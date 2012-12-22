@@ -1,2 +1,0 @@
-//>>built
-define("dojox/mobile/bidi/TabBarButton",["dojo/_base/declare","./common"],function(a){return a(null,{_setBadgeAttr:function(a){this.inherited(arguments);this.badgeObj.setTextDir(this.textDir)}})});
