@@ -1,0 +1,3 @@
+//>>built
+define("dojox/mobile/bidi/Carousel",["dojo/_base/declare","./common"],function(c,b){return c(null,{_setTitleAttr:function(a){this.titleNode.innerHTML=this._cv?this._cv(a):a;this._set("title",a);if(this.textDir)this.titleNode.innerHTML=b.enforceTextDirWithUcc(this.titleNode.innerHTML,this.textDir),this.titleNode.style.textAlign="rtl"===this.dir.toLowerCase()?"right":"left"},_setTextDirAttr:function(a){if(a&&this.textDir!==a&&(this.textDir=a,this.titleNode.innerHTML=b.removeUCCFromText(this.titleNode.innerHTML),
+this.titleNode.innerHTML=b.enforceTextDirWithUcc(this.titleNode.innerHTML,this.textDir),0<this.items.length))this.onComplete(this.items)}})});
