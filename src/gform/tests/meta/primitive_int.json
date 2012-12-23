@@ -1,0 +1,14 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"int",
+            "label":"int",
+            "code":"int",
+            "required":false,
+            "array":false
+        }
+    ],
+    "type_property":"ext_type"
+}

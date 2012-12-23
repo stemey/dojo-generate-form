@@ -1,0 +1,15 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"text",
+            "label":"text",
+            "code":"text",
+            "required":false,
+            "array":false,
+            "values":["Hallo","Good bye"]
+        }
+    ],
+    "type_property":"ext_type"
+}

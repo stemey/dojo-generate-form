@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner",//
+		         "dojo/text!./meta/embedded_polymorphic.json","dojo/text!./entity/embedded_polymorphic.json"//
+		         ],function(ready,json,Editor,Stateful,doh,meta,entity) {
+			
+			doh.register("standard", [
+									
+									{
+										name: 'init',
+										runTest: function(t){
+												try {
+													var editor=new Editor();
+													editor.set("modelHandle",new Stateful(dojo.fromJson(entity)));
+													editor.set("meta",dojo.fromJson(meta));
+													var container= dojo.byId("container");;
+													editor.placeAt(container);
+												} catch (e) {
+													t.error(e.message);
+												}
+										}
+									}]);			
+			doh.run();
+		});
+		
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test</h1>
+
+
+	<div id="container"></div>
+
+</body>
+</html>

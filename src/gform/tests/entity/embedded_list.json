@@ -1,0 +1,7 @@
+{
+	things : [ {
+		yes : false
+	}, {
+		yes : true
+	} ]
+}
