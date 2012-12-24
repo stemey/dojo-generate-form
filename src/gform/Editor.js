@@ -78,7 +78,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				}
 			} catch (e) {
 				console.log("cannot create editor. " + e.message+" "+ e.stack);
-				throw e;
+				 throw e;
 			}
 
 		},
@@ -96,4 +96,5 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		}
 
 	});
+	
 });

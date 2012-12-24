@@ -4,10 +4,10 @@ define([ "dojo/_base/array", //
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./polymorphic_embedded_attribute.html",
 		"dijit/layout/StackContainer", "dojo/Stateful",
-		"dojox/mvc/Bind"//
+		"gform/Editor"//
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
-		Bind) {
+		Editor) {
 
 	return declare("app.GroupPanelWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
@@ -18,21 +18,21 @@ define([ "dojo/_base/array", //
 			// move this to postCreate
 			var validTypes = attribute.validTypes;
 
-			var validTypeOptions = array.map(attribute.validTypes,
+			this.validTypeOptions = array.map(attribute.validTypes,
 					function(validType) {
 						return {
 							value : validType.code,
 							label : validType.label
 						};
 					});
-			validTypeOptions.push({
+			this.validTypeOptions.push({
 				label : "null",
 				value : "null"
 			});
-			var initialType = validTypeOptions[0].value
+			var initialType = this.validTypeOptions[0].value
 			var panelModel = new Stateful({
 				title : "",// attribute.code,
-				validTypes : validTypeOptions,
+				validTypes : this.validTypeOptions,
 				type : initialType
 			});
 
@@ -44,7 +44,6 @@ define([ "dojo/_base/array", //
 			typeToModel[initialType]=modelHandle.get(attribute.code);	
 			array.forEach(attribute.validTypes, function(type) {
 				var editor = new app.Editor();
-				//Bind.bind(this,"modelHandle",editor,"modelHandle");
 				typeStack.addChild(editor);
 				typeToGroup[type.code] = editor;
 				if (type.code!=initialType) {	
@@ -56,27 +55,25 @@ define([ "dojo/_base/array", //
 				}
 				editor.set("meta", type);
 			}, this);
-			//var nullWidget = new AttributeListWidget();
-			//typeStack.addChild(nullWidget);
-			typeToGroup["null"] = new _WidgetBase();//nullWidget;
-				
+			
 			panelModel.watch("type", function() {
 				var type = panelModel.get("type");
 				var modelHandle=me.get("modelHandle");
 				if (type == "null") {
 					modelHandle.set(attribute.code, null);
-//						model.set(attribute.type_property, null);
-					typeStack.selectChild(typeToGroup[type]);
+					typeStack.set("display","block");
 				} else {
-//						modelHandle
-//								.set(attribute.code, me.get("modelHandle"));
+					typeStack.set("display","none");
 					modelHandle.set(attribute.code, typeToModel[type]);
 					typeStack.selectChild(typeToGroup[type]);
 				}
 			});
 			this.addChild(typeStack);
-			panelModel.set("type", validTypeOptions[0].value);
 			this.set("target", panelModel);
+		},
+		startup: function() {
+			this.inherited(arguments);
+			this.get("target").set("type", this.validTypeOptions[0].value);
 		}
 
 	});

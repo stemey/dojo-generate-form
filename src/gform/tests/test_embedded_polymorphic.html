@@ -29,8 +29,11 @@
 													editor.set("meta",dojo.fromJson(meta));
 													var container= dojo.byId("container");;
 													editor.placeAt(container);
+													var nameText = dojo.byId("dijit_form_TextBox_0");	
+													var typeSelect = dojo.byId("dijit_form_Select_0");	
+													t.assertEquals("moin",nameText.get("value"));
 												} catch (e) {
-													t.error(e.message);
+													throw e;
 												}
 										}
 									}]);			
