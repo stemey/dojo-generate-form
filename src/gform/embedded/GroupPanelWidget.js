@@ -61,9 +61,9 @@ define([ "dojo/_base/array", //
 				var modelHandle=me.get("modelHandle");
 				if (type == "null") {
 					modelHandle.set(attribute.code, null);
-					typeStack.set("display","block");
+					typeStack.domNode.style.display="none";
 				} else {
-					typeStack.set("display","none");
+					typeStack.domNode.style.display="block";
 					modelHandle.set(attribute.code, typeToModel[type]);
 					typeStack.selectChild(typeToGroup[type]);
 				}

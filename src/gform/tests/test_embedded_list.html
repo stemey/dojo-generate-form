@@ -18,20 +18,35 @@
 		         "dojo/text!./meta/embedded_list.json","dojo/text!./entity/embedded_list.json"//
 		         ],function(ready,json,Editor,Stateful,doh,meta,entity) {
 			
-			doh.register("standard", [
-									
-									{
-										name: 'init',
-										runTest: function(t){
-												console.log("starting");
-												var editor=new Editor();
-												editor.set("modelHandle",new Stateful(dojo.fromJson(entity)));
-												editor.set("meta",dojo.fromJson(meta));
-												var container= dojo.byId("container");;
-												editor.placeAt(container);
-												t.is(true, true);
-										}
-									}]);			
+				var editor=new Editor();
+				var modelHandle=new Stateful(dojo.fromJson(entity));
+				editor.set("modelHandle",modelHandle);
+				editor.set("meta",dojo.fromJson(meta));
+				var container= dojo.byId("container");
+				editor.placeAt(container);
+				doh.register("standard", [
+							{
+								name: 'init',
+								runTest: function(t){
+									t.assertEqual(2,modelHandle.get("things").length);
+									var message1=dijit.byId("dijit_form_TextBox_0").get("value");
+									t.assertEqual("moin",message1);
+								}
+							},
+							{
+								name: 'remove',
+								runTest: function(t){
+									dijit.byId("dijit_form_Button_1").onClick();
+									t.assertEqual(1,modelHandle.get("things").length);
+								}
+							},
+							{
+								name: 'add',
+								runTest: function(t){
+									dijit.byId("dijit_form_Button_0").onClick();
+									t.assertEqual(2,modelHandle.get("things").length);
+								}
+							}]);			
 			doh.run();
 		});
 		

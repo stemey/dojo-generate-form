@@ -1,7 +1,9 @@
 {
 	things : [ {
-		yes : false
+		yes : false,
+		message:"moin"
 	}, {
-		yes : true
+		yes : true,
+		message:"bye"
 	} ]
 }

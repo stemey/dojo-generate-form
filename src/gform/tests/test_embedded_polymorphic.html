@@ -14,32 +14,42 @@
 
 
 	<script type="text/javascript">
-		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner",//
-		         "dojo/text!./meta/embedded_polymorphic.json","dojo/text!./entity/embedded_polymorphic.json"//
-		         ],function(ready,json,Editor,Stateful,doh,meta,entity) {
-			
+
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner",//
+		"dojo/text!./meta/embedded_polymorphic.json", "dojo/text!./entity/embedded_polymorphic.json"//
+		], function(ready, json, Editor, Stateful, doh, meta, entity) {
+
+			var editor = new Editor();
+			editor.set("modelHandle", new Stateful(dojo.fromJson(entity)));
+			editor.set("meta", dojo.fromJson(meta));
+			var container = dojo.byId("container");
+			editor.placeAt(container);
+			var nameText = dijit.byId("dijit_form_TextBox_0");
+			var typeSelect = dijit.byId("dijit_form_Select_0");
 			doh.register("standard", [
-									
-									{
-										name: 'init',
-										runTest: function(t){
-												try {
-													var editor=new Editor();
-													editor.set("modelHandle",new Stateful(dojo.fromJson(entity)));
-													editor.set("meta",dojo.fromJson(meta));
-													var container= dojo.byId("container");;
-													editor.placeAt(container);
-													var nameText = dojo.byId("dijit_form_TextBox_0");	
-													var typeSelect = dojo.byId("dijit_form_Select_0");	
-													t.assertEquals("moin",nameText.get("value"));
-												} catch (e) {
-													throw e;
-												}
-										}
-									}]);			
+				{
+					name : 'switchType',
+					runTest : function(t) {
+						t.assertEqual("moin", editor.get("modelHandle").get("thing").get("name"));
+						t.assertEqual("moin", nameText.get("value"));
+						t.assertEqual("thing1", editor.get("modelHandle").get("thing").get("ext_type"));
+	
+						typeSelect.set("value", "thing2");
+						var name = editor.get("modelHandle").get("thing").get("name");
+						t.assertTrue(typeof name == "undefined");
+						t.assertEqual("thing2", editor.get("modelHandle").get("thing").get("ext_type"));
+					}
+				}, {
+					name : 'switchToNull',
+					runTest : function(t) {
+						typeSelect.set("value", "null");
+						t.assertEqual(null, editor.get("modelHandle").get("thing"));
+	
+					}
+				} 
+			]);
 			doh.run();
 		});
-		
 	</script>
 </head>
 <body class="claro">

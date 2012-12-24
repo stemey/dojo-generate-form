@@ -27,17 +27,20 @@ define([ "dojo/_base/array", //
 				var model = new Stateful();
 				modelHandle.set(attribute.code,model);
 			}
+			
+			editor = new app.Editor();
+			editor.set("modelHandle", modelHandle);
+			editor.set("meta", attribute);
 			panelModel.watch("empty", function(e) {
 				var modelHandle=me.get("modelHandle");
 				if (panelModel.get("empty")) {
 					modelHandle.set(attribute.code, null);
+					editor.domNode.style.display="none";
 				} else {
+					editor.domNode.style.display="block";
 					modelHandle.set(attribute.code, model);
 				}
 			});
-			editor = new app.Editor();
-			editor.set("modelHandle", modelHandle);
-			editor.set("meta", attribute);
 			this.addChild(editor);
 			this.set("target", panelModel);
 		}
