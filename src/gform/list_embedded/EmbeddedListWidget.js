@@ -11,8 +11,6 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		attribute:null,
 		_addElement : function() {
 			this.target[this.attribute].push(new dojo.Stateful({
-//				value : null,
-//				options : this.target.options
 			}));
 		},
 		postCreate : function() {

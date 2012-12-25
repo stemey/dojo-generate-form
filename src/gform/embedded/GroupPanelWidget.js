@@ -26,6 +26,7 @@ define([ "dojo/_base/array", //
 			// move this to postCreate
 			var validTypes = attribute.validTypes;
 
+			var modelHandle = this.get("modelHandle");
 			this.validTypeOptions = array.map(attribute.validTypes,
 					function(validType) {
 						return {
@@ -39,21 +40,21 @@ define([ "dojo/_base/array", //
 					value : "null"
 				});
 			}
-			var initialType = this.validTypeOptions[0].value
+			var currentType = modelHandle && modelHandle[attribute.type_property]? modelHandle.get(attribute.type_property) : this.validTypeOptions[0].value
+			modelHandle[attribute.type_property]=currentType;
 			var panelModel = new Stateful({
 				title : "",// attribute.code,
 				validTypes : this.validTypeOptions,
-				type : initialType
+				type : currentType
 			});
 
 			this.typeStack = new StackContainer();
 			this.typeToGroup = {};
 			var me=this;
 			var typeToModel={};
-			var modelHandle = this.get("modelHandle");
-			typeToModel[initialType]=modelHandle;//.get(attribute.code);	
+			typeToModel[currentType]=modelHandle;//.get(attribute.code);	
 			array.forEach(attribute.validTypes, function(type) {
-				if (type.code!=initialType) {	
+				if (type.code!=currentType) {	
 					typeToModel[type.code]=new Stateful();
 					typeToModel[type.code][attribute.type_property]=type.code;
 				}
@@ -83,7 +84,7 @@ define([ "dojo/_base/array", //
 		},
 		startup: function() {
 			this.inherited(arguments);
-			this.get("target").set("type", this.validTypeOptions[0].value);
+			this.get("target").set("type", this.modelHandle.get(this.meta.type_property));
 		}
 
 	});

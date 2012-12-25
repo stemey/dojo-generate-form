@@ -22,7 +22,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 				modelHandle.set(attribute.code,model);
 			}
 			if (this.meta.validTypes) {
-				editor = new GroupPanelWidget({"modelHandle":this.modelHandle,"meta":this.meta});
+				editor = new GroupPanelWidget({"modelHandle":this.modelHandle,"meta":this.meta,nullable:false});
 			}else{
 				editor = new app.Editor({"modelHandle":this.modelHandle,"meta":this.meta});
 			}
