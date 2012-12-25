@@ -51,7 +51,7 @@ define([ "dojo/_base/array", //
 			var me=this;
 			var typeToModel={};
 			var modelHandle = this.get("modelHandle");
-			typeToModel[initialType]=modelHandle.get(attribute.code);	
+			typeToModel[initialType]=modelHandle;//.get(attribute.code);	
 			array.forEach(attribute.validTypes, function(type) {
 				if (type.code!=initialType) {	
 					typeToModel[type.code]=new Stateful();

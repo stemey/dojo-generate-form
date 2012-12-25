@@ -32,13 +32,14 @@ define([ "dojo/_base/array", //
 			});
 
 			var childModel = modelHandle.get(attribute.code);
+			var childMeta = attribute.validTypes? attribute:attribute.type;
 
 			var widgetList = new WidgetList();
 			widgetList.set("partialrebuild", true);
 			widgetList.set("children", items);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {
-				meta : attribute.type,
+				meta : childMeta,
 				_relTargetProp : "modelHandle"
 			});
 			select.addChild(widgetList);
