@@ -10,7 +10,7 @@ define([ "dojo/_base/array", //
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
 		Bind) {
 
-	return declare("app.GroupPanelWidget", [ _WidgetBase, _Container,
+	return declare("app.SingleTypePanelWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template,
 		//_setMetaAttr : function(/* dojo/Stateful */attribute) {
@@ -28,7 +28,7 @@ define([ "dojo/_base/array", //
 				modelHandle.set(attribute.code,model);
 			}
 			
-			var editor = new app.Editor({"modelHandle": modelHandle,"meta": attribute});
+			var editor = new app.Editor({"modelHandle": modelHandle.get(attribute.code),"meta": attribute.type});
 			panelModel.watch("empty", function(e) {
 				var modelHandle=me.get("modelHandle");
 				if (panelModel.get("empty")) {
