@@ -15,7 +15,7 @@ define([ "dojo/_base/array", //
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
 		handles : function(attribute) {
-			return attribute != null && attribute.type.attributes
+			return attribute != null && ((attribute.type && 	attribute.type.attributes) || attribute.validTypes)
 					&& attribute.array;
 		},
 		create : function(attribute, modelHandle) {

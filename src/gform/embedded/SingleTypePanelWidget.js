@@ -28,9 +28,7 @@ define([ "dojo/_base/array", //
 				modelHandle.set(attribute.code,model);
 			}
 			
-			editor = new app.Editor();
-			editor.set("modelHandle", modelHandle);
-			editor.set("meta", attribute);
+			var editor = new app.Editor({"modelHandle": modelHandle,"meta": attribute});
 			panelModel.watch("empty", function(e) {
 				var modelHandle=me.get("modelHandle");
 				if (panelModel.get("empty")) {

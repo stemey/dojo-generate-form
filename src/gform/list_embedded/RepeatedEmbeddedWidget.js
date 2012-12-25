@@ -1,9 +1,9 @@
 define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
-		"dijit/_WidgetsInTemplateMixin","dojo/Stateful",
+		"dijit/_WidgetsInTemplateMixin","dojo/Stateful","../embedded/GroupPanelWidget",
 		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox"//
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, Stateful,template, TextBox) {
+		_WidgetsInTemplateMixin, Stateful,GroupPanelWidget,template, TextBox) {
 
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
@@ -14,15 +14,18 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			panelModel.set("title", "");
 			var me=this;
 			var modelHandle = this.get("modelHandle");
+			var editor;
 			if (modelHandle.get(attribute.code)) {
 				var model = modelHandle.get(attribute.code);
 			}else{
 				var model = new Stateful();
 				modelHandle.set(attribute.code,model);
 			}
-			editor = new app.Editor();
-			editor.set("modelHandle", modelHandle);
-			editor.set("meta", attribute);
+			if (this.meta.validTypes) {
+				editor = new GroupPanelWidget({"modelHandle":this.modelHandle,"meta":this.meta});
+			}else{
+				editor = new app.Editor({"modelHandle":this.modelHandle,"meta":this.meta});
+			}
 			this.addChild(editor);
 			this.set("target", panelModel);
 

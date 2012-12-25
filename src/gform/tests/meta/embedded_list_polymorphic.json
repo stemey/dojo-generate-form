@@ -1,0 +1,45 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "required":false,
+            type:"thing",
+            "type_property":"ext_type",
+            "validTypes":[
+                {
+                    "code":"thing1",
+                    "label":"thing1",
+                    "attributes":[
+                        {
+                            "required":false,
+                            "type":"text",
+                            "label":"name",
+                            "code":"name",
+                            "array":false
+                        }
+                    ]
+                    
+                },
+                {
+                    "code":"thing2",
+                    "label":"thing2",
+                    "attributes":[
+                        {
+                            "required":false,
+                            "type":"text",
+                            "label":"firstName",
+                            "code":"firstName",
+                            "array":false
+                        }
+                    ]
+                    
+                }
+            ],
+            "label":"things",
+            "code":"things",
+            "array":true
+        }
+    ],
+    "type_property":"ext_type"
+}

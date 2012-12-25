@@ -19,9 +19,9 @@
 		"dojo/text!./meta/embedded_polymorphic.json", "dojo/text!./entity/embedded_polymorphic.json"//
 		], function(ready, json, Editor, Stateful, doh, meta, entity) {
 
-			var editor = new Editor();
-			editor.set("modelHandle", new Stateful(dojo.fromJson(entity)));
-			editor.set("meta", dojo.fromJson(meta));
+			var editor = new Editor({
+					"modelHandle": new Stateful(dojo.fromJson(entity)),
+					"meta": dojo.fromJson(meta)});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
 			var nameText = dijit.byId("dijit_form_TextBox_0");

@@ -1,0 +1,12 @@
+{
+    things:[
+        {
+            ext_type:"thing1",
+            name:"moin"
+        },
+        {
+            ext_type:"thing2",
+            firstName:"John"
+        }
+    ]
+}

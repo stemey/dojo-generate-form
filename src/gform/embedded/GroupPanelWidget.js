@@ -12,8 +12,16 @@ define([ "dojo/_base/array", //
 	return declare("app.GroupPanelWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template,
-		//_setMetaAttr : function(/* dojo/Stateful */attribute) {
-		postCreate : function() {
+		typeStack:null,
+		nullable:true,
+		postCreate: function() {
+			if (this.meta) {
+				this._buildContained();
+			}else{
+				this.watch("meta", lang.hitch(this, "_buildContained"));
+			}
+		},
+		_buildContained : function() {
 			var attribute=this.get("meta");
 			// move this to postCreate
 			var validTypes = attribute.validTypes;
@@ -25,10 +33,12 @@ define([ "dojo/_base/array", //
 							label : validType.label
 						};
 					});
-			this.validTypeOptions.push({
-				label : "null",
-				value : "null"
-			});
+			if(this.nullable) {
+				this.validTypeOptions.push({
+					label : "null",
+					value : "null"
+				});
+			}
 			var initialType = this.validTypeOptions[0].value
 			var panelModel = new Stateful({
 				title : "",// attribute.code,
@@ -36,24 +46,24 @@ define([ "dojo/_base/array", //
 				type : initialType
 			});
 
-			var typeStack = new StackContainer();
-			var typeToGroup = {};
+			this.typeStack = new StackContainer();
+			this.typeToGroup = {};
 			var me=this;
 			var typeToModel={};
 			var modelHandle = this.get("modelHandle");
 			typeToModel[initialType]=modelHandle.get(attribute.code);	
 			array.forEach(attribute.validTypes, function(type) {
-				var editor = new app.Editor();
-				typeStack.addChild(editor);
-				typeToGroup[type.code] = editor;
 				if (type.code!=initialType) {	
 					typeToModel[type.code]=new Stateful();
 					typeToModel[type.code][attribute.type_property]=type.code;
-					editor.set("modelHandle", typeToModel[type.code]);
-				}else{
-					editor.set("modelHandle", typeToModel[type.code]);
 				}
-				editor.set("meta", type);
+				var editor = new app.Editor(
+					{
+						"modelHandle": typeToModel[type.code],
+						"meta":type
+					});
+				this.typeStack.addChild(editor);
+				this.typeToGroup[type.code] = editor;
 			}, this);
 			
 			panelModel.watch("type", function() {
@@ -61,14 +71,14 @@ define([ "dojo/_base/array", //
 				var modelHandle=me.get("modelHandle");
 				if (type == "null") {
 					modelHandle.set(attribute.code, null);
-					typeStack.domNode.style.display="none";
+					me.typeStack.domNode.style.display="none";
 				} else {
-					typeStack.domNode.style.display="block";
+					me.typeStack.domNode.style.display="block";
 					modelHandle.set(attribute.code, typeToModel[type]);
-					typeStack.selectChild(typeToGroup[type]);
+					me.typeStack.selectChild(me.typeToGroup[type]);
 				}
 			});
-			this.addChild(typeStack);
+			this.addChild(this.typeStack);
 			this.set("target", panelModel);
 		},
 		startup: function() {

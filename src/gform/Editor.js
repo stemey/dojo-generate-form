@@ -27,45 +27,14 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		postCreate : function() {
 			this.inherited(arguments);
 			this.watch("meta", lang.hitch(this, "_buildContained"));
+			if (this.meta) {
+				this._buildContained();
+			}
 		},
-		_setChildrenAttr : function(/* dojo/Stateful */value) {
-			// summary:
-			// Handler for calls to set("children", val).
-			// description:
-			// Sets "ref" property so that child widgets can
-			// refer to, and then
-			// rebuilds the children.
-			
-			this._set("children", value);
-			this.modelHandle=value;
-//			if(this._started && (!this._builtOnce || children != value)){
-				this._builtOnce = true;
-				this._buildContained(value);
-//			}			// this.binding is the resolved ref, so not matching
-			// with the new
-			// value means change in repeat target.
-			// if(this.binding != value){
-			// this.set("ref", value);
-			// }
-			// if(this._started && (!this._builtOnce || children
-			// != value)){
-			// this._builtOnce = true;
-			// this._buildContained(value);
-			// }
+		startup : function() {
+			this.inherited(arguments);
 		},
-
-		_buildContained : function() {
-			// summary:
-			// Destroy any existing generated view, recreate it
-			// from scratch
-			// parse the new contents.
-			// children: dojo/Stateful
-			// The array of child widgets.
-			// tags:
-			// private
-
-			this._destroyBody();
-
+		_buildContained: function() {
 			if (this.modelHandle == null) {
 				this.modelHandle = new Stateful();
 			}
@@ -79,13 +48,6 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			} catch (e) {
 				console.log("cannot create editor. " + e.message+" "+ e.stack);
 				 throw e;
-			}
-
-		},
-		startup : function() {
-			this.inherited(arguments);
-			if (this.widget) {
-				//this.widget.startup();
 			}
 		},
 		_destroyBody : function() {
