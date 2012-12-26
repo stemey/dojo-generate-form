@@ -13,7 +13,7 @@ define(
 					[],
 					{
 						handles : function(attribute) {
-							return (attribute.type.code == "Integer" || attribute.type.code == "Long")
+							return (attribute.type == "Integer" || attribute.type == "Long" || attribute.type == "int" || attribute.type == "long")
 									&& !attribute.array;
 						},
 						create : function(attribute, modelHandle) {

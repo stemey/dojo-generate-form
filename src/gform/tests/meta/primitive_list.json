@@ -1,0 +1,14 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "required":false,
+            "label":"things",
+            "code":"things",
+            "array":true,
+            "type":"text"           
+        }
+    ],
+    "type_property":"ext_type"
+}

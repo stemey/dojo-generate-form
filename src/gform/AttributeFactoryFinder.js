@@ -1,6 +1,7 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
+"./list_primitive/PrimitiveListAttributeFactory",//
 "./primitive/TextAttributeFactory",//
 "./primitive/BooleanAttributeFactory",//
 "./primitive/SelectAttributeFactory",//
@@ -10,7 +11,7 @@ define([ "dojo/_base/array", //
 "./group/AttributeListWidget",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory"
 
-], function(array, lang, declare, TextAttributeFactory,
+], function(array, lang, declare, PrimitiveListAttributeFactory,TextAttributeFactory,
 		BooleanAttributeFactory, SelectAttributeFactory,
  MappedSelectAttributeFactory,EmbeddedAttributeFactory,
 		IntegerAttributeFactory, 
@@ -25,7 +26,7 @@ define([ "dojo/_base/array", //
 				attributeFactories : [ //
 				new RepeatedEmbeddedAttributeFactory(),//
 				new EmbeddedAttributeFactory(),//
-				//new SelectArrayAttributeFactory(),//
+				new PrimitiveListAttributeFactory(),//
 				new IntegerAttributeFactory(),//
 				new SelectAttributeFactory(), // 
 				new BooleanAttributeFactory(), // 
