@@ -1,9 +1,9 @@
 define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
-		"dijit/_WidgetsInTemplateMixin","dojo/Stateful","../embedded/GroupPanelWidget",
+		"dijit/_WidgetsInTemplateMixin","dojo/Stateful","./PolymorphicMemberWidget",
 		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox"//
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, Stateful,GroupPanelWidget,template, TextBox) {
+		_WidgetsInTemplateMixin, Stateful,PolymorphicMemberWidget,template, TextBox) {
 
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
@@ -22,7 +22,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 				modelHandle.set(attribute.code,model);
 			}
 			if (this.meta.validTypes) {
-				editor = new GroupPanelWidget({"modelHandle":this.modelHandle,"meta":this.meta,nullable:false});
+				editor = new PolymorphicMemberWidget({"modelHandle":this.modelHandle,"meta":this.meta,nullable:false});
 			}else{
 				editor = new app.Editor({"modelHandle":this.modelHandle,"meta":this.meta});
 			}

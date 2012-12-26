@@ -9,7 +9,7 @@ define([ "dojo/_base/array", //
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
 		Editor) {
 
-	return declare("app.GroupPanelWidget", [ _WidgetBase, _Container,
+	return declare("app.PolymorphicMemberWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template,
 		typeStack:null,
@@ -41,7 +41,7 @@ define([ "dojo/_base/array", //
 				});
 			}
 			var currentType = modelHandle && modelHandle[attribute.type_property]? modelHandle.get(attribute.type_property) : this.validTypeOptions[0].value
-			modelHandle[attribute.code][attribute.type_property]=currentType;
+			modelHandle[attribute.type_property]=currentType;
 			var panelModel = new Stateful({
 				title : "",// attribute.code,
 				validTypes : this.validTypeOptions,
@@ -52,7 +52,7 @@ define([ "dojo/_base/array", //
 			this.typeToGroup = {};
 			var me=this;
 			var typeToModel={};
-			typeToModel[currentType]=modelHandle.get(attribute.code);	
+			typeToModel[currentType]=modelHandle;	
 			array.forEach(attribute.validTypes, function(type) {
 				if (type.code!=currentType) {	
 					typeToModel[type.code]=new Stateful();
@@ -70,21 +70,15 @@ define([ "dojo/_base/array", //
 			panelModel.watch("type", function() {
 				var type = panelModel.get("type");
 				var modelHandle=me.get("modelHandle");
-				if (type == "null") {
-					modelHandle.set(attribute.code, null);
-					me.typeStack.domNode.style.display="none";
-				} else {
-					me.typeStack.domNode.style.display="block";
-					modelHandle.set(attribute.code, typeToModel[type]);
-					me.typeStack.selectChild(me.typeToGroup[type]);
-				}
+				modelHandle.set(attribute.code, typeToModel[type]);
+				me.typeStack.selectChild(me.typeToGroup[type]);
 			});
 			this.addChild(this.typeStack);
 			this.set("target", panelModel);
 		},
 		startup: function() {
 			this.inherited(arguments);
-			this.get("target").set("type", this.modelHandle[this.meta.code].get(this.meta.type_property));
+			this.get("target").set("type", this.modelHandle.get(this.meta.type_property));
 		}
 
 	});
