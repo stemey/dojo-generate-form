@@ -1,16 +1,14 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-"dojox/mvc/at",//"./list_primitive/PrimitiveListAttributeFactory",//
-"./AttributeFactoryFinder",//
+"dojox/mvc/at",//
 "./group/GroupFactory",//
 "./group/TabGroupFactory"//
-], function(array, lang, declare, at, AttributeFactoryFinder, GroupFactory,TabGroupFactory) {
+], function(array, lang, declare, at, GroupFactory,TabGroupFactory) {
 
 	return declare("app.EditorFactory", [], {
 		constructor : function() {
 		},
-		attributeFactoryFinder 
 		groupFactories : {
 			"list" : new GroupFactory(),
 			"tab" : new TabGroupFactory()

@@ -47,7 +47,7 @@ define([ "dojo/_base/array", //
 			widgetList.set("children", items);
 			widgetList.set("childClz", RepeatedAttributeWidget);
 			widgetList.set("childParams", {
-				meta : singleAttribute,
+				meta : childMeta,
 				_relTargetProp : "modelHandle"
 			});
 			select.addChild(widgetList);

@@ -17,7 +17,7 @@ define([ "dojo/_base/array", //
 		IntegerAttributeFactory, 
 		AttributeListWidget, RepeatedEmbeddedAttributeFactory) {
 
-	var AttributeFactoryFinder = declare("app.editor.AttributeFactoryFinder",
+	return declare("app.editor.AttributeFactoryFinder",
 			null, {
 				constructor : function(kwArgs) {
 
@@ -54,5 +54,4 @@ define([ "dojo/_base/array", //
 				}
 			})
 
-	return new AttributeFactoryFinder();
 });

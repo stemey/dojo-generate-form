@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner",//
+		         "dojo/text!./meta/embedded_list.json","dojo/text!./entity/embedded_list.json"//
+		         ],function(ready,json,Editor,Stateful,doh,meta,entity) {
+			
+				var modelHandle=new Stateful(dojo.fromJson(entity));
+				var editor=new Editor({"modelHandle":modelHandle,
+				"meta":dojo.fromJson(meta)});
+				var container= dojo.byId("container");
+				editor.placeAt(container);
+				doh.register("standard", [
+							{
+								name: 'init',
+								runTest: function(t){
+									t.assertEqual(2,modelHandle.get("things").length);
+									var message1=dijit.byId("dijit_form_TextBox_0").get("value");
+									t.assertEqual("moin",message1);
+								}
+							},
+							{
+								name: 'remove',
+								runTest: function(t){
+									dijit.byId("dijit_form_Button_1").onClick();
+									t.assertEqual(1,modelHandle.get("things").length);
+								}
+							},
+							{
+								name: 'add',
+								runTest: function(t){
+									dijit.byId("dijit_form_Button_0").onClick();
+									t.assertEqual(2,modelHandle.get("things").length);
+								}
+							}]);			
+			doh.run();
+		});
+		
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test</h1>
+
+
+	<div id="container"></div>
+
+</body>
+</html>
