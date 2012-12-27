@@ -14,6 +14,9 @@ define([ "dojo/_base/array", //
 
 	return declare("app.PrimitiveListAttributeFactory", [], {
 
+		constructor : function(kwArgs) {
+			lang.mixin(this, kwArgs);
+		},
 		handles : function(attribute) {
 			return attribute != null && (typeof attribute.type == "string") 
 					&& attribute.array;
@@ -29,7 +32,7 @@ define([ "dojo/_base/array", //
 
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
-				attribute:attribute.code
+				attribute:attribute
 			});
 
 			var childModel = modelHandle.get(attribute.code);
@@ -48,7 +51,8 @@ define([ "dojo/_base/array", //
 			widgetList.set("childClz", RepeatedAttributeWidget);
 			widgetList.set("childParams", {
 				meta : singleAttribute,
-				_relTargetProp : "modelHandle"
+				_relTargetProp : "modelHandle",
+				editorFactory:this.editorFactory
 			});
 			select.addChild(widgetList);
 

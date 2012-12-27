@@ -61,7 +61,8 @@ define([ "dojo/_base/array", //
 				var editor = new app.Editor(
 					{
 						"modelHandle": typeToModel[type.code],
-						"meta":type
+						"meta":type,
+						editorFactory:this.editorFactory
 					});
 				this.typeStack.addChild(editor);
 				this.typeToGroup[type.code] = editor;

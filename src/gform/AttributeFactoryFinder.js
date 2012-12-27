@@ -20,18 +20,18 @@ define([ "dojo/_base/array", //
 	return declare("app.editor.AttributeFactoryFinder",
 			null, {
 				constructor : function(kwArgs) {
-
+					lang.mixin(this, kwArgs);
+					this.attributeFactories = [ //
+					       				new RepeatedEmbeddedAttributeFactory({editorFactory:this.editorFactory}),//
+					       				new EmbeddedAttributeFactory({editorFactory:this.editorFactory}),//
+					       				new PrimitiveListAttributeFactory({editorFactory:this.editorFactory}),//
+					       				new IntegerAttributeFactory({editorFactory:this.editorFactory}),//
+					       				new SelectAttributeFactory({editorFactory:this.editorFactory}), // 
+					       				new BooleanAttributeFactory({editorFactory:this.editorFactory}), // 
+					       				new TextAttributeFactory({editorFactory:this.editorFactory}) //
+					       				];
 				},
 
-				attributeFactories : [ //
-				new RepeatedEmbeddedAttributeFactory(),//
-				new EmbeddedAttributeFactory(),//
-				new PrimitiveListAttributeFactory(),//
-				new IntegerAttributeFactory(),//
-				new SelectAttributeFactory(), // 
-				new BooleanAttributeFactory(), // 
-				new TextAttributeFactory() //
-				],
 				attributeFactoryMap : {},
 				addFactory : function(factory) {
 					this.attributeFactories.push(factory);

@@ -14,6 +14,9 @@ define([ "dojo/_base/array", //
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
+		constructor : function(kwArgs) {
+			lang.mixin(this, kwArgs);
+		},
 		handles : function(attribute) {
 			return attribute != null && ((attribute.type && 	attribute.type.attributes) || attribute.validTypes)
 					&& attribute.array;
@@ -40,7 +43,8 @@ define([ "dojo/_base/array", //
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {
 				meta : childMeta,
-				_relTargetProp : "modelHandle"
+				_relTargetProp : "modelHandle",
+				editorFactory: this.editorFactory
 			});
 			select.addChild(widgetList);
 

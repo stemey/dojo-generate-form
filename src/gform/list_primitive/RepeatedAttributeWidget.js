@@ -8,25 +8,19 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 
 	return declare("app.RepeatedAttributeWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
-			constructor : function(kwArgs) {
-			this.attributeFactoryFinder = new AttributeFactoryFinder();
-		},
 	templateString : template,
 		postCreate : function() {
 			var attribute=this.get("meta");
 			var panelModel = new dojo.Stateful();
 			panelModel.set("title", "");
-			var me=this;
+			//var me=this;
 			var modelHandle = this.get("modelHandle");
 			var editor;
-			if (modelHandle.get(attribute.code)) {
-				var model = modelHandle.get(attribute.code);
-			}else{
-				var model = new Stateful();
-				modelHandle.set(attribute.code,model);
+			if (modelHandle.get(attribute.code)==null) {
+				modelHandle.set(attribute.code,null);
 			}
 
-			var factory = this.attributeFactoryFinder.getFactory(attribute);
+			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute);
 			editor = factory.create(attribute,this.modelHandle);
 			
 			this.addChild(editor);

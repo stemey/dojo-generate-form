@@ -22,9 +22,9 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 				modelHandle.set(attribute.code,model);
 			}
 			if (this.meta.validTypes) {
-				editor = new PolymorphicMemberWidget({"modelHandle":this.modelHandle,"meta":this.meta,nullable:false});
+				editor = new PolymorphicMemberWidget({"modelHandle":this.modelHandle,"meta":this.meta,nullable:false,editorFactory:this.editorFactory});
 			}else{
-				editor = new app.Editor({"modelHandle":this.modelHandle,"meta":this.meta});
+				editor = new app.Editor({"modelHandle":this.modelHandle,"meta":this.meta,editorFactory:this.editorFactory});
 			}
 			this.addChild(editor);
 			this.set("target", panelModel);

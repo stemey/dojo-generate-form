@@ -13,10 +13,10 @@ define([ "dojo/_base/array", //
 
 	return declare("app.Groupfactory", null, {
 		constructor : function(kwArgs) {
-
+			lang.mixin(this, kwArgs);
 		},
 		createAttribute : function(attribute, modelHandle) {
-			var factory = AttributeFactoryFinder.getFactory(attribute.editor);
+			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute.editor);
 			return factory.create(attribute, modelHandle);
 		},
 		create : function(group, modelHandle) {

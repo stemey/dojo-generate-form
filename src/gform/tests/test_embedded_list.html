@@ -14,13 +14,13 @@
 
 
 	<script type="text/javascript">
-		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner",//
+		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner", "gform/EditorFactory",//
 		         "dojo/text!./meta/embedded_list.json","dojo/text!./entity/embedded_list.json"//
-		         ],function(ready,json,Editor,Stateful,doh,meta,entity) {
+		         ],function(ready,json,Editor,Stateful,doh,EditorFactory,meta,entity) {
 			
 				var modelHandle=new Stateful(dojo.fromJson(entity));
 				var editor=new Editor({"modelHandle":modelHandle,
-				"meta":dojo.fromJson(meta)});
+				"meta":dojo.fromJson(meta),editorFactory:new EditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);
 				doh.register("standard", [

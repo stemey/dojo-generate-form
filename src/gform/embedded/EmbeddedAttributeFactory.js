@@ -18,6 +18,9 @@ define([ "dojo/_base/array", //
 					&& (attribute.type.attributes || attribute.validTypes)
 					&& !attribute.array;
 		},
+		constructor : function(kwArgs) {
+			lang.mixin(this, kwArgs);
+		},
 		create : function(attribute, modelHandle) {
 
 			var model = modelHandle.get(attribute.code);
@@ -38,12 +41,14 @@ define([ "dojo/_base/array", //
 			if (attribute.validTypes && attribute.validTypes.length>1) {
 				panelWidget = new GroupPanelWidget({
 					"modelHandle":modelHandle,
-					"meta":attribute
+					"meta":attribute,
+					editorFactory:this.editorFactory
 				});
 			}else{
 				panelWidget = new SingleTypePanelWidget({
 					"modelHandle":modelHandle,
-					"meta":attribute
+					"meta":attribute,
+					editorFactory:this.editorFactory
 				});
 			}	
 

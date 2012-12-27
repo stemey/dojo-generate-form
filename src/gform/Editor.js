@@ -1,14 +1,14 @@
 define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		"dojox/mvc/_Container", "dojox/mvc/at", 
-		"dojo/dom-construct", "./EditorFactory", "dojo/Stateful",
+		"dojo/dom-construct", "dojo/Stateful",
 		"dojox/mvc/Group", "dijit/form/TextBox" ], function(array, lang,
 		declare, Container, at, domConstruct,
-		EditorFactory, Stateful) {
+		 Stateful) {
 
 	// at needs to be globally defined.
 	window.at = at; 
 	return declare("app.Editor", [ Container ], {
-		editorFactory : new EditorFactory(),
+		editorFactory : null,
 		widget : null,
 
 		children : null,
