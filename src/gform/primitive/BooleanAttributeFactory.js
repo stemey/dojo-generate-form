@@ -2,12 +2,13 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"dijit/form/CheckBox"//
-], function(array, lang, declare, at, TextBox) {
+"dijit/form/CheckBox",//
+"../meta"//
+], function(array, lang, declare, at, TextBox, meta) {
 
 	return declare("app.BooleanAttributeFactory", [], {
 		handles : function(attribute) {
-			return attribute.type.code == "boolean" || attribute.type == "boolean";
+			return meta.isType(attribute,"boolean") && !attribute.array;
 		},
 		create : function(attribute, modelHandle) {
 			return new TextBox({

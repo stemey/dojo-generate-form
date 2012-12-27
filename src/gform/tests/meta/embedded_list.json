@@ -21,7 +21,7 @@
                     ,
                     {
                         "required":false,
-                        "type":"text",
+                        "type":"string",
                         "label":"message",
                         "code":"message",
                         "array":false

@@ -3,7 +3,7 @@
     "label":"example",
     "attributes":[
         {
-            "type":"int",
+            "type":"number",
             "label":"int",
             "code":"int",
             "required":false,

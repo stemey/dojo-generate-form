@@ -2,12 +2,13 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"dijit/form/TextBox"//
-], function(array, lang, declare, at, TextBox) {
+"dijit/form/TextBox",//
+"../meta"//
+], function(array, lang, declare, at, TextBox, meta) {
 
 	return declare("app.TextAttributeFactory", [], {
 		handles : function(attribute) {
-			return attribute.type == "text" && !attribute.array;
+			return meta.isType(attribute,"string") && !attribute.array;
 		},
 		create : function(attribute, modelHandle) {
 			return new TextBox({

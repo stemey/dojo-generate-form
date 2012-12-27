@@ -5,11 +5,11 @@
         {
             "required":false,
             "type":{ 
-										code:"thing1",
+					code:"thing1",
                     "attributes":[
                         {
                             "required":false,
-                            "type":"text",
+                            "type":"string",
                             "label":"name",
                             "code":"name",
                             "array":false

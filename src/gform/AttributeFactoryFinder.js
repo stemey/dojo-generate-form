@@ -2,19 +2,19 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "./list_primitive/PrimitiveListAttributeFactory",//
-"./primitive/TextAttributeFactory",//
+"./primitive/StringAttributeFactory",//
 "./primitive/BooleanAttributeFactory",//
 "./primitive/SelectAttributeFactory",//
 "./primitive/MappedSelectAttributeFactory",//
 "./embedded/EmbeddedAttributeFactory",//
-"./primitive/IntegerAttributeFactory",//
+"./primitive/NumberAttributeFactory",//
 "./group/AttributeListWidget",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory"
 
-], function(array, lang, declare, PrimitiveListAttributeFactory,TextAttributeFactory,
+], function(array, lang, declare, PrimitiveListAttributeFactory,StringAttributeFactory,
 		BooleanAttributeFactory, SelectAttributeFactory,
  MappedSelectAttributeFactory,EmbeddedAttributeFactory,
-		IntegerAttributeFactory, 
+ NumberAttributeFactory, 
 		AttributeListWidget, RepeatedEmbeddedAttributeFactory) {
 
 	return declare("app.editor.AttributeFactoryFinder",
@@ -25,10 +25,10 @@ define([ "dojo/_base/array", //
 					       				new RepeatedEmbeddedAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new EmbeddedAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new PrimitiveListAttributeFactory({editorFactory:this.editorFactory}),//
-					       				new IntegerAttributeFactory({editorFactory:this.editorFactory}),//
+					       				new NumberAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new SelectAttributeFactory({editorFactory:this.editorFactory}), // 
 					       				new BooleanAttributeFactory({editorFactory:this.editorFactory}), // 
-					       				new TextAttributeFactory({editorFactory:this.editorFactory}) //
+					       				new StringAttributeFactory({editorFactory:this.editorFactory}) //
 					       				];
 				},
 

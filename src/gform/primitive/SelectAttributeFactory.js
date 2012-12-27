@@ -2,13 +2,15 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"dijit/form/Select"//
-], function(array, lang, declare, at, Select) {
+"dijit/form/Select",//
+"../meta"//
+], function(array, lang, declare, at, Select, meta) {
 
 	return declare("app.SelectAttributeFactory", [], {
 
 		handles : function(attribute) {
-			return !attribute.array && attribute.values != null && attribute.values.length>0;
+			var values = meta.getTypeAttribute(attribute,"values");	
+			return !attribute.array && values != null &&values.length>0;
 		},
 		create : function(attribute, modelHandle) {
 			var options = [];

@@ -3,17 +3,17 @@ define(
 		"dojo/_base/lang",//
 		"dojo/_base/declare",//
 		"dojox/mvc/at",//
-		"dijit/form/NumberTextBox"//
-
+		"dijit/form/NumberTextBox",//
+		"../meta"//
 		],
-		function(array, lang, declare, at, NumberTextBox) {
+		function(array, lang, declare, at, NumberTextBox,meta) {
 
 			return declare(
 					"app.TextAttributeFactory",
 					[],
 					{
 						handles : function(attribute) {
-							return (attribute.type == "Integer" || attribute.type == "Long" || attribute.type == "int" || attribute.type == "long")
+							return meta.isType(attribute,"number")
 									&& !attribute.array;
 						},
 						create : function(attribute, modelHandle) {

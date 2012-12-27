@@ -13,7 +13,7 @@
                     "attributes":[
                         {
                             "required":false,
-                            "type":"text",
+                            "type":"string",
                             "label":"name",
                             "code":"name",
                             "array":false
@@ -27,7 +27,7 @@
                     "attributes":[
                         {
                             "required":false,
-                            "type":"text",
+                            "type":"string",
                             "label":"firstName",
                             "code":"firstName",
                             "array":false

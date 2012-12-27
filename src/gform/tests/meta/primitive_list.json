@@ -7,7 +7,7 @@
             "label":"things",
             "code":"things",
             "array":true,
-            "type":"text"           
+            "type":"string"           
         }
     ],
     "type_property":"ext_type"
