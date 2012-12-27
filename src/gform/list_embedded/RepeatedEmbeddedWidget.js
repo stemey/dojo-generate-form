@@ -1,9 +1,9 @@
 define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
-		"dijit/_WidgetsInTemplateMixin","dojo/Stateful","./PolymorphicMemberWidget",
+		"dijit/_WidgetsInTemplateMixin","dojo/Stateful","./PolymorphicMemberWidget","../Editor",
 		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox"//
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, Stateful,PolymorphicMemberWidget,template, TextBox) {
+		_WidgetsInTemplateMixin, Stateful,PolymorphicMemberWidget,Editor,template, TextBox) {
 
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
@@ -24,7 +24,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			if (this.meta.validTypes) {
 				editor = new PolymorphicMemberWidget({"modelHandle":this.modelHandle,"meta":this.meta,nullable:false,editorFactory:this.editorFactory});
 			}else{
-				editor = new app.Editor({"modelHandle":this.modelHandle,"meta":this.meta,editorFactory:this.editorFactory});
+				editor = new Editor({"modelHandle":this.modelHandle,"meta":this.meta,editorFactory:this.editorFactory});
 			}
 			this.addChild(editor);
 			this.set("target", panelModel);

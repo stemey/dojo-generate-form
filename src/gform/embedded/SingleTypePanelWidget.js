@@ -3,12 +3,10 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./singletype_embedded_attribute.html",
-		"dijit/layout/StackContainer", "dojo/Stateful",
-		
-		"dojox/mvc/Bind"//
+		"dijit/layout/StackContainer", "dojo/Stateful", "../Editor"
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
-		Bind) {
+		Editor) {
 
 	return declare("app.SingleTypePanelWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
@@ -28,7 +26,7 @@ define([ "dojo/_base/array", //
 				modelHandle.set(attribute.code,model);
 			}
 			
-			var editor = new app.Editor({"modelHandle": modelHandle.get(attribute.code),"meta": attribute.type,editorFactory:this.editorFactory});
+			var editor = new Editor({"modelHandle": modelHandle.get(attribute.code),"meta": attribute.type,editorFactory:this.editorFactory});
 			panelModel.watch("empty", function(e) {
 				var modelHandle=me.get("modelHandle");
 				if (panelModel.get("empty")) {

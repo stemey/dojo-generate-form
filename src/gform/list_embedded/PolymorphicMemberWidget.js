@@ -58,7 +58,7 @@ define([ "dojo/_base/array", //
 					typeToModel[type.code]=new Stateful();
 					typeToModel[type.code][attribute.type_property]=type.code;
 				}
-				var editor = new app.Editor(
+				var editor = new Editor(
 					{
 						"modelHandle": typeToModel[type.code],
 						"meta":type,
