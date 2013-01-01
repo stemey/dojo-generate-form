@@ -39,6 +39,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				this.modelHandle = new Stateful();
 			}
 			try {
+				if (this.widget) {
+					this.widget.destroy();
+				}
 				this.widget = this.editorFactory.create(this.get("meta"),
 						this.modelHandle);
 				if (this.widget && this.domNode) {
