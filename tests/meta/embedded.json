@@ -4,8 +4,10 @@
     "attributes":[
         {
             "required":false,
-            "type":{ 
-					code:"thing1",
+            "type":"test",
+            validTypes:[
+                {
+                    code:"thing1",
                     "attributes":[
                         {
                             "required":false,
@@ -15,7 +17,8 @@
                             "array":false
                         }
                     ]
-						},
+                }
+            ],
             "label":"thing",
             "code":"thing",
             "array":false

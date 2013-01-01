@@ -26,7 +26,7 @@ define([ "dojo/_base/array", //
 				modelHandle.set(attribute.code,model);
 			}
 			
-			var editor = new Editor({"modelHandle": modelHandle.get(attribute.code),"meta": attribute.type,editorFactory:this.editorFactory});
+			var editor = new Editor({"modelHandle": modelHandle.get(attribute.code),"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
 			panelModel.watch("empty", function(e) {
 				var modelHandle=me.get("modelHandle");
 				if (panelModel.get("empty")) {

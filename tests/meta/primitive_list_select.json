@@ -1,0 +1,15 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "required":false,
+            "label":"things",
+            "code":"things",
+            "array":true,
+            "type":"string",
+            values : ["moin","bye","buenos dias"]           
+        }
+    ],
+    "type_property":"ext_type"
+}

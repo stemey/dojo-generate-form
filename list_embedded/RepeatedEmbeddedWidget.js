@@ -21,10 +21,11 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 				var model = new Stateful();
 				modelHandle.set(attribute.code,model);
 			}
-			if (this.meta.validTypes) {
+			if (this.meta.validTypes && this.meta.validTypes.length>1) {
 				editor = new PolymorphicMemberWidget({"modelHandle":this.modelHandle,"meta":this.meta,nullable:false,editorFactory:this.editorFactory});
 			}else{
-				editor = new Editor({"modelHandle":this.modelHandle,"meta":this.meta,editorFactory:this.editorFactory});
+				var meta = this.meta.validTypes ? this.meta.validTypes[0] : this.meta;
+				editor = new Editor({"modelHandle":this.modelHandle,"meta":meta,editorFactory:this.editorFactory});
 			}
 			this.addChild(editor);
 			this.set("target", panelModel);
