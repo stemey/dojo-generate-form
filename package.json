@@ -8,7 +8,7 @@
 		"dojox": "1.8.0",
 		"util": "1.8.0"
 	},
-	"description": "Dojo Boilerplate Example Application. A quick-start application that demonstrates basic usage of the Dojo Toolkit. This package.json file is a CommonJS Packages/1.0 manifest, with a special `dojoBuild` property to point to the build file for this package.",
+	"description": "Dojo Generate Form helps to create administrative front ends.",
 	"licenses": [
 		{
 			"type": "AFLv2.1",
@@ -19,8 +19,8 @@
 			"url": "http://bugs.dojotoolkit.org/browser/dojo/trunk/LICENSE#L13"
 		}
 	],
-	"bugs": "https://github.com/csnover/dojo-boilerplate/issues",
-	"keywords": ["JavaScript", "Dojo", "Boilerplate", "Example", "Howto"],
-	"homepage": "https://github.com/csnover/dojo-boilerplate",
+	"bugs": "https://github.com/stemey/dojo-generate-form/issues",
+	"keywords": ["JavaScript", "Dojo", "Generate"],
+	"homepage": "https://github.com/stemey/dojo-generate-form",
 	"dojoBuild": "package.js"
 }
