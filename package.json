@@ -22,5 +22,5 @@
 	"bugs": "https://github.com/stemey/dojo-generate-form/issues",
 	"keywords": ["JavaScript", "Dojo", "Generate"],
 	"homepage": "https://github.com/stemey/dojo-generate-form",
-	"dojoBuild": "package.js"
+	"dojoBuild": "gform.profile.js"
 }
