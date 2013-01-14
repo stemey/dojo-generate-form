@@ -9,8 +9,8 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "dojox/mvc/WidgetList",//
 "./RepeatedAttributeWidget",//
-], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedAttributeWidget) {
+], function(array, lang, Editor, declare, at, StatefulArray, Stateful,
+		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget) {
 
 	return declare("app.PrimitiveListAttributeFactory", [], {
 
@@ -18,32 +18,38 @@ define([ "dojo/_base/array", //
 			lang.mixin(this, kwArgs);
 		},
 		handles : function(attribute) {
-			return attribute != null && (typeof attribute.type == "string") 
+			return attribute != null && (typeof attribute.type == "string")
 					&& attribute.array;
 		},
 		create : function(attribute, modelHandle) {
 
 			var model = new dojo.Stateful();
-			
+
 			var items = new StatefulArray([]);
-			items.set("primitive",true);
-			array.forEach(modelHandle.get(attribute.code),function(e){items.push(new Stateful({"value":e}))},this);
+			items.set("primitive", true);
+			array.forEach(modelHandle.get(attribute.code), function(e) {
+				items.push(new Stateful({
+					"value" : e
+				}))
+			}, this);
 			modelHandle.set(attribute.code, items);
 
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
-				attribute:attribute
+				attribute : attribute
 			});
 
 			var childModel = modelHandle.get(attribute.code);
-			var singleAttribute={};
-			var attributes=[singleAttribute];
-			var childMeta = {attributes:attributes};
-			for (var key in attribute) {
-				singleAttribute[key]=attribute[key];
+			var singleAttribute = {};
+			var attributes = [ singleAttribute ];
+			var childMeta = {
+				attributes : attributes
+			};
+			for ( var key in attribute) {
+				singleAttribute[key] = attribute[key];
 			}
-			singleAttribute.code="value";
-			singleAttribute.array=false;
+			singleAttribute.code = "value";
+			singleAttribute.array = false;
 
 			var widgetList = new WidgetList();
 			widgetList.set("partialrebuild", true);
@@ -52,7 +58,7 @@ define([ "dojo/_base/array", //
 			widgetList.set("childParams", {
 				meta : singleAttribute,
 				_relTargetProp : "modelHandle",
-				editorFactory:this.editorFactory
+				editorFactory : this.editorFactory
 			});
 			select.addChild(widgetList);
 

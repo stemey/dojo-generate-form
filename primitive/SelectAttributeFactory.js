@@ -44,7 +44,7 @@ define([ "dojo/_base/array", //
 				options : options,
 				style:"width:200px;"
 			});
-			if (options.length > 0) {
+			if (!modelHandle.get(attribute.code) && options.length > 0) {
 				modelHandle.set(attribute.code, options[0].value);
 			}
 			return select;
