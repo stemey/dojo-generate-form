@@ -4,8 +4,8 @@
     "attributes":[
         {
             "type":"text",
-            "label":"text",
-            "code":"text",
+            "label":"select",
+            "code":"select",
             "required":false,
             "array":false,
             "values":["Hallo","Good bye"]

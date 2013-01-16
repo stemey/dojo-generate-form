@@ -17,7 +17,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			var modelHandle = this.get("modelHandle");
 			var editor;
 			if (modelHandle.get(attribute.code)==null) {
-				modelHandle.set(attribute.code,null);
+				modelHandle.set(attribute.code,{value:null,valid:true});
 			}
 
 			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute);

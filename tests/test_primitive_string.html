@@ -16,7 +16,7 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory",//
-		"dojo/text!./meta/primitive_select.json", "dojo/text!./entity/primitive_select.json"//
+		"dojo/text!./meta/primitive_string.json", "dojo/text!./entity/primitive_string.json"//
 		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
 			var editor = new Editor({
@@ -24,20 +24,21 @@
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
-			var intText = dijit.byId("dijit_form_Select_0");
+			var intText = dijit.byId("dijit_form_ValidationTextBox_0");
 			doh.register("standard", [
 				{
 					name : 'init',
 					runTest : function(t) {
-						t.assertEqual("Good bye", editor.get("modelHandle").select.get("value"));
-						t.assertEqual("Good bye", intText.get("value"));
+						t.assertEqual("hallo", editor.get("modelHandle").text.get("value"));
+						t.assertEqual("hallo", intText.get("value"));
 					}
 				},
 				{
 					name : 'testValid',
 					runTest : function(t) {
-						editor.get("modelHandle").select.set("valid",false);
-						t.assertEqual("Good bye", intText.style);
+						intText.set("state","Error");
+						editor.get("modelHandle").text.set("valid",false);
+						t.assertEqual("hallo", intText.style);
 					}
 				}
 			]);

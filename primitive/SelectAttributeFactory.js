@@ -3,8 +3,9 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dijit/form/Select",//
+"../getStateful",//
 "../meta"//
-], function(array, lang, declare, at, Select, meta) {
+], function(array, lang, declare, at, Select, getStateful, meta) {
 
 	return declare("app.SelectAttributeFactory", [], {
 
@@ -26,7 +27,11 @@ define([ "dojo/_base/array", //
 				value : "null"
 			})
 
-			var valueBinding = at(modelHandle, attribute.code).transform({
+			modelHandle[attribute.code]=getStateful(modelHandle[attribute.code])
+			
+			
+
+			var valueBinding = at(modelHandle[attribute.code], "value").transform({
 				format : function(value) {
 					return value == null ? "null" : value;
 				},
@@ -44,8 +49,8 @@ define([ "dojo/_base/array", //
 				options : options,
 				style:"width:200px;"
 			});
-			if (options.length > 0) {
-				modelHandle.set(attribute.code, options[0].value);
+			if (false && options.length > 0) {
+				modelHandle[attribute.code].set("value", options[0].value);
 			}
 			return select;
 

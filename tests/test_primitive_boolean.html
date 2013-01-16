@@ -32,6 +32,12 @@
 						t.assertEqual(true, editor.get("modelHandle").get("bool"));
 						t.assertEqual(true, intText.get("checked"));
 					}
+				},
+				{
+					name : 'testValid',
+					runTest : function(t) {
+						intText.set("state","Error");
+					}
 				}
 			]);
 			doh.run();

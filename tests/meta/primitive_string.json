@@ -3,7 +3,7 @@
     "label":"example",
     "attributes":[
         {
-            "type":"text",
+            "type":"string",
             "label":"text",
             "code":"text",
             "required":false,

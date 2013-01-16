@@ -8,9 +8,10 @@ define([ "dojo/_base/array", //
 	var getPlainValueOptions = {
 		getType : function(/* Anything */v) {
 
-			if (lang.isArray(v) && v.primitiveArray) {
-				return "PrimitiveArray";
-			} else {
+			if (v.__type) {
+				v.__type;
+			}
+			else {
 				return lang.isArray(v) ? "array" : v != null
 						&& {}.toString.call(v) == "[object Object]" ? "object"
 						: "value";
@@ -24,7 +25,7 @@ define([ "dojo/_base/array", //
 			// returns:
 			// The converted array.
 
-			return array.map(a, function(item) {
+			return array.map(a.value, function(item) {
 				return getPlainValue(item, this);
 			}, this); // Anything[]
 		},
@@ -36,7 +37,7 @@ define([ "dojo/_base/array", //
 			// The object.
 
 			var plain = {};
-			for ( var s in o) {
+			for ( var s in o.value) {
 				if (!(s in Stateful.prototype) && s != "_watchCallbacks") {
 					plain[s] = getPlainValue(o[s], this);
 				}
@@ -48,16 +49,11 @@ define([ "dojo/_base/array", //
 			// summary:
 			// Just returns the given value.
 
-			return v; // Anything
-		},
-		getPlainPrimitiveArray : function(values) {
-			return array.map(values, function(e) {
-				return e.value;
-			});
+			return v.value; // Anything
 		}
 	}
-	var getPlainValueWithPrimitiveArray = function(v) {
+	var getPlainValueWithMetaData = function(v) {
 		return getPlainValue(v, getPlainValueOptions);
 	}
-	return getPlainValueWithPrimitiveArray;
+	return getPlainValueWithMetaData;
 })
