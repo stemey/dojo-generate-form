@@ -4,14 +4,17 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dijit/form/CheckBox",//
 "../meta"//
-], function(array, lang, declare, at, TextBox, meta) {
+], function(array, lang, declare, at, CheckBox, meta) {
 
 	return declare("app.BooleanAttributeFactory", [], {
 		handles : function(attribute) {
 			return meta.isType(attribute,"boolean") && !attribute.array;
 		},
 		create : function(attribute, modelHandle) {
-			return new TextBox({
+			if (!modelHandle[attribute.code]) {
+				modelHandle[attribute.code]=getStateful(false);
+			}			
+			return new CheckBox({
 				"checked" : at(modelHandle, attribute.code)
 			});
 

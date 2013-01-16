@@ -18,8 +18,7 @@
 		         "dojo/text!./meta/embedded_list_polymorphic.json","dojo/text!./entity/embedded_list_polymorphic.json"//
 		         ],function(ready,json,Editor,Stateful,doh,EditorFactory,meta,entity) {
 			
-				var modelHandle=new Stateful(dojo.fromJson(entity));
-				var editor=new Editor({"modelHandle":modelHandle,
+				var editor=new Editor({"plainValue": dojo.fromJson(entity),
 				"meta":dojo.fromJson(meta),editorFactory:new EditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);

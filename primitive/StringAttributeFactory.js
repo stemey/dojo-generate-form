@@ -13,7 +13,9 @@ define([ "dojo/_base/array", //
 		},
 		create : function(attribute, modelHandle) {
 			
-			modelHandle[attribute.code]=getStateful(modelHandle[attribute.code]);
+			if (!modelHandle[attribute.code]) {
+				modelHandle[attribute.code]=getStateful(null);
+			}			
 			return new TextBox({
 				"value" : at(modelHandle[attribute.code], "value"),
 				"valid" : at(modelHandle[attribute.code], "valid")

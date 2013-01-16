@@ -1,9 +1,8 @@
 define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		"dojox/mvc/_Container", "dojox/mvc/at", 
-		"dojo/dom-construct", "dojo/Stateful",
-		"dojox/mvc/Group", "dijit/form/TextBox" ], function(array, lang,
+		"dojo/dom-construct", "dojo/Stateful", "./getStateful","./getPlainValue" ], function(array, lang,
 		declare, Container, at, domConstruct,
-		 Stateful) {
+		 Stateful,getStateful,getPlainValue) {
 
 	// at needs to be globally defined.
 	window.at = at; 
@@ -24,6 +23,12 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// //////////////////// PRIVATE METHODS
 		// ////////////////////////
 
+		_setPlainValueAttr: function(value) {
+				this.set("modelHandle",getStateful(value));
+		},
+		_getPlainValueAttr: function() {
+				return getPlainValue(this.modelHandle);
+		},
 		postCreate : function() {
 			this.inherited(arguments);
 			this.watch("meta", lang.hitch(this, "_buildContained"));
@@ -36,7 +41,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		},
 		_buildContained: function() {
 			if (this.modelHandle == null) {
-				this.modelHandle = new Stateful();
+				this.modelHandle = getStateful({});
 			}
 			try {
 				if (this.widget) {

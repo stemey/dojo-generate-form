@@ -27,7 +27,9 @@ define([ "dojo/_base/array", //
 				value : "null"
 			})
 
-			modelHandle[attribute.code]=getStateful(modelHandle[attribute.code])
+			if (!modelHandle[attribute.code]) {
+				modelHandle[attribute.code]=getStateful(null);
+			}			
 			
 			
 
