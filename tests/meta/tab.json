@@ -1,0 +1,23 @@
+{
+    "groupType":"tab",
+    "tabs":[
+	{label:"Reiter1",
+                    "attributes":[
+                        {
+                            "type":"string",
+                            "label":"name",
+                            "code":"name",
+                            "array":false
+                        }
+                    ]
+	},{label: "Reiter2",
+                    "attributes":[
+                        {
+                            "type":"string",
+                            "label":"company",
+                            "code":"company",
+                            "array":false
+                        }
+                    ]
+}
+]}
