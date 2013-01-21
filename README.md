@@ -98,6 +98,6 @@ The editorFactory contains a list of groupFactories and attributeEditorFactories
 INSTALLATION
 ------------
 
-this project is organized like most dojo libraries. If your project is based on the dojo boilerplate layout you can integrate it by adding it as a git submodule parallel to dojo, dijit, dojox and  util. 
+this project is organized like most dojo libraries. If your project is based on the dojo boilerplate layout you can integrate it by adding it as a git submodule named "gform" (not dojo-generate-form) parallel to dojo, dijit, dojox and  util. 
 
 
