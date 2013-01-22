@@ -17,7 +17,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dijit/_WidgetBase", "dijit/_C
 		},
 		onValueChange: function(e) {
 			this.set("changed",this.modelHandle.value!=this.modelHandle.oldValue);
-			this.labelNode.toggleClass(this.get("changed"),"changed");
+			//this.labelNode.toggleClass(this.get("changed"),"changed");
 		},
 		isValid: function() {
 			var valid=true;

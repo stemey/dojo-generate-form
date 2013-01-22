@@ -1,12 +1,12 @@
 define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
-		"dojox/mvc/_Container", "dojox/mvc/at", 
+		"dojox/mvc/_Container", "dijit/layout/_LayoutWidget","dojox/mvc/at", 
 		"dojo/dom-construct", "dojo/Stateful", "./getStateful","./getPlainValue" ], function(array, lang,
-		declare, Container, at, domConstruct,
+		declare, Container, _LayoutWidget,at, domConstruct,
 		 Stateful,getStateful,getPlainValue) {
 
 	// at needs to be globally defined.
 	window.at = at; 
-	return declare("app.Editor", [ Container ], {
+	return declare("app.Editor", [ Container, _LayoutWidget ], {
 		editorFactory : null,
 		widget : null,
 
@@ -31,10 +31,15 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		},
 		postCreate : function() {
 			this.inherited(arguments);
+			//this.domNode.style.height="100%";
+			//this.domNode.style.width="100%";
 			this.watch("meta", lang.hitch(this, "_buildContained"));
 			if (this.meta) {
 				this._buildContained();
 			}
+		},
+		layout : function() {
+			this.widget.resize(null	);
 		},
 		startup : function() {
 			this.inherited(arguments);
@@ -50,8 +55,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				this.widget = this.editorFactory.create(this.get("meta"),
 						this.modelHandle);
 				if (this.widget && this.domNode) {
-					domConstruct.place(this.widget.domNode, this.domNode);
+					//domConstruct.place(this.widget.domNode, this.domNode);
 					this.widget.startup();
+					this.addChild(this.widget);
 				}
 			} catch (e) {
 				console.log("cannot create editor. " + e.message+" "+ e.stack);
