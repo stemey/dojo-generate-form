@@ -4,10 +4,10 @@ define([ "dojo/_base/array", //
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./polymorphic_embedded_attribute.html",
 		"dijit/layout/StackContainer", "dojo/Stateful",
-		"gform/Editor"//
+		"gform/Editor","../getStateful"//
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
-		Editor) {
+		Editor,getStateful) {
 
 	return declare("app.GroupPanelWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
@@ -40,8 +40,10 @@ define([ "dojo/_base/array", //
 					value : "null"
 				});
 			}
-			var currentType = modelHandle && modelHandle[attribute.type_property]? modelHandle.get(attribute.type_property) : this.validTypeOptions[0].value
-			modelHandle[attribute.code][attribute.type_property]=currentType;
+			var attributeData=modelHandle[attribute.code];
+
+			var currentType = attributeData ? attributeData[attribute.type_property].value:"null";
+			
 			var panelModel = new Stateful({
 				title : "",// attribute.code,
 				validTypes : this.validTypeOptions,
@@ -55,8 +57,8 @@ define([ "dojo/_base/array", //
 			typeToModel[currentType]=modelHandle.get(attribute.code);	
 			array.forEach(attribute.validTypes, function(type) {
 				if (type.code!=currentType) {	
-					typeToModel[type.code]=new Stateful();
-					typeToModel[type.code][attribute.type_property]=type.code;
+					typeToModel[type.code]=getStateful({});
+					typeToModel[type.code][attribute.type_property]=getStateful(type.code);
 				}
 				var editor = new Editor(
 					{
@@ -84,7 +86,7 @@ define([ "dojo/_base/array", //
 		},
 		startup: function() {
 			this.inherited(arguments);
-			this.get("target").set("type", this.modelHandle[this.meta.code].get(this.meta.type_property));
+			this.get("target").set("type", this.modelHandle[this.meta.code][this.meta.type_property].value);
 		}
 
 	});

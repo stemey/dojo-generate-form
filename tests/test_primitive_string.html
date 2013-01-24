@@ -29,7 +29,7 @@
 				{
 					name : 'init',
 					runTest : function(t) {
-						t.assertEqual("hallo", editor.get("modelHandle").text.get("value"));
+						t.assertEqual("hallo", editor.get("plainValue").text);
 						t.assertEqual("hallo", intText.get("value"));
 					}
 				},
@@ -37,8 +37,6 @@
 					name : 'testValid',
 					runTest : function(t) {
 						intText.set("state","Error");
-						editor.get("modelHandle").text.set("valid",false);
-						t.assertEqual("hallo", intText.style);
 					}
 				}
 			]);

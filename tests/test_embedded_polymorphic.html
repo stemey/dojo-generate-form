@@ -24,27 +24,27 @@
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
-			var nameText = dijit.byId("dijit_form_TextBox_0");
+			var nameText = dijit.byId("dijit_form_ValidationTextBox_0");
 			var typeSelect = dijit.byId("dijit_form_Select_0");
 			dijit.byId("dijit_TitlePane_0").set("open",true);
 			doh.register("standard", [
 				{
 					name : 'switchType',
 					runTest : function(t) {
-						t.assertEqual("moin", editor.get("modelHandle").get("thing").get("name"));
+						t.assertEqual("moin", editor.get("plainValue").thing.name);
 						t.assertEqual("moin", nameText.get("value"));
-						t.assertEqual("thing1", editor.get("modelHandle").get("thing").get("ext_type"));
+						t.assertEqual("thing1", editor.get("plainValue").thing.ext_type);
 	
 						typeSelect.set("value", "thing2");
-						var name = editor.get("modelHandle").get("thing").get("name");
+						var name = editor.get("plainValue").thing.name;
 						t.assertTrue(typeof name == "undefined");
-						t.assertEqual("thing2", editor.get("modelHandle").get("thing").get("ext_type"));
+						t.assertEqual("thing2", editor.get("plainValue").thing.ext_type);
 					}
 				}, {
 					name : 'switchToNull',
 					runTest : function(t) {
 						typeSelect.set("value", "null");
-						t.assertEqual(null, editor.get("modelHandle").get("thing"));
+						t.assertEqual(null, editor.get("plainValue").thing);
 	
 					}
 				} 

@@ -4,9 +4,11 @@ define(
 		"dojo/_base/declare",//
 		"dojox/mvc/at",//
 		"dijit/form/NumberTextBox",//
-		"../meta"//
+		"../getStateful",//
+"../meta"//
+
 		],
-		function(array, lang, declare, at, NumberTextBox,meta) {
+		function(array, lang, declare, at, NumberTextBox,getStateful,meta) {
 
 			return declare(
 					"app.TextAttributeFactory",
@@ -21,7 +23,7 @@ define(
 								modelHandle[attribute.code]=getStateful(0);
 							}			
 							return new NumberTextBox({
-								"value" : at(modelHandle, attribute.code)
+								"value" : at(modelHandle[attribute.code], "value")
 							});
 
 						}

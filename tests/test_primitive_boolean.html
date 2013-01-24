@@ -29,7 +29,7 @@
 				{
 					name : 'init',
 					runTest : function(t) {
-						t.assertEqual(true, editor.get("modelHandle").get("bool"));
+						t.assertEqual(true, editor.get("plainValue").bool);
 						t.assertEqual(true, intText.get("checked"));
 					}
 				},

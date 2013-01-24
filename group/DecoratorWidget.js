@@ -10,7 +10,11 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dijit/_WidgetBase", "dijit/_C
 		baseClass:"Decorator",
 		postCreate: function() {
 			on(this.domNode,"attrmodified-state", lang.hitch(this,"onStateChange"));
-			this.modelHandle.watch("value",lang.hitch(this,"onValueChange"));
+			if (this.modelHandle && typeof this.modelHandle.watch == "function") {
+				this.modelHandle.watch("value",lang.hitch(this,"onValueChange"));
+			}else{
+				console.log("modelHandle is null "+this.label);
+			}
 		},
 		onStateChange: function(e) {
 			this.set("state",e.detail.newValue); 

@@ -30,7 +30,7 @@ define([ "dojo/_base/array", //
 				{
 					var widget = new ExpandableDecoratorWidget({
 						label : label,
-						modelHandle: at(modelHandle ,attribute.code)
+						modelHandle: modelHandle[attribute.code]
 					});
 				}else{
 					var widget = new DecoratorWidget({

@@ -15,17 +15,17 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			var me=this;
 			var modelHandle = this.get("modelHandle");
 			var editor;
-			if (modelHandle.get(attribute.code)) {
-				var model = modelHandle.get(attribute.code);
-			}else{
-				var model = new Stateful();
-				modelHandle.set(attribute.code,model);
-			}
+			//if (modelHandle) {
+				var model = modelHandle;
+			//}else{
+				//var model = new Stateful();
+				//modelHandle.set(attribute.code,model);
+			//}
 			if (this.meta.validTypes && this.meta.validTypes.length>1) {
-				editor = new PolymorphicMemberWidget({"modelHandle":this.modelHandle,"meta":this.meta,nullable:false,editorFactory:this.editorFactory});
+				editor = new PolymorphicMemberWidget({"modelHandle":model,"meta":this.meta,nullable:false,editorFactory:this.editorFactory});
 			}else{
 				var meta = this.meta.validTypes ? this.meta.validTypes[0] : this.meta;
-				editor = new Editor({"modelHandle":this.modelHandle,"meta":meta,editorFactory:this.editorFactory});
+				editor = new Editor({"modelHandle":model,"meta":meta,editorFactory:this.editorFactory});
 			}
 			this.addChild(editor);
 			this.set("target", panelModel);
