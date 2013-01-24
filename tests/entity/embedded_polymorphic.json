@@ -1,6 +1,7 @@
 {
 	thing: {
 		ext_type:"thing1",
-		name:"moin"
+		name:"moin",
+		common:"same value for both types"
 	}
 }

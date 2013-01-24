@@ -5,11 +5,10 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dijit/layout/TabContainer",//
 "./DecoratorWidget",//
-"./AttributeListWidget",//
 "../AttributeFactoryFinder"
 
 ], function(array, lang, declare, at, TabContainer, DecoratorWidget,
-		AttributeListWidget,AttributeFactoryFinder) {
+		AttributeFactoryFinder) {
 
 	return declare("app.Groupfactory", null, {
 		constructor : function(kwArgs) {
@@ -22,25 +21,14 @@ define([ "dojo/_base/array", //
 		create : function(group, modelHandle) {
 			 var tc = new TabContainer({
         		    style: "height: 100%; width: 100%;"
-       			 }, "tc1-prog");
+       			 });
 			array.forEach(group.tabs, function(tab) {
-				var tab = new AttributeListWidget({
-					title: tab.label
-				});
-				tc.addChild(tab);
-				array.forEach(tab.attributes, function(attribute) {
-					var label = attribute.label;
-					var widget = new DecoratorWidget({
-						label : label
-					});
-					var attributeEditor = this.createAttribute(attribute,
-							modelHandle);
-					if (attributeEditor != null) {
-						widget.addChild(attributeEditor);
-						tab.addChild(widget);
-					}
-				}, this);
+				var tabWidget = this.editorFactory.create(tab,modelHandle);				
+				tabWidget.set("title",tab.label);
+				tc.addChild(tabWidget);
+				
 			}, this);
+			tc.selectChild(tc.getChildren()[0]);
 			return tc;
 
 		}

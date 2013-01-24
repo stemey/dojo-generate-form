@@ -20,7 +20,7 @@
 		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
 			var editor = new Editor({
-					"modelHandle": new Stateful(dojo.fromJson(entity)),
+					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
@@ -29,8 +29,15 @@
 				{
 					name : 'init',
 					runTest : function(t) {
-						t.assertEqual("Hallo", editor.get("modelHandle").get("text"));
-						t.assertEqual("Hallo", intText.get("value"));
+						t.assertEqual("Good bye", editor.get("modelHandle").select.get("value"));
+						t.assertEqual("Good bye", intText.get("value"));
+					}
+				},
+				{
+					name : 'testValid',
+					runTest : function(t) {
+						intText.set("state","Error");
+						intText.set("message","some error message");
 					}
 				}
 			]);

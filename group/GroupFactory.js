@@ -29,11 +29,13 @@ define([ "dojo/_base/array", //
 				if (attribute.type.attributes || attribute.validTypes)
 				{
 					var widget = new ExpandableDecoratorWidget({
-						label : label
+						label : label,
+						modelHandle: modelHandle[attribute.code]
 					});
 				}else{
 					var widget = new DecoratorWidget({
-						label : label
+						label : label,
+						modelHandle: modelHandle[attribute.code]
 					});
 				}
 				var attributeEditor = this.createAttribute(attribute,

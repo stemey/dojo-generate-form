@@ -16,7 +16,7 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory",//
-		"dojo/text!./meta/primitive_boolean.json", "dojo/text!./entity/primitive_boolean.json"//
+		"dojo/text!./meta/primitive_string.json", "dojo/text!./entity/primitive_string.json"//
 		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
 			var editor = new Editor({
@@ -24,13 +24,13 @@
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
-			var intText = dijit.byId("dijit_form_CheckBox_0");
+			var intText = dijit.byId("dijit_form_ValidationTextBox_0");
 			doh.register("standard", [
 				{
 					name : 'init',
 					runTest : function(t) {
-						t.assertEqual(true, editor.get("plainValue").bool);
-						t.assertEqual(true, intText.get("checked"));
+						t.assertEqual("hallo", editor.get("plainValue").text);
+						t.assertEqual("hallo", intText.get("value"));
 					}
 				},
 				{

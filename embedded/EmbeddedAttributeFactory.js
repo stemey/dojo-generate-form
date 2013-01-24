@@ -6,10 +6,11 @@ define([ "dojo/_base/array", //
 "./SingleTypePanelWidget",//
 "dijit/layout/StackContainer",//
 "dojo/Stateful",//
-"dijit/TitlePane"//
+"dijit/TitlePane",//
+"../getStateful"//
 
 ], function(array, lang, declare, at, GroupPanelWidget, SingleTypePanelWidget,
-		StackContainer,  Stateful, TitlePane) {
+		StackContainer,  Stateful, TitlePane,getStateful) {
 
 	return declare("app.EmbeddedGroupFactory", [],{
 		handles : function(attribute, modelHandle) {
@@ -25,13 +26,7 @@ define([ "dojo/_base/array", //
 
 			var model = modelHandle.get(attribute.code);
 			if (!model) {
-				model = new Stateful();
-				modelHandle.set(attribute.code, model);
-			} else if (model.declaredClass
-					&& model.declaredClass == "dojo.Stateful") {
-
-			} else {
-				model = new Stateful(model);
+				model = getStateful({});
 				modelHandle.set(attribute.code, model);
 			}
 

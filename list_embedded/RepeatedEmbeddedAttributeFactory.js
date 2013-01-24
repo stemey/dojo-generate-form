@@ -9,8 +9,9 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "dojox/mvc/WidgetList",//
 "./RepeatedEmbeddedWidget",//
+"../getStateful",//
 ], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, getStateful) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -26,7 +27,7 @@ define([ "dojo/_base/array", //
 			var model = new dojo.Stateful();
 			
 			var items = new StatefulArray([]);
-			array.forEach(modelHandle.get(attribute.code),function(e){items.push(new Stateful(e))},this);
+			array.forEach(modelHandle.get(attribute.code),function(e){items.push(e)},this);
 			modelHandle.set(attribute.code, items);
 
 			var select = new EmbeddedListWidget({

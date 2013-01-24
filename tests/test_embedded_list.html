@@ -18,17 +18,17 @@
 		         "dojo/text!./meta/embedded_list.json","dojo/text!./entity/embedded_list.json"//
 		         ],function(ready,json,Editor,Stateful,doh,EditorFactory,meta,entity) {
 			
-				var modelHandle=new Stateful(dojo.fromJson(entity));
-				var editor=new Editor({"modelHandle":modelHandle,
+				var editor=new Editor({"plainValue": dojo.fromJson(entity),
 				"meta":dojo.fromJson(meta),editorFactory:new EditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);
+dijit.byId("dijit_TitlePane_0").set("open",true);
 				doh.register("standard", [
 							{
 								name: 'init',
 								runTest: function(t){
-									t.assertEqual(2,modelHandle.get("things").length);
-									var message1=dijit.byId("dijit_form_TextBox_0").get("value");
+									t.assertEqual(2,editor.get("plainValue").things.length);
+									var message1=dijit.byId("dijit_form_ValidationTextBox_0").get("value");
 									t.assertEqual("moin",message1);
 								}
 							},
@@ -36,14 +36,14 @@
 								name: 'remove',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_1").onClick();
-									t.assertEqual(1,modelHandle.get("things").length);
+									t.assertEqual(1,editor.get("plainValue").things.length);
 								}
 							},
 							{
 								name: 'add',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_0").onClick();
-									t.assertEqual(2,modelHandle.get("things").length);
+									t.assertEqual(2,editor.get("plainValue").things.length);
 								}
 							}]);			
 			doh.run();
