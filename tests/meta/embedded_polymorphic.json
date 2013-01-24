@@ -17,6 +17,13 @@
                             "label":"name",
                             "code":"name",
                             "array":false
+                        },
+                        {
+                            "required":false,
+                            "type":"string",
+                            "label":"common",
+                            "code":"common",
+                            "array":false
                         }
                     ]
                     
@@ -25,11 +32,18 @@
                     "code":"thing2",
                     "label":"thing2",
                     "attributes":[
-                        {
+                          {
+                              "required":false,
+                              "type":"string",
+                              "label":"firstName",
+                              "code":"firstName",
+                              "array":false
+                          },
+                           {
                             "required":false,
                             "type":"string",
-                            "label":"firstName",
-                            "code":"firstName",
+                            "label":"common",
+                            "code":"common",
                             "array":false
                         }
                     ]

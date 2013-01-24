@@ -29,18 +29,23 @@
 			dijit.byId("dijit_TitlePane_0").set("open",true);
 			doh.register("standard", [
 				{
-					name : 'switchType',
+					name : 'initialValue',
 					runTest : function(t) {
 						t.assertEqual("moin", editor.get("plainValue").thing.name);
+						t.assertEqual("same value for both types", editor.get("plainValue").thing.common);
 						t.assertEqual("moin", nameText.get("value"));
 						t.assertEqual("thing1", editor.get("plainValue").thing.ext_type);
-	
+					}
+				}, 				{
+					name : 'switchType',
+					runTest : function(t) {
 						typeSelect.set("value", "thing2");
+						t.assertEqual("same value for both types", editor.get("plainValue").thing.common);
 						var name = editor.get("plainValue").thing.name;
 						t.assertTrue(typeof name == "undefined");
 						t.assertEqual("thing2", editor.get("plainValue").thing.ext_type);
 					}
-				}, {
+				},{
 					name : 'switchToNull',
 					runTest : function(t) {
 						typeSelect.set("value", "null");

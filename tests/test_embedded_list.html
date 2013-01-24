@@ -36,14 +36,14 @@ dijit.byId("dijit_TitlePane_0").set("open",true);
 								name: 'remove',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_1").onClick();
-									t.assertEqual(1,editor.get("plainValue").length);
+									t.assertEqual(1,editor.get("plainValue").things.length);
 								}
 							},
 							{
 								name: 'add',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_0").onClick();
-									t.assertEqual(2,editor.get("plainValue").length);
+									t.assertEqual(2,editor.get("plainValue").things.length);
 								}
 							}]);			
 			doh.run();

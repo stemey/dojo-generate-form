@@ -27,10 +27,10 @@
 							{
 								name: 'init',
 								runTest: function(t){
-									t.assertEqual(2,modelHandle.get("things").length);
-									var message1=dijit.byId("dijit_form_TextBox_0").get("value");
+									t.assertEqual(2,editor.get("plainValue").things.length);
+									var message1=dijit.byId("dijit_form_ValidationTextBox_0").get("value");
 									t.assertEqual("moin",message1);
-									var message2=dijit.byId("dijit_form_TextBox_3").get("value");
+									var message2=dijit.byId("dijit_form_ValidationTextBox_3").get("value");
 									t.assertEqual("John",message2);
 								}
 							},
@@ -38,14 +38,14 @@
 								name: 'remove',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_1").onClick();
-									t.assertEqual(1,modelHandle.get("things").length);
+									t.assertEqual(1,editor.get("plainValue").things.length);
 								}
 							},
 							{
 								name: 'add',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_0").onClick();
-									t.assertEqual(2,modelHandle.get("things").length);
+									t.assertEqual(2,editor.get("plainValue").things.length);
 								}
 							}]);			
 			doh.run();
