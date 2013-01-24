@@ -7,9 +7,10 @@ General
 
 The basic dijit to generate a form is called 'Editor'. It has three properties:
 
-1. 'meta' : an editor schema  
-2. 'modelHandle' : A dojo stateful which is the data to display in the form or to fill via the form.  
-3. 'editorFactory' : the editorFactory defines how the properties defined by the schema are displayed by the generated widgets.  
+1. 'meta' : 			an editor schema  
+2. 'plainValue' : 		A plain object which is the data to display in the form or to fill via the form. When setting this value it will be converted to the modelHandle. 
+3. 'editorFactory' : 	the editorFactory defines how the properties defined by the schema are displayed by the generated widgets.  
+4. 'modelHandle' : 		A dojo stateful which is the internal representation of the plainValue. for each primitive value it has a Stateful instance with extra meta properties : "valid","oldValue"...  
 
  
 
