@@ -54,7 +54,8 @@ define([ "dojo/_base/array", //
 			this.typeToGroup = {};
 			var me=this;
 			var typeToModel={};
-			typeToModel[currentType]=modelHandle.get(attribute.code);	
+			var cloned = copyProperties(modelHandle.get(attribute.code),new Stateful({}));
+			typeToModel[currentType]=cloned;	
 			array.forEach(attribute.validTypes, function(type) {
 				if (type.code!=currentType) {	
 					typeToModel[type.code]=getStateful({});
@@ -62,22 +63,26 @@ define([ "dojo/_base/array", //
 				}
 				var editor = new Editor(
 					{
-						"modelHandle": typeToModel[type.code],
+						"modelHandle": modelHandle[attribute.code],
 						"meta":type,editorFactory:this.editorFactory
 					});
 				this.typeStack.addChild(editor);
 				this.typeToGroup[type.code] = editor;
 			}, this);
 			
-			panelModel.watch("type", function() {
+			panelModel.watch("type", function(e) {
 				var type = panelModel.get("type");
 				var modelHandle=me.get("modelHandle");
 				if (type == "null") {
 					modelHandle.set(attribute.code, null);
+					// rather clear all properites
 					me.typeStack.domNode.style.display="none";
 				} else {
 					me.typeStack.domNode.style.display="block";
-					modelHandle.set(attribute.code, typeToModel[type]);
+					if (e.oldValue!="null") {
+						copyProperties(modelHandle.get(attribute.code),typeToModel[e.oldValue])
+					}
+					mergeProperties(typeToModel[type],modelHandle.get(attribute.code) );
 					me.typeStack.selectChild(me.typeToGroup[type]);
 				}
 			});
