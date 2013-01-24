@@ -6,7 +6,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 
 	// at needs to be globally defined.
 	window.at = at; 
-	return declare("app.Editor", [ Container, _LayoutWidget ], {
+	return declare("app.Editor", [ Container ], {
 		editorFactory : null,
 		widget : null,
 
@@ -19,6 +19,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// widgets for relative
 		// data binding.
 		_relTargetProp : "children",
+		isLayoutContainer:true,
 
 		// //////////////////// PRIVATE METHODS
 		// ////////////////////////
@@ -29,6 +30,11 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		_getPlainValueAttr: function() {
 				return getPlainValue(this.modelHandle);
 		},
+resize: function(dim) {
+if (this.widget.resize) {
+this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
+}
+},
 		postCreate : function() {
 			this.inherited(arguments);
 			//this.domNode.style.height="100%";
@@ -38,8 +44,10 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				this._buildContained();
 			}
 		},
-		layout : function() {
-			this.widget.resize(null	);
+		xlayout : function() {
+			if (this.widget.resize) {
+				this.widget.resize(null	);
+			}
 		},
 		startup : function() {
 			this.inherited(arguments);
@@ -55,9 +63,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				this.widget = this.editorFactory.create(this.get("meta"),
 						this.modelHandle);
 				if (this.widget && this.domNode) {
-					//domConstruct.place(this.widget.domNode, this.domNode);
+					domConstruct.place(this.widget.domNode, this.domNode);
 					this.widget.startup();
-					this.addChild(this.widget);
+					//this.addChild(this.widget);
 				}
 			} catch (e) {
 				console.log("cannot create editor. " + e.message+" "+ e.stack);

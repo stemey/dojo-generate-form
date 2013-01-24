@@ -7,9 +7,12 @@ define([ "dojo/_base/array", //
 
 	var getPlainValueOptions = {
 		getType : function(/* Anything */v) {
-
+			
+			if (v==null) {
+				return "value";
+			}else
 			if (v.__type) {
-				v.__type;
+				return v.__type;
 			}
 			else {
 				return lang.isArray(v) ? "array" : v != null
@@ -25,7 +28,7 @@ define([ "dojo/_base/array", //
 			// returns:
 			// The converted array.
 
-			return array.map(a.value, function(item) {
+			return array.map(a, function(item) {
 				return getPlainValue(item, this);
 			}, this); // Anything[]
 		},
@@ -37,7 +40,7 @@ define([ "dojo/_base/array", //
 			// The object.
 
 			var plain = {};
-			for ( var s in o.value) {
+			for ( var s in o) {
 				if (!(s in Stateful.prototype) && s != "_watchCallbacks") {
 					plain[s] = getPlainValue(o[s], this);
 				}
@@ -48,8 +51,11 @@ define([ "dojo/_base/array", //
 		getPlainValue : function(/* Anything */v) {
 			// summary:
 			// Just returns the given value.
-
+			if (v==null) {
+				return null}
+			else{
 			return v.value; // Anything
+		}
 		}
 	}
 	var getPlainValueWithMetaData = function(v) {

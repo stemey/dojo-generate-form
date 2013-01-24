@@ -43,7 +43,7 @@ define([
 			// summary:
 			//		Just returns the given value.
 
-			return new Stateful({value:v,valid:true,oldValue:v}); // Anything
+			return new Stateful({__type:"value",value:v,valid:true,oldValue:v}); // Anything
 		}
 	};
 
