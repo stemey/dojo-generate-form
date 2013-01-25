@@ -6,6 +6,7 @@
             "type":"string",
 						"pattern":"[a-zA-Z]+",
             "label":"text",
+            "description":"Only alphabetical characters",
             "code":"text",
             "required":false,
             "array":false

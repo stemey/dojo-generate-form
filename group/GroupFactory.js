@@ -26,20 +26,20 @@ define([ "dojo/_base/array", //
 			var listWidget = new AttributeListWidget();
 			array.forEach(group.type.attributes, function(attribute) {
 				var label = attribute.label;
+				var attributeEditor = this.createAttribute(attribute,
+						modelHandle);
 				if (attribute.type.attributes || attribute.validTypes)
 				{
 					var widget = new ExpandableDecoratorWidget({
-						label : label,
+						meta : attribute,
 						modelHandle: modelHandle[attribute.code]
 					});
 				}else{
 					var widget = new DecoratorWidget({
-						label : label,
+						meta : attribute,
 						modelHandle: modelHandle[attribute.code]
 					});
 				}
-				var attributeEditor = this.createAttribute(attribute,
-						modelHandle);
 				if (attributeEditor != null) {
 					widget.addChild(attributeEditor);
 					listWidget.addChild(widget);

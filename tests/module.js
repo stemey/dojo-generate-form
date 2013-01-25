@@ -12,6 +12,7 @@ try {
 	doh.registerUrl("gform.tests.primitive_list", dojo.moduleUrl("gform","tests/test_primitive_list.html"));
 	doh.registerUrl("gform.tests.primitive_list_select", dojo.moduleUrl("gform","tests/test_primitive_list_select.html"));
 	doh.registerUrl("gform.tests.group_tab", dojo.moduleUrl("gform","tests/test_group_tab.html"));
+	doh.registerUrl("gform.tests.group_decorator", dojo.moduleUrl("gform","tests/test_group_decorator.html"));
 }catch(e){
 	doh.debug(e);
 }

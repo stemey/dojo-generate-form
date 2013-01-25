@@ -25,13 +25,18 @@
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
-			var intText = dijit.byId("dijit_form_ValidationTextBox_0");
+			var intText = dijit.byId("gform_ValidationTextBox_0");
 			doh.register("standard", [
 				{
-					name : 'init',
+					name : 'showError',
 					runTest : function(t) {
-						intText.set("state","Error");
-						intText.set("message","oh no, not again");
+						intText.set("value","123");
+					}
+				},
+				{
+					name : 'showChanges',
+					runTest : function(t) {
+						intText.set("value","changedvalue");
 					}
 				}
 			]);

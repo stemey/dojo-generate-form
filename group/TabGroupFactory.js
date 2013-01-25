@@ -1,36 +1,42 @@
-
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dijit/layout/TabContainer",//
 "./DecoratorWidget",//
-"../AttributeFactoryFinder"
+"../AttributeFactoryFinder",//
+"dojo/on"
 
 ], function(array, lang, declare, at, TabContainer, DecoratorWidget,
-		AttributeFactoryFinder) {
+		AttributeFactoryFinder,on) {
 
 	return declare("app.Groupfactory", null, {
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		createAttribute : function(attribute, modelHandle) {
-			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute.editor);
+			var factory = this.editorFactory.attributeFactoryFinder
+					.getFactory(attribute.editor);
 			return factory.create(attribute, modelHandle);
 		},
 		create : function(group, modelHandle) {
-			 var tc = new TabContainer({
-        		    style: "height: 100%; width: 100%;"
-       			 });
+			var tc = new TabContainer({
+				style : "height: 100%; width: 100%;"
+			});
 			array.forEach(group.tabs, function(tab) {
-				var tabWidget = this.editorFactory.create(tab,modelHandle);				
-				tabWidget.set("title",tab.label);
+				var tabWidget = this.editorFactory.create(tab, modelHandle);
+				tabWidget.set("title", tab.label);
 				tc.addChild(tabWidget);
-				
+				on(tabWidget, "validChanged", function() {
+					if (tabWidget.get("valid")) {
+						tabWidget.set("iconClass", "dijitErrorIcon");
+					} else {
+						tabWidget.set("iconClass", "");
+					}
+				});
 			}, this);
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
-
 		}
 	})
 });
