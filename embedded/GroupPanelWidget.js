@@ -50,7 +50,7 @@ define([ "dojo/_base/array", //
 				type : currentType
 			});
 
-			this.typeStack = new StackContainer();
+			this.typeStack = new StackContainer({doLayout:false});
 			this.typeToGroup = {};
 			var me=this;
 			var typeToModel={};

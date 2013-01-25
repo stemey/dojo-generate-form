@@ -32,7 +32,12 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		},
 resize: function(dim) {
 if (this.widget.resize) {
-this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
+	if (dim) {
+			this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
+}	else{
+	this.widget.resize(null);
+}
+
 }
 },
 		postCreate : function() {

@@ -17,12 +17,14 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory","dojo/on",//
-		"dojo/text!./meta/kitchensink.json", "dojo/text!./entity/kitchensink.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","dijit/form/Button"//
-		], function(ready, json, Editor, Stateful, doh,EditorFactory,on, meta, entity, registry,BorderContainer,parser) {
+		"dojo/text!./meta/kitchensink.json", "dojo/text!./entity/kitchensink.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button"//
+		], function(ready, json, Editor, Stateful, doh,EditorFactory,on, meta, entity, registry,BorderContainer,parser,ListPaneGroupFactory) {
 			parser.parse();
+			var editorFactory = new EditorFactory()
+			editorFactory.set("defaultGroupFactory",new ListPaneGroupFactory({editorFactory:editorFactory}));
 			var editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
-					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
+					"meta": dojo.fromJson(meta),editorFactory:editorFactory});
 			var container = registry.byId("container");
 			editor.set("region","center");
 			container.addChild(editor);
@@ -38,11 +40,21 @@
 <body class="claro" style="width:100%;height:100%">
 	
 
-	<div id="container" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="id:'container'" style="width:100%;height:100%">
-		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'right',splitter:true" >
+	<div data-dojo-type="dijit.layout.BorderContainer"  style="width:100%;height:100%">
+	<div id="container" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region:'center',id:'container'" style="width:100%;height:100%">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'bottom',splitter:true" >
 			<div>
-				<button  type="button" data-dojo-type="dijit.form.Button" value="displayData" data-dojo-props="id:'displayButton'">display plain value</button>
+				<button  type="button" data-dojo-type="dijit.form.Button" value="validate" data-dojo-props="id:'validateCientButton'">validate (client-side)</button>
+				<button  type="button" data-dojo-type="dijit.form.Button" value="validate" data-dojo-props="id:'validateServerButton'">validate (server-side)</button>
+				<button  type="button" data-dojo-type="dijit.form.Button" value="displayData" data-dojo-props="id:'displayButton'">display plain value -></button>
+
+<!--
+				<button  type="button" data-dojo-type="dijit.form.Button" value="reset" data-dojo-props="id:'resetButton'">reset</button>
+-->
 			</div>
+		</div>
+</div>
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="width:'100%',region:'right',splitter:true" >
 			<textarea id="displayArea" cols="100" style="width:100%;height:100%"></textarea>
 		</div>
 		

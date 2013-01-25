@@ -4,7 +4,7 @@ define([ "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container","dijit/_T
 ], function(declare, _WidgetBase, _Container,_TemplatedMixin, _WidgetsInTemplateMixin,
 		template,on) {
 
-	return declare("app.AttributeListWidget",[ _WidgetBase,_Container, _TemplatedMixin, _WidgetsInTemplateMixin ], {
+	return declare("gform.ListPaneGroupWidget",[ _WidgetBase,_Container, _TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template
 	});
 
