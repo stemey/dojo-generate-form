@@ -6,5 +6,13 @@
  * It is highly, highly recommended that you develop your CSS using Stylus: http://learnboost.github.com/stylus/.
  */
 
-@import '../../dojo/resources/dojo.css';
-@import '../../dijit/themes/claro/claro.css';
+
+.DecoratorError {
+color:red;
+}
+
+.DecoratorChanged {
+color:green;
+}
+
+

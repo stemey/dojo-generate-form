@@ -2,7 +2,7 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"dijit/form/ValidationTextBox",//
+"./ValidationTextBox",//
 "../meta",//
 "../getStateful"//
 ], function(array, lang, declare, at, TextBox, meta, getStateful) {
@@ -16,9 +16,20 @@ define([ "dojo/_base/array", //
 			if (!modelHandle[attribute.code]) {
 				modelHandle[attribute.code]=getStateful(null);
 			}			
+			var validConverter ={
+					parse:function(state){
+									return state!="Error"
+									},
+					format: function(valid){
+									return valid?"":"Error"
+									}
+			};
+			var validAt=at(modelHandle[attribute.code], "valid").transform(validConverter);
 			return new TextBox({
 				"value" : at(modelHandle[attribute.code], "value"),
-				"valid" : at(modelHandle[attribute.code], "valid")
+				"state" : validAt,
+				"message" : at(modelHandle[attribute.code], "message"),
+				"pattern" : attribute.pattern
 			});
 
 		}

@@ -4,6 +4,7 @@
     "attributes":[
         {
             "type":"string",
+						"pattern":"[a-zA-Z]+",
             "label":"text",
             "code":"text",
             "required":false,
