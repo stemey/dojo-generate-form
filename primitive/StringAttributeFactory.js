@@ -25,12 +25,18 @@ define([ "dojo/_base/array", //
 									}
 			};
 			var validAt=at(modelHandle[attribute.code], "valid").transform(validConverter);
-			return new TextBox({
+			var box = new TextBox({
 				"value" : at(modelHandle[attribute.code], "value"),
 				"state" : validAt,
-				"message" : at(modelHandle[attribute.code], "message"),
-				"pattern" : attribute.pattern
+				"message" : at(modelHandle[attribute.code], "message")
 			});
+			if (attribute.pattern) {
+				box.pattern=attribute.pattern;
+			}
+			if (attribute.required) {
+				box.required=attribute.required;
+			}
+			return box;
 
 		}
 	})

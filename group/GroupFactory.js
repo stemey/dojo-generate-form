@@ -14,6 +14,7 @@ define([ "dojo/_base/array", //
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
+		useExpandable:true,	
 		createAttribute : function(attribute, modelHandle) {
 			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute);
 			if (factory != null) {
@@ -28,7 +29,7 @@ define([ "dojo/_base/array", //
 				var label = attribute.label;
 				var attributeEditor = this.createAttribute(attribute,
 						modelHandle);
-				if (attribute.type.attributes || attribute.validTypes)
+				if (this.useExpandable && (attribute.type.attributes || attribute.validTypes))
 				{
 					var widget = new ExpandableDecoratorWidget({
 						meta : attribute,

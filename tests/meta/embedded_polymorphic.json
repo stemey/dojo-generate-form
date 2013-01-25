@@ -6,6 +6,9 @@
             "required":false,
             "type":"thing1",
             "type_property":"ext_type",
+            "label":"thing",
+            "code":"thing",
+            "array":false,
             "validTypes":[
                 {
                     "code":"thing1",
@@ -49,10 +52,7 @@
                     ]
                     
                 }
-            ],
-            "label":"thing",
-            "code":"thing",
-            "array":false
+            ]
         }
     ],
     "type_property":"ext_type"
