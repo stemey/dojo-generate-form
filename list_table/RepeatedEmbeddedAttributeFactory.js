@@ -11,9 +11,10 @@ define([ "dojo/_base/array", //
 "./RepeatedEmbeddedWidget",//
 "../getStateful",//
 "./TableHeader",//
-"./TableElementHeader"
+"./TableElementHeader",//
+"./mergeAttributeDefinitions"
 ], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, getStateful,TableHeader,TableElementHeader) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, getStateful,TableHeader,TableElementHeader,mergeAttributeDefinitions) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -41,7 +42,11 @@ define([ "dojo/_base/array", //
 			var childMeta = attribute.validTypes? attribute:attribute.type;
 				
 			var tableHeader =new TableHeader();
-			array.forEach(attribute.validTypes[0].attributes,function(attribute) {
+			if (attribute.validTypes.length>1) {
+				tableHeader.addChild(new TableElementHeader({label:attribute.type_property}));
+				
+			}
+			array.forEach(mergeAttributeDefinitions(attribute.validTypes),function(attribute) {
 				tableHeader.addChild(new TableElementHeader({label:attribute.label}));
 			},this);
 			select.addChild(tableHeader);

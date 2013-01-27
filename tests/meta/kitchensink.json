@@ -10,7 +10,10 @@
                     "code":"name",
                     "array":false
                 }
-						]},{
+                
+            ]
+        },
+        {
             label:"polymorphic",
             "attributes":[
                 {
@@ -64,7 +67,59 @@
                     ]
                 }
             ]
-            
+        },
+        {
+            label:"poly-list",
+            "attributes":[
+                {
+                    "required":false,
+                    type:"thing",
+                    "label":"polyThings",
+                    "code":"polyThings",
+                    "array":true,
+                    "type_property":"ext_type",
+                    "validTypes":[
+                        {
+                            "code":"thing1",
+                            "label":"thing1",
+                            "attributes":[
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"name",
+                                    "code":"name",
+                                    "array":false
+                                }, {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"common",
+                                    "code":"common",
+                                    "array":false
+                                }
+                            ]
+                        },
+                        {
+                            "code":"thing2",
+                            "label":"thing2",
+                            "attributes":[
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"firstName",
+                                    "code":"firstName",
+                                    "array":false
+                                }, {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"common",
+                                    "code":"common",
+                                    "array":false
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         },
         {
             label:"list",
