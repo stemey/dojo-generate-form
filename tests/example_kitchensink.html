@@ -16,12 +16,13 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory","dojo/on",//
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
 		"dojo/text!./meta/kitchensink.json", "dojo/text!./entity/kitchensink.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button"//
-		], function(ready, json, Editor, Stateful, doh,EditorFactory,on, meta, entity, registry,BorderContainer,parser,ListPaneGroupFactory) {
+		], function(ready, json, Editor, Stateful, doh,EditorFactory,on,RepeatedEmbeddedAttributeFactory, meta, entity, registry,BorderContainer,parser,ListPaneGroupFactory) {
 			parser.parse();
 			var editorFactory = new EditorFactory()
 			editorFactory.set("defaultGroupFactory",new ListPaneGroupFactory({editorFactory:editorFactory}));
+			editorFactory.attributeFactoryFinder.attributeFactories[0]=new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory});
 			var editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),editorFactory:editorFactory});
