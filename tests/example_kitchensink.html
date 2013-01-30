@@ -32,6 +32,11 @@
 				var plainValue=editor.get("plainValue");
 				dojo.byId("displayArea").innerHTML=dojo.toJson(plainValue,true);
 			});
+			registry.byId("displayModelHandle").set("onClick",function(e) {
+				var plainValue=editor.get("modelHandle");
+				dojo.byId("displayArea").innerHTML=dojo.toJson(plainValue,true);
+
+			});
 			registry.byId("validateServerButton").set("onClick",function(e) {
 				editor.get("modelHandle").name.set("valid",false);
 				editor.get("modelHandle").name.set("message","not good");
@@ -54,6 +59,7 @@
 			<div>
 				<button  type="button" data-dojo-type="dijit.form.Button" value="validate" data-dojo-props="id:'validateServerButton'">validate (server-side)</button>
 				<button  type="button" data-dojo-type="dijit.form.Button" value="displayData" data-dojo-props="id:'displayButton'">display plain value -></button>
+				<button  type="button" data-dojo-type="dijit.form.Button" value="displayModelData" data-dojo-props="id:'displayModelHandle'">display model handle -></button>
 
 <!--
 				<button  type="button" data-dojo-type="dijit.form.Button" value="reset" data-dojo-props="id:'resetButton'">reset</button>

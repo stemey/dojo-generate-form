@@ -8,13 +8,15 @@ define([ "dojo/_base/array", //
 	return declare("gform.group._GroupMixin", null, {
 		isValidationContainer:true,
 		validateChildren:true,
+		persistable:false,
 		postCreate : function() {
 			this.inherited(arguments);
-			this.errorCount=0;
-			if (this.modelHandle) {
+			this.persistable=typeof this.modelHandle != "undefined" && this.modelHandle!=null;
+			this.on("valid-changed",lang.hitch(this,"onValidChanged"));
+			if (this.persistable) {
+				this.modelHandle.set("errorCount",0)
 				this.modelHandle.watch("valid",lang.hitch(this,"onModelValidChanged"));
 			}
-			this.on("valid-changed",lang.hitch(this,"onValidChanged"));
 		},
 		onModelValidChanged: function(propName,old,nu) {
 			if (old!=nu) {
@@ -28,11 +30,20 @@ define([ "dojo/_base/array", //
 				event.stopPropagation();
 				this._validateAndFire();
 		},
+		_getErrorCountAttr: function() {
+			if (this.persistable) {
+				return this.modelHandle.errorCount;
+			}	else{
+				return this.validate();
+			}
+		},
 		_validateAndFire: function(errorCount){
-				//console.log("validating "+this.id);
+				console.log("validating "+this.id);
 				errorCount=this.validate();
-				this.set("errorCount",errorCount);
-				//console.log("found "+this.get("errorCount")+" in "+this.id);
+				if (this.persistable) {
+					this.modelHandle.set("errorCount",errorCount);
+				}
+				console.log("found "+this.get("errorCount")+" in "+this.id);
 				this.emit("valid-changed",{source:this});
 		},
 		_validateChildren: function(children,errorCount){
@@ -44,7 +55,7 @@ define([ "dojo/_base/array", //
 				if (child.isValidationContainer) {
 					ec = child.get("errorCount");
 					errorCount+=ec;
-				  //console.log("found "+errorCount+" errors in child "+child.id+" of "+this.id);
+				  console.log("found "+errorCount+" errors in child "+child.id+" of "+this.id);
 				}else{
 					errorCount+=this._validateChildren(child.getChildren());
 				}
