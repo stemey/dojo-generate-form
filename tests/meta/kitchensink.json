@@ -3,11 +3,36 @@
     "tabs":[
         {
             label:"primitives",
+						description:"This tab contains primitive attributes.",
             "attributes":[
                 {
                     "type":"string",
                     "label":"name",
+                    "description":"this attribute only allows letters a to z.",
+                    "errorMessage":"only use letters",
+										"required":true,
+										"pattern":"[a-zA-Z]*",	
                     "code":"name",
+                    "array":false
+                },
+                {
+                    "type":"string",
+                    "label":"salutation",
+                    "description":"select one",
+                    "errorMessage":"required",
+										"required":false,
+										"values":["Mr.","Mrs.","Sir."],	
+                    "code":"salutation",
+                    "array":false
+                },
+                {
+                    "type":"string",
+                    "label":"lastname",
+                    "description":"we need to know",
+                    "errorMessage":"required",
+										"pattern":"[a-zA-Z]+",
+										"required":true,
+										"code":"lastname",
                     "array":false
                 }
 						]},{
@@ -93,8 +118,39 @@
                                     "type":"string",
                                     "label":"message",
                                     "code":"message",
+																		"pattern":"[a-zA-Z]*",
                                     "array":false
-                                }
+                                },
+																{
+														      "required":false,
+														      "type":"thing",
+														      "type_property":"ext_type",
+														      "label":"thingx",
+														      "code":"thingx",
+														      "array":true,
+														      "validTypes":[
+														          	{
+														              "code":"thing1",
+														              "label":"thing1",
+														              "attributes":[
+														                  {
+														                      "required":false,
+														                      "type":"string",
+														                      "label":"name",
+														                      "code":"name",
+														                      "array":false
+														                  },
+														                  {
+														                      "required":false,
+														                      "type":"string",
+														                      "label":"common",
+														                      "code":"common",
+														                      "array":false
+														                  }
+														              ]
+														          }
+																	]
+																}
                             ],
                             "type_property":"ext_type"
                         }

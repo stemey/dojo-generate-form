@@ -26,17 +26,24 @@ define([ "dojo/_base/array", //
 			array.forEach(group.tabs, function(tab) {
 				var tabWidget = this.editorFactory.create(tab, modelHandle);
 				tabWidget.set("title", tab.label);
+				tabWidget.set("meta",tab);
+				tabWidget.set("iconClass", "dijitErrorIcon");
 				tc.addChild(tabWidget);
-				on(tabWidget, "validChanged", function() {
-					if (tabWidget.get("valid")) {
-						tabWidget.set("iconClass", "dijitErrorIcon");
-					} else {
-						tabWidget.set("iconClass", "");
-					}
-				});
+				tc.on("valid-changed", lang.hitch(this,"onValidChanged"));
 			}, this);
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
-		}
+		},
+		onValidChanged: function(e) {
+			var tabWidget=e.source;
+			var tab=tabWidget.get("meta");
+			if (tabWidget.get("errorCount")>0) {
+				tabWidget.set("iconClass", "dijitIconError");
+				tabWidget.set("title", tab.label+"("+tabWidget.get("errorCount")+")");
+			} else {
+				tabWidget.set("iconClass", "");
+				tabWidget.set("title", tab.label);
+			}
+		}	
 	})
 });

@@ -42,6 +42,7 @@ if (this.widget.resize) {
 },
 		postCreate : function() {
 			this.inherited(arguments);
+			this.containerNode=this.domNode;
 			//this.domNode.style.height="100%";
 			//this.domNode.style.width="100%";
 			this.watch("meta", lang.hitch(this, "_buildContained"));

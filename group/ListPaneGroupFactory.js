@@ -4,10 +4,13 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "./DecoratorWidget",//
 "dijit/layout/ContentPane",//
-"../AttributeFactoryFinder"
+"../AttributeFactoryFinder",//
+"dojo/on",//
+"../visit",//
+"./ListPane"
 
 ], function(array, lang, declare, at, DecoratorWidget,  ListPaneGroupWidget,
-		AttributeFactoryFinder) {
+		AttributeFactoryFinder, on, visit,ListPane) {
 
 	return declare("gform.ListPaneGroupFactory", null, {
 		constructor : function(kwArgs) {
@@ -22,11 +25,14 @@ define([ "dojo/_base/array", //
 			}
 		},
 		create : function(group, modelHandle) {
-			var listWidget = new ListPaneGroupWidget();
+			var listWidget = new ListPane();
+			listWidget.set("iconClass","dijitIconError");
+			var attributeCodes=[];
 			array.forEach(group.type.attributes, function(attribute) {
 				var label = attribute.label;
 				var attributeEditor = this.createAttribute(attribute,
 						modelHandle);
+				attributeCodes.push(attribute.code);
 				var widget = new DecoratorWidget({
 					meta : attribute,
 					modelHandle: modelHandle[attribute.code]
@@ -36,6 +42,32 @@ define([ "dojo/_base/array", //
 					listWidget.addChild(widget);
 				}
 			}, this);
+			listWidget.on("valid-changedx",function() {
+				var errorCount=0;
+				array.forEach(attributeCodes,function(attribute) {
+						if (modelHandle[attribute].valid == false) {
+							errorCount++;
+						}
+						//visit(modelHandle[attribute],function(value) {
+						//	if (value.valid == false) {
+						//		errorCount++;
+						//	}
+						//	return true;
+						//});
+				},this);
+				listWidget.set("valid",errorCount==0);
+				listWidget.set("errorCount",errorCount);
+//				var title = listWidget.get("title");
+//				if (errorCount>0) {
+//					listWidget.set("title", title+" ("+errorCount+")");
+//					listWidget.set("iconClass", "dijitIconError");
+//				}else{
+//					listWidget.set("title", title);
+//					listWidget.set("iconClass", "");
+//				}
+
+				listWidget.emit("validChanged",{errorCount:errorCount,source:listWidget});
+			});
 			return listWidget;
 
 		}
