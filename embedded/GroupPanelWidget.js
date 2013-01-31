@@ -4,13 +4,13 @@ define([ "dojo/_base/array", //
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./polymorphic_embedded_attribute.html",
 		"dijit/layout/StackContainer", "dojo/Stateful",
-		"gform/Editor","../getStateful","../copyProperties","../mergeProperties"//
+		"gform/Editor","../getStateful","../copyProperties","../mergeProperties","../group/_GroupMixin"//
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
-		Editor,getStateful,copyProperties,mergeProperties) {
+		Editor,getStateful,copyProperties,mergeProperties,_GroupMixin) {
 
 	return declare("app.GroupPanelWidget", [ _WidgetBase, _Container,
-			_TemplatedMixin, _WidgetsInTemplateMixin ], {
+			_TemplatedMixin, _WidgetsInTemplateMixin,_GroupMixin ], {
 		templateString : template,
 		typeStack:null,
 		nullable:true,
@@ -44,61 +44,79 @@ define([ "dojo/_base/array", //
 
 			var currentType = attributeData ? attributeData[attribute.type_property].value:"null";
 			
-			var panelModel = new Stateful({
+			this.panelModel = new Stateful({
 				title : "",// attribute.code,
 				validTypes : this.validTypeOptions,
 				type : currentType
 			});
+			//this.persistable=false;
 
 			this.typeStack = new StackContainer({doLayout:false});
 			this.typeToGroup = {};
 			var me=this;
 			var typeToModel={};
+			this.modelHandle.typeToModel=typeToModel;
 			var cloned = new Stateful({});
-			copyProperties(modelHandle,cloned);
-			typeToModel[currentType]=cloned;	
+			//copyProperties(modelHandle.value,cloned);
+			typeToModel[currentType]=getStateful({});
+			typeToModel[currentType].value=modelHandle.value;
 			array.forEach(attribute.validTypes, function(type) {
 				if (type.code!=currentType) {	
 					typeToModel[type.code]=getStateful({});
-					typeToModel[type.code][attribute.type_property]=getStateful(type.code);
+					typeToModel[type.code].value[attribute.type_property]=getStateful(type.code);
 					array.forEach(type.attributes,function(attribute) {
-						typeToModel[type.code][attribute.code]=null;
+						typeToModel[type.code].value[attribute.code]=getStateful(null);
 					});
 				}
 				var editor = new Editor(
 					{
-						"modelHandle": modelHandle,
+						"modelHandle": typeToModel[type.code],
 						"meta":type,editorFactory:this.editorFactory
 					});
 				this.typeStack.addChild(editor);
 				this.typeToGroup[type.code] = editor;
 			}, this);
 			
-			panelModel.watch("type", function(propName,oldValue,newValue) {
+			this.panelModel.watch("type",lang.hitch(this,"switchType"));
+			this.addChild(this.typeStack);
+			this.set("target", this.panelModel);
+		},
+		getChildrenToValidate: function() {
+			if (this.modelHandle.value==null) {
+				return [];
+			}else{
+				return [this.typeStack.selectedChildWidget];
+			}
+		},
+		switchType: function(propName,oldValue,newValue) {
 				var type = newValue;
-				var modelHandle=me.get("modelHandle");
+				var modelHandle=this.get("modelHandle");
 				if (type == "null") {
 					modelHandle.set("value", null);
 					// rather clear all properites
-					me.typeStack.domNode.style.display="none";
+					this.typeStack.domNode.style.display="none";
+					this.validateAndFire();
 				} else {
-					me.typeStack.domNode.style.display="block";
+					this.typeStack.domNode.style.display="block";
 					if (oldValue!=newValue) {	
 						if (modelHandle.get("value")==null) {
-							var cloned = new Stateful({});
-							copyProperties(modelHandle,cloned);
-							modelHandle=cloned;
+							//var cloned = new Stateful({});
+							//copyProperties(modelHandle,cloned);
+							//copyProperties(this.modelHandle.typeToModel[type],modelHandle.value)
+							modelHandle.value=this.modelHandle.typeToModel[type].value;
 						}else{
-							copyProperties(modelHandle.value,typeToModel[oldValue])
-							mergeProperties(typeToModel[type],modelHandle.value);
-							modelHandle.value[attribute.type_property]=getStateful(newValue);
+							modelHandle.value=this.modelHandle.typeToModel[type].value;
+							// save data
+							//array.forEach(this.modelHandle.typeToModel[oldValue]
+							//(modelHandle.value,this.modelHandle.typeToModel[oldValue])
+							// update value by existing. 
+	//						mergeProperties(this.modelHandle.typeToModel[type],modelHandle.value);
+		//					modelHandle.value[this.meta.type_property]=getStateful(newValue);
 						}
 					}
-					me.typeStack.selectChild(me.typeToGroup[type]);
-				}
-			});
-			this.addChild(this.typeStack);
-			this.set("target", panelModel);
+					this.typeStack.selectChild(this.typeToGroup[type]);
+					this.validateAndFire();
+				}			
 		},
 		startup: function() {
 			this.inherited(arguments);

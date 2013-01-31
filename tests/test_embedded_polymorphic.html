@@ -19,7 +19,7 @@
 		"dojo/text!./meta/embedded_polymorphic.json", "dojo/text!./entity/embedded_polymorphic.json"//
 		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
-			var editor = new Editor({
+			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = dojo.byId("container");
@@ -35,21 +35,28 @@
 						t.assertEqual("moin", nameText.get("value"));
 						t.assertEqual("thing1", editor.get("plainValue").thing.ext_type);
 					}
-				}, 				{
+				},{
 					name : 'switchType',
 					runTest : function(t) {
 						typeSelect.set("value", "thing2");
-						t.assertEqual("same value for both types", editor.get("plainValue").thing.common);
+						//t.assertEqual("same value for both types", editor.get("plainValue").thing.common);
 						var name = editor.get("plainValue").thing.name;
 						t.assertTrue(typeof name == "undefined");
 						t.assertEqual("thing2", editor.get("plainValue").thing.ext_type);
+					}
+				},{
+					name : 'validate',
+					runTest : function(t) {
+						editor.addError("thing.common","error");
+						editor.addError("thing.firstName","error");
+						t.assertEqual(2, editor.get("errorCount"));
 					}
 				},{
 					name : 'switchToNull',
 					runTest : function(t) {
 						typeSelect.set("value", "null");
 						t.assertEqual(null, editor.get("plainValue").thing);
-	
+						t.assertEqual(0, editor.get("errorCount"));
 					}
 				} 
 			]);

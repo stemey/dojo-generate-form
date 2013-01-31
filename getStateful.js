@@ -38,7 +38,7 @@ define([
 				stateful[s] = getStateful(o[s], this);
 			}
 			stateful["__type"]="object";
-			return new Stateful({__type:"meta",value:stateful,valid:true}); // dojo/Stateful
+			return new Stateful({__type:"meta",value:stateful,valid:true,errorCount:0}); // dojo/Stateful
 		},
 
 		getStatefulValue: function(/*Anything*/ v){

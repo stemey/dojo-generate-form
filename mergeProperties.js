@@ -3,7 +3,9 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare"//
 ]
 , function(array, lang, declare) {
-
+//
+// remove everything from target. then overwrite with value props
+//
 	var mergeProperties = function( value, target){
 			for (var key in target) {
 				if (key!="_watchCallbacks" && target.hasOwnProperty(key) && !value.hasOwnProperty(key)) {

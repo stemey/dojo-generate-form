@@ -35,7 +35,12 @@ define([ "dojo/_base/array", //
 		},
 		_getErrorCountAttr: function() {
 			if (this.persistable) {
-				return this.modelHandle[this.id+"errorCount"];
+				var errorCount= this.modelHandle[this.id+"errorCount"];
+				if (typeof errorCount == "number") {
+					return errorCount;
+				}else{
+					return this.validate();
+				}
 			}	else{
 				return this.validate();
 			}
@@ -43,45 +48,43 @@ define([ "dojo/_base/array", //
 		_setErrorCountAttr: function(errorCount) {
 			if (this.persistable) {
 				this.modelHandle[this.id+"errorCount"]=errorCount;
-			}	else{
-				return this.validate();
 			}
 		},
 		validateAndFire: function(errorCount){
-				console.log("validating "+this.id);
+				//console.log("validating "+this.id);
 				errorCount=this.validate();
 				if (this.persistable) {
 					this.set("errorCount",errorCount);
 				}
-				console.log("found "+this.get("errorCount")+" in "+this.id);
+				//console.log("found "+this.get("errorCount")+" in "+this.id);
 				this.emit("valid-changed",{source:this});
 		},
 		getChildrenToValidate: function() {
 			return this.getChildren() || children;
 		},	
-		_validateChildren: function(children,errorCount){
+		_validateChildren: function(children,force,errorCount){
 			if (!children) {
 				return 0;
 			}
 			errorCount=0;
 			array.forEach(children,function(child,ec) {
 				if (child.isValidationContainer) {
-					ec = child.get("errorCount");
+					ec = force?child.validate(force):child.get("errorCount");
 					errorCount+=ec;
-				  console.log("found "+errorCount+" errors in child "+child.id+" of "+this.id);
+				  //console.log("found "+errorCount+" errors in child "+child.id+" of "+this.id);
 				}else{
-					errorCount+=this._validateChildren(child.getChildren());
+					errorCount+=this._validateChildren(child.getChildren(),force);
 				}
 			},this);
 			return errorCount;
 		},
-		validate : function(errorCount) {
+		validate : function(force,errorCount) {
 			errorCount=0;	
 			if (this.modelHandle && this.modelHandle.get("valid")==false) {
 				errorCount++;	
 			}
 			if (this.validateChildren) {
-				errorCount+= this._validateChildren(this.getChildrenToValidate());
+				errorCount+= this._validateChildren(this.getChildrenToValidate(),force);
 			}
 			return errorCount;
 		}
