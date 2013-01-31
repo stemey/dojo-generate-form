@@ -1,19 +1,5 @@
 {
     name:"moin",
-    company:"Komapnie",
-    thing:{
-        ext_type:"thing1",
-        name:"moin",
-        common:"same value for both types"
-    },
-    things:[
-        {
-            yes:false,
-            message:"moin"
-        },
-        {
-            yes:true,
-            message:"bye"
-        }
-    ]
+    company:"Komapnie"
+   
 }

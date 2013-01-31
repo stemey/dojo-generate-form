@@ -9,9 +9,10 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "dojox/mvc/WidgetList",//
 "./RepeatedAttributeWidget",//
-"../getStateful"
+"../getStateful",//
+"dojox/mvc/StatefulArray"
 ], function(array, lang, Editor, declare, at, StatefulArray, Stateful,
-		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget,getStateful) {
+		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget,getStateful,StatefulArray) {
 
 	return declare("app.PrimitiveListAttributeFactory", [], {
 
@@ -28,9 +29,9 @@ define([ "dojo/_base/array", //
 		create : function(attribute, modelHandle) {
 
 			
-			if (modelHandle[attribute.code]==null) {
-				modelHandle[attribute.code]=getStateful([]);
-			}
+			if (modelHandle.value==null) {
+				modelHandle.value=new StatefulArray([]);
+			}	
 			
 			var select = new EmbeddedListWidget({
 				target : modelHandle,

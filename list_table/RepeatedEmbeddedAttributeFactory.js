@@ -7,12 +7,14 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
-"dojox/mvc/WidgetList",//
+"./TableWidgetList",//
 "./RepeatedEmbeddedWidget",//
 "../getStateful",//
-"dojox/mvc/StatefulArray"
+"./TableHeader",//
+"./TableElementHeader",//
+"./mergeAttributeDefinitions"
 ], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, getStateful, StatefulArray) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, getStateful,TableHeader,TableElementHeader,mergeAttributeDefinitions) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -25,21 +27,33 @@ define([ "dojo/_base/array", //
 		},
 		create : function(attribute, modelHandle) {
 
-
-			if (modelHandle.value==null) {
-				modelHandle.value=new StatefulArray([]);
-			}	
+			var model = new dojo.Stateful();
+			
+			var items = new StatefulArray([]);
+			array.forEach(modelHandle.get(attribute.code),function(e){items.push(e)},this);
+			modelHandle.set(attribute.code, items);
 
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
-				attribute:attribute
+				attribute:attribute.code
 			});
 
+			var childModel = modelHandle.get(attribute.code);
 			var childMeta = attribute.validTypes? attribute:attribute.type;
-
+				
+			var tableHeader =new TableHeader();
+			if (attribute.validTypes.length>1) {
+				tableHeader.addChild(new TableElementHeader({label:attribute.type_property}));
+				
+			}
+			array.forEach(mergeAttributeDefinitions(attribute.validTypes),function(attribute) {
+				tableHeader.addChild(new TableElementHeader({label:attribute.label}));
+			},this);
+			select.addChild(tableHeader);
+			
 			var widgetList = new WidgetList();
 			widgetList.set("partialrebuild", true);
-			widgetList.set("children", modelHandle.value);
+			widgetList.set("children", items);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {
 				meta : childMeta,

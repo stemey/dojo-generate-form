@@ -9,13 +9,14 @@ define([ "dojo/_base/array", //
 "./embedded/EmbeddedAttributeFactory",//
 "./primitive/NumberAttributeFactory",//
 "./group/AttributeListWidget",//
-"./list_embedded/RepeatedEmbeddedAttributeFactory"
+"./list_embedded/RepeatedEmbeddedAttributeFactory",//,
+"./list_table/RepeatedEmbeddedAttributeFactory"
 
 ], function(array, lang, declare, PrimitiveListAttributeFactory,StringAttributeFactory,
 		BooleanAttributeFactory, SelectAttributeFactory,
  MappedSelectAttributeFactory,EmbeddedAttributeFactory,
  NumberAttributeFactory, 
-		AttributeListWidget, RepeatedEmbeddedAttributeFactory) {
+		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
 	return declare("app.editor.AttributeFactoryFinder",
 			null, {
@@ -30,9 +31,10 @@ define([ "dojo/_base/array", //
 					       				new BooleanAttributeFactory({editorFactory:this.editorFactory}), // 
 					       				new StringAttributeFactory({editorFactory:this.editorFactory}) //
 					       				];
+					this.attributeFactoryMap["table"]=new TableListAttributeFactory({editorFactory:this.editorFactory});
 				},
-
-				attributeFactoryMap : {},
+				attributeFactoryMap : {
+				},
 				addFactory : function(factory) {
 					this.attributeFactories.push(factory);
 				},

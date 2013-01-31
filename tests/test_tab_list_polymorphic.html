@@ -15,13 +15,14 @@
 
 	<script type="text/javascript">
 		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner", "gform/EditorFactory",//
-		         "dojo/text!./meta/embedded_list.json","dojo/text!./entity/embedded_list.json"//
+		         "dojo/text!./meta/tab_list_polymorphic.json","dojo/text!./entity/embedded_list_polymorphic.json"//
 		         ],function(ready,json,Editor,Stateful,doh,EditorFactory,meta,entity) {
 			
-				var editor=new Editor({"plainValue": dojo.fromJson(entity),
+				editor=new Editor({"plainValue": dojo.fromJson(entity),
 				"meta":dojo.fromJson(meta),editorFactory:new EditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);
+				//dijit.byId("dijit_TitlePane_0").set("open",true);
 				doh.register("standard", [
 							{
 								name: 'init',
@@ -29,6 +30,16 @@
 									t.assertEqual(2,editor.get("plainValue").things.length);
 									var message1=dijit.byId("gform_ValidationTextBox_0").get("value");
 									t.assertEqual("moin",message1);
+									var message2=dijit.byId("gform_ValidationTextBox_3").get("value");
+									t.assertEqual("John",message2);
+								}
+							},
+							{
+								name: 'validate',
+								runTest: function(t){
+									editor.addError("things.0.name","error");
+									editor.addError("things.1.firstName","error");
+									t.assertEqual(2,editor.get("errorCount"));
 								}
 							},
 							{
@@ -36,6 +47,8 @@
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_1").onClick();
 									t.assertEqual(1,editor.get("plainValue").things.length);
+									// the validationTextBox is recreated and the error is overwritten
+									t.assertEqual(0,editor.get("errorCount"));
 								}
 							},
 							{
@@ -43,15 +56,6 @@
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_0").onClick();
 									t.assertEqual(2,editor.get("plainValue").things.length);
-								},
-							},
-							{
-								name: 'initWithNull',
-								runTest: function(t){
-									editor.set("plainValue",null);
-									editor.set("meta",dojo.fromJson(meta));
-									dijit.byId("dijit_form_Button_0").onClick();
-									t.assertEqual(1,editor.get("plainValue").things.length);
 								}
 							}]);			
 			doh.run();

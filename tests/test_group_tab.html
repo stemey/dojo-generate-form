@@ -32,6 +32,13 @@
 					name : 'init',
 					runTest : function(t) {
 					}
+				},
+				{
+					name : 'initWithNull',
+					runTest : function(t) {
+						editor.set("plainValue",null);
+						editor.set("meta",dojo.fromJson(meta));
+					}
 				}
 			]);
 			doh.run();

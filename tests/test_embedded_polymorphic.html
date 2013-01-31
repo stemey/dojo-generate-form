@@ -65,6 +65,12 @@
 						t.assertEqual(null, editor.get("plainValue").thing);
 						t.assertEqual(0, editor.get("errorCount"));
 					}
+				},{
+					name : 'initWithNull',
+					runTest : function(t) {
+						editor.set("plainValue",null);
+						editor.set("meta",dojo.fromJson(meta));
+					}
 				} 
 			]);
 			doh.run();

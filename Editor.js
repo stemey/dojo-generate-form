@@ -25,6 +25,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// ////////////////////////
 
 		_setPlainValueAttr: function(value) {
+				if (value==null) {
+					value={};
+				}
 				this.set("modelHandle",getStateful(value));
 		},
 		_getPlainValueAttr: function() {

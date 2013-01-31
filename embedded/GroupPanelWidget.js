@@ -34,7 +34,7 @@ define([ "dojo/_base/array", //
 			}
 			var attributeData=modelHandle.value;
 
-			var currentType = attributeData ? attributeData[attribute.type_property].value:"null";
+			var currentType = attributeData && attributeData[attribute.type_property] ? attributeData[attribute.type_property].value:"null";
 			
 			this.panelModel = new Stateful({
 				title : "",
@@ -101,7 +101,6 @@ define([ "dojo/_base/array", //
 									modelHandle.value[attribute.code].set("value",oldModelHandleValue[attribute.code].value);
 								}
 							},this);
-							// the common properties should be copied to the new  
 						}
 					}
 					this.typeStack.selectChild(this.typeToGroup[type]);
@@ -110,7 +109,11 @@ define([ "dojo/_base/array", //
 		},
 		startup: function() {
 			this.inherited(arguments);
-			this.get("target").set("type", this.modelHandle.value[this.meta.type_property].value);
+			if (this.modelHandle.value==null) {
+				this.get("target").set("type","null");
+			}else{
+				this.get("target").set("type", this.modelHandle.value[this.meta.type_property].value);
+			}
 		}
 
 	});
