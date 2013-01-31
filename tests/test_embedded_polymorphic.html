@@ -39,7 +39,7 @@
 					name : 'switchType',
 					runTest : function(t) {
 						typeSelect.set("value", "thing2");
-						//t.assertEqual("same value for both types", editor.get("plainValue").thing.common);
+						t.assertEqual("same value for both types", editor.get("plainValue").thing.common);
 						var name = editor.get("plainValue").thing.name;
 						t.assertTrue(typeof name == "undefined");
 						t.assertEqual("thing2", editor.get("plainValue").thing.ext_type);
@@ -50,6 +50,13 @@
 						editor.addError("thing.common","error");
 						editor.addError("thing.firstName","error");
 						t.assertEqual(2, editor.get("errorCount"));
+					}
+				},{
+					name : 'switchTypeAndvalidate',
+					runTest : function(t) {
+						typeSelect.set("value", "thing1");
+						editor.addError("thing.name","error");
+						t.assertEqual(1, editor.get("errorCount"));
 					}
 				},{
 					name : 'switchToNull',

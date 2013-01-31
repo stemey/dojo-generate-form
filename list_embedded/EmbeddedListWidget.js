@@ -8,9 +8,10 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 	return declare("app.EmbeddedListWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template,
-		attribute:null,
 		_addElement : function() {
-			this.target.value.push(getStateful({}));
+			var type=this.attribute.validTypes[0].code;
+			this.target.value.push(getStateful({ext_type:type}));
+			this.emit("valid-changed");
 		},
 		postCreate : function() {
 			this.addButton.set("onClick", lang.hitch(this, "_addElement"));

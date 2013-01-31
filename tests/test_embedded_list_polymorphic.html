@@ -35,10 +35,20 @@
 								}
 							},
 							{
+								name: 'validate',
+								runTest: function(t){
+									editor.addError("things.0.name","error");
+									editor.addError("things.1.firstName","error");
+									t.assertEqual(2,editor.get("errorCount"));
+								}
+							},
+							{
 								name: 'remove',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_1").onClick();
 									t.assertEqual(1,editor.get("plainValue").things.length);
+									// the validationTextBox is recreated and the error is overwritten
+									t.assertEqual(0,editor.get("errorCount"));
 								}
 							},
 							{

@@ -15,15 +15,7 @@ define([ "dojo/_base/array", //
 		typeStack:null,
 		nullable:true,
 		postCreate: function() {
-			if (this.meta) {
-				this._buildContained();
-			}else{
-				this.watch("meta", lang.hitch(this, "_buildContained"));
-			}
-		},
-		_buildContained : function() {
 			var attribute=this.get("meta");
-			// move this to postCreate
 			var validTypes = attribute.validTypes;
 
 			var modelHandle = this.get("modelHandle");
@@ -45,11 +37,10 @@ define([ "dojo/_base/array", //
 			var currentType = attributeData ? attributeData[attribute.type_property].value:"null";
 			
 			this.panelModel = new Stateful({
-				title : "",// attribute.code,
+				title : "",
 				validTypes : this.validTypeOptions,
 				type : currentType
 			});
-			//this.persistable=false;
 
 			this.typeStack = new StackContainer({doLayout:false});
 			this.typeToGroup = {};
@@ -57,7 +48,6 @@ define([ "dojo/_base/array", //
 			var typeToModel={};
 			this.modelHandle.typeToModel=typeToModel;
 			var cloned = new Stateful({});
-			//copyProperties(modelHandle.value,cloned);
 			typeToModel[currentType]=getStateful({});
 			typeToModel[currentType].value=modelHandle.value;
 			array.forEach(attribute.validTypes, function(type) {
@@ -100,18 +90,18 @@ define([ "dojo/_base/array", //
 					this.typeStack.domNode.style.display="block";
 					if (oldValue!=newValue) {	
 						if (modelHandle.get("value")==null) {
-							//var cloned = new Stateful({});
-							//copyProperties(modelHandle,cloned);
-							//copyProperties(this.modelHandle.typeToModel[type],modelHandle.value)
 							modelHandle.value=this.modelHandle.typeToModel[type].value;
 						}else{
+							var oldModelHandleValue=modelHandle.value;	
 							modelHandle.value=this.modelHandle.typeToModel[type].value;
-							// save data
-							//array.forEach(this.modelHandle.typeToModel[oldValue]
-							//(modelHandle.value,this.modelHandle.typeToModel[oldValue])
-							// update value by existing. 
-	//						mergeProperties(this.modelHandle.typeToModel[type],modelHandle.value);
-		//					modelHandle.value[this.meta.type_property]=getStateful(newValue);
+							var oldMeta = this.typeToGroup[oldValue].meta;
+							array.forEach(oldMeta.attributes,function(attribute) {
+								//only copy primitives
+								if (!attribute.validTypes && typeof modelHandle.value[attribute.code]!= "undefined") {
+									modelHandle.value[attribute.code].set("value",oldModelHandleValue[attribute.code].value);
+								}
+							},this);
+							// the common properties should be copied to the new  
 						}
 					}
 					this.typeStack.selectChild(this.typeToGroup[type]);

@@ -17,7 +17,6 @@ define([ "dojo/_base/array", //
 			this.panelModel = new dojo.Stateful();
 			this.panelModel.set("empty", false);
 			this.panelModel.set("title", "");
-			var me=this;
 			var modelHandle = this.get("modelHandle");
 			modelHandle.saveModel=modelHandle.value
 			

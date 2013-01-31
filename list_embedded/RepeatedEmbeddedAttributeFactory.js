@@ -32,7 +32,7 @@ define([ "dojo/_base/array", //
 
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
-				attribute:attribute.code
+				attribute:attribute
 			});
 
 			var childMeta = attribute.validTypes? attribute:attribute.type;
