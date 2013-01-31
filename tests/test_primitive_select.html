@@ -29,9 +29,9 @@
 				{
 					name : 'init',
 					runTest : function(t) {
-						t.assertEqual("Good bye", editor.get("modelHandle").select.get("value"));
+						t.assertEqual("Good bye", editor.get("modelHandle").value.select.get("value"));
 						t.assertEqual("Good bye", intText.get("value"));
-					}
+					} 
 				},
 				{
 					name : 'testValid',

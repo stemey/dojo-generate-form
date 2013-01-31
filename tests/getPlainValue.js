@@ -1,21 +1,24 @@
-define(["doh/runner","gform/getPlainValue"], function(doh,getPlainValue){
+define(["doh/runner","gform/getPlainValue","gform/getStateful"], function(doh,getPlainValue,getStateful){
 
     doh.register("gform-getPlainValue", [
       function testPlainValue(){
-        var value=getPlainValue({__type:"value",value:"stefan"});
-				doh.assertEqual("stefan",value);
+				var stateful=getStateful("stefan");
+        var value=getPlainValue(stateful);
+				doh.assertEqual(value,"stefan");
       },
       function testNull(){
         var value=getPlainValue(null);
-				doh.assertEqual(null,value);
+				doh.assertEqual(value,null);
       },
       function testPrimitiveArray(){
-        var plain=getPlainValue([{__type:"value",value:"stefan"},{__type:"value",value:"tim"}]);
-				doh.assertEqual(plain[0],"stefan");
+				var stateful=getStateful(["stefan","tim"]);
+        var plain=getPlainValue(stateful);
+				doh.assertEqual("stefan",plain[0]);
       },
       function testComplexArray(){
-        var plain=getPlainValue([{firstname:{__type:"value",value:"stefan"}},{firstname:{__type:"value",value:"tim"}}]);
-				doh.assertEqual(plain[1].firstname,"tim");
+				var stateful=getStateful([{name:"stefan"},{name:"tim"}]);
+        var plain=getPlainValue(stateful);
+				doh.assertEqual("tim",plain[1].name);
       }
     ]);
 

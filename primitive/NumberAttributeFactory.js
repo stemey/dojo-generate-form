@@ -19,11 +19,8 @@ define(
 									&& !attribute.array;
 						},
 						create : function(attribute, modelHandle) {
-							if (!modelHandle[attribute.code]) {
-								modelHandle[attribute.code]=getStateful(0);
-							}			
 							return new NumberTextBox({
-								"value" : at(modelHandle[attribute.code], "value")
+								"value" : at(modelHandle, "value")
 							});
 
 						}

@@ -11,7 +11,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		attribute:null,
 		_addElement : function() {
 			var defaultValue = meta.getDefaultAttributeValue(this.attribute);
-			this.target[this.attribute.code].push(new Stateful({value:defaultValue}));
+			this.target.value.push(new Stateful({value:defaultValue}));
 		},
 		postCreate : function() {
 			this.addButton.set("onClick", lang.hitch(this, "_addElement"));

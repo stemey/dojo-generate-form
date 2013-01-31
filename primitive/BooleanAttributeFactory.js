@@ -12,11 +12,11 @@ define([ "dojo/_base/array", //
 			return meta.isType(attribute,"boolean") && !attribute.array;
 		},
 		create : function(attribute, modelHandle) {
-			if (!modelHandle[attribute.code]) {
-				modelHandle[attribute.code]=getStateful(false);
+			if (!modelHandle) {
+				modelHandle=getStateful(false);
 			}			
 			return new CheckBox({
-				"checked" : at(modelHandle[attribute.code],"value")
+				"checked" : at(modelHandle,"value")
 			});
 
 		}

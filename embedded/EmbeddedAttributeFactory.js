@@ -24,11 +24,6 @@ define([ "dojo/_base/array", //
 		},
 		create : function(attribute, modelHandle) {
 
-			var model = modelHandle.get(attribute.code);
-			if (!model) {
-				model = getStateful({});
-				modelHandle.set(attribute.code, model);
-			}
 
 			var panelWidget;
 

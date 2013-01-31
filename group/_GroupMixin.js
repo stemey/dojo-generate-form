@@ -18,9 +18,12 @@ define([ "dojo/_base/array", //
 				this.modelHandle.watch("valid",lang.hitch(this,"onModelValidChanged"));
 			}
 		},
+		getPrefix: function() {
+			return this.id;	
+		},
 		onModelValidChanged: function(propName,old,nu) {
 			if (old!=nu) {
-				this._validateAndFire();
+				this.validateAndFire();
 			}
 		},
 		onValidChanged: function(event) {
@@ -28,24 +31,34 @@ define([ "dojo/_base/array", //
 					return;
 				}
 				event.stopPropagation();
-				this._validateAndFire();
+				this.validateAndFire();
 		},
 		_getErrorCountAttr: function() {
 			if (this.persistable) {
-				return this.modelHandle.errorCount;
+				return this.modelHandle[this.id+"errorCount"];
 			}	else{
 				return this.validate();
 			}
 		},
-		_validateAndFire: function(errorCount){
+		_setErrorCountAttr: function(errorCount) {
+			if (this.persistable) {
+				this.modelHandle[this.id+"errorCount"]=errorCount;
+			}	else{
+				return this.validate();
+			}
+		},
+		validateAndFire: function(errorCount){
 				console.log("validating "+this.id);
 				errorCount=this.validate();
 				if (this.persistable) {
-					this.modelHandle.set("errorCount",errorCount);
+					this.set("errorCount",errorCount);
 				}
 				console.log("found "+this.get("errorCount")+" in "+this.id);
 				this.emit("valid-changed",{source:this});
 		},
+		getChildrenToValidate: function() {
+			return this.getChildren() || children;
+		},	
 		_validateChildren: function(children,errorCount){
 			if (!children) {
 				return 0;
@@ -68,7 +81,7 @@ define([ "dojo/_base/array", //
 				errorCount++;	
 			}
 			if (this.validateChildren) {
-				errorCount+= this._validateChildren(this.getChildren() || children);
+				errorCount+= this._validateChildren(this.getChildrenToValidate());
 			}
 			return errorCount;
 		}

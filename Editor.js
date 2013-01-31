@@ -6,7 +6,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 
 	// at needs to be globally defined.
 	window.at = at; 
-	return declare("app.Editor", [ Container,_GroupMixin ], {
+	return declare("gform.Editor", [ Container,_GroupMixin ], {
 		editorFactory : null,
 		widget : null,
 
@@ -73,6 +73,25 @@ if (this.widget.resize) {
 				console.log("cannot create editor. " + e.message+" "+ e.stack);
 				 throw e;
 			}
+		},
+		addError: function(path,message) {
+			var pathElements=path.split(".");
+			var model=this.get("modelHandle");
+			array.forEach(pathElements,function(pathElement){
+				if (!model) {
+					throw new Error("cannot resolve path "+path);
+				}
+				model=model.value;
+				if (!model) {
+					throw new Error("cannot resolve path "+path);
+				}
+				model=model[pathElement];
+			},this);
+				if (!model) {
+					throw new Error("cannot resolve path "+path);
+				}
+			model.set("valid",false);
+			model.set("message",message);
 		},
 		_destroyBody : function() {
 			if (this.widget != null) {

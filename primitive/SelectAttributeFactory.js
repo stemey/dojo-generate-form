@@ -27,13 +27,7 @@ define([ "dojo/_base/array", //
 				value : "null"
 			})
 
-			if (!modelHandle[attribute.code]) {
-				modelHandle[attribute.code]=getStateful(null);
-			}			
-			
-			
-
-			var valueBinding = at(modelHandle[attribute.code], "value").transform({
+			var valueBinding = at(modelHandle, "value").transform({
 				format : function(value) {
 					return value == null ? "null" : value;
 				},
@@ -52,7 +46,7 @@ define([ "dojo/_base/array", //
 				style:"width:200px;"
 			});
 			if (false && options.length > 0) {
-				modelHandle[attribute.code].set("value", options[0].value);
+				modelHandle.set("value", options[0].value);
 			}
 			return select;
 

@@ -5,10 +5,11 @@ define([ "dojo/_base/array", //
 "./DecoratorWidget",//
 "./ExpandableDecoratorWidget",//
 "./AttributeListWidget",//
-"../AttributeFactoryFinder"
+"../AttributeFactoryFinder",//
+"../getStateful"
 
 ], function(array, lang, declare, at, DecoratorWidget, ExpandableDecoratorWidget, AttributeListWidget,
-		AttributeFactoryFinder) {
+		AttributeFactoryFinder,getStateful) {
 
 	return declare("app.Groupfactory", null, {
 		constructor : function(kwArgs) {
@@ -27,18 +28,21 @@ define([ "dojo/_base/array", //
 			var listWidget = new AttributeListWidget();
 			array.forEach(group.type.attributes, function(attribute) {
 				var label = attribute.label;
+				if (!modelHandle.value[attribute.code]) {
+					modelHandle.value[attribute.code]=getStateful(null);
+				}
 				var attributeEditor = this.createAttribute(attribute,
-						modelHandle);
+						modelHandle.value[attribute.code]);
 				if (this.useExpandable && (attribute.type.attributes || attribute.validTypes))
 				{
 					var widget = new ExpandableDecoratorWidget({
 						meta : attribute,
-						modelHandle: modelHandle[attribute.code]
+						modelHandle: modelHandle.value[attribute.code]
 					});
 				}else{
 					var widget = new DecoratorWidget({
 						meta : attribute,
-						modelHandle: modelHandle[attribute.code]
+						modelHandle: modelHandle.value[attribute.code]
 					});
 				}
 				if (attributeEditor != null) {

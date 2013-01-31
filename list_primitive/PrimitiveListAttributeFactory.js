@@ -9,8 +9,9 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "dojox/mvc/WidgetList",//
 "./RepeatedAttributeWidget",//
+"../getStateful"
 ], function(array, lang, Editor, declare, at, StatefulArray, Stateful,
-		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget) {
+		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget,getStateful) {
 
 	return declare("app.PrimitiveListAttributeFactory", [], {
 
@@ -21,42 +22,27 @@ define([ "dojo/_base/array", //
 			return attribute != null && (typeof attribute.type == "string")
 					&& attribute.array;
 		},
+		_getModelHandleValue: function() {
+			return this.modelHandle.value;
+		},
 		create : function(attribute, modelHandle) {
 
-			var model = new dojo.Stateful();
-
-			var items = new StatefulArray([]);
-			items.set("primitive", true);
-			array.forEach(modelHandle.get(attribute.code), function(e) {
-				items.push(new Stateful({
-					"value" : e
-				}))
-			}, this);
-			modelHandle.set(attribute.code, items);
-
+			
+			if (modelHandle[attribute.code]==null) {
+				modelHandle[attribute.code]=getStateful([]);
+			}
+			
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
 				attribute : attribute
 			});
 
-			var childModel = modelHandle.get(attribute.code);
-			var singleAttribute = {};
-			var attributes = [ singleAttribute ];
-			var childMeta = {
-				attributes : attributes
-			};
-			for ( var key in attribute) {
-				singleAttribute[key] = attribute[key];
-			}
-			singleAttribute.code = "value";
-			singleAttribute.array = false;
-
 			var widgetList = new WidgetList();
 			widgetList.set("partialrebuild", true);
-			widgetList.set("children", items);
+			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedAttributeWidget);
 			widgetList.set("childParams", {
-				meta : singleAttribute,
+				meta : attribute,
 				_relTargetProp : "modelHandle",
 				editorFactory : this.editorFactory
 			});

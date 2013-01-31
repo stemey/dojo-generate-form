@@ -15,13 +15,13 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			panelModel.set("title", "");
 			//var me=this;
 			var modelHandle = this.get("modelHandle");
-			var editor;
-			if (modelHandle.get(attribute.code)==null) {
-				modelHandle.set(attribute.code,{value:null,valid:true});
-			}
+	
+			var singleAttribute={};
+			lang.mixin(singleAttribute,attribute);
+			singleAttribute.array=false;
 
-			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute);
-			editor = factory.create(attribute,this.modelHandle);
+			var factory = this.editorFactory.attributeFactoryFinder.getFactory(singleAttribute);
+			var editor = factory.create(attribute,this.modelHandle);
 			
 			this.addChild(editor);
 			this.set("target", panelModel);

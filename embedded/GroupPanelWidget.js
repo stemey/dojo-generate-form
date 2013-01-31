@@ -40,7 +40,7 @@ define([ "dojo/_base/array", //
 					value : "null"
 				});
 			}
-			var attributeData=modelHandle[attribute.code];
+			var attributeData=modelHandle.value;
 
 			var currentType = attributeData ? attributeData[attribute.type_property].value:"null";
 			
@@ -55,7 +55,7 @@ define([ "dojo/_base/array", //
 			var me=this;
 			var typeToModel={};
 			var cloned = new Stateful({});
-			copyProperties(modelHandle.get(attribute.code),cloned);
+			copyProperties(modelHandle,cloned);
 			typeToModel[currentType]=cloned;	
 			array.forEach(attribute.validTypes, function(type) {
 				if (type.code!=currentType) {	
@@ -67,7 +67,7 @@ define([ "dojo/_base/array", //
 				}
 				var editor = new Editor(
 					{
-						"modelHandle": modelHandle[attribute.code],
+						"modelHandle": modelHandle,
 						"meta":type,editorFactory:this.editorFactory
 					});
 				this.typeStack.addChild(editor);
@@ -78,20 +78,20 @@ define([ "dojo/_base/array", //
 				var type = newValue;
 				var modelHandle=me.get("modelHandle");
 				if (type == "null") {
-					modelHandle.set(attribute.code, null);
+					modelHandle.set("value", null);
 					// rather clear all properites
 					me.typeStack.domNode.style.display="none";
 				} else {
 					me.typeStack.domNode.style.display="block";
 					if (oldValue!=newValue) {	
-						if (modelHandle.get(attribute.code)==null) {
+						if (modelHandle.get("value")==null) {
 							var cloned = new Stateful({});
-							copyProperties(modelHandle.get(attribute.code),cloned);
-							modelHandle[attribute.code]=cloned;
+							copyProperties(modelHandle,cloned);
+							modelHandle=cloned;
 						}else{
-							copyProperties(modelHandle.get(attribute.code),typeToModel[oldValue])
-							mergeProperties(typeToModel[type],modelHandle.get(attribute.code) );
-							modelHandle[attribute.code][attribute.type_property]=getStateful(newValue);
+							copyProperties(modelHandle.value,typeToModel[oldValue])
+							mergeProperties(typeToModel[type],modelHandle.value);
+							modelHandle.value[attribute.type_property]=getStateful(newValue);
 						}
 					}
 					me.typeStack.selectChild(me.typeToGroup[type]);
@@ -102,7 +102,7 @@ define([ "dojo/_base/array", //
 		},
 		startup: function() {
 			this.inherited(arguments);
-			this.get("target").set("type", this.modelHandle[this.meta.code][this.meta.type_property].value);
+			this.get("target").set("type", this.modelHandle.value[this.meta.type_property].value);
 		}
 
 	});

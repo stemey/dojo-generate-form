@@ -13,9 +13,6 @@ define([ "dojo/_base/array", //
 		},
 		create : function(attribute, modelHandle) {
 			
-			if (!modelHandle[attribute.code]) {
-				modelHandle[attribute.code]=getStateful(null);
-			}			
 			var validConverter ={
 					parse:function(state){
 									return state!="Error"
@@ -24,11 +21,11 @@ define([ "dojo/_base/array", //
 									return valid?"":"Error"
 									}
 			};
-			var validAt=at(modelHandle[attribute.code], "valid").transform(validConverter);
+			var validAt=at(modelHandle, "valid").transform(validConverter);
 			var box = new TextBox({
-				"value" : at(modelHandle[attribute.code], "value"),
+				"value" : at(modelHandle, "value"),
 				"state" : validAt,
-				"message" : at(modelHandle[attribute.code], "message")
+				"message" : at(modelHandle, "message")
 			});
 			if (attribute.pattern) {
 				box.pattern=attribute.pattern;

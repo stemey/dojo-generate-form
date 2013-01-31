@@ -3,43 +3,49 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./singletype_embedded_attribute.html",
-		"dijit/layout/StackContainer", "dojo/Stateful", "../Editor"
+		"dijit/layout/StackContainer", "dojo/Stateful","../getStateful", "../Editor","../group/_GroupMixin"
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
-		Editor) {
+		_WidgetsInTemplateMixin, template, StackContainer, Stateful,getStateful,
+		Editor,_GroupMixin) {
 
 	return declare("app.SingleTypePanelWidget", [ _WidgetBase, _Container,
-			_TemplatedMixin, _WidgetsInTemplateMixin ], {
+			_TemplatedMixin, _WidgetsInTemplateMixin,_GroupMixin ], {
 		templateString : template,
 		//_setMetaAttr : function(/* dojo/Stateful */attribute) {
 		postCreate : function() {
 			var attribute=this.get("meta");
-			var panelModel = new dojo.Stateful();
-			panelModel.set("empty", false);
-			panelModel.set("title", "");
+			this.panelModel = new dojo.Stateful();
+			this.panelModel.set("empty", false);
+			this.panelModel.set("title", "");
 			var me=this;
 			var modelHandle = this.get("modelHandle");
-			if (modelHandle.get(attribute.code)) {
-				var model = modelHandle.get(attribute.code);
-			}else{
-				var model = new Stateful();
-				modelHandle.set(attribute.code,model);
-			}
+			modelHandle.saveModel=modelHandle.value
 			
-			var editor = new Editor({"modelHandle": modelHandle.get(attribute.code),"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
-			panelModel.watch("empty", function(e) {
-				var modelHandle=me.get("modelHandle");
-				if (panelModel.get("empty")) {
-					modelHandle.set(attribute.code, null);
-					editor.domNode.style.display="none";
+			this.editor = new Editor({"modelHandle": modelHandle,"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
+			this.panelModel.watch("empty", lang.hitch(this,"switchedNull"));
+			this.addChild(this.editor);
+			this.set("target", this.panelModel);
+		},
+		getChildrenToValidate:function() {
+			if (this.panelModel.get("empty")) {
+				return [];
+			}else{
+				return this.inherited(arguments);
+			}
+		}, 
+		switchedNull: function() {
+				var modelHandle=this.get("modelHandle");
+				if (this.panelModel.get("empty")) {
+					modelHandle.savedValue=modelHandle.value;
+					modelHandle.set("value", null);
+					this.containerNode.style.display="none";
+					this.validateAndFire();
 				} else {
-					editor.domNode.style.display="block";
-					modelHandle.set(attribute.code, model);
+					this.containerNode.style.display="";
+					modelHandle.set("value", modelHandle.savedValue);
+					this.validateAndFire();
 				}
-			});
-			this.addChild(editor);
-			this.set("target", panelModel);
-		}
+		}	
 
 	});
 

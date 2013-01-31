@@ -19,7 +19,7 @@
 		"dojo/text!./meta/embedded.json", "dojo/text!./entity/embedded.json"//
 		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
-			var editor = new Editor({
+			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),
 					"editorFactory":new EditorFactory});
@@ -27,7 +27,6 @@
 			editor.placeAt(container);
 			var nameText = dijit.byId("gform_ValidationTextBox_0");
 			var nullCheckbox = dijit.byId("dijit_form_CheckBox_0");
-			dijit.byId("dijit_TitlePane_0").set("open",true);
 			doh.register("standard", [
 				{
 					name : 'init',
@@ -40,7 +39,30 @@
 					runTest : function(t) {
 						nullCheckbox.set("value", true);
 						t.assertEqual(null, editor.get("plainValue").thing);
-	
+					}
+				}, {
+					name : 'switchFromNull',
+					runTest : function(t) {
+						nullCheckbox.set("value", false);
+						t.assertNotEqual(null, editor.get("plainValue").thing);
+					}
+				}, {
+					name : 'validate',
+					runTest : function(t) {
+						editor.addError("thing.name","impossible");
+						t.assertEqual(1,editor.get("errorCount"));
+					}
+				}, {
+					name : 'setToNullandRevalidate',
+					runTest : function(t) {
+						nullCheckbox.set("value", true);
+						t.assertEqual(0,editor.get("errorCount"));
+					}
+				}, {
+					name : 'setFromNullandRevalidate',
+					runTest : function(t) {
+						nullCheckbox.set("value", false);
+						t.assertEqual(1,editor.get("errorCount"));
 					}
 				} 
 			]);

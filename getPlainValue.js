@@ -20,6 +20,9 @@ define([ "dojo/_base/array", //
 						: "value";
 			}
 		},
+		getPlainMeta : function(/* Anything[] */a) {
+			return getPlainValue(a.value,this);
+		},
 		getPlainArray : function(/* Anything[] */a) {
 			// summary:
 			// Returns the stateful version of the given array.
@@ -51,11 +54,8 @@ define([ "dojo/_base/array", //
 		getPlainValue : function(/* Anything */v) {
 			// summary:
 			// Just returns the given value.
-			if (v==null) {
-				return null}
-			else{
-			return v.value; // Anything
-		}
+			return v; // Anything
+		
 		}
 	}
 	var getPlainValueWithMetaData = function(v) {

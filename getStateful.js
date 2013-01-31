@@ -23,7 +23,8 @@ define([
 			// a: Anything[]
 			//		The array.
 
-			return new StatefulArray(array.map(a, function(item){ return getStateful(item, this); }, this)); // dojox/mvc/StatefulArray
+			var arrayValue=new StatefulArray(array.map(a, function(item){ return getStateful(item, this); }, this)); // dojox/mvc/StatefulArray
+			return new Stateful({__type:"meta",value:arrayValue,valid:true});
 		},
 
 		getStatefulObject: function(/*Object*/ o){
@@ -32,18 +33,19 @@ define([
 			// o: Object
 			//		The object.
 
-			var stateful = new Stateful({valid:true});
+			var stateful = new Stateful({});
 			for(var s in o){
 				stateful[s] = getStateful(o[s], this);
 			}
-			return stateful; // dojo/Stateful
+			stateful["__type"]="object";
+			return new Stateful({__type:"meta",value:stateful,valid:true}); // dojo/Stateful
 		},
 
 		getStatefulValue: function(/*Anything*/ v){
 			// summary:
 			//		Just returns the given value.
 
-			return new Stateful({__type:"value",value:v,valid:true,oldValue:v}); // Anything
+			return new Stateful({__type:"meta",value:v,valid:true,oldValue:v}); // Anything
 		}
 	};
 

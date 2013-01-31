@@ -10,7 +10,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		templateString : template,
 		attribute:null,
 		_addElement : function() {
-			this.target[this.attribute].push(getStateful({}));
+			this.target.value.push(getStateful({}));
 		},
 		postCreate : function() {
 			this.addButton.set("onClick", lang.hitch(this, "_addElement"));
