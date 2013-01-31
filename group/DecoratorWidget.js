@@ -54,6 +54,9 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dijit/_WidgetBase", "dijit/_C
 		},
 		isValidationContainer:true,
 		updateState: function() {
+			if (!this.modelHandle) {
+				return;
+			}
 			if (this.modelHandle.valid) {
 				if (this.modelHandle.oldValue!=this.modelHandle.value	) {
 					this.set("state","Changed");
