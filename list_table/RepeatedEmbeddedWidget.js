@@ -15,12 +15,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 					var me = this;
 					var modelHandle = this.get("modelHandle");
 					var editor;
-					// if (modelHandle) {
 					var model = modelHandle;
-					// }else{
-					// var model = new Stateful();
-					// modelHandle.set(attribute.code,model);
-					// }
 
 					if (this.meta.validTypes && this.meta.validTypes.length > 1) {
 						var validTypeOptions = array.map(attribute.validTypes, function(validType) {
@@ -29,23 +24,23 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 								label : validType.label
 							};
 						});
-						var currentType = modelHandle && modelHandle[attribute.type_property] ? modelHandle
+
+						var currentType = modelHandle && modelHandle.value[attribute.type_property] ? modelHandle.value
 								.get(attribute.type_property).value : validTypeOptions[0].value
-						 modelHandle[attribute.type_property] =
-						 getStateful(currentType);
+						modelHandle.value[attribute.type_property] =getStateful(currentType);
 								
 								
 						
 						var typeToModel = {};
 						var cloned = new Stateful({});
-						copyProperties(modelHandle, cloned);
+						copyProperties(modelHandle.value, cloned);
 						typeToModel[currentType] = cloned;
 						array.forEach(attribute.validTypes, function(type) {
 							if (type.code != currentType) {
 								typeToModel[type.code] = new Stateful();
 								typeToModel[type.code][attribute.type_property] = getStateful(type.code);
 								array.forEach(type.attributes, function(attribute) {
-									typeToModel[type.code][attribute.code] = null;
+									typeToModel[type.code][attribute.code] = getStateful(null);
 								});
 							}
 						}, this);
@@ -64,9 +59,9 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 						panelModel.watch("type", function(propName,oldValue,newValue) {
 							var type = newValue;
 							if (oldValue!=newValue) {	
-								copyProperties(modelHandle,typeToModel[oldValue])
-								mergeProperties(typeToModel[type],modelHandle );
-								modelHandle[attribute.type_property].set("value",newValue);
+								copyProperties(modelHandle.value,typeToModel[oldValue])
+								mergeProperties(typeToModel[type],modelHandle.value );
+								modelHandle.value[attribute.type_property].set("value",newValue);
 								
 							}
 						});
@@ -78,10 +73,13 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 						var combinedAttributes=mergeAttributeDefinitions(this.meta.validTypes);
 						
 						array.forEach(combinedAttributes, function(attribute) {
+							if (!modelHandle.value[attribute.code]) {
+								modelHandle.value[attribute.code]=getStateful(null);
+							}
 							var tdWidget = this.editorFactory.attributeFactoryFinder.getFactory(attribute).create(
-									attribute, modelHandle);
+									attribute, modelHandle.value[attribute.code]);
 							var decorator = new TableElementDecorator({meta:attribute});
-							this.modelHandle[this.meta.type_property].watch("value", function(propName, oldValue, newValue) {
+							panelModel.watch("type", function(propName, oldValue, newValue) {
 								decorator.updateTypeVisibilty(newValue);
 
 							});
@@ -98,7 +96,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 						// Editor({"modelHandle":model,"meta":meta,editorFactory:this.editorFactory});
 						array.forEach(this.meta.validTypes[0].attributes, function(attribute) {
 							var tdWidget = this.editorFactory.attributeFactoryFinder.getFactory(attribute).create(
-									attribute, modelHandle);
+									attribute, modelHandle.value[attribute.code]);
 							var decorator = new TableElementDecorator();
 							decorator.addChild(tdWidget);
 							this.addChild(decorator);

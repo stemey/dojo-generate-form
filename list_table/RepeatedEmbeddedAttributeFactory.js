@@ -27,25 +27,23 @@ define([ "dojo/_base/array", //
 		},
 		create : function(attribute, modelHandle) {
 
-			var model = new dojo.Stateful();
-			
-			var items = new StatefulArray([]);
-			array.forEach(modelHandle.get(attribute.code),function(e){items.push(e)},this);
-			modelHandle.set(attribute.code, items);
+			if (modelHandle.value==null) {
+				modelHandle.value=new StatefulArray([]);
+			}
 
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
-				attribute:attribute.code
+				attribute:attribute
 			});
 
-			var childModel = modelHandle.get(attribute.code);
-			var childMeta = attribute.validTypes? attribute:attribute.type;
 				
 			var tableHeader =new TableHeader();
 			if (attribute.validTypes.length>1) {
 				tableHeader.addChild(new TableElementHeader({label:attribute.type_property}));
 				
 			}
+
+
 			array.forEach(mergeAttributeDefinitions(attribute.validTypes),function(attribute) {
 				tableHeader.addChild(new TableElementHeader({label:attribute.label}));
 			},this);
@@ -53,10 +51,10 @@ define([ "dojo/_base/array", //
 			
 			var widgetList = new WidgetList();
 			widgetList.set("partialrebuild", true);
-			widgetList.set("children", items);
+			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {
-				meta : childMeta,
+				meta : attribute,
 				_relTargetProp : "modelHandle",
 				editorFactory: this.editorFactory
 			});

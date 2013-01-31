@@ -17,6 +17,13 @@
                             "label":"name",
                             "code":"name",
                             "array":false
+                        },
+												{
+                            "required":false,
+                            "type":"string",
+                            "label":"common",
+                            "code":"common",
+                            "array":false
                         }
                     ]
                     
@@ -30,6 +37,13 @@
                             "type":"string",
                             "label":"firstName",
                             "code":"firstName",
+                            "array":false
+                        },
+												{
+                            "required":false,
+                            "type":"string",
+                            "label":"common",
+                            "code":"common",
                             "array":false
                         }
                     ]
