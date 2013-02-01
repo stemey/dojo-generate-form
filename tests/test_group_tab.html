@@ -19,19 +19,22 @@
 		"dojo/text!./meta/tab.json", "dojo/text!./entity/tab.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser"//
 		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity, registry,BorderContainer,parser) {
 			parser.parse();
-			var editor = new Editor({
+			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = registry.byId("container");
 			editor.set("region","center");
 			container.addChild(editor);
-			//editor.placeAt(container);
-			//editor.layout();
 			doh.register("standard", [
 				{
 					name : 'init',
-					runTest : function(t) {
+					runTest : function(t) {	
+						editor.addError("name","error");
+						t.assertEqual(1,editor.get("errorCount"));
+						var errors = dijit.byId("gform_ListPaneGroupWidget_0").get("errorCount");
+						t.assertEqual(1,errors);	
 					}
+
 				},
 				{
 					name : 'initWithNull',

@@ -36,9 +36,7 @@ define([ "dojo/_base/array", //
 			// The converted array.
 
 			return array.map(a, function(item) {
-				if (typeof item != "undefined") {
-					return getPlainValue(item, this);
-				}
+				return getPlainValue(item, this);
 			}, this); // Anything[]
 		},
 
