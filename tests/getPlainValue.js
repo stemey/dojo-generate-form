@@ -19,6 +19,18 @@ define(["doh/runner","gform/getPlainValue","gform/getStateful"], function(doh,ge
 				var stateful=getStateful([{name:"stefan"},{name:"tim"}]);
         var plain=getPlainValue(stateful);
 				doh.assertEqual("tim",plain[1].name);
+      },
+      function testIgnore(){
+				var stateful=getStateful({name:"stefan"});
+				stateful.value.name.ignore=true
+        var plain=getPlainValue(stateful);
+				doh.assertEqual("undefined",typeof plain.name);
+      },
+      function testIgnoreArrayElement(){
+				var stateful=getStateful([{name:"stefan"}]);
+				stateful.value[0].ignore=true
+        var plain=getPlainValue(stateful);
+				doh.assertEqual("undefined",typeof plain[0]);
       }
     ]);
 

@@ -21,7 +21,11 @@ define([ "dojo/_base/array", //
 			}
 		},
 		getPlainMeta : function(/* Anything[] */a) {
-			return getPlainValue(a.value,this);
+			if (a.ignore) {
+				return undefined;
+			}else{
+				return getPlainValue(a.value,this);
+			}
 		},
 		getPlainArray : function(/* Anything[] */a) {
 			// summary:
@@ -32,7 +36,9 @@ define([ "dojo/_base/array", //
 			// The converted array.
 
 			return array.map(a, function(item) {
-				return getPlainValue(item, this);
+				if (typeof item != "undefined") {
+					return getPlainValue(item, this);
+				}
 			}, this); // Anything[]
 		},
 
@@ -45,7 +51,10 @@ define([ "dojo/_base/array", //
 			var plain = {};
 			for ( var s in o) {
 				if (!(s in Stateful.prototype) && s != "_watchCallbacks") {
-					plain[s] = getPlainValue(o[s], this);
+					var value = getPlainValue(o[s], this);
+					if (typeof value != "undefined") {
+						plain[s] = value;
+					}
 				}
 			}
 			return plain; // Object
