@@ -1,0 +1,37 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "required":false,
+            "label":"things",
+            "code":"things",
+            "array":true,
+						"editor":"table",
+            "type":"ExampleThing",
+            "validTypes":[{
+                "code":"ExampleThing",
+                "label":"ExampleThing",
+                "attributes":[
+                    {
+                        "required":false,
+                        "type":"boolean",
+                        "label":"yes",
+                        "code":"yes",
+                        "array":false
+                    }
+                    ,
+                    {
+                        "required":false,
+                        "type":"string",
+                        "label":"message",
+                        "code":"message",
+                        "array":false
+                    }
+                ],
+                "type_property":"ext_type"
+            }]
+        }
+    ],
+    "type_property":"ext_type"
+}

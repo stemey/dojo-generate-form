@@ -29,6 +29,9 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 					} else {
 						var meta = this.meta.validTypes ? this.meta.validTypes[0] : this.meta;
 						array.forEach(meta.attributes, function(attribute) {
+							if (!this.modelHandle.value[attribute.code]) {
+								this.modelHandle.value[attribute.code]=getStateful(null);
+							}
 							var attributeModelHandle=this.modelHandle.value[attribute.code];
 							var tdWidget = this.editorFactory.attributeFactoryFinder.getFactory(attribute).create(
 									attribute, attributeModelHandle);
