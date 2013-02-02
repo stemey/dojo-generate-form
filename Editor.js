@@ -33,16 +33,16 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		_getPlainValueAttr: function() {
 				return getPlainValue(this.modelHandle);
 		},
-resize: function(dim) {
-if (this.widget.resize) {
-	if (dim) {
-			this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
-}	else{
-	this.widget.resize(null);
-}
-
-}
-},
+		resize: function(dim) {
+		if (this.widget.resize) {
+			if (dim) {
+					this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
+		}	else{
+			this.widget.resize(null);
+		}
+		
+		}
+		},
 		postCreate : function() {
 			this.inherited(arguments);
 			this.containerNode=this.domNode;
@@ -78,6 +78,17 @@ if (this.widget.resize) {
 			}
 		},
 		addError: function(path,message) {
+			visit(path,function(model) {
+				model.set("valid",false);
+				model.set("message",message);
+			});
+		},
+		updateValue: function(path,value) {
+			this.visit(path,function(model) {
+				model.set("value",value);
+			});
+		},
+		visit: function(path,cb) {
 			var pathElements=path.split(".");
 			var model=this.get("modelHandle");
 			array.forEach(pathElements,function(pathElement){
@@ -93,9 +104,9 @@ if (this.widget.resize) {
 				if (!model) {
 					throw new Error("cannot resolve path "+path);
 				}
-			model.set("valid",false);
-			model.set("message",message);
+			cb(model);
 		},
+		
 		_destroyBody : function() {
 			if (this.widget != null) {
 				this.widget.destroy();
