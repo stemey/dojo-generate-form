@@ -1,0 +1,18 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"date",
+            "label":"Valid from",
+            "description":"Date with format dd.MM.yyyy",
+            "code":"validFrom",
+            "required":true,
+            "array":false,
+            "constraints":{
+            	"datePattern":"dd.MM.yyyy"
+            }
+        }
+    ],
+    "type_property":"ext_type"
+}

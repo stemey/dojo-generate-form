@@ -78,7 +78,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			}
 		},
 		addError: function(path,message) {
-			visit(path,function(model) {
+			this.visit(path,function(model) {
 				model.set("valid",false);
 				model.set("message",message);
 			});

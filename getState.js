@@ -1,7 +1,7 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare"//
-, function(array, lang, declare) {
+], function(array, lang, declare) {
 
 	var visit = function(stateful,visitor){
 			for (var key in stateful) {
@@ -12,6 +12,6 @@ define([ "dojo/_base/array", //
 					}					
 				}
 			}
-		}
+		};
 	return visit;
-})
+});

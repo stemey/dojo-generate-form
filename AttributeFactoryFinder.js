@@ -6,6 +6,7 @@ define([ "dojo/_base/array", //
 "./primitive/BooleanAttributeFactory",//
 "./primitive/SelectAttributeFactory",//
 "./primitive/MappedSelectAttributeFactory",//
+"./primitive/DateAttributeFactory",//
 "./embedded/EmbeddedAttributeFactory",//
 "./primitive/NumberAttributeFactory",//
 "./group/AttributeListWidget",//
@@ -14,8 +15,8 @@ define([ "dojo/_base/array", //
 
 ], function(array, lang, declare, PrimitiveListAttributeFactory,StringAttributeFactory,
 		BooleanAttributeFactory, SelectAttributeFactory,
- MappedSelectAttributeFactory,EmbeddedAttributeFactory,
- NumberAttributeFactory, 
+		MappedSelectAttributeFactory, DateAttributeFactory, 
+		EmbeddedAttributeFactory, NumberAttributeFactory, 
 		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
 	return declare("app.editor.AttributeFactoryFinder",
@@ -29,7 +30,8 @@ define([ "dojo/_base/array", //
 					       				new NumberAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new SelectAttributeFactory({editorFactory:this.editorFactory}), // 
 					       				new BooleanAttributeFactory({editorFactory:this.editorFactory}), // 
-					       				new StringAttributeFactory({editorFactory:this.editorFactory}) //
+					       				new StringAttributeFactory({editorFactory:this.editorFactory}), //
+					       				new DateAttributeFactory({editorFactory:this.editorFactory}) //
 					       				];
 					this.attributeFactoryMap["table"]=new TableListAttributeFactory({editorFactory:this.editorFactory});
 				},
