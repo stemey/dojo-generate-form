@@ -15,6 +15,16 @@ define([ "dojo/_base/array", //
 		},
 		create : function(attribute, modelHandle) {
 			var options = [];
+			if (!attribute.required) {
+				var emptyValueLabel = "-- SELECT --";
+				if (attribute.emptyValueLabel) {
+					emptyValueLabel = attribute.emptyValueLabel;
+				}
+				options.push({
+					label : emptyValueLabel,
+					value : ""
+				});
+			}
 			for ( var key in attribute.values) {
 				var value = attribute.values[key];
 				options.push({
@@ -22,17 +32,15 @@ define([ "dojo/_base/array", //
 					value : value
 				});
 			}
-			options.push({
-				label : "null",
-				value : "null"
-			})
 
 			var valueBinding = at(modelHandle, "value").transform({
 				format : function(value) {
-					return value == null ? "null" : value;
+					console.log("format", value);
+					return value == null ? "" : value;
 				},
 				parse : function(value) {
-					if (value == "null") {
+					console.log("parse", value);
+					if (value == "") {
 						return null;
 					} else {
 						return value;
@@ -51,5 +59,5 @@ define([ "dojo/_base/array", //
 			return select;
 
 		}
-	})
+	});
 });
