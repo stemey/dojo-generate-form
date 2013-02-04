@@ -25,23 +25,22 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// ////////////////////////
 
 		_setPlainValueAttr: function(value) {
-				if (value==null) {
-					value={};
-				}
-				this.set("modelHandle",getStateful(value));
+			if (value==null) {
+				value={};
+			}
+			this.set("modelHandle",getStateful(value));
 		},
 		_getPlainValueAttr: function() {
-				return getPlainValue(this.modelHandle);
+			return getPlainValue(this.modelHandle);
 		},
 		resize: function(dim) {
-		if (this.widget.resize) {
-			if (dim) {
+			if (this.widget && this.widget.resize) {
+				if (dim) {
 					this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
-		}	else{
-			this.widget.resize(null);
-		}
-		
-		}
+				} else {
+					this.widget.resize(null);
+				}
+			}
 		},
 		postCreate : function() {
 			this.inherited(arguments);
