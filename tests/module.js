@@ -12,6 +12,7 @@ try {
 	doh.registerUrl("gform.tests.primitive_boolean", dojo.moduleUrl("gform","tests/test_primitive_boolean.html"));
 	doh.registerUrl("gform.tests.primitive_date", dojo.moduleUrl("gform","tests/test_primitive_date.html"));
 	doh.registerUrl("gform.tests.primitive_select", dojo.moduleUrl("gform","tests/test_primitive_select.html"));
+	doh.registerUrl("gform.tests.primitive_checkedmultiselect", dojo.moduleUrl("gform","tests/test_primitive_checkedmultiselect.html"));
 	doh.registerUrl("gform.tests.primitive_list", dojo.moduleUrl("gform","tests/test_primitive_list.html"));
 	doh.registerUrl("gform.tests.primitive_list_select", dojo.moduleUrl("gform","tests/test_primitive_list_select.html"));
 	doh.registerUrl("gform.tests.group_tab", dojo.moduleUrl("gform","tests/test_group_tab.html"));

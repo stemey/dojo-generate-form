@@ -7,7 +7,7 @@
             "label":"things",
             "code":"things",
             "array":true,
-						"editor":"table",
+			"editor":"table",
             "type":"ExampleThing",
             "validTypes":[{
                 "code":"ExampleThing",

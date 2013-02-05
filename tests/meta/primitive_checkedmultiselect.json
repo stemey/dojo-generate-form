@@ -1,0 +1,21 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"text",
+            "label":"multiple select",
+            "code":"multiselect",
+            "required":false,
+            "array":true,
+            "values": [
+            	"Hello",
+            	"Hi",
+            	"Good bye",
+            	"Ciao",
+            	"Bye Bye"
+            ]
+        }
+    ],
+    "type_property":"ext_type"
+}
