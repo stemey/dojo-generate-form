@@ -5,13 +5,17 @@ define([ "dojo/_base/array", //
 "dojo/Stateful", //
 "./AttributeFactoryFinder",//
 "./group/GroupFactory",//
+"./group/ListPaneGroupFactory",//
 "./group/TabGroupFactory"//
-], function(array, lang, declare, at, Stateful,AttributeFactoryFinder, GroupFactory, TabGroupFactory) {
+], function(array, lang, declare, at, Stateful,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory) {
 
 	return declare("app.EditorFactory", [Stateful], {
 		constructor : function() {
 			this.groupFactories = {
 				"list" : new GroupFactory({
+					editorFactory : this
+				}),
+				"listpane" : new ListPaneGroupFactory({
 					editorFactory : this
 				}),
 				"tab" : new TabGroupFactory({
@@ -32,11 +36,7 @@ define([ "dojo/_base/array", //
 				return this.find(group.groupType).create(group, modelHandle);
 			} 
 			else if (lang.isArray(group.attributes)) {
-				return this.defaultGroupFactory.create({
-					type : {
-						attributes : group.attributes
-					}
-				}, modelHandle);
+				return this.defaultGroupFactory.create(group, modelHandle);
 			}
 		},
 		find : function(groupType) {

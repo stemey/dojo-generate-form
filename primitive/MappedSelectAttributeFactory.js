@@ -3,38 +3,43 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dijit/form/Select",//
-"../meta"//
+"../meta"
 ], function(array, lang, declare, at, Select, meta) {
 
 	return declare("app.SelectAttributeFactory", [], {
 		handles: function(attribute) {
-			var mapped_values=meta.getTypeAttribute("mapped_values");
-			return !attribute.array && mapped_values && mapped_values.length>0;
+			var mapped_values=attribute.mapped_values;
+			return !attribute.array && mapped_values;
 		},
-		create : function(attribute, modelHandle) {
+		create : function(attribute, modelHandle,resolver) {
 			var options = [];
-			var mapped_values=meta.getTypeAttribute("mapped_values");
+			var mapped_values=attribute.mapped_values;
 			var onMappedAttributeChanged = function(e) {
 				options = [];
-				var mappedValue = modelHandle.get(meta.getTypeAttribute(attribute,"mapped_attribute"));
-				var values = mapped_values[mappedValue].elements;
+				var mappedValue = resolver.get(attribute.mapped_attribute);
+				var values = mapped_values[mappedValue];
+				var valueValid=false;
 				for ( var key in values) {
 					var value = values[key];
+					if (value==modelHandle.value) {
+						valueValid=true;
+					}
 					options.push({
 						label : value,
 						value : value
 					});
 				}
 				select.set("options", options);
-				if (options.length > 0) {
-					modelHandle.set(attribute.code, options[0].value);
+				if (!valueValid) {
+					modelHandle.set("value",options[0].value);
 				}
+				
 			};
-			modelHandle.watch(meta.getTypeAttribute(attribute,"mapped_attribute"),
+			resolver.watch(attribute.mapped_attribute,
 					onMappedAttributeChanged);
 
 			var select = new Select({
-				"value" : at(modelHandle, attribute.code),
+				"value" : at(modelHandle, "value"),
 				options : options,
 				style : "width:200px;"
 

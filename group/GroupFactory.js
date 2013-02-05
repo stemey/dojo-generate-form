@@ -6,33 +6,37 @@ define([ "dojo/_base/array", //
 "./ExpandableDecoratorWidget",//
 "./AttributeListWidget",//
 "../AttributeFactoryFinder",//
-"../getStateful"
+"../getStateful",
+"../Resolver"
 
 ], function(array, lang, declare, at, DecoratorWidget, ExpandableDecoratorWidget, AttributeListWidget,
-		AttributeFactoryFinder,getStateful) {
+		AttributeFactoryFinder,getStateful,Resolver) {
 
 	return declare("app.Groupfactory", null, {
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		useExpandable:false,	
-		createAttribute : function(attribute, modelHandle) {
+		createAttribute : function(attribute, modelHandle,resolver) {
 			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute);
 			if (factory != null) {
-				return factory.create(attribute, modelHandle);
+				return factory.create(attribute, modelHandle,resolver);
 			} else {
 				return null;
 			}
 		},
+		createWidget: function(group) {
+			return new AttributeListWidget({meta:group});
+		},	
 		create : function(group, modelHandle) {
-			var listWidget = new AttributeListWidget();
-			array.forEach(group.type.attributes, function(attribute) {
+			var listWidget = this.createWidget(group);
+			array.forEach(group.attributes, function(attribute) {
 				var label = attribute.label;
 				if (!modelHandle.value[attribute.code]) {
 					modelHandle.value[attribute.code]=getStateful(null);
 				}
 				var attributeEditor = this.createAttribute(attribute,
-						modelHandle.value[attribute.code]);
+						modelHandle.value[attribute.code],new Resolver(modelHandle));
 				if (this.useExpandable && (attribute.type.attributes || attribute.validTypes))
 				{
 					var widget = new ExpandableDecoratorWidget({

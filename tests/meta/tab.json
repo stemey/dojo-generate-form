@@ -2,6 +2,7 @@
     "groupType":"tab",
     "tabs":[
 	{label:"Reiter1",
+	description:"have a look at my ",
                     "attributes":[
                         {
                             "type":"string",
@@ -11,6 +12,7 @@
                         }
                     ]
 	},{label: "Reiter2",
+	description:"have a look at my ",
                     "attributes":[
                         {
                             "type":"string",

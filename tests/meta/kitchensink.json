@@ -26,17 +26,48 @@
                     "array":false
                 },
                 {
-                    "type":"string",
+                    "type":"boolean",
                     "label":"lastname",
                     "description":"we need to know",
                     "errorMessage":"required",
-										"pattern":"[a-zA-Z]+",
-										"required":true,
 										"code":"lastname",
                     "array":false
                 }
 						]},{
-            label:"polymorphic",
+            label:"primitives",
+						description:"This tab contains primitive list attributes.",
+            "attributes":[
+                {
+                    "type":"string",
+                    "label":"name",
+                    "description":"this attribute only allows letters a to z.",
+                    "errorMessage":"only use letters",
+										"required":true,
+										"pattern":"[a-zA-Z]*",	
+                    "code":"name",
+                    "array":true
+                },
+                {
+                    "type":"string",
+                    "label":"salutation",
+                    "description":"select one",
+                    "errorMessage":"required",
+										"required":false,
+										"values":["Mr.","Mrs.","Sir."],	
+                    "code":"salutation",
+                    "array":true
+                },
+                {
+                    "type":"boolean",
+                    "label":"lastname",
+                    "description":"we need to know",
+                    "errorMessage":"required",
+										"code":"lastname",
+                    "array":true
+                }
+						]},{
+            label:"embedded",
+						description:"embedded simple and polymorphic attributes.",
             "attributes":[
                 {
                     "required":false,

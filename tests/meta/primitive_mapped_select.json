@@ -1,0 +1,27 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"text",
+            "label":"language",
+            "code":"language",
+            "required":true,
+            "array":false,
+            "values":["english","german"]
+        },
+        {
+            "type":"text",
+            "label":"salutation",
+            "code":"salutation",
+            "required":false,
+            "array":false,
+            "mapped_attribute":"language",
+						"mapped_values":{
+							"english":["Mr.","Mrs."],
+							"german":["Herr","Frau"],
+						}
+        }
+    ],
+    "type_property":"ext_type"
+}

@@ -24,6 +24,9 @@ define([ "dojo/_base/array", //
 				style : "height: 100%; width: 100%;"
 			});
 			array.forEach(group.tabs, function(tab) {
+				if (!tab.groupType) {
+					tab.groupType="listpane";
+				}
 				var tabWidget = this.editorFactory.create(tab, modelHandle);
 				tabWidget.set("title", tab.label);
 				tabWidget.set("meta",tab);

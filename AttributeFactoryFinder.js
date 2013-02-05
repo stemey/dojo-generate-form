@@ -26,6 +26,7 @@ define([ "dojo/_base/array", //
 					this.attributeFactories = [ //
 					       				new RepeatedEmbeddedAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new EmbeddedAttributeFactory({editorFactory:this.editorFactory}),//
+					       				new MappedSelectAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new PrimitiveListAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new NumberAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new SelectAttributeFactory({editorFactory:this.editorFactory}), // 
