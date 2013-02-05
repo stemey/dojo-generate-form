@@ -6,8 +6,11 @@ define([ "dojo/_base/array", //
 "./AttributeFactoryFinder",//
 "./group/GroupFactory",//
 "./group/ListPaneGroupFactory",//
-"./group/TabGroupFactory"//
-], function(array, lang, declare, at, Stateful,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory) {
+"./group/TabGroupFactory",//
+"./group/TitlePaneGroupFactory",//
+"./group/ListGroupFactory"//
+], function(array, lang, declare, at, Stateful,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
+		TitlePaneGroupFactory, ListGroupFactory) {
 
 	return declare("app.EditorFactory", [Stateful], {
 		constructor : function() {
@@ -18,7 +21,13 @@ define([ "dojo/_base/array", //
 				"listpane" : new ListPaneGroupFactory({
 					editorFactory : this
 				}),
+				"listgroup" : new ListGroupFactory({
+					editorFactory : this
+				}),
 				"tab" : new TabGroupFactory({
+					editorFactory : this
+				}),
+				"titlepane" : new TitlePaneGroupFactory({
 					editorFactory : this
 				})
 			};
@@ -43,5 +52,5 @@ define([ "dojo/_base/array", //
 			return this.groupFactories[groupType];
 		}
 
-	})
+	});
 });
