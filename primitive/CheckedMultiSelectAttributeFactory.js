@@ -12,8 +12,7 @@ define([ "dojo/_base/array", //
 	return declare("gform.CheckedMultiSelectAttributeFactory", [], {
 
 		handles : function(attribute) {
-			var values = meta.getTypeAttribute(attribute, "values");	
-			return attribute.array && values != null && values.length > 0;
+			return attribute != null && attribute.array && !attribute.validTypes && attribute.values;
 		},
 		
 		create : function(attribute, modelHandle) {

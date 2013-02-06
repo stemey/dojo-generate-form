@@ -11,7 +11,7 @@ define([ "dojo/_base/array", //
 			var mapped_values=attribute.mapped_values;
 			return !attribute.array && mapped_values;
 		},
-		create : function(attribute, modemapped_selectlHandle,resolver) {
+		create : function(attribute, modelHandle,resolver) {
 			var options = [];
 			var mapped_values=attribute.mapped_values;
 			var onMappedAttributeChanged = function(e) {

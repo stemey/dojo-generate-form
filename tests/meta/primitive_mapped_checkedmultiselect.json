@@ -1,0 +1,25 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes": [{
+        "type":"text",
+        "label":"name",
+        "code":"name",
+        "required":false,
+        "array":false,
+        "values": [ "Henry", "Anni", "Bob" ]
+    },{
+        "type":"text",
+        "label":"languages",
+        "code":"languages",
+        "required":false,
+        "array":true,
+        "mapped_attribute":"name",
+		"mapped_values": {
+			"Henry":["English","German","Indish"],
+			"Anni":["English","American English","German","Hindu"],
+			"Bob":["American English","Ukrainish","Hindu"],
+		}
+    }],
+    "type_property":"ext_type"
+}

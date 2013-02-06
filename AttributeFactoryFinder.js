@@ -5,6 +5,7 @@ define([ "dojo/_base/array", //
 "./primitive/StringAttributeFactory",//
 "./primitive/BooleanAttributeFactory",//
 "./primitive/SelectAttributeFactory",//
+"./primitive/MappedCheckedMultiSelectAttributeFactory",//
 "./primitive/CheckedMultiSelectAttributeFactory",//
 "./primitive/MappedSelectAttributeFactory",//
 "./primitive/DateAttributeFactory",//
@@ -15,8 +16,8 @@ define([ "dojo/_base/array", //
 "./list_table/RepeatedEmbeddedAttributeFactory"
 
 ], function(array, lang, declare, PrimitiveListAttributeFactory,StringAttributeFactory,
-		BooleanAttributeFactory, SelectAttributeFactory, CheckedMultiSelectAttributeFactory,
-		MappedSelectAttributeFactory, DateAttributeFactory, 
+		BooleanAttributeFactory, SelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory,
+		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
 		EmbeddedAttributeFactory, NumberAttributeFactory, 
 		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
@@ -27,6 +28,7 @@ define([ "dojo/_base/array", //
 					this.attributeFactories = [ //
 					       				new RepeatedEmbeddedAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new EmbeddedAttributeFactory({editorFactory:this.editorFactory}),//
+					       				new MappedCheckedMultiSelectAttributeFactory({editorFactory:this.editorFactory}), // 
 					       				new CheckedMultiSelectAttributeFactory({editorFactory:this.editorFactory}), // 
 					       				new MappedSelectAttributeFactory({editorFactory:this.editorFactory}),//
 					       				new PrimitiveListAttributeFactory({editorFactory:this.editorFactory}),//
@@ -36,7 +38,8 @@ define([ "dojo/_base/array", //
 					       				new StringAttributeFactory({editorFactory:this.editorFactory}), //
 					       				new DateAttributeFactory({editorFactory:this.editorFactory}) //
 					       				];
-					this.attributeFactoryMap["table"]=new TableListAttributeFactory({editorFactory:this.editorFactory});
+					this.attributeFactoryMap["table"]= new TableListAttributeFactory({editorFactory:this.editorFactory});
+					this.attributeFactoryMap["primitive_list"]= new PrimitiveListAttributeFactory({editorFactory:this.editorFactory});
 				},
 				attributeFactoryMap : {
 				},
