@@ -23,7 +23,7 @@
 			var editorFactory = new EditorFactory()
 //			editorFactory.set("defaultGroupFactory",new ListPaneGroupFactory({editorFactory:editorFactory}));
 	//		editorFactory.attributeFactoryFinder.attributeFactories[0]=new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory});
-			var editor = new Editor({
+			 editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),editorFactory:editorFactory});
 			var container = registry.byId("container");

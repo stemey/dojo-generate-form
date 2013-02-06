@@ -1,5 +1,27 @@
 {
-    name:"moin",
-    company:"Komapnie"
-   
+	"name": "moin",
+	"company": "Komapnie",
+	"salutation": "Mr.",
+	"manySalutations": [],
+	"lastname":  true,
+	"thing": {
+		"ext_type": "thing2",
+		"firstName": "asdas",
+		"common": "asdasd"
+	},
+	"things": [
+		{
+			"ext_type": "ExampleThing",
+			"yes": true,
+			"message": "sdasd",
+			"thingx": []
+		}
+	],
+	"morethings": [
+		{
+			"ext_type": "ExampleThing",
+			"yes": true,
+			"message": "sdasdasd"
+		}
+	]
 }

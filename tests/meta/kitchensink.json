@@ -21,7 +21,7 @@
                     "description":"select one",
                     "errorMessage":"required",
 										"required":false,
-										"values":["Mr.","Mrs.","Sir."],	
+										"values":["Mr.","Mrs.","Sir"],	
                     "code":"salutation",
                     "array":false
                 },
@@ -34,7 +34,7 @@
                     "array":false
                 }
 						]},{
-            label:"primitives",
+            label:"primitive lists",
 						description:"This tab contains primitive list attributes.",
             "attributes":[
                 {
@@ -49,12 +49,12 @@
                 },
                 {
                     "type":"string",
-                    "label":"salutation",
+                    "label":"manySalutations",
                     "description":"select one",
                     "errorMessage":"required",
 										"required":false,
 										"values":["Mr.","Mrs.","Sir."],	
-                    "code":"salutation",
+                    "code":"manySalutations",
                     "array":true
                 },
                 {

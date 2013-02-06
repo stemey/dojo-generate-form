@@ -1,8 +1,8 @@
 define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		"dojox/mvc/_Container", "dijit/layout/_LayoutWidget","dojox/mvc/at", 
-		"dojo/dom-construct", "dojo/Stateful", "./getStateful","./getPlainValue","./group/_GroupMixin" ], function(array, lang,
+		"dojo/dom-construct", "dojo/Stateful", "./getStateful","./getPlainValue","./hasChanged","./group/_GroupMixin" ], function(array, lang,
 		declare, Container, _LayoutWidget,at, domConstruct,
-		 Stateful,getStateful,getPlainValue,_GroupMixin) {
+		 Stateful,getStateful,getPlainValue,hasChanged,_GroupMixin) {
 
 	// at needs to be globally defined.
 	window.at = at; 
@@ -32,6 +32,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		},
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);
+		},
+		hasChanged: function() {
+			return hasChanged(this.modelHandle);
 		},
 		resize: function(dim) {
 			if (this.widget && this.widget.resize) {

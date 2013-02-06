@@ -1,6 +1,6 @@
 define([ "dojo/_base/declare", "dojo/_base/lang",
-		"dijit/Tooltip","./_GroupMixin"
-], function(declare, lang,	Tooltip,_GroupMixin) {
+		"dijit/Tooltip","./_GroupMixin","../hasChanged"
+], function(declare, lang,	Tooltip,_GroupMixin, hasChanged) {
 
 	return declare("gform._DecoratorMixin",[ _GroupMixin ], {
 		baseClass:"Decorator",
@@ -8,7 +8,8 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			this.inherited(arguments);
 			if (this.modelHandle && typeof this.modelHandle.watch == "function") {
 				this.modelHandle.watch("message",lang.hitch(this,"onMessageChange"));
-				this.modelHandle.watch("value",lang.hitch(this,"onValueChange"));
+				this.modelHandle.watch("value",lang.hitch(this,"onModelValueChange"));
+				this.on("value-changed",lang.hitch(this,"onValueChange"));
 				this.on("valid-changed",lang.hitch(this,"onValidChange"));
 			}else{
 				console.log("modelHandle is null "+this.label);
@@ -28,15 +29,21 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		        label: ""
 		    });
 			this.updateState();
+			this.changesTooltip.label="was "+dojo.toJson(this.modelHandle.oldValue,true)
 			
 			
 		},
 		startup: function() {
 			this.inherited(arguments);
 		},
-		onValueChange: function(a,old,nu) {
-			this.changesTooltip.label="was "+this.modelHandle.oldValue
+		onValueChange: function(e) {
+			if (e.src!=this) {
+				this.updateState();
+			}
+		},
+		onModelValueChange: function(propName,old,nu) {
 			this.updateState();
+			this.emit("value-changed",{src:this,oldValue:old,newValue:nu});
 		},
 		onValidChange: function(e	) {
 			this.updateState();
@@ -47,7 +54,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 				return;
 			}
 			if (this.modelHandle.valid) {
-				if (this.modelHandle.oldValue!=this.modelHandle.value	) {
+				if (hasChanged(this.modelHandle)) {
 					this.set("state","Changed");
 					this.changesTooltipNode.style.display="";
 				}else{

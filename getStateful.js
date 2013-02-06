@@ -24,7 +24,7 @@ define([
 			//		The array.
 
 			var arrayValue=new StatefulArray(array.map(a, function(item){ return getStateful(item, this); }, this)); // dojox/mvc/StatefulArray
-			return new Stateful({__type:"meta",value:arrayValue,valid:true});
+			return new Stateful({__type:"meta",value:arrayValue,valid:true,oldValue:a});
 		},
 
 		getStatefulObject: function(/*Object*/ o){
@@ -37,8 +37,7 @@ define([
 			for(var s in o){
 				stateful[s] = getStateful(o[s], this);
 			}
-			stateful["__type"]="object";
-			return new Stateful({__type:"meta",value:stateful,valid:true,errorCount:0}); // dojo/Stateful
+			return new Stateful({__type:"meta",value:stateful,valid:true,oldValue:o}); // dojo/Stateful
 		},
 
 		getStatefulValue: function(/*Anything*/ v){
