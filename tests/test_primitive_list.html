@@ -14,9 +14,9 @@
 
 
 	<script type="text/javascript">
-		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner", "gform/EditorFactory",//
+		require(["dojo/ready","dojo/json","dojo/query","gform/Editor","dojo/Stateful","doh/runner", "gform/EditorFactory",//
 		         "dojo/text!./meta/primitive_list.json","dojo/text!./entity/primitive_list.json"//
-		         ],function(ready,json,Editor,Stateful,doh,EditorFactory,meta,entity) {
+		         ],function(ready,json,query,Editor,Stateful,doh,EditorFactory,meta,entity) {
 			
 				 editor=new Editor({"plainValue": dojo.fromJson(entity),
 				"meta":dojo.fromJson(meta),editorFactory:new EditorFactory()});
@@ -43,6 +43,17 @@
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_0").onClick();
 									t.assertEqual(2,editor.get("plainValue").things.length);
+								}
+							},
+							{
+								name: 'set',
+								runTest: function(t){
+									editor.set("plainValue",{things:["a","b"]});
+									//t.assertEqual(2,editor.get("plainValue").things.length);
+									var inputs=query("input[type='text']");
+									t.assertEqual(2,inputs.length);
+									t.assertEqual("a",inputs[0].value);
+									t.assertEqual("b",inputs[1].value);
 								}
 							}]);			
 			doh.run();
