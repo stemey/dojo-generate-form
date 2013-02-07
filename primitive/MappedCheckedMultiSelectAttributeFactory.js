@@ -19,16 +19,7 @@ define([ "dojo/_base/array", //
 		create : function(attribute, modelHandle, resolver) {
 			var options = this._createMappedOptions(attribute, resolver);
 			
-			var valueBinding = at(modelHandle, "value").direction(at.to).transform({
-				parse : function(value) {
-					console.log("parse cm", value);
-					return value;
-				},
-				format : function(value) {
-					console.log("format cm", value);
-					return value;
-				}
-			});
+			var valueBinding = at(modelHandle, "value").direction(at.to);
 
 			var select = new CheckedMultiSelect({
 				"value" : valueBinding,
@@ -43,6 +34,10 @@ define([ "dojo/_base/array", //
 			resolver.watch(attribute.mapped_attribute, 
 				lang.hitch(this, "_onMappedAttributeChanged", select, attribute, resolver));
 			
+			if (options.length == 0) {
+				this._hideAndDisable(select);
+			}
+			
 			return select;
 		},
 		
@@ -50,17 +45,23 @@ define([ "dojo/_base/array", //
 			var newOptions = this._createMappedOptions(attribute, resolver);
 			
 			if (newOptions.length == 0) {
-				select.set("disabled", true);
-				domClass.add(select.domNode, "dijitHidden");
-				
+				this._hideAndDisable(select);
 				select.removeOption(select.getOptions());
 			} else {
-				select.set("disabled", false);
-				domClass.remove(select.domNode, "dijitHidden");
-				
+				this._showAndEnable(select);
 				this._removeOldOptions(select, newOptions);
 				this._addNewOptions(select, newOptions);
 			}
+		},
+		
+		_hideAndDisable : function(select) {
+			select.set("disabled", true);
+			domClass.add(select.domNode, "dijitHidden");
+		},
+		
+		_showAndEnable : function(select) {
+			select.set("disabled", false);
+			domClass.remove(select.domNode, "dijitHidden");
 		},
 		
 		_createMappedOptions : function(attribute, resolver) {

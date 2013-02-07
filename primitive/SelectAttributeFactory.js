@@ -35,11 +35,9 @@ define([ "dojo/_base/array", //
 
 			var valueBinding = at(modelHandle, "value").transform({
 				format : function(value) {
-					console.log("format", value);
 					return value == null ? "" : value;
 				},
 				parse : function(value) {
-					console.log("parse", value);
 					if (value == "") {
 						return null;
 					} else {

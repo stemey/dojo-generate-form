@@ -26,16 +26,7 @@ define([ "dojo/_base/array", //
 			}
 			var initValue = getPlainValue(modelHandle.value);
 
-			var valueBinding = at(modelHandle, "value").direction(at.to).transform({
-				parse : function(value) {
-					console.log("parse cm", value);
-					return value;
-				},
-				format : function(value) {
-					console.log("format cm", value);
-					return value;
-				}
-			});
+			var valueBinding = at(modelHandle, "value").direction(at.to);
 
 			var select = new CheckedMultiSelect({
 				"value" : valueBinding		,
