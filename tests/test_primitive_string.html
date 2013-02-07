@@ -19,7 +19,7 @@
 		"dojo/text!./meta/primitive_string.json", "dojo/text!./entity/primitive_string.json"//
 		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
-			var editor = new Editor({
+			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = dojo.byId("container");
@@ -37,6 +37,15 @@
 					name : 'testValid',
 					runTest : function(t) {
 						intText.set("state","Error");
+					}
+				},
+				{
+					name : 'reset',
+					runTest : function(t) {
+						intText.set("value","something");
+						t.assertTrue(editor.hasChanged());
+						editor.reset();
+						t.assertEqual("hallo", intText.get("value"));
 					}
 				}
 			]);

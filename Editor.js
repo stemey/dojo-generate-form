@@ -1,11 +1,12 @@
 define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		"dojox/mvc/_Container", "dijit/layout/_LayoutWidget","dojox/mvc/at", 
-		"dojo/dom-construct", "dojo/Stateful", "./getStateful","./getPlainValue","./hasChanged","./group/_GroupMixin" ], function(array, lang,
+		"dojo/dom-construct", "dojo/Stateful", "./getStateful","./getPlainValue","./updateStateful","./hasChanged","./group/_GroupMixin" ], function(array, lang,
 		declare, Container, _LayoutWidget,at, domConstruct,
-		 Stateful,getStateful,getPlainValue,hasChanged,_GroupMixin) {
+		 Stateful,getStateful,getPlainValue,updateStateful,hasChanged,_GroupMixin) {
 
 	// at needs to be globally defined.
 	window.at = at; 
+
 	return declare("gform.Editor", [ Container,_GroupMixin ], {
 		editorFactory : null,
 		widget : null,
@@ -28,7 +29,11 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			if (value==null) {
 				value={};
 			}
-			this.set("modelHandle",getStateful(value));
+			if (this.modelHandle) {
+				updateStateful(value,this.modelHandle);
+			}else{
+				this.set("modelHandle",getStateful(value));
+			}
 		},
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);
@@ -108,6 +113,10 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				}
 			cb(model);
 		},
+		reset: function() {
+			var oldValue=this.modelHandle.oldValue;
+			updateStateful(oldValue,this.modelHandle);
+		},	
 		
 		_destroyBody : function() {
 			if (this.widget != null) {

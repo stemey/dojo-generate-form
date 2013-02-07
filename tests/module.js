@@ -1,5 +1,5 @@
 dojo.provide("gform.tests.module");
-
+dojo.require("gform/getPlainValue");
 
 try {
 	doh.registerUrl("gform.tests.embedded_list", dojo.moduleUrl("gform","tests/test_embedded_list.html")); 
@@ -18,6 +18,7 @@ try {
 	doh.registerUrl("gform.tests.primitive_list_select", dojo.moduleUrl("gform","tests/test_primitive_list_select.html"));
 	doh.registerUrl("gform.tests.group_tab", dojo.moduleUrl("gform","tests/test_group_tab.html"));
 	doh.registerUrl("gform.tests.group_decorator", dojo.moduleUrl("gform","tests/test_group_decorator.html"));
+	//doh.registerTest("gform.tests.getPlainValue", gform.getPlainValue);
 }catch(e){
 	doh.debug(e);
 }
