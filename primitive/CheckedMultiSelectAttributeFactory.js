@@ -24,8 +24,7 @@ define([ "dojo/_base/array", //
 					value : value
 				});
 			}
-			var initValue = getPlainValue(modelHandle.value);
-
+			
 			var valueBinding = at(modelHandle, "value").direction(at.to);
 
 			var select = new CheckedMultiSelect({
@@ -34,7 +33,11 @@ define([ "dojo/_base/array", //
 				style : "width: 200px;",
 				multiple : true
 			});
-			
+
+			if (modelHandle.oldValue == null || typeof modelHandle.oldValue == "undefined") {
+				modelHandle.set("oldValue", []);
+			}
+			var initValue = getPlainValue(modelHandle.value);
 			select.set("value", initValue);
 			
 			return select;

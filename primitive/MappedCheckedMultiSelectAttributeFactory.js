@@ -28,6 +28,9 @@ define([ "dojo/_base/array", //
 				multiple : true
 			});
 
+			if (modelHandle.oldValue == null || typeof modelHandle.oldValue == "undefined") {
+				modelHandle.set("oldValue", []);
+			}
 			initValue = getPlainValue(modelHandle.value);
 			select.set("value", initValue);
 			

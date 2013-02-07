@@ -1,0 +1,17 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"text",
+            "label":"select",
+            "code":"select",
+            "required":false,
+            "array":false,
+            "emptyValueLabel":"-- Please select --",
+            "checked":true,
+            "values":["Hallo","Good bye"]
+        }
+    ],
+    "type_property":"ext_type"
+}

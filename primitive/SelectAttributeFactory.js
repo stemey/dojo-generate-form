@@ -3,9 +3,10 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dijit/form/Select",//
+"dojox/form/CheckedMultiSelect",//
 "../getStateful",//
 "../meta"//
-], function(array, lang, declare, at, Select, getStateful, meta) {
+], function(array, lang, declare, at, Select, CheckedMultiSelect, getStateful, meta) {
 
 	return declare("app.SelectAttributeFactory", [], {
 
@@ -46,11 +47,19 @@ define([ "dojo/_base/array", //
 				}
 			});
 
-			var select = new Select({
+			var selectConfig = {
 				"value" : valueBinding,
 				options : options,
 				style:"width:200px;"
-			});
+			};
+			var select;
+			if (attribute.checked == true) {
+				select = new CheckedMultiSelect(selectConfig);
+				select.set("multiple", false);
+			} else {
+				select = new Select(selectConfig);
+			}
+			
 			if (false && options.length > 0) {
 				modelHandle.set("value", options[0].value);
 			}
