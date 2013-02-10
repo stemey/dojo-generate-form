@@ -15,9 +15,9 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory",//
+		require([ "dojo/ready", "dojo/_base/query", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory",//
 		"dojo/text!./meta/embedded.json", "dojo/text!./entity/embedded.json"//
-		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
+		], function(ready, query, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
 			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
@@ -63,6 +63,18 @@
 					runTest : function(t) {
 						nullCheckbox.set("value", false);
 						t.assertEqual(1,editor.get("errorCount"));
+					}
+				}, {
+					name : 'setPlainValue',
+					runTest : function(t) {
+						editor.set("plainValue", {thing:{name:"herman"}});
+						t.assertEqual("herman",query("input[type='text']")[0].value);
+					}
+				}, {
+					name : 'setPlainNull',
+					runTest : function(t) {
+						editor.set("plainValue", {thing:null});
+						t.assertEqual(true,query("input[type='checkbox']")[0].checked);
 					}
 				} 
 			]);

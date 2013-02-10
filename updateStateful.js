@@ -38,16 +38,28 @@ define([
 			//		Returns the stateful version of the given object.
 			// o: Object
 			//		The object.
-
+			
+			if (o==null) {
+				modelHandle.set("value",null);
+				return;
+			}
+			if (modelHandle.value==null) {
+				modelHandle.set("value",new Stateful({}));
+			}
 			var target = modelHandle.value;
 			this.resetMeta(modelHandle,o);
 			for(var s in o){
+				if (!target.get(s)) {
+					target.set(s,getStateful(null));
+				}
 				updateStateful(o[s],target.get(s), this);
 			}
-			for(var s in target._attrPairNames){
-				console.log("---"+s+"   "+typeof s);
-				if (typeof o[s]=="undefined") {
-					delete target[s];
+			this._removeUndefineds(o,target);
+		},
+		_removeUndefineds: function(o,modelHandle,s) {
+			for(s in modelHandle){
+				if (modelHandle.hasOwnProperty(s) && typeof o[s]=="undefined" ) {	
+					delete modelHandle[s];
 				}
 			}
 		},

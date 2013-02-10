@@ -44,6 +44,20 @@ define([ "dojo/_base/array", //
 
 			return panelWidget;
 
+		},
+		updateStatefulModel: function(plainValue,modelHandle) {
+			if (plainValue==null) {
+				modelHandle.set("value",null);
+			}else{
+				array.forEach(this.meta.validTypes.attributes,function(attribute) {
+					var childHandle = modelHandle.value[attribute.code];
+					if (!childHandle) {
+						childHandle=new Stateful({});
+						modelHandle.value[attribute.code]=childHandle;
+					}
+					this.editorFactory.getAttributeFactory(attribute).updateStatefulModel(plainValue[attribute.code],childHandle);
+				},this);
+			}
 		}
 	})
 });
