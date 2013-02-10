@@ -41,6 +41,19 @@ define([
 				},this);
 			}
 		},
+		setNull: function(meta,modelHandle) {
+			if (modelHandle.value==null) {
+				return;
+			}
+			modelHandle.nonNullValue=modelHandle.value;
+			modelHandle.set("value",null);
+		},
+		setEmpty: function(meta,modelHandle) {
+			if (!modelHandle.nonNullValue) {
+				updateModelHandle(meta,{},modelHandle.nonNullValue);
+			}
+			modelHandle.set("value",modelHandle.nonNullValue);
+		}, 
 		updateObject: function( meta, plainValue, modelHandle) {
 			if (plainValue==null) {
 				if (modelHandle.value) {

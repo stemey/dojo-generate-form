@@ -3,9 +3,9 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./singletype_embedded_attribute.html",
-		"dijit/layout/StackContainer", "dojo/Stateful","../getStateful", "../Editor","../group/_GroupMixin"
+		"dijit/layout/StackContainer", "dojo/Stateful","../updateModelHandle", "../Editor","../group/_GroupMixin"
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, template, StackContainer, Stateful,getStateful,
+		_WidgetsInTemplateMixin, template, StackContainer, Stateful,updateModelHandle,
 		Editor,_GroupMixin) {
 
 	return declare("gform.SingleTypePanelWidget", [ _WidgetBase, _Container,
@@ -18,11 +18,10 @@ define([ "dojo/_base/array", //
 			this.panelModel.set("empty", false);
 			this.panelModel.set("title", "");
 			var modelHandle = this.get("modelHandle");
-			//modelHandle.saveModel=modelHandle.value
 			modelHandle.watch("value",lang.hitch(this,"modelChanged"));
 			
 			this.editor = new Editor({"modelHandle": modelHandle,"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
-			this.panelModel.watch("empty", lang.hitch(this,"switchedNull"));
+			this.panelModel.watch("empty", lang.hitch(this,"panelChanged"));
 			this.addChild(this.editor);
 			this.set("target", this.panelModel);
 		},
@@ -35,7 +34,6 @@ define([ "dojo/_base/array", //
 		}, 
 		modelChanged: function(propName,old,nu) {
 			if (nu==null && old!=null) {
-				this._switchedToNull();
 				if (this.panelModel.get("empty")==false) {
 					this.panelModel.set("empty",true);
 				}
@@ -49,20 +47,23 @@ define([ "dojo/_base/array", //
 					this.containerNode.style.display="none";
 					this.validateAndFire();
 		},
-		switchedNull: function(propName,old,nu) {
+		_switchedFromNull: function() {
+					this.containerNode.style.display="";
+		},
+		panelChanged: function(propName,old,nu) {
 				if (old==nu) {
 					return;
 				}
 				var modelHandle=this.get("modelHandle");
 				if (this.panelModel.get("empty")) {
+					this._switchedToNull();
 					if (modelHandle.value!=null) {
-						modelHandle.nonNullValue=modelHandle.value;
-						modelHandle.set("value", null);
+						updateModelHandle.setNull(this.meta,modelHandle);
 					}
 				} else {
-					this.containerNode.style.display="";
+					this._switchedFromNull();
 					if (modelHandle.value==null) {
-						modelHandle.set("value", modelHandle.nonNullValue);
+						updateModelHandle.setEmpty(this.meta,modelHandle);
 					}
 					this.validateAndFire();
 				}
