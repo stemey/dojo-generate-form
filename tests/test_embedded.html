@@ -64,7 +64,15 @@
 						nullCheckbox.set("value", false);
 						t.assertEqual(1,editor.get("errorCount"));
 					}
-				} 
+				}, {
+					name : 'initWithNull',
+					runTest : function(t) {
+						editor.set("plainValue",{});
+						editor.set("meta",dojo.fromJson(meta));
+						var isNull=dijit.byId("dijit_form_CheckBox_1").get("checked");
+						t.assertEqual(true,isNull);
+					}
+				}  
 			]);
 			doh.run();
 		});
