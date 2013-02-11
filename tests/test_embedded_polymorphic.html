@@ -69,7 +69,9 @@
 					name : 'initWithNull',
 					runTest : function(t) {
 						editor.set("plainValue",null);
-						editor.set("meta",dojo.fromJson(meta));
+						t.assertEqual("null",typeSelect.value);
+						editor.set("plainValue",{thing:{ext_type:"thing2",firstName:"stefan",common:"meyer"}});
+						t.assertEqual("thing2",typeSelect.value);
 					}
 				} 
 			]);

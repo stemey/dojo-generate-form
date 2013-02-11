@@ -7,10 +7,10 @@ define([ "dojo/_base/array", //
 "dijit/layout/StackContainer",//
 "dojo/Stateful",//
 "dijit/TitlePane",//
-"../getStateful"//
+"../updateModelHandle"//
 
 ], function(array, lang, declare, at, GroupPanelWidget, SingleTypePanelWidget,
-		StackContainer,  Stateful, TitlePane,getStateful) {
+		StackContainer,  Stateful, TitlePane,updateModelHandle) {
 
 	return declare("app.EmbeddedGroupFactory", [],{
 		handles : function(attribute, modelHandle) {
@@ -45,19 +45,13 @@ define([ "dojo/_base/array", //
 			return panelWidget;
 
 		},
-		updateStatefulModel: function(plainValue,modelHandle) {
-			if (plainValue==null) {
-				modelHandle.set("value",null);
+		updateModelHandle: function(meta,plainValue,modelHandle) {
+			if (meta.validTypes.length==1) {
+				updateModelHandle.updateObject(meta,plainValue,modelHandle,this.editorFactory);
 			}else{
-				array.forEach(this.meta.validTypes.attributes,function(attribute) {
-					var childHandle = modelHandle.value[attribute.code];
-					if (!childHandle) {
-						childHandle=new Stateful({});
-						modelHandle.value[attribute.code]=childHandle;
-					}
-					this.editorFactory.getAttributeFactory(attribute).updateStatefulModel(plainValue[attribute.code],childHandle);
-				},this);
+				updateModelHandle.updatePolyObject(meta,plainValue,modelHandle,this.editorFactory);
 			}
-		}
+		}	
+		
 	})
 });

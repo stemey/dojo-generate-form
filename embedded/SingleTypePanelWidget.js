@@ -63,7 +63,7 @@ define([ "dojo/_base/array", //
 				} else {
 					this._switchedFromNull();
 					if (modelHandle.value==null) {
-						updateModelHandle.setEmpty(this.meta,modelHandle);
+						updateModelHandle.setEmpty(modelHandle);
 					}
 					this.validateAndFire();
 				}

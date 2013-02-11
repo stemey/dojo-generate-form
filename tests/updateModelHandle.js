@@ -31,9 +31,22 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 					}
 					]
 			}
-		var polyMeta={}
-		lang.mixin(polyMeta,meta);
-		polyMeta.attributes[0].validTypes.push(type2);
+		var polyAttribute={
+						type_property:"ext_type",
+						code:"objectP",
+						validTypes:[
+							type1,
+							type2
+						]
+		}
+
+		var objectAttribute={
+						type_property:"ext_type",
+						code:"objectP",
+						validTypes:[
+							type1
+						]
+		}
 
 		var primitiveArray= {
 			attributes:[
@@ -79,13 +92,35 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 				console.log("actual"+dojo.toJson(plainValue));
 				doh.assertTrue(equals(plainValue,emptyMeta));
       },
+      function testObjectSetNull(){
+				var modelHandle = updateModelHandle.createMeta();
+        updateModelHandle.updateObject(objectAttribute,emptyType1,modelHandle);
+        updateModelHandle.updateObject(objectAttribute,null,modelHandle);
+        updateModelHandle.updateObject(objectAttribute,emptyType1,modelHandle);
+				var plainValue = getPlainValue(modelHandle);
+				console.log("expected"+dojo.toJson(emptyType1));
+				console.log("actual"+dojo.toJson(plainValue));
+				doh.assertTrue(equals(plainValue,emptyType1));
+      },
       function testPolyObject(){
 				var modelHandle = updateModelHandle.createMeta();
-        updateModelHandle.updateObjectType(null,meta,polyMeta1,modelHandle);
+        updateModelHandle.updatePolyObject(polyAttribute,polyMeta1.objectP,modelHandle);
 				var plainValue = getPlainValue(modelHandle);
-				console.log("expected"+dojo.toJson(polyMeta1));
+				console.log("expected"+dojo.toJson(polyMeta1.objectP));
 				console.log("actual"+dojo.toJson(plainValue));
-				doh.assertTrue(equals(plainValue,polyMeta1));
+				doh.assertTrue(equals(plainValue,polyMeta1.objectP));
+				doh.assertEqual(modelHandle.typeToValue["thing1"].value,modelHandle.value);
+      },
+      function testPolyObjectSwitchType(){
+				var modelHandle = updateModelHandle.createMeta();
+        updateModelHandle.updatePolyObject(polyAttribute,polyMeta1.objectP,modelHandle);
+				var objectP2={ext_type:"thing2",stringP2:"xxx"};
+        updateModelHandle.updatePolyObject(polyAttribute,objectP2,modelHandle);
+				var plainValue = getPlainValue(modelHandle);
+				console.log("expected"+dojo.toJson(objectP2));
+				console.log("actual"+dojo.toJson(plainValue));
+				doh.assertTrue(equals(plainValue,objectP2));
+				doh.assertEqual(modelHandle.typeToValue["thing2"].value,modelHandle.value);
       },
       function testPimitiveArray(){
 				var modelHandle = updateModelHandle.createMeta();

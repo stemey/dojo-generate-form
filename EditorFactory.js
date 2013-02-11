@@ -48,6 +48,10 @@ define([ "dojo/_base/array", //
 				return this.defaultGroupFactory.create(group, modelHandle);
 			}
 		},
+		getUpdateModelHandle: function(meta) {
+			var factory=this.attributeFactoryFinder.getFactory(meta);
+			return factory;
+		},
 		find : function(groupType) {
 			return this.groupFactories[groupType];
 		}

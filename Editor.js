@@ -29,11 +29,11 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			if (value==null) {
 				value={};
 			}
-			if (this.modelHandle) {
-				updateModelHandle.updateObjectType(null,this.meta,value,this.modelHandle);
-			}else{
-				this.set("modelHandle",getStateful(value));
+			if (!this.modelHandle) {
+				this.modelHandle=updateModelHandle.createMeta();
 			}
+			updateModelHandle.updateObjectType(null,this.meta,value,this.modelHandle,this.editorFactory);
+
 		},
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);

@@ -19,7 +19,7 @@ define([
 			});
 			return types.length > 0 ? types[0] : null;
 		},
-		updateObjectType: function(type_property,type, plainValue, modelHandle) {
+		updateObjectType: function(type_property,type, plainValue, modelHandle,editorFactory) {
 			if (plainValue==null) {
 				if (modelHandle.value) {
 					modelHandle.nonNullValue=modelHandle.value;
@@ -37,7 +37,7 @@ define([
 						childHandle=this.createMeta();
 						modelHandle.value[attribute.code]=childHandle;
 					}
-					this.cascadeAttribute(attribute,plainValue[attribute.code], childHandle);
+					this.cascadeAttribute(attribute,plainValue[attribute.code], childHandle,editorFactory);
 				},this);
 			}
 		},
@@ -45,26 +45,22 @@ define([
 			if (modelHandle.value==null) {
 				return;
 			}
-			modelHandle.nonNullValue=modelHandle.value;
+			modelHandle.nonNullValue.set("value",modelHandle.value);
 			modelHandle.set("value",null);
 		},
-		setEmpty: function(meta,modelHandle) {
+		setEmpty: function(modelHandle) {
 			if (!modelHandle.nonNullValue) {
-				updateModelHandle(meta,{},modelHandle.nonNullValue);
+				modelHandle.nonNullValue=this.createMeta();
+				modelHandle.nonNullValue.value=new Stateful({});
 			}
-			modelHandle.set("value",modelHandle.nonNullValue);
+			modelHandle.set("value",modelHandle.nonNullValue.value);
 		}, 
-		updateObject: function( meta, plainValue, modelHandle) {
+		updateObject: function( meta, plainValue, modelHandle,editorFactory) {
 			if (plainValue==null) {
-				if (modelHandle.value) {
-					modelHandle.nonNullValue=modelHandle.value;
-				}
-				modelHandle.set("value",null);
+				this.setNull(meta,modelHandle);
 			}else{
-				if (modelHandle.value==null && ! modelHandle.nonNullValue) {
-					modelHandle.set("value",new Stateful({}));
-				}else if (modelHandle.value==null && modelHandle.nonNullValue) {
-					modelHandle.set("value",modelHandle.nonNullValue);
+				if (modelHandle.value==null){
+					this.setEmpty(modelHandle);
 				}
 				if (meta.validTypes.length>1 && !meta.type_property) {
 					throw new Error("more than one type defined but no type property");
@@ -79,31 +75,60 @@ define([
 					}
 					modelHandle.value.set(meta.type_property,new Stateful({__type:"meta",value:type.code}));
 				}
-				this.updateObjectType(meta.type_property,type,plainValue,modelHandle);
+				this.updateObjectType(meta.type_property,type,plainValue,modelHandle,editorFactory);
 			}
 		},
-		updateString: function(meta,plainValue, modelHandle) {
+		updatePolyObject: function( meta, plainValue, modelHandle,editorFactory) {
+			var typeToValue=modelHandle.typeToValue;
+			if (!typeToValue) {
+				modelHandle.typeToValue={};
+				array.forEach(meta.validTypes,function(type) {
+					var metaObject= this.createMeta();
+					metaObject.value=new Stateful({});
+					metaObject.value[meta.type_property]=this.createMeta();
+					metaObject.value[meta.type_property].value=type.code;
+					modelHandle.typeToValue[type.code]=metaObject;
+				},this);
+				typeToValue=modelHandle.typeToValue;
+			}
+			if (plainValue==null) {
+				modelHandle.set("value",null);
+			}else{
+				if (meta.validTypes.length>1 && !meta.type_property) {
+					throw new Error("more than one type defined but no type property");
+				}
+				var typeCode=plainValue[meta.type_property];
+				var type=this.getFromValidTypes(meta.validTypes,typeCode);
+				if (type==null) {
+					throw new Error("type "+typeCode+" is invalid");
+				}
+				var value = typeToValue[typeCode].value;
+				modelHandle.set("value",value);
+				this.updateObjectType(meta.type_property,type,plainValue,modelHandle,editorFactory);
+			}
+		},
+		updateString: function(meta,plainValue, modelHandle,editorFactory) {
 			if (plainValue==null) {
 				modelHandle.set("value","");
 			}else{
 				modelHandle.set("value",plainValue);
 			}
 		},
-		updateBoolean: function(meta,plainValue, modelHandle) {
+		updateBoolean: function(meta,plainValue, modelHandle,editorFactory) {
 			if (plainValue==null) {
 				modelHandle.set("value",false);
 			}else{
 				modelHandle.set("value",plainValue);
 			}
 		},
-		updateNumber: function(meta,plainValue, modelHandle) {
+		updateNumber: function(meta,plainValue, modelHandle,editorFactory) {
 			if (plainValue==null) {
 				modelHandle.set("value",0);
 			}else{
 				modelHandle.set("value",plainValue);
 			}
 		},
-		updateArray: function(meta,plainValue, modelHandle) {
+		updateArray: function(meta,plainValue, modelHandle,editorFactory) {
 			if (modelHandle.value==null) {
 				modelHandle.set("value",new StatefulArray([]));
 			}
@@ -120,18 +145,26 @@ define([
 						model = this.createMeta();
 						modelArray.push(model);
 					}
-					this.cascadeAttribute(childMeta,element,model);
+					this.cascadeAttribute(childMeta,element,model,editorFactory);
 				},this);
 			}
 		},
 		createMeta: function() {
 			return new Stateful({__type:"meta"});
 		},
-		cascadeAttribute: function(meta,plainValue,modelHandle) {
+		cascadeAttribute: function(meta,plainValue,modelHandle,editorFactory) {
+			if (editorFactory) {
+				var handle=editorFactory.getUpdateModelHandle(meta);
+				if (handle.updateModelHandle) {
+					return handle.updateModelHandle(meta,plainValue,modelHandle);
+				}
+			}
 			if (meta.array ) {
 				this.updateArray(meta,plainValue,modelHandle);
-			}else if (meta.validTypes) {
+			}else if (meta.validTypes && meta.validTypes.length==1) {
 				this.updateObject(meta,plainValue,modelHandle);
+			}else if (meta.validTypes && meta.validTypes.length>1) {
+				this.updatePolyObject(meta,plainValue,modelHandle);
 			}else if (meta.type=="string") {
 				this.updateString(meta,plainValue,modelHandle);
 			}else if (meta.type=="number") {

@@ -34,7 +34,7 @@ define([ "dojo/_base/array", //
 			}
 			var attributeData=modelHandle.value;
 
-			var currentType = attributeData && attributeData[attribute.type_property] ? attributeData[attribute.type_property].value:"null";
+			var currentType = attributeData && attributeData[attribute.type_property] ? attributeData[attribute.type_property].value : "null";
 			
 			this.panelModel = new Stateful({
 				title : "",
@@ -45,31 +45,31 @@ define([ "dojo/_base/array", //
 			this.typeStack = new StackContainer({doLayout:false});
 			this.typeToGroup = {};
 			var me=this;
-			var typeToModel={};
-			this.modelHandle.typeToModel=typeToModel;
+			var typeToValue=this.modelHandle.typeToValue;
 			var cloned = new Stateful({});
-			typeToModel[currentType]=getStateful({});
-			typeToModel[currentType].value=modelHandle.value;
+			//typeToValue[currentType].value=modelHandle.value;
 			array.forEach(attribute.validTypes, function(type) {
-				if (type.code!=currentType) {	
-					typeToModel[type.code]=getStateful({});
-					typeToModel[type.code].value[attribute.type_property]=getStateful(type.code);
-					array.forEach(type.attributes,function(attribute) {
-						typeToModel[type.code].value[attribute.code]=getStateful(null);
-					});
-				}
 				var editor = new Editor(
 					{
-						"modelHandle": typeToModel[type.code],
+						"modelHandle": typeToValue[type.code],
 						"meta":type,editorFactory:this.editorFactory
 					});
 				this.typeStack.addChild(editor);
 				this.typeToGroup[type.code] = editor;
 			}, this);
+
+			this.modelHandle.watch("value",lang.hitch(this,"modelChanged"));
 			
 			this.panelModel.watch("type",lang.hitch(this,"switchType"));
 			this.addChild(this.typeStack);
 			this.set("target", this.panelModel);
+		},
+		modelChanged: function() {
+			if (this.modelHandle.value==null && this.panelModel.get("type")!="null") {
+				this.panelModel.set("type","null");
+			}else if (this.modelHandle.value!=null && this.panelModel.get("type")!=this.modelHandle.value[this.meta.type_property].value) {
+				this.panelModel.set("type",this.modelHandle.value[this.meta.type_property].value);
+			}
 		},
 		getChildrenToValidate: function() {
 			if (this.modelHandle.value==null) {
@@ -87,20 +87,22 @@ define([ "dojo/_base/array", //
 					this.typeStack.domNode.style.display="none";
 					this.validateAndFire();
 				} else {
-					this.typeStack.domNode.style.display="block";
+					this.typeStack.domNode.style.display="";
 					if (oldValue!=newValue) {	
 						if (modelHandle.get("value")==null) {
-							modelHandle.value=this.modelHandle.typeToModel[type].value;
+							modelHandle.value=this.modelHandle.typeToValue[type].value;
 						}else{
 							var oldModelHandleValue=modelHandle.value;	
-							modelHandle.value=this.modelHandle.typeToModel[type].value;
-							var oldMeta = this.typeToGroup[oldValue].meta;
-							array.forEach(oldMeta.attributes,function(attribute) {
-								//only copy primitives
-								if (!attribute.validTypes && typeof modelHandle.value[attribute.code]!= "undefined") {
-									modelHandle.value[attribute.code].set("value",oldModelHandleValue[attribute.code].value);
-								}
-							},this);
+							modelHandle.value=this.modelHandle.typeToValue[type].value;
+							if (oldValue!="null") {
+								var oldMeta = this.typeToGroup[oldValue].meta;
+								array.forEach(oldMeta.attributes,function(attribute) {
+									//only copy primitives
+									if (!attribute.validTypes && typeof modelHandle.value[attribute.code]!= "undefined") {
+										modelHandle.value[attribute.code].set("value",oldModelHandleValue[attribute.code].value);
+									}
+								},this);
+							}
 						}
 					}
 					this.typeStack.selectChild(this.typeToGroup[type]);
