@@ -18,7 +18,7 @@
 		         "dojo/text!./meta/embedded_list.json","dojo/text!./entity/embedded_list.json"//
 		         ],function(ready,json,Editor,Stateful,doh,EditorFactory,meta,entity) {
 			
-				var editor=new Editor({"plainValue": dojo.fromJson(entity),
+				 editor=new Editor({"plainValue": dojo.fromJson(entity),
 				"meta":dojo.fromJson(meta),editorFactory:new EditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);
@@ -49,11 +49,21 @@
 								name: 'initWithNull',
 								runTest: function(t){
 									editor.set("plainValue",null);
-									editor.set("meta",dojo.fromJson(meta));
-									dijit.byId("dijit_form_Button_6").onClick();
+									dijit.byId("dijit_form_Button_0").onClick();
 									t.assertEqual(1,editor.get("plainValue").things.length);
 								}
-							}]);			
+							},
+							{
+								name: 'resetValue',
+								runTest: function(t){
+									editor.set("plainValue",null);
+									editor.set("plainValue",dojo.fromJson(entity));
+									t.assertEqual(2,editor.get("plainValue").things.length);
+									var message1=dijit.byId("gform_ValidationTextBox_0").get("value");
+									t.assertEqual("moin",message1);
+								}
+							}
+					]);			
 			doh.run();
 		});
 		

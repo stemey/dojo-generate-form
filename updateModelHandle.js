@@ -143,9 +143,9 @@ define([
 					var model=modelArray[i];
 					if (model==null) {
 						model = this.createMeta();
-						modelArray.push(model);
 					}
 					this.cascadeAttribute(childMeta,element,model,editorFactory);
+					modelArray.push(model);
 				},this);
 			}
 		},
