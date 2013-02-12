@@ -12,9 +12,12 @@ define([ "dojo/_base/array", //
 		postCreate : function() {
 			this.inherited(arguments);
 			this.persistable=typeof this.modelHandle != "undefined" && this.modelHandle!=null;
+				if (this.modelHandle && !this.modelHandle.tmp) {
+					throw new Error("modelHandle.tmp is null");
+				}
 			this.on("valid-changed",lang.hitch(this,"onValidChanged"));
 			if (this.persistable) {
-				this.modelHandle.set("errorCount",0)
+				this.set("errorCount",0)
 				this.modelHandle.watch("valid",lang.hitch(this,"onModelValidChanged"));
 			}
 		},
@@ -35,7 +38,7 @@ define([ "dojo/_base/array", //
 		},
 		_getErrorCountAttr: function() {
 			if (this.persistable) {
-				var errorCount= this.modelHandle[this.id+"errorCount"];
+				var errorCount= this.modelHandle.tmp[this.id+"errorCount"];
 				if (typeof errorCount == "number") {
 					return errorCount;
 				}else{
@@ -47,7 +50,7 @@ define([ "dojo/_base/array", //
 		},
 		_setErrorCountAttr: function(errorCount) {
 			if (this.persistable) {
-				this.modelHandle[this.id+"errorCount"]=errorCount;
+				this.modelHandle.tmp[this.id+"errorCount"]=errorCount;
 			}
 		},
 		validateAndFire: function(errorCount){

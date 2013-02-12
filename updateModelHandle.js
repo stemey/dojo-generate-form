@@ -3,8 +3,8 @@ define([
 	"dojo/_base/lang",
 	"dojo/Stateful",
 	"dojox/mvc/StatefulArray",
-	"./getStateful"
-], function(array, lang, Stateful, StatefulArray, getStateful){
+	"./getPlainValue"
+], function(array, lang, Stateful, StatefulArray, getPlainValue){
 
 
   var updateModelHandle= {
@@ -36,6 +36,8 @@ define([
 					if (!childHandle) {
 						childHandle=this.createMeta();
 						modelHandle.value[attribute.code]=childHandle;
+					}else {
+						this.resetMeta(childHandle);
 					}
 					this.cascadeAttribute(attribute,plainValue[attribute.code], childHandle,editorFactory);
 				},this);
@@ -52,6 +54,8 @@ define([
 			if (!modelHandle.nonNullValue) {
 				modelHandle.nonNullValue=this.createMeta();
 				modelHandle.nonNullValue.value=new Stateful({});
+			}else {
+				this.resetMeta(modelHandle.nonNullValue);
 			}
 			modelHandle.set("value",modelHandle.nonNullValue.value);
 		}, 
@@ -77,8 +81,12 @@ define([
 				}
 				this.updateObjectType(meta.type_property,type,plainValue,modelHandle,editorFactory);
 			}
+			modelHandle.set("oldValue",getPlainValue(modelHandle.value));
 		},
 		updatePolyObject: function( meta, plainValue, modelHandle,editorFactory) {
+			if (plainValue!=null) {
+				var typeCode=plainValue[meta.type_property];
+			}
 			var typeToValue=modelHandle.typeToValue;
 			if (!typeToValue) {
 				modelHandle.typeToValue={};
@@ -88,6 +96,11 @@ define([
 					metaObject.value[meta.type_property]=this.createMeta();
 					metaObject.value[meta.type_property].value=type.code;
 					modelHandle.typeToValue[type.code]=metaObject;
+					if (type.code==typeCode)  {
+						this.updateObjectType(meta.type_property,type,plainValue,metaObject,editorFactory);
+					}else{
+						this.updateObjectType(meta.type_property,type,{},metaObject,editorFactory);
+					}
 				},this);
 				typeToValue=modelHandle.typeToValue;
 			}
@@ -97,15 +110,14 @@ define([
 				if (meta.validTypes.length>1 && !meta.type_property) {
 					throw new Error("more than one type defined but no type property");
 				}
-				var typeCode=plainValue[meta.type_property];
 				var type=this.getFromValidTypes(meta.validTypes,typeCode);
 				if (type==null) {
 					throw new Error("type "+typeCode+" is invalid");
 				}
 				var value = typeToValue[typeCode].value;
 				modelHandle.set("value",value);
-				this.updateObjectType(meta.type_property,type,plainValue,modelHandle,editorFactory);
 			}
+			modelHandle.set("oldValue",getPlainValue(modelHandle.value));
 		},
 		updateString: function(meta,plainValue, modelHandle,editorFactory) {
 			if (plainValue==null) {
@@ -113,6 +125,7 @@ define([
 			}else{
 				modelHandle.set("value",plainValue);
 			}
+			modelHandle.set("oldValue",modelHandle.value);
 		},
 		updateBoolean: function(meta,plainValue, modelHandle,editorFactory) {
 			if (plainValue==null) {
@@ -120,6 +133,7 @@ define([
 			}else{
 				modelHandle.set("value",plainValue);
 			}
+			modelHandle.set("oldValue",modelHandle.value);
 		},
 		updateNumber: function(meta,plainValue, modelHandle,editorFactory) {
 			if (plainValue==null) {
@@ -127,6 +141,7 @@ define([
 			}else{
 				modelHandle.set("value",plainValue);
 			}
+			modelHandle.set("oldValue",modelHandle.value);
 		},
 		updateArray: function(meta,plainValue, modelHandle,editorFactory) {
 			if (modelHandle.value==null) {
@@ -143,14 +158,25 @@ define([
 					var model=modelArray[i];
 					if (model==null) {
 						model = this.createMeta();
+					}else {
+						this.resetMeta(model);
 					}
 					this.cascadeAttribute(childMeta,element,model,editorFactory);
 					modelArray.push(model);
 				},this);
 			}
+			modelHandle.set("oldValue",plainValue);
 		},
 		createMeta: function() {
-			return new Stateful({__type:"meta"});
+			var meta= new Stateful({__type:"meta",valid:true,message:null});
+			meta.set("tmp",new Stateful());
+			return meta;	
+		},
+		resetMeta: function(meta) {
+			meta.set("tmp",new Stateful());
+			meta.set("message",null);
+			meta.set("valid",true);
+			return meta;	
 		},
 		cascadeAttribute: function(meta,plainValue,modelHandle,editorFactory) {
 			if (editorFactory) {

@@ -9,10 +9,10 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "dojox/mvc/WidgetList",//
 "./RepeatedEmbeddedWidget",//
-"../getStateful",//
+"../updateModelHandle",//
 "dojox/mvc/StatefulArray"
 ], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, getStateful, StatefulArray) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, StatefulArray) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -50,6 +50,9 @@ define([ "dojo/_base/array", //
 
 			return select;
 
+		},
+		updateModelHandle: function(meta,plainValue,modelHandle) {
+			updateModelHandle.updateArray(meta,plainValue,modelHandle,this.editorFactory);
 		}
 	})
 });

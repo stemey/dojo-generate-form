@@ -33,7 +33,7 @@ define([ "dojo/_base/array", //
 			array.forEach(group.attributes, function(attribute) {
 				var label = attribute.label;
 				if (!modelHandle.value[attribute.code]) {
-					modelHandle.value[attribute.code]=getStateful(null);
+					throw new Error("provide a default value");//modelHandle.value[attribute.code]=getStateful(null);
 				}
 				var attributeEditor = this.createAttribute(attribute,
 						modelHandle.value[attribute.code],new Resolver(modelHandle));

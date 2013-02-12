@@ -8,6 +8,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			this.inherited(arguments);
 			if (this.modelHandle && typeof this.modelHandle.watch == "function") {
 				this.modelHandle.watch("message",lang.hitch(this,"onMessageChange"));
+				this.modelHandle.watch("oldValue",lang.hitch(this,"onOldValueChange"));
 				this.modelHandle.watch("value",lang.hitch(this,"onModelValueChange"));
 				this.on("value-changed",lang.hitch(this,"onValueChange"));
 				this.on("valid-changed",lang.hitch(this,"onValidChange"));
@@ -44,6 +45,10 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		onModelValueChange: function(propName,old,nu) {
 			this.updateState();
 			this.emit("value-changed",{src:this,oldValue:old,newValue:nu});
+		},
+		onOldValueChange: function(propName,old,nu) {
+			this.changesTooltip.label="was "+dojo.toJson(this.modelHandle.oldValue,true)
+			this.updateState();
 		},
 		onValidChange: function(e	) {
 			this.updateState();
