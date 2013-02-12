@@ -57,6 +57,13 @@
 									dijit.byId("dijit_form_Button_0").onClick();
 									t.assertEqual(2,editor.get("plainValue").things.length);
 								}
+							},
+							{
+								name: 'reset',
+								runTest: function(t){
+									editor.set("plainValue",{things:[{ext_type:"thing1",common:"c1",name:"name1"}, {ext_type:"thing2",common:"c2",firstName:"fname1"}]});
+									t.assertEqual(2,editor.get("plainValue").things.length);
+								}
 							}]);			
 			doh.run();
 		});

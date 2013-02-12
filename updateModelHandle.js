@@ -147,8 +147,8 @@ define([
 			if (modelHandle.value==null) {
 				modelHandle.set("value",new StatefulArray([]));
 			}
+			modelHandle.value.splice(0,modelHandle.value.length);
 			if (plainValue==null) {
-				modelHandle.value.splice(0,modelHandle.value.length);
 			}else{
 				var modelArray=modelHandle.value;
 				var childMeta={};
