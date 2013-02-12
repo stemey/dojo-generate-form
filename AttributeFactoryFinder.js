@@ -12,6 +12,7 @@ define([ "dojo/_base/array", //
 "./primitive/TimeAttributeFactory",//
 "./embedded/EmbeddedAttributeFactory",//
 "./primitive/NumberAttributeFactory",//
+"./primitive/CurrencyAmountAttributeFactory",//
 "./primitive/MappedContentPaneFactory",//
 "./group/AttributeListWidget",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//,
@@ -20,7 +21,8 @@ define([ "dojo/_base/array", //
 ], function(array, lang, declare, PrimitiveListAttributeFactory,StringAttributeFactory,
 		BooleanAttributeFactory, SelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory,
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
-		TimeAttributeFactory, EmbeddedAttributeFactory, NumberAttributeFactory, MappedContentPaneFactory,
+		TimeAttributeFactory, EmbeddedAttributeFactory, NumberAttributeFactory, 
+		CurrencyAmountAttributeFactory, MappedContentPaneFactory,
 		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
 	return declare("app.editor.AttributeFactoryFinder", null, {
@@ -44,6 +46,7 @@ define([ "dojo/_base/array", //
 			this.attributeFactoryMap["table"]= new TableListAttributeFactory({editorFactory:this.editorFactory});
 			this.attributeFactoryMap["primitive_list"]= new PrimitiveListAttributeFactory({editorFactory:this.editorFactory});
 			this.attributeFactoryMap["mapped_contentpane"]= new MappedContentPaneFactory({editorFactory:this.editorFactory});
+			this.attributeFactoryMap["currencyamount"]= new CurrencyAmountAttributeFactory({editorFactory:this.editorFactory});
 		},
 		
 		attributeFactoryMap : {

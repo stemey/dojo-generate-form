@@ -1,0 +1,15 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "editor":"currencyamount",
+            "type":"number",
+            "label":"Price",
+            "code":"price",
+            "required":false,
+            "array":false
+        }
+    ],
+    "type_property":"ext_type"
+}

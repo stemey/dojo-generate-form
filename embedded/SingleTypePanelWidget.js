@@ -14,20 +14,21 @@ define([ "dojo/_base/array", //
 		templateString : template,
 		
 		postCreate : function() {
-			var attribute=this.get("meta");
+			var attribute = this.get("meta");
 			this.panelModel = new dojo.Stateful();
 			this.panelModel.set("empty", false);
 			this.panelModel.set("title", "");
 			
-			var modelHandle = this.get("modelHandle");
-			if (modelHandle.value==null) {
-				modelHandle.value=new Stateful();
+			this.get("modelHandle").saveModel = getStateful({});
+			if (!this.get("modelHandle").value) {
+				this.get("modelHandle").saveModel.value = new Stateful();
 				this.panelModel.set("empty", true);
-				this.containerNode.style.display="none";
+				this.containerNode.style.display = "none";
+			} else {
+				this.get("modelHandle").saveModel.value = this.get("modelHandle").value;
 			}
-			modelHandle.saveModel=modelHandle.value;
 			
-			this.editor = new Editor({"modelHandle": modelHandle,"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
+			this.editor = new Editor({"modelHandle": this.get("modelHandle").saveModel, "meta": attribute.validTypes[0], editorFactory:this.editorFactory});
 			this.panelModel.watch("empty", lang.hitch(this,"switchedNull"));
 			this.addChild(this.editor);
 			this.set("target", this.panelModel);
@@ -45,13 +46,13 @@ define([ "dojo/_base/array", //
 			var modelHandle=this.get("modelHandle");
 			
 			if (this.panelModel.get("empty")) {
-				modelHandle.saveModel=modelHandle.value;
+				modelHandle.saveModel.value=modelHandle.value;
 				modelHandle.set("value", null);
 				
 				this.containerNode.style.display="none";
 				this.validateAndFire();
 			} else {
-				modelHandle.set("value", modelHandle.saveModel);
+				modelHandle.set("value", modelHandle.saveModel.value);
 				
 				this.containerNode.style.display="";
 				this.validateAndFire();
