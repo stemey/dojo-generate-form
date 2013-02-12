@@ -18,7 +18,13 @@ define([ "dojo/_base/array", //
 			this.on("valid-changed",lang.hitch(this,"onValidChanged"));
 			if (this.persistable) {
 				this.set("errorCount",0)
-				this.modelHandle.watch("valid",lang.hitch(this,"onModelValidChanged"));
+				this.modelWatch=this.modelHandle.watch("valid",lang.hitch(this,"onModelValidChanged"));
+			}
+		},
+		destroy: function() {
+			this.inherited(arguments);
+			if (this.modelWatch) {
+				this.modelWatch.remove();
 			}
 		},
 		getPrefix: function() {

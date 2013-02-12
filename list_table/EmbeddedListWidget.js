@@ -1,17 +1,26 @@
 define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		"dijit/_Container", "dijit/_TemplatedMixin",
 		"dijit/_WidgetsInTemplateMixin",
-		"dojo/text!./embedded_list_attribute.html", "../getStateful"//
+		"dojo/text!./embedded_list_attribute.html", "../updateModelHandle"//
 ], function(lang, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, template, getStateful) {
+		_WidgetsInTemplateMixin, template, updateModelHandle) {
 
 	return declare("app.EmbeddedListWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template,
 		attribute:null,
 		_addElement : function() {
+			var newModelHandle = updateModelHandle.createMeta();
 			var type=this.attribute.validTypes[0].code;
-			this.target.value.push(getStateful({ext_type:type}));
+			var type_property=this.attribute.type_property;
+			var newValue={};
+			newValue[type_property]=type;
+			if (this.attribute.validTypes.length>1) {
+				updateModelHandle.updateMergedPolyObject(this.attribute,newValue,newModelHandle);
+			}else{
+				updateModelHandle.updateObject(this.attribute,newValue,newModelHandle);
+			}
+			this.target.value.push(newModelHandle);
 			this.emit("valid-changed");
 		},
 		postCreate : function() {

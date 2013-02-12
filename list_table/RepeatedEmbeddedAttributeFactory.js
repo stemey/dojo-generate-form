@@ -9,12 +9,12 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "./TableWidgetList",//
 "./RepeatedEmbeddedWidget",//
-"../getStateful",//
+"../updateModelHandle",//
 "./TableHeader",//
 "./TableElementHeader",//
 "./mergeAttributeDefinitions"
 ], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, getStateful,TableHeader,TableElementHeader,mergeAttributeDefinitions) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle,TableHeader,TableElementHeader,mergeAttributeDefinitions) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -28,7 +28,7 @@ define([ "dojo/_base/array", //
 		create : function(attribute, modelHandle) {
 
 			if (modelHandle.value==null) {
-				modelHandle.value=new StatefulArray([]);
+				throw new Error("modelHandle.value should be initialized here");
 			}
 
 			var select = new EmbeddedListWidget({
