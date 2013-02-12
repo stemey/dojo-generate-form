@@ -37,6 +37,7 @@ define([ "dojo/_base/array", //
 					       				new DateAttributeFactory({editorFactory:this.editorFactory}) //
 					       				];
 					this.attributeFactoryMap["table"]=new TableListAttributeFactory({editorFactory:this.editorFactory});
+					this.attributeFactoryMap["primitive_list"]=new PrimitiveListAttributeFactory({editorFactory:this.editorFactory});
 				},
 				attributeFactoryMap : {
 				},

@@ -127,6 +127,14 @@ define([
 			}
 			modelHandle.set("oldValue",modelHandle.value);
 		},
+		updateNullableString: function(meta,plainValue, modelHandle,editorFactory) {
+			if (plainValue==null) {
+				modelHandle.set("value",null);
+			}else{
+				modelHandle.set("value",plainValue);
+			}
+			modelHandle.set("oldValue",modelHandle.value);
+		},
 		updateBoolean: function(meta,plainValue, modelHandle,editorFactory) {
 			if (plainValue==null) {
 				modelHandle.set("value",false);
@@ -181,7 +189,7 @@ define([
 		cascadeAttribute: function(meta,plainValue,modelHandle,editorFactory) {
 			if (editorFactory) {
 				var handle=editorFactory.getUpdateModelHandle(meta);
-				if (handle.updateModelHandle) {
+				if (handle && handle.updateModelHandle) {
 					return handle.updateModelHandle(meta,plainValue,modelHandle);
 				}
 			}
@@ -193,6 +201,8 @@ define([
 				this.updatePolyObject(meta,plainValue,modelHandle);
 			}else if (meta.type=="string") {
 				this.updateString(meta,plainValue,modelHandle);
+			}else if (meta.type=="date") {
+				this.updateNullableString(meta,plainValue,modelHandle);
 			}else if (meta.type=="number") {
 				this.updateNumber(meta,plainValue,modelHandle);
 			}else if (meta.type=="boolean") {

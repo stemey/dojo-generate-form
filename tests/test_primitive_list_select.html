@@ -18,7 +18,7 @@
 		         "dojo/text!./meta/primitive_list_select.json","dojo/text!./entity/primitive_list_select.json"//
 		         ],function(ready,json,Editor,Stateful,doh,EditorFactory,meta,entity) {
 			
-				var editor=new Editor({"plainValue":dojo.fromJson(entity),
+				editor=new Editor({"plainValue":dojo.fromJson(entity),
 				"meta":dojo.fromJson(meta),editorFactory:new EditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);
@@ -43,6 +43,16 @@
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_0").onClick();
 									t.assertEqual(2,editor.get("plainValue").things.length);
+								}
+							},
+							{
+								name: 'reset',
+								runTest: function(t){
+									editor.set("plainValue",{things:["bye","moin"]});
+									var message1=dijit.byId("dijit_form_Select_6").get("value");
+									t.assertEqual("bye",message1);
+									var message2=dijit.byId("dijit_form_Select_7").get("value");
+									t.assertEqual("moin",message2);
 								}
 							}]);			
 			doh.run();

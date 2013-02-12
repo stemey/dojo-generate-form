@@ -11,7 +11,7 @@ define([ "dojo/_base/array", //
 	return declare("app.DateAttributeFactory", [], {
 		
 		handles : function(attribute) {
-			return meta.isType(attribute, "date") && !attribute.array;
+			return attribute.type == "date" && !attribute.array;
 		},
 		
 		create : function(attribute, modelHandle) {
