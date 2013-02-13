@@ -4,11 +4,16 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 
 	return declare("gform._DecoratorMixin",[ _GroupMixin ], {
 		baseClass:"Decorator",
+		isValidationContainer:true,
+		
+		messageWatch : null,
+		valueWatch : null,
+		
 		postCreate: function() {
 			this.inherited(arguments);
 			if (this.modelHandle && typeof this.modelHandle.watch == "function") {
-				this.modelHandle.watch("message",lang.hitch(this,"onMessageChange"));
-				this.modelHandle.watch("value",lang.hitch(this,"onModelValueChange"));
+				this.messageWatch = this.modelHandle.watch("message",lang.hitch(this,"onMessageChange"));
+				this.valueWatch = this.modelHandle.watch("value",lang.hitch(this,"onModelValueChange"));
 				this.on("value-changed",lang.hitch(this,"onValueChange"));
 				this.on("valid-changed",lang.hitch(this,"onValidChange"));
 			}else{
@@ -29,26 +34,37 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		        label: ""
 		    });
 			this.updateState();
-			this.changesTooltip.label="was "+dojo.toJson(this.modelHandle.oldValue,true)
-			
-			
+			this.changesTooltip.label="was "+dojo.toJson(this.modelHandle.oldValue,true);
 		},
+		
+		destroy: function() {
+			if (this.messageWatch) {
+				this.messageWatch.remove();
+			}
+			if (this.valueWatch) {
+				this.valueWatch.remove();
+			}
+		},
+		
 		startup: function() {
 			this.inherited(arguments);
 		},
+		
 		onValueChange: function(e) {
 			if (e.src!=this) {
 				this.updateState();
 			}
 		},
+		
 		onModelValueChange: function(propName,old,nu) {
 			this.updateState();
 			this.emit("value-changed",{src:this,oldValue:old,newValue:nu});
 		},
+		
 		onValidChange: function(e	) {
 			this.updateState();
 		},
-		isValidationContainer:true,
+		
 		updateState: function() {
 			if (!this.modelHandle) {
 				return;
@@ -68,6 +84,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 					this.set("state","Error");
 			}
 		},	
+		
 		onMessageChange: function(a,old,nu) {
 			this.errorTooltip.label=nu;
 		}

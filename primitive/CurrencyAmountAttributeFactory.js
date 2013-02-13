@@ -28,15 +28,12 @@ define([ "dojo/_base/array", //
 			return {
 				format : function(value) {
 					if (value == null) {
-						console.log("format value", value);
 						return null;
 					} else {
-						console.log("format value", value, value / 100);
 						return value / 100;
 					}
 				},
 				parse : function(value) {
-					console.log("parse value", value, Math.round(value * 100));
 					return Math.round(value * 100);
 				}
 			};
