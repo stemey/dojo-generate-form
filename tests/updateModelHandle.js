@@ -131,6 +131,58 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 				console.log("actual"+dojo.toJson(plainValue));
 				doh.assertEqual("b",modelHandle.value.things.value[1].value);
 				doh.assertTrue(equals(plainValue,expected));
+      },
+      function testUpdateMergedObject(){
+				var meta={
+					code:"x",
+					type_property:"ext_type",
+					validTypes: [
+						{code:"thing1",attributes:[{code:"a",type:"string"},{code:"b",type:"string"}]},
+						{code:"thing2",attributes:[{code:"b",type:"string"},{code:"c",type:"string"}]}
+					]
+				};
+				var modelHandle = updateModelHandle.createMeta();
+				var expected ={ext_type:"thing1",a:"1",b:"2"};
+        updateModelHandle.updateMergedObject(meta,expected,modelHandle);
+				var plainValue = getPlainValue(modelHandle);
+				console.log("expected"+dojo.toJson(expected));
+				console.log("actual"+dojo.toJson(plainValue));
+      },
+      function testSwitchTypeInMergedObject(){
+				var meta={
+					code:"x",
+					type_property:"ext_type",
+					validTypes: [
+						{code:"thing1",attributes:[{code:"a",type:"string"},{code:"b",type:"string"}]},
+						{code:"thing2",attributes:[{code:"b",type:"string"},{code:"c",type:"string"}]}
+					]
+				};
+				var modelHandle = updateModelHandle.createMeta();
+				var initialValue ={ext_type:"thing1",a:"1",b:"2"};
+				var expected ={ext_type:"thing2",c:"",b:"2"};
+        updateModelHandle.updateMergedObject(meta,expected,modelHandle);
+        updateModelHandle.switchTypeInMergedObject(meta,"thing2",modelHandle);
+				var plainValue = getPlainValue(modelHandle);
+				console.log("expected"+dojo.toJson(expected));
+				console.log("actual"+dojo.toJson(plainValue));
+      },
+      function testUpdateMergedObjectWithDifferentType(){
+				var meta={
+					code:"x",
+					type_property:"ext_type",
+					validTypes: [
+						{code:"thing1",attributes:[{code:"a",type:"string"},{code:"b",type:"string"}]},
+						{code:"thing2",attributes:[{code:"b",type:"string"},{code:"c",type:"string"}]}
+					]
+				};
+				var modelHandle = updateModelHandle.createMeta();
+				var initialValue ={ext_type:"thing2",b:"1",c:"2"};
+        updateModelHandle.updateMergedObject(meta,initialValue,modelHandle);
+				var expected ={ext_type:"thing1",a:"1",b:"2"};
+				updateModelHandle.updateMergedObject(meta,expected,modelHandle);
+				var plainValue = getPlainValue(modelHandle);
+				console.log("expected"+dojo.toJson(expected));
+				console.log("actual"+dojo.toJson(plainValue));
       }
     ]);
 

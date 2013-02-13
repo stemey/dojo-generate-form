@@ -62,6 +62,16 @@ define([ "dojo/_base/array", //
 
 			return select;
 
+		},
+		updateObject: function (meta,plainValue,modelHandle) {
+			if (meta.validTypes.length==1) {
+				updateModelHandle.updateObject(meta,plainValue,modelHandle,this.editorFactory);
+			}else{
+				updateModelHandle.updateMergedObject(meta,plainValue,modelHandle,this.editorFactory);
+			}			
+		},
+		updateModelHandle: function(meta,plainValue,modelHandle) {
+			updateModelHandle.updateArray(meta,plainValue,modelHandle,this.editorFactory, lang.hitch(this,"updateObject"));
 		}
 	})
 });

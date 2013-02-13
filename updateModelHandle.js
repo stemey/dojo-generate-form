@@ -103,6 +103,15 @@ define([
 					}
 				},this);
 				typeToValue=modelHandle.typeToValue;
+			}else{
+				array.forEach(meta.validTypes,function(type) {
+					var metaObject = typeToValue[type.code];
+					if (type.code==typeCode)  {
+						this.updateObjectType(meta.type_property,type,plainValue,metaObject,editorFactory);
+					}else{
+						this.updateObjectType(meta.type_property,type,{},metaObject,editorFactory);
+					}
+				},this);
 			}
 			if (plainValue==null) {
 				modelHandle.set("value",null);
@@ -151,7 +160,65 @@ define([
 			}
 			modelHandle.set("oldValue",modelHandle.value);
 		},
-		updateArray: function(meta,plainValue, modelHandle,editorFactory) {
+		updateMergedObject: function(meta,plainValue, modelHandle,editorFactory) {
+			var combinedAttributes=modelHandle.tmp.combininedAttributes;
+			if (!combinedAttributes) {
+				combinedAttributes=this.mergeAttributeDefinitions(meta.validTypes);
+				modelHandle.tmp.combininedAttributes=combinedAttributes;
+			}
+			if (!modelHandle.value) {
+				modelHandle.set("value",new Stateful());
+			}
+			var typeCode=plainValue ? plainValue[meta.type_property] :null;
+			if (!modelHandle.value[meta.type_property]) {
+				modelHandle.value[meta.type_property]=this.createMeta();
+			}else{
+				this.resetMeta(modelHandle.value[meta.type_property]);
+			}
+			modelHandle.value[meta.type_property].set("value",typeCode);
+			array.forEach(combinedAttributes, function(attribute) {
+				if (!modelHandle.value[attribute.code]) {
+					modelHandle.value[attribute.code]=this.createMeta();
+				}
+				var attributeModelHandle=modelHandle.value[attribute.code];
+				this.cascadeAttribute(attribute,plainValue[attribute.code],attributeModelHandle);
+				attributeModelHandle.ignore=true;
+			}, this);
+			if (typeCode!=null) {
+				var type=this.getFromValidTypes(meta.validTypes,typeCode);
+				array.forEach(type.attributes,function(attribute) {
+					modelHandle.value[attribute.code].ignore=false;					
+				},this);
+			}
+		
+		},
+		switchTypeInMergedObject: function(meta,typeCode,modelHandle) {
+			modelHandle.value[meta.type_property].set("value",typeCode);
+			var type=this.getFromValidTypes(meta.validTypes,typeCode);
+			array.forEach(modelHandle.tmp.combinedAttributes,function(attribute) {
+				modelHandle.value[attribute.code].ignore=false;					
+			},this);
+			array.forEach(type.attributes,function(attribute) {
+				modelHandle.value[attribute.code].ignore=true;					
+			},this);
+		},
+		mergeAttributeDefinitions: function(validTypes) {
+			var combinedAttributes = [];
+			var addedAttributes={};
+			array.forEach(validTypes, function(type) {
+				array.forEach(type.attributes, function(attribute) {
+					if (!addedAttributes[attribute.code]) {
+						attribute.types=[type.code];
+						combinedAttributes.push(attribute);
+						addedAttributes[attribute.code]=attribute;
+					}else{
+						addedAttributes[attribute.code].types.push(type.code);
+					}
+				}, this);
+			}, this);
+			return combinedAttributes;
+		},
+		updateArray: function(meta,plainValue, modelHandle,editorFactory,cascadeAttribute) {
 			if (modelHandle.value==null) {
 				modelHandle.set("value",new StatefulArray([]));
 			}
@@ -169,7 +236,7 @@ define([
 					}else {
 						this.resetMeta(model);
 					}
-					this.cascadeAttribute(childMeta,element,model,editorFactory);
+					(cascadeAttribute || this.cascadeAttribute).apply(this,[childMeta,element,model,editorFactory]);
 					modelArray.push(model);
 				},this);
 			}
