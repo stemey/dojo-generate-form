@@ -10,7 +10,10 @@
             "array":false,
             "emptyValueLabel":"-- Please select --",
             "editor":"checked_select",
-            "values":["Hallo","Good bye"]
+            "values":[
+            	"Hallo",
+            	{label: "Bye", value: "Good bye"}
+            ]
         }
     ],
     "type_property":"ext_type"

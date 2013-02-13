@@ -12,8 +12,8 @@
             	"Hello",
             	"Hi",
             	"Good bye",
-            	"Ciao",
-            	"Bye Bye"
+            	{label: "Ciao Bella", value: "Ciao"},
+            	{label: "Bye", value: "Bye Bye"}
             ]
         }
     ],

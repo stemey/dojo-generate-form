@@ -17,10 +17,16 @@
             "required":false,
             "array":false,
             "mapped_attribute":"language",
-						"mapped_values":{
-							"english":["Mr.","Mrs."],
-							"german":["Herr","Frau"],
-						}
+			"mapped_values":{
+				"english":[
+					{label: "Mr.", value: "Mr."},
+					{label: "Mrs.", value: "Mrs."}
+				],
+				"german":[
+					{label: "Herr", value: "Herr"},
+					{label: "Frau", value: "Frau"}
+				],
+			}
         }
     ],
     "type_property":"ext_type"

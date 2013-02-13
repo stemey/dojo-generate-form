@@ -4,112 +4,135 @@ define([ "dojo/_base/array", //
 "dojo/dom-class",//
 "dojox/mvc/at",//
 "dojox/form/CheckedMultiSelect",//
+"./_MappedSelectAttributeFactoryBase",//
 "../getStateful",//
 "../meta",//
 "../getPlainValue",//
 "dojox/mvc/StatefulArray"
-], function(array, lang, declare, domClass, at, CheckedMultiSelect, getStateful, meta,getPlainValue,StatefulArray) {
+], function(array, lang, declare, domClass, at, CheckedMultiSelect, _MappedSelectAttributeFactoryBase, //
+		getStateful, meta, getPlainValue, StatefulArray) {
 
-	return declare("gform.MappedCheckedMultiSelectAttributeFactory", [], {
+	return declare("gform.MappedCheckedMultiSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
 
 		handles : function(attribute) {
 			return attribute != null && attribute.array && !attribute.validTypes && attribute.mapped_values;
 		},
 		
-		create : function(attribute, modelHandle, resolver) {
-			var options = this._createMappedOptions(attribute, resolver);
-			
-			var valueBinding = at(modelHandle, "value").direction(at.to);
+		createValueBinding : function(modelHandle) {
+			return at(modelHandle, "value").direction(at.to);
+		},
 
-			var select = new CheckedMultiSelect({
-				"value" : valueBinding,
-				options : options,
-				style : "width: 200px;",
-				multiple : true
-			});
+		createSelect : function(config) {
+			config["multiple"] = true;
+			return new CheckedMultiSelect(config);
+		},
 
+		initValue : function(select, modelHandle) {
 			if (modelHandle.oldValue == null || typeof modelHandle.oldValue == "undefined") {
 				modelHandle.set("oldValue", []);
 			}
 			initValue = getPlainValue(modelHandle.value);
 			select.set("value", initValue);
-			
-			resolver.watch(attribute.mapped_attribute, 
-				lang.hitch(this, "_onMappedAttributeChanged", select, attribute, resolver));
-			
-			if (options.length == 0) {
-				this._hideAndDisable(select);
-			}
-			
-			return select;
-		},
-		
-		_onMappedAttributeChanged : function(select, attribute, resolver) {
-			var newOptions = this._createMappedOptions(attribute, resolver);
-			
-			if (newOptions.length == 0) {
-				this._hideAndDisable(select);
-				select.removeOption(select.getOptions());
-			} else {
-				this._showAndEnable(select);
-				this._removeOldOptions(select, newOptions);
-				this._addNewOptions(select, newOptions);
-			}
-		},
-		
-		_hideAndDisable : function(select) {
-			select.set("disabled", true);
-			domClass.add(select.domNode, "dijitHidden");
-		},
-		
-		_showAndEnable : function(select) {
-			select.set("disabled", false);
-			domClass.remove(select.domNode, "dijitHidden");
-		},
-		
-		_createMappedOptions : function(attribute, resolver) {
-			var mappedValue = resolver.get(attribute.mapped_attribute);
-			var values = attribute.mapped_values[mappedValue];
-			
-			var options = [];
-			array.forEach(values, function(value) {
-				options.push({
-					label : value,
-					value : value
-				});
-			}, this);
-			
-			return options;
-		},
-		
-		_removeOldOptions : function(select, newOptions) {
-			var currentOptions = select.getOptions();
-			var optionsToRemove = [];
-			
-			array.forEach(currentOptions, function(currentOption) {
-				var currentValid = false;
-				array.forEach(newOptions, function(newOption) {
-					if (newOption.value == currentOption.value) {
-						currentValid = true;
-					}
-				}, this);
-				
-				if (!currentValid) {
-					optionsToRemove.push(currentOption);
-				} 
-			}, this);
-			
-			select.removeOption(optionsToRemove);
-		},
-		
-		_addNewOptions : function(select, newOptions) {
-			var optionsToAdd = [];
-			array.forEach(newOptions, function(newOption) {
-				if (!select.getOptions(newOption)) {
-					optionsToAdd.push(newOption);
-				} 
-			}, this);
-			select.addOption(optionsToAdd);
 		}
+		
+//		create : function(attribute, modelHandle, resolver) {
+//			var options = this._createMappedOptions(attribute, resolver);
+//			
+//			var valueBinding = at(modelHandle, "value").direction(at.to);
+//
+//			var select = new CheckedMultiSelect({
+//				"value" : valueBinding,
+//				options : options,
+//				style : "width: 200px;",
+//				multiple : true
+//			});
+//
+//			if (modelHandle.oldValue == null || typeof modelHandle.oldValue == "undefined") {
+//				modelHandle.set("oldValue", []);
+//			}
+//			initValue = getPlainValue(modelHandle.value);
+//			select.set("value", initValue);
+//			
+//			resolver.watch(attribute.mapped_attribute, 
+//				lang.hitch(this, "_onMappedAttributeChanged", select, attribute, resolver));
+//			
+//			if (options.length == 0) {
+//				this._hideAndDisable(select);
+//			}
+//			
+//			return select;
+//		},
+//		
+//		_onMappedAttributeChanged : function(select, attribute, resolver) {
+//			var newOptions = this._createMappedOptions(attribute, resolver);
+//			
+//			if (newOptions.length == 0) {
+//				this._hideAndDisable(select);
+//				select.removeOption(select.getOptions());
+//			} else {
+//				this._showAndEnable(select);
+//				this._removeOldOptions(select, newOptions);
+//				this._addNewOptions(select, newOptions);
+//			}
+//		},
+//		
+//		_hideAndDisable : function(select) {
+//			select.set("disabled", true);
+//			domClass.add(select.domNode, "dijitHidden");
+//		},
+//		
+//		_showAndEnable : function(select) {
+//			select.set("disabled", false);
+//			domClass.remove(select.domNode, "dijitHidden");
+//		},
+//		
+//		_createMappedOptions : function(attribute, resolver) {
+//			var mappedValue = resolver.get(attribute.mapped_attribute);
+//			var values = attribute.mapped_values[mappedValue];
+//			
+//			var options = [];
+//			array.forEach(values, function(value) {
+//				if (value.label && value.value) {
+//					options.push(value);
+//				} else {
+//					options.push({
+//						label : value,
+//						value : value
+//					});
+//				}
+//			}, this);
+//			
+//			return options;
+//		},
+//		
+//		_removeOldOptions : function(select, newOptions) {
+//			var currentOptions = select.getOptions();
+//			var optionsToRemove = [];
+//			
+//			array.forEach(currentOptions, function(currentOption) {
+//				var currentValid = false;
+//				array.forEach(newOptions, function(newOption) {
+//					if (newOption.value == currentOption.value) {
+//						currentValid = true;
+//					}
+//				}, this);
+//				
+//				if (!currentValid) {
+//					optionsToRemove.push(currentOption);
+//				} 
+//			}, this);
+//			
+//			select.removeOption(optionsToRemove);
+//		},
+//		
+//		_addNewOptions : function(select, newOptions) {
+//			var optionsToAdd = [];
+//			array.forEach(newOptions, function(newOption) {
+//				if (!select.getOptions(newOption)) {
+//					optionsToAdd.push(newOption);
+//				} 
+//			}, this);
+//			select.addOption(optionsToAdd);
+//		}
 	});
 });

@@ -16,9 +16,22 @@
         "array":true,
         "mapped_attribute":"name",
 		"mapped_values": {
-			"Henry":["English","German","Indish"],
-			"Anni":["English","American English","German","Hindu"],
-			"Bob":["American English","Ukrainish","Hindu"],
+			"Henry": [
+				"English",
+				"German",
+				"Indish"
+			],
+			"Anni":[
+				{label: "EN", value: "English"},
+				{label: "AE", value: "American English"},
+				{label: "DE", value: "German"},
+				{label: "HI", value: "Hindu"}
+			],
+			"Bob":[
+				"American English",
+				"Ukrainish",
+				"Hindu"
+			],
 		}
     }],
     "type_property":"ext_type"
