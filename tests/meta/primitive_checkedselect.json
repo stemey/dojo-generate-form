@@ -9,7 +9,7 @@
             "required":false,
             "array":false,
             "emptyValueLabel":"-- Please select --",
-            "checked":true,
+            "editor":"checked_select",
             "values":["Hallo","Good bye"]
         }
     ],
