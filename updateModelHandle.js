@@ -21,7 +21,7 @@ define([
 		},
 		_collectAttributes: function(groupOrType,editorFactory) {
 			if (groupOrType.attributes){
-				return attributes; 
+				return groupOrType.attributes; 
 			}else{
 				var groupFactory = editorFactory.getGroupFactory(groupOrType);
 				return groupFactory.collectAttributes(groupOrType);
