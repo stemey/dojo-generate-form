@@ -19,7 +19,16 @@ define([
 			});
 			return types.length > 0 ? types[0] : null;
 		},
-		updateObjectType: function(type_property,type, plainValue, modelHandle,editorFactory) {
+		_collectAttributes: function(groupOrType,editorFactory) {
+			if (groupOrType.attributes){
+				return attributes; 
+			}else{
+				var groupFactory = editorFactory.getGroupFactory(groupOrType);
+				return groupFactory.collectAttributes(groupOrType);
+			}
+		},
+		updateObjectType: function(type_property,groupOrType, plainValue, modelHandle,editorFactory) {
+			var attributes = this._collectAttributes(groupOrType,editorFactory);
 			if (plainValue==null) {
 				if (modelHandle.value) {
 					modelHandle.nonNullValue=modelHandle.value;
@@ -31,7 +40,7 @@ define([
 				}else if (modelHandle.value==null && modelHandle.nonNullValue) {
 					modelHandle.set("value",modelHandle.nonNullValue);
 				}
-				array.forEach(type.attributes,function(attribute) {
+				array.forEach(attributes,function(attribute) {
 					var childHandle = modelHandle.value[attribute.code];
 					if (!childHandle) {
 						childHandle=this.createMeta();

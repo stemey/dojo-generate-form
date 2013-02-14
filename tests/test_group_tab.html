@@ -31,7 +31,7 @@
 					runTest : function(t) {	
 						editor.addError("name","error");
 						t.assertEqual(1,editor.get("errorCount"));
-						var errors = dijit.byId("gform_ListPaneGroupWidget_0").get("errorCount");
+						var errors = dijit.byId("gform_ListPane_0").get("errorCount");
 						t.assertEqual(1,errors);	
 					}
 

@@ -37,6 +37,15 @@ define([ "dojo/_base/array", //
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
 		},
+		collectAttributes: function(group) {
+			var attributes=[];
+			array.forEach(group.tabs, function(tab) {
+				array.forEach(tab.attributes, function(attribute) {
+					attributes.push(attribute);
+				},this);
+			},this);
+			return attributes;
+		},
 		onValidChanged: function(e) {
 			var tabWidget=e.source;
 			var tab=tabWidget.get("meta");

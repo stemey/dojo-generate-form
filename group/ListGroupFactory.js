@@ -20,6 +20,15 @@ define([ "dojo/_base/array", //
 			}, this);
 			
 			return listWidget;
-		}
+		},
+		collectAttributes: function(group) {
+			var attributes=[];
+			array.forEach(group.groups, function(group) {
+				array.forEach(group.attributes, function(attribute) {
+					attributes.push(attribute);
+				},this);
+			},this);
+			return attributes;
+		},
 	});
 });
