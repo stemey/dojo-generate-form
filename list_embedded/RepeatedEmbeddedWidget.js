@@ -31,7 +31,16 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			if (index >= 0) {
 				this.parent.children.splice(index, 1);
 			}
+		},
+		destroy: function() {
+			array.forEach(this.getChildren(),function(child) {
+				child.destroy();
+				//this.removeChild(child);
+			});
+			this.inherited(arguments);
+		//	this.destroyRecursive();
 		}
+
 	});
 
 });
