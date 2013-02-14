@@ -28,7 +28,7 @@
 								name: 'init',
 								runTest: function(t){
 									t.assertEqual(2,editor.get("plainValue").things.length);
-									t.assertEqual(null,editor.get("plainValue").things[0].common);
+									t.assertEqual("",editor.get("plainValue").things[0].common);
 									var message1=dijit.byId("gform_ValidationTextBox_0").get("value");
 									t.assertEqual("moin",message1);
 									var message2=dijit.byId("gform_ValidationTextBox_5").get("value");
@@ -42,7 +42,7 @@
 									dijit.byId("gform_ValidationTextBox_1").set("value","a common value");
 									dijit.byId("dijit_form_Select_0").set("value","thing2");
 									t.assertEqual("a common value",editor.get("plainValue").things[0].common);
-									t.assertEqual(null,editor.get("plainValue").things[0].firstName);
+									t.assertEqual("",editor.get("plainValue").things[0].firstName);
 									t.assertEqual("undefined",typeof editor.get("plainValue").things[0].name);
 								}
 							},

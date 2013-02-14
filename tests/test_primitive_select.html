@@ -43,10 +43,12 @@
 					} 
 				},
 				{
-					name : 'testValid',
+					name : 'reset',
 					runTest : function(t) {
-						intText.set("state","Error");
-						intText.set("message","some error message");
+						editor.set("plainValue",{select:"Good bye"});
+						t.assertFalse(editor.hasChanged());
+						t.assertEqual("Good bye",intText.get("value"));
+
 					}
 				}
 			]);

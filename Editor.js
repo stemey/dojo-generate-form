@@ -32,6 +32,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			if (!this.modelHandle) {
 				this.modelHandle=updateModelHandle.createMeta();
 			}
+			this.modelHandle.oldValue=value;
 			updateModelHandle.updateObjectType(null,this.meta,value,this.modelHandle,this.editorFactory);
 
 		},

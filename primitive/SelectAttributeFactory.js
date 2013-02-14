@@ -3,9 +3,9 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dijit/form/Select",//
-"../getStateful",//
+"../updateModelHandle",//
 "../meta"//
-], function(array, lang, declare, at, Select, getStateful, meta) {
+], function(array, lang, declare, at, Select, updateModelHandle, meta) {
 
 	return declare("app.SelectAttributeFactory", [], {
 
@@ -58,6 +58,9 @@ define([ "dojo/_base/array", //
 			}
 			return select;
 
+		},
+		updateModelHandle: function(meta,plainValue,modelHandle) {
+			updateModelHandle.updateNullableString(meta,plainValue,modelHandle);
 		}
 	});
 });

@@ -16,7 +16,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 			var newValue={};
 			newValue[type_property]=type;
 			if (this.attribute.validTypes.length>1) {
-				updateModelHandle.updateMergedPolyObject(this.attribute,newValue,newModelHandle);
+				updateModelHandle.updateMergedObject(this.attribute,newValue,newModelHandle);
 			}else{
 				updateModelHandle.updateObject(this.attribute,newValue,newModelHandle);
 			}

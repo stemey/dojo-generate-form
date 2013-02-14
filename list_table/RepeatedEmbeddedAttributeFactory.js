@@ -30,6 +30,8 @@ define([ "dojo/_base/array", //
 			if (modelHandle.value==null) {
 				throw new Error("modelHandle.value should be initialized here");
 			}
+			
+			var combinedAttributes=updateModelHandle.mergeAttributeDefinitions(attribute.validTypes	);
 
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
@@ -44,7 +46,7 @@ define([ "dojo/_base/array", //
 			}
 
 
-			array.forEach(mergeAttributeDefinitions(attribute.validTypes),function(attribute) {
+			array.forEach(combinedAttributes,function(attribute) {
 				tableHeader.addChild(new TableElementHeader({label:attribute.label}));
 			},this);
 			select.addChild(tableHeader);
@@ -55,6 +57,7 @@ define([ "dojo/_base/array", //
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {
 				meta : attribute,
+				combinedAttributes: combinedAttributes,
 				_relTargetProp : "modelHandle",
 				editorFactory: this.editorFactory
 			});

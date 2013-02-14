@@ -1,13 +1,14 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-"dojox/mvc/at",//
+"dojo/aspect",//
 "dojox/form/CheckedMultiSelect",//
-"../getStateful",//
+"../updateModelHandle",//
 "../meta",//
 "../getPlainValue",//
-"dojox/mvc/StatefulArray"
-], function(array, lang, declare, at, CheckedMultiSelect, getStateful, meta,getPlainValue,StatefulArray) {
+"dojox/mvc/StatefulArray",//
+"dojox/mvc/equals"
+], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle, meta,getPlainValue,StatefulArray, equals) {
 
 	return declare("gform.CheckedMultiSelectAttributeFactory", [], {
 
@@ -27,19 +28,9 @@ define([ "dojo/_base/array", //
 			}
 			var initValue = getPlainValue(modelHandle.value);
 
-			var valueBinding = at(modelHandle, "value").direction(at.to).transform({
-				parse : function(value) {
-					console.log("parse cm", value);
-					return value;
-				},
-				format : function(value) {
-					console.log("format cm", value);
-					return value;
-				}
-			});
 
 			var select = new CheckedMultiSelect({
-				"value" : valueBinding		,
+				"value" : initValue		,
 				options : options,
 				style : "width: 200px;",
 				multiple : true
@@ -47,7 +38,24 @@ define([ "dojo/_base/array", //
 			
 			select.set("value", initValue);
 			
+			select.watch("value",function(propName,old,nu) {
+				if (!equals(old,nu) && !equals(nu,modelHandle.value)) {
+					modelHandle.set("value",nu);
+				}
+			});
+			var valueWatch = modelHandle.watch("value",function(propName,old,nu) {
+				if (!equals(old,nu) && !equals(nu,select.value)) {
+					select.set("value",nu);
+				}
+			});
+			aspect.after(select,"destroy",function() {
+				valueWatch.remove()
+			});
+			
 			return select;
+		},
+		updateModelHandle: function(meta,plainValue,modelHandle) {
+			modelHandle.set("value",plainValue);
 		}
 	});
 });
