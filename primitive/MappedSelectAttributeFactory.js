@@ -24,11 +24,11 @@ define([ "dojo/_base/array",
 			});
 			
 			resolver.watch(attribute.mapped_attribute, 
-					lang.hitch(this, "_onMappedAttributeChanged", select, attribute, resolver));
+					lang.hitch(this, "_onMappedAttributeChanged", modelHandle, select, attribute, resolver));
 			return select;
 		},
 		
-		_onMappedAttributeChanged : function(select, attribute, resolver) {
+		_onMappedAttributeChanged : function(modelHandle, select, attribute, resolver) {
 			var options = this._createMappedOptions(attribute, resolver);
 			
 			var valueValid = false;

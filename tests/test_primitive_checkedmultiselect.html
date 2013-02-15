@@ -33,7 +33,14 @@
 						t.assertEqual(2, editor.get("modelHandle").value.multiselect.get("value").length);
 						t.assertEqual(2, intText.get("value").length);
 					} 
+				},{
+					name : 'reset',
+					runTest : function(t) {
+						editor.set("plainValue",{multiselect:["Hi"]});
+						t.assertEqual(1, intText.get("value").length);
+					} 
 				}
+
 			]);
 			doh.run();
 		});

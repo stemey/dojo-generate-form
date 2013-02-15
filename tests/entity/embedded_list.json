@@ -1,9 +1,9 @@
 {
 	things : [ {
 		yes : false,
-		message:"moin"
+		message:"a"
 	}, {
 		yes : true,
-		message:"bye"
+		message:"b"
 	} ]
 }

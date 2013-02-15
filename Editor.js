@@ -116,7 +116,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		},
 		reset: function() {
 			var oldValue=this.modelHandle.oldValue;
-			updateStateful(oldValue,this.modelHandle);
+			this.set("plainValue",oldValue);
 		},	
 		
 		_destroyBody : function() {

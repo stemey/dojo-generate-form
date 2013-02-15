@@ -3,16 +3,16 @@
     "label":"example",
     "attributes":[
         {
-            "type":"text",
+            "type":"string",
             "label":"select",
             "code":"select",
             "required":false,
             "array":false,
-            "emptyValueLabel":"-- Please select --",
+            "emptyValueLabel":"-- no selection --",
             "editor":"checked_select",
             "values":[
             	"Hallo",
-            	{label: "Bye", value: "Good bye"}
+            	{label: "Good bye (Label)", value: "Good bye"}
             ]
         }
     ],

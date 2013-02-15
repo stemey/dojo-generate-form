@@ -3,7 +3,7 @@
     "label":"example",
     "attributes":[
         {
-            "type":"text",
+            "type":"string",
             "label":"language",
             "code":"language",
             "required":true,
@@ -11,7 +11,7 @@
             "values":["english","german"]
         },
         {
-            "type":"text",
+            "type":"string",
             "label":"salutation",
             "code":"salutation",
             "required":false,
