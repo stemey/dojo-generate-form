@@ -169,6 +169,14 @@ define([
 			}
 			modelHandle.set("oldValue",modelHandle.value);
 		},
+		updateAny: function(meta,plainValue, modelHandle) {
+			if (typeof plainValue=="undefined") {
+				modelHandle.set("value",null);
+			}else{
+				modelHandle.set("value",plainValue);
+			}
+			modelHandle.set("oldValue",modelHandle.value);
+		},
 		updateMergedObject: function(meta,plainValue, modelHandle,editorFactory) {
 			var combinedAttributes=modelHandle.tmp.combininedAttributes;
 			if (!combinedAttributes) {
@@ -283,6 +291,8 @@ define([
 				this.updateNumber(meta,plainValue,modelHandle);
 			}else if (meta.type=="boolean") {
 				this.updateBoolean(meta,plainValue,modelHandle);
+			}else {
+				this.updateAny(meta,plainValue,modelHandle);
 			}
 		}
 	}
