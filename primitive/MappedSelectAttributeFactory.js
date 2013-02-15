@@ -22,55 +22,5 @@ define([ "dojo/_base/array", //
 			return new Select(config);
 		}
 		
-//		create : function(attribute, modelHandle, resolver) {
-//			var options = this._createMappedOptions(attribute, resolver);
-//			
-//			var select = new Select({
-//				value : at(modelHandle, "value"),
-//				options : options,
-//				style : "width:200px;"
-//			});
-//			
-//			resolver.watch(attribute.mapped_attribute, 
-//					lang.hitch(this, "_onMappedAttributeChanged", select, attribute, resolver));
-//			return select;
-//		},
-//		
-//		_onMappedAttributeChanged : function(select, attribute, resolver) {
-//			var options = this._createMappedOptions(attribute, resolver);
-//			
-//			var valueValid = false;
-//			for (var key in options) {
-//				var option = options[key];
-//				if (option.value == modelHandle.value) {
-//					valueValid=true;
-//				}
-//			}
-//			
-//			select.set("options", options);
-//			if (!valueValid) {
-//				modelHandle.set("value", options[0].value);
-//			}
-//		},
-//		
-//		_createMappedOptions : function(attribute, resolver) {
-//			var mappedValue = resolver.get(attribute.mapped_attribute);
-//			var values = attribute.mapped_values[mappedValue];
-//			
-//			var options = [];
-//			for ( var key in values) {
-//				var value = values[key];
-//				
-//				if (value.label && value.option) {
-//					options.push(value);
-//				} else {
-//					options.push({
-//						label : value,
-//						value : value
-//					});
-//				}
-//			}
-//			return options;
-//		}
 	});
 });

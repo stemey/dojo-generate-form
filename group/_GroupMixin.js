@@ -23,6 +23,7 @@ define([ "dojo/_base/array", //
 		},
 		
 		destroy: function() {
+			this.inherited(arguments);
 			if (this.validWatch) {
 				this.validWatch.remove();
 			}

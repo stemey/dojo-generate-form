@@ -38,6 +38,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		},
 		
 		destroy: function() {
+			this.inherited(arguments);
 			if (this.messageWatch) {
 				this.messageWatch.remove();
 			}

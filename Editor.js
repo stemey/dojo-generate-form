@@ -30,6 +30,13 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			}
 			this.set("modelHandle",getStateful(value));
 		},
+		_setMetaAttr: function(value) {
+			if (value==null) {
+				value={};
+			}
+			this.meta=value;
+			this._buildContained();
+		},
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);
 		},
@@ -50,7 +57,6 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			this.containerNode=this.domNode;
 			//this.domNode.style.height="100%";
 			//this.domNode.style.width="100%";
-			this.watch("meta", lang.hitch(this, "_buildContained"));
 			if (this.meta) {
 				this._buildContained();
 			}
@@ -65,6 +71,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			try {
 				if (this.widget) {
 					this.widget.destroy();
+					domConstruct.destroy(this.widget.domNode);	
 				}
 				if (this.get("meta") && this.editorFactory) {
 					this.widget = this.editorFactory.create(this.get("meta"),
@@ -109,7 +116,8 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			cb(model);
 		},
 		
-		_destroyBody : function() {
+		destroy : function() {
+			this.inherited(arguments);	
 			if (this.widget != null) {
 				this.widget.destroy();
 				this.widget = null;

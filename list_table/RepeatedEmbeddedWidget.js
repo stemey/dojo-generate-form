@@ -8,6 +8,9 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin ],
 			{
 				templateString : template,
+				
+				selectWatch : null,
+				
 				postCreate : function() {
 
 					if (this.meta.validTypes && this.meta.validTypes.length > 1) {
@@ -22,7 +25,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 								
 						this.typeToModel=this._createTypeToModel(currentType);						
 
-						select.watch("value", lang.hitch(this,"switchedType"));
+						this.selectWatch = select.watch("value", lang.hitch(this,"switchedType"));
 						
 						this._createTableRow(select,currentType);
 
@@ -48,6 +51,12 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 					this.addChild(decorator);
 
 					deleteButton.set("onClick", lang.hitch(this, "_delete"));
+				},
+				destroy : function() {
+					this.inherited(arguments);
+					if (this.selectWatch) {
+						this.selectWatch.remove();
+					}
 				},
 				_delete : function(e) {
 					var index = this.indexAtStartup;
@@ -114,7 +123,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 							var tdWidget = this.editorFactory.attributeFactoryFinder.getFactory(attribute).create(
 									attribute, attributeModelHandle);
 							var decorator = new TableValueDecorator({meta:attribute,modelHandle:attributeModelHandle});
-							select.watch("value", function(propName, oldValue, newValue) {
+							this.selectWatch = select.watch("value", function(propName, oldValue, newValue) {
 								decorator.updateTypeVisibilty(newValue);
 
 							});

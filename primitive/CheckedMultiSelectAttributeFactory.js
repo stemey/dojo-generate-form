@@ -31,45 +31,9 @@ define([ "dojo/_base/array", //
 			if (modelHandle.oldValue == null || typeof modelHandle.oldValue == "undefined") {
 				modelHandle.set("oldValue", []);
 			}
-			var initValue = getPlainValue(modelHandle.value);
-			select.set("value", initValue);
+			var plainValue = getPlainValue(modelHandle.value);
+			select.set("value", plainValue);
 		}
 		
-//		create : function(attribute, modelHandle) {
-//			var options = this._createOptions(attribute);
-//			
-//			var valueBinding = at(modelHandle, "value").direction(at.to);
-//
-//			var select = new CheckedMultiSelect({
-//				"value" : valueBinding		,
-//				options : options,
-//				style : "width: 200px;",
-//				multiple : true
-//			});
-//
-//			if (modelHandle.oldValue == null || typeof modelHandle.oldValue == "undefined") {
-//				modelHandle.set("oldValue", []);
-//			}
-//			var initValue = getPlainValue(modelHandle.value);
-//			select.set("value", initValue);
-//			
-//			return select;
-//		},
-//		
-//		_createOptions : function(attribute) {
-//			var options = [];
-//			for ( var key in attribute.values) {
-//				var value = attribute.values[key];
-//				if (value.label && value.value) {
-//					options.push(value);
-//				} else {
-//					options.push({
-//						label : value,
-//						value : value
-//					});
-//				}
-//			}
-//			return options;
-//		}
 	});
 });

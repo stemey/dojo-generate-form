@@ -18,12 +18,17 @@
                             "code":"name",
                             "array":false
                         },
-												{
+                        {
                             "required":false,
                             "type":"string",
                             "label":"common",
                             "code":"common",
-                            "array":false
+                            "array":false,
+                            "values":[
+                            	{label: "one", value: "one"},
+                            	{label: "two", value: "two"},
+                            	{label: "three", value: "three"}
+                            ]
                         }
                     ]
                     
@@ -39,12 +44,16 @@
                             "code":"firstName",
                             "array":false
                         },
-												{
+                        {
                             "required":false,
                             "type":"string",
-                            "label":"common",
-                            "code":"common",
-                            "array":false
+                            "label":"specific",
+                            "code":"specific",
+                            "array":false,
+                            "values":[
+                            	{label: "four", value: "four"},
+                            	{label: "five", value: "five"}
+                            ]
                         }
                     ]
                     
