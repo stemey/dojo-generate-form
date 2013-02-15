@@ -7,12 +7,12 @@ define([ "dojo/_base/array", //
 
 		
 		return function(modelHandle,widget,widgetPropName) {
-			widget.watch("value",function(propName,old,nu) {
+			widget.watch(widgetPropName,function(propName,old,nu) {
 				if (!equals(old,nu) && !equals(nu,modelHandle.value)) {
 					modelHandle.set("value",nu);
 				}
 			});
-			var valueWatch = modelHandle.watch(widgetPropName,function(propName,old,nu) {
+			var valueWatch = modelHandle.watch("value",function(propName,old,nu) {
 				if (!equals(old,nu) && !equals(nu,widget[widgetPropName])) {
 					widget.set(widgetPropName,nu);
 				}

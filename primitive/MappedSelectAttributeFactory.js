@@ -43,7 +43,7 @@ define([ "dojo/_base/array",
 			if (!valueValid) {
 				modelHandle.set("value", options[0].value);
 			}
-		},
+		}
 		
 	});
 });

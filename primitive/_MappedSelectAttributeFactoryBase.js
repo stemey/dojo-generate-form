@@ -15,15 +15,11 @@ define([ "dojo/_base/array", //
 		
 		_onMappedAttributeChanged : function(select, attribute, resolver) {
 			var newOptions = this._createMappedOptions(attribute, resolver);
-			
-			if (newOptions.length == 0) {
-				this._hideAndDisable(select);
-				select.removeOption(select.getOptions());
-			} else {
-				this._showAndEnable(select);
-				this._removeOldOptions(select, newOptions);
-				this._addNewOptions(select, newOptions);
-			}
+			//var value = 
+			var value = select.get("value");
+			select.removeOption(select.get("options"));
+			select.addOption(newOptions);
+			select.set("value",value);
 		},
 
 		_watchMappedAttribute: function(attribute,select,resolver) {
@@ -31,16 +27,6 @@ define([ "dojo/_base/array", //
 				lang.hitch(this, "_onMappedAttributeChanged", select, attribute, resolver));
 		},
 
-		_hideAndDisable : function(select) {
-			select.set("disabled", true);
-			domClass.add(select.domNode, "dijitHidden");
-		},
-		
-		_showAndEnable : function(select) {
-			select.set("disabled", false);
-			domClass.remove(select.domNode, "dijitHidden");
-		},
-		
 		_createMappedOptions : function(attribute, resolver) {
 			var mappedValue = resolver.get(attribute.mapped_attribute);
 			var values = attribute.mapped_values[mappedValue];
@@ -60,34 +46,6 @@ define([ "dojo/_base/array", //
 			return options;
 		},
 		
-		_removeOldOptions : function(select, newOptions) {
-			var currentOptions = select.getOptions();
-			var optionsToRemove = [];
-			
-			array.forEach(currentOptions, function(currentOption) {
-				var currentValid = false;
-				array.forEach(newOptions, function(newOption) {
-					if (newOption.value == currentOption.value) {
-						currentValid = true;
-					}
-				}, this);
-				
-				if (!currentValid) {
-					optionsToRemove.push(currentOption);
-				} 
-			}, this);
-			
-			select.removeOption(optionsToRemove);
-		},
-		
-		_addNewOptions : function(select, newOptions) {
-			var optionsToAdd = [];
-			array.forEach(newOptions, function(newOption) {
-				if (!select.getOptions(newOption)) {
-					optionsToAdd.push(newOption);
-				} 
-			}, this);
-			select.addOption(optionsToAdd);
-		}
+
 	});
 });

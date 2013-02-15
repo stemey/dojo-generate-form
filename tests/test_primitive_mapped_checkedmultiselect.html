@@ -20,7 +20,7 @@
 		"dojo/text!./meta/primitive_mapped_checkedmultiselect.json", "dojo/text!./entity/primitive_mapped_checkedmultiselect.json"//
 		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
-			var editor = new Editor({
+			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = dojo.byId("container");

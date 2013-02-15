@@ -10,7 +10,7 @@ define([ "dojo/_base/array", //
 "../getPlainValue",//
 "dojox/mvc/StatefulArray"
 ], function(array, lang, declare, domClass, at, CheckedMultiSelect, _MappedSelectAttributeFactoryBase, //
-		getStateful, meta, bindArray, StatefulArray) {
+		getStateful, bindArray, getPlainValue,StatefulArray) {
 
 	return declare("gform.MappedCheckedMultiSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
 
@@ -22,21 +22,25 @@ define([ "dojo/_base/array", //
 			
 
 			var select = new CheckedMultiSelect({
-				"value" : valueBinding,
 				options : options,
 				style : "width: 200px;",
-				multiple:true
+				multiple:true,
+				value:modelHandle.value
 			});
 
 			bindArray(modelHandle,select,"value");
 			this._watchMappedAttribute(attribute,select,resolver);
 			
-			if (options.length == 0) {
-				this._hideAndDisable(select);
-			}
 			
 			return select;
 		},
+		updateModelHandle: function(meta,plainValue,modelHandle) {
+			if (!plainValue) {
+				plainValue=[];
+			}
+			modelHandle.set("value",plainValue);
+			modelHandle.set("oldValue",plainValue);
+		}
 		
 
 	});
