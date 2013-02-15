@@ -4,49 +4,22 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dijit/form/Select",//
 "../updateModelHandle",//
-"../meta"//
-], function(array, lang, declare, at, Select, updateModelHandle, meta) {
+"../meta",//
+"./createOptions",//
+"./nullablePrimitiveConverter"
+], function(array, lang, declare, at, Select, updateModelHandle, meta, createOptions, nullablePrimitiveConverter) {
 
-	return declare("app.SelectAttributeFactory", [], {
+ 	return declare("gform.SelectAttributeFactory", [  ], {
 
-		handles : function(attribute) {
-			var values = meta.getTypeAttribute(attribute,"values");	
-			return !attribute.array && values != null &&values.length>0;
-		},
+ 		handles : function(attribute) {
+ 			var values = meta.getTypeAttribute(attribute,"values");	
+ 			return !attribute.array && values != null && values.length > 0;
+ 		},
+ 		
 		create : function(attribute, modelHandle) {
-			var options = [];
-			if (!attribute.required) {
-				var emptyValueLabel = "-- SELECT --";
-				if (attribute.emptyValueLabel) {
-					emptyValueLabel = attribute.emptyValueLabel;
-				}
-				options.push({
-					label : emptyValueLabel,
-					value : ""
-				});
-			}
-			for ( var key in attribute.values) {
-				var value = attribute.values[key];
-				options.push({
-					label : value,
-					value : value
-				});
-			}
+			var options = createOptions(attribute,true);
 
-			var valueBinding = at(modelHandle, "value").transform({
-				format : function(value) {
-					console.log("format", value);
-					return value == null ? "" : value;
-				},
-				parse : function(value) {
-					console.log("parse", value);
-					if (value == "") {
-						return null;
-					} else {
-						return value;
-					}
-				}
-			});
+			var valueBinding = at(modelHandle, "value").transform(nullablePrimitiveConverter);
 
 			var select = new Select({
 				"value" : valueBinding,
@@ -63,4 +36,5 @@ define([ "dojo/_base/array", //
 			updateModelHandle.updateNullableString(meta,plainValue,modelHandle);
 		}
 	});
+
 });

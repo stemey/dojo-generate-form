@@ -4,58 +4,39 @@ define([ "dojo/_base/array", //
 "dojo/aspect",//
 "dojox/form/CheckedMultiSelect",//
 "../updateModelHandle",//
-"../meta",//
+"../getStateful",//
+"./createOptions",//
+"./bindArray",//
 "../getPlainValue",//
-"dojox/mvc/StatefulArray",//
-"dojox/mvc/equals"
-], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle, meta,getPlainValue,StatefulArray, equals) {
+"dojox/mvc/StatefulArray"
+], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle,  getStateful, createOptions,bindArray,getPlainValue,StatefulArray) {
 
-	return declare("gform.CheckedMultiSelectAttributeFactory", [], {
-
+	return declare("gform.CheckedMultiSelectAttributeFactory", [  ], {
+ 		
 		handles : function(attribute) {
-			var values = meta.getTypeAttribute(attribute, "values");	
-			return attribute.array && values != null && values.length > 0;
+			return attribute != null && attribute.array && !attribute.validTypes && attribute.values;
 		},
-		
-		create : function(attribute, modelHandle) {
-			var options = [];
-			for ( var key in attribute.values) {
-				var value = attribute.values[key];
-				options.push({
-					label : value,
-					value : value
-				});
-			}
-			var initValue = getPlainValue(modelHandle.value);
-
+ 		
+ 		create: function(meta, modelHandle) {
+			var options= createOptions(meta,false);
 
 			var select = new CheckedMultiSelect({
-				"value" : initValue		,
+				"value" : modelHandle.value		,
 				options : options,
 				style : "width: 200px;",
 				multiple : true
 			});
 			
-			select.set("value", initValue);
-			
-			select.watch("value",function(propName,old,nu) {
-				if (!equals(old,nu) && !equals(nu,modelHandle.value)) {
-					modelHandle.set("value",nu);
-				}
-			});
-			var valueWatch = modelHandle.watch("value",function(propName,old,nu) {
-				if (!equals(old,nu) && !equals(nu,select.value)) {
-					select.set("value",nu);
-				}
-			});
-			aspect.after(select,"destroy",function() {
-				valueWatch.remove()
-			});
+			bindArray(modelHandle,select,"value");
 			
 			return select;
 		},
 		updateModelHandle: function(meta,plainValue,modelHandle) {
+			if (!plainValue) {
+				plainValue=[];
+			}
 			modelHandle.set("value",plainValue);
+			modelHandle.set("oldValue",plainValue);
 		}
 	});
 });

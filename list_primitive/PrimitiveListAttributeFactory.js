@@ -20,8 +20,7 @@ define([ "dojo/_base/array", //
 			lang.mixin(this, kwArgs);
 		},
 		handles : function(attribute) {
-			return attribute != null && (typeof attribute.type == "string")
-					&& attribute.array;
+			return attribute != null && !attribute.validTypes && attribute.array;
 		},
 		_getModelHandleValue: function() {
 			return this.modelHandle.value;

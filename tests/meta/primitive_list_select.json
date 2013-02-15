@@ -3,6 +3,7 @@
     "label":"example",
     "attributes":[
         {
+        	editor:"primitive_list",
             "required":false,
             "label":"things",
             "code":"things",

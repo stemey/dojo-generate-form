@@ -1,52 +1,49 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/_base/declare",//
-"dojox/mvc/at",//
-"dijit/form/Select",//
+define([ "dojo/_base/array", 
+"dojo/_base/lang",
+"dojo/_base/declare",
+"dojox/mvc/at",
+"dijit/form/Select",
+"./_MappedSelectAttributeFactoryBase",
 "../meta"
-], function(array, lang, declare, at, Select, meta) {
+], function(array, lang, declare, at, Select, _MappedSelectAttributeFactoryBase, meta) {
 
-	return declare("app.SelectAttributeFactory", [], {
+	return declare("gform.MappedSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
+		
 		handles: function(attribute) {
 			var mapped_values=attribute.mapped_values;
 			return !attribute.array && mapped_values;
 		},
-		create : function(attribute, modemapped_selectlHandle,resolver) {
-			var options = [];
-			var mapped_values=attribute.mapped_values;
-			var onMappedAttributeChanged = function(e) {
-				options = [];
-				var mappedValue = resolver.get(attribute.mapped_attribute);
-				var values = mapped_values[mappedValue];
-				var valueValid=false;
-				for ( var key in values) {
-					var value = values[key];
-					if (value==modelHandle.value) {
-						valueValid=true;
-					}
-					options.push({
-						label : value,
-						value : value
-					});
-				}
-				select.set("options", options);
-				if (!valueValid) {
-					modelHandle.set("value",options[0].value);
-				}
-				
-			};
-			resolver.watch(attribute.mapped_attribute,
-					onMappedAttributeChanged);
-
+		
+		create : function(attribute, modelHandle, resolver) {
+			var options = this._createMappedOptions(attribute, resolver);
+			
 			var select = new Select({
-				"value" : at(modelHandle, "value"),
+				value : at(modelHandle, "value"),
 				options : options,
 				style : "width:200px;"
-
 			});
-			onMappedAttributeChanged();
+			
+			resolver.watch(attribute.mapped_attribute, 
+					lang.hitch(this, "_onMappedAttributeChanged", select, attribute, resolver));
 			return select;
-
-		}
-	})
+		},
+		
+		_onMappedAttributeChanged : function(select, attribute, resolver) {
+			var options = this._createMappedOptions(attribute, resolver);
+			
+			var valueValid = false;
+			for (var key in options) {
+				var option = options[key];
+				if (option.value == modelHandle.value) {
+					valueValid=true;
+				}
+			}
+			
+			select.set("options", options);
+			if (!valueValid) {
+				modelHandle.set("value", options[0].value);
+			}
+		},
+		
+	});
 });

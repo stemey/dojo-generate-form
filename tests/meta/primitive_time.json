@@ -1,0 +1,18 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"time",
+            "label":"Start time",
+            "description":"Time with format HH:mm",
+            "code":"startTime",
+            "required":true,
+            "array":false,
+            "constraints":{
+            	"timePattern":"HH:mm"
+            }
+        }
+    ],
+    "type_property":"ext_type"
+}

@@ -10,10 +10,11 @@ define([ "dojo/_base/array", //
 
 	return declare("gform.SingleTypePanelWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin,_GroupMixin ], {
+
 		templateString : template,
-		//_setMetaAttr : function(/* dojo/Stateful */attribute) {
+		
 		postCreate : function() {
-			var attribute=this.get("meta");
+			var attribute = this.get("meta");
 			this.panelModel = new dojo.Stateful();
 			this.panelModel.set("empty", false);
 			this.panelModel.set("title", "");
@@ -25,6 +26,7 @@ define([ "dojo/_base/array", //
 			this.addChild(this.editor);
 			this.set("target", this.panelModel);
 		},
+		
 		getChildrenToValidate:function() {
 			if (this.panelModel.get("empty")) {
 				return [];
@@ -32,6 +34,7 @@ define([ "dojo/_base/array", //
 				return this.inherited(arguments);
 			}
 		}, 
+
 		modelChanged: function(propName,old,nu) {
 			if (nu==null && old!=null) {
 				if (this.panelModel.get("empty")==false) {

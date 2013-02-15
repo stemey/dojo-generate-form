@@ -9,6 +9,9 @@ define([ "dojo/_base/array", //
 		isValidationContainer:true,
 		validateChildren:true,
 		persistable:false,
+		
+		validWatch : null,
+		
 		postCreate : function() {
 			this.inherited(arguments);
 			this.persistable=typeof this.modelHandle != "undefined" && this.modelHandle!=null;
@@ -17,31 +20,34 @@ define([ "dojo/_base/array", //
 				}
 			this.on("valid-changed",lang.hitch(this,"onValidChanged"));
 			if (this.persistable) {
-				this.set("errorCount",0)
-				this.modelWatch=this.modelHandle.watch("valid",lang.hitch(this,"onModelValidChanged"));
+				this.validWatch=this.modelHandle.watch("valid",lang.hitch(this,"onModelValidChanged"));
 			}
 		},
 		destroy: function() {
 			this.inherited(arguments);
-			if (this.modelWatch) {
-				this.modelWatch.remove();
+			if (this.validWatch) {
+				this.validWatch.remove();
 			}
 		},
+		
 		getPrefix: function() {
 			return this.id;	
 		},
+		
 		onModelValidChanged: function(propName,old,nu) {
 			if (old!=nu) {
 				this.validateAndFire();
 			}
 		},
+		
 		onValidChanged: function(event) {
-				if (event.source==this) {
-					return;
-				}
-				event.stopPropagation();
-				this.validateAndFire();
+			if (event.source==this) {
+				return;
+			}
+			event.stopPropagation();
+			this.validateAndFire();
 		},
+		
 		_getErrorCountAttr: function() {
 			if (this.persistable) {
 				var errorCount= this.modelHandle.tmp[this.id+"errorCount"];
@@ -54,23 +60,25 @@ define([ "dojo/_base/array", //
 				return this.validate();
 			}
 		},
+		
 		_setErrorCountAttr: function(errorCount) {
 			if (this.persistable) {
 				this.modelHandle.tmp[this.id+"errorCount"]=errorCount;
 			}
 		},
+		
 		validateAndFire: function(errorCount){
-				//console.log("validating "+this.id);
-				errorCount=this.validate();
-				if (this.persistable) {
-					this.set("errorCount",errorCount);
-				}
-				//console.log("found "+this.get("errorCount")+" in "+this.id);
-				this.emit("valid-changed",{source:this});
+			errorCount=this.validate();
+			if (this.persistable) {
+				this.set("errorCount",errorCount);
+			}
+			this.emit("valid-changed",{source:this});
 		},
+		
 		getChildrenToValidate: function() {
 			return this.getChildren() || children;
 		},	
+		
 		_validateChildren: function(children,force,errorCount){
 			if (!children) {
 				return 0;
@@ -80,13 +88,13 @@ define([ "dojo/_base/array", //
 				if (child.isValidationContainer) {
 					ec = force?child.validate(force):child.get("errorCount");
 					errorCount+=ec;
-				  //console.log("found "+errorCount+" errors in child "+child.id+" of "+this.id);
 				}else{
 					errorCount+=this._validateChildren(child.getChildren(),force);
 				}
 			},this);
 			return errorCount;
 		},
+		
 		validate : function(force,errorCount) {
 			errorCount=0;	
 			if (this.modelHandle && this.modelHandle.get("valid")==false) {
@@ -97,5 +105,5 @@ define([ "dojo/_base/array", //
 			}
 			return errorCount;
 		}
-	})
+	});
 });

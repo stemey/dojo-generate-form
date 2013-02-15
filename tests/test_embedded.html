@@ -65,6 +65,7 @@
 						t.assertEqual(1,editor.get("errorCount"));
 					}
 				}, {
+<<<<<<< HEAD
 					name : 'setPlainValue',
 					runTest : function(t) {
 						editor.set("plainValue", {thing:{name:"herman"}});
@@ -77,6 +78,16 @@
 						t.assertEqual(true,query("input[type='checkbox']")[0].checked);
 					}
 				} 
+=======
+					name : 'initWithNull',
+					runTest : function(t) {
+						editor.set("plainValue",{});
+						editor.set("meta",dojo.fromJson(meta));
+						var isNull=dijit.byId("dijit_form_CheckBox_1").get("checked");
+						t.assertEqual(true,isNull);
+					}
+				}  
+>>>>>>> origin/master
 			]);
 			doh.run();
 		});
