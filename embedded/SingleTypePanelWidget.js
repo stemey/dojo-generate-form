@@ -14,15 +14,15 @@ define([ "dojo/_base/array", //
 		templateString : template,
 		
 		postCreate : function() {
+			var modelHandle = this.get("modelHandle");
 			var attribute = this.get("meta");
 			this.panelModel = new dojo.Stateful();
-			this.panelModel.set("empty", false);
+			this.panelModel.watch("empty", lang.hitch(this,"panelChanged"));
+			this.panelModel.set("empty", modelHandle.value==null);
 			this.panelModel.set("title", "");
-			var modelHandle = this.get("modelHandle");
 			modelHandle.watch("value",lang.hitch(this,"modelChanged"));
 			
-			this.editor = new Editor({"modelHandle": modelHandle,"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
-			this.panelModel.watch("empty", lang.hitch(this,"panelChanged"));
+			this.editor = new Editor({"modelHandle": modelHandle.nonNullValue,"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
 			this.addChild(this.editor);
 			this.set("target", this.panelModel);
 		},
@@ -61,12 +61,12 @@ define([ "dojo/_base/array", //
 				if (this.panelModel.get("empty")) {
 					this._switchedToNull();
 					if (modelHandle.value!=null) {
-						updateModelHandle.setNull(this.meta,modelHandle);
+						modelHandle.set("value",null);
 					}
 				} else {
 					this._switchedFromNull();
 					if (modelHandle.value==null) {
-						updateModelHandle.setEmpty(modelHandle);
+						modelHandle.set("value",modelHandle.nonNullValue.value);
 					}
 					this.validateAndFire();
 				}

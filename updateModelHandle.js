@@ -30,15 +30,10 @@ define([
 		updateObjectType: function(type_property,groupOrType, plainValue, modelHandle,editorFactory) {
 			var attributes = this._collectAttributes(groupOrType,editorFactory);
 			if (plainValue==null) {
-				if (modelHandle.value) {
-					modelHandle.nonNullValue=modelHandle.value;
-				}
 				modelHandle.set("value",null);
 			}else{
-				if (modelHandle.value==null && ! modelHandle.nonNullValue) {
+				if (modelHandle.value==null ) {
 					modelHandle.set("value",new Stateful({}));
-				}else if (modelHandle.value==null && modelHandle.nonNullValue) {
-					modelHandle.set("value",modelHandle.nonNullValue);
 				}
 				array.forEach(attributes,function(attribute) {
 					var childHandle = modelHandle.value[attribute.code];
@@ -69,26 +64,23 @@ define([
 			modelHandle.set("value",modelHandle.nonNullValue.value);
 		}, 
 		updateObject: function( meta, plainValue, modelHandle,editorFactory) {
+			if (meta.code=="P_ALLNET") {
+				var x =0;
+			}
+			if (meta.validTypes.length>1 && !meta.type_property) {
+				throw new Error("more than one type defined but no type property");
+			}
+			var type=meta.validTypes[0];
+			if (!modelHandle.nonNullValue) {
+				modelHandle.nonNullValue=this.createMeta();
+				modelHandle.nonNullValue.value=new Stateful();
+			}
+			var initialValue= plainValue || {};
+			this.updateObjectType(meta.type_property,type,initialValue,modelHandle.nonNullValue,editorFactory);
 			if (plainValue==null) {
-				this.setNull(meta,modelHandle);
+				modelHandle.set("value",null);
 			}else{
-				if (modelHandle.value==null){
-					this.setEmpty(modelHandle);
-				}
-				if (meta.validTypes.length>1 && !meta.type_property) {
-					throw new Error("more than one type defined but no type property");
-				}
-				var typeCode=plainValue[meta.type_property];
-				if (!typeCode) {
-					var type=meta.validTypes[0];
-				}else{
-					var type=this.getFromValidTypes(meta.validTypes,typeCode);
-					if (type==null) {
-						throw new Error("type "+typeCode+" is invalid");
-					}
-					modelHandle.value.set(meta.type_property,new Stateful({__type:"meta",value:type.code}));
-				}
-				this.updateObjectType(meta.type_property,type,plainValue,modelHandle,editorFactory);
+				modelHandle.set("value",modelHandle.nonNullValue.value);
 			}
 			modelHandle.set("oldValue",getPlainValue(modelHandle.value));
 		},

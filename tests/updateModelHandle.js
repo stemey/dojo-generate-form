@@ -84,13 +84,29 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 				console.log("actual"+dojo.toJson(plainValue));
 				doh.assertTrue(equals(plainValue,emptyType1));
       },
-      function testObject(){
+      function testObjectInitNull(){
 				var modelHandle = updateModelHandle.createMeta();
-        updateModelHandle.updateObjectType(null,meta,{objectP:{}},modelHandle);
+        updateModelHandle.updateObject(objectAttribute,null,modelHandle);
 				var plainValue = getPlainValue(modelHandle);
-				console.log("expected"+dojo.toJson(emptyMeta));
-				console.log("actual"+dojo.toJson(plainValue));
-				doh.assertTrue(equals(plainValue,emptyMeta));
+				doh.assertTrue(null==plainValue);
+				doh.assertEqual("",modelHandle.nonNullValue.value.stringP.value);
+      },
+      function testObjectInitNotNull(){
+				var modelHandle = updateModelHandle.createMeta();
+        updateModelHandle.updateObject(objectAttribute,{stringP:"hallo"},modelHandle);
+				var plainValue = getPlainValue(modelHandle);
+				doh.assertEqual("hallo",plainValue.stringP);
+				doh.assertEqual("hallo",modelHandle.nonNullValue.value.stringP.value);
+      },
+      function testObjectUpdateNotNull(){
+				var modelHandle = updateModelHandle.createMeta();
+        updateModelHandle.updateObject(objectAttribute,{stringP:"bye"},modelHandle);
+				var initialNonNullValue=modelHandle.nonNullValue;
+        updateModelHandle.updateObject(objectAttribute,{stringP:"hallo"},modelHandle);
+				var plainValue = getPlainValue(modelHandle);
+				doh.assertEqual(initialNonNullValue,modelHandle.nonNullValue);
+				doh.assertEqual("bye",plainValue.stringP);
+				doh.assertEqual("bye",modelHandle.nonNullValue.value.stringP.value);
       },
       function testObjectSetNull(){
 				var modelHandle = updateModelHandle.createMeta();
