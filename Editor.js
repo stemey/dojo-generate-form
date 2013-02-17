@@ -33,7 +33,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				this.modelHandle=updateModelHandle.createMeta();
 			}
 			this.modelHandle.oldValue=value;
-			updateModelHandle.updateObjectType(null,this.meta,value,this.modelHandle,this.editorFactory);
+			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
 
 		},
 		_getPlainValueAttr: function() {

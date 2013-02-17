@@ -12,6 +12,8 @@ define([ "dojo/_base/array", //
 				title : group.title,
 				open : group.open
 			});
+			//make pane content scrollable. important for usage in layout containers	
+			titlePane.containerNode.style.overflow="auto";
 			titlePane.on("valid-changed", lang.hitch(this,"onValidChanged"));
 			return titlePane;
 		},

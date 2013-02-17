@@ -45,15 +45,16 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 					deleteButton.set("onClick", lang.hitch(this, "_delete"));
 				},
 				_delete : function(e) {
-					var index = this.indexAtStartup;
+					var eventDispatcher = this.getParent();
+					var index = this.getParent().getChildren().indexOf(this);
 					if (index >= 0) {
 						this.parent.children.splice(index, 1);
 					}
+					eventDispatcher.emit("valid-changed");
 				},
 				switchedType:	function(propName,oldType,newType) {
 						if (oldType!=newType) {	
 							updateModelHandle.switchTypeInMergedObject(this.meta,newType,this.modelHandle);
-							//this.modelHandle.value[this.meta.type_property].set("value",newType);
 						}
 				},
 				_createTypeSelect: function(currentType) {

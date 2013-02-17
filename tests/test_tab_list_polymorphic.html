@@ -60,7 +60,7 @@
 									dijit.byId("dijit_form_Button_1").onClick();
 									t.assertEqual(1,editor.get("plainValue").things.length);
 									// the validationTextBox is recreated and the error is overwritten
-									t.assertEqual(0,editor.get("errorCount"));
+									t.assertEqual(1,editor.get("errorCount"));
 								}
 							},
 							{

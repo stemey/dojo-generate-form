@@ -27,6 +27,9 @@ define([
 				return groupFactory.collectAttributes(groupOrType);
 			}
 		},
+		update: function(groupOrType, plainValue, modelHandle,editorFactory) {
+			this.updateObjectType(null,groupOrType, plainValue, modelHandle,editorFactory);
+		},
 		updateObjectType: function(type_property,groupOrType, plainValue, modelHandle,editorFactory) {
 			var attributes = this._collectAttributes(groupOrType,editorFactory);
 			if (plainValue==null) {
@@ -47,22 +50,22 @@ define([
 				},this);
 			}
 		},
-		setNull: function(meta,modelHandle) {
-			if (modelHandle.value==null) {
-				return;
-			}
-			modelHandle.nonNullValue.set("value",modelHandle.value);
-			modelHandle.set("value",null);
-		},
-		setEmpty: function(modelHandle) {
-			if (!modelHandle.nonNullValue) {
-				modelHandle.nonNullValue=this.createMeta();
-				modelHandle.nonNullValue.value=new Stateful({});
-			}else {
-				this.resetMeta(modelHandle.nonNullValue);
-			}
-			modelHandle.set("value",modelHandle.nonNullValue.value);
-		}, 
+//		setNull: function(meta,modelHandle) {
+//			if (modelHandle.value==null) {
+//				return;
+//			}
+//			modelHandle.nonNullValue.set("value",modelHandle.value);
+//			modelHandle.set("value",null);
+//		},
+//		setEmpty: function(modelHandle) {
+//			if (!modelHandle.nonNullValue) {
+//				modelHandle.nonNullValue=this.createMeta();
+//				modelHandle.nonNullValue.value=new Stateful({});
+//			}else {
+//				this.resetMeta(modelHandle.nonNullValue);
+//			}
+//			modelHandle.set("value",modelHandle.nonNullValue.value);
+//		}, 
 		updateObject: function( meta, plainValue, modelHandle,editorFactory) {
 			if (meta.code=="P_ALLNET") {
 				var x =0;
