@@ -1,4 +1,4 @@
-define(["doh/runner","gform/getPlainValue","gform/getStateful"], function(doh,getPlainValue,getStateful){
+define(["doh/runner","gform/getPlainValue","gform/udateModelHandle"], function(doh,getPlainValue,updateModelHandle){
 
     doh.register("gform-getPlainValue", [
       function testPlainValue(){

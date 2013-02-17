@@ -1,4 +1,4 @@
-define(["doh/runner","gform/equals","gform/getStateful"], function(doh,equals,getStateful){
+define(["doh/runner","gform/equals","gform/updateModelHandle"], function(doh,equals,updateModelHandle){
 
     doh.register("gform-equals", [
       function testValue(){

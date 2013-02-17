@@ -5,12 +5,11 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dojox/form/CheckedMultiSelect",//
 "./_MappedSelectAttributeFactoryBase",//
-"../getStateful",//
 "./bindArray",//
 "../getPlainValue",//
 "dojox/mvc/StatefulArray"
 ], function(array, lang, declare, domClass, at, CheckedMultiSelect, _MappedSelectAttributeFactoryBase, //
-		getStateful, bindArray, getPlainValue,StatefulArray) {
+		 bindArray, getPlainValue,StatefulArray) {
 
 	return declare("gform.MappedCheckedMultiSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
 

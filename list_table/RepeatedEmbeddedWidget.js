@@ -1,9 +1,9 @@
 define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/Stateful", "../Editor",
 		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox", "./TableElementDecorator", "./TableValueDecorator",
-		"dijit/form/Button", "dijit/form/Select", "../copyProperties", "../mergeProperties", "../updateModelHandle","./mergeAttributeDefinitions","dojo/dom-class"//
+		"dijit/form/Button", "dijit/form/Select", "../updateModelHandle","./mergeAttributeDefinitions","dojo/dom-class"//
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, Stateful, Editor,
-		template, TextBox, TableElementDecorator,TableValueDecorator, Button, Select, copyProperties, mergeProperties, updateModelHandle,mergeAttributeDefinitions,domClass) {
+		template, TextBox, TableElementDecorator,TableValueDecorator, Button, Select,  updateModelHandle,mergeAttributeDefinitions,domClass) {
 
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin ],
 			{
@@ -25,7 +25,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 						var meta = this.meta.validTypes ? this.meta.validTypes[0] : this.meta;
 						array.forEach(meta.attributes, function(attribute) {
 							if (!this.modelHandle.value[attribute.code]) {
-								this.modelHandle.value[attribute.code]=getStateful(null);
+								throw new Error(" attribute "+attribute.code+" was not initialiaized");
 							}
 							var attributeModelHandle=this.modelHandle.value[attribute.code];
 							var tdWidget = this.editorFactory.attributeFactoryFinder.getFactory(attribute).create(

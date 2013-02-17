@@ -4,8 +4,7 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "./ValidationTextBox",//
 "../meta",//
-"../getStateful"//
-], function(array, lang, declare, at, TextBox, meta, getStateful) {
+], function(array, lang, declare, at, TextBox, meta) {
 
 	return declare("app.TextAttributeFactory", [], {
 		handles : function(attribute) {

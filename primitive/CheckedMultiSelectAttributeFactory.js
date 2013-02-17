@@ -4,12 +4,11 @@ define([ "dojo/_base/array", //
 "dojo/aspect",//
 "dojox/form/CheckedMultiSelect",//
 "../updateModelHandle",//
-"../getStateful",//
 "./createOptions",//
 "./bindArray",//
 "../getPlainValue",//
 "dojox/mvc/StatefulArray"
-], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle,  getStateful, createOptions,bindArray,getPlainValue,StatefulArray) {
+], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle,   createOptions,bindArray,getPlainValue,StatefulArray) {
 
 	return declare("gform.CheckedMultiSelectAttributeFactory", [  ], {
  		

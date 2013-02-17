@@ -5,8 +5,7 @@ define([ "dojo/_base/array", //
 "dojo/date/stamp",//
 "./DateTextBox",//
 "../meta",//
-"../getStateful"//
-], function(array, lang, declare, at, dateStamp, DateTextBox, meta, getStateful) {
+], function(array, lang, declare, at, dateStamp, DateTextBox, meta) {
 
 	return declare("app.DateAttributeFactory", [], {
 		

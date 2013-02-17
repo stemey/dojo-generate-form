@@ -3,9 +3,8 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dijit/form/CheckBox",//
-"../getStateful",//
 "../meta"//
-], function(array, lang, declare, at, CheckBox, getStateful, meta) {
+], function(array, lang, declare, at, CheckBox,  meta) {
 
 	return declare("app.BooleanAttributeFactory", [], {
 		handles : function(attribute) {
@@ -13,7 +12,7 @@ define([ "dojo/_base/array", //
 		},
 		create : function(attribute, modelHandle) {
 			if (!modelHandle) {
-				modelHandle=getStateful(false);
+				throw new Error(" attribute "+attribute.code+" was not initialized");
 			}			
 			return new CheckBox({
 				"checked" : at(modelHandle,"value")

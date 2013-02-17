@@ -4,10 +4,10 @@ define([ "dojo/_base/array", //
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./polymorphic_embedded_attribute.html",
 		"dijit/layout/StackContainer", "dojo/Stateful",
-		"gform/Editor","../getStateful","../copyProperties","../mergeProperties","../group/_GroupMixin"//
+		"gform/Editor","../group/_GroupMixin"//
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
-		Editor,getStateful,copyProperties,mergeProperties,_GroupMixin) {
+		Editor,_GroupMixin) {
 
 	return declare("app.GroupPanelWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin,_GroupMixin ], {

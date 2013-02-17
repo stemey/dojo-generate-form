@@ -3,11 +3,10 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojo/dom-class",//
 "dojox/mvc/at",//
-"../getStateful",//
 "../meta",//
 "../getPlainValue",//
 "dojox/mvc/StatefulArray"
-], function(array, lang, declare, domClass, at, getStateful, meta,getPlainValue,StatefulArray) {
+], function(array, lang, declare, domClass, at,  meta,getPlainValue,StatefulArray) {
 
 	return declare("gform._MappedSelectAttributeFactoryBase", [], {
 
