@@ -33,6 +33,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				this.modelHandle=updateModelHandle.createMeta();
 			}
 			this.modelHandle.oldValue=value;
+			if (!this.meta) {
+				throw new Error("cannot set plainValue before setting meta");
+			}
 			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
 
 		},
@@ -66,8 +69,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		},
 		_buildContained: function() {
 			if (this.modelHandle == null) {
-				this.modelHandle = updateModelHandle.createMeta();
-				this.modelHandle.value=null;
+				this.set("plainValue",{});
 			}
 			try {
 				if (this.widget) {
