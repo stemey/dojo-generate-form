@@ -23,9 +23,12 @@
 			var editorFactory = new EditorFactory()
 //			editorFactory.set("defaultGroupFactory",new ListPaneGroupFactory({editorFactory:editorFactory}));
 	//		editorFactory.attributeFactoryFinder.attributeFactories[0]=new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory});
-			 editor = new Editor({
-					"plainValue": dojo.fromJson(entity),
-					"meta": dojo.fromJson(meta),editorFactory:editorFactory});
+			 editor = new Editor();
+			try {
+			editor.set("editorFactory",editorFactory);
+			editor.set("meta",dojo.fromJson(meta));
+			editor.set("plainValue",dojo.fromJson(entity));
+			} catch (e) {console.log(e.message+" "+e.stack)};
 			var container = registry.byId("container");
 			editor.set("region","center");
 			container.addChild(editor);
