@@ -137,7 +137,7 @@ define([
 			modelHandle.set("oldValue",getPlainValue(modelHandle.value));
 		},
 		updateString: function(meta,plainValue, modelHandle,editorFactory) {
-			if (plainValue==null) {
+			if (!plainValue) {
 				modelHandle.set("value","");
 			}else{
 				modelHandle.set("value",plainValue);
@@ -145,7 +145,7 @@ define([
 			modelHandle.set("oldValue",modelHandle.value);
 		},
 		updateNullableString: function(meta,plainValue, modelHandle,editorFactory) {
-			if (plainValue==null) {
+			if (!plainValue) {
 				modelHandle.set("value",null);
 			}else{
 				modelHandle.set("value",plainValue);
@@ -161,7 +161,7 @@ define([
 			modelHandle.set("oldValue",modelHandle.value);
 		},
 		updateNumber: function(meta,plainValue, modelHandle,editorFactory) {
-			if (plainValue==null) {
+			if (!plainValue) {
 				modelHandle.set("value",0);
 			}else{
 				modelHandle.set("value",plainValue);
@@ -283,7 +283,7 @@ define([
 			}else if (meta.validTypes && meta.validTypes.length>1) {
 				this.updatePolyObject(meta,plainValue,modelHandle);
 			}else if (meta.type=="string") {
-				this.updateString(meta,plainValue,modelHandle);
+				this.updateNullableString(meta,plainValue,modelHandle);
 			}else if (meta.type=="date") {
 				this.updateNullableString(meta,plainValue,modelHandle);
 			}else if (meta.type=="number") {

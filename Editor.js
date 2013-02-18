@@ -25,6 +25,11 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// //////////////////// PRIVATE METHODS
 		// ////////////////////////
 
+		_setMetaAttr: function(meta) {
+			this.modelHandle=updateModelHandle.createMeta();
+			updateModelHandle.update(meta,{},this.modelHandle,this.editorFactory);
+			this._set("meta",meta);		
+		},
 		_setPlainValueAttr: function(value) {
 			if (value==null) {
 				value={};
@@ -32,12 +37,11 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			if (!this.modelHandle) {
 				this.modelHandle=updateModelHandle.createMeta();
 			}
-			this.modelHandle.oldValue=value;
 			if (!this.meta) {
 				throw new Error("cannot set plainValue before setting meta");
 			}
 			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
-
+			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
 		},
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);
