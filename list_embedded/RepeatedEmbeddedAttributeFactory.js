@@ -7,7 +7,7 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
-"dojox/mvc/WidgetList",//
+"../WidgetList",//
 "./RepeatedEmbeddedWidget",//
 "../updateModelHandle",//
 "dojox/mvc/StatefulArray"

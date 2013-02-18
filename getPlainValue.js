@@ -5,6 +5,7 @@ define([ "dojo/_base/array", //
 "dojox/mvc/getPlainValue"//
 ], function(array, lang, declare, Stateful, getPlainValue) {
 
+   
 	var getPlainValueOptions = {
 		getType : function(/* Anything */v) {
 			
@@ -26,47 +27,14 @@ define([ "dojo/_base/array", //
 			}else{
 				return getPlainValue(a.value,this);
 			}
-		},
-		getPlainArray : function(/* Anything[] */a) {
-			// summary:
-			// Returns the stateful version of the given array.
-			// a: Anything[]
-			// The array.
-			// returns:
-			// The converted array.
-
-			return array.map(a, function(item) {
-				return getPlainValue(item, this);
-			}, this); // Anything[]
-		},
-
-		getPlainObject : function(/* Object */o) {
-			// summary:
-			// Returns the stateful version of the given object.
-			// o: Object
-			// The object.
-
-			var plain = {};
-			for ( var s in o) {
-				if (!(s in Stateful.prototype) && s != "_watchCallbacks") {
-					var value = getPlainValue(o[s], this);
-					if (typeof value != "undefined") {
-						plain[s] = value;
-					}
-				}
-			}
-			return plain; // Object
-		},
-
-		getPlainValue : function(/* Anything */v) {
-			// summary:
-			// Just returns the given value.
-			return v; // Anything
-		
 		}
 	}
+  var options = {};
+	lang.mixin(options,getPlainValue);
+	lang.mixin(options,getPlainValueOptions);
+	
 	var getPlainValueWithMetaData = function(v) {
-		return getPlainValue(v, getPlainValueOptions);
+		return getPlainValue(v, options);
 	}
 	return getPlainValueWithMetaData;
 })

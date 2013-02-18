@@ -90,7 +90,7 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 				var plainValue = getPlainValue(modelHandle);
 				doh.assertTrue(null==plainValue);
 				doh.assertEqual("",modelHandle.nonNullValue.value.stringP.value);
-      },
+      }, 
       function testObjectInitNotNull(){
 				var modelHandle = updateModelHandle.createMeta();
         updateModelHandle.updateObject(objectAttribute,{stringP:"hallo"},modelHandle);
@@ -105,8 +105,8 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
         updateModelHandle.updateObject(objectAttribute,{stringP:"hallo"},modelHandle);
 				var plainValue = getPlainValue(modelHandle);
 				doh.assertEqual(initialNonNullValue,modelHandle.nonNullValue);
-				doh.assertEqual("bye",plainValue.stringP);
-				doh.assertEqual("bye",modelHandle.nonNullValue.value.stringP.value);
+				doh.assertEqual("hallo",plainValue.stringP);
+				doh.assertEqual("hallo",modelHandle.nonNullValue.value.stringP.value);
       },
       function testObjectSetNull(){
 				var modelHandle = updateModelHandle.createMeta();

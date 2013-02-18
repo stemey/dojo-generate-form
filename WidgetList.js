@@ -22,7 +22,7 @@ define([
 		}
 	}
 
-	var WidgetList = declare("dojox.mvc.WidgetList", [_WidgetBase, _Container], {
+	var WidgetList = declare("gform.WidgetList", [_WidgetBase, _Container], {
 		// summary:
 		//		A widget that creates child widgets repeatedly based on the children attribute (the repeated data) and childType/childMixins/childParams attributes (determines how to create each child widget).
 		// example:
@@ -172,7 +172,7 @@ define([
 			}
 		},
 
-		_removeChildren: function(idx,/*dojox/mvc/StatefulArray*/ removals){
+		_removeChildren: function(/*int*/idx,/*dojox/mvc/StatefulArray*/ removals){
 			// summary:
 			//		Create child widgets upon children and inserts them into the container node.
 
@@ -186,50 +186,9 @@ define([
 			//		Create child widgets upon children and inserts them into the container node.
 
 			for(var cw = this.getChildren(), w = null; w = cw.pop();){ this.removeChild(w); w.destroy(); }
-			if(!lang.isArray(children)){ return; }
-
-			var createAndWatch = lang.hitch(this, function(seq){
-				if(this._buildChildrenSeq > seq){ return; } // If newer _buildChildren call comes during lazy loading, bail
-				var clz = declare([].slice.call(arguments, 1), {}),
-				 _self = this;
-				function create(children, startIndex){
-					array.forEach(array.map(children, function(child, idx){
-						var params = {
-							ownerDocument: _self.ownerDocument,
-							parent: _self,
-							indexAtStartup: startIndex + idx // Won't be updated even if there are removals/adds of repeat items after startup
-						};
-						params[(_self.childParams || _self[childParamsAttr] && evalParams.call(params, _self[childParamsAttr]) || {})._relTargetProp || clz.prototype._relTargetProp || "target"] = child;
-
-						var childParams = _self.childParams || _self[childParamsAttr] && evalParams.call(params, _self[childParamsAttr]),
-						 childBindings = _self.childBindings || _self[childBindingsAttr] && evalParams.call(params, _self[childBindingsAttr]);
-						if(_self.templateString && !params.templateString && !clz.prototype.templateString){ params.templateString = _self.templateString; }
-						if(childBindings && !params.bindings && !clz.prototype.bindings){ params.bindings = childBindings; }
-						return new clz(lang.mixin(params, childParams));
-					}), function(child, idx){
-						_self.addChild(child, startIndex + idx);
-					});
-				}
-				create(children, 0);
-				if(this.partialRebuild){
-					lang.isFunction(children.watchElements) && (this._handles = this._handles || []).push(children.watchElements(function(idx, removals, adds){
-						for(var i = 0, l = (removals || []).length; i < l; ++i){
-							_self.removeChild(idx);
-						}
-						create(adds, idx);
-					}));
-				}
-			}, this._buildChildrenSeq = (this._buildChildrenSeq || 0) + 1);
-
-			if(this.childClz){
-				createAndWatch(this.childClz);
-			}else if(this.childType){
-				require([this.childType].concat(this.childMixins && this.childMixins.split(",") || []), createAndWatch);
-			}else{
-				createAndWatch(Templated);
-			}
+			this._addChildren(0,children);
 		},
-		_addChildren: function(idx,/*dojox/mvc/StatefulArray*/ children){
+		_addChildren: function(/*int*/idx,/*dojox/mvc/StatefulArray*/ children){
 			// summary:
 			//		Create child widgets upon children and inserts them into the container node.
 

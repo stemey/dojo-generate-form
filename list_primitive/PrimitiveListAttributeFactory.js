@@ -7,7 +7,7 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
-"dojox/mvc/WidgetList",//
+"../WidgetList",//
 "./RepeatedAttributeWidget",//
 "dojox/mvc/StatefulArray"
 ], function(array, lang, Editor, declare, at, StatefulArray, Stateful,
