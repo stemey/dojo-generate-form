@@ -24,7 +24,11 @@ define([
 				return groupOrType.attributes; 
 			}else{
 				var groupFactory = editorFactory.getGroupFactory(groupOrType);
-				return groupFactory.collectAttributes(groupOrType);
+				if (groupFactory==null) {	
+					return [];
+				}else{
+					return groupFactory.collectAttributes(groupOrType);
+				}
 			}
 		},
 		update: function(groupOrType, plainValue, modelHandle,editorFactory) {
