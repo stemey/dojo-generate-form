@@ -25,10 +25,12 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// //////////////////// PRIVATE METHODS
 		// ////////////////////////
 
-		_setMetaAttr: function(meta) {
+		setMetaAndPlainValue: function(meta,value) {
+			this.meta=meta;
 			this.modelHandle=updateModelHandle.createMeta();
-			updateModelHandle.update(meta,{},this.modelHandle,this.editorFactory);
-			this._set("meta",meta);		
+			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
+			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
+			this._buildContained();
 		},
 		_setPlainValueAttr: function(value) {
 			if (value==null) {
