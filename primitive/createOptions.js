@@ -22,7 +22,10 @@ define([ "dojo/_base/array", //
 			for ( var key in attribute.values) {
 				var value = attribute.values[key];
 				if (value.label && value.value) {
-					options.push(value);
+					options.push({
+						label : value.label,
+						value : value.value
+					});
 				} else {
 					options.push({
 						label : value,

@@ -19,8 +19,13 @@ define([ "dojo/_base/array", //
  		create: function(meta, modelHandle) {
 			var options= createOptions(meta,false);
 
+			var clonedValues = [];
+			array.forEach(modelHandle.value, function(value) {
+				clonedValues.push(value);
+			});
+			
 			var select = new CheckedMultiSelect({
-				"value" : modelHandle.value		,
+				"value" : clonedValues,
 				options : options,
 				style : "width: 200px;",
 				multiple : true
@@ -30,6 +35,7 @@ define([ "dojo/_base/array", //
 			
 			return select;
 		},
+		
 		updateModelHandle: function(meta,plainValue,modelHandle) {
 			if (!plainValue) {
 				plainValue=[];

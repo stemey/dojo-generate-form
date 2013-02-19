@@ -197,7 +197,7 @@ define([
 					modelHandle.value[attribute.code]=this.createMeta();
 				}
 				var attributeModelHandle=modelHandle.value[attribute.code];
-				this.cascadeAttribute(attribute,plainValue[attribute.code],attributeModelHandle);
+				this.cascadeAttribute(attribute,plainValue[attribute.code],attributeModelHandle,editorFactory);
 				attributeModelHandle.ignore=true;
 			}, this);
 			if (typeCode!=null) {
