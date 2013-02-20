@@ -33,7 +33,10 @@ define([ "dojo/_base/array", //
 			var options = [];
 			array.forEach(values, function(value) {
 				if (value.label && value.value) {
-					options.push(value);
+					options.push({
+						label : value.label,
+						value : value.value
+					});
 				} else {
 					options.push({
 						label : value,

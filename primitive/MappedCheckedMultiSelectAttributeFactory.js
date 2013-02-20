@@ -19,17 +19,20 @@ define([ "dojo/_base/array", //
 			create : function(attribute, modelHandle, resolver) {
 			var options = this._createMappedOptions(attribute, resolver);
 			
+			var clonedValues = [];
+			array.forEach(modelHandle.value, function(value) {
+				clonedValues.push(value);
+			});
 
 			var select = new CheckedMultiSelect({
 				options : options,
 				style : "width: 200px;",
-				multiple:true,
-				value:modelHandle.value
+				multiple : true,
+				value : clonedValues
 			});
 
 			bindArray(modelHandle,select,"value");
 			this._watchMappedAttribute(attribute,select,resolver);
-			
 			
 			return select;
 		},
