@@ -1,10 +1,11 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
+"dojo/aspect",//
 "dojox/mvc/at",//
 "dijit/form/CheckBox",//
 "../meta"//
-], function(array, lang, declare, at, CheckBox,  meta) {
+], function(array, lang, declare, aspect, at, CheckBox,  meta) {
 
 	return declare("app.BooleanAttributeFactory", [], {
 		handles : function(attribute) {
@@ -14,9 +15,15 @@ define([ "dojo/_base/array", //
 			if (!modelHandle) {
 				throw new Error(" attribute "+attribute.code+" was not initialized");
 			}			
-			return new CheckBox({
+			var box= new CheckBox({
 				"checked" : at(modelHandle,"value")
 			});
+			// remove errors when value changes because this select does not validate.
+			aspect.after(box, "onChange", function() {
+				modelHandle.set("message", null);
+				modelHandle.set("valid", true);
+			});
+			return box;
 
 		}
 	})
