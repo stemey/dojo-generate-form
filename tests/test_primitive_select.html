@@ -15,13 +15,13 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory",//
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
 		"dojo/text!./meta/primitive_select.json", "dojo/text!./entity/primitive_select.json"//
-		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
+		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
 
 			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
-					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
+					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
 			var intText = dijit.byId("dijit_form_Select_0");

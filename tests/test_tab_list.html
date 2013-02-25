@@ -14,12 +14,12 @@
 
 
 	<script type="text/javascript">
-		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner", "gform/EditorFactory",//
+		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner", "gform/createStandardEditorFactory",//
 		         "dojo/text!./meta/tab_list.json","dojo/text!./entity/embedded_list.json"//
-		         ],function(ready,json,Editor,Stateful,doh,EditorFactory,meta,entity) {
+		         ],function(ready,json,Editor,Stateful,doh,createStandardEditorFactory,meta,entity) {
 			
 				editor=new Editor({"plainValue": dojo.fromJson(entity),
-				"meta":dojo.fromJson(meta),editorFactory:new EditorFactory()});
+				"meta":dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);
 				doh.register("standard", [

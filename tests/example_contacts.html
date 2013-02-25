@@ -20,7 +20,7 @@
 		"dojo/text!./meta/contacts_schema.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema"
 		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory,on,RepeatedEmbeddedAttributeFactory, meta,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema) {
 			parser.parse();
-			//var editorFactory = new EditorFactory()
+			//var editorFactory = createStandardEditorFactory()
 //			editorFactory.set("defaultGroupFactory",new ListPaneGroupFactory({editorFactory:editorFactory}));
 	//		editorFactory.attributeFactoryFinder.attributeFactories[0]=new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory});
 			try {
