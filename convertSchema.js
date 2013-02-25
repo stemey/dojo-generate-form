@@ -1,8 +1,14 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-], function(array, lang, declare, getPlainValue, equals) {
+"dojox/json/ref",
+], function(array, lang, declare, ref) {
 
+  var formatToTypeMapping= {
+		date:"date",
+		time:"time",
+		"date-time":"date-time"
+	}	
 
 	var convert = {
 		copy: function(propSource,propTarget,prop,attribute) {
@@ -12,41 +18,59 @@ define([ "dojo/_base/array", //
 			}
 		},
 		convertAttribute: function(prop,attribute) {
-			attribute.type=prop.type;
+			
+			//attribute.type=prop.type;
 			this.copy("description","description",prop,attribute);
-			this.copy("label","label",prop,attribute);
-			var optional = prop["optional"];
-			if (optional) {
-				attribute["required"]=!optional;
-			}
+			this.copy("title","label",prop,attribute);
+			this.copy("required","required",prop,attribute);
 			this.copy("readonly","readonly",prop,attribute);
-			this.copy("options","values",prop,attribute);
+			this.copy("enum","values",prop,attribute);
 			if (prop.type=="object") {
-				var propertyType=this.convert(prop);
-				attribute.validTypes=[];
-				attribute.validTypes.push(propertyType);
+				var types = this.convertObjectProp(prop);
+				attribute.type="object";
+				attribute.validTypes=types;
 			}else if (prop.type=="array") {
 				attribute.array=true;
 				if (prop.items.type=="object") {
-					var propertyType = this.convert(prop.items);
-					attribute.validTypes=[];
-					attribute.validTypes.push(propertyType);
-				} else if (prop.items.type="array") {
+					attribute.type="object";
+					var types = this.convertObjectProp(prop.items);
+					attribute.validTypes=types;
+				} else if (prop.items.type=="array") {
 					throw new Error("cannot convert array of arrays");
 				}else{
 					attribute.type=prop.items.type;
 				}
+			}else{
+				var type = formatToTypeMapping[prop.format];
+				attribute.type=type || prop.type;
 			}
 		},
+		convertObjectProp: function(prop) {
+				if (prop.oneOf) {
+					return this.convertTypes(prop.oneOf);
+				}else	if (prop.properties) {
+					return [this.convert(prop)];
+				}else{
+					throw new Error("cannot only convert objects with oneOf");
+				}
+		},
+		convertTypes: function(schemas) {
+			return array.map(schemas,lang.hitch(this,"convert"),this);
+		},
 		convert: function(schema,meta) {
+			schema=ref.resolveJson(schema);
 			meta={};
 			meta.attributes=[];
+			//return  meta;
 			for (var key in schema.properties) {
-				var attribute={};
-				attribute.code=key;
-				meta.attributes.push(attribute);
-				var prop = schema.properties[key];
-				this.convertAttribute(prop,attribute);
+				// "__parent" is added by dojox/json/ref
+				if (key!="__parent") {
+					var attribute={};
+					attribute.code=key;
+					var prop = schema.properties[key];
+					meta.attributes.push(attribute);
+					this.convertAttribute(prop,attribute);
+				}
 			}		
 			return meta;
 		}
