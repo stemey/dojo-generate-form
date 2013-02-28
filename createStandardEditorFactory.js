@@ -1,4 +1,5 @@
 define([ 
+"dojo/_base/lang",//
 "./EditorFactory", //
 "./AttributeFactoryFinder",//
 "./group/GroupFactory",//
@@ -24,7 +25,7 @@ define([
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//,
 "./list_table/RepeatedEmbeddedAttributeFactory"
 
-], function(EditorFactory,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
+], function(lang,EditorFactory,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
 		TitlePaneGroupFactory, ListGroupFactory,PrimitiveListAttributeFactory,StringAttributeFactory,
 		BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, 
 		MappedCheckedMultiSelectAttributeFactory,
@@ -33,7 +34,6 @@ define([
 		CurrencyAmountAttributeFactory, MappedContentPaneFactory,
 		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
-	return function() {
 			var editorFactory = new EditorFactory();
 			editorFactory.addGroupFactory("list", new GroupFactory({editorFactory:editorFactory}));
 			editorFactory.addGroupFactory("listpane", new ListPaneGroupFactory({editorFactory:editorFactory}));
@@ -69,8 +69,9 @@ define([
 			attributeFactoryFinder.set("attributeFactories",attributeFactories);
 
 			editorFactory.set("attributeFactoryFinder",attributeFactoryFinder);
-			return editorFactory;
-			
+		
+			return function() {
+				return editorFactory;
+			}				
 
-		}
 });

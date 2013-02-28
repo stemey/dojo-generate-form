@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: true, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+		require(["gform/registerStandardEditorFactory"]);
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test</h1>
+
+
+	<div data-dojo-type="gform.Editor" id="editor" data-dojo-props="editorFactory:gform.ef.standard, metaUrl:'./meta/declarative.json'">
+	</div>
+
+</body>
+</html>

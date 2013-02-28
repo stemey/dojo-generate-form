@@ -7,7 +7,7 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
-"../WidgetList",//
+"dojox/mvc/WidgetList",//
 "./RepeatedAttributeWidget",//
 "dojox/mvc/StatefulArray"
 ], function(array, lang, Editor, declare, at, StatefulArray, Stateful,
@@ -37,7 +37,7 @@ define([ "dojo/_base/array", //
 			});
 
 			var widgetList = new WidgetList();
-			widgetList.set("partialrebuild", true);
+			widgetList.set("partialRebuild", true);
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedAttributeWidget);
 			widgetList.set("childParams", {

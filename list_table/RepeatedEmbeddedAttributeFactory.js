@@ -52,7 +52,7 @@ define([ "dojo/_base/array", //
 			select.addChild(tableHeader);
 			
 			var widgetList = new WidgetList();
-			widgetList.set("partialrebuild", true);
+			widgetList.set("partialRebuild", true);
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {

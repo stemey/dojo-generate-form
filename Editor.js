@@ -53,6 +53,12 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);
 		},
+		_setMetaUrlAttr: function(url) {
+			var me = this;
+			require(["dojo/text!"+url],function(metaJson) {
+				me.set("meta",dojo.fromJson(metaJson));
+			});
+		},
 		hasChanged: function() {
 		// summary:
 		// 		returns true if the data was changed.
