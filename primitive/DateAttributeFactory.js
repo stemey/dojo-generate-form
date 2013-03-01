@@ -19,6 +19,9 @@ define([ "dojo/_base/array", //
 			if (attribute.required) {
 				box.set("required", attribute.required);
 			}
+			if (attribute.readOnly) {
+				box.set("readOnly", attribute.readOnly);
+			}
 			if (attribute.constraints) {
 				box.set("constraints", attribute.constraints);
 			}
