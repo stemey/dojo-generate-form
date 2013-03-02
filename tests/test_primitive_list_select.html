@@ -27,7 +27,7 @@
 								name: 'init',
 								runTest: function(t){
 									t.assertEqual(2,editor.get("plainValue").things.length);
-									var message1=dijit.byId("dijit_form_Select_1").get("value");
+									var message1=dijit.byId("gform_Select_1").get("value");
 									t.assertEqual("bye",message1);
 								}
 							},
@@ -49,9 +49,9 @@
 								name: 'reset',
 								runTest: function(t){
 									editor.set("plainValue",{things:["bye","moin"]});
-									var message1=dijit.byId("dijit_form_Select_3").get("value");
+									var message1=dijit.byId("gform_Select_3").get("value");
 									t.assertEqual("bye",message1);
-									var message2=dijit.byId("dijit_form_Select_4").get("value");
+									var message2=dijit.byId("gform_Select_4").get("value");
 									t.assertEqual("moin",message2);
 								}
 							}]);			

@@ -55,7 +55,7 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 		}
 
 		var emptyType1= {
-			stringP:"",
+			stringP:null,
 			booleanP:false,
 			numberP:0,
 		}
@@ -89,8 +89,8 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
         updateModelHandle.updateObject(objectAttribute,null,modelHandle);
 				var plainValue = getPlainValue(modelHandle);
 				doh.assertTrue(null==plainValue);
-				doh.assertEqual("",modelHandle.nonNullValue.value.stringP.value);
-      }, 
+				doh.assertEqual(null,modelHandle.nonNullValue.value.stringP.value);
+      }, 	
       function testObjectInitNotNull(){
 				var modelHandle = updateModelHandle.createMeta();
         updateModelHandle.updateObject(objectAttribute,{stringP:"hallo"},modelHandle);
