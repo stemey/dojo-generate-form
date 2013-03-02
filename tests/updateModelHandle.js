@@ -75,7 +75,7 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 			}
 		}
 
-    doh.register("gform", [
+    doh.register("gform-updateModelHandle", [
       function testValue(){
 				var modelHandle = updateModelHandle.createMeta();
         updateModelHandle.updateObjectType(null,type1,{},modelHandle);

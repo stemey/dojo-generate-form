@@ -59,10 +59,10 @@
                 },
                 {
                     "type":"boolean",
-                    "label":"lastname",
+                    "label":"lastnames",
                     "description":"we need to know",
                     "errorMessage":"required",
-										"code":"lastname",
+										"code":"lastnames",
                     "array":true
                 }
 						]},{
