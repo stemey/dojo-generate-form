@@ -5,6 +5,10 @@ Dojo Generate Form: A Dijit to generate a form based on an editor schema
 General
 -------
 
+
+See the [wiki](http://github.com/stemey/dojo-generate-form/wiki) for documentation.
+
+
 The basic dijit to generate a form is called 'Editor'. It has three properties:
 
 1. 'meta' : 			an editor schema  
@@ -73,7 +77,6 @@ The editor schema is a json literal that contains all the properties to be displ
 		]
 	}
 
-See the [wiki](http://github.com/stemey/dojo-generate-form/wiki) for more information.
 
 INSTALLATION
 ------------
