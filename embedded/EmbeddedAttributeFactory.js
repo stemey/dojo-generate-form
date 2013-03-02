@@ -16,7 +16,7 @@ define([ "dojo/_base/array", //
 		handles : function(attribute, modelHandle) {
 			// check if the attribute is complex.
 			return attribute != null
-					&& (attribute.type.attributes || attribute.validTypes)
+					&& attribute.validTypes
 					&& !attribute.array;
 		},
 		constructor : function(kwArgs) {

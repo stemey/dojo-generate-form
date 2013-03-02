@@ -20,6 +20,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
 			return this.normalizedPrimitiveType(this.getType(attribute));
 		},
 		getType : function(attribute) {
+			if (!attribute.type) {
+				return null;
+			}
 			if (typeof attribute.type == "string") {
 				return attribute.type;
 			}else{

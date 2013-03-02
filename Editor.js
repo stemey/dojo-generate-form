@@ -3,17 +3,28 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		"dojo/dom-construct", "dojo/Stateful", "./getPlainValue","./updateModelHandle","./hasChanged","./group/_GroupMixin" ], function(array, lang,
 		declare, Container, _LayoutWidget,at, domConstruct,
 		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin) {
+		// module: 
+		//		gform/Editor
 
 	// at needs to be globally defined.
 	window.at = at; 
 
 	return declare("gform.Editor", [ Container,_GroupMixin ], {
+		// summary:
+		//		this widget generates a form based on a schema.
 		editorFactory : null,
+		// summary:
+		// 		the editorFactory is responsible for translating the schema into a widget tree.
+
 		widget : null,
 
 		children : null,
 		modelHandle : null,
+		// summary:
+		// 		the data that is bound to the form.
 		meta : null,
+		// summary:
+		// 		the schema describing the form.
 
 		// _relTargetProp: String
 		// The name of the property that is used by child
@@ -48,7 +59,15 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);
 		},
+		_setMetaUrlAttr: function(url) {
+			var me = this;
+			require(["dojo/text!"+url],function(metaJson) {
+				me.set("meta",dojo.fromJson(metaJson));
+			});
+		},
 		hasChanged: function() {
+		// summary:
+		// 		returns true if the data was changed.
 			return hasChanged(this.modelHandle);
 		},
 		resize: function(dim) {
@@ -95,17 +114,23 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			}
 		},
 		addError: function(path,message) {
+		// summary:
+		//		add an error message to an attribute defined by the path.
 			this.visit(path,function(model) {
 				model.set("valid",false);
 				model.set("message",message);
 			});
 		},
 		updateValue: function(path,value) {
+		// summary:
+		//		update an attribute of the data.
 			this.visit(path,function(model) {
 				model.set("value",value);
 			});
 		},
 		visit: function(path,cb) {
+		// summary:
+		//		visit the data attribute defined by the path. The path elements are separated by dots -even the indices (e.g.: "person.friends.1.name"). 
 			var pathElements=path.split(".");
 			var model=this.get("modelHandle");
 			array.forEach(pathElements,function(pathElement){
@@ -124,10 +149,19 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			cb(model);
 		},
 		reset: function() {
+		// summary:
+		//		reset the data to its original value.
 			var oldValue=this.modelHandle.oldValue;
 			this.set("plainValue",oldValue);
 		},	
-		
+		setMetaAndValue: function(meta,plainValue) {
+		// summary:
+		//		change the form and its data.
+			this.meta=meta;
+			this.modelHandle=null;
+			this.set("plainValue",plainValue);
+			this._buildContained();
+		},	
 		_destroyBody : function() {
 			if (this.widget != null) {
 				this.widget.destroy();

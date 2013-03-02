@@ -2,7 +2,7 @@ define([
     	"dojo/_base/array",
     	"dojo/_base/lang",
     	"dojo/_base/declare",
-"../WidgetList" ], function(array,lang,declare,WidgetList) {
+"dojox/mvc/WidgetList" ], function(array,lang,declare,WidgetList) {
 
 	return declare("gform.TableWidgetList", [ WidgetList ], {
 		buildRendering : function() {

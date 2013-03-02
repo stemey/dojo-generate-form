@@ -1,0 +1,50 @@
+{
+	definitions: {
+		contactField:{
+			"id":	"contactField",
+			"description": "An Address following the convention of http://www.w3.org/TR/2010/WD-contacts-api-20100121/#idl-def-ContactField",
+		  "type": "object",
+			"properties": {
+		          "types": {"type":"array", "items":{"type":"string"}},
+		          "value": {"type" : "string"}
+		  }
+		}
+	,contactAddress:{
+				"id":"contactAddress",
+				"description" : "An Address following the convention of http://www.w3.org/TR/2010/WD-contacts-api-20100121/#idl-def-ContactAddress",
+				"type" : "object",
+				"properties" : {
+				    "country" : { "type" : "string",
+				                     "required" : false,
+				                     "description" : "Two letter [ISO 3166-1] country code" },
+				    "region" : { "type" : "string",
+				                    "required" : false,
+				                    "description" : "The country subdivision (eg. state)"},
+				    "county" : { "type" : "string", "required" : false },
+				    "city" : { "type" : "string", "required" : false },
+				    "street" : { "type":"string" },
+				    "streetNumber" : { "type":"string" },
+				    "premises" : { "type" : "string", },
+				    "additionalInformation" : { "type" : "string" },
+				    "postalCode" : { "type" : "string",
+				                        "description" : "The postal code of the address" },
+				}
+		}
+	},	
+	"description":"A representation of a person, company, organization, or place",
+	"type":"object",
+	"properties":{
+		 "name":{"type":"string", "required":true},
+		 "nicknames":{"type":"array", "items":{"type":"string"}},
+		 "phones":{"type":"array", "items":{"$ref" : "contactField", "format":"phone"}},
+		 "emails":{"type":"array", "items":{"$ref" : "contactField", "format":"email"}},
+		 "addresses":{"type":"array", "items":{"$ref" : "contactAddress"}},
+		 "serviceId":{"type":"string"},
+		 "categories":{"type":"array", "items":{"type":"string"}},
+		 "pic":{"type":"string","format":"uri"},
+		 "birthdate":{"type":"string","format":"date"},
+		 "favoriteColor":{"type":"string","format":"color"}
+	}
+}
+
+

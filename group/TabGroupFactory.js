@@ -51,7 +51,7 @@ define([ "dojo/_base/array", //
 			var tab=tabWidget.get("meta");
 			if (tabWidget.get("errorCount")>0) {
 				tabWidget.set("iconClass", "dijitIconError");
-				tabWidget.set("title", tab.label+"("+tabWidget.get("errorCount")+")");
+				tabWidget.set("title", tab.label+"(<span>"+tabWidget.get("errorCount")+"</span>)");
 			} else {
 				tabWidget.set("iconClass", "");
 				tabWidget.set("title", tab.label);
