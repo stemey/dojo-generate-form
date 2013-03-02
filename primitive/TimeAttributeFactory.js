@@ -5,8 +5,7 @@ define([ "dojo/_base/array", //
 "dojo/date/stamp",//
 "./TimeTextBox",//
 "../meta",//
-"../getStateful"//
-], function(array, lang, declare, at, dateStamp, TimeTextBox, meta, getStateful) {
+], function(array, lang, declare, at, dateStamp, TimeTextBox, meta) {
 
 	return declare("app.TimeAttributeFactory", [], {
 		

@@ -1,8 +1,8 @@
 define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		"dojox/mvc/_Container", "dijit/layout/_LayoutWidget","dojox/mvc/at", 
-		"dojo/dom-construct", "dojo/Stateful", "./getStateful","./getPlainValue","./updateStateful","./hasChanged","./group/_GroupMixin" ], function(array, lang,
+		"dojo/dom-construct", "dojo/Stateful", "./getPlainValue","./updateModelHandle","./hasChanged","./group/_GroupMixin" ], function(array, lang,
 		declare, Container, _LayoutWidget,at, domConstruct,
-		 Stateful,getStateful,getPlainValue,updateStateful,hasChanged,_GroupMixin) {
+		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin) {
 
 	// at needs to be globally defined.
 	window.at = at; 
@@ -25,22 +25,25 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// //////////////////// PRIVATE METHODS
 		// ////////////////////////
 
+		setMetaAndPlainValue: function(meta,value) {
+			this.meta=meta;
+			this.modelHandle=updateModelHandle.createMeta();
+			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
+			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
+			this._buildContained();
+		},
 		_setPlainValueAttr: function(value) {
 			if (value==null) {
 				value={};
 			}
-			if (this.modelHandle) {
-				updateStateful(value,this.modelHandle);
-			}else{
-				this.set("modelHandle",getStateful(value));
+			if (!this.modelHandle) {
+				this.modelHandle=updateModelHandle.createMeta();
 			}
-		},
-		_setMetaAttr: function(value) {
-			if (value==null) {
-				value={};
+			if (!this.meta) {
+				throw new Error("cannot set plainValue before setting meta");
 			}
-			this.meta=value;
-			this._buildContained();
+			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
+			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
 		},
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);
@@ -62,6 +65,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			this.containerNode=this.domNode;
 			//this.domNode.style.height="100%";
 			//this.domNode.style.width="100%";
+			this.watch("meta", lang.hitch(this, "_buildContained"));
 			if (this.meta) {
 				this._buildContained();
 			}
@@ -71,12 +75,11 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		},
 		_buildContained: function() {
 			if (this.modelHandle == null) {
-				this.modelHandle = getStateful({});
+				this.set("plainValue",{});
 			}
 			try {
 				if (this.widget) {
 					this.widget.destroy();
-					domConstruct.destroy(this.widget.domNode);	
 				}
 				if (this.get("meta") && this.editorFactory) {
 					this.widget = this.editorFactory.create(this.get("meta"),
@@ -122,11 +125,10 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		},
 		reset: function() {
 			var oldValue=this.modelHandle.oldValue;
-			updateStateful(oldValue,this.modelHandle);
+			this.set("plainValue",oldValue);
 		},	
 		
-		destroy : function() {
-			this.inherited(arguments);	
+		_destroyBody : function() {
 			if (this.widget != null) {
 				this.widget.destroy();
 				this.widget = null;

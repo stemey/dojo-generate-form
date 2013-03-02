@@ -9,12 +9,12 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "./TableWidgetList",//
 "./RepeatedEmbeddedWidget",//
-"../getStateful",//
+"../updateModelHandle",//
 "./TableHeader",//
 "./TableElementHeader",//
 "./mergeAttributeDefinitions"
 ], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, getStateful,TableHeader,TableElementHeader,mergeAttributeDefinitions) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle,TableHeader,TableElementHeader,mergeAttributeDefinitions) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -28,8 +28,10 @@ define([ "dojo/_base/array", //
 		create : function(attribute, modelHandle) {
 
 			if (modelHandle.value==null) {
-				modelHandle.value=new StatefulArray([]);
+				throw new Error("modelHandle.value should be initialized here");
 			}
+			
+			var combinedAttributes=updateModelHandle.mergeAttributeDefinitions(attribute.validTypes	);
 
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
@@ -44,7 +46,7 @@ define([ "dojo/_base/array", //
 			}
 
 
-			array.forEach(mergeAttributeDefinitions(attribute.validTypes),function(attribute) {
+			array.forEach(combinedAttributes,function(attribute) {
 				tableHeader.addChild(new TableElementHeader({label:attribute.label}));
 			},this);
 			select.addChild(tableHeader);
@@ -55,6 +57,7 @@ define([ "dojo/_base/array", //
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {
 				meta : attribute,
+				combinedAttributes: combinedAttributes,
 				_relTargetProp : "modelHandle",
 				editorFactory: this.editorFactory
 			});
@@ -62,6 +65,16 @@ define([ "dojo/_base/array", //
 
 			return select;
 
+		},
+		updateObject: function (meta,plainValue,modelHandle) {
+			if (meta.validTypes.length==1) {
+				updateModelHandle.updateObject(meta,plainValue,modelHandle,this.editorFactory);
+			}else{
+				updateModelHandle.updateMergedObject(meta,plainValue,modelHandle,this.editorFactory);
+			}			
+		},
+		updateModelHandle: function(meta,plainValue,modelHandle) {
+			updateModelHandle.updateArray(meta,plainValue,modelHandle,this.editorFactory, lang.hitch(this,"updateObject"));
 		}
 	})
 });

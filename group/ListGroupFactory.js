@@ -1,8 +1,8 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-"./AttributeListWidget"//
-], function(array, lang, declare, AttributeListWidget) {
+"./ListPane"//
+], function(array, lang, declare, ListPane) {
 
 	return declare("gform.ListGroupFactory", null, {
 		constructor : function(kwArgs) {
@@ -10,7 +10,7 @@ define([ "dojo/_base/array", //
 		},
 		
 		create : function(group, modelHandle) {
-			var listWidget = new AttributeListWidget({
+			var listWidget = new ListPane({
 				meta:group
 			});
 			
@@ -20,6 +20,15 @@ define([ "dojo/_base/array", //
 			}, this);
 			
 			return listWidget;
-		}
+		},
+		collectAttributes: function(group) {
+			var attributes=[];
+			array.forEach(group.groups, function(group) {
+				array.forEach(group.attributes, function(attribute) {
+					attributes.push(attribute);
+				},this);
+			},this);
+			return attributes;
+		},
 	});
 });

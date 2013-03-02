@@ -27,11 +27,22 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			this.deleteButton.set("onClick", lang.hitch(this, "_delete"));
 		},
 		_delete : function(e) {
-			var index = this.indexAtStartup;
+			var eventDispatcher = this.getParent();
+			var index = this.getParent().getChildren().indexOf(this);
 			if (index >= 0) {
 				this.parent.children.splice(index, 1);
 			}
+			eventDispatcher.emit("valid-changed");
+		},
+		destroy: function() {
+			array.forEach(this.getChildren(),function(child) {
+				child.destroy();
+				//this.removeChild(child);
+			});
+			this.inherited(arguments);
+		//	this.destroyRecursive();
 		}
+
 	});
 
 });

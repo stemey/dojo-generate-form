@@ -6,11 +6,10 @@ define([ "dojo/_base/array", //
 "./ExpandableDecoratorWidget",//
 "./AttributeListWidget",//
 "../AttributeFactoryFinder",//
-"../getStateful",
 "../Resolver"
 
 ], function(array, lang, declare, at, DecoratorWidget, ExpandableDecoratorWidget, AttributeListWidget,
-		AttributeFactoryFinder,getStateful,Resolver) {
+		AttributeFactoryFinder,Resolver) {
 
 	return declare("app.Groupfactory", null, {
 		constructor : function(kwArgs) {
@@ -30,10 +29,14 @@ define([ "dojo/_base/array", //
 		},	
 		create : function(group, modelHandle) {
 			var listWidget = this.createWidget(group);
+
 			array.forEach(group.attributes, function(attribute) {
 				var label = attribute.label;
+				if (!modelHandle.value) {
+					throw new Error("provide a meta object "+attribute.code);
+				}
 				if (!modelHandle.value[attribute.code]) {
-					modelHandle.value[attribute.code]=getStateful(null);
+					throw new Error("provide a default value"+attribute.code);
 				}
 				var attributeEditor = this.createAttribute(attribute,
 						modelHandle.value[attribute.code],new Resolver(modelHandle));

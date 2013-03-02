@@ -9,6 +9,7 @@
             "code":"things",
             "array":true,
             "type":"string",
+						editor:"primitive_list",
             values : ["moin","bye","buenos dias"]           
         }
     ],

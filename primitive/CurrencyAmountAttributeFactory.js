@@ -3,9 +3,8 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dijit/form/NumberTextBox",//
-"../getStateful",//
 "../meta"//
-], function(array, lang, declare, at, NumberTextBox,getStateful,meta) {
+], function(array, lang, declare, at, NumberTextBox,meta) {
 
 	return declare( "gform.CurrencyAmountAttributeFactory", [], {
 		handles : function(attribute) {

@@ -15,9 +15,9 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory",//
+		require([ "dojo/ready", "dojo/_base/query", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/EditorFactory",//
 		"dojo/text!./meta/embedded.json", "dojo/text!./entity/embedded.json"//
-		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
+		], function(ready, query, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
 			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
@@ -65,14 +65,18 @@
 						t.assertEqual(1,editor.get("errorCount"));
 					}
 				}, {
-					name : 'initWithNull',
+					name : 'setPlainValue',
 					runTest : function(t) {
-						editor.set("plainValue",{});
-						editor.set("meta",dojo.fromJson(meta));
-						var isNull=dijit.byId("dijit_form_CheckBox_1").get("checked");
-						t.assertEqual(true,isNull);
+						editor.set("plainValue", {thing:{name:"herman"}});
+						t.assertEqual("herman",query("input[type='text']")[0].value);
 					}
-				}  
+				}, {
+					name : 'setPlainNull',
+					runTest : function(t) {
+						editor.set("plainValue", {thing:null});
+						t.assertEqual(true,query("input[type='checkbox']")[0].checked);
+					}
+				}
 			]);
 			doh.run();
 		});

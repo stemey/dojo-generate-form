@@ -5,13 +5,12 @@ define([ "dojo/_base/array", //
 "dojo/date/stamp",//
 "./DateTextBox",//
 "../meta",//
-"../getStateful"//
-], function(array, lang, declare, at, dateStamp, DateTextBox, meta, getStateful) {
+], function(array, lang, declare, at, dateStamp, DateTextBox, meta) {
 
 	return declare("app.DateAttributeFactory", [], {
 		
 		handles : function(attribute) {
-			return meta.isType(attribute, "date") && !attribute.array;
+			return attribute.type == "date" && !attribute.array;
 		},
 		
 		create : function(attribute, modelHandle) {

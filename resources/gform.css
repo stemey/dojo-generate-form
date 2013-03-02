@@ -7,6 +7,7 @@
  */
 
 
+@import url('../../dojox/form/resources/CheckedMultiSelect.css');
 @import url('normalize.css');
 
 body,html {

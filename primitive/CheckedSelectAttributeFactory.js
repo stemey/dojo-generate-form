@@ -1,28 +1,30 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-"dojox/mvc/at",//
 "dojox/form/CheckedMultiSelect",//
-"./_SelectAttributeFactoryBase",//
-"../getStateful",//
-"../meta"//
-], function(array, lang, declare, at, CheckedMultiSelect, _SelectAttributeFactoryBase, getStateful, meta) {
+"./createOptions",//
+"./nullablePrimitiveConverter",//
+], function(array, lang, declare, CheckedMultiSelect, createOptions, nullablePrimitiveConverter) {
 
-	return declare("gform.CheckedSelectAttributeFactory", [ _SelectAttributeFactoryBase ], {
+	return declare("gform.CheckedSelectAttributeFactory", [ ], {
 
 		handles : function(attribute) {
-			var values = meta.getTypeAttribute(attribute,"values");	
+			var values = meta.values;	
 			return !attribute.array && values != null && values.length > 0;
 		},
  		
- 		createValueBinding : function(modelHandle) {
- 			var valueConverter = this.createValueConverter();
-			return at(modelHandle, "value").transform(valueConverter);
-		},
- 		
- 		createSelect : function(config) {
- 			config["multiple"] = false;
- 			return new CheckedMultiSelect(config);
+
+ 		create : function(meta,modelHandle) {
+			var options= createOptions(meta,true);
+
+			var select = new CheckedMultiSelect({
+				"value" : at(modelHandle,"value").transform(nullablePrimitiveConverter),
+				options : options,
+				style : "width: 200px;",
+				multiple : false
+			});
+			
+			return select;
  		}
 		
 	});

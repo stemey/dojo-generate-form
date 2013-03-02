@@ -19,7 +19,7 @@
 		         "dojo/text!./meta/embedded_list_polymorphic.json","dojo/text!./entity/embedded_list_polymorphic.json"//
 		         ],function(ready,json,Editor,Stateful,doh,EditorFactory,meta,entity) {
 			
-				var editor=new Editor({"plainValue": dojo.fromJson(entity),
+				editor=new Editor({"plainValue": dojo.fromJson(entity),
 				"meta":dojo.fromJson(meta),editorFactory:new EditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);
@@ -49,13 +49,20 @@
 									dijit.byId("dijit_form_Button_1").onClick();
 									t.assertEqual(1,editor.get("plainValue").things.length);
 									// the validationTextBox is recreated and the error is overwritten
-									t.assertEqual(0,editor.get("errorCount"));
+									t.assertEqual(1,editor.get("errorCount"));
 								}
 							},
 							{
 								name: 'add',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_0").onClick();
+									t.assertEqual(2,editor.get("plainValue").things.length);
+								}
+							},
+							{
+								name: 'reset',
+								runTest: function(t){
+									editor.set("plainValue",{things:[{ext_type:"thing1",common:"c1",name:"name1"}, {ext_type:"thing2",common:"c2",firstName:"fname1"}]});
 									t.assertEqual(2,editor.get("plainValue").things.length);
 								}
 							}]);			

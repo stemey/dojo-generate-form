@@ -19,7 +19,7 @@
 		"dojo/text!./meta/primitive_mapped_select.json", "dojo/text!./entity/primitive_mapped_select.json"//
 		], function(ready, json, Editor, Stateful, doh,EditorFactory, meta, entity) {
 
-			var editor = new Editor({
+			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),editorFactory:new EditorFactory()});
 			var container = dojo.byId("container");
@@ -39,6 +39,15 @@
 					runTest : function(t) {
 						firstSelect.set("value","german");
 						t.assertEqual("Herr", secondSelect.get("value"));
+					}
+				},
+				{
+					name : 'testReset',
+					runTest : function(t) {
+						editor.set("plainValue",{language:"english"});
+						editor.set("plainValue",{language:"german",salutation:"Herr"});
+						t.assertEqual("Herr", secondSelect.get("value"));
+						t.assertEqual("german", firstSelect.get("value"));
 					}
 				}
 			]);

@@ -12,8 +12,9 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		postCreate: function() {
 			this.inherited(arguments);
 			if (this.modelHandle && typeof this.modelHandle.watch == "function") {
-				this.messageWatch = this.modelHandle.watch("message",lang.hitch(this,"onMessageChange"));
-				this.valueWatch = this.modelHandle.watch("value",lang.hitch(this,"onModelValueChange"));
+				this.messageWatch=this.modelHandle.watch("message",lang.hitch(this,"onMessageChange"));
+				this.oldValueWatch=this.modelHandle.watch("oldValue",lang.hitch(this,"onOldValueChange"));
+				this.valueWatch=this.modelHandle.watch("value",lang.hitch(this,"onModelValueChange"));
 				this.on("value-changed",lang.hitch(this,"onValueChange"));
 				this.on("valid-changed",lang.hitch(this,"onValidChange"));
 			}else{
@@ -36,17 +37,15 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			this.updateState();
 			this.changesTooltip.label="was "+dojo.toJson(this.modelHandle.oldValue,true);
 		},
-		
 		destroy: function() {
 			this.inherited(arguments);
-			if (this.messageWatch) {
+			if (this.modelHandle) {
+				this.oldValueWatch.remove();
 				this.messageWatch.remove();
-			}
-			if (this.valueWatch) {
 				this.valueWatch.remove();
 			}
 		},
-		
+
 		startup: function() {
 			this.inherited(arguments);
 		},
@@ -61,7 +60,12 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			this.updateState();
 			this.emit("value-changed",{src:this,oldValue:old,newValue:nu});
 		},
-		
+
+		onOldValueChange: function(propName,old,nu) {
+			this.changesTooltip.label="was "+dojo.toJson(this.modelHandle.oldValue,true)
+			this.updateState();
+		},
+
 		onValidChange: function(e	) {
 			this.updateState();
 		},

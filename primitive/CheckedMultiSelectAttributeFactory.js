@@ -1,39 +1,47 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-"dojox/mvc/at",//
+"dojo/aspect",//
 "dojox/form/CheckedMultiSelect",//
-"./_SelectAttributeFactoryBase",//
-"../getStateful",//
-"../meta",//
+"../updateModelHandle",//
+"./createOptions",//
+"./bindArray",//
 "../getPlainValue",//
 "dojox/mvc/StatefulArray"
-], function(array, lang, declare, at, CheckedMultiSelect, _SelectAttributeFactoryBase, getStateful, meta,getPlainValue,StatefulArray) {
+], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle,   createOptions,bindArray,getPlainValue,StatefulArray) {
 
-	return declare("gform.CheckedMultiSelectAttributeFactory", [ _SelectAttributeFactoryBase ], {
+	return declare("gform.CheckedMultiSelectAttributeFactory", [  ], {
  		
- 		emptyOptionSupported : false,
-
 		handles : function(attribute) {
 			return attribute != null && attribute.array && !attribute.validTypes && attribute.values;
 		},
-		
-		createValueBinding : function(modelHandle) {
-			return at(modelHandle, "value").direction(at.to);
-		},
  		
- 		createSelect : function(config) {
- 			config["multiple"] = true;
-			return new CheckedMultiSelect(config);
- 		},
+ 		create: function(meta, modelHandle) {
+			var options= createOptions(meta,false);
 
-		initValue : function(select, modelHandle) {
-			if (modelHandle.oldValue == null || typeof modelHandle.oldValue == "undefined") {
-				modelHandle.set("oldValue", []);
-			}
-			var plainValue = getPlainValue(modelHandle.value);
-			select.set("value", plainValue);
-		}
+			var clonedValues = [];
+			array.forEach(modelHandle.value, function(value) {
+				clonedValues.push(value);
+			});
+			
+			var select = new CheckedMultiSelect({
+				"value" : clonedValues,
+				options : options,
+				style : "width: 200px;",
+				multiple : true
+			});
+			
+			bindArray(modelHandle,select,"value");
+			
+			return select;
+		},
 		
+		updateModelHandle: function(meta,plainValue,modelHandle) {
+			if (!plainValue) {
+				plainValue=[];
+			}
+			modelHandle.set("value",plainValue);
+			modelHandle.set("oldValue",plainValue);
+		}
 	});
 });

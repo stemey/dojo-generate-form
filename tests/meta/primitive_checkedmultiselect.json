@@ -3,7 +3,7 @@
     "label":"example",
     "attributes":[
         {
-            "type":"text",
+            "type":"string",
             "label":"multiple select",
             "code":"multiselect",
             "required":false,

@@ -5,35 +5,45 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dojox/form/CheckedMultiSelect",//
 "./_MappedSelectAttributeFactoryBase",//
-"../getStateful",//
-"../meta",//
+"./bindArray",//
 "../getPlainValue",//
 "dojox/mvc/StatefulArray"
 ], function(array, lang, declare, domClass, at, CheckedMultiSelect, _MappedSelectAttributeFactoryBase, //
-		getStateful, meta, getPlainValue, StatefulArray) {
+		 bindArray, getPlainValue,StatefulArray) {
 
 	return declare("gform.MappedCheckedMultiSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
 
 		handles : function(attribute) {
 			return attribute != null && attribute.array && !attribute.validTypes && attribute.mapped_values;
 		},
-		
-		createValueBinding : function(modelHandle) {
-			return at(modelHandle, "value").direction(at.to);
-		},
+			create : function(attribute, modelHandle, resolver) {
+			var options = this._createMappedOptions(attribute, resolver);
+			
+			var clonedValues = [];
+			array.forEach(modelHandle.value, function(value) {
+				clonedValues.push(value);
+			});
 
-		createSelect : function(config) {
-			config["multiple"] = true;
-			return new CheckedMultiSelect(config);
-		},
+			var select = new CheckedMultiSelect({
+				options : options,
+				style : "width: 200px;",
+				multiple : true,
+				value : clonedValues
+			});
 
-		initValue : function(select, modelHandle) {
-			if (modelHandle.oldValue == null || typeof modelHandle.oldValue == "undefined") {
-				modelHandle.set("oldValue", []);
+			bindArray(modelHandle,select,"value");
+			this._watchMappedAttribute(attribute,select,resolver);
+			
+			return select;
+		},
+		updateModelHandle: function(meta,plainValue,modelHandle) {
+			if (!plainValue) {
+				plainValue=[];
 			}
-			initValue = getPlainValue(modelHandle.value);
-			select.set("value", initValue);
+			modelHandle.set("value",plainValue);
+			modelHandle.set("oldValue",plainValue);
 		}
 		
+
 	});
 });

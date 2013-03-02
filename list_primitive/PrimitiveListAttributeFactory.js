@@ -7,12 +7,11 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
-"dojox/mvc/WidgetList",//
+"../WidgetList",//
 "./RepeatedAttributeWidget",//
-"../getStateful",//
 "dojox/mvc/StatefulArray"
 ], function(array, lang, Editor, declare, at, StatefulArray, Stateful,
-		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget,getStateful,StatefulArray) {
+		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget ,StatefulArray) {
 
 	return declare("app.PrimitiveListAttributeFactory", [], {
 

@@ -32,6 +32,13 @@
 						t.assertEqual("2013-05-01", editor.get("plainValue").validFrom);
 						t.assertEqual(new Date(2013, 4, 1), intValidFrom.get("value"));
 					}
+				},
+				{
+					name : 'resetValue',
+					runTest : function(t) {
+						editor.set("plainValue",{validFrom:"2011-01-01"});
+						t.assertEqual(new Date(2011, 0, 1), intValidFrom.get("value"));
+					}
 				}
 			]);
 			doh.run();

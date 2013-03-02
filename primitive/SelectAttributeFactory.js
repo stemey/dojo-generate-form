@@ -2,27 +2,50 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"dijit/form/Select",//
-"./_SelectAttributeFactoryBase",//
-"../getStateful",//
-"../meta"//
-], function(array, lang, declare, at, Select, _SelectAttributeFactoryBase, getStateful, meta) {
+"dojo/aspect",//
+"./Select",//
+"../updateModelHandle",//
+"../meta",//
+"./createOptions",//
+"./nullablePrimitiveConverter" ], function(array, lang, declare, at, aspect,
+		Select, updateModelHandle, meta, createOptions,
+		nullablePrimitiveConverter) {
 
- 	return declare("gform.SelectAttributeFactory", [ _SelectAttributeFactoryBase ], {
+	return declare("gform.SelectAttributeFactory", [], {
 
- 		handles : function(attribute) {
- 			var values = meta.getTypeAttribute(attribute,"values");	
- 			return !attribute.array && values != null && values.length > 0;
- 		},
- 		
- 		createValueBinding : function(modelHandle) {
- 			var valueConverter = this.createValueConverter();
-			return at(modelHandle, "value").transform(valueConverter);
+		handles : function(attribute) {
+			var values = meta.getTypeAttribute(attribute, "values");
+			return !attribute.array && values != null && values.length > 0;
 		},
- 		
- 		createSelect : function(config) {
- 			return new Select(config);
- 		}
- 		
- 	});
+
+		create : function(attribute, modelHandle) {
+			var options = createOptions(attribute, true);
+
+			var valueBinding = at(modelHandle, "value").transform(
+					nullablePrimitiveConverter);
+
+			var select = new Select({
+				"value" : valueBinding,
+				options : options,
+				style : "width:200px;"
+			});
+
+			// remove errors when value changes because this select does not validate.
+			aspect.after(select, "onChange", function() {
+				modelHandle.set("message", null);
+				modelHandle.set("valid", true);
+			});
+
+			if (false && options.length > 0) {
+				modelHandle.set("value", options[0].value);
+			}
+			return select;
+
+		},
+		updateModelHandle : function(meta, plainValue, modelHandle) {
+			updateModelHandle.updateNullableString(meta, plainValue,
+					modelHandle);
+		}
+	});
+
 });

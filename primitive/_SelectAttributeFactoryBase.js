@@ -2,9 +2,8 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"../getStateful",//
 "../meta"//
-], function(array, lang, declare, at, getStateful, meta) {
+], function(array, lang, declare, at,  meta) {
 
  	return declare("gform._SelectAttributeFactoryBase", [], {
  		
