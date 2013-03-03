@@ -32,6 +32,44 @@
                     "errorMessage":"required",
 										"code":"lastname",
                     "array":false
+                },
+                {
+                    "type":"number",
+                    "label":"float1",
+                    "description":"a float",
+                    "code":"float1",
+                    "array":false
+                },
+                {
+                    "type":"number",
+                    "label":"float2",
+                    "description":"a float",
+                    "code":"float2",
+										"constraints":{places:2,locale:"en-us"},
+										"array":false
+                },
+                {
+                    "type":"number",
+                    "label":"integer",
+                    "description":"a float",
+                    "code":"integer2",
+										"constraints":{places:0,min:3,max:9},
+										"locale":"de-de",
+                    "array":false
+                },
+                {
+                    "type":"date",
+                    "label":"date",
+                    "description":"date",
+                    "code":"date",
+										"array":false
+                },
+                {
+                    "type":"time",
+                    "label":"time",
+                    "description":"teim",
+                    "code":"time",
+										"array":false
                 }
 						]},{
             label:"primitive lists",

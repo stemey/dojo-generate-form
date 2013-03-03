@@ -33,7 +33,8 @@ define([ "dojo/_base/array", //
 			
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
-				attribute : attribute
+				attribute : attribute,
+				editorFactory:this.editorFactory
 			});
 
 			var widgetList = new WidgetList();

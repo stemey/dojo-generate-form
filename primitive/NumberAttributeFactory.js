@@ -3,14 +3,16 @@ define(
 		"dojo/_base/lang",//
 		"dojo/_base/declare",//
 		"dojox/mvc/at",//
-		"dijit/form/NumberTextBox",//
-		"../meta"//
-
+		"./NumberTextBox",//
+"../meta",//
+"./copyProperty",
+"./copyDijitProperties",
+"./mixinTextboxBindings"
 		],
-		function(array, lang, declare, at, NumberTextBox,meta) {
+		function(array, lang, declare, at, NumberTextBox,meta,copyProperty,copyDijitProperties, mixinTextboxBindings) {
 
 			return declare(
-					"app.TextAttributeFactory",
+					"gform.NumberAttributeFactory",
 					[],
 					{
 						handles : function(attribute) {
@@ -18,9 +20,12 @@ define(
 									&& !attribute.array;
 						},
 						create : function(attribute, modelHandle) {
-							return new NumberTextBox({
-								"value" : at(modelHandle, "value")
-							});
+							var props={
+							}
+							mixinTextboxBindings(modelHandle,props);
+							copyProperty("constraints",attribute,props)
+							copyDijitProperties(attribute,props);
+							return new NumberTextBox(props);
 
 						}
 					})
