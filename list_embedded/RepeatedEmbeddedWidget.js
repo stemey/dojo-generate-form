@@ -33,6 +33,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 				this.parent.children.splice(index, 1);
 			}
 			eventDispatcher.emit("valid-changed");
+			eventDispatcher.emit("value-changed");
 		},
 		destroy: function() {
 			array.forEach(this.getChildren(),function(child) {
