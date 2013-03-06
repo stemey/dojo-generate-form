@@ -36,8 +36,10 @@ define([ "dojo/_base/array", //
 				modelHandle.set("valid", true);
 			});
 
-			if (false && options.length > 0) {
-				modelHandle.set("value", options[0].value);
+			if (options.length == 1) {
+		//		aspect.after(select, "startup", function() {
+					modelHandle.set("value", options[0].value);
+		//		});
 			}
 			return select;
 
