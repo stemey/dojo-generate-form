@@ -24,15 +24,24 @@ define([ "dojo/_base/array", //
 			this.copy("title","label",prop,attribute);
 			this.copy("required","required",prop,attribute);
 			this.copy("readonly","readonly",prop,attribute);
-			this.copy("enum","values",prop,attribute);
+			if (prop.enum) {
+				attribute.values=[];
+				for (var key in prop.enum) {
+					if (key!="__parent") {
+						attribute.values.push(prop.enum[key]);
+					}
+				}
+			}
 			if (prop.type=="object") {
 				var types = this.convertObjectProp(prop);
 				attribute.type="object";
+				attribute.type_property="ext_type";
 				attribute.validTypes=types;
 			}else if (prop.type=="array") {
 				attribute.array=true;
 				if (prop.items.type=="object") {
 					attribute.type="object";
+					attribute.type_property="ext_type";
 					var types = this.convertObjectProp(prop.items);
 					attribute.validTypes=types;
 				} else if (prop.items.type=="array") {
@@ -61,6 +70,7 @@ define([ "dojo/_base/array", //
 			schema=ref.resolveJson(schema);
 			meta={};
 			meta.attributes=[];
+			meta.code=schema.id;
 			//return  meta;
 			for (var key in schema.properties) {
 				// "__parent" is added by dojox/json/ref
