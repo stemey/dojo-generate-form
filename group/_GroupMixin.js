@@ -88,6 +88,13 @@ define([ "dojo/_base/array", //
 				if (child.isValidationContainer) {
 					ec = force?child.validate(force):child.get("errorCount");
 					errorCount+=ec;
+				}else if (child.validate){
+					// this will trigger an update to the errorCount in the surrounding GroupMixin. The number will be picked up later 
+					if (force) {
+						// set state to was edited
+						child._hasBeenBlurred=true;
+						child.validate()
+					};
 				}else{
 					errorCount+=this._validateChildren(child.getChildren(),force);
 				}
@@ -97,11 +104,11 @@ define([ "dojo/_base/array", //
 		
 		validate : function(force,errorCount) {
 			errorCount=0;	
-			if (this.modelHandle && this.modelHandle.get("valid")==false) {
-				errorCount++;	
-			}
 			if (this.validateChildren) {
 				errorCount+= this._validateChildren(this.getChildrenToValidate(),force);
+			}
+			if (this.modelHandle && this.modelHandle.get("valid")==false) {
+				errorCount++;	
 			}
 			return errorCount;
 		}
