@@ -1,0 +1,127 @@
+{
+	definitions: [
+		{
+			"id":"string",
+			"type":"object",
+			"properties": {
+				"type":{type:"string",enum:["string"],required:true},
+				"code":{"type":"string",required:true},
+				"array":{"type":"boolean"}
+			}
+		},	
+		{
+			"id":"number",
+			"type":"object",
+			"properties": {
+				"type":{type:"string",enum:["number"],required:true},
+				"code":{"type":"string",required:true},
+				"array":{"type":"boolean"}
+			}
+		},	
+		{
+			"id":"boolean",
+			"type":"object",
+			"properties": {
+				"type":{type:"string",enum:["boolean"],required:true},
+				"code":{"type":"string",required:true},
+				"array":{"type":"boolean"}
+			}
+		},	
+		{
+			"id":"embedded",
+			"type":"object",
+			"properties": {
+				"type":{type:"string",enum:["object"],required:true},
+				"code":{"type":"string",required:true},
+				"type_property":{"type":"string",required:true},
+				"array":{"type":"boolean"},
+				"validTypes": {type:"array",items:{type:"object",oneOf:[{$ref:"validType"}]}}
+			}
+		},
+		{
+				id:"attributes",
+				"type":"array",
+				items: {
+					type:"object",
+					"oneOf" : [
+						{"$ref":"string"},
+						{"$ref":"number"},
+						{"$ref":"boolean"},
+						//{"$ref":"embedded"}, leads to endles recursion when converting to gform schema
+					]
+				}
+		},
+		{
+				id:"groups",
+				"type":"array",
+				items: {
+					type:"object",
+					"oneOf" : [
+						{"$ref":"listpane"},
+						{"$ref":"titlepane"},
+					]
+				}
+		},		
+		{
+			"id":"listpane",
+			"type":"object",
+			"properties": {
+				"groupType":{type:"string",enum:["listpane"],required:true},
+				"label":{"type":"string"},
+				"description":{"type":"string"},
+				"attributes":{"$ref":"attributes"}
+			}
+		},		
+		{
+			"id":"validType",
+			"type":"object",
+			"properties": {
+				"code":{type:"string",required:"true"},
+				"attributes":{"$ref":"attributes"}
+			}
+		},		
+		{
+			"id":"titlepane",
+			"type":"object",
+			"properties": {
+				"groupType":{type:"string",enum:["titlepane"],required:true},
+				"title":{"type":"string"},
+				"attributes":{"$ref":"attributes"}
+			}
+		},		
+		{
+			"id":"tab",
+			"type":"object",
+			"properties": {
+				"groupType":{type:"string",enum:["tab"],required:true},
+				"tabs":{"$ref":"groups"}
+			}
+		},		
+		{
+			"id":"listgroup",
+			"type":"object",
+			"properties": {
+				"groupType":{type:"string",enum:["listgroup"],required:true},
+				"groups":{"$ref":"groups"}
+			}
+		}
+	],
+	"type":"object",
+	"id":"object",
+	"properties": {
+		"editor":{
+					type:"object"
+					,oneOf:[
+						{$ref:"listgroup"},
+						{$ref:"tab"},
+						{$ref:"listpane"}
+					]},
+		}
+}
+
+
+
+
+
+
+
