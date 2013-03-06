@@ -36,6 +36,8 @@ define([ "dojo/_base/array", //
 				modelHandle.set("valid", true);
 			});
 
+
+
 			return select;
 
 		},
