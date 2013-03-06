@@ -4,10 +4,10 @@ define([ "dojo/_base/array", //
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./polymorphic_embedded_attribute.html",
 		"dijit/layout/StackContainer", "dojo/Stateful",
-		"gform/Editor","../group/_GroupMixin"//
+		"gform/Editor","../group/_GroupMixin","dojox/mvc/equals"//
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
-		Editor,_GroupMixin) {
+		Editor,_GroupMixin, equals) {
 
 	return declare("app.GroupPanelWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin,_GroupMixin ], {
@@ -23,7 +23,7 @@ define([ "dojo/_base/array", //
 					function(validType) {
 						return {
 							value : validType.code,
-							label : validType.label
+							label : validType.label || validType.code
 						};
 					});
 			if(this.nullable) {
@@ -96,10 +96,14 @@ define([ "dojo/_base/array", //
 							modelHandle.value=this.modelHandle.typeToValue[type].value;
 							if (oldValue!="null") {
 								var oldMeta = this.typeToGroup[oldValue].meta;
+								var newMeta = this.typeToGroup[newValue].meta;
 								array.forEach(oldMeta.attributes,function(attribute) {
 									//only copy primitives
 									if (!attribute.validTypes && typeof modelHandle.value[attribute.code]!= "undefined") {
-										modelHandle.value[attribute.code].set("value",oldModelHandleValue[attribute.code].value);
+										var attributeExists = array.some(newMeta.attributes,function(newAttribute) {return equals(newAttribute,attribute);});
+										if (attributeExists) {
+											modelHandle.value[attribute.code].set("value",oldModelHandleValue[attribute.code].value);
+										}
 									}
 								},this);
 							}
