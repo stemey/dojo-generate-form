@@ -36,10 +36,8 @@ define([ "dojo/_base/array", //
 				modelHandle.set("valid", true);
 			});
 
-			if (options.length == 1) {
-		//		aspect.after(select, "startup", function() {
+			if ( options.length == 1 || (modelHandle.get("value") == null && attribute.required==true)) {
 					modelHandle.set("value", options[0].value);
-		//		});
 			}
 			return select;
 
