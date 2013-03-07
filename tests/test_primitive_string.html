@@ -47,6 +47,13 @@
 						editor.reset();
 						t.assertEqual("hallo", intText.get("value"));
 					}
+				},
+				{
+					name : 'incomplete',
+					runTest : function(t) {
+						editor.set("plainValue",{});
+						t.assertEqual(1,editor.get("incompleteCount"));
+					}
 				}
 			]);
 			doh.run();

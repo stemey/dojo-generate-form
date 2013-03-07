@@ -74,7 +74,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			if (!this.modelHandle) {
 				return;
 			}
-			if (this.modelHandle.valid) {
+			if (this.modelHandle.state=="") {
 				if (hasChanged(this.modelHandle)) {
 					this.set("state","Changed");
 					this.changesTooltipNode.style.display="";

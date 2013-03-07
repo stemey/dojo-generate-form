@@ -8,7 +8,7 @@
             "label":"text",
             "description":"Only alphabetical characters",
             "code":"text",
-            "required":false,
+            "required":true,
             "array":false
         }
     ],

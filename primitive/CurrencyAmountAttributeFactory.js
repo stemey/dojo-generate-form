@@ -19,6 +19,7 @@ define([ "dojo/_base/array", //
 			// is this like currencyTextBox ? then add missing props: fractional, invalidMessage,currency,lang
 			var props={
 				"value" : valueAt,
+				"state" : at(modelHandle, "state"),
 				"constraints" : {
 					"type" : "currency"
 				}

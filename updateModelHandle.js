@@ -259,14 +259,14 @@ define([
 			modelHandle.set("oldValue",plainValue);
 		},
 		createMeta: function() {
-			var meta= new Stateful({__type:"meta",valid:true,message:null});
+			var meta= new Stateful({__type:"meta",state:"",message:null});
 			meta.set("tmp",new Stateful());
 			return meta;	
 		},
 		resetMeta: function(meta) {
 			meta.set("tmp",new Stateful());
 			meta.set("message",null);
-			meta.set("valid",true);
+			meta.set("state","");
 			return meta;	
 		},
 		cascadeAttribute: function(meta,plainValue,modelHandle,editorFactory) {

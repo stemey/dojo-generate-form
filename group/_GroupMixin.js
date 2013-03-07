@@ -20,7 +20,7 @@ define([ "dojo/_base/array", //
 				}
 			this.on("valid-changed",lang.hitch(this,"onValidChanged"));
 			if (this.persistable) {
-				this.validWatch=this.modelHandle.watch("valid",lang.hitch(this,"onModelValidChanged"));
+				this.validWatch=this.modelHandle.watch("state",lang.hitch(this,"onModelValidChanged"));
 			}
 		},
 		destroy: function() {
@@ -59,6 +59,10 @@ define([ "dojo/_base/array", //
 			}	else{
 				return this.validate();
 			}
+		},
+		
+		_getIncompleteCountAttr: function() {
+			return this._getIncompleteCount();
 		},
 		
 		_setErrorCountAttr: function(errorCount) {
@@ -107,10 +111,39 @@ define([ "dojo/_base/array", //
 			if (this.validateChildren) {
 				errorCount+= this._validateChildren(this.getChildrenToValidate(),force);
 			}
-			if (this.modelHandle && this.modelHandle.get("valid")==false) {
+			if (this.modelHandle && this.modelHandle.get("state")=="Error") {
 				errorCount++;	
 			}
 			return errorCount;
+		},
+		_getIncompleteCountChildren: function(children,incompleteCount){
+			if (!children) {
+				return 0;
+			}
+			incompleteCount=0;
+			array.forEach(children,function(child,ec) {
+				if (child.isValidationContainer) {
+					ec = child.get("incompleteCount");
+					incompleteCount+=ec;
+				}else{
+					incompleteCount+=this._getIncompleteCountChildren(child.getChildren());
+				}
+			},this);
+			return incompleteCount;
+		},
+		
+		_getIncompleteCount : function(incompleteCount) {
+			incompleteCount=0;	
+			if (this.validateChildren) {
+				incompleteCount+= this._getIncompleteCountChildren(this.getChildrenToValidate());
+			}
+			if (this.modelHandle && this.modelHandle.get("state")=="Incomplete") {
+				console.log("adding incomplete of "+this.meta.code);
+				incompleteCount++;	
+			}else{
+				console.log("not adding incomplete of "+this.meta.code);
+			}
+			return incompleteCount;
 		}
 	});
 });

@@ -13,18 +13,10 @@ define([ "dojo/_base/array", //
 		},
 		create : function(attribute, modelHandle) {
 
-			var validConverter = {
-				parse : function(state) {
-					return state != "Error"
-				},
-				format : function(valid) {
-					return valid ? "" : "Error"
-				}
-			};
-			var validAt = at(modelHandle, "valid").transform(validConverter);
+			//var validAt = at(modelHandle, "valid").transform(validConverter);
 			var box = new TextBox({
 				"value" : at(modelHandle, "value"),
-				"state" : validAt,
+				"state" : at(modelHandle,"state"),
 				"message" : at(modelHandle, "message")
 			});
 			if (attribute.pattern) {
