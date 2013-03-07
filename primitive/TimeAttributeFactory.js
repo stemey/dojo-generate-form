@@ -26,28 +26,15 @@ define([ "dojo/_base/array", //
 		},
 		
 		createTimeTextBox : function(modelHandle) {
-			var validConverter = this.createValidConverter();
-			var validAt = at(modelHandle, "valid").transform(validConverter);
 
 			var valueConverter = this.createValueConverter();
 			var valueAt = at(modelHandle, "value").transform(valueConverter);
 			
 			return new TimeTextBox({
 				"value" : valueAt,
-				"state" : validAt,
+				"state" : at(modelHandle, "state"),
 				"message" : at(modelHandle, "message")
 			});
-		},
-		
-		createValidConverter : function() {
-			return {
-				parse:function(state){
-					return state!="Error";
-				},
-				format: function(valid){
-					return valid?"":"Error";
-				}
-			};
 		},
 		
 		createValueConverter : function() {

@@ -71,6 +71,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			return hasChanged(this.modelHandle);
 		},
 		resize: function(dim) {
+			this.dim=dim;
 			if (this.widget && this.widget.resize) {
 				if (dim) {
 					this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
@@ -106,6 +107,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 					if (this.widget && this.domNode) {
 						domConstruct.place(this.widget.domNode, this.domNode);
 						this.widget.startup();
+					}
+					if (this.dim) {
+						this.resize(this.dim);
 					}
 				}
 			} catch (e) {
