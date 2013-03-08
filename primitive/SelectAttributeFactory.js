@@ -36,15 +36,11 @@ define([ "dojo/_base/array", //
 				modelHandle.set("valid", true);
 			});
 
-			if (false && options.length > 0) {
-				modelHandle.set("value", options[0].value);
-			}
 			return select;
 
 		},
 		updateModelHandle : function(meta, plainValue, modelHandle) {
-			updateModelHandle.updateNullableString(meta, plainValue,
-					modelHandle);
+			updateModelHandle.updateSelectModelHandle(meta, plainValue, modelHandle,createOptions(meta,true));
 		}
 	});
 

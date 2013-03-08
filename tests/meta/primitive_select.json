@@ -6,7 +6,7 @@
             "type":"text",
             "label":"select",
             "code":"select",
-            "required":false,
+            "required":true,
             "array":false,
             "emptyValueLabel":"-- Please select --",
             "values":[

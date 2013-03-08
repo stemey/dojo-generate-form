@@ -45,6 +45,7 @@
 					name : 'testReset',
 					runTest : function(t) {
 						editor.set("plainValue",{language:"english"});
+						t.assertEqual("Mr.", secondSelect.get("value"));
 						editor.set("plainValue",{language:"german",salutation:"Herr"});
 						t.assertEqual("Herr", secondSelect.get("value"));
 						t.assertEqual("german", firstSelect.get("value"));

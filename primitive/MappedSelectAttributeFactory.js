@@ -23,8 +23,14 @@ define([ "dojo/_base/array",
 				style : "width:200px;"
 			});
 			
+			if (attribute.required && !modelHandle.value) {
+				modelHandle.set("value",options[0].value);
+			}
+			
 			resolver.watch(attribute.mapped_attribute, 
 					lang.hitch(this, "_onMappedAttributeChanged", modelHandle, select, attribute, resolver));
+			
+			
 			return select;
 		},
 		
@@ -38,6 +44,8 @@ define([ "dojo/_base/array",
 					valueValid=true;
 				}
 			}
+			
+			
 			
 			select.set("options", options);
 			if (!valueValid) {

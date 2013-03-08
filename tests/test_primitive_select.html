@@ -50,6 +50,14 @@
 						t.assertEqual("Good bye",intText.get("value"));
 
 					}
+				},
+				{
+					name : 'initRequired',
+					runTest : function(t) {
+						editor.set("plainValue",{});
+						t.assertEqual("Hallo",intText.get("value"));
+
+					}
 				}
 			]);
 			doh.run();

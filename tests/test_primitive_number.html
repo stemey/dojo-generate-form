@@ -19,12 +19,12 @@
 		"dojo/text!./meta/primitive_number.json", "dojo/text!./entity/primitive_number.json"//
 		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
 
-			var editor = new Editor({
+			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
-			var intText = dijit.byId("dijit_form_NumberTextBox_0");
+			var intText = dijit.byId("gform_NumberTextBox_0");
 			doh.register("standard", [
 				{
 					name : 'init',

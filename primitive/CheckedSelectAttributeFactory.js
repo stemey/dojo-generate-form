@@ -4,7 +4,8 @@ define([ "dojo/_base/array", //
 "dojox/form/CheckedMultiSelect",//
 "./createOptions",//
 "./nullablePrimitiveConverter",//
-], function(array, lang, declare, CheckedMultiSelect, createOptions, nullablePrimitiveConverter) {
+"../updateModelHandle",//
+], function(array, lang, declare, CheckedMultiSelect, createOptions, nullablePrimitiveConverter, updateModelHandle) {
 
 	return declare("gform.CheckedSelectAttributeFactory", [ ], {
 
@@ -25,7 +26,10 @@ define([ "dojo/_base/array", //
 			});
 			
 			return select;
- 		}
+ 		},
+		updateModelHandle : function(meta, plainValue, modelHandle) {
+			updateModelHandle.updateSelectModelHandle(meta, plainValue, modelHandle,createOptions(meta,true));
+		}
 		
 	});
 });

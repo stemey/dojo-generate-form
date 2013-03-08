@@ -3,8 +3,9 @@ define([
 	"dojo/_base/lang",
 	"dojo/Stateful",
 	"dojox/mvc/StatefulArray",
-	"./getPlainValue"
-], function(array, lang, Stateful, StatefulArray, getPlainValue){
+	"./getPlainValue",
+	"./primitive/createOptions"
+], function(array, lang, Stateful, StatefulArray, getPlainValue, createOptions){
 
 
   var updateModelHandle= {
@@ -257,6 +258,15 @@ define([
 				},this);
 			}
 			modelHandle.set("oldValue",plainValue);
+		},
+		updateSelectModelHandle : function(meta, plainValue, modelHandle,options) {
+			if (!plainValue && meta.required) {
+				this.updateNullableString(meta, options[0].value,
+						modelHandle);
+			}else{
+				this.updateNullableString(meta, plainValue,
+					modelHandle);
+			}
 		},
 		createMeta: function() {
 			var meta= new Stateful({__type:"meta",valid:true,message:null});
