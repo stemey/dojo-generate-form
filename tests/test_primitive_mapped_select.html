@@ -46,6 +46,7 @@
 					runTest : function(t) {
 						editor.set("plainValue",{language:"english"});
 						t.assertEqual("Mr.", secondSelect.get("value"));
+						t.assertEqual("Mr.", editor.get("plainValue").salutation);
 						editor.set("plainValue",{language:"german",salutation:"Herr"});
 						t.assertEqual("Herr", secondSelect.get("value"));
 						t.assertEqual("german", firstSelect.get("value"));

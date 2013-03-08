@@ -4,8 +4,8 @@ define([
 	"dojo/Stateful",
 	"dojox/mvc/StatefulArray",
 	"./getPlainValue",
-	"./primitive/createOptions"
-], function(array, lang, Stateful, StatefulArray, getPlainValue, createOptions){
+	"./Resolver"
+], function(array, lang, Stateful, StatefulArray, getPlainValue, Resolver){
 
 
   var updateModelHandle= {
@@ -51,7 +51,7 @@ define([
 					}else {
 						this.resetMeta(childHandle);
 					}
-					this.cascadeAttribute(attribute,plainValue[attribute.code], childHandle,editorFactory);
+					this.cascadeAttribute(attribute,plainValue[attribute.code], childHandle,editorFactory, new Resolver(modelHandle));
 				},this);
 			}
 		},
@@ -198,7 +198,7 @@ define([
 					modelHandle.value[attribute.code]=this.createMeta();
 				}
 				var attributeModelHandle=modelHandle.value[attribute.code];
-				this.cascadeAttribute(attribute,plainValue[attribute.code],attributeModelHandle,editorFactory);
+				this.cascadeAttribute(attribute,plainValue[attribute.code],attributeModelHandle,editorFactory, new Resolver(modelHandle));
 				attributeModelHandle.ignore=true;
 			}, this);
 			if (typeCode!=null) {
@@ -253,7 +253,7 @@ define([
 					}else {
 						this.resetMeta(model);
 					}
-					(cascadeAttribute || this.cascadeAttribute).apply(this,[childMeta,element,model,editorFactory]);
+					(cascadeAttribute || this.cascadeAttribute).apply(this,[childMeta,element,model,editorFactory, new Resolver(modelHandle)]);
 					modelArray.push(model);
 				},this);
 			}
@@ -279,11 +279,11 @@ define([
 			meta.set("valid",true);
 			return meta;	
 		},
-		cascadeAttribute: function(meta,plainValue,modelHandle,editorFactory) {
+		cascadeAttribute: function(meta,plainValue,modelHandle,editorFactory,resolver) {
 			if (editorFactory) {
 				var handle=editorFactory.getUpdateModelHandle(meta);
 				if (handle && handle.updateModelHandle) {
-					return handle.updateModelHandle(meta,plainValue,modelHandle);
+					return handle.updateModelHandle(meta,plainValue,modelHandle,resolver);
 				}
 			}
 			if (meta.array ) {

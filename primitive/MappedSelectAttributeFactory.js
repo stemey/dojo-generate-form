@@ -4,8 +4,9 @@ define([ "dojo/_base/array",
 "dojox/mvc/at",
 "dijit/form/Select",
 "./_MappedSelectAttributeFactoryBase",
-"../meta"
-], function(array, lang, declare, at, Select, _MappedSelectAttributeFactoryBase, meta) {
+"../meta",
+"../updateModelHandle"
+], function(array, lang, declare, at, Select, _MappedSelectAttributeFactoryBase, meta, updateModelHandle) {
 
 	return declare("gform.MappedSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
 		
@@ -51,6 +52,10 @@ define([ "dojo/_base/array",
 			if (!valueValid) {
 				modelHandle.set("value", options[0].value);
 			}
+		},
+		updateModelHandle : function(meta, plainValue, modelHandle,resolver) {
+			var options = this._createMappedOptions(meta, resolver);
+			updateModelHandle.updateSelectModelHandle(meta, plainValue, modelHandle,options);
 		}
 		
 	});
