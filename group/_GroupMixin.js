@@ -138,10 +138,7 @@ define([ "dojo/_base/array", //
 				incompleteCount+= this._getIncompleteCountChildren(this.getChildrenToValidate());
 			}
 			if (this.modelHandle && this.modelHandle.get("state")=="Incomplete") {
-				console.log("adding incomplete of "+this.meta.code);
 				incompleteCount++;	
-			}else{
-				console.log("not adding incomplete of "+this.meta.code);
 			}
 			return incompleteCount;
 		}

@@ -1,0 +1,37 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "required":true,
+            "type":"string",
+            "code":"name",
+						"pattern":"[a-z]*",
+            "array":false
+        },
+        {
+            "required":true,
+            "type":"string",
+            "code":"lastname",
+            "array":false
+        },
+        {
+            "required":true,
+            "type":"number",
+            "code":"age",
+            "array":false
+        },
+        {
+            "required":true,
+            "type":"date",
+            "code":"date",
+            "array":false
+        },
+        {
+            "required":true,
+            "type":"time",
+            "code":"time",
+            "array":false
+        }
+     ]
+}

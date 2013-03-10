@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/ready", "dojo/_base/query", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
+		"dojo/text!./meta/validation.json", "dojo/text!./entity/validation.json"//
+		], function(ready, query, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
+
+			editor = new Editor({
+					"plainValue": dojo.fromJson(entity),
+					"meta": dojo.fromJson(meta),
+					"editorFactory":createStandardEditorFactory()});
+			var container = dojo.byId("container");
+			editor.placeAt(container);
+			doh.register("standard", [
+				{
+					name : 'incompleteCount',
+					runTest : function(t) {
+						t.assertEqual(4, editor.get("incompleteCount"));
+						t.assertEqual(0, editor.get("errorCount"));
+					}
+				},
+				{
+					name : 'forceValidation',
+					runTest : function(t) {
+						editor.validate(true);
+						t.assertEqual(0, editor.get("incompleteCount"));
+						t.assertEqual(4, editor.get("errorCount"));
+					}
+				},
+				{
+					name : 'invalidValues',
+					runTest : function(t) {
+						editor.set("plainValue",{name:"123",age:"jj",lastname:"Meyer"});
+						dojo.byId("gform_DateTextBox_0").value="hhhh";
+						dojo.byId("gform_TimeTextBox_0").value="hhhh";
+						// we need to call validate because on blur was not called on the fields.
+						editor.validate(true);
+						t.assertEqual(4, editor.get("errorCount"));
+					}
+				}
+			]);
+			doh.run();
+		});
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test</h1>
+
+
+	<div id="container"></div>
+
+</body>
+</html>

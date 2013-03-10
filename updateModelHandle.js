@@ -163,7 +163,7 @@ define([
 		},
 		updateNumber: function(meta,plainValue, modelHandle,editorFactory) {
 			if (!plainValue) {
-				modelHandle.set("value",0);
+				modelHandle.set("value",null);
 			}else{
 				modelHandle.set("value",plainValue);
 			}
