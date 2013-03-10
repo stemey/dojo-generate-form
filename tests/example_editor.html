@@ -17,11 +17,13 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/registerLayoutEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-		"dojo/text!./meta/editor.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema"
-		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory, meta,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema) {
+		"dojo/text!./meta/editor.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve"
+		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory, metaJson,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve) {
 			parser.parse();
 			try {
-			  var meta = convertSchema(dojo.fromJson(meta));
+				var schema = dojo.fromJson(metaJson);
+				refresolve(schema);
+			  var meta = convertSchema(schema);
 			  editor =dijit.byId("form");
 				editor.set("meta",meta);
 				generatedEditor=dijit.byId("resultForm");
