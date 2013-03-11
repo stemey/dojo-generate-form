@@ -57,13 +57,13 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 		var emptyType1= {
 			stringP:null,
 			booleanP:false,
-			numberP:0,
+			numberP:null,
 		}
 		var emptyMeta= {
 			objectP: {
 				stringP:"",
 				booleanP:false,
-				numberP:0
+				numberP:null
 			}
 		}
 		var polyMeta1= {
