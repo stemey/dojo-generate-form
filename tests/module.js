@@ -1,6 +1,8 @@
 define ("gform.tests.module",[
 "gform/tests/getPlainValue",//
 "gform/tests/updateModelHandle",//
+//"gform/tests/refresolve",//
+"gform/tests/convertSchema",//
 "gform/tests/equals"
 ],function() {
 
@@ -26,6 +28,7 @@ define ("gform.tests.module",[
 		doh.registerUrl("gform.tests.primitive_list_select", dojo.moduleUrl("gform","tests/test_primitive_list_select.html"));
 		doh.registerUrl("gform.tests.group_tab", dojo.moduleUrl("gform","tests/test_group_tab.html"));
 		doh.registerUrl("gform.tests.group_decorator", dojo.moduleUrl("gform","tests/test_group_decorator.html"));
+		doh.registerUrl("gform.tests.validation", dojo.moduleUrl("gform","tests/test_validation.html"));
 		//doh.registerTest("gform.tests.getPlainValue", gform.getPlainValue);
 	}catch(e){
 		doh.debug(e);

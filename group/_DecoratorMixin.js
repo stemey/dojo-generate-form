@@ -83,10 +83,10 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 					this.changesTooltipNode.style.display="none";
 				}
 				this.errorTooltipNode.style.display="none";
-			}else{
+			}else if (this.modelHandle.state=="Error"){
 				this.changesTooltipNode.style.display="none";
 				this.errorTooltipNode.style.display="";
-					this.set("state","Error");
+				this.set("state","Error");
 			}
 		},	
 		

@@ -7,13 +7,16 @@
             "type":"string",
             "code":"name",
 						"pattern":"[a-z]*",
-            "array":false
+            "array":false,
+						"invalidMessage":"only small letters",
+						"missingMessage":"Please enter your name"
         },
         {
             "required":true,
             "type":"string",
             "code":"lastname",
-            "array":false
+            "array":false,
+						
         },
         {
             "required":true,

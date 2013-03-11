@@ -121,7 +121,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// summary:
 		//		add an error message to an attribute defined by the path.
 			this.visit(path,function(model) {
-				model.set("valid",false);
+				model.set("state","Error");
 				model.set("message",message);
 			});
 		},
