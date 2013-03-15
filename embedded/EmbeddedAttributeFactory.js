@@ -1,5 +1,6 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
+"dojo/_base/json",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "./GroupPanelWidget",//
@@ -7,10 +8,10 @@ define([ "dojo/_base/array", //
 "dijit/layout/StackContainer",//
 "dojo/Stateful",//
 "dijit/TitlePane",//
-"../updateModelHandle"//
-
-], function(array, lang, declare, at, GroupPanelWidget, SingleTypePanelWidget,
-		StackContainer,  Stateful, TitlePane,updateModelHandle) {
+"../updateModelHandle",//
+"dojo/text!../schema/embeddedAttributeProperties.json"
+], function(array, lang, json,declare, at, GroupPanelWidget, SingleTypePanelWidget,
+		StackContainer,  Stateful, TitlePane,updateModelHandle,embeddedAttributeProperties) {
 
 	return declare("app.EmbeddedGroupFactory", [],{
 		handles : function(attribute, modelHandle) {
@@ -51,7 +52,10 @@ define([ "dojo/_base/array", //
 			}else{
 				updateModelHandle.updatePolyObject(meta,plainValue,modelHandle,this.editorFactory);
 			}
-		}	
+		},
+		getSchema: function() {
+			return dojo.fromJson(embeddedAttributeProperties);
+		}
 		
 	})
 });

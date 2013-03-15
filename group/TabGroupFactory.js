@@ -56,6 +56,10 @@ define([ "dojo/_base/array", //
 				tabWidget.set("iconClass", "");
 				tabWidget.set("title", tab.label);
 			}
-		}	
+		},		
+		getSchema: function() {
+				return {"tabs":{"$ref":"groups"}}
+		}
+	
 	})
 });

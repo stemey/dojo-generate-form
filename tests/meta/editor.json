@@ -65,7 +65,9 @@
 		{
 			"id":"listpane",
 			"type":"object",
-			"properties": {
+			"progenerateAttributeSchema(id,properties) {
+		},
+		perties": {
 				"groupType":{type:"string",enum:["listpane"],required:true},
 				"label":{"type":"string"},
 				"description":{"type":"string"},

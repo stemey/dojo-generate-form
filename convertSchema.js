@@ -35,13 +35,13 @@ define([ "dojo/_base/array", //
 			if (prop.type=="object") {
 				var types = this.convertObjectProp(prop,converted);
 				attribute.type="object";
-				attribute.type_property="ext_type";
+				attribute.type_property=prop.gform_type_property || "ext_type";
 				attribute.validTypes=types;
 			}else if (prop.type=="array") {
 				attribute.array=true;
 				if (prop.items.type=="object") {
 					attribute.type="object";
-					attribute.type_property="ext_type";
+					attribute.type_property=prop.gform_type_property || "ext_type";
 					var types = this.convertObjectProp(prop.items,converted);
 					attribute.validTypes=types;
 				} else if (prop.items.type=="array") {

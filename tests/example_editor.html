@@ -17,11 +17,12 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/registerLayoutEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-		"dojo/text!./meta/editor.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve"
-		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory, metaJson,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve) {
+		"dojo/text!./meta/editor.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve","gform/schema/schemaGenerator"
+		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory, metaJson,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve,schemaGenerator) {
 			parser.parse();
 			try {
-				var schema = dojo.fromJson(metaJson);
+				//var schema = dojo.fromJson(metaJson);
+				var schema = schemaGenerator.generate(gform.ef.layout);
 				refresolve(schema);
 			  var meta = convertSchema(schema);
 			  editor =dijit.byId("form");

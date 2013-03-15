@@ -34,12 +34,21 @@ define([ "dojo/_base/array", //
 		getGroupFactory: function(group) {
 			return this.find(group.groupType);
 		},
+		getGroupFactoryMap: function() {
+			return this.groupFactories;
+		},
 		getUpdateModelHandle: function(meta) {
 			var factory=this.attributeFactoryFinder.getFactory(meta);
 			return factory;
 		},
 		find : function(groupType) {
 			return this.groupFactories[groupType];
+		},
+		getAttributeFactories: function() {
+			return this.attributeFactoryFinder.getAttributeFactories();
+		},
+		getAttributeFactoryMap: function() {
+			return this.attributeFactoryFinder.getAttributeFactoryMap();
 		}
 
 	});

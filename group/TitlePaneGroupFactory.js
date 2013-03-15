@@ -26,6 +26,9 @@ define([ "dojo/_base/array", //
 			} else {
 				titlePaneWidget.set("title", titlePane.title);
 			}
+		},
+		getSchema: function() {
+				return {"title":{"type":"string"},"attributes":{"$ref":"attributes"}}
 		}	
 	});
 });

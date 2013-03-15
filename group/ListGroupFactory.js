@@ -30,5 +30,8 @@ define([ "dojo/_base/array", //
 			},this);
 			return attributes;
 		},
+		getSchema: function() {
+				return {"label":{"type":"string"},"description":{"type":"string"},"groups":{"$ref":"groups"}}
+		}
 	});
 });

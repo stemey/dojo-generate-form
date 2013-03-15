@@ -5,7 +5,8 @@ define([ "dojo/_base/array", //
 "dojo/date/stamp",//
 "./TimeTextBox",//
 "../meta",//
-], function(array, lang, declare, at, dateStamp, TimeTextBox, meta) {
+"./standardAttributeProperties"
+], function(array, lang, declare, at, dateStamp, TimeTextBox, meta, standardAttributeProperties) {
 
 	return declare("app.TimeAttributeFactory", [], {
 		
@@ -49,6 +50,19 @@ define([ "dojo/_base/array", //
 					return isoDateString;
 				}
 			};
-		}
+		},
+		getSchema:function(){
+			var schema={};
+			schema["id"]="time";
+			schema.properties={};
+			lang.mixin(schema.properties,standardAttributeProperties);
+			schema.properties["required"]={ type : "boolean"};
+			schema.properties["missingMessage"]={ type : "string"};
+			schema.properties["promptMessage"]={ type : "string"};
+			schema.properties["placeHolder"]={ type : "string"};
+			schema.properties["invalidMessage"]={ type : "string"};
+			return schema;
+		}	
+
 	});
 });

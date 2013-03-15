@@ -15,6 +15,9 @@ define([ "dojo/_base/array", //
 	return declare("gform.ListPaneGroupFactory", [GroupFactory], {
 		createWidget : function(group) {
 			return new ListPane({meta:group});
-	}
+	},
+		getSchema: function() {
+				return {"label":{"type":"string"},"description":{"type":"string"},"attributes":{"$ref":"attributes"}}
+		}
 	})
 });

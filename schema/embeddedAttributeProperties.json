@@ -1,0 +1,17 @@
+{
+	id:"embedded",
+	type:"object",
+	"properties": {
+		"code":{"type":"string",required:true},
+		"type_property":{"type":"string",required:true},
+		"array":{"type":"boolean"},
+		"validTypes": {type:"array",gform_property:"type",items:{type:"object",oneOf:[
+				{"type":"object",
+					"properties": {
+						"code":{type:"string",required:"true"},
+						"attributes":{"$ref":"attributes"}
+				}}
+		]}}
+	}
+}
+
