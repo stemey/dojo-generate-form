@@ -59,6 +59,9 @@ define([ "dojo/_base/array", //
 			}, this);
 			return listWidget;
 
-		}
+		},
+		getSchema: function() {
+				return {"label":{"type":"string"},"description":{"type":"string"},"attributes":{"$ref":"attributes"}}
+		}	
 	})
 });

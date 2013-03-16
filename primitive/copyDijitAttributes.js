@@ -10,6 +10,7 @@ define(
 		function(array, lang, declare) {
 			
 			var properties=[
+				"maxLength",
 				"missingMessage",
 				"promptMessage",
 				"placeHolder",
@@ -27,8 +28,7 @@ define(
 				if (attribute.dijitOptions) {
 					lang.mixin(props,dijitOptions);
 				}
-				array.forEach(properties,function(propIdx) {
-					var prop=properties[propIdx];
+				array.forEach(properties,function(prop) {
 					if (attribute[prop]) {
 						props[prop]=attribute[prop];
 					}

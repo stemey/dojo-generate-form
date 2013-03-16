@@ -47,7 +47,7 @@
 						{"$ref":"string"},
 						{"$ref":"number"},
 						{"$ref":"boolean"},
-						//{"$ref":"embedded"}, leads to endles recursion when converting to gform schema
+						{"$ref":"embedded"}
 					]
 				}
 		},

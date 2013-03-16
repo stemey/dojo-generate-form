@@ -12,9 +12,10 @@ define([ "dojo/_base/array", //
 "../updateModelHandle",//
 "./TableHeader",//
 "./TableElementHeader",//
-"./mergeAttributeDefinitions"
+"./mergeAttributeDefinitions",//
+"dojo/text!../schema/embeddedAttributeProperties.json"
 ], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle,TableHeader,TableElementHeader,mergeAttributeDefinitions) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle,TableHeader,TableElementHeader,mergeAttributeDefinitions, embeddedAttributeProperties) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -47,7 +48,7 @@ define([ "dojo/_base/array", //
 
 
 			array.forEach(combinedAttributes,function(attribute) {
-				tableHeader.addChild(new TableElementHeader({label:attribute.label}));
+				tableHeader.addChild(new TableElementHeader({label:attribute.label||attribute.code}));
 			},this);
 			select.addChild(tableHeader);
 			
@@ -75,6 +76,11 @@ define([ "dojo/_base/array", //
 		},
 		updateModelHandle: function(meta,plainValue,modelHandle) {
 			updateModelHandle.updateArray(meta,plainValue,modelHandle,this.editorFactory, lang.hitch(this,"updateObject"));
+		},
+		getSchema : function() {
+			var schema = dojo.fromJson(embeddedAttributeProperties);
+			schema.properties.editor={type:"string",enum:["table"],required:true};
+			return schema;
 		}
 	})
 });

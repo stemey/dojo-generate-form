@@ -5,7 +5,8 @@ define([ "dojo/_base/array", //
 "dojo/date/stamp",//
 "./DateTextBox",//
 "../meta",//
-], function(array, lang, declare, at, dateStamp, DateTextBox, meta) {
+"./standardAttributeProperties"
+], function(array, lang, declare, at, dateStamp, DateTextBox, meta, standardAttributeProperties) {
 
 	return declare("app.DateAttributeFactory", [], {
 		
@@ -32,15 +33,16 @@ define([ "dojo/_base/array", //
 
 			var valueConverter = this.createValueConverter();
 			var valueAt = at(modelHandle, "value").transform(valueConverter);
-			
-			return new DateTextBox({
+
+			var props ={
 				"value" : valueAt,
 				"state" : at(modelHandle, "state"),
 				"message" : at(modelHandle, "message")
-			});
+			};
+
+			
+			return new DateTextBox(props);
 		},
-		
-		
 		createValueConverter : function() {
 			return {
 				parse : function(date) {
@@ -53,6 +55,19 @@ define([ "dojo/_base/array", //
 					return isoDateString;
 				}
 			};
-		}
+		},
+		getSchema:function(){
+			var schema={};
+			schema["id"]="date";
+			schema.properties={};
+			lang.mixin(schema.properties,standardAttributeProperties);
+			schema.properties["required"]={ type : "boolean"};
+			schema.properties["readOnly"]={ type : "readOnly"};
+			schema.properties["missingMessage"]={ type : "string"};
+			schema.properties["promptMessage"]={ type : "string"};
+			schema.properties["placeHolder"]={ type : "string"};
+			schema.properties["invalidMessage"]={ type : "string"};
+			return schema;
+		}	
 	});
 });

@@ -6,6 +6,7 @@ define(["doh/runner","dojo/_base/lang","gform/schema/refresolve"], function(doh,
 							{id:"mercedes",price:"expensive"},
 							{id:"vw",price:"medium"},
 						],
+						somethingelse:"text",
 						mycar: {$ref:"mercedes"},
 						theircars: [{$ref:"mercedes"},{$ref:"vw"}],
 						

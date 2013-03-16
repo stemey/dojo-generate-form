@@ -4,8 +4,9 @@ define([ "dojo/_base/array", //
 "dojo/aspect",//
 "dojox/mvc/at",//
 "dijit/form/CheckBox",//
-"../meta"//
-], function(array, lang, declare, aspect, at, CheckBox,  meta) {
+"../meta",//
+"./standardAttributeProperties"
+], function(array, lang, declare, aspect, at, CheckBox,  meta, standardAttributeProperties) {
 
 	return declare("app.BooleanAttributeFactory", [], {
 		handles : function(attribute) {
@@ -25,6 +26,13 @@ define([ "dojo/_base/array", //
 			});
 			return box;
 
+		},
+		getSchema:function(){
+			var schema={};
+			schema["id"]="boolean";
+			schema.properties={};
+			lang.mixin(schema.properties,standardAttributeProperties);
+			return schema;
 		}
 	})
 });

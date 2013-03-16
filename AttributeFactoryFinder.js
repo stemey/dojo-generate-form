@@ -15,7 +15,12 @@ define([ "dojo/_base/array", //
 		addAttributeFactory : function(id,factory) {
 			this.attributeFactoryMap[id]=factory;
 		},
-		
+		getAttributeFactories: function() {
+			return this.attributeFactories;
+		},		
+		getAttributeFactoryMap: function() {
+			return this.attributeFactoryMap;
+		},		
 		getFactory : function(attribute) {
 			var factory = this.attributeFactoryMap[attribute.editor];
 			// if (factory == null) {
