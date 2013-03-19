@@ -28,7 +28,7 @@ define([ "dojo/_base/array", //
 			dijitHelper.copyProperty("readOnly",attribute,props);
 
 			if (attribute.constraints) {
-				props.set("constraints", attribute.constraints);
+				props.constraints=attribute.constraints;
 			}
 			
 			return new DateTextBox(props);
