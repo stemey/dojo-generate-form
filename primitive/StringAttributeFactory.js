@@ -9,8 +9,9 @@ define([ "dojo/_base/array", //
 "./copyProperty",
 "./copyDijitProperties",
 "./mixinTextboxBindings",
-"./standardAttributeProperties"
-], function(array, lang, declare, aspect, Stateful, at, TextBox,  meta, copyProperty, copyDijitProperties, mixinTextboxBindings, standardAttributeProperties) {
+"./standardAttributeProperties",
+"./extraAttributeProperties"
+], function(array, lang, declare, aspect, Stateful, at, TextBox,  meta, copyProperty, copyDijitProperties, mixinTextboxBindings, standardAttributeProperties, extraAttributeProperties) {
 
 	return declare("gform.TextAttributeFactory", [Stateful], {
 		handles : function(attribute) {
@@ -29,20 +30,22 @@ define([ "dojo/_base/array", //
 		getSchema:function(){
 			var schema={};
 			schema["id"]="string";
+			schema["description"]="This is a textfield based on 'dijit.form.ValidationTextBox'";
+			schema["example"]=dojo.toJson({code:'name',type:'string'},true);
 			var properties={};
 			lang.mixin(properties,standardAttributeProperties);
 			//properties["type"]={ type : "string",enum:["string"]};
-			properties["missingMessage"]={ type : "string"};
-			properties["promptMessage"]={ type : "string"};
-			properties["placeHolder"]={ type : "string"};
-			properties["invalidMessage"]={ type : "string"};
-			properties["pattern"]={ type : "string"};
-			properties["properCase"]={ type : "boolean"};
-			properties["upperCase"]={ type : "boolean"};
-			properties["maxLength"]={ type : "number"};
-			properties["required"]={ type : "boolean"};
+			extraAttributeProperties.add("required",properties);
+			extraAttributeProperties.add("maxLength",properties);
+			extraAttributeProperties.add("missingMessage",properties);
+			extraAttributeProperties.add("promptMessage",properties);
+			extraAttributeProperties.add("placeHolder",properties);
+			extraAttributeProperties.add("invalidMessage",properties);
+			extraAttributeProperties.add("pattern",properties);
+			extraAttributeProperties.add("properCase",properties);
+			extraAttributeProperties.add("upperCase",properties);
 			schema.properties=properties;
 			return schema;
-		}	
+		}
 	})
 });

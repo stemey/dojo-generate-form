@@ -1,0 +1,51 @@
+<div>
+
+	<h3>Attributes</h3>
+    {% for attribute in attributes %}
+				<div data-dojo-type="dijit/TitlePane" title="{{ attribute.id }}" data-dojo-props="open:false">
+				<p>{% if attribute.description%}{{attribute.description}}{% endif %}</p>
+				{% if attribute.example%}
+				<pre class="examplecode">
+					<code class="javascript">{{ attribute.example }}</code>
+				</pre>	
+				{% endif %}			
+				<ul>
+					{% for prop,k in attribute.properties %}
+						<li>	{{k}}
+							<ul>
+							{% for v,key in prop %}
+								<li>{{key}}:{{v}}	
+								</li>
+							{% endfor %}
+							</ul>
+						</li>
+					{% endfor %}
+				</div>
+    {% endfor %}
+	</ul>
+
+	<h3>Groups</h3>
+    {% for group in groups %}
+				<div data-dojo-type="dijit/TitlePane" title="{{ group.id }}" data-dojo-props="open:false">
+				<p>{% if group.description%}{{group.description}}{% endif %}</p>
+				{% if group.example%}
+				<pre class="examplecode">
+					<code class="javascript">{{ group.example }}</code>
+				</pre>	
+				{% endif %}
+				<ul>
+					{% for prop,k in group.properties %}
+						<li>	{{k}}
+							<ul>
+							{% for v,key in prop %}
+								<li>{{key}}:{{v}}	
+								</li>
+							{% endfor %}
+							</ul>
+						</li>
+					{% endfor %}
+				</div>
+    {% endfor %}
+	</ul>
+	
+</div>

@@ -1,0 +1,84 @@
+<html>
+	<head>
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<style type="text/css">
+/*		@import "../../../dijit/tests/css/dijitTests.css";*/
+
+		/* a sample set of definitions to use as a foundation to color your code */
+		@import "../../dojox/highlight/resources/highlight.css";
+
+		/* additional styling for this test case */
+		pre.examplecode code[class]:after {
+		  content: 'highlight: ' attr(class);
+		  display: block; text-align: right;
+		  font-size: smaller;
+		  color: #CCC; background: white;
+		  border-top: solid 1px;
+		  padding-top: 0.5em;
+		}
+		
+		pre code {
+		  display: block;
+		}
+		
+		code {
+		  background: #F0F0F0;
+		}
+		
+		pre code, 
+		.ruby .subst {
+		  color: black;
+		}
+	</style>
+	 
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+	 
+ 
+ 
+
+	<script type="text/javascript">
+
+		require([ "dojo/parser","dojo/_base/declare","dijit/_WidgetBase", "dijit/_WidgetsInTemplateMixin","dojox/dtl/_Templated","gform/schema/schemaGenerator" ,"gform/createStandardEditorFactory", "gform/convertSchema", "gform/schema/refresolve", "dojo/text!./schema.dtl","dojox/dtl/Context","dojox/dtl/_base","dojox/dtl/tag/logic", "dojox/highlight", "dojox/highlight/languages/javascript", "dojox/highlight/widget/Code"
+		], function(parser, declare, _WidgetBase, _WidgetsInTemplateMixin, _Templated, schemaGenerator, createStandardEditorFactory, convertSchema, refresolve, schemaTemplate, Context, dtl,logic,highlight) {
+
+			var ef = createStandardEditorFactory();
+			var schema = schemaGenerator.generate(ef);
+			refresolve(schema);
+		  //var meta = convertSchema(schema);
+			var attributes;
+			for (var idx in schema.definitions) {
+				var def =schema.definitions[idx];
+				if (def.id=="attributes") {
+					attributes=def.items.oneOf;
+				}
+			}
+
+			var groups;
+			for (var idx in schema.definitions) {
+				var def =schema.definitions[idx];
+				if (def.id=="groups") {
+					groups=def.items.oneOf;
+				}
+			}
+
+			var template = new dtl.Template(schemaTemplate);
+			var ctx = new Context({attributes:attributes,groups:groups});
+			var html=template.render(ctx);
+			dojo.byId("inline").innerHTML=html;
+			parser.parse();
+		 dojo.query("pre > code").forEach(highlight.init);
+		});
+
+	</script>
+	</head>
+	<body class="claro">
+		<div id="inline">
+		</div>
+	</body>
+</html>

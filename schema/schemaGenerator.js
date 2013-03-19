@@ -23,7 +23,13 @@ define([ "dojo/_base/array", //
 			for (var key in groupFactoryMap) {
 				var gf = groupFactoryMap[key];
 				if (gf.getSchema) {
-					var subschema = {id:key,properties:gf.getSchema()};	
+					var subschema = gf.getSchema();
+					if (!subschema.properties) {
+						subschema.properties={};
+					}
+					subschema.properties.groupType={type:"string"};		
+					subschema.properties.groupType.enum=[key];
+					subschema.id=key;
 					definitions.push(subschema);
 					groupsRef.push({$ref:key});
 				}

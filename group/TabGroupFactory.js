@@ -58,7 +58,10 @@ define([ "dojo/_base/array", //
 			}
 		},		
 		getSchema: function() {
-				return {"tabs":{"$ref":"groups"}}
+				var schema= {	"tabs":{"$ref":"groups"}}
+				var example={groupType:"tab",tabs:[{groupType:"listpane",label:"Tab 1",attributes:[]},{groupType:"listpane",label:"Tab 2",attributes:[]}]}
+				//schema.example=dojo.toJson(example,true);
+				return schema;
 		}
 	
 	})

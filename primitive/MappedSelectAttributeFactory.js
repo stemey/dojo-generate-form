@@ -5,8 +5,10 @@ define([ "dojo/_base/array",
 "dijit/form/Select",
 "./_MappedSelectAttributeFactoryBase",
 "../meta",
-"../updateModelHandle"
-], function(array, lang, declare, at, Select, _MappedSelectAttributeFactoryBase, meta, updateModelHandle) {
+"../updateModelHandle",
+"./dijitHelper",
+"dojo/text!./mapped_select.json"
+], function(array, lang, declare, at, Select, _MappedSelectAttributeFactoryBase, meta, updateModelHandle, dijitHelper, example) {
 
 	return declare("gform.MappedSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
 		
@@ -56,6 +58,22 @@ define([ "dojo/_base/array",
 		updateModelHandle : function(meta, plainValue, modelHandle,resolver) {
 			var options = this._createMappedOptions(meta, resolver);
 			updateModelHandle.updateSelectModelHandle(meta, plainValue, modelHandle,options);
+		},
+		getSchema:function(){
+			var schema={};
+			schema["id"]="mapped-select";
+			var properties={};
+			schema["description"]="This is a select field whose options depend on the value of another attribute. The options are specified as an array of label value pairs and or values. It is based on 'dijit.form.Select'";
+			schema["example"]=example;
+			schema.properties=properties;
+			properties.mapped_values={type:"object",additionalProperties:{type:"array",items:{oneOf:[{type:"string"},{type:"object",properties:{label:{type:"string"},value:{type:"string"}}}]}}};	
+			properties.mapped_attribute={type:"string",description:"the name of a sibling property"};	
+			dijitHelper.addSchemaProperties(properties);
+			dijitHelper.addSchemaProperty("required",properties);
+			dijitHelper.addSchemaProperty("promptMessage",properties);
+			dijitHelper.addSchemaProperty("placeHolder",properties);
+			dijitHelper.addSchemaProperty("invalidMessage",properties);
+			return schema;
 		}
 		
 	});

@@ -5,8 +5,8 @@ define([ "dojo/_base/array", //
 "dojo/date/stamp",//
 "./DateTextBox",//
 "../meta",//
-"./standardAttributeProperties"
-], function(array, lang, declare, at, dateStamp, DateTextBox, meta, standardAttributeProperties) {
+"./dijitHelper"
+], function(array, lang, declare, at, dateStamp, DateTextBox, meta, dijitHelper ) {
 
 	return declare("app.DateAttributeFactory", [], {
 		
@@ -15,22 +15,6 @@ define([ "dojo/_base/array", //
 		},
 		
 		create : function(attribute, modelHandle) {
-			var box = this.createDateTextBox(modelHandle);
-			
-			if (attribute.required) {
-				box.set("required", attribute.required);
-			}
-			if (attribute.readOnly) {
-				box.set("readOnly", attribute.readOnly);
-			}
-			if (attribute.constraints) {
-				box.set("constraints", attribute.constraints);
-			}
-			return box;
-		},
-		
-		createDateTextBox : function(modelHandle) {
-
 			var valueConverter = this.createValueConverter();
 			var valueAt = at(modelHandle, "value").transform(valueConverter);
 
@@ -40,6 +24,12 @@ define([ "dojo/_base/array", //
 				"message" : at(modelHandle, "message")
 			};
 
+			dijitHelper.copyDijitProperties(attribute,props);
+			dijitHelper.copyProperty("readOnly",attribute,props);
+
+			if (attribute.constraints) {
+				props.set("constraints", attribute.constraints);
+			}
 			
 			return new DateTextBox(props);
 		},
@@ -59,14 +49,17 @@ define([ "dojo/_base/array", //
 		getSchema:function(){
 			var schema={};
 			schema["id"]="date";
-			schema.properties={};
-			lang.mixin(schema.properties,standardAttributeProperties);
-			schema.properties["required"]={ type : "boolean"};
-			schema.properties["readOnly"]={ type : "readOnly"};
-			schema.properties["missingMessage"]={ type : "string"};
-			schema.properties["promptMessage"]={ type : "string"};
-			schema.properties["placeHolder"]={ type : "string"};
-			schema.properties["invalidMessage"]={ type : "string"};
+			var properties={};
+			schema["description"]="This is a textfield displaying dates. It is based on 'dijit.form.DateTextBox'";
+			schema["example"]=dojo.toJson({code:'name',type:'date'},true);
+			schema.properties=properties;
+			dijitHelper.addSchemaProperties(properties);
+			dijitHelper.addSchemaProperty("required",properties);
+			properties["readOnly"]={ type : "boolean"};
+			dijitHelper.addSchemaProperty("missingMessage",properties);
+			dijitHelper.addSchemaProperty("promptMessage",properties);
+			dijitHelper.addSchemaProperty("placeHolder",properties);
+			dijitHelper.addSchemaProperty("invalidMessage",properties);
 			return schema;
 		}	
 	});

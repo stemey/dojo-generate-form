@@ -17,7 +17,12 @@ define([ "dojo/_base/array", //
 			return new ListPane({meta:group});
 	},
 		getSchema: function() {
-				return {"label":{"type":"string"},"description":{"type":"string"},"attributes":{"$ref":"attributes"}}
+				var properties= {"label":{"type":"string"},"description":{"type":"string"},"attributes":{"$ref":"attributes"}}
+			var schema={description:"The listpane displays an array of attributes in a list. It is useful inside dijit layout containers because it wraps its content in a 'dijit.layout.ContentPane'."};
+			schema.properties=properties;
+			var example={groupType:"listpane",label:"Tab name for display in tab",attributes:[{code:"name",type:"string"}]};	
+			schema.example=dojo.toJson(example,true);
+			return schema;	
 		}
 	})
 });
