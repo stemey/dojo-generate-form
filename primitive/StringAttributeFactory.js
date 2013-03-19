@@ -6,12 +6,9 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "./ValidationTextBox",//
 "../meta",//
-"./copyProperty",
-"./copyDijitProperties",
 "./mixinTextboxBindings",
-"./standardAttributeProperties",
-"./extraAttributeProperties"
-], function(array, lang, declare, aspect, Stateful, at, TextBox,  meta, copyProperty, copyDijitProperties, mixinTextboxBindings, standardAttributeProperties, extraAttributeProperties) {
+"./dijitHelper"
+], function(array, lang, declare, aspect, Stateful, at, TextBox,  meta, mixinTextboxBindings, dijitHelper) {
 
 	return declare("gform.TextAttributeFactory", [Stateful], {
 		handles : function(attribute) {
@@ -22,8 +19,8 @@ define([ "dojo/_base/array", //
 			var props={
 			}
 			mixinTextboxBindings(modelHandle,props);
-			copyProperty("pattern",attribute,props)
-			copyDijitProperties(attribute,props);
+			dijitHelper.copyProperty("pattern",attribute,props)
+			dijitHelper.copyDijitProperties(attribute,props);
 			return new TextBox(props);
 
 		},
@@ -33,19 +30,21 @@ define([ "dojo/_base/array", //
 			schema["description"]="This is a textfield based on 'dijit.form.ValidationTextBox'";
 			schema["example"]=dojo.toJson({code:'name',type:'string'},true);
 			var properties={};
-			lang.mixin(properties,standardAttributeProperties);
-			//properties["type"]={ type : "string",enum:["string"]};
-			extraAttributeProperties.add("required",properties);
-			extraAttributeProperties.add("maxLength",properties);
-			extraAttributeProperties.add("missingMessage",properties);
-			extraAttributeProperties.add("promptMessage",properties);
-			extraAttributeProperties.add("placeHolder",properties);
-			extraAttributeProperties.add("invalidMessage",properties);
-			extraAttributeProperties.add("pattern",properties);
-			extraAttributeProperties.add("properCase",properties);
-			extraAttributeProperties.add("upperCase",properties);
+			dijitHelper.addSchemaProperties(properties);
+			dijitHelper.addSchemaProperty("required",properties);
+			dijitHelper.addSchemaProperty("maxLength",properties);
+			dijitHelper.addSchemaProperty("missingMessage",properties);
+			dijitHelper.addSchemaProperty("promptMessage",properties);
+			dijitHelper.addSchemaProperty("placeHolder",properties);
+			dijitHelper.addSchemaProperty("invalidMessage",properties);
+			dijitHelper.addSchemaProperty("pattern",properties);
+			dijitHelper.addSchemaProperty("properCase",properties);
+			dijitHelper.addSchemaProperty("upperCase",properties);
+
 			schema.properties=properties;
 			return schema;
 		}
+
+
 	})
 });

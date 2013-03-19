@@ -7,10 +7,14 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			references:[],
 			values:{},
 			addReference: function(id,setter) {
-				this.references.push({id:id,setter:setter});
+				if (id) {
+					this.references.push({id:id,setter:setter});
+				}
 			},
 			addElement: function(element) {
-				this.values[element.id]=element;
+				if (element.id) {
+					this.values[element.id]=element;
+				}
 			},
 			finish:function() {
 				array.forEach(this.references,function(ref) {

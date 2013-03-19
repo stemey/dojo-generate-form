@@ -40,8 +40,12 @@ define([ "dojo/_base/array", //
 				var af = attributeFactories[key];
 				if (af.getSchema) {
 					var subschema = af.getSchema();	
-					definitions.push(subschema);
-					attributesRef.push({$ref:subschema.id});
+					if (subschema.id) {
+						definitions.push(subschema);
+						attributesRef.push({$ref:subschema.id});
+					}else{
+						throw new Error("attribute schema has no id "+af.declaredClass);
+					}
 				}
 			}
 

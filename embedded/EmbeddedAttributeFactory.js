@@ -54,7 +54,9 @@ define([ "dojo/_base/array", //
 			}
 		},
 		getSchema: function() {
-			return dojo.fromJson(embeddedAttributeProperties);
+			var schema= dojo.fromJson(embeddedAttributeProperties);
+			schema.id="embedded";
+			return schema;
 		}
 		
 	})

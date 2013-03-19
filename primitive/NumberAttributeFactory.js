@@ -5,11 +5,10 @@ define(
 		"dojox/mvc/at",//
 		"./NumberTextBox",//
 "../meta",//
-"./copyProperty",
-"./copyDijitProperties",
+"./dijitHelper",
 "./mixinTextboxBindings"
 		],
-		function(array, lang, declare, at, NumberTextBox,meta,copyProperty,copyDijitProperties, mixinTextboxBindings) {
+		function(array, lang, declare, at, NumberTextBox,meta,dijitHelper, mixinTextboxBindings) {
 
 			return declare(
 					"gform.NumberAttributeFactory",
@@ -23,8 +22,8 @@ define(
 							var props={
 							}
 							mixinTextboxBindings(modelHandle,props);
-							copyProperty("constraints",attribute,props)
-							copyDijitProperties(attribute,props);
+							dijitHelper.copyProperty("constraints",attribute,props)
+							dijitHelper.copyDijitProperties(attribute,props);
 							return new NumberTextBox(props);
 
 						}

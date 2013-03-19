@@ -38,8 +38,12 @@
 						<li>	{{k}}
 							<ul>
 							{% for v,key in prop %}
-								<li>{{key}}:{{v}}	
-								</li>
+								{% if key=="validTypes" %}
+									an array of groups
+								{% else %}
+									<li>{{key}}:{{v}}	
+									</li>
+								{% endif %}
 							{% endfor %}
 							</ul>
 						</li>

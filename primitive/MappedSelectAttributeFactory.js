@@ -66,7 +66,7 @@ define([ "dojo/_base/array",
 			schema["description"]="This is a select field whose options depend on the value of another attribute. The options are specified as an array of label value pairs and or values. It is based on 'dijit.form.Select'";
 			schema["example"]=example;
 			schema.properties=properties;
-			properties.mapped_values={type:"object",additionalProperties:{type:"array",items:{oneOf:[{type:"string"},{type:"object",properties:{label:{type:"string"},value:{type:"string"}}}]}}};	
+			properties.mapped_values=dijitHelper.getMappedValuesSchema();	
 			properties.mapped_attribute={type:"string",description:"the name of a sibling property"};	
 			dijitHelper.addSchemaProperties(properties);
 			dijitHelper.addSchemaProperty("required",properties);

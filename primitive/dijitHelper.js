@@ -46,6 +46,22 @@ define([ "dojo/_base/array", //
 			for (var key in allDijitProperties) {
 				this.copyProperty(allDijitProperties[key],attribute,dijitProps);
 			}
+		},
+		getMappedValuesSchema: function() {	
+			return {
+				type:"object",
+				description:"a map of options.",
+				additionalProperties:
+					{
+						type:"array",
+						items:{
+							oneOf:[
+							{type:"string"},
+							{type:"object",properties:{label:{type:"string"},value:{type:"string"}}}
+							]
+					}
+				}
+			}
 		}
 	}
 			

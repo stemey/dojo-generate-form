@@ -5,8 +5,8 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dijit/form/CheckBox",//
 "../meta",//
-"./standardAttributeProperties"
-], function(array, lang, declare, aspect, at, CheckBox,  meta, standardAttributeProperties) {
+"./dijitHelper"
+], function(array, lang, declare, aspect, at, CheckBox,  meta, dijitHelper) {
 
 	return declare("app.BooleanAttributeFactory", [], {
 		handles : function(attribute) {
@@ -30,8 +30,9 @@ define([ "dojo/_base/array", //
 		getSchema:function(){
 			var schema={};
 			schema["id"]="boolean";
-			schema.properties={};
-			lang.mixin(schema.properties,standardAttributeProperties);
+			var properties={};
+			schema.properties=properties;
+			dijitHelper.addSchemaProperties(properties);
 			return schema;
 		}
 	})

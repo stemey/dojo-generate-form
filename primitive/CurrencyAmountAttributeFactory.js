@@ -4,9 +4,8 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dijit/form/NumberTextBox",//
 "../meta",//
-"./copyProperty",
-"./copyDijitProperties"
-], function(array, lang, declare, at, NumberTextBox,meta,copyProperty,copyDijitProperties) {
+"./dijitHelper"
+], function(array, lang, declare, at, NumberTextBox, meta, dijitHelper) {
 
 	return declare( "gform.CurrencyAmountAttributeFactory", [], {
 		handles : function(attribute) {
@@ -24,7 +23,7 @@ define([ "dojo/_base/array", //
 					"type" : "currency"
 				}
 			}
-			copyProperty("currency",attribute,props);
+			dijitHelper.copyProperty("currency",attribute,props);
 			return new NumberTextBox(props);
 		},
 		
