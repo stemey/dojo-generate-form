@@ -21,9 +21,10 @@ define([
 "./primitive/NumberAttributeFactory",//
 "./primitive/CurrencyAmountAttributeFactory",//
 "./primitive/MappedContentPaneFactory",//
+"./primitive/TextareaAttributeFactory",//
 "./group/AttributeListWidget",//
-"./list_embedded/RepeatedEmbeddedAttributeFactory",//,
-"./list_table/RepeatedEmbeddedAttributeFactory"
+"./list_embedded/RepeatedEmbeddedAttributeFactory",//
+"./list_table/RepeatedEmbeddedAttributeFactory"//
 
 ], function(lang,EditorFactory,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
 		TitlePaneGroupFactory, ListGroupFactory,PrimitiveListAttributeFactory,StringAttributeFactory,
@@ -31,7 +32,7 @@ define([
 		MappedCheckedMultiSelectAttributeFactory,
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
 		TimeAttributeFactory, EmbeddedAttributeFactory, NumberAttributeFactory, 
-		CurrencyAmountAttributeFactory, MappedContentPaneFactory,
+		CurrencyAmountAttributeFactory, MappedContentPaneFactory, TextareaAttributeFactory,
 		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
 			var editorFactory = new EditorFactory();
@@ -66,12 +67,13 @@ define([
 			attributeFactoryFinder.addAttributeFactory("mapped_contentpane", new MappedContentPaneFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("currencyamount", new CurrencyAmountAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("checked_select",new CheckedSelectAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("textarea", new TextareaAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.set("attributeFactories",attributeFactories);
 
 			editorFactory.set("attributeFactoryFinder",attributeFactoryFinder);
 		
 			return function() {
 				return editorFactory;
-			}				
+			};	
 
 });

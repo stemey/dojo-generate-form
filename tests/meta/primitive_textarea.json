@@ -1,0 +1,15 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"string",
+            "label":"description",
+            "description":"Only alphabetical characters",
+            "code":"description",
+            "array":false,
+            "editor":"textarea"
+        }
+    ],
+    "type_property":"ext_type"
+}
