@@ -32,6 +32,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// data binding.
 		_relTargetProp : "children",
 		isLayoutContainer:true,
+		
+		// remember all field paths where an explicit error message was added via addError()
+		_explicitErrorPaths : [],
 
 		// //////////////////// PRIVATE METHODS
 		// ////////////////////////
@@ -41,6 +44,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			this.modelHandle=updateModelHandle.createMeta();
 			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
 			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
+			
+			this._explicitErrorPaths = [];
+			
 			this._buildContained();
 		},
 		_setPlainValueAttr: function(value) {
@@ -55,6 +61,8 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 			}
 			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
 			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
+			
+			this._explicitErrorPaths = [];
 		},
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);
@@ -120,6 +128,18 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				model.set("valid",false);
 				model.set("message",message);
 			});
+			this._explicitErrorPaths.push(path);
+		},
+		resetErrors: function() {
+		// summary:
+		//		reset all field errors that were added via addError().
+			array.forEach(this._explicitErrorPaths, function(path) {
+				this.visit(path,function(model) {
+					model.set("valid",true);
+					model.set("message",null);
+				});
+			}, this);
+			this._explicitErrorPaths = [];
 		},
 		updateValue: function(path,value) {
 		// summary:

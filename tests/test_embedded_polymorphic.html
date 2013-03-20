@@ -52,6 +52,14 @@
 						t.assertEqual(2, editor.get("errorCount"));
 					}
 				},{
+					name : 'resetErrors',
+					runTest : function(t) {
+						editor.resetErrors();
+						t.assertEqual(0, editor.get("errorCount"));
+						editor.addError("thing.common","error");
+						t.assertEqual(1, editor.get("errorCount"));
+					}
+				},{
 					name : 'switchTypeAndvalidate',
 					runTest : function(t) {
 						typeSelect.set("value", "thing1");
