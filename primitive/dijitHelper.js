@@ -55,7 +55,7 @@ define([ "dojo/_base/array", //
 					{
 						type:"array",
 						items:{
-							oneOf:[
+							type:[
 							{type:"string"},
 							{type:"object",properties:{label:{type:"string"},value:{type:"string"}}}
 							]

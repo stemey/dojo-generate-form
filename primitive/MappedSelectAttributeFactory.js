@@ -7,8 +7,9 @@ define([ "dojo/_base/array",
 "../meta",
 "../updateModelHandle",
 "./dijitHelper",
-"dojo/text!./mapped_select.json"
-], function(array, lang, declare, at, Select, _MappedSelectAttributeFactoryBase, meta, updateModelHandle, dijitHelper, example) {
+"dojo/text!./mapped_select.json",
+"dojo/text!./mapped_select_doc.json"
+], function(array, lang, declare, at, Select, _MappedSelectAttributeFactoryBase, meta, updateModelHandle, dijitHelper, example,exampleForDoc) {
 
 	return declare("gform.MappedSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
 		
@@ -65,6 +66,7 @@ define([ "dojo/_base/array",
 			var properties={};
 			schema["description"]="This is a select field whose options depend on the value of another attribute. The options are specified as an array of label value pairs and or values. It is based on 'dijit.form.Select'";
 			schema["example"]=example;
+			schema["exampleForDoc"]=exampleForDoc;
 			schema.properties=properties;
 			properties.mapped_values=dijitHelper.getMappedValuesSchema();	
 			properties.mapped_attribute={type:"string",description:"the name of a sibling property"};	

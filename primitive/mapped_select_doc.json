@@ -1,3 +1,10 @@
+{
+	"attributes":[
+		{// the available salutations depend on this language attribute
+			"type":"string",
+			"code":"language",
+			"values":["english","german"]
+		},
 		{// the salutation is a mapped select attribute
 			"type":"string",
 			"code":"salutation",
@@ -13,4 +20,5 @@
 				]
 			}
 		}
-
+	]
+}

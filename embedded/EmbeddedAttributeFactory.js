@@ -9,9 +9,11 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "dijit/TitlePane",//
 "../updateModelHandle",//
-"dojo/text!../schema/embeddedAttributeProperties.json"
+"dojo/text!../schema/embeddedAttributeProperties.json",//
+"dojo/text!./embeddedExample.json",
+"dojo/text!./embeddedInstanceExample.json"
 ], function(array, lang, json,declare, at, GroupPanelWidget, SingleTypePanelWidget,
-		StackContainer,  Stateful, TitlePane,updateModelHandle,embeddedAttributeProperties) {
+		StackContainer,  Stateful, TitlePane,updateModelHandle,embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
 
 	return declare("app.EmbeddedGroupFactory", [],{
 		handles : function(attribute, modelHandle) {
@@ -56,6 +58,9 @@ define([ "dojo/_base/array", //
 		getSchema: function() {
 			var schema= dojo.fromJson(embeddedAttributeProperties);
 			schema.id="embedded";
+			schema.description="This attibute creates a subform for complex properties. It also handles complex arrays. The complex property is described by a group. The groupType can be left out. There may be more than one group. If so there will be a drop down to chhose the group. The value of the group is saved in the property whose name is defined by the schema property 'type_property'" ;
+			schema.example=embeddedExample;
+			schema.instanceExample=embeddedInstanceExample;
 			return schema;
 		}
 		

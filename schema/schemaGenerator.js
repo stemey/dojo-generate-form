@@ -17,7 +17,7 @@ define([ "dojo/_base/array", //
 			this._createAttributesRef(definitions,attributesRef);
 			definitions[this.ATTRIBUTES_REF]=attributesRef;
 			schema.definitions=definitions;
-			schema.properties={"editor":{type:"object",gform_type_property:"groupType",required:true,oneOf:groupsRef}};
+			schema.properties={"editor":{type:groupsRef,gform_type_property:"groupType",required:true}};
 			
 			var groupFactoryMap = editorFactory.getGroupFactoryMap();
 			for (var key in groupFactoryMap) {
@@ -68,7 +68,7 @@ define([ "dojo/_base/array", //
 			groupsRef.id=this.GROUPS_REF;
 			groupsRef.type="array";
 			groupsRef.gform_type_property="groupType";
-			groupsRef.items={type:"object","oneOf":groups};
+			groupsRef.items={type:groups};
 			definitions.push(groupsRef);
 		},
 		_createAttributesRef: function(definitions,attributes) {
@@ -76,7 +76,7 @@ define([ "dojo/_base/array", //
 			attributesRef.id=this.ATTRIBUTES_REF;
 			attributesRef.gform_type_property="type";
 			attributesRef.type="array";
-			attributesRef.items={type:"object","oneOf":attributes};
+			attributesRef.items={type:attributes};
 			definitions.push(attributesRef);
 		}	
 	})
