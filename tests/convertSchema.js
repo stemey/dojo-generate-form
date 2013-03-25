@@ -50,14 +50,15 @@ define(["doh/runner","gform/schema/refresolve","gform/convertSchema","dojo/text!
 	var loader=function(s) {
 			console.log("load "+s);
 	}
-  var contactsSchema = dojo.fromJson(contactsSchemaJson);
-	//console.log(dojo.toJson(contactsSchema,true));
+  //console.log(dojo.toJson(contactsSchema,true));
 
 
     doh.register("gform-convertSchema", [
-      function testSimpleSchema(){
+      function testContactsSchema(){
+				var contactsSchema = dojo.fromJson(contactsSchemaJson);
+				refresolve(contactsSchema);
 				var meta = convertSchema(contactsSchema);
-				console.log(dojo.toJson(meta,true));({})
+				//console.log(dojo.toJson(meta,true));({})
       },
       function testSchemaWithCircularRef(){
 				refresolve(schemaWithRef);
