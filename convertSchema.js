@@ -32,45 +32,42 @@ define([ "dojo/_base/array", //
 					}
 				}
 			}
-			if (prop.type=="object") {
-				var types = this.convertObjectProp(prop,converted);
+			if (prop.type=="array") {
+				attribute.array=true;
+				if (typeof prop.items.type == "string") {
+					var type = formatToTypeMapping[prop.format];
+					attribute.type=type || prop.items.type;
+				}else{
+					var types = this.convertType(prop.items.type,converted);
+					attribute.type="object";
+					attribute.type_property=prop.gform_type_property || "ext_type";
+					attribute.validTypes=types;
+				}
+			}else if (typeof prop.type == "string") {
+				var type = formatToTypeMapping[prop.format];
+				attribute.type=type || prop.type;
+			}else{
+				var types = this.convertType(prop.type,converted);
 				attribute.type="object";
 				attribute.type_property=prop.gform_type_property || "ext_type";
 				attribute.validTypes=types;
-			}else if (prop.type=="array") {
-				attribute.array=true;
-				if (prop.items.type=="object") {
-					attribute.type="object";
-					attribute.type_property=prop.gform_type_property || "ext_type";
-					var types = this.convertObjectProp(prop.items,converted);
-					attribute.validTypes=types;
-				} else if (prop.items.type=="array") {
-					throw new Error("cannot convert array of arrays");
-				}else{
-					attribute.type=prop.items.type;
-				}
-			}else{
-				var type = formatToTypeMapping[prop.format];
-				attribute.type=type || prop.type;
 			}
 		},
-		convertObjectProp: function(prop,converted) {
-				if (prop.oneOf) {
-					return this.convertTypes(prop.oneOf,converted);
-				}else	if (prop.properties) {
-					return [this.convert(prop,converted)];
-				}else{
-					throw new Error("cannot only convert objects with oneOf");
-				}
+		convertType: function(type,converted) {
+			if (lang.isArray(type)){
+				return array.map(type,function(schema) {
+					return this.convert(schema,converted);
+				},this);
+			}else{
+				return [this.convert(type,converted)];
+			}
 		},
-		convertTypes: function(schemas,converted) {
-			return array.map(schemas,function(schema) {
-				return this.convert(schema,converted);
-			},this);
-		},
-		convert: function(schema,converted,/**params*/meta) {
+		convert: function(schema,converted,/**local variables*/meta) {
 			//schema=ref.resolveJson(schema);
 			//refresolve(schema);
+			if (!schema.properties) {
+				throw new Error("no properties defined in schema "+schema);
+			}
 			converted=converted||{};
 			meta=converted[schema.id];
 			if (meta) {

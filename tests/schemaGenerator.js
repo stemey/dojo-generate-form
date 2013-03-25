@@ -1,17 +1,16 @@
-define(["doh/runner","gform/schema/schemaGenerator","gform/createStandardEditorFactory","json-schema/lib/validate","dojo/text!json-schema/draft-03/schema"], function(doh,schemaGenerator,createStandardEditorFactory,validate,schemaSchema){
+define(["doh/runner","gform/schema/schemaGenerator","gform/schema/refresolve","gform/createStandardEditorFactory","json-schema/lib/validate","dojo/text!json-schema/draft-03/schema"], function(doh,schemaGenerator, refresolve, createStandardEditorFactory,validate,schemaSchema){
 
 	
-	function addSchemaTest(attributeFactory,tests) {
-		var safSchema=attributeFactory.getSchema();
+	function addSchemaTest(schema,tests) {
 		var test= {
-			name:"testSchema-"+safSchema.id,
+			name:"testSchema-"+schema.id,
 			runTest:function() { 
-				var instance=dojo.fromJson(safSchema.example);
-				var result = validate(instance,safSchema);
+				var instance=dojo.fromJson(schema.example);
+				var result = validate(instance,schema);
 				if (!result.valid) {
 					console.log(dojo.toJson(result,true));
 					console.log(dojo.toJson(instance,true));
-					console.log(dojo.toJson(safSchema,true));
+					//console.log(dojo.toJson(schema,true));
 				}
 				doh.assertTrue(result.valid);		
 				}
@@ -23,6 +22,7 @@ define(["doh/runner","gform/schema/schemaGenerator","gform/createStandardEditorF
       function testSchema(){
 				var ef = createStandardEditorFactory();
 				var schema = schemaGenerator.generate(ef);
+				refresolve(schema);
 				//console.log(dojo.toJson(schema,true));
       },
       function validateSchema(){
@@ -38,11 +38,14 @@ define(["doh/runner","gform/schema/schemaGenerator","gform/createStandardEditorF
     ];
 
 	var ef = createStandardEditorFactory();
-	for (var key in ef.getAttributeFactories()) {
-		var saf = ef.getAttributeFactories()[key];
-		if (saf.getSchema) {
-			addSchemaTest(saf,tests);
-		};
+	var schema = schemaGenerator.generate(ef);
+	refresolve(schema);	
+	for (var key in schema.definitions) {
+		var schemaDef = schema.definitions[key];
+		// onyl add attribute schemas
+		if (schemaDef.id && schemaDef.example ) {
+			addSchemaTest(schemaDef,tests);
+		}
 	}
 
 
