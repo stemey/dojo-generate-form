@@ -55,7 +55,7 @@
 			for (var idx in schema.definitions) {
 				var def =schema.definitions[idx];
 				if (def.id=="attributes") {
-					attributes=def.items.oneOf;
+					attributes=def.items.type;
 				}
 			}
 
@@ -63,7 +63,7 @@
 			for (var idx in schema.definitions) {
 				var def =schema.definitions[idx];
 				if (def.id=="groups") {
-					groups=def.items.oneOf;
+					groups=def.items.type;
 				}
 			}
 
