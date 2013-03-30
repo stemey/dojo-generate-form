@@ -357,6 +357,28 @@
                     ]
                 }
             ]
+        },
+        {
+            label:"groups",
+						description:"Groups can be nested.",
+						groupType:"listgroup",
+						groups: [
+							{
+								groupType:"titlepane",
+								open:true,
+								title:"1. titlepane",
+								attributes: [
+									{type:"string",code:"atext1"}
+								]
+							},
+							{
+								groupType:"titlepane",
+								title:"2. titlepane",
+								attributes: [
+									{type:"string",code:"atext2"}
+								]
+							}
+						]
         }
     ]
 }

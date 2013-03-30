@@ -27,6 +27,13 @@ define([ "dojo/_base/array", //
 				titlePaneWidget.set("title", titlePane.title);
 			}
 		},
+		collectAttributes: function(group) {
+			var attributes=[];
+			array.forEach(group.attributes, function(attribute) {
+				attributes.push(attribute);
+			},this);
+			return attributes;
+		},
 		getSchema: function(){
 			var properties=  {"title":{"type":"string"},"attributes":{"$ref":"attributes"}};
 			var schema={description:"The titlepane displays an array of attributes in a 'dijit.TitlePane'."};
