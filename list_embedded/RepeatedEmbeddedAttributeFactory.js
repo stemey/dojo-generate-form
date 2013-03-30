@@ -32,7 +32,8 @@ define([ "dojo/_base/array", //
 
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
-				attribute:attribute
+				attribute:attribute,
+				editorFactory: this.editorFactory
 			});
 
 			var childMeta = attribute.validTypes? attribute:attribute.type;
@@ -53,6 +54,7 @@ define([ "dojo/_base/array", //
 		},
 		updateModelHandle: function(meta,plainValue,modelHandle) {
 			updateModelHandle.updateArray(meta,plainValue,modelHandle,this.editorFactory);
-		}
+		},
+/* getSchema() is implemented in gform/embedded/EmbeddedAttributeFactory */
 	})
 });

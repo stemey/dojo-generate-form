@@ -56,7 +56,9 @@ define([ "dojo/_base/array", //
 		convertType: function(type,converted) {
 			if (lang.isArray(type)){
 				return array.map(type,function(schema) {
-					return this.convert(schema,converted);
+					if (typeof schema != "string") {
+						return this.convert(schema,converted);
+					}
 				},this);
 			}else{
 				return [this.convert(type,converted)];

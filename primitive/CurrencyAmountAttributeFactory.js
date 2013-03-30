@@ -2,14 +2,15 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"dijit/form/NumberTextBox",//
+"dijit/form/CurrencyTextBox",//
 "../meta",//
-"./dijitHelper"
-], function(array, lang, declare, at, NumberTextBox, meta, dijitHelper) {
+"./dijitHelper",//
+"./mixinNumberboxBindings"
+], function(array, lang, declare, at, CurrencyTextBox, meta, dijitHelper, mixinNumberboxBindings) {
 
 	return declare( "gform.CurrencyAmountAttributeFactory", [], {
 		handles : function(attribute) {
-			return meta.isType(attribute, "number") && !attribute.array;
+			return attribute.type="number" && !attribute.array;
 		},
 		
 		create : function(attribute, modelHandle) {
@@ -17,14 +18,14 @@ define([ "dojo/_base/array", //
 			var valueAt = at(modelHandle, "value").transform(valueConverter);
 			// is this like currencyTextBox ? then add missing props: fractional, invalidMessage,currency,lang
 			var props={
-				"value" : valueAt,
-				"state" : at(modelHandle, "state"),
-				"constraints" : {
-					"type" : "currency"
-				}
+				constraints:{}
 			}
+			mixinNumberboxBindings(modelHandle,props);
 			dijitHelper.copyProperty("currency",attribute,props);
-			return new NumberTextBox(props);
+			dijitHelper.copyDijitProperties(attribute,props);
+			dijitHelper.copyProperty("min",attribute,props.constraints)
+			dijitHelper.copyProperty("max",attribute,props.constraints)
+			return new CurrencyTextBox(props);
 		},
 		
 		createValueConverter : function() {
@@ -40,7 +41,28 @@ define([ "dojo/_base/array", //
 					return Math.round(value * 100);
 				}
 			};
-		}
+		},
+			getSchema:function(){
+				var schema={};
+				schema["id"]="number";
+				schema["description"]="This is a textfield for numerical amount with currency values based on 'dijit.form.NumberTextBox'.";
+				schema["example"]=dojo.toJson({code:'name',type:'number',editor:"currencyamount",currency:"USD"},true);
+				var properties={};
+				properties.type={type:"string",required:true,enum:["number"]};
+				dijitHelper.addSchemaProperties(properties);
+				dijitHelper.addSchemaProperty("required",properties);
+				dijitHelper.addSchemaProperty("maxLength",properties);
+				properties.currency={type:"string",maxLength:3,pattern:"[A-Z]{3}",description:"The currency code according to ISO4217"};
+				properties.min={type:"number",description:"the minimum value"};
+				properties.max={type:"number",description:"the maximum value"};
+				dijitHelper.addSchemaProperty("missingMessage",properties);
+				dijitHelper.addSchemaProperty("promptMessage",properties);
+				dijitHelper.addSchemaProperty("placeHolder",properties);
+				dijitHelper.addSchemaProperty("invalidMessage",properties);
+
+				schema.properties=properties;
+				return schema;
+			}
 	});
 	
 });

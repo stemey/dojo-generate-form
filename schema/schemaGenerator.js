@@ -27,7 +27,7 @@ define([ "dojo/_base/array", //
 					if (!subschema.properties) {
 						subschema.properties={};
 					}
-					subschema.properties.groupType={type:"string"};		
+					subschema.properties.groupType={type:"string",required:true};		
 					subschema.properties.groupType.enum=[key];
 					subschema.id=key;
 					definitions.push(subschema);
@@ -55,6 +55,7 @@ define([ "dojo/_base/array", //
 				if (af &&  af.getSchema) {
 					var subschema = af.getSchema();	
 					subschema.id=key;
+					subschema.properties.editor={type:"string",required:true,enum:[key]};
 					definitions.push(subschema);
 					attributesRef.push({$ref:subschema.id});
 				}
@@ -74,7 +75,7 @@ define([ "dojo/_base/array", //
 		_createAttributesRef: function(definitions,attributes) {
 			var attributesRef ={};
 			attributesRef.id=this.ATTRIBUTES_REF;
-			attributesRef.gform_type_property="type";
+			attributesRef.gform_type_property="_type";
 			attributesRef.type="array";
 			attributesRef.items={type:attributes};
 			definitions.push(attributesRef);

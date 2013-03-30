@@ -19,7 +19,10 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			var singleAttribute={};
 			lang.mixin(singleAttribute,attribute);
 			singleAttribute.array=false;
-			delete singleAttribute.editor;	
+			delete singleAttribute.editor;
+			if (attribute.elementEditor) {
+				singleAttribute.editor=attribute.elementEditor;
+			}
 
 			var factory = this.editorFactory.attributeFactoryFinder.getFactory(singleAttribute);
 			var editor = factory.create(attribute,this.modelHandle);

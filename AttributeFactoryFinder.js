@@ -23,6 +23,16 @@ define([ "dojo/_base/array", //
 		},		
 		getFactory : function(attribute) {
 			var factory = this.attributeFactoryMap[attribute.editor];
+			if (factory && factory.handles(attribute)) {
+				return factory;
+			} if (factory && attribute.array && !attribute.elementEditor) {
+				attribute.elementEditor=attribute.editor;
+				delete attribute.editor;
+			}else if (factory) {
+				console.log("editor "+attribute.editor+ " cannot handle attribute "+attribute.code);
+				return null;
+			}
+
 			// if (factory == null) {
 			// factory = this.attributeFactoryMap[attribute.type.code];
 			// }

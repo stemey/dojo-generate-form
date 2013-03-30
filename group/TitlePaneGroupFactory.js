@@ -27,8 +27,14 @@ define([ "dojo/_base/array", //
 				titlePaneWidget.set("title", titlePane.title);
 			}
 		},
-		getSchema: function() {
-				return {"title":{"type":"string"},"attributes":{"$ref":"attributes"}}
+		getSchema: function(){
+			var properties=  {"title":{"type":"string"},"attributes":{"$ref":"attributes"}};
+			var schema={description:"The titlepane displays an array of attributes in a 'dijit.TitlePane'."};
+			schema.properties=properties;
+			schema.required=["attributes"];
+			var example={groupType:"titlepane",title:"1.",attributes:[{code:"name",type:"string"}]};	
+			schema.example=dojo.toJson(example,true);
+			return schema;	
 		}	
 	});
 });

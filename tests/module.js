@@ -3,6 +3,7 @@ define ("gform.tests.module",[
 "gform/tests/updateModelHandle",//
 //"gform/tests/refresolve",//
 "gform/tests/convertSchema",//
+"gform/tests/schemaGenerator",//
 "gform/tests/equals"
 ],function() {
 

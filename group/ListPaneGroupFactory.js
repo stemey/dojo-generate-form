@@ -7,14 +7,17 @@ define([ "dojo/_base/array", //
 "../AttributeFactoryFinder",//
 "dojo/on",//
 "../visit",//
-"./ListPane"
+"./ListPane",//
+"./DescriptionWidget"
 
 ], function(array, lang, declare, at, GroupFactory,  ListPaneGroupWidget,
-		AttributeFactoryFinder, on, visit,ListPane,_GroupMixin) {
+		AttributeFactoryFinder, on, visit,ListPane, DescriptionWidget, _GroupMixin) {
 
 	return declare("gform.ListPaneGroupFactory", [GroupFactory], {
 		createWidget : function(group) {
-			return new ListPane({meta:group});
+			var pane = new ListPane({meta:group});
+			pane.addChild(new DescriptionWidget({description:group.description}));
+			return pane;
 	},
 		getSchema: function() {
 				var properties= {"label":{"type":"string"},"description":{"type":"string"},"attributes":{"$ref":"attributes"}}

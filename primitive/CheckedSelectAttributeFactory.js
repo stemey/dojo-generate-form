@@ -10,7 +10,7 @@ define([ "dojo/_base/array", //
 	return declare("gform.CheckedSelectAttributeFactory", [ ], {
 
 		handles : function(attribute) {
-			var values = meta.values;	
+			var values = attribute.values;	
 			return !attribute.array && values != null && values.length > 0;
 		},
  		

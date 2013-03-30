@@ -7,55 +7,60 @@
             "attributes":[
                 {
                     "type":"string",
-                    "label":"name",
+                    "label":"string",
                     "description":"this attribute only allows letters a to z.",
-                    "errorMessage":"only use letters",
+                    "invalidMessage":"only use letters",
 										"required":true,
-										"pattern":"[a-zA-Z]*",	
-                    "code":"name",
+										"pattern":"[a-zA-Z]*",
+										"placeHolder":"enter a text",	
+                    "code":"string",
                     "array":false
                 },
                 {
                     "type":"string",
-                    "label":"salutation",
+                    "label":"select",
                     "description":"select one",
-                    "errorMessage":"required",
+                    "invalidMessage":"please select one",
 										"required":false,
 										"values":["Mr.","Mrs.","Sir"],	
-                    "code":"salutation",
+                    "code":"select",
+                    "array":false
+                },
+                {
+										"editor":"checked_select",
+                    "type":"string",
+                    "label":"radios",
+                    "description":"select one",
+                    "invalidMessage":"please select one",
+										"required":false,
+										"values":["Mr.","Mrs.","Sir"],	
+                    "code":"radios",
                     "array":false
                 },
                 {
                     "type":"boolean",
-                    "label":"lastname",
+                    "label":"boolean",
                     "description":"we need to know",
-                    "errorMessage":"required",
-										"code":"lastname",
+                    "code":"boolean",
                     "array":false
                 },
                 {
                     "type":"number",
-                    "label":"float1",
-                    "description":"a float",
-                    "code":"float1",
+                    "label":"fractional",
+                    "description":"up to three fractional digits",
+										places:"0,3",
+                    "code":"fractional",
                     "array":false
-                },
-                {
-                    "type":"number",
-                    "label":"float2",
-                    "description":"a float",
-                    "code":"float2",
-										"constraints":{places:2,locale:"en-us"},
-										"array":false
                 },
                 {
                     "type":"number",
                     "label":"integer",
-                    "description":"a float",
+                    "description":"an interger between 3 and 9",
                     "code":"integer2",
-										"constraints":{places:0,min:3,max:9},
-										"locale":"de-de",
-                    "array":false
+										places:0,
+										min:3,
+										max:9,
+										"array":false
                 },
                 {
                     "type":"date",
@@ -67,52 +72,55 @@
                 {
                     "type":"time",
                     "label":"time",
-                    "description":"teim",
+                    "description":"time",
                     "code":"time",
 										"array":false
                 }
 						]},{
-            label:"primitive lists",
-						description:"This tab contains primitive list attributes.",
+            label:"primitive arrays",
+						description:"This tab contains primitive array attributes.",
             "attributes":[
                 {
                     "type":"string",
-                    "label":"name",
-                    "description":"this attribute only allows letters a to z.",
+                    "label":"array of strings",
+                    "description":"This is a simple string attribute with array set to true. All primitives auspport 'array=true' and will be displayed similarly.",
                     "errorMessage":"only use letters",
 										"required":true,
 										"pattern":"[a-zA-Z]*",	
-                    "code":"name",
+                    "code":"array_string",
                     "array":true
                 },
                 {
                     "type":"string",
-                    "label":"manySalutations",
-                    "description":"select one",
+                    "label":"array of selects 1",
+                    "description":"This is a special widget for an array of select values.",
                     "errorMessage":"required",
 										"required":false,
 										"values":["Mr.","Mrs.","Sir."],	
-                    "code":"manySalutations",
+                    "code":"array_select_1",
                     "array":true
                 },
                 {
-                    "type":"boolean",
-                    "label":"lastnames",
-                    "description":"we need to know",
+                    "type":"string",
+                    "description":"this is the other way of displaying an array of select values.",
+										"editor":"primitive_list",				
+                    "label":"array of selects 2",
                     "errorMessage":"required",
-										"code":"lastnames",
+										"required":false,
+										"values":["Mr.","Mrs.","Sir."],	
+                    "code":"array_select_2",
                     "array":true
                 }
 						]},{
             label:"embedded",
-						description:"embedded simple and polymorphic attributes.",
+						description:"embedded simple and polymorphic types.",
             "attributes":[
                 {
                     "required":false,
                     "type":"thing1",
                     "type_property":"ext_type",
-                    "label":"thing",
-                    "code":"thing",
+                    "label":"polything",
+                    "code":"polything",
                     "array":false,
                     "validTypes":[
                         {
@@ -156,7 +164,37 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "required":true,
+                    "type":"thing1",
+                    "label":"thing",
+                    "code":"thing",
+                    "array":false,
+                    "validTypes":[
+                        {
+                            "code":"thing1",
+                            "label":"thing1",
+                            "attributes":[
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"name",
+                                    "code":"name",
+                                    "array":false
+                                },
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"common",
+                                    "code":"common",
+                                    "array":false
+                                }
+                            ]
+                        }
+                    ]
                 }
+
             ]
             
         },

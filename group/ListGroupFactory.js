@@ -31,7 +31,17 @@ define([ "dojo/_base/array", //
 			return attributes;
 		},
 		getSchema: function() {
-				return {"label":{"type":"string"},"description":{"type":"string"},"groups":{"$ref":"groups"}}
+			var properties= {
+				"label":{"type":"string",description:"for display in a tab"},
+				"description":{"type":"string"},
+				"groups":{"$ref":"groups"}
+			}
+			var schema={description:"The listgroup displays an array of groups in a list."};
+			schema.properties=properties;
+			schema.required=["groups"];
+			var example={groupType:"listgroup",label:"Tab name for display in tab",groups:[{groupType:"titlepane",title:"1.",attributes:[]}]};	
+			schema.example=dojo.toJson(example,true);
+			return schema;	
 		}
 	});
 });

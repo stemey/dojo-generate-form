@@ -54,7 +54,7 @@ define([
 			       				//new MappedSelectAttributeFactory({editorFactory:editorFactory}),//
 			       				new PrimitiveListAttributeFactory({editorFactory:editorFactory}),//
 			       				new NumberAttributeFactory({editorFactory:editorFactory}),//
-			       				//new SelectAttributeFactory({editorFactory:editorFactory}), // 
+			       				new SelectAttributeFactory({editorFactory:editorFactory}), // 
 			       				new BooleanAttributeFactory({editorFactory:editorFactory}), // 
 			       				new StringAttributeFactory({editorFactory:editorFactory}), //
 			       				new DateAttributeFactory({editorFactory:editorFactory}), //

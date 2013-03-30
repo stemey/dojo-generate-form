@@ -61,7 +61,14 @@ define([ "dojo/_base/array", //
 
 		},
 		getSchema: function() {
-				return {"label":{"type":"string"},"description":{"type":"string"},"attributes":{"$ref":"attributes"}}
+				var properties= {"label":{"type":"string"},"description":{"type":"string"},"attributes":{"$ref":"attributes"}}
+			var schema={description:"The list displays an array of attributes."};
+			schema.properties=properties;
+			schema.required=["attributes"];
+			var example={groupType:"list",description:"This text is displayed at the top of the list",attributes:[{code:"name",type:"string"}]};	
+			schema.example=dojo.toJson(example,true);
+			return schema;	
+
 		}	
 	})
 });

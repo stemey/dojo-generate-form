@@ -13,9 +13,11 @@ define([ "dojo/_base/array", //
 "./TableHeader",//
 "./TableElementHeader",//
 "./mergeAttributeDefinitions",//
-"dojo/text!../schema/embeddedAttributeProperties.json"
+"dojo/text!../schema/embeddedAttributeProperties.json",
+"dojo/text!./embeddedExample.json",
+"dojo/text!./embeddedInstanceExample.json"
 ], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle,TableHeader,TableElementHeader,mergeAttributeDefinitions, embeddedAttributeProperties) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle,TableHeader,TableElementHeader,mergeAttributeDefinitions, embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -79,6 +81,9 @@ define([ "dojo/_base/array", //
 		},
 		getSchema : function() {
 			var schema = dojo.fromJson(embeddedAttributeProperties);
+			schema.description="This attribute represents an array of objects. They are displayed in a table. validTypes describes the possible types/groups of objects. The table columns represent the union of all properties. Common properties appear only once. Proerty cells will be invisible if not applicable to the rows object";
+			schema.example=embeddedExample;
+			schema.instanceExample=embeddedInstanceExample;
 			schema.properties.editor={type:"string",enum:["table"],required:true};
 			return schema;
 		}

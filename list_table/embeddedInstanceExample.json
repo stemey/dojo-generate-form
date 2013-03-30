@@ -1,0 +1,14 @@
+{
+	things: [
+		{
+			ext_type:"thing1",
+			name:"moin",
+			common:"same value for both types"
+		},
+		{
+			ext_type:"thing2",
+			firstname:"will",
+			common:"same value for both types"
+		}
+	]
+}

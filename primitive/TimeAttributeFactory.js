@@ -54,7 +54,11 @@ define([ "dojo/_base/array", //
 		getSchema:function(){
 			var schema={};
 			schema["id"]="time";
+			schema.description="This attribute is a time value formatted according to ISO-8601. The dijit is based on 'dijit.form.TimeTextBox'";
+			schema.example=dojo.toJson({code:"wakeupTime",type:"time"},true);
+			schema.instanceExample=dojo.toJson({wakeupTime:"8:30"},true);
 			schema.properties={};
+			schema.properties.type={type:"string",required:true,enum:["time"]};
 			lang.mixin(schema.properties,standardAttributeProperties);
 			schema.properties["required"]={ type : "boolean"};
 			schema.properties["missingMessage"]={ type : "string"};

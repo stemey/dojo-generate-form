@@ -1,17 +1,32 @@
 <div>
 	<h2>Documentation of gform schema</h3>
-	<p>This documentation was generated for the  editor factory. EditorFactories differ in the attributes and groups they support. An editorFactory for mobiles will support a different selection of attributes. The general supported attributes will probably the same for mobile and desktop devices but the actual dijits will be different and support different features.
+	<p>This documentation was generated for the standard editorFactory. EditorFactories differ in the attributes and groups they support. An editorFactory for mobiles will support a different set of attributes. The generally supported attributes will probably be the same for mobile and desktop devices but the actual dijits will be different and support different features.
 </p> 	
 
-	<h3>Attribute editors</h3>
+	<h3>Attributes</h3>
 
 <p>
-	An attribute may be displayed in different ways. A string can be edited in a textfield or a textarea or a wysiwyg editor. The attribute editor can be defined using different strategy. Either it is chosen by its id or it is chosen programmatically by its properties. A string with maxLength greater than 1000 characters should rather be displayed in a textarea. To choose an editor by it id the attribute in the gform schema must define the id in the editor propery. The second Strategy is can be implemented in  the AttributeFactory by implmenting the handles function accordingly.
+	An attribute may be displayed in different ways. A string can be edited in a textfield or a textarea or a wysiwyg editor. The dijit representing the attribute can be defined using different strategies. Either it is chosen by an id called `editor` or it is chosen programmatically by its properties. A string with maxLength greater than 1000 characters should rather be displayed in a textarea. This logic is implemented in the create function of the attributeFactory that handles attributes of type `string`. To the dijit by its id the attribute in the gform schema must define the property `editor`.
 </p>
 
 <p>
 	Most properties for the various attributes are documented here. Some of these properties are available for all attributes and some are specific to the dijit used. General properties for attribtues are :
 <ul>
+	<li>
+			code: the name of the json property described by the attribute and bound to the dijit
+	</li>
+	<li>
+			type: The primitive type of the attribute. predefined values are: `string`, `boolean`, `number`, `date`, `time`, `datetime`.
+	</li>
+	<li>
+			validTypes: if the attribute represents a complex property or array then type property can be left out and instead the validTypes property contains an array of types/groups;
+	</li>
+	<li>
+			label: a human readable text to display as label next to the dijit.
+	</li>
+	<li>
+			array: true if the attribute represents an array. The elements of the array are described by type and validTypes.  
+	</li>
 </ul> 
 </p>
 

@@ -50,9 +50,11 @@ define([ "dojo/_base/array", //
 			var schema={};
 			schema["id"]="date";
 			var properties={};
-			schema["description"]="This is a textfield displaying dates. It is based on 'dijit.form.DateTextBox'";
-			schema["example"]=dojo.toJson({code:'name',type:'date'},true);
+			schema["description"]="This is a textfield displaying dates. The values should be formatted according to ISO-8601. It is based on 'dijit.form.DateTextBox'";
+			schema["example"]=dojo.toJson({code:'birthday',type:'date'},true);
+			schema["instanceExample"]=dojo.toJson({birthday:"2013-01-31"},true);
 			schema.properties=properties;
+			properties.type={type:"string",required:true,enum:["date"]};
 			dijitHelper.addSchemaProperties(properties);
 			dijitHelper.addSchemaProperty("required",properties);
 			properties["readOnly"]={ type : "boolean"};

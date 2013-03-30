@@ -15,9 +15,9 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 			var newValue={};
 			newValue[type_property]=type;
 			if (this.attribute.validTypes.length>1) {
-				updateModelHandle.updatePolyObject(this.attribute,newValue,newModelHandle);
+				updateModelHandle.updatePolyObject(this.attribute,newValue,newModelHandle, this.editorFactory);
 			}else{
-				updateModelHandle.updateObject(this.attribute,newValue,newModelHandle);
+				updateModelHandle.updateObject(this.attribute,newValue,newModelHandle, this.editorFactory);
 			}
 			this.target.value.push(newModelHandle);
 			this.emit("valid-changed");

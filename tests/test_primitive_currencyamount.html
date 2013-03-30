@@ -24,20 +24,20 @@
 					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
-			var priceText = dijit.byId("dijit_form_NumberTextBox_0");
+			var priceText = dijit.byId("dijit_form_CurrencyTextBox_0");
 			doh.register("standard", [
 				{
 					name : 'init',
 					runTest : function(t) {
 						t.assertEqual(1250, editor.get("plainValue").price);
-						t.assertEqual(12.5, priceText.get("value"));
+						t.assertEqual(1250, priceText.get("value"));
 					}
 				}, 
 				{
 					name : 'null',
 					runTest : function(t) {
 						priceText.set("value",null);
-						t.assertEqual(NaN, editor.get("plainValue").price);
+						t.assertEqual(null, editor.get("plainValue").price);
 					}
 				} 
 			]);

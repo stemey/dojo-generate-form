@@ -58,10 +58,14 @@ define([ "dojo/_base/array", //
 			}
 		},		
 		getSchema: function() {
-				var schema= {	"tabs":{"$ref":"groups"}}
-				var example={groupType:"tab",tabs:[{groupType:"listpane",label:"Tab 1",attributes:[]},{groupType:"listpane",label:"Tab 2",attributes:[]}]}
+			var properties= {	"tabs":{"$ref":"groups"}}
+			var example={groupType:"tab",tabs:[{groupType:"listpane",label:"Tab 1",attributes:[]},{groupType:"listpane",label:"Tab 2",attributes:[]}]}
 				//schema.example=dojo.toJson(example,true);
-				return schema;
+			var schema={description:"The tabgroup displays an array of groups in a 'dijit.layout.TabContainer'."};
+			schema.properties=properties;
+			schema.required=["tabs"];
+			schema.example=dojo.toJson(example,true);
+			return schema;	
 		}
 	
 	})

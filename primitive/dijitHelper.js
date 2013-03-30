@@ -20,6 +20,7 @@ define([ "dojo/_base/array", //
 			extraProps["upperCase"]={ type : "boolean"};
 			extraProps["maxLength"]={ type : "number",description:"the maximum length of a text value"};
 			extraProps["required"]={ type : "boolean",description:"an empty value is invalid "};
+			extraProps["locale"]={ type : "string",description:"the locale used for formatting."};
 
 			
 			var allDijitProperties=[];
@@ -38,7 +39,7 @@ define([ "dojo/_base/array", //
 			lang.mixin(props,standardProps);
 		},
 		copyProperty: function(key,attribute,dijitProps) {
-			if (typeof attribute[key] !="undefined") {
+			if (typeof attribute[key] !="undefined" && attribute[key]!=null && attribute[key]!="") {
 				dijitProps[key]=attribute[key];
 			}
 		},

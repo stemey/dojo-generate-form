@@ -91,5 +91,10 @@ body,html {
 	display:block;
 }
 
+/* select is not properly displayed in table list without this */
+.dijitSelect td.dijitStretch{
+	overflow:hidden;
+}
+
 
 

@@ -2,8 +2,9 @@ define([
 	"dojo/_base/declare", // declare
 	"dojo/_base/kernel", // kernel.deprecated
 	"dojo/i18n", // i18n.getLocalization
-	"dijit/form/Select"
-], function(declare, kernel, i18n, Select){
+	"dijit/form/Select",
+	"dojo/dom-class"
+], function(declare, kernel, i18n, Select, domClass){
 
 	// module:
 	//		dijit/form/DateTextBox
