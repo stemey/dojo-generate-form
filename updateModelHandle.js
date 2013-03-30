@@ -20,7 +20,7 @@ define([
 			});
 			return types.length > 0 ? types[0] : null;
 		},
-		_collectAttributes: function(groupOrType,editorFactory) {
+		collectAttributes: function(groupOrType,editorFactory) {
 			if (groupOrType.attributes){
 				return groupOrType.attributes; 
 			}else{
@@ -36,7 +36,7 @@ define([
 			this.updateObjectType(null,groupOrType, plainValue, modelHandle,editorFactory);
 		},
 		updateObjectType: function(type_property,groupOrType, plainValue, modelHandle,editorFactory) {
-			var attributes = this._collectAttributes(groupOrType,editorFactory);
+			var attributes = this.collectAttributes(groupOrType,editorFactory);
 			if (plainValue==null) {
 				modelHandle.set("value",null);
 			}else{

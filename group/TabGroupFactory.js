@@ -5,10 +5,11 @@ define([ "dojo/_base/array", //
 "dijit/layout/TabContainer",//
 "./DecoratorWidget",//
 "../AttributeFactoryFinder",//
-"dojo/on"
+"../updateModelHandle",
+"dojo/on",
 
 ], function(array, lang, declare, at, TabContainer, DecoratorWidget,
-		AttributeFactoryFinder,on) {
+		AttributeFactoryFinder, updateModelHandle, on) {
 
 	return declare("app.Groupfactory", null, {
 		constructor : function(kwArgs) {
@@ -37,12 +38,13 @@ define([ "dojo/_base/array", //
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
 		},
-		collectAttributes: function(group) {
-			var attributes=[];
+		collectAttributes: function(group,/*local variables*/attributes) {
+			attributes=[];
 			array.forEach(group.tabs, function(tab) {
-				array.forEach(tab.attributes, function(attribute) {
-					attributes.push(attribute);
-				},this);
+				var subAttributes = updateModelHandle.collectAttributes(tab,this.editorFactory);
+				array.forEach(subAttributes,function(a) {
+					attributes.push(a);
+				});
 			},this);
 			return attributes;
 		},
