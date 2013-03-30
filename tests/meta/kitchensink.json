@@ -77,6 +77,38 @@
 										"array":false
                 }
 						]},{
+            label:"mapped primitives",
+						description:"This tab contains mapped select attributes. A mapped select's options depends on the value of another attribute. ",
+            "attributes":[
+                {
+                    "type":"string",
+                    "label":"language",
+										"values":["english","german"],
+                    "code":"language",
+                },
+                {
+                    "type":"string",
+                    "label":"salutation",
+										"mapped_attribute":"language",
+										"mapped_values":{
+											"english":["Mr.","Mrs."],
+											"german":["Herr","Frau"]
+										},
+                    "code":"salutation",
+                },
+                {
+                    "type":"string",
+										"array":true,
+                    "label":"array of salutations",
+										"mapped_attribute":"language",
+										"mapped_values":{
+											"english":["Mr.","Mrs."],
+											"german":["Herr","Frau"]
+										},
+                    "code":"salutation_array",
+                }
+							]
+						},{
             label:"primitive arrays",
 						description:"This tab contains primitive array attributes.",
             "attributes":[
