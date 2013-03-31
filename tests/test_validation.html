@@ -25,6 +25,7 @@
 					"editorFactory":createStandardEditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
+			editor.startup();
 			doh.register("standard", [
 				{
 					name : 'incompleteCount',

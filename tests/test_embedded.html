@@ -16,8 +16,8 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/_base/query", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
-		"dojo/text!./meta/embedded.json", "dojo/text!./entity/embedded.json"//
-		], function(ready, query, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
+		"dojo/text!./meta/embedded.json", "dojo/text!./meta/embedded_group.json", "dojo/text!./entity/embedded.json"//
+		], function(ready, query, json, Editor, Stateful, doh,createStandardEditorFactory, meta, meta_group, entity) {
 
 			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
@@ -25,6 +25,7 @@
 					"editorFactory":createStandardEditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
+			editor.startup();
 			var nameText = dijit.byId("gform_ValidationTextBox_0");
 			var nullCheckbox = dijit.byId("dijit_form_CheckBox_0");
 			doh.register("standard", [
@@ -75,6 +76,12 @@
 					runTest : function(t) {
 						editor.set("plainValue", {thing:null});
 						t.assertEqual(true,query("input[type='checkbox']")[0].checked);
+					}
+				}, {
+					name : 'group',
+					runTest : function(t) {
+						editor.setMetaAndPlainValue(dojo.fromJson(meta_group) ,{thing:{}});
+						//t.assertEqual(true,query("input[type='checkbox']")[0].checked);
 					}
 				}
 			]);

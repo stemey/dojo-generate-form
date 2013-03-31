@@ -24,6 +24,7 @@
 					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
+			editor.startup();
 			var nameText = dijit.byId("gform_ValidationTextBox_0");
 			var typeSelect = dijit.byId("dijit_form_Select_0");
 			doh.register("standard", [

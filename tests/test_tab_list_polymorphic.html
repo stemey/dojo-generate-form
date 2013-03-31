@@ -22,6 +22,7 @@
 				"meta":dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);
+				editor.startup();
 				//dijit.byId("dijit_TitlePane_0").set("open",true);
 				doh.register("standard", [
 							{

@@ -25,6 +25,7 @@
 					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
+			editor.startup();
 			var intText = dijit.byId("dojox_form_CheckedMultiSelect_0");
 			doh.register("standard", [
 				{
