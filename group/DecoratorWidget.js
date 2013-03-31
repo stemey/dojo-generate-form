@@ -1,10 +1,10 @@
 define([ "dojo/_base/declare", "dojo/_base/lang", "dijit/_WidgetBase", "dijit/_Container","dijit/_TemplatedMixin",
 		"dijit/_WidgetsInTemplateMixin", "dojo/text!./decorator.html",
-		"dijit/Tooltip","./_DecoratorMixin"
+		"dijit/Tooltip","./_DecoratorMixin","../_LayoutMixin"
 ], function(declare, lang,_WidgetBase, _Container,_TemplatedMixin, _WidgetsInTemplateMixin,
-		template,Tooltip,_DecoratorMixin) {
+		template,Tooltip,_DecoratorMixin, _LayoutMixin) {
 
-	return declare("app.DecoratorWidget",[ _WidgetBase,_Container, _TemplatedMixin, _WidgetsInTemplateMixin,_DecoratorMixin ], {
+	return declare("app.DecoratorWidget",[ _WidgetBase,_Container, _TemplatedMixin, _WidgetsInTemplateMixin,_DecoratorMixin, _LayoutMixin ], {
 		constructor:function(config) {
 			this.inherited(arguments);
 			lang.mixin(this,config);

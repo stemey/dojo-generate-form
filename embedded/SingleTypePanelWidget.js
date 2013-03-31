@@ -3,13 +3,14 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./singletype_embedded_attribute.html",
-		"dijit/layout/StackContainer", "dojo/Stateful","../updateModelHandle", "../Editor","../group/_GroupMixin"
+		"dijit/layout/StackContainer", "dojo/Stateful","../updateModelHandle", "../Editor","../group/_GroupMixin",
+"../_LayoutMixin"
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,updateModelHandle,
-		Editor,_GroupMixin) {
+		Editor,_GroupMixin,_LayoutMixin) {
 
 	return declare("gform.SingleTypePanelWidget", [ _WidgetBase, _Container,
-			_TemplatedMixin, _WidgetsInTemplateMixin,_GroupMixin ], {
+			_TemplatedMixin, _WidgetsInTemplateMixin,_GroupMixin, _LayoutMixin ], {
 
 		templateString : template,
 		
@@ -48,11 +49,11 @@ define([ "dojo/_base/array", //
 			}		
 		},
 		_switchedToNull: function() {
-					this.containerNode.style.visibility="hidden";
+					this.containerNode.style.display="none";
 					this.validateAndFire();
 		},
 		_switchedFromNull: function() {
-					this.containerNode.style.visibility="visible";
+					this.containerNode.style.display="initial";
 		},
 		panelChanged: function(propName,old,nu) {
 				if (old==nu) {

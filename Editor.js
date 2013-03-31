@@ -77,7 +77,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				if (dim) {
 					this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
 				} else {
-					this.widget.resize(null);
+					this.widget.resize();
 				}
 			}
 		},
@@ -95,6 +95,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			this.inherited(arguments);
 			this._started=true;
 			this.widget.startup();
+			this.resize();
 		},
 		_buildContained: function() {
 			if (this.modelHandle == null) {
@@ -108,11 +109,11 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 					this.widget = this.editorFactory.create(this.get("meta"),
 							this.modelHandle);
 					if (typeof this.get("doLayout")!="undefined") {
-						this.widget.set("doLayout",false);
+						this.widget.set("doLayout",this.get("doLayout"));
 						var widget = this.widget;	
 						if (widget.resize) {
 							aspect.after(this.widget,"startup",function() {
-								widget.resize({w:500,h:300});
+							//	widget.resize();
 							});
 						}
 					}
@@ -122,8 +123,10 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 							this.widget.startup();
 						}
 					}
-					if (this.dim) {
+					if (this._started && this.dim) {
 						this.resize(this.dim);
+					}else if (this._started){
+						this.resize();
 					}
 				}
 			} catch (e) {
