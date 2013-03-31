@@ -22,7 +22,8 @@ define([ "dojo/_base/array", //
 			this.panelModel.set("title", "");
 			modelHandle.watch("value",lang.hitch(this,"modelChanged"));
 			
-			this.editor = new Editor({"modelHandle": modelHandle.nonNullValue,"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
+			// is not contained in layout container  so should take as much space as necessary -> doLayout=false
+			this.editor = new Editor({doLayout:false,"modelHandle": modelHandle.nonNullValue,"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
 			this.addChild(this.editor);
 			this.set("target", this.panelModel);
 		},
@@ -47,11 +48,11 @@ define([ "dojo/_base/array", //
 			}		
 		},
 		_switchedToNull: function() {
-					this.containerNode.style.display="none";
+					this.containerNode.style.visibility="hidden";
 					this.validateAndFire();
 		},
 		_switchedFromNull: function() {
-					this.containerNode.style.display="";
+					this.containerNode.style.visibility="visible";
 		},
 		panelChanged: function(propName,old,nu) {
 				if (old==nu) {

@@ -1,6 +1,6 @@
-define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
+define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declare",
 		"dojox/mvc/_Container", "dijit/layout/_LayoutWidget","dojox/mvc/at", 
-		"dojo/dom-construct", "dojo/Stateful", "./getPlainValue","./updateModelHandle","./hasChanged","./group/_GroupMixin" ], function(array, lang,
+		"dojo/dom-construct", "dojo/Stateful", "./getPlainValue","./updateModelHandle","./hasChanged","./group/_GroupMixin" ], function(array, aspect,  lang,
 		declare, Container, _LayoutWidget,at, domConstruct,
 		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin) {
 		// module: 
@@ -17,6 +17,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		// 		the editorFactory is responsible for translating the schema into a widget tree.
 
 		widget : null,
+		//_started:false,	
 
 		children : null,
 		modelHandle : null,
@@ -92,6 +93,8 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 		},
 		startup : function() {
 			this.inherited(arguments);
+			this._started=true;
+			this.widget.startup();
 		},
 		_buildContained: function() {
 			if (this.modelHandle == null) {
@@ -104,9 +107,20 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				if (this.get("meta") && this.editorFactory) {
 					this.widget = this.editorFactory.create(this.get("meta"),
 							this.modelHandle);
+					if (typeof this.get("doLayout")!="undefined") {
+						this.widget.set("doLayout",false);
+						var widget = this.widget;	
+						if (widget.resize) {
+							aspect.after(this.widget,"startup",function() {
+								widget.resize({w:500,h:300});
+							});
+						}
+					}
 					if (this.widget && this.domNode) {
 						domConstruct.place(this.widget.domNode, this.domNode);
-						this.widget.startup();
+						if (this._started) {
+							this.widget.startup();
+						}
 					}
 					if (this.dim) {
 						this.resize(this.dim);
@@ -172,6 +186,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				this.widget = null;
 			}
 		}
+
 
 	});
 	
