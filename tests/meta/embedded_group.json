@@ -1,0 +1,50 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "required":false,
+            "type":"test",
+            validTypes:[
+                {
+										groupType:"tab",
+										tabs: [
+											{
+											groupType:"listpane",
+											label:"thing1",
+		                  code:"thing1",
+		                  "attributes":[
+		                      {
+		                          "required":false,
+		                          "type":"string",
+		                          "label":"name",
+		                          "code":"name",
+		                          "array":false
+		                      }
+		                  ]
+										},
+										{
+											groupType:"listpane",
+											label:"thing2",
+		                  code:"thing2",
+		                  "attributes":[
+		                      {
+		                          "required":false,
+		                          "type":"string",
+		                          "label":"name2",
+		                          "code":"name2",
+		                          "array":false
+		                      }
+		                  ]
+										}
+										]
+									}
+                
+            ],
+            "label":"thing",
+            "code":"thing",
+            "array":false
+        }
+    ],
+    "type_property":"ext_type"
+}
