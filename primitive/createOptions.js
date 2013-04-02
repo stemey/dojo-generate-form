@@ -1,11 +1,12 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-], function(array, lang, declare) {
+"dojo/i18n!../nls/messages",
+], function(array, lang, declare, messages) {
 
 		
 		function _createEmptyOption(attribute) {
-			var emptyValueLabel = "-- SELECT --";
+			var emptyValueLabel = messages["emptySelectLabel"];
 			if (attribute.emptyValueLabel) {
 				emptyValueLabel = attribute.emptyValueLabel;
 			}
