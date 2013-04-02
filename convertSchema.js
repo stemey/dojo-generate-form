@@ -34,34 +34,46 @@ define([ "dojo/_base/array", //
 			}
 			if (prop.type=="array") {
 				attribute.array=true;
-				if (typeof prop.items.type == "string") {
+				if (prop.items.type == "object") {
+					var types = this.convertType(prop.items,converted);
+					attribute.type="object";
+					attribute.type_property=prop.gform_type_property || "ext_type";
+					attribute.validTypes=types;
+				}else	if (typeof prop.items.type == "string") {
 					var type = formatToTypeMapping[prop.format];
 					attribute.type=type || prop.items.type;
 				}else{
-					var types = this.convertType(prop.items.type,converted);
+					var types = this.convertType(prop.items,converted);
 					attribute.type="object";
 					attribute.type_property=prop.gform_type_property || "ext_type";
 					attribute.validTypes=types;
 				}
+			}else if (prop.type == "object") {
+				var types = this.convertType(prop,converted);
+				attribute.type="object";
+				attribute.type_property=prop.gform_type_property || "ext_type";
+				attribute.validTypes=types;
 			}else if (typeof prop.type == "string") {
 				var type = formatToTypeMapping[prop.format];
 				attribute.type=type || prop.type;
 			}else{
-				var types = this.convertType(prop.type,converted);
+				var types = this.convertType(prop,converted);
 				attribute.type="object";
 				attribute.type_property=prop.gform_type_property || "ext_type";
 				attribute.validTypes=types;
 			}
 		},
-		convertType: function(type,converted) {
-			if (lang.isArray(type)){
-				return array.map(type,function(schema) {
+		convertType: function(prop,converted) {
+			if (prop.type=="object") {
+					return [this.convert(prop,converted)];
+			} else if (lang.isArray(prop.type)){
+				return array.map(prop.type,function(schema) {
 					if (typeof schema != "string") {
 						return this.convert(schema,converted);
 					}
 				},this);
 			}else{
-				return [this.convert(type,converted)];
+				return [this.convert(prop.type,converted)];
 			}
 		},
 		convert: function(schema,converted,/**local variables*/meta) {

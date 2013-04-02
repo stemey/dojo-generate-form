@@ -37,10 +37,22 @@ define(["doh/runner","gform/schema/refresolve","gform/convertSchema","dojo/text!
 			address:{type:{properties:{city:{type:"string"}}}},
 			}
 	};
+	var complexSchema2 = {
+		id:"car",
+		properties:{
+			address:{type:"object",properties:{city:{type:"string"}}},
+			}
+	};
 	var complexArraySchema = {
 		id:"car",
 		properties:{
 			emails:{type:"array",items:{type:{properties:{email:{type:"string"}}}}}
+			}
+	};
+	var complexArraySchema2 = {
+		id:"car",
+		properties:{
+			emails:{type:"array",items:{type:"object",properties:{email:{type:"string"}}}}
 			}
 	};
 
@@ -85,9 +97,26 @@ define(["doh/runner","gform/schema/refresolve","gform/convertSchema","dojo/text!
 				doh.assertEqual(1,meta.attributes[0].validTypes.length)	
 				doh.assertEqual("string",meta.attributes[0].validTypes[0].attributes[0].type)	
 			}	,
+      function testComplexSchema2(){
+				refresolve(complexSchema2);
+				var meta = convertSchema(complexSchema2);
+
+				doh.assertEqual("object",meta.attributes[0].type)				
+				doh.assertEqual(1,meta.attributes[0].validTypes.length)	
+				doh.assertEqual("string",meta.attributes[0].validTypes[0].attributes[0].type)	
+			}	,
       function testComplexArraySchema(){
 				refresolve(complexArraySchema);
 				var meta = convertSchema(complexArraySchema);
+
+				doh.assertEqual("object",meta.attributes[0].type)				
+				doh.assertTrue(true,meta.attributes[0].array)				
+				doh.assertEqual(1,meta.attributes[0].validTypes.length)	
+				doh.assertEqual("string",meta.attributes[0].validTypes[0].attributes[0].type)
+			}	,	
+      function testComplexArraySchema2(){
+				refresolve(complexArraySchema2);
+				var meta = convertSchema(complexArraySchema2);
 
 				doh.assertEqual("object",meta.attributes[0].type)				
 				doh.assertTrue(true,meta.attributes[0].array)				
