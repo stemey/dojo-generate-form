@@ -38,7 +38,7 @@
 					name : 'null',
 					runTest : function(t) {
 						priceText.set("value",null);
-						t.assertEqual(null, editor.get("plainValue").price);
+						t.assertEqual(NaN, editor.get("plainValue").price);
 					}
 				} 
 			]);

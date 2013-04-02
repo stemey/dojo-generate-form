@@ -5,7 +5,7 @@ define([ "dojo/_base/array", //
 "dijit/form/CurrencyTextBox",//
 "../meta",//
 "./dijitHelper",//
-"./mixinNumberboxBindings"
+"./mixinTextboxBindings	"
 ], function(array, lang, declare, at, CurrencyTextBox, meta, dijitHelper, mixinNumberboxBindings) {
 
 	return declare( "gform.CurrencyAmountAttributeFactory", [], {
