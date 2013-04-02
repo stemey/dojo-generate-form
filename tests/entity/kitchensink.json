@@ -4,6 +4,7 @@
 	"radios": "Mrs.",
 	"boolean": false,
 	"fractional": 123.12,
+	"currencyamount": 123,
 	"integer2": 4,
 	"date": "2013-03-21",
 	"time": "T15:00:00",

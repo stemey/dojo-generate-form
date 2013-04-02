@@ -54,6 +54,15 @@
                 },
                 {
                     "type":"number",
+                    "label":"currencyamount",
+										"currency":"USD",	
+                    "editor":"currencyamount",
+                    "description":"currency amount",
+                    "code":"currencyamount",
+                    "array":false
+                },
+                {
+                    "type":"number",
                     "label":"integer",
                     "description":"an interger between 3 and 9",
                     "code":"integer2",
@@ -205,24 +214,41 @@
                     "array":false,
                     "validTypes":[
                         {
-                            "code":"thing1",
-                            "label":"thing1",
-                            "attributes":[
-                                {
-                                    "required":false,
-                                    "type":"string",
-                                    "label":"name",
-                                    "code":"name",
-                                    "array":false
-                                },
-                                {
-                                    "required":false,
-                                    "type":"string",
-                                    "label":"common",
-                                    "code":"common",
-                                    "array":false
-                                }
-                            ]
+														groupType:"tab",
+	                          "code":"thing1",
+														tabs:[
+															{
+		                          "label":"thing1",
+		                          "attributes":[
+		                              {
+		                                  "required":false,
+		                                  "type":"string",
+		                                  "label":"name",
+		                                  "code":"name",
+		                                  "array":false
+		                              },
+		                              {
+		                                  "required":false,
+		                                  "type":"string",
+		                                  "label":"common",
+		                                  "code":"common",
+		                                  "array":false
+		                              }
+		                          ]
+														},
+														{
+		                          "label":"thing2",
+		                          "attributes":[
+		                              {
+		                                  "required":false,
+		                                  "type":"number",
+		                                  "label":"count",
+		                                  "code":"count",
+		                                  "array":false
+		                              }
+		                          ]
+														}
+													]
                         }
                     ]
                 }
