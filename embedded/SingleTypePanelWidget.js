@@ -2,22 +2,30 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
-		"dojo/text!./singletype_embedded_attribute.html",
+		"dojo/text!./singletype_embedded_attribute.html", "dojo/text!./singletype_embedded_required_attribute.html",
 		"dijit/layout/StackContainer", "dojo/Stateful","../updateModelHandle", "../Editor","../group/_GroupMixin",
 "../_LayoutMixin"
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, template, StackContainer, Stateful,updateModelHandle,
+		_WidgetsInTemplateMixin, template, requiredTemplate, StackContainer, Stateful,updateModelHandle,
 		Editor,_GroupMixin,_LayoutMixin) {
 
 	return declare("gform.SingleTypePanelWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin,_GroupMixin, _LayoutMixin ], {
 
-		templateString : template,
-		
+		templateString : null,
+		constructor : function(config) {
+			var attribute = config.meta;
+			if (attribute.required) {
+				this.templateString=requiredTemplate;
+			} else{
+				this.templateString=template;
+			}
+			this.inherited(arguments);
+		},
 		postCreate : function() {
 			var modelHandle = this.get("modelHandle");
 			var attribute = this.get("meta");
-			this.panelModel = new dojo.Stateful();
+				this.panelModel = new dojo.Stateful();
 			this.panelModel.watch("empty", lang.hitch(this,"panelChanged"));
 			this.panelModel.set("empty", modelHandle.value==null);
 			this.panelModel.set("title", "");

@@ -1,13 +1,15 @@
 define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		"dijit/_Container", "dijit/_TemplatedMixin",
 		"dijit/_WidgetsInTemplateMixin",
-		"dojo/text!./embedded_list_attribute.html", "../updateModelHandle"//
+		"dojo/text!./embedded_list_attribute.html", "../updateModelHandle",//
+		"dojo/i18n!../nls/messages"
 ], function(lang, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, template, updateModelHandle) {
+		_WidgetsInTemplateMixin, template, updateModelHandle, messages) {
 
-	return declare("gform.EmbeddedListWidget", [ _WidgetBase, _Container,
+	return declare("...EmbeddedListWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template,
+		messages:messages,
 		_addElement : function() {
 			var newModelHandle = updateModelHandle.createMeta();
 			var type=this.attribute.validTypes[0].code;

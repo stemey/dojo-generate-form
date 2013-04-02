@@ -2,13 +2,14 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
 		"../AttributeFactoryFinder",//
 		"dijit/_WidgetsInTemplateMixin","dojo/Stateful",
-		"dojo/text!./repeated_attribute.html", "dijit/form/TextBox"//
+		"dojo/text!./repeated_attribute.html", "dijit/form/TextBox", "dojo/i18n!../nls/messages"//
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, AttributeFactoryFinder,
-		_WidgetsInTemplateMixin, Stateful,template, TextBox) {
+		_WidgetsInTemplateMixin, Stateful,template, TextBox, messages) {
 
 	return declare("app.RepeatedAttributeWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
-	templateString : template,
+		templateString : template,
+		messages:messages,	
 		postCreate : function() {
 			var attribute=this.get("meta");
 			var panelModel = new dojo.Stateful();

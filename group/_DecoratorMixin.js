@@ -1,8 +1,8 @@
 define([ "dojo/_base/declare", "dojo/_base/lang",
-		"dijit/Tooltip","./_GroupMixin","../hasChanged"
-], function(declare, lang,	Tooltip,_GroupMixin, hasChanged) {
+		"dijit/Tooltip","./_GroupMixin","../hasChanged", "dojo/i18n", "dojo/i18n!../nls/messages"
+], function(declare, lang,	Tooltip,_GroupMixin, hasChanged, i18n, messages) {
 
-	return declare("gform._DecoratorMixin",[ _GroupMixin ], {
+	return declare("..._DecoratorMixin",[ _GroupMixin ], {
 		baseClass:"Decorator",
 		isValidationContainer:true,
 		
@@ -35,7 +35,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		        label: ""
 		    });
 			this.updateState();
-			this.changesTooltip.label="was "+dojo.toJson(this.modelHandle.oldValue,true);
+			this.changesTooltip.label=this.getOldValueMessage(this.modelHandle.oldValue);
 		},
 		destroy: function() {
 			this.inherited(arguments);
@@ -60,9 +60,17 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			this.updateState();
 			this.emit("value-changed",{src:this,oldValue:old,newValue:nu});
 		},
-
+		getOldValueMessage: function(old) {
+			var message;
+			if (old==null || typeof old == "undefined") {
+				message = messages["oldValueWasNull"];
+			} else {
+				message = lang.replace(messages["oldValueChanged"],{oldValue:dojo.toJson(old,true)});
+			}
+			return message;
+		},
 		onOldValueChange: function(propName,old,nu) {
-			this.changesTooltip.label="was "+dojo.toJson(this.modelHandle.oldValue,true)
+			this.changesTooltip.label=this.getOldValueMessage(old);
 			this.updateState();
 		},
 

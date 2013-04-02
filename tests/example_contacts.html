@@ -16,16 +16,18 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-		"dojo/text!./meta/contacts_schema.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema"
-		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory,on,RepeatedEmbeddedAttributeFactory, meta,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema) {
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
+		"dojo/text!./meta/contacts_schema.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve"
+		], function(ready, json, Editor, Stateful, doh,createEditorFactory,on,RepeatedEmbeddedAttributeFactory, meta,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema, refresolve) {
 			parser.parse();
 			//var editorFactory = createStandardEditorFactory()
 //			editorFactory.set("defaultGroupFactory",new ListPaneGroupFactory({editorFactory:editorFactory}));
 	//		editorFactory.attributeFactoryFinder.attributeFactories[0]=new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory});
 			try {
-			var ef=createStandardEditorFactory();
-			var meta = convertSchema(dojo.fromJson(meta));
+			var ef=createEditorFactory();
+			var schema = dojo.fromJson(meta);
+			refresolve(schema);
+			var meta = convertSchema(schema);
 			 editor = new Editor({editorFactory:ef,meta:meta});
 			} catch (e) {console.log(e.message+" "+e.stack)};
 			var container = registry.byId("container");

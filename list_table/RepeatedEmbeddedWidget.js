@@ -1,9 +1,9 @@
 define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/Stateful", "../Editor",
 		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox", "./TableElementDecorator", "./TableValueDecorator",
-		"dijit/form/Button", "dijit/form/Select", "../updateModelHandle","./mergeAttributeDefinitions","dojo/dom-class"//
+		"dijit/form/Button", "dijit/form/Select", "../updateModelHandle","./mergeAttributeDefinitions","dojo/dom-class", "dojo/i18n!../nls/messages"//
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, Stateful, Editor,
-		template, TextBox, TableElementDecorator,TableValueDecorator, Button, Select,  updateModelHandle,mergeAttributeDefinitions,domClass) {
+		template, TextBox, TableElementDecorator,TableValueDecorator, Button, Select,  updateModelHandle,mergeAttributeDefinitions,domClass, messages) {
 
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin ],
 			{
@@ -37,7 +37,9 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 					}
 					var decorator = new TableElementDecorator();
 					var deleteButton = new Button({
-						label : "delete"
+						label : messages["removeButtonLabel"], 
+						showLabel:false,
+						iconClass:"dijitIconDelete"
 					});
 					decorator.addChild(deleteButton);
 					this.addChild(decorator);

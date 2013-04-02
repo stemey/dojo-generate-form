@@ -1,13 +1,14 @@
 define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
 		"dijit/_WidgetsInTemplateMixin","dojo/Stateful","./PolymorphicMemberWidget","../Editor",
-		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox"//
+		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox", "dojo/i18n!../nls/messages"
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, Stateful,PolymorphicMemberWidget,Editor,template, TextBox) {
+		_WidgetsInTemplateMixin, Stateful,PolymorphicMemberWidget,Editor,template, TextBox, messages) {
 
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template,
+		messages: messages,
 		postCreate : function() {
 			var attribute=this.get("meta");
 			var panelModel = new dojo.Stateful();
