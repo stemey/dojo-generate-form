@@ -5,8 +5,7 @@ define([ "dojo/_base/array", //
 "dijit/form/CurrencyTextBox",//
 "../meta",//
 "./dijitHelper",//
-"./mixinTextboxBindings	"
-], function(array, lang, declare, at, CurrencyTextBox, meta, dijitHelper, mixinNumberboxBindings) {
+], function(array, lang, declare, at, CurrencyTextBox, meta, dijitHelper) {
 
 	return declare( "gform.CurrencyAmountAttributeFactory", [], {
 		handles : function(attribute) {
@@ -16,11 +15,12 @@ define([ "dojo/_base/array", //
 		create : function(attribute, modelHandle) {
 			var valueConverter = this.createValueConverter();
 			var valueAt = at(modelHandle, "value").transform(valueConverter);
-			// is this like currencyTextBox ? then add missing props: fractional, invalidMessage,currency,lang
 			var props={
 				constraints:{}
 			}
-			mixinNumberboxBindings(modelHandle,props);
+			props["value"]=valueAt;
+			props["state"]= at(modelHandle, "state");
+			props["message"]=at(modelHandle, "message");
 			dijitHelper.copyProperty("currency",attribute,props);
 			dijitHelper.copyDijitProperties(attribute,props);
 			dijitHelper.copyProperty("min",attribute,props.constraints)
