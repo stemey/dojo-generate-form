@@ -1,9 +1,13 @@
-define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
+define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","dojo/promise/all", "dojo/request/xhr"
 		 ], function(array, lang,
-		declare) {
+		declare, all, request) {
 
 
-	return declare("gform.Resolver",null,{
+	return declare("gform.Resolver",[],{
+			constructor: function(kwargs) {
+				lang.mixin(this,kwargs);
+			},
+			baseUrl:null,
 			references:[],
 			values:{},
 			addReference: function(id,setter) {
@@ -17,14 +21,38 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare",
 				}
 			},
 			finish:function() {
+				var deferred =[];
 				array.forEach(this.references,function(ref) {
 					var value = this.values[ref.id];
 					if (typeof value == "undefined") {
-						throw new Error("cannot find value for "+ref.id);
+						if (ref.id.substring(0,1)=="#") {
+							throw new Error("path reference not implemented");
+						}else{
+							deferred.push(this.load(ref));
+						}
 					} else {
 						ref.setter(value);
 					}
 				},this);
+				return all(deferred);
+			},
+			load: function(ref) {
+				if (ref.id.substring(0,1)=="/") {
+					var url=ref.id;
+				}else{
+					var url=this.baseUrl+ref.id;
+				}
+				var deferred = request(url,{handleAs:"json",method:"GET"});
+				deferred.then(
+						function(schema){
+							schema.id=ref.id;
+							ref.setter(schema)
+						},
+						function(e) {
+							console.log("cannot find schema "+ref.id+" "+e.message);
+						}
+				);
+				return deferred;
 			}
 
 	});
