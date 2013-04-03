@@ -2,12 +2,14 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"dojo/Stateful" //
-], function(array, lang, declare, at, Stateful) {
+"dojo/Stateful", //
+"./group/DecoratorFactory" //
+], function(array, lang, declare, at, Stateful, DecoratorFactory) {
 
-	return declare("app.EditorFactory", [Stateful], {
+	return declare("gform.EditorFactory", [Stateful], {
 		constructor : function() {
 			this.groupFactories={};
+			this.decoratorFactory=new DecoratorFactory();
 		},
 		addGroupFactory: function(id,factory) {
 			this.groupFactories[id]=factory;
@@ -15,7 +17,11 @@ define([ "dojo/_base/array", //
 		setDefaultGroupFactory: function(id) {
 			this.defaultGroupFactory=this.groupFactories[id];
 		},
+		decoratorFactory: null,
 		defaultGroupFactory:null,
+		createDecorator: function(attribute,modelHandle) {
+			return this.decoratorFactory.create(attribute,modelHandle);
+		},	
 		create : function(group, modelHandle) {
 			if (!group) {
 				return null;
