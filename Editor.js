@@ -94,7 +94,9 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		startup : function() {
 			this.inherited(arguments);
 			this._started=true;
-			this.widget.startup();
+			if (this.widget) {
+				this.widget.startup();
+			}
 			this.resize();
 		},
 		_buildContained: function() {
