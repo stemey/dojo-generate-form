@@ -21,10 +21,14 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 				console.log("modelHandle is null "+this.label);
 			}
 			if (this.descriptionTooltipNode) {
+				if (this.meta.description) {
 				new Tooltip({
 				      connectId: [this.descriptionTooltipNode],
 				      label: this.meta.description
 				  });
+				} else {
+					this.descriptionTooltipNode.style.display="none";
+				}
 			}
 			this.errorTooltip=new Tooltip({
 		        connectId: [this.errorTooltipNode],
