@@ -90,8 +90,10 @@ define([ "dojo/_base/array", //
 				meta={};
 			}
 			meta.attributes=[];
-			meta.code=schema.id;
-			converted[schema.id]=meta;
+			if (schema.id) {	
+				meta.code=schema.id;
+				converted[schema.id]=meta;
+			}
 			//return  meta;
 			for (var key in schema.properties) {
 				// "__parent" is added by dojox/json/ref
