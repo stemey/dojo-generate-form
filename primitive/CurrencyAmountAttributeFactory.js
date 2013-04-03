@@ -55,10 +55,11 @@ define([ "dojo/_base/array", //
 				schema["example"]=dojo.toJson({code:'name',type:'number',editor:"currencyamount",currency:"USD"},true);
 				var properties={};
 				properties.type={type:"string",required:true,enum:["number"]};
+				properties.currency={type:"string",required:true,maxLength:3,pattern:"[A-Z]{3}",description:"The currency code according to ISO4217"};
+				properties.amountFractional={type:"boolean",description:"If true the value is a fractional value. Otherwise the value is provided in the minor currency like cents instead of dollars."};
 				dijitHelper.addSchemaProperties(properties);
 				dijitHelper.addSchemaProperty("required",properties);
 				dijitHelper.addSchemaProperty("maxLength",properties);
-				properties.currency={type:"string",required:true,maxLength:3,pattern:"[A-Z]{3}",description:"The currency code according to ISO4217"};
 				properties.min={type:"number",description:"the minimum value"};
 				properties.max={type:"number",description:"the maximum value"};
 				dijitHelper.addSchemaProperty("missingMessage",properties);
