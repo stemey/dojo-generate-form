@@ -2,15 +2,16 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
 		"../AttributeFactoryFinder",//
 		"dijit/_WidgetsInTemplateMixin","dojo/Stateful",
-		"dojo/text!./repeated_attribute.html", "dijit/form/TextBox", "dojo/i18n!../nls/messages"//
+		"dojo/text!./repeated_attribute.html", "dijit/form/TextBox", "dojo/i18n!../nls/messages","../group/_DecoratorMixin","../group/_GroupMixin"//
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, AttributeFactoryFinder,
-		_WidgetsInTemplateMixin, Stateful,template, TextBox, messages) {
+		_WidgetsInTemplateMixin, Stateful,template, TextBox, messages, _DecoratorMixin, _GroupMixin) {
 
-	return declare("app.RepeatedAttributeWidget", [ _WidgetBase, _Container,
-			_TemplatedMixin, _WidgetsInTemplateMixin ], {
+	return declare("gform.RepeatedAttributeWidget", [ _WidgetBase, _Container,
+			_TemplatedMixin, _WidgetsInTemplateMixin, _DecoratorMixin,  _GroupMixin ], {
 		templateString : template,
 		messages:messages,	
 		postCreate : function() {
+			this.inherited(arguments);
 			var attribute=this.get("meta");
 			var panelModel = new dojo.Stateful();
 			panelModel.set("title", "");
@@ -38,6 +39,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			if (index >= 0) {
 				this.parent.children.splice(index, 1);
 			}
+			this.parent.emit("valid-changed",{source:this});
 		}
 	});
 

@@ -56,6 +56,20 @@
 									t.assertEqual("a",inputs[0].value);
 									t.assertEqual("b",inputs[1].value);
 								}
+							},
+							{
+								name: 'validate',
+								runTest: function(t){
+									var calledValidChanged=false;
+									editor.on("valid-changed",function(){calledValidChanged=true});
+									editor.set("plainValue",{things:["3","4"]});
+									//t.assertEqual(2,editor.get("plainValue").things.length);
+									var inputs=query("input[type='text']");
+									dijit.byId(inputs[0].id).set("value","..");
+									dijit.byId(inputs[1].id).set("value","..");
+									t.assertEqual(2,editor.get("errorCount"));
+									t.assertTrue(calledValidChanged);
+								}
 							}]);			
 			doh.run();
 		});

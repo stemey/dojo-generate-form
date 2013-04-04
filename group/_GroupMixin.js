@@ -2,9 +2,8 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare"//
 ], function(array, lang, declare) {
-//the primitve value decorator needs to listen to modelHandle.valid and return that from getErrorCOunt
-//the complex decoator ust listen to modelHandle.valid and also listen to children.valid-changed. getErrorCOunt must be reset o event and must be updated on getErrorCOunt 
-//
+//the _GroupMixin listens to modelHandle.state and updates the cached errorCount. It also listens to valid-changed fire by embedded attributes and updates the errorCount. 
+
 	return declare("gform.group._GroupMixin", null, {
 		isValidationContainer:true,
 		validateChildren:true,
