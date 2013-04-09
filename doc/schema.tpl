@@ -1,12 +1,12 @@
 <div>
 	<h2>Documentation of gform schema</h3>
-	<p>This documentation was generated for the standard editorFactory. EditorFactories differ in the attributes and groups they support. An editorFactory for mobiles will support a different set of attributes. The generally supported attributes will probably be the same for mobile and desktop devices but the actual dijits will be different and support different features.
+	<p>This documentation was generated for the standard editorFactory. EditorFactories create the form from the schema. They differ in the attributes and groups they support. An editorFactory for mobiles will support a different set of attributes. The generally supported attributes will probably be the same for mobile and desktop devices but the actual dijits will be different and support different features.
 </p> 	
 
 	<h3>Attributes</h3>
 
 <p>
-	An attribute may be displayed in different ways. A string can be edited in a textfield or a textarea or a wysiwyg editor. The dijit representing the attribute can be defined using different strategies. Either it is chosen by an id called `editor` or it is chosen programmatically by its properties. A string with maxLength greater than 1000 characters should rather be displayed in a textarea. This logic is implemented in the create function of the attributeFactory that handles attributes of type `string`. To the dijit by its id the attribute in the gform schema must define the property `editor`.
+	An attribute may be displayed in different ways. A string can be edited in a textfield or a textarea or a wysiwyg editor. The dijit representing the attribute can be defined using different strategies. Either it is chosen by an id called `editor` or it is chosen programmatically by its properties. A string with maxLength greater than 1000 characters should rather be displayed in a textarea. This logic is implemented in the `create` function of the attributeFactory that handles attributes of type `string`. To choose the dijit by its id the attribute in the gform schema must define the property `editor`.
 </p>
 
 <p>
@@ -25,7 +25,7 @@
 			label: a human readable text to display as label next to the dijit.
 	</li>
 	<li>
-			array: true if the attribute represents an array. The elements of the array are described by type and validTypes.  
+			array: true if the attribute represents an array. The elements of the array are described by type and validTypes. In the future this property will probably be replaced by a property whose values can be `array` or `map`.   
 	</li>
 </ul> 
 </p>
@@ -67,6 +67,9 @@
 	</ul>
 
 	<h3>Groups</h3>
+	<p>
+		Groups give structure to a form. Attributes can be grouped in tabs or titlepanes. Groups can be nested. A group is always chosen by the property `groupType`. An editorFactory also defines a default groupfactory wich will be chosen if the `groupType` is absent.
+	</p>
     <% for (var idx in groups) { var group=groups[idx]; %>
 				<div data-dojo-type="dijit/TitlePane" title="<%= group.id %>" data-dojo-props="open:false">
 				<p><% if (group.description) {%><%=group.description%><% } %></p>
