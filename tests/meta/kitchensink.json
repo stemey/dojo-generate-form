@@ -92,12 +92,14 @@
                 {
                     "type":"string",
                     "label":"language",
+										"description":"This is a simple select attribute. Its selection has an impact on the options of the other attributes.",
 										"values":["english","german"],
                     "code":"language",
                 },
                 {
                     "type":"string",
                     "label":"salutation",
+										"description":"select a language specific salutation",
 										"mapped_attribute":"language",
 										"mapped_values":{
 											"english":["Mr.","Mrs."],
@@ -109,6 +111,7 @@
                     "type":"string",
 										"array":true,
                     "label":"array of salutations",
+										"description":"select language specific salutations",
 										"mapped_attribute":"language",
 										"mapped_values":{
 											"english":["Mr.","Mrs."],
@@ -161,7 +164,8 @@
                     "type":"thing1",
                     "type_property":"ext_type",
                     "label":"polything",
-                    "code":"polything",
+                    "code":"polything",			
+										"description":"this is a complex attribute. Changing the type in the select field will change the form.",
                     "array":false,
                     "validTypes":[
                         {
@@ -212,6 +216,7 @@
                     "label":"thing",
                     "code":"thing",
                     "array":false,
+										"description":"this complex attribute is required and can only be of one type. Its attributes are grouped in a tab", 
                     "validTypes":[
                         {
 														groupType:"tab",
@@ -258,6 +263,7 @@
         },
         {
             label:"list",
+						description:"This tab contains a single complex array. The elements have a complex attribute themselves.",
             "attributes":[
                 {
                     "required":false,
@@ -325,6 +331,7 @@
         },
         {
             label:"table-list",
+						description:"This is a different way to display complex arrays. The elements are displayed in a table. Changing the type will hide and show different sets of cells.",
             "attributes":[
                 {
 										"editor":"table",
