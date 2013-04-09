@@ -60,7 +60,7 @@ body,html {
 }
 
 .editor .row {
-	margin-bottom: 0.5em;
+	margin-bottom: 0.5em
 }
 
 .editor label {
@@ -96,5 +96,8 @@ body,html {
 	overflow:hidden;
 }
 
+.Decorator {
+	margin-bottom:0.5em;
+}
 
 
