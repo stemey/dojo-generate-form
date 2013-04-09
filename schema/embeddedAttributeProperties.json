@@ -7,13 +7,12 @@
 		"validTypes": {description:"The list of valid groups (types) that describe the properties in the complex object or array.",
 					type:"array",
 					gform_property:"type",
-					items:{type:"object",oneOf:[
-						{"type":"object",
+					items:{type:{"type":"object",
 							"properties": {
 								"code":{type:"string",required:"true"},
 								"attributes":{"$ref":"attributes"}
 						}}
-		]}}
+		}}
 	}
 }
 
