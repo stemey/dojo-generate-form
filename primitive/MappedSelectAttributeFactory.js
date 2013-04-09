@@ -52,7 +52,9 @@ define([ "dojo/_base/array",
 			
 			
 			select.set("options", options);
-			if (!valueValid) {
+			if (options.length==0) {
+				modelHandle.set("value", null);
+			}else	if (!valueValid) {
 				modelHandle.set("value", options[0].value);
 			}
 		},

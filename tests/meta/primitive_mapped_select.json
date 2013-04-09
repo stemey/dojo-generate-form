@@ -6,7 +6,6 @@
             "type":"string",
             "label":"language",
             "code":"language",
-            "required":true,
             "array":false,
             "values":["english","german"]
         },

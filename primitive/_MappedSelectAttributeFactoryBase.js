@@ -5,8 +5,9 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "../meta",//
 "../getPlainValue",//
-"dojox/mvc/StatefulArray"
-], function(array, lang, declare, domClass, at,  meta,getPlainValue,StatefulArray) {
+"dojox/mvc/StatefulArray",//
+"dojo/i18n!../nls/messages"
+], function(array, lang, declare, domClass, at,  meta,getPlainValue,StatefulArray, messages) {
 
 	return declare("gform._MappedSelectAttributeFactoryBase", [], {
 
@@ -44,6 +45,11 @@ define([ "dojo/_base/array", //
 					});
 				}
 			}, this);
+
+			// at least the empty option needs to be added
+			if (options.length==0 && !attribute.array) {
+				options.push({label:messages["emptySelectLabel"],value:""});
+			}
 			
 			return options;
 		},
