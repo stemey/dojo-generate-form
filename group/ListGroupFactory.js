@@ -1,8 +1,9 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-"./ListPane"//
-], function(array, lang, declare, ListPane) {
+"./ListPane",//
+"./DescriptionWidget"
+], function(array, lang, declare, ListPane, DescriptionWidget) {
 
 	return declare("gform.ListGroupFactory", null, {
 		constructor : function(kwArgs) {
@@ -14,6 +15,9 @@ define([ "dojo/_base/array", //
 				meta:group
 			});
 			
+			if (group.description) {
+				listWidget.addChild(new DescriptionWidget({description:group.description}));
+			}
 			array.forEach(group.groups, function(childGroup) {
 				var groupWidget = this.editorFactory.create(childGroup, modelHandle);
 				listWidget.addChild(groupWidget);
