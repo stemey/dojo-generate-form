@@ -34,7 +34,13 @@
 						var errors = dijit.byId("gform_ListPane_0").get("errorCount");
 						t.assertEqual(1,errors);	
 					}
-
+				},
+				{
+					name : 'resetErrors',
+					runTest : function(t) {	
+						editor.resetErrors();
+						t.assertEqual(0,editor.get("errorCount"));
+					}
 				},
 				{
 					name : 'initWithNull',

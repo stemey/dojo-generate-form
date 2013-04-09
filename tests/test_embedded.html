@@ -54,8 +54,15 @@
 						t.assertEqual(1,editor.get("errorCount"));
 					}
 				}, {
+					name : 'resetErrors',
+					runTest : function(t) {
+						editor.resetErrors();
+						t.assertEqual(0,editor.get("errorCount"));
+					}
+				}, {
 					name : 'setToNullandRevalidate',
 					runTest : function(t) {
+						editor.addError("thing.name","impossible");
 						nullCheckbox.set("value", true);
 						t.assertEqual(0,editor.get("errorCount"));
 					}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
+		"dojo/text!./meta/primitive_textarea.json", "dojo/text!./entity/primitive_textarea.json"//
+		], function(ready, json, Editor, Stateful, doh, createStandardEditorFactory, meta, entity) {
+
+			editor = new Editor({
+					"plainValue": dojo.fromJson(entity),
+					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
+			
+			var container = dojo.byId("container");
+			editor.placeAt(container);
+			
+			var textarea = dijit.byId("dijit_form_Textarea_0");
+			
+			doh.register("standard", [
+				{
+					name : 'init',
+					runTest : function(t) {
+						t.assertEqual("hallo", editor.get("plainValue").description);
+						t.assertEqual("hallo", textarea.get("value"));
+					}
+				},
+				{
+					name : 'changeValue',
+					runTest : function(t) {
+						text = "text text text text text text text text text text text text text text text";
+						
+						textarea.set("value", text);
+						t.assertTrue(editor.hasChanged());
+						t.assertEqual(text, editor.get("plainValue").description);
+						t.assertEqual(text, textarea.get("value"));
+						
+						editor.reset();
+						t.assertEqual("hallo", textarea.get("value"));
+					}
+				}
+			]);
+			doh.run();
+		});
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test</h1>
+	<div id="container"></div>
+</body>
+</html>	

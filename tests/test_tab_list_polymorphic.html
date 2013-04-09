@@ -56,6 +56,15 @@
 								}
 							},
 							{
+								name: 'resetErrors',
+								runTest: function(t){
+									editor.resetErrors();
+									t.assertEqual(0,editor.get("errorCount"));
+									editor.addError("things.1.firstName","error");
+									t.assertEqual(1,editor.get("errorCount"));
+								}
+							},
+							{
 								name: 'remove',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_1").onClick();
