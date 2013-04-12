@@ -158,7 +158,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		//		reset all field errors that were added via addError().
 			array.forEach(this._explicitErrorPaths, function(path) {
 				this.visit(path,function(model) {
-					model.set("valid",true);
+					model.set("state","");
 					model.set("message",null);
 				});
 			}, this);
