@@ -67,11 +67,14 @@ define([ "dojo/_base/array", //
 			if (prop.type=="object") {
 					return [this.convert(prop,converted)];
 			} else if (lang.isArray(prop.type)){
-				return array.map(prop.type,function(schema) {
+				var types= [];
+				array.forEach(prop.type,function(schema) {
 					if (typeof schema != "string") {
-						return this.convert(schema,converted);
+						types.push(this.convert(schema,converted));
 					}
 				},this);
+				return types;
+				
 			}else{
 				return [this.convert(prop.type,converted)];
 			}
