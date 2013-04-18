@@ -22,6 +22,7 @@ define([
 "./primitive/CurrencyAmountAttributeFactory",//
 "./primitive/MappedContentPaneFactory",//
 "./primitive/TextareaAttributeFactory",//
+"./primitive/SimpleTextareaAttributeFactory",//
 "./group/AttributeListWidget",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//
 "./list_table/RepeatedEmbeddedAttributeFactory"//
@@ -32,7 +33,7 @@ define([
 		MappedCheckedMultiSelectAttributeFactory,
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
 		TimeAttributeFactory, EmbeddedAttributeFactory, NumberAttributeFactory, 
-		CurrencyAmountAttributeFactory, MappedContentPaneFactory, TextareaAttributeFactory,
+		CurrencyAmountAttributeFactory, MappedContentPaneFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory,
 		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
 			var editorFactory = new EditorFactory();
@@ -68,6 +69,7 @@ define([
 			attributeFactoryFinder.addAttributeFactory("currencyamount", new CurrencyAmountAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("checked_select",new CheckedSelectAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("textarea", new TextareaAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("simpletextarea", new SimpleTextareaAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.set("attributeFactories",attributeFactories);
 
 			editorFactory.set("attributeFactoryFinder",attributeFactoryFinder);
