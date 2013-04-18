@@ -1,0 +1,23 @@
+.dijitColumnContainer {
+}
+.dijitColumnContainer.columns_5 {
+	-webkit-column-count:5;
+	-moz-column-count:5;
+}
+.dijitColumnContainer.columns_4 {
+	-webkit-column-count:4;
+	-moz-column-count:4;
+}
+.dijitColumnContainer.columns_3 {
+	-webkit-column-count:3;
+	-moz-column-count:3;
+}
+.dijitColumnContainer.columns_2 {
+	-webkit-column-count:2;
+	-moz-column-count:2;
+}
+.dijitColumnContainer.columns_1 {
+	-webkit-column-count:1;
+	-moz-column-count:1;
+}
+
