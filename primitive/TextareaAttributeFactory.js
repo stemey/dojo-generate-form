@@ -5,7 +5,9 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dijit/form/Textarea",//
 "../meta",//
-], function(array, lang, declare, aspect, at, Textarea, meta) {
+"./mixinTextboxBindings",
+"./dijitHelper"
+], function(array, lang, declare, aspect, at, Textarea, meta, mixinTextboxBindings, dijitHelper) {
 
 	return declare("gform.TextareaAttributeFactory", [], {
 		handles : function(attribute) {
@@ -13,11 +15,29 @@ define([ "dojo/_base/array", //
 		},
 		
 		create : function(attribute, modelHandle) {
-			var textarea = new Textarea({
-				"value" : at(modelHandle, "value")
-			});
-			
-			return textarea;
+			var props = {};
+			mixinTextboxBindings(modelHandle,props);
+			dijitHelper.copyDijitProperties(attribute,props);
+			dijitHelper.copyProperty("cols", attribute, props);
+			return  new Textarea(props);			
+		},
+		getSchema:function(){
+			var schema={};
+			schema["id"]="string";
+			schema["description"]="This is a textarea based on 'dijit.form.Textarea'";
+			schema["example"]=dojo.toJson({code:'name',type:'string'},true);
+			var properties={};
+			properties.type={type:"string",required:true,enum:["string"]};
+			properties.cols={type:"number",places:0,description:"the number of characters per line"}
+			dijitHelper.addSchemaProperties(properties);
+			dijitHelper.addSchemaProperty("required",properties);
+			dijitHelper.addSchemaProperty("maxLength",properties);
+			dijitHelper.addSchemaProperty("missingMessage",properties);
+			dijitHelper.addSchemaProperty("promptMessage",properties);
+			dijitHelper.addSchemaProperty("placeHolder",properties);
+
+			schema.properties=properties;
+			return schema;
 		}
 	});
 });
