@@ -3,6 +3,7 @@
     "tabs":[
         {
             label:"primitives",
+						groupType:"columnsgroup",
 						description:"This tab contains primitive attributes.",
             "attributes":[
                 {
@@ -84,7 +85,26 @@
                     "description":"time",
                     "code":"time",
 										"array":false
-                }
+                },
+                {
+                    "type":"string",
+                    "label":"textarea",
+										"editor":"textarea",
+										"cols":20,
+                    "description":"this attribute displays the text in a textarea that grows vertically.",
+                    "code":"longtext",
+                    "array":false
+                },
+                {
+                    "type":"string",
+                    "label":"simpletextarea",
+										"editor":"simpletextarea",
+										"cols":20,
+										"rows":4,
+                    "description":"this attribute displays the text in a textarea with fixed rows.",
+                    "code":"simplelongtext",
+                    "array":false
+                },
 						]},{
             label:"mapped primitives",
 						description:"This tab contains mapped select attributes. A mapped select's options depends on the value of another attribute. ",
