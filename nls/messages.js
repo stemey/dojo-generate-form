@@ -3,7 +3,7 @@ define({
 		"addButtonLabel":"add",
 		"removeButtonLabel":"remove",
 		"oldValueChanged":"was {oldValue}",
-		"oldValueWasNull":"was empty",
+		"oldValueWasNull":"new",
 		"emptySelectLabel":"--select--"
 	}),
 	de:true,
