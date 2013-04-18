@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html style="width:100%;height:100%">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css"/>
+	<link id="themeStylese" rel="stylesheet" href="../../../gform/resources/gform.css"/>
+	<link rel='stylesheet' href="../../../gridx/resources/claro/Gridx.css" />
+	<link rel='stylesheet' href="../../../gridx/resources/claro/Gridx_rtl.css" />
+	<!--<link rel='stylesheet' href="../../../gridx/tests/support/common.css" />-->
+	<style type="text/css">
+		#grid {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/ready", "dojo/parser", "gform/tests/gridx/GridController"//
+		], function(ready, parser, g) {
+			parser.parse();
+		});
+	</script>
+</head>
+<body class="claro" style="width:100%;height:100%">
+	
+		<div data-dojo-type="gform.tests.gridx.GridController" />
+		
+</body>
+</html>	
