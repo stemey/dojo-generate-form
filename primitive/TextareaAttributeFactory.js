@@ -1,11 +1,10 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-"dojo/aspect",//
 "dojox/mvc/at",//
 "dijit/form/Textarea",//
 "../meta",//
-], function(array, lang, declare, aspect, at, Textarea, meta) {
+], function(array, lang, declare, at, Textarea, meta) {
 
 	return declare("gform.TextareaAttributeFactory", [], {
 		handles : function(attribute) {
@@ -13,11 +12,10 @@ define([ "dojo/_base/array", //
 		},
 		
 		create : function(attribute, modelHandle) {
-			var textarea = new Textarea({
-				"value" : at(modelHandle, "value")
-			});
-			
-			return textarea;
+			var props={};
+			window.mo=modelHandle;
+			props["value"]=at(modelHandle, "value");
+			return new Textarea(props);
 		}
 	});
 });
