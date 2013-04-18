@@ -10,9 +10,10 @@ define([ "dojo/_base/array", //
 "dojox/mvc/WidgetList",//
 "./RepeatedEmbeddedWidget",//
 "../updateModelHandle",//
-"dojox/mvc/StatefulArray"
+"dojox/mvc/StatefulArray",//
+"../_LayoutMixin"
 ], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, StatefulArray) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, StatefulArray, _LayoutMixin) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -38,7 +39,8 @@ define([ "dojo/_base/array", //
 
 			var childMeta = attribute.validTypes? attribute:attribute.type;
 
-			var widgetList = new WidgetList();
+			var wlc = declare([WidgetList,_LayoutMixin]);;
+			var widgetList = new wlc();
 			widgetList.set("partialRebuild", true);
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
@@ -48,7 +50,20 @@ define([ "dojo/_base/array", //
 				editorFactory: this.editorFactory
 			});
 			select.addChild(widgetList);
-
+			modelHandle.value.watch(function(){
+				var i=0;
+				array.forEach(modelHandle.value,
+					function(e){
+						e.set("index",i++);
+					}
+				)
+			});
+				var i=0;
+				array.forEach(modelHandle.value,
+					function(e){
+						e.set("index",i++);
+					}
+				)
 			return select;
 
 		},
