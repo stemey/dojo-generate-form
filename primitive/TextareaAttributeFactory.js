@@ -6,7 +6,7 @@ define([ "dojo/_base/array", //
 "../meta",//
 "./mixinTextboxBindings",
 "./dijitHelper"
-], function(array, lang, declare, aspect, at, Textarea, meta, mixinTextboxBindings, dijitHelper) {
+], function(array, lang, declare, at, Textarea, meta, mixinTextboxBindings, dijitHelper) {
 
 	return declare("gform.TextareaAttributeFactory", [], {
 		handles : function(attribute) {
