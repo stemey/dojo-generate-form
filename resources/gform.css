@@ -64,7 +64,7 @@ body,html {
 }
 
 .editor label {
-	min-width: 15em;
+	min-width: 8em;
 	display: inline-block;
 	margin-bottom: 0.5em;
 	vertical-align:top;
@@ -86,7 +86,6 @@ body,html {
 }
 
 .editor textarea.dijitTextArea{
-	width:50%;
 	margin-top:20px;
 	display:block;
 }
@@ -98,6 +97,37 @@ body,html {
 
 .Decorator {
 	margin-bottom:0.5em;
+}
+
+.gformColumnContainer .Decorator {
+	/* inline-block so that ColumnContainer computes proper column size. But this makes following decorators float*/
+	float: left;
+	clear: both;	
+}
+
+.gformColumnContainer {
+	overflow: auto;
+	padding: 8px;
+}
+.gformColumnCanvas.columns_5 {
+	-webkit-column-count:5;
+	-moz-column-count:5;
+}
+.gformColumnCanvas.columns_4 {
+	-webkit-column-count:4;
+	-moz-column-count:4;
+}
+.gformColumnCanvas.columns_3 {
+	-webkit-column-count:3;
+	-moz-column-count:3;
+}
+.gformColumnCanvas.columns_2 {
+	-webkit-column-count:2;
+	-moz-column-count:2;
+}
+.gformColumnCanvas.columns_1 {
+	-webkit-column-count:1;
+	-moz-column-count:1;
 }
 
 

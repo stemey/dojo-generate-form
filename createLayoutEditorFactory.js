@@ -18,10 +18,13 @@ define([
 "./primitive/DateAttributeFactory",//
 "./primitive/TimeAttributeFactory",//
 "./embedded/EmbeddedAttributeFactory",//
+"./primitive/TextareaAttributeFactory",//
+"./primitive/SimpleTextareaAttributeFactory",//
 "./primitive/NumberAttributeFactory",//
 "./primitive/CurrencyAmountAttributeFactory",//
 "./primitive/MappedContentPaneFactory",//
 "./group/AttributeListWidget",//
+"./group/ColumnsGroupFactory",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//,
 "./list_table/RepeatedEmbeddedAttributeFactory"
 
@@ -30,9 +33,9 @@ define([
 		BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, 
 		MappedCheckedMultiSelectAttributeFactory,
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
-		TimeAttributeFactory, EmbeddedAttributeFactory, NumberAttributeFactory, 
+		TimeAttributeFactory, EmbeddedAttributeFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory, NumberAttributeFactory, 
 		CurrencyAmountAttributeFactory, MappedContentPaneFactory,
-		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
+		AttributeListWidget, ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
 			var editorFactory = new EditorFactory();
 			editorFactory.addGroupFactory("list", new GroupFactory({editorFactory:editorFactory}));
@@ -40,6 +43,7 @@ define([
 			editorFactory.addGroupFactory("listgroup", new ListGroupFactory({editorFactory:editorFactory}));
 			editorFactory.addGroupFactory("tab", new TabGroupFactory({editorFactory:editorFactory}));
 			editorFactory.addGroupFactory("titlepane", new TitlePaneGroupFactory({editorFactory:editorFactory}));
+			editorFactory.addGroupFactory("columnsgroup", new ColumnsGroupFactory({editorFactory:editorFactory}));
 			editorFactory.set("defaultGroupFactory",new ListPaneGroupFactory({editorFactory:editorFactory}));
 
 			var attributeFactoryFinder = new AttributeFactoryFinder({
@@ -65,6 +69,8 @@ define([
 			attributeFactoryFinder.addAttributeFactory("primitive_list", new PrimitiveListAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("mapped_contentpane", new MappedContentPaneFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("currencyamount", new CurrencyAmountAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("textarea", new TextareaAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("simpletextarea", new SimpleTextareaAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("checked_select",new CheckedSelectAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.set("attributeFactories",attributeFactories);
 

@@ -22,7 +22,9 @@ define([
 "./primitive/CurrencyAmountAttributeFactory",//
 "./primitive/MappedContentPaneFactory",//
 "./primitive/TextareaAttributeFactory",//
+"./primitive/SimpleTextareaAttributeFactory",//
 "./group/AttributeListWidget",//
+"./group/ColumnsGroupFactory",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//
 "./list_table/RepeatedEmbeddedAttributeFactory"//
 
@@ -32,8 +34,8 @@ define([
 		MappedCheckedMultiSelectAttributeFactory,
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
 		TimeAttributeFactory, EmbeddedAttributeFactory, NumberAttributeFactory, 
-		CurrencyAmountAttributeFactory, MappedContentPaneFactory, TextareaAttributeFactory,
-		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
+		CurrencyAmountAttributeFactory, MappedContentPaneFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory,
+		AttributeListWidget, ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
 			var editorFactory = new EditorFactory();
 			editorFactory.addGroupFactory("list", new GroupFactory({editorFactory:editorFactory}));
@@ -41,6 +43,7 @@ define([
 			editorFactory.addGroupFactory("listgroup", new ListGroupFactory({editorFactory:editorFactory}));
 			editorFactory.addGroupFactory("tab", new TabGroupFactory({editorFactory:editorFactory}));
 			editorFactory.addGroupFactory("titlepane", new TitlePaneGroupFactory({editorFactory:editorFactory}));
+			editorFactory.addGroupFactory("columnsgroup", new ColumnsGroupFactory({editorFactory:editorFactory}));
 			editorFactory.set("defaultGroupFactory",new GroupFactory({editorFactory:editorFactory}));
 
 			var attributeFactoryFinder = new AttributeFactoryFinder({
@@ -68,6 +71,7 @@ define([
 			attributeFactoryFinder.addAttributeFactory("currencyamount", new CurrencyAmountAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("checked_select",new CheckedSelectAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("textarea", new TextareaAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("simpletextarea", new SimpleTextareaAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.set("attributeFactories",attributeFactories);
 
 			editorFactory.set("attributeFactoryFinder",attributeFactoryFinder);

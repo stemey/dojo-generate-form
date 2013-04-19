@@ -1,12 +1,13 @@
 define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
 		"dijit/_WidgetsInTemplateMixin","dojo/Stateful","./PolymorphicMemberWidget","../Editor",
-		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox", "dojo/i18n!../nls/messages"
+		"dojo/text!./repeated_embedded_attribute.html", "dijit/TitlePane", "dojo/i18n!../nls/messages",
+		"../_LayoutMixin",
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, Stateful,PolymorphicMemberWidget,Editor,template, TextBox, messages) {
+		_WidgetsInTemplateMixin, Stateful,PolymorphicMemberWidget,Editor,template, TitlePane, messages, _LayoutMixin) {
 
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container,
-			_TemplatedMixin, _WidgetsInTemplateMixin ], {
+			_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin ], {
 		templateString : template,
 		messages: messages,
 		postCreate : function() {
@@ -15,13 +16,16 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			panelModel.set("title", "");
 			var me=this;
 			var modelHandle = this.get("modelHandle");
+			this.modelHandle=modelHandle;
 			var editor;
 			if (this.meta.validTypes && this.meta.validTypes.length>1) {
-				editor = new PolymorphicMemberWidget({"modelHandle":modelHandle,"meta":this.meta,nullable:false,editorFactory:this.editorFactory});
+				editor = new PolymorphicMemberWidget({"modelHandle": modelHandle, "meta": this.meta, nullable: false, editorFactory: this.editorFactory});
 			}else{
 				var meta = this.meta.validTypes ? this.meta.validTypes[0] : this.meta;
 				editor = new Editor({"modelHandle":modelHandle,"meta":meta,editorFactory:this.editorFactory});
 			}
+		  //var titlePane = new TitlePane({title:at(modelHandle,"index")});
+			//titlePane.addChild(editor);
 			this.addChild(editor);
 			this.set("target", panelModel);
 
