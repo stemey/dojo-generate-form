@@ -4,17 +4,19 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		declare, Container, _LayoutWidget,at, domConstruct,
 		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin) {
 		// module: 
-		//		gform/Editor
+		//		gform/_LayoutMixin
 
-	// at needs to be globally defined.
-	window.at = at; 
 
 	return declare("gform._LayoutMixin", [], {
+		//	summary:
+		//		This LayoutContainer notitifes nested LayoutContainers that they are being shown and need to layout.
+		//		Also it resizes the width of children if possible.
 		isLayoutContainer:true,
 		resize: function(dim) {
 			this.dim=dim;
 			if (dim) {
 				this.domNode.style.width=dim.w+"px";
+				var id = this.meta ? this.meta.code : (this.attribute?this.attribute.code:this.id);
 			}
 			array.forEach(this.getChildren(),function(widget) {
 				if (widget.resize) {
