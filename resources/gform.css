@@ -107,6 +107,7 @@ body,html {
 
 .gformColumnContainer {
 	overflow: auto;
+	padding: 8px;
 }
 .gformColumnContainer.columns_5 {
 	-webkit-column-count:5;
