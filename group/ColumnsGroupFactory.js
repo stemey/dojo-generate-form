@@ -21,7 +21,7 @@ define([ "dojo/_base/array", //
 	},
 		getSchema: function() {
 				var properties= {"label":{"type":"string"},"attributes":{"$ref":"attributes"}}
-			var schema={description:"The listpane displays an array of attributes in a list. It is useful inside dijit layout containers because it wraps its content in a 'dijit.layout.ContentPane'."};
+			var schema={description:"This pane arranges its attributes in columns. The maximum of the children's width is calculated and the corresponding number of columns are used. This group is useful for lots of primitive attributes. complex attributes may be nested and are usually not easily arranged in columns with fixed width. <br/>This dijit uses css-columns, which is a relatively new feature and not supported in older browsers. The attributes must have a calculatable width. A div should therefore be 'display:inline-block'."};
 			schema.properties=properties;
 			schema.required=["attributes"];
 			var example={groupType:"columnsgroup",label:"Tab name for display in tab",attributes:[{code:"name",type:"string"}]};	

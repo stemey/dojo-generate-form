@@ -24,6 +24,7 @@ define([
 "./primitive/TextareaAttributeFactory",//
 "./primitive/SimpleTextareaAttributeFactory",//
 "./group/AttributeListWidget",//
+"./group/ColumnsGroupFactory",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//
 "./list_table/RepeatedEmbeddedAttributeFactory"//
 
@@ -34,7 +35,7 @@ define([
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
 		TimeAttributeFactory, EmbeddedAttributeFactory, NumberAttributeFactory, 
 		CurrencyAmountAttributeFactory, MappedContentPaneFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory,
-		AttributeListWidget, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
+		AttributeListWidget, ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
 			var editorFactory = new EditorFactory();
 			editorFactory.addGroupFactory("list", new GroupFactory({editorFactory:editorFactory}));
@@ -42,6 +43,7 @@ define([
 			editorFactory.addGroupFactory("listgroup", new ListGroupFactory({editorFactory:editorFactory}));
 			editorFactory.addGroupFactory("tab", new TabGroupFactory({editorFactory:editorFactory}));
 			editorFactory.addGroupFactory("titlepane", new TitlePaneGroupFactory({editorFactory:editorFactory}));
+			editorFactory.addGroupFactory("columnsgroup", new ColumnsGroupFactory({editorFactory:editorFactory}));
 			editorFactory.set("defaultGroupFactory",new GroupFactory({editorFactory:editorFactory}));
 
 			var attributeFactoryFinder = new AttributeFactoryFinder({
