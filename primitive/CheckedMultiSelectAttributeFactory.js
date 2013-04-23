@@ -27,7 +27,6 @@ define([ "dojo/_base/array", //
 			var select = new CheckedMultiSelect({
 				"value" : clonedValues,
 				options : options,
-				style : "width: 200px;",
 				multiple : true
 			});
 			

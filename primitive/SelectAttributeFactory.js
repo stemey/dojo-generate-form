@@ -28,8 +28,7 @@ define([ "dojo/_base/array", //
 
 			var select = new Select({
 				"value" : valueBinding,
-				options : options,
-				style : "width:200px;"
+				options : options
 			});
 
 			// remove errors when value changes because this select does not validate.

@@ -16,8 +16,7 @@ define([ "dojo/_base/array", //
 
  			var select = this.createSelect({
  				value : valueBinding,
- 				options : options,
- 				style:"width:200px;"
+ 				options : options
  			});
  			
  			this.initValue(select, modelHandle);
