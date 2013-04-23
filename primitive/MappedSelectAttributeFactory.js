@@ -20,8 +20,7 @@ define([ "dojo/_base/array",
 			
 			var select = new Select({
 				value : at(modelHandle, "value"),
-				options : options,
-				style : "width:200px;"
+				options : options
 			});
 			
 			if (attribute.required && !modelHandle.value) {

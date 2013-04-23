@@ -21,7 +21,6 @@ define([ "dojo/_base/array", //
 			var select = new CheckedMultiSelect({
 				"value" : at(modelHandle,"value").transform(nullablePrimitiveConverter),
 				options : options,
-				style : "width: 200px;",
 				multiple : false
 			});
 			
