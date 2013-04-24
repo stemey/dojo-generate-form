@@ -1,0 +1,19 @@
+{
+	attributes: [
+		{
+			code: "id",
+			type: "number",
+			disabled:true,
+		},
+		{
+			code: "name",
+			type: "string",
+		},
+		{
+			code: "features",
+			array: true,
+			type: "string",
+		}
+	]
+}
+
