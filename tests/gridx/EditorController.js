@@ -2,6 +2,7 @@ define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
 	"dojo/dom-class",
+	"dojo/when",
 	"dojo/text!./editorschema.json",
 	"gform/Editor",	
 	"gform/createLayoutEditorFactory",	
@@ -11,7 +12,7 @@ define([
 	"dojo/text!./editor.html",
 	"dijit/form/Button",
 	"dijit/Dialog"
-], function(declare, lang, domClass, editorSchema, Editor, createEditorFactory, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template){
+], function(declare, lang, domClass, when, editorSchema, Editor, createEditorFactory, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template){
 
 
 	
@@ -50,8 +51,13 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 		},
 		_edit: function(id) {
 			this.set("state","edit");
-			var entity = this.store.get(id);
+			when(this.store.get(id),lang.hitch(this,"_onLoaded"),lang.hitch(this,"_onLoadFailed"));
+		},
+		_onLoaded: function(entity) {
 			this.editor.set("plainValue", entity);
+		},
+		_onLoadFailed: function(error) {
+			alert("error while loading entity");
 		},
 		createNew: function() {
 			if (this.state=="create") {
@@ -90,8 +96,14 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 		remove: function() {
 			if (this.state!="create") {
 				var entity = this.editor.get("plainValue");
-				this.store.remove(entity.id);
+				this.store.remove(entity.id).then(lang.hitch(this,"_onRemoved"));
 			}
+		},
+		_onRemoved: function() {
+			alert("successfully removed");
+		},
+		_onRemoveFailed: function() {
+			alert("removal failed");
 		}
 	});
 

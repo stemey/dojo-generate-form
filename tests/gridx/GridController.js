@@ -11,7 +11,7 @@ define([
 	'gridx/modules/Focus',
 	'gridx/modules/RowHeader',
 	'gridx/modules/select/Row',
-	"dojo/store/Memory",
+	"./AsyncMemory",
 	"dojo/json",
 	"dojo/text!./tablestructure.json",
 	"dojo/text!./table.json",
