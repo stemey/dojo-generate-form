@@ -11,6 +11,7 @@ define([
 	'gridx/modules/Focus',
 	'gridx/modules/RowHeader',
 	'gridx/modules/select/Row',
+	"dojo/store/Memory",
 	"./AsyncMemory",
 	"dojo/json",
 	"dojo/text!./tablestructure.json",
@@ -24,7 +25,7 @@ define([
 	"dijit/layout/ContentPane",
 	"dijit/Toolbar"
 ], function(declare, lang, aspect, Grid, Cache, 
-	VirtualVScroller, ColumnResizer, SingleSort, Filter, Focus, RowHeader, RowSelect,
+	VirtualVScroller, ColumnResizer, SingleSort, Filter, Focus, RowHeader, RowSelect, Memory,
 	 Store, json, tableStructure, tabledata, EditorController, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template){
 
 
@@ -36,7 +37,7 @@ return declare("gform.tests.gridx.GridController", [ _WidgetBase, _TemplatedMixi
 			var props={ id: "grid"};
 			props.cacheClass=Cache;
 			props.structure = dojo.fromJson(tableStructure);
-			this.store = new Store({idProperty: 'id', data:dojo.fromJson(tabledata)});
+			this.store = new Store(new Memory({idProperty: 'id', data:dojo.fromJson(tabledata)}));
 			props.store = this.store;
 			props.modules= [
 				VirtualVScroller,

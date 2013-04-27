@@ -4,10 +4,16 @@
 			code: "id",
 			type: "number",
 			disabled:true,
+			id: "the primary key is generated in the store"
 		},
 		{
 			code: "name",
-			type: "string",
+			type: "string"
+		},
+		{
+			code: "error",
+			type: "boolean",
+			description:"check this attribute to provoke an error on save and delete"
 		},
 		{
 			code: "features",

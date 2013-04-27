@@ -1,6 +1,7 @@
 define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
+	"dojo/_base/array",
 	"dojo/dom-class",
 	"dojo/when",
 	"dojo/text!./editorschema.json",
@@ -11,8 +12,11 @@ define([
 	"dijit/_WidgetsInTemplateMixin",
 	"dojo/text!./editor.html",
 	"dijit/form/Button",
+	"dijit/layout/StackContainer",
+	"dijit/layout/ContentPane",
+	"dijit/ProgressBar",
 	"dijit/Dialog"
-], function(declare, lang, domClass, when, editorSchema, Editor, createEditorFactory, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template){
+], function(declare, lang, array, domClass, when, editorSchema, Editor, createEditorFactory, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template){
 
 
 	
@@ -21,18 +25,19 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 		templateString : template,
 		store: null,
 		state:"create",
-		currentId:100,
 		postCreate : function() {	
 			this.editor.set("editorFactory",createEditorFactory());
 			this.editor.setMetaAndPlainValue(dojo.fromJson(editorSchema), {});
 			this.watch("state",lang.hitch(this,"_onStateChange"));
 			this.editor.on("value-changed",lang.hitch(this,"_onStateChange"));
-			//this.editor.on("valid-change",lang.hitch(this,"_onStateChange"));
 		},
 		_onStateChange: function(e) {
-			this.discardButton.set("disabled",!this.editor.hasChanged());
-			this.deleteButton.set("disabled",this.state=="create");
-			this.stateElement.innerHTML=this.get("state")=="create"?'New':'Edit';
+			this.discardButton.set("disabled",this.state=="working" || !this.editor.hasChanged());
+			this.deleteButton.set("disabled",this.state=="working" || this.state=="create");
+			this.saveButton.set("disabled",this.state=="working" || (this.state=="edit" && !this.editor.hasChanged()));
+			array.forEach(["create","edit","working"], function(e) {
+				domClass.toggle(this.domNode,e,this.state==e);
+			},this);
 		},
 		_checkState: function(callback) {
 			if (this.state=="create" && this.editor.hasChanged()) {
@@ -49,15 +54,26 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 		discard: function() {
 			this.editor.reset();			
 		},
-		_edit: function(id) {
-			this.set("state","edit");
-			when(this.store.get(id),lang.hitch(this,"_onLoaded"),lang.hitch(this,"_onLoadFailed"));
+		_showProgressBar: function() {
+			this.set("state","working");	
 		},
-		_onLoaded: function(entity) {
+		_edit: function(id) {
+			var promise = this.store.get(id);
+			this._execute(promise,"LoadForEdit");
+		},
+		_onLoadForEdit: function(entity) {
+			this.set("state","edit");
 			this.editor.set("plainValue", entity);
 		},
-		_onLoadFailed: function(error) {
+		_onLoadForEditFailed: function(error) {
+			this.set("state","edit");
 			alert("error while loading entity");
+		},
+		_execute: function(promise, command) {
+			if (!promise.isResolved()) {
+				this._showProgressBar();
+			}
+			when(promise,lang.hitch(this,"_on"+command),lang.hitch(this,"_on"+command+"Failed"));
 		},
 		createNew: function() {
 			if (this.state=="create") {
@@ -68,18 +84,40 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 		},
 		_createNew: function() {
 			this.set("state","create");
-			this.editor.set("plainValue", {id:this.currentId++});
+			this.editor.set("plainValue", {});
 		},
 		save: function() {
 			var entity = this.editor.get("plainValue");
 			if (this.state==	"create") {
-				this.store.add(entity);
-				this.set("state","edit");
+				var promise = this.store.add(entity);
+				this._execute(promise,"Add");
 			}else{
-				this.store.put(entity);
+				var promise = this.store.put(entity);
+				this._execute(promise,"Update");
 			}
-			// reset editor to remove change indicators
+		},
+		_onAdd: function(result) {
+			this.set("state","edit");
+			this._removeChangeIndicator();
+		},
+		_removeChangeIndicator: function() {
+			var entity = this.editor.get("plainValue");
 			this.editor.set("plainValue",entity);
+		},
+		_onAddFailed: function(error) {
+			this.set("state","create");
+			alert("error while saving entity");
+		},
+		_onUpdate: function(result) {
+			this._removeChangeIndicator();
+			this.set("state","edit");
+		},
+		_onUpdateFailed: function(error) {
+			this.set("state","edit");
+			array.forEach(error.fields, function(error) {
+				this.editor.addError(error.path, error.message);
+			},this);
+			alert("error while updating entity");
 		},
 		startup: function() {
 			this.inherited(arguments);
@@ -96,14 +134,15 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 		remove: function() {
 			if (this.state!="create") {
 				var entity = this.editor.get("plainValue");
+				this._removeChangeIndicator();
 				this.store.remove(entity.id).then(lang.hitch(this,"_onRemoved"));
 			}
 		},
 		_onRemoved: function() {
-			alert("successfully removed");
+			this.set("state","edit");
 		},
 		_onRemoveFailed: function() {
-			alert("removal failed");
+			this.set("state","edit");
 		}
 	});
 
