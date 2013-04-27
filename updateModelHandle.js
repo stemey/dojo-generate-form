@@ -241,6 +241,9 @@ define([
 			}
 			modelHandle.value.splice(0,modelHandle.value.length);
 			if (plainValue==null) {
+				modelHandle.set("oldValue",[]);
+			}else	if (typeof plainValue== "undefined"	) {
+				modelHandle.set("oldValue",[]);
 			}else{
 				var modelArray=modelHandle.value;
 				var childMeta={};
@@ -256,8 +259,8 @@ define([
 					(cascadeAttribute || this.cascadeAttribute).apply(this,[childMeta,element,model,editorFactory, new Resolver(modelHandle)]);
 					modelArray.push(model);
 				},this);
+				modelHandle.set("oldValue",plainValue);
 			}
-			modelHandle.set("oldValue",plainValue);
 		},
 		updateSelectModelHandle : function(meta, plainValue, modelHandle,options) {
 			if (!plainValue && meta.required) {

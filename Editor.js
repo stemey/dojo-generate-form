@@ -45,6 +45,8 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			this.modelHandle=updateModelHandle.createMeta();
 			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
 			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
+			// send change event beause oldValue changed and hasChanged will return something new
+			this.emit("value-changed");
 			
 			this._explicitErrorPaths = [];
 			
@@ -64,6 +66,8 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
 			
 			this._explicitErrorPaths = [];
+			// send change event beause oldValue changed and hasChanged will return something new
+			this.emit("value-changed");
 		},
 		_getPlainValueAttr: function() {
 			return getPlainValue(this.modelHandle);
@@ -196,14 +200,6 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		//		reset the data to its original value.
 			var oldValue=this.modelHandle.oldValue;
 			this.set("plainValue",oldValue);
-		},	
-		setMetaAndValue: function(meta,plainValue) {
-		// summary:
-		//		change the form and its data.
-			this.meta=meta;
-			this.modelHandle=null;
-			this.set("plainValue",plainValue);
-			this._buildContained();
 		},	
 		_destroyBody : function() {
 			if (this.widget != null) {

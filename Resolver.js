@@ -4,9 +4,16 @@ define([ "dojo/_base/array", //
 
 ], function(array, lang, declare) {
 
-	return declare("gform.Resolver", null, {
-		constructor : function(modelHandle) {
+	var Resolver= declare("gform.Resolver", null, {
+		constructor : function(modelHandle, path) {
 			this.modelHandle=modelHandle;
+			this.path=path || "";
+		},
+		createChild: function (property) {
+			new Resolver(this.modelHandle.value[property],property);
+		},
+		getPath: function() {
+			return this.path;
 		},
 		get : function(propName) {
 			return this.modelHandle.value.get(propName).value;
@@ -15,4 +22,5 @@ define([ "dojo/_base/array", //
 			return this.modelHandle.value[propName].watch("value",watchCallback);
 		}
 	})
+	return Resolver;
 });

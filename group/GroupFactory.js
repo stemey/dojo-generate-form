@@ -26,7 +26,7 @@ define([ "dojo/_base/array", //
 		createWidget: function(group) {
 			return new AttributeListWidget({meta:group});
 		},	
-		create : function(group, modelHandle) {
+		create : function(group, modelHandle, resolver) {
 			var listWidget = this.createWidget(group);
 
 			array.forEach(group.attributes, function(attribute) {
@@ -37,8 +37,10 @@ define([ "dojo/_base/array", //
 				if (!modelHandle.value[attribute.code]) {
 					throw new Error("provide a default value"+attribute.code);
 				}
+				var childResolver = resolver.createChild("attribute.code");
+
 				var attributeEditor = this.createAttribute(attribute,
-						modelHandle.value[attribute.code],new Resolver(modelHandle));
+						modelHandle.value[attribute.code], childResolver);
 				var widget = this.editorFactory.createDecorator(attribute, modelHandle.value[attribute.code]);
 				if (attributeEditor != null) {
 					widget.addChild(attributeEditor);

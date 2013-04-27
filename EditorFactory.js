@@ -3,8 +3,9 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dojo/Stateful", //
+"./Resolver", //
 "./group/DecoratorFactory" //
-], function(array, lang, declare, at, Stateful, DecoratorFactory) {
+], function(array, lang, declare, at, Stateful, Resolver, DecoratorFactory) {
 
 	return declare("gform.EditorFactory", [Stateful], {
 		constructor : function() {
@@ -31,10 +32,10 @@ define([ "dojo/_base/array", //
 				if (groupFactory==null) {
 					throw new Error("cannot find group factory "+group.groupType);
 				}
-				return groupFactory.create(group, modelHandle);
+				return groupFactory.create(group, modelHandle, new Resolver(modelHandle));
 			} 
 			else if (lang.isArray(group.attributes)) {
-				return this.defaultGroupFactory.create(group, modelHandle);
+				return this.defaultGroupFactory.create(group, modelHandle, new Resolver(modelHandle));
 			}
 		},
 		getGroupFactory: function(group) {

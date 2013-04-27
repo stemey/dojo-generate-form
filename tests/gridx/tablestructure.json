@@ -1,0 +1,14 @@
+[
+	{
+		id: "id",
+		field: "id",
+		name: "id",
+		width: "100px",
+	},
+	{
+		id: "name",
+		field: "name",
+		name: "name",
+	}
+]
+
