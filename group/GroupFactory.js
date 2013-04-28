@@ -37,7 +37,7 @@ define([ "dojo/_base/array", //
 				if (!modelHandle.value[attribute.code]) {
 					throw new Error("provide a default value"+attribute.code);
 				}
-				var childResolver = resolver.createChild("attribute.code");
+				var childResolver = new Resolver(modelHandle,attribute.code);
 
 				var attributeEditor = this.createAttribute(attribute,
 						modelHandle.value[attribute.code], childResolver);

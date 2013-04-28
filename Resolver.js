@@ -9,9 +9,6 @@ define([ "dojo/_base/array", //
 			this.modelHandle=modelHandle;
 			this.path=path || "";
 		},
-		createChild: function (property) {
-			new Resolver(this.modelHandle.value[property],property);
-		},
 		getPath: function() {
 			return this.path;
 		},
