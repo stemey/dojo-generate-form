@@ -10,6 +10,12 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dijit/_WidgetBase", "dijit/_C
 			lang.mixin(this,config);
 			this.label=this.meta && (this.meta.label || this.meta.code) || "";
 		},
+		startup: function() {
+			this.inherited(arguments);
+			if (this.meta && this.meta.visible == false) {
+				this.domNode.style.display="none";
+			}
+		},
 		templateString : template,
 	
 	});
