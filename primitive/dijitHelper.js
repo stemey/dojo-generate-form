@@ -6,7 +6,7 @@ define([ "dojo/_base/array", //
 	var standardProps={};
 			standardProps["code"]={ type : "string", required:true,description:"the name of the property"};
 			standardProps["label"]={ type : "string",description:"the label ofthe property displayed in a form. If empty the code will be displayed."};
-			standardProps["description"]={ type : "string",description:"the info text for the property."};
+			standardProps["description"]={ type : "string",description:"the info text for the property.", editor: "simpletextarea"};
 			standardProps["array"]={ type : "boolean",description:"if checked the attribute is an array"};
 			standardProps["disabled"]={ type : "boolean",description:"if checked the value is not editable"};
 

@@ -13,7 +13,7 @@ define([ "dojo/_base/array", //
 	var convert = {
 		copy: function(propSource,propTarget,prop,attribute) {
 			var value = prop[propSource];
-			if (value) {
+			if (typeof value != "undefined") {
 				attribute[propTarget]=value;
 			}
 		},
@@ -23,6 +23,7 @@ define([ "dojo/_base/array", //
 			this.copy("description","description",prop,attribute);
 			this.copy("title","label",prop,attribute);
 			this.copy("required","required",prop,attribute);
+			this.copy("visible","visible",prop,attribute);
 			this.copy("readonly","readonly",prop,attribute);
 			if (prop.enum) {
 				attribute.values=[];

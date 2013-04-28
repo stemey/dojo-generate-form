@@ -27,7 +27,7 @@ define([ "dojo/_base/array", //
 					if (!subschema.properties) {
 						subschema.properties={};
 					}
-					subschema.properties.groupType={type:"string",required:true};		
+					subschema.properties.groupType={type:"string", required:true, visible:false};		
 					subschema.properties.groupType.enum=[key];
 					subschema.id=key;
 					definitions.push(subschema);
