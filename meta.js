@@ -30,11 +30,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
 			}
  		},
  		getTypeAttribute: function(attribute,attributeCode) {
-			if (typeof attribute.type == "string") {
-				return attribute[attributeCode];
-			}else{
-				return attribute.type[attributeCode];
-			}
+			return attribute[attributeCode];
  		},
 		isType : function(attribute,typeCode) {
 			return typeCode==this.getType(attribute);
