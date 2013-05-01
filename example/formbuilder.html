@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Form Editor</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+	<link id="themeStyles" rel="stylesheet" href="../../gform/resources/gform_layout.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/registerBuilderEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
+	"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve","gform/schema/schemaGenerator"
+		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve,schemaGenerator) {
+			parser.parse();
+			try {
+				//var schema = dojo.fromJson(metaJson);
+				var schema = schemaGenerator.generate(gform.ef.layout);
+				refresolve(schema);
+			  var meta = convertSchema(schema);
+			  editor =dijit.byId("form");
+				editor.set("meta",meta);
+				generatedEditor=dijit.byId("resultForm");
+				editor.on("value-changed",function(){
+					if (editor.get("errorCount")==0 && editor.get("incompleteCount")==0) {
+						generatedEditor.setMetaAndPlainValue(editor.get("plainValue").editor,{});
+					}
+				});
+			} catch (e) {console.log(e.message+" "+e.stack)};
+			
+			
+			
+		});
+	</script>
+</head>
+<body class="claro" style="width:100%;height:100%">
+	
+
+	<div data-dojo-type="dijit.layout.BorderContainer"  style="width:100%;height:100%">
+		<div id="container" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center',id:'container'" style="width:100%;height:100%">
+			<div data-dojo-type="gform.Editor" data-dojo-props="id:'form',editorFactory:gform.ef.layout"></div>
+		</div>
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'bottom',splitter:true"   >
+			<div data-dojo-type="gform.Editor" data-dojo-props="id:'resultForm',editorFactory:gform.ef.layout"></div>
+		</div>
+	</div>
+
+</body>
+</html>	

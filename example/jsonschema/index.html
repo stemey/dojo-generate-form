@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Json Schema Form Generator</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css"/>
+	<link id="themeStyles" rel="stylesheet" href="../../../gform/resources/gform.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
+		"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve", "dojo/request",  "gform/schema/Resolver", "dijit/form/Textarea"
+		], function(ready, json, Editor, Stateful, doh,createEditorFactory,on,RepeatedEmbeddedAttributeFactory,   registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema, refresolve, request, Resolver) {
+			parser.parse();
+			var ef=createEditorFactory();
+			editor = registry.byId("editor");
+			editor.set("editorFactory",ef);	
+			var textarea = registry.byId("schemaArea");
+			registry.byId("createButton").set("onClick",function(e) {
+				var schemaString = schemaArea.value;
+				var schema =dojo.fromJson(schemaString);
+				var promise = refresolve(schema,new Resolver({baseUrl:""}));
+				promise.then(
+					function() {
+						try {
+							var meta =convertSchema(schema);
+							editor.setMetaAndPlainValue(meta,{});
+						} catch (e) {
+							alert("cannot convert schema: "+e.message);
+						}
+					},
+					function(error) {
+						alert("schema cannot be converted: "+error.message);
+					}
+				);
+			});
+			
+			registry.byId("pasteAddress").set("onClick",function(e) {
+				request("address.json").then(
+					function(response) {
+						textarea.set("value",response);
+					});
+			});
+			registry.byId("pasteCalendar").set("onClick",function(e) {
+				request("calendar.json").then(
+					function(response) {
+						textarea.set("value",response);
+					});
+			});
+			registry.byId("pasteCard").set("onClick",function(e) {
+				request("card.json").then(
+					function(response) {
+						textarea.set("value",response);
+					});
+			});
+
+		});
+	</script>
+</head>
+<body class="claro" >
+	
+	<div>
+		<p>paste your schema (version 0.3) here. External refs are not supported yetThe buttons below paste schemas from <a href="http://json-schema.org/documentation.html">json-schema.org</a> (they contain external refs - but not cross domain.)</p>
+			<span>
+				<button  type="button" data-dojo-type="dijit.form.Button" data-dojo-props="id:'pasteAddress'">paste address</button>
+				<button  type="button" data-dojo-type="dijit.form.Button" data-dojo-props="id:'pasteCard'">paste card</button>
+				<button  type="button" data-dojo-type="dijit.form.Button" data-dojo-props="id:'pasteCalendar'">paste calendar</button>
+		</span>
+		<div data-dojo-type="dijit.form.Textarea" data-dojo-props="id:'schemaArea'" style="width:100%;height:200px"></div>
+		<div>
+			<button  type="button" data-dojo-type="dijit.form.Button" value="create" data-dojo-props="id:'createButton'">create form</button>
+		</div>
+		<div data-dojo-type="gform.Editor" data-dojo-props="id:'editor'">
+		</div>
+	</div>
+
+</body>
+</html>	

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Getting Started</title>
+	<script src="/sh/scripts/XRegExp.js"></script>
+	<script src="/sh/scripts/shCore.js"></script>
+	<script src="/sh/scripts/shBrushJScript.js"></script>
+	<link type="text/css" rel="stylesheet" href="/sh/styles/shCoreDefault.css"/>
+	<script src='/sh/scripts/shBrushXml.js' type='text/javascript'></script>
+	<script src='/sh/scripts/shBrushCss.js' type='text/javascript'></script>
+	<script>
+		SyntaxHighlighter.all();
+	</script>
+</head>
+<body>
+	<h2>Getting Started with Gform</h2>
+		<h3>Declarative example</h3>
+		<p>
+			The first step is to load an editorFactory. EditorFactories are responsible for creating the form according to the schema. There are two predefined editorFactories: one for general use and one especially for use inside layout containers. You can either load the editorFactory with the module "createXXXEditorFactory" which returns a function to create it or you can have the editorFactory be made available in the global variable "gform.ef.XXX" by using the module "registerXXXLEditorFactory". 
+		</p>
+		<pre class="brush:js;">
+			// load the standard editorFactory and make it globally available as 'gform.ef.standard'.
+			require(["gform/registerStandardEditorFactory"]);
+		</pre>
+		<p>
+			To create the acutal form we can now declare the widget "gform/Editor" and set the properties editorFactory and metaUrl. The metaUrl is a relative url to the gform schema.
+		</p>	
+		<pre class="brush:xml;">
+			<div data-dojo-type="gform.Editor" 
+					data-dojo-props="editorFactory:gform.ef.standard, metaUrl:'schema.json'">
+			</div>
+		</pre>
+		<p>
+			That's it! <a href="../../tests/test_declarative.html">View</a>.
+		</p>
+		<h3>Programmatic example</h3>
+		<p>
+			This time we assemble the widget and then put it in the dom. 
+		</p>
+		<pre class="brush:js;">
+		require(["gform/createStandardEditorFactory", "gform/Editor", //
+							"dojo/json", "dojo/text!./schema.json"],
+		function(createEf, Editor, json, meta) {
+			var props= {
+				editorFactory: createEf(),
+				meta: json.parse(meta)
+			}
+			var editor = new Editor(props);
+			editor.placeAt("editor");
+		});
+		</pre>
+		<p>
+			To create the acutal form we can now declare the widget "gform/Editor" and set the properties editorFactory and metaUrl. The metaUrl is a relative url to the gform schema.
+		</p>	
+		<pre class="brush:xml;">
+			<div id="editor">
+			</div>
+		</pre>
+		<p>
+			That's it! <a href="programmatic.html">View</a>.
+		</p>
+
+</body>
+</html>	

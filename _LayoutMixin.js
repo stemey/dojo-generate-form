@@ -9,8 +9,8 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 
 	return declare("gform._LayoutMixin", [], {
 		//	summary:
-		//		This LayoutContainer notitifes nested LayoutContainers that they are being shown and need to layout.
-		//		Also it resizes the width of children if possible.
+		//		This LayoutContainer notitifes nested LayoutContainers that they are being shown and need to layout
+		//		Also it resizes the width of children if possible
 		isLayoutContainer:true,
 		resize: function(dim) {
 			this.dim=dim;

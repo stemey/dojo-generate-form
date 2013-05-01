@@ -1,0 +1,438 @@
+{
+    "groupType":"tab",
+    "tabs":[
+        {
+            label:"primitives",
+						groupType:"columnsgroup",
+						description:"This tab contains primitive attributes.",
+            "attributes":[
+                {
+                    "type":"string",
+                    "label":"string",
+                    "description":"this attribute only allows letters a to z.",
+                    "invalidMessage":"only use letters",
+										"required":true,
+										"pattern":"[a-zA-Z]*",
+										"placeHolder":"enter a text",	
+                    "code":"string",
+                    "array":false
+                },
+                {
+                    "type":"string",
+                    "label":"select",
+                    "description":"select one",
+                    "invalidMessage":"please select one",
+										"required":false,
+										"values":["Mr.","Mrs.","Sir"],	
+                    "code":"select",
+                    "array":false
+                },
+                {
+										"editor":"checked_select",
+                    "type":"string",
+                    "label":"radios",
+                    "description":"select one",
+                    "invalidMessage":"please select one",
+										"required":false,
+										"values":["Mr.","Mrs.","Sir"],	
+                    "code":"radios",
+                    "array":false
+                },
+                {
+                    "type":"boolean",
+                    "label":"boolean",
+                    "description":"we need to know",
+                    "code":"boolean",
+                    "array":false
+                },
+                {
+                    "type":"number",
+                    "label":"fractional",
+                    "description":"up to three fractional digits",
+										places:"0,3",
+                    "code":"fractional",
+                    "array":false
+                },
+                {
+                    "type":"number",
+                    "label":"currencyamount",
+										"currency":"USD",	
+                    "editor":"currencyamount",
+                    "description":"currency amount",
+                    "code":"currencyamount",
+                    "array":false
+                },
+                {
+                    "type":"number",
+                    "label":"integer",
+                    "description":"an interger between 3 and 9",
+                    "code":"integer2",
+										places:0,
+										min:3,
+										max:9,
+										"array":false
+                },
+                {
+                    "type":"date",
+                    "label":"date",
+                    "description":"date",
+                    "code":"date",
+										"array":false
+                },
+                {
+                    "type":"time",
+                    "label":"time",
+                    "description":"time",
+                    "code":"time",
+										"array":false
+                },
+                {
+                    "type":"string",
+                    "label":"textarea",
+										"editor":"textarea",
+										"cols":20,
+                    "description":"this attribute displays the text in a textarea that grows vertically.",
+                    "code":"longtext",
+                    "array":false
+                },
+                {
+                    "type":"string",
+                    "label":"simpletextarea",
+										"editor":"simpletextarea",
+										"cols":20,
+										"rows":4,
+                    "description":"this attribute displays the text in a textarea with fixed rows.",
+                    "code":"simplelongtext",
+                    "array":false
+                },
+						]},{
+            label:"mapped primitives",
+						description:"This tab contains mapped select attributes. A mapped select's options depends on the value of another attribute. ",
+            "attributes":[
+                {
+                    "type":"string",
+                    "label":"language",
+										"description":"This is a simple select attribute. Its selection has an impact on the options of the other attributes.",
+										"values":["english","german"],
+                    "code":"language",
+                },
+                {
+                    "type":"string",
+                    "label":"salutation",
+										"description":"select a language specific salutation",
+										"mapped_attribute":"language",
+										"mapped_values":{
+											"english":["Mr.","Mrs."],
+											"german":["Herr","Frau"]
+										},
+                    "code":"salutation",
+                },
+                {
+                    "type":"string",
+										"array":true,
+                    "label":"array of salutations",
+										"description":"select language specific salutations",
+										"mapped_attribute":"language",
+										"mapped_values":{
+											"english":["Mr.","Mrs."],
+											"german":["Herr","Frau"]
+										},
+                    "code":"salutation_array",
+                }
+							]
+						},{
+            label:"primitive arrays",
+						description:"This tab contains primitive array attributes.",
+            "attributes":[
+                {
+                    "type":"string",
+                    "label":"array of strings",
+                    "description":"This is a simple string attribute with array set to true. All primitives auspport 'array=true' and will be displayed similarly.",
+                    "errorMessage":"only use letters",
+										"required":true,
+										"pattern":"[a-zA-Z]*",	
+                    "code":"array_string",
+                    "array":true
+                },
+                {
+                    "type":"string",
+                    "label":"array of selects 1",
+                    "description":"This is a special widget for an array of select values.",
+                    "errorMessage":"required",
+										"required":false,
+										"values":["Mr.","Mrs.","Sir."],	
+                    "code":"array_select_1",
+                    "array":true
+                },
+                {
+                    "type":"string",
+                    "description":"this is the other way of displaying an array of select values.",
+										"editor":"primitive_list",				
+                    "label":"array of selects 2",
+                    "errorMessage":"required",
+										"required":false,
+										"values":["Mr.","Mrs.","Sir."],	
+                    "code":"array_select_2",
+                    "array":true
+                }
+						]},{
+            label:"embedded",
+						description:"embedded simple and polymorphic types.",
+            "attributes":[
+                {
+                    "required":false,
+                    "type":"thing1",
+                    "type_property":"ext_type",
+                    "label":"polything",
+                    "code":"polything",			
+										"description":"this is a complex attribute. Changing the type in the select field will change the form.",
+                    "array":false,
+                    "validTypes":[
+                        {
+                            "code":"thing1",
+                            "label":"thing1",
+                            "attributes":[
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"name",
+                                    "code":"name",
+                                    "array":false
+                                },
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"common",
+                                    "code":"common",
+                                    "array":false
+                                }
+                            ]
+                        },
+                        {
+                            "code":"thing2",
+                            "label":"thing2",
+                            "attributes":[
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"firstName",
+                                    "code":"firstName",
+                                    "array":false
+                                },
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"common",
+                                    "code":"common",
+                                    "array":false
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "required":true,
+                    "type":"thing1",
+                    "label":"thing",
+                    "code":"thing",
+                    "array":false,
+										"description":"this complex attribute is required and can only be of one type. Its attributes are grouped in a tab", 
+                    "validTypes":[
+                        {
+														groupType:"tab",
+	                          "code":"thing1",
+														tabs:[
+															{
+		                          "label":"thing1",
+		                          "attributes":[
+		                              {
+		                                  "required":false,
+		                                  "type":"string",
+		                                  "label":"name",
+		                                  "code":"name",
+		                                  "array":false
+		                              },
+		                              {
+		                                  "required":false,
+		                                  "type":"string",
+		                                  "label":"common",
+		                                  "code":"common",
+		                                  "array":false
+		                              }
+		                          ]
+														},
+														{
+		                          "label":"thing2",
+		                          "attributes":[
+		                              {
+		                                  "required":false,
+		                                  "type":"number",
+		                                  "label":"count",
+		                                  "code":"count",
+		                                  "array":false
+		                              }
+		                          ]
+														}
+													]
+                        }
+                    ]
+                }
+
+            ]
+            
+        },
+        {
+            label:"list",
+						description:"This tab contains a single complex array. The elements have a complex attribute themselves.",
+            "attributes":[
+                {
+                    "required":false,
+                    "label":"things",
+                    "code":"things",
+                    "array":true,
+                    "type":"ExampleThing",
+                    "validTypes":[
+                        {
+                            "code":"ExampleThing",
+                            "label":"ExampleThing",
+                            "attributes":[
+                                {
+                                    "required":false,
+                                    "type":"boolean",
+                                    "label":"yes",
+                                    "code":"yes",
+                                    "array":false
+                                }
+                                ,
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"message",
+                                    "code":"message",
+																		"pattern":"[a-zA-Z]*",
+                                    "array":false
+                                },
+																{
+														      "required":false,
+														      "type":"thing",
+														      "type_property":"ext_type",
+														      "label":"thingx",
+														      "code":"thingx",
+														      "array":true,
+														      "validTypes":[
+														          	{
+														              "code":"thing1",
+														              "label":"thing1",
+														              "attributes":[
+														                  {
+														                      "required":false,
+														                      "type":"string",
+														                      "label":"name",
+														                      "code":"name",
+														                      "array":false
+														                  },
+														                  {
+														                      "required":false,
+														                      "type":"string",
+														                      "label":"common",
+														                      "code":"common",
+														                      "array":false
+														                  }
+														              ]
+														          }
+																	]
+																}
+                            ],
+                            "type_property":"ext_type"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            label:"table-list",
+						description:"This is a different way to display complex arrays. The elements are displayed in a table. Changing the type will hide and show different sets of cells.",
+            "attributes":[
+                {
+										"editor":"table",
+                    "required":false,
+                    "label":"morethings",
+                    "code":"morethings",
+                    "array":true,
+                    "type":"ExampleThing",
+                    "type_property":"ext_type",
+                    "validTypes":[
+                       	 		{
+                            "code":"ExampleThing",
+                            "label":"ExampleThing",
+                            "attributes":[
+                                {
+                                    "required":false,
+                                    "type":"boolean",
+                                    "label":"yes",
+                                    "code":"yes",
+                                    "array":false
+                                }
+                                ,
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"message",
+                                    "code":"message",
+																		"pattern":"[a-zA-Z]*",
+                                    "array":false
+                                }
+                            ],
+                            "type_property":"ext_type"
+                        },{
+                            "code":"ExampleThing1",
+                            "label":"ExampleThing1",
+                            "attributes":[
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"text",
+                                    "code":"text",
+                                    "array":false
+                                }
+                                ,
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"message",
+                                    "code":"message",
+																		"pattern":"[a-zA-Z]*",
+                                    "array":false
+                                }
+                            ],
+                            "type_property":"ext_type"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            label:"groups",
+						description:"Groups can be nested.",
+						groupType:"listgroup",
+						groups: [
+							{
+								groupType:"titlepane",
+								open:true,
+								title:"1. titlepane",
+								attributes: [
+									{type:"string",code:"atext1"}
+								]
+							},
+							{
+								groupType:"titlepane",
+								title:"2. titlepane",
+								attributes: [
+									{type:"string",code:"atext2"}
+								]
+							}
+						]
+        }
+    ]
+}
+

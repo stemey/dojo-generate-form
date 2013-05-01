@@ -17,12 +17,11 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		// 		the editorFactory is responsible for translating the schema into a widget tree.
 
 		widget : null,
-		//_started:false,	
-
 		children : null,
 		modelHandle : null,
 		// summary:
 		// 		the data that is bound to the form.
+
 		meta : null,
 		// summary:
 		// 		the schema describing the form.
@@ -66,7 +65,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
 			
 			this._explicitErrorPaths = [];
-			// send change event beause oldValue changed and hasChanged will return something new
+			// send change event because oldValue changed and hasChanged will return something new
 			this.emit("value-changed");
 		},
 		_getPlainValueAttr: function() {
@@ -96,8 +95,6 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		postCreate : function() {
 			this.inherited(arguments);
 			this.containerNode=this.domNode;
-			//this.domNode.style.height="100%";
-			//this.domNode.style.width="100%";
 			this.watch("meta", lang.hitch(this, "_buildContained"));
 			if (this.meta) {
 				this._buildContained();
@@ -180,6 +177,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		//		visit the data attribute defined by the path. The path elements are separated by dots -even the indices (e.g.: "person.friends.1.name"). 
 			var pathElements=path.split(".");
 			var model=this.get("modelHandle");
+			//TODO we need to consult the editorFactory t do this properly. 
 			array.forEach(pathElements,function(pathElement){
 				if (!model) {
 					throw new Error("cannot resolve path "+path);
