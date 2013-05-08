@@ -1,5 +1,5 @@
-define(["dojo/_base/declare", "dojo/Deferred", "dojo/store/Memory" ],
-function(declare, Deferred, Memory){
+define(["dojo/_base/declare", "dojo/Deferred", "dojo/store/Memory", "dojo/store/util/QueryResults" ],
+function(declare, Deferred, Memory, QueryResults){
 
 	var currentId=1000;
 
@@ -54,7 +54,12 @@ return declare([], {
 		});
 	},
 	query: function(query, options){
-		return this.wrapped.query(query, options);
+		var me = this;
+		var result = finishDeferred(false,function(){
+			result.total=me.wrapped.query(query, options).total;
+			return me.wrapped.query(query, options);
+		});
+		return new QueryResults(result);
 	},
 	getIdentity: function(object){
 		return this.wrapped.getIdentity(object);

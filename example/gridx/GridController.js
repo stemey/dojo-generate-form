@@ -3,7 +3,7 @@ define([
 	"dojo/_base/lang",
 	"dojo/aspect",
 	"gridx/Grid",
-	'gridx/core/model/cache/Sync',
+	'gridx/core/model/cache/Async',
 	"gridx/modules/VirtualVScroller",
 	"gridx/modules/ColumnResizer",
 	"gridx/modules/SingleSort",

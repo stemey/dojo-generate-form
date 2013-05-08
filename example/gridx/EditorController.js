@@ -32,9 +32,9 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 			this.editor.on("value-changed",lang.hitch(this,"_onStateChange"));
 		},
 		_onStateChange: function(e) {
-			this.discardButton.set("disabled",this.state=="working" || !this.editor.hasChanged());
+			//this.discardButton.set("disabled",this.state=="working" || !this.editor.hasChanged());
 			this.deleteButton.set("disabled",this.state=="working" || this.state=="create");
-			this.saveButton.set("disabled",this.state=="working" || (this.state=="edit" && !this.editor.hasChanged()));
+			//this.saveButton.set("disabled",this.state=="working" || (this.state=="edit" && !this.editor.hasChanged()));
 			array.forEach(["create","edit","working"], function(e) {
 				domClass.toggle(this.domNode,e,this.state==e);
 			},this);
@@ -52,7 +52,11 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 			this._checkState(lang.hitch(this,"_edit", id));
 		},
 		discard: function() {
-			this.editor.reset();			
+			if (!this.editor.hasChanged()) {
+				alert("no changes to discard") 
+			}else{
+				this.editor.reset();	
+			}		
 		},
 		_showProgressBar: function() {
 			this.set("state","working");	
@@ -92,8 +96,12 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 				var promise = this.store.add(entity);
 				this._execute(promise,"Add");
 			}else{
-				var promise = this.store.put(entity);
-				this._execute(promise,"Update");
+				if (!this.editor.hasChanged()) {
+					alert("no changes to save") 
+				}else{
+					var promise = this.store.put(entity);
+					this._execute(promise,"Update");
+				}
 			}
 		},
 		_onAdd: function(result) {
