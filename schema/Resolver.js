@@ -39,6 +39,8 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","dojo/promi
 			load: function(ref) {
 				if (ref.id.substring(0,1)=="/") {
 					var url=ref.id;
+				}else	if (ref.id.substring(0,2)=="./") {
+					var url=this.baseUrl+ref.id.substring(2);
 				}else{
 					var url=this.baseUrl+ref.id;
 				}

@@ -1,0 +1,18 @@
+{
+     name: "Mr. John Q. Public, Esq.",
+nicknames: ["jim", "jimmie"],
+      phones: [{types: ["home"], value: "+442088450343"}, 
+               {types: ["work"], value: "+442088450343"}],
+      emails: [{types: ["work"], value: "john.q.quinlan@example.com"}, 
+               {types: ["home", "mobile"], value: "jquinlan@mail.com"}],
+				ddresses: [{streetNumber: "123", 
+              street: "Main Street", 
+              city: "My Town", 
+              region: "CA", 
+              postalCode: "91921-1234", 
+              country: "USA"}],
+       impps: [{types: ["work"], value:"im:jquinlan@example.com"},
+               {types: ["work", "mobile"], value:"sip:jquinlan@example.com"}],
+   serviceId: "http://example.com/myservices/v1/addressbook",
+  categories: ["friends", "w3c", "information technology", "engineers"]
+}

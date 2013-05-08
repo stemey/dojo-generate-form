@@ -1,0 +1,19 @@
+{
+	"description" : "An Address following the convention of http://www.w3.org/TR/2010/WD-contacts-api-20100121/#idl-def-ContactAddress",
+	"type" : "object",
+	"properties" : {
+		"country" : { "type" : "string", 
+                            "required" : false,
+                            "description" : "Two letter [ISO 3166-1] country code" },
+		"region" : { "type" : "string", 
+                           "required" : false,
+                           "description" : "The country subdivision (eg. state)"},
+		"county" : { "type" : "string", "required" : false },
+		"city" : { "type" : "string", "required" : false },
+		"street" : { "type":"string" },
+		"streetNumber" : { "type":"string" },
+		"premises" : { "type" : "string"},
+		"additionalInformation" : { "type" : "string" },
+		"postalCode" : { "type" : "string", "description" : "The postal code of the address" }
+	}
+}
