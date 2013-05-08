@@ -37,7 +37,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			if (index >= 0) {
 				this.parent.children.splice(index, 1);
 			}
-			eventDispatcher.emit("valid-changed");
+			eventDispatcher.emit("state-changed");
 			eventDispatcher.emit("value-changed");
 		},
 		destroy: function() {

@@ -35,11 +35,13 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			this.deleteButton.set("onClick", lang.hitch(this, "_delete"));
 		},
 		_delete : function(e) {
-			var index = this.indexAtStartup;
+			var eventDispatcher = this.getParent();
+			var index = this.getParent().getChildren().indexOf(this);
 			if (index >= 0) {
 				this.parent.children.splice(index, 1);
 			}
-			this.parent.emit("valid-changed",{source:this});
+			this.parent.emit("value-changed",{source:this});
+			this.parent.emit("state-changed",{source:this});
 		}
 	});
 

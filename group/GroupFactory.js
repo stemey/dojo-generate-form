@@ -51,7 +51,7 @@ define([ "dojo/_base/array", //
 
 		},
 		getSchema: function() {
-				var properties= {"label":{"type":"string"},"description":{"type":"string"},"attributes":{"$ref":"attributes"}}
+				var properties= {"label":{"type":"string", description:"This label is displayed in a tab."},"description":{"type":"string", "description": "text displayed above the attributes"},"attributes":{"$ref":"attributes"}}
 			var schema={description:"The list displays an array of attributes."};
 			schema.properties=properties;
 			schema.required=["attributes"];

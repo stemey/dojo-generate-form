@@ -61,7 +61,7 @@
 								name: 'validate',
 								runTest: function(t){
 									var calledValidChanged=false;
-									editor.on("valid-changed",function(){calledValidChanged=true});
+									editor.on("state-changed",function(){calledValidChanged=true});
 									editor.set("plainValue",{things:["3","4"]});
 									//t.assertEqual(2,editor.get("plainValue").things.length);
 									var inputs=query("input[type='text']");

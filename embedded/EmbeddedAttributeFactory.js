@@ -35,6 +35,7 @@ define([ "dojo/_base/array", //
 				panelWidget = new GroupPanelWidget({
 					"modelHandle":modelHandle,
 					"meta":attribute,
+					nullable: attribute.required!=true,
 					editorFactory:this.editorFactory
 				});
 			}else{

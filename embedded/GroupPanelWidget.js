@@ -1,11 +1,12 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
+"dojo/dom-class",
 "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./polymorphic_embedded_attribute.html",
 		"dijit/layout/StackContainer", "dojo/Stateful",
 		"gform/Editor","../group/_GroupMixin","dojox/mvc/equals", "../_LayoutMixin"//
-], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
+], function(array, lang, domClass, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, StackContainer, Stateful,
 		Editor,_GroupMixin, equals, _LayoutMixin) {
 
@@ -61,6 +62,7 @@ define([ "dojo/_base/array", //
 			this.modelHandle.watch("value",lang.hitch(this,"modelChanged"));
 			
 			this.panelModel.watch("type",lang.hitch(this,"switchType"));
+			//this.typeStack.selectChild(this.typeToGroup[currentType]);
 			this.addChild(this.typeStack);
 			this.set("target", this.panelModel);
 		},
@@ -110,6 +112,10 @@ define([ "dojo/_base/array", //
 						}
 					}
 					this.typeStack.selectChild(this.typeToGroup[type]);
+					if (domClass.contains(this.typeToGroup[type].domNode,"dijitHidden")) {
+						// there is an issue with initial visibility
+						domClass.replace(this.typeToGroup[type].domNode, "dijitVisible", "dijitHidden");
+					}
 					this.validateAndFire();
 				}			
 		},

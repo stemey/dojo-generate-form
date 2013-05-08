@@ -33,7 +33,7 @@ define([ "dojo/_base/array", //
 				tabWidget.set("meta",tab);
 				tabWidget.set("iconClass", "dijitErrorIcon");
 				tc.addChild(tabWidget);
-				tc.on("valid-changed", lang.hitch(this,"onValidChanged"));
+				tc.on("state-changed", lang.hitch(this,"onValidChanged"));
 			}, this);
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
@@ -53,7 +53,7 @@ define([ "dojo/_base/array", //
 			var tab=tabWidget.get("meta");
 			if (tabWidget.get("errorCount")>0) {
 				tabWidget.set("iconClass", "dijitIconError");
-				tabWidget.set("title", tab.label+"(<span>"+tabWidget.get("errorCount")+"</span>)");
+				titlePaneWidget.set("title", titlePane.title + "(<span class='errorTooltipNode'>" + titlePaneWidget.get("errorCount") + "</span>)");
 			} else {
 				tabWidget.set("iconClass", "");
 				tabWidget.set("title", tab.label);

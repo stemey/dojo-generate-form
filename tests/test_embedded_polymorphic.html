@@ -15,9 +15,9 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner","gform/createStandardEditorFactory",//
+		require([ "dojo/ready", "dojo/json", "dojo/query", "gform/Editor", "dojo/Stateful", "doh/runner","gform/createStandardEditorFactory",//
 		"dojo/text!./meta/embedded_polymorphic.json", "dojo/text!./entity/embedded_polymorphic.json"//
-		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
+		], function(ready, json, query, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
 
 			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
@@ -81,6 +81,14 @@
 						t.assertEqual("null",typeSelect.value);
 						editor.set("plainValue",{thing:{ext_type:"thing2",firstName:"stefan",common:"meyer"}});
 						t.assertEqual("thing2",typeSelect.value);
+					}
+				},{
+					name : 'initWithNullRequired',
+					runTest : function(t) {
+						var schema =dojo.fromJson(meta);
+						schema.attributes[0].required=true;
+						editor.setMetaAndPlainValue(schema,null);
+						t.assertEqual(2,query("input[type=text]").length);
 					}
 				} 
 			]);

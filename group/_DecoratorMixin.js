@@ -16,7 +16,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 				this.oldValueWatch=this.modelHandle.watch("oldValue",lang.hitch(this,"onOldValueChange"));
 				this.valueWatch=this.modelHandle.watch("value",lang.hitch(this,"onModelValueChange"));
 				this.on("value-changed",lang.hitch(this,"onValueChange"));
-				this.on("valid-changed",lang.hitch(this,"onValidChange"));
+				this.on("state-changed",lang.hitch(this,"onStateChange"));
 			}else{
 				console.log("modelHandle is null "+this.label);
 			}
@@ -78,7 +78,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			this.updateState();
 		},
 
-		onValidChange: function(e	) {
+		onStateChange: function(e	) {
 			this.updateState();
 		},
 		

@@ -123,7 +123,11 @@ define([
 				},this);
 			}
 			if (plainValue==null) {
-				modelHandle.set("value",null);
+				if (meta.required) {
+					modelHandle.set("value",modelHandle.typeToValue[meta.validTypes[0].code].value);
+				} else {
+					modelHandle.set("value",null);
+				}	
 			}else{
 				if (meta.validTypes.length>1 && !meta.type_property) {
 					throw new Error("more than one type defined but no type property");

@@ -40,6 +40,16 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 						]
 		}
 
+		var requiredPolyAttribute={
+						type_property:"ext_type",
+						code:"objectP",
+						required:true,
+						validTypes:[
+							type1,
+							type2
+						]
+		}
+
 		var objectAttribute={
 						type_property:"ext_type",
 						code:"objectP",
@@ -126,6 +136,13 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 				console.log("actual"+dojo.toJson(plainValue));
 				doh.assertTrue(equals(plainValue,polyMeta1.objectP));
 				doh.assertEqual(modelHandle.typeToValue["thing1"].value,modelHandle.value);
+      },
+      function testRequiredPolyObject(){
+				var modelHandle = updateModelHandle.createMeta();
+				updateModelHandle.updatePolyObject(requiredPolyAttribute,null,modelHandle);
+				var plainValue = getPlainValue(modelHandle);
+				doh.assertEqual(requiredPolyAttribute.validTypes[0].code,plainValue.ext_type);
+				doh.assertEqual(modelHandle.value.ext_type.value,plainValue.ext_type);
       },
       function testPolyObjectSwitchType(){
 				var modelHandle = updateModelHandle.createMeta();

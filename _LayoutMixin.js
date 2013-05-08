@@ -1,8 +1,6 @@
 define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declare",
-		"dojox/mvc/_Container", "dijit/layout/_LayoutWidget","dojox/mvc/at", 
-		"dojo/dom-construct", "dojo/Stateful", "./getPlainValue","./updateModelHandle","./hasChanged","./group/_GroupMixin" ], function(array, aspect,  lang,
-		declare, Container, _LayoutWidget,at, domConstruct,
-		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin) {
+		"dojo/dom-geometry", "dojo/dom-style" ], function(array, aspect,  lang,
+		declare, domGeometry, domStyle) {
 		// module: 
 		//		gform/_LayoutMixin
 
@@ -21,12 +19,22 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			array.forEach(this.getChildren(),function(widget) {
 				if (widget.resize) {
 					if (dim) {
-						widget.resize({t:0,l:0,w:dim.w});
+						if (this.domNode) {
+							var cs = domStyle.getComputedStyle(this.domNode);
+							var me = domGeometry.getMarginExtents(this.domNode, cs);
+							var be = domGeometry.getBorderExtents(this.domNode, cs);
+							var pe = domGeometry.getPadExtents(this.domNode, cs);
+							var width = dim.w- 2*(me.w + be.w + pe.w);
+							console.log("   "+this.id+" e "+dim.w+" "+width); 
+							widget.resize({t:0,l:0,w: width});
+						}else{
+							widget.resize({t:0,l:0,w:dim.w});
+						}
 					} else {
 						widget.resize();
 					}
 				}
-			});
+			}, this);
 		}
 
 	});

@@ -2,7 +2,7 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare"//
 ], function(array, lang, declare) {
-//the _GroupMixin listens to modelHandle.state and updates the cached errorCount. It also listens to valid-changed fire by embedded attributes and updates the errorCount. 
+//the _GroupMixin listens to modelHandle.state and updates the cached errorCount. It also listens to state-changed fire by embedded attributes and updates the errorCount. 
 
 	return declare("gform.group._GroupMixin", null, {
 		isValidationContainer:true,
@@ -17,9 +17,9 @@ define([ "dojo/_base/array", //
 				if (this.modelHandle && !this.modelHandle.tmp) {
 					throw new Error("modelHandle.tmp is null");
 				}
-			this.on("valid-changed",lang.hitch(this,"onValidChanged"));
+			this.on("state-changed",lang.hitch(this,"onStateChanged"));
 			if (this.persistable) {
-				this.validWatch=this.modelHandle.watch("state",lang.hitch(this,"onModelValidChanged"));
+				this.validWatch=this.modelHandle.watch("state",lang.hitch(this,"onModelStateChanged"));
 			}
 		},
 		destroy: function() {
@@ -33,13 +33,13 @@ define([ "dojo/_base/array", //
 			return this.id;	
 		},
 		
-		onModelValidChanged: function(propName,old,nu) {
+		onModelStateChanged: function(propName,old,nu) {
 			if (old!=nu) {
 				this.validateAndFire();
 			}
 		},
 		
-		onValidChanged: function(event) {
+		onStateChanged: function(event) {
 			if (event.source==this) {
 				return;
 			}
@@ -75,7 +75,7 @@ define([ "dojo/_base/array", //
 			if (this.persistable) {
 				this.set("errorCount",errorCount);
 			}
-			this.emit("valid-changed",{source:this});
+			this.emit("state-changed",{source:this});
 		},
 		
 		getChildrenToValidate: function() {
@@ -106,6 +106,10 @@ define([ "dojo/_base/array", //
 		},
 		
 		validate : function(force,errorCount) {
+		// summary:
+		//		validates the children of this group and returns the errorCount.
+		// force:
+		//		if set to true will force validation of dijits, so that they will be in state "Error" rather than "Incomplete".
 			errorCount=0;	
 			if (this.validateChildren) {
 				errorCount+= this._validateChildren(this.getChildrenToValidate(),force);

@@ -52,7 +52,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 					if (index >= 0) {
 						this.parent.children.splice(index, 1);
 					}
-					eventDispatcher.emit("valid-changed");
+					eventDispatcher.emit("state-changed");
 				},
 				switchedType:	function(propName,oldType,newType) {
 						if (oldType!=newType) {	

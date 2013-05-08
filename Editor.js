@@ -40,6 +40,9 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		// ////////////////////////
 
 		setMetaAndPlainValue: function(meta,value) {
+			if (value==null) {
+				value={};
+			}
 			this.meta=meta;
 			this.modelHandle=updateModelHandle.createMeta();
 			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);

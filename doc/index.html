@@ -6,7 +6,21 @@
 </head>
 <body>
 	<h2>Gform</h2>
-	<p>Gform helps you creating forms for your <a href="http://www.dojotoolkit.org">dojo</a> application. The form is created according to your data model's schema. <a href="http://json-schema.org/">Json schema (v0.3)</a> and gform schema are supported formats. The former is a standard schema for json data and supported by a lot of libraries. The latter is a specialized schema that provides extra information to take advantage of all gform features like 'groups'.</p>
+	<p>Gform helps you creating forms for your <a href="http://www.dojotoolkit.org">dojo</a> application. Gform is best-suited for administrative frontends that require the user to enter lots of data and the layout does not require any special conversion rate optimization features like fancy visual effects. A gform form is initialized by javascript with a json object and the modified object is read by javascript - e.g. the form can be bound to a dojo store. Posting the gform like an html form is currently not supported.  
+
+The form is created according to your data model's schema and thus he development effort stays constant even for complexe data structures. The main steps to using gform
+- provide a schema for you data model. Maybe use one of these tools
+- integrate the Editor dijit in you dojo application
+- add buttons to load data into the editor
+- add uttons to validate and process the editored data.
+
+Steps you don't need to take:
+- You don't need to add layouting. THis is taken care of. 
+- Validation rules can be defined in the schema.
+- 
+
+
+<a href="http://json-schema.org/">Json schema (v0.3)</a> and gform schema are supported formats. The former is a standard schema for json data and supported by a lot of libraries. The latter is a specialized schema that provides extra information to take advantage of all gform features like 'groups'.</p>
 
 <ul>
 	<li>

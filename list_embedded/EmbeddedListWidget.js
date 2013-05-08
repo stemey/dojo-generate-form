@@ -22,7 +22,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 				updateModelHandle.updateObject(this.attribute,newValue,newModelHandle, this.editorFactory);
 			}
 			this.target.value.push(newModelHandle);
-			this.emit("valid-changed");
+			this.emit("state-changed");
 			this.emit("value-changed");
 		},
 		postCreate : function() {

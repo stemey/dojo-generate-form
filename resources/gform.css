@@ -59,15 +59,26 @@ body,html {
 	margin: 0 5px;
 }
 
-.editor .row {
-	margin-bottom: 0.5em
+.editor.row {
+	margin-bottom: 0.8em;
+	margin-right: 0.5em;
+	position:relative;
+	-webkit-column-break-inside: avoid;
+	-moz-column-break-inside: avoid;
+	column-break-inside: avoid;
 }
 
-.editor label {
-	min-width: 8em;
-	display: inline-block;
-	margin-bottom: 0.5em;
+.editor .body {
+	margin-left: 1.5em;
+}
+
+.editor .label {
+	margin-bottom: 0.6em;
 	vertical-align:top;
+}
+
+.label label {
+	margin-right: 10px;
 }
 
 .editor .dijitSelect {
@@ -86,8 +97,55 @@ body,html {
 }
 
 .editor textarea.dijitTextArea{
-	margin-top:20px;
+	//margin-top:20px;
 	display:block;
+}
+
+
+
+
+.label span.error {
+	color: red;
+	border-color: red;
+	padding: 1px 4px;
+}
+.label span.changes {
+	color: green;
+	border-color: green;
+}
+.label span.description {
+	color: #666;
+	border-color: #666;
+}
+
+.label span{
+	font-weight: bold;
+	font-size: 5pt;	
+	border: 1px solid;
+	border-radius: 7px;
+	padding: 1px 3px;
+	background-color:#fff;
+	margin-left:3px;
+	position:relative;
+	vertical-align: top;	
+	top:4px;
+
+}
+
+/* from admin */
+.dijitContentPane div span.pageName{font-size: 16px;padding: 10px 0 10px 10px;display: block;background-color: #08298A;color: #fff;width:700px;}
+.dijitContentPane div ul li.moduleContainer{list-style-type:none;padding-top:10px;}
+
+span.errorTooltipNode{
+	border: 1px solid red;
+	background-color: #fff;
+	border-radius: 10px;
+	width: 10px;
+	height: 10px;
+	padding: 1px 6px;
+	color: red;
+	text-align: center;
+	margin-left: 6px;
 }
 
 /* select is not properly displayed in table list without this */
