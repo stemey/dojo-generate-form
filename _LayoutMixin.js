@@ -25,7 +25,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 							var be = domGeometry.getBorderExtents(this.domNode, cs);
 							var pe = domGeometry.getPadExtents(this.domNode, cs);
 							var width = dim.w- 2*(me.w + be.w + pe.w);
-							console.log("   "+this.id+" e "+dim.w+" "+width); 
+							//console.log("   "+this.id+" e "+dim.w+" "+width); 
 							widget.resize({t:0,l:0,w: width});
 						}else{
 							widget.resize({t:0,l:0,w:dim.w});
