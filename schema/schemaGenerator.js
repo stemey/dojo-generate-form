@@ -28,7 +28,7 @@ define([ "dojo/_base/array", //
 						subschema.properties={};
 					}
 					subschema.properties.groupType={type:"string", required:true, visible:false};		
-					subschema.properties.groupType.enum=[key];
+					subschema.properties.groupType["enum"]=[key];
 					subschema.id=key;
 					definitions.push(subschema);
 					groupsRef.push({$ref:key});
@@ -55,7 +55,7 @@ define([ "dojo/_base/array", //
 				if (af &&  af.getSchema) {
 					var subschema = af.getSchema();	
 					subschema.id=key;
-					subschema.properties.editor={type:"string",required:true,enum:[key]};
+					subschema.properties.editor={type:"string",required:true,"enum":[key]};
 					definitions.push(subschema);
 					attributesRef.push({$ref:subschema.id});
 				}

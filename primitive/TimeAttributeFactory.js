@@ -58,7 +58,7 @@ define([ "dojo/_base/array", //
 			schema.example=dojo.toJson({code:"wakeupTime",type:"time"},true);
 			schema.instanceExample=dojo.toJson({wakeupTime:"8:30"},true);
 			schema.properties={};
-			schema.properties.type={type:"string",required:true,enum:["time"]};
+			schema.properties.type={type:"string",required:true,"enum":["time"]};
 			lang.mixin(schema.properties,standardAttributeProperties);
 			schema.properties["required"]={ type : "boolean"};
 			schema.properties["missingMessage"]={ type : "string"};

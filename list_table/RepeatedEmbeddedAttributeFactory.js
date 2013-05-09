@@ -84,7 +84,7 @@ define([ "dojo/_base/array", //
 			schema.description="This attribute represents an array of objects. They are displayed in a table. validTypes describes the possible types/groups of objects. The table columns represent the union of all properties. Common properties appear only once. Proerty cells will be invisible if not applicable to the rows object";
 			schema.example=embeddedExample;
 			schema.instanceExample=embeddedInstanceExample;
-			schema.properties.editor={type:"string",enum:["table"],required:true};
+			schema.properties.editor={type:"string","enum":["table"],required:true};
 			return schema;
 		}
 	})

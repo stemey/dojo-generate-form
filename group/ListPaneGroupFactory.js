@@ -6,12 +6,11 @@ define([ "dojo/_base/array", //
 "dijit/layout/ContentPane",//
 "../AttributeFactoryFinder",//
 "dojo/on",//
-"../visit",//
 "./ListPane",//
 "./DescriptionWidget"
 
 ], function(array, lang, declare, at, GroupFactory,  ListPaneGroupWidget,
-		AttributeFactoryFinder, on, visit,ListPane, DescriptionWidget, _GroupMixin) {
+		AttributeFactoryFinder, on, ListPane, DescriptionWidget, _GroupMixin) {
 
 	return declare("gform.ListPaneGroupFactory", [GroupFactory], {
 		createWidget : function(group) {

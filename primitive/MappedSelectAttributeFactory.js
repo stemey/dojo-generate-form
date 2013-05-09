@@ -69,7 +69,7 @@ define([ "dojo/_base/array",
 			schema["example"]=example;
 			schema["exampleForDoc"]=exampleForDoc;
 			schema.properties=properties;
-			properties.type={type:"string",required:true,enum:["string"]};
+			properties.type={type:"string",required:true,"enum":["string"]};
 			properties.mapped_values=dijitHelper.getMappedValuesSchema();	
 			properties.mapped_attribute={type:"string",description:"the name of a sibling property"};	
 			dijitHelper.addSchemaProperties(properties);

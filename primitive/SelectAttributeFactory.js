@@ -50,7 +50,7 @@ define([ "dojo/_base/array", //
 			schema["description"]="This is a select field. The options are specified as an array of label value pairs and or values. It is based on 'dijit.form.Select'";
 			schema["example"]=dojo.toJson({code:'name',type:'string',values:[{label:"Mr.",value:"Mr"},"Mrs."]},true);
 			schema.properties=properties;
-			properties.type={type:"string",required:true,enum:["string"]};
+			properties.type={type:"string",required:true,"enum":["string"]};
 			properties.values={
 				type:"array",
 				items:{

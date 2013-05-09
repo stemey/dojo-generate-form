@@ -42,7 +42,7 @@ define(
 				schema["description"]="This is a textfield for numerical values based on 'dijit.form.NumberTextBox'.";
 				schema["example"]=dojo.toJson({code:'name',type:'number',numberFormat:"#.###"},true);
 				var properties={};
-				properties.type	={type:"string",required:true,enum:["number"]};
+				properties.type	={type:"string",required:true,"enum":["number"]};
 				dijitHelper.addSchemaProperties(properties);
 				dijitHelper.addSchemaProperty("required",properties);
 				dijitHelper.addSchemaProperty("maxLength",properties);

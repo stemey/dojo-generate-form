@@ -30,7 +30,7 @@ define([ "dojo/_base/array", //
 			schema["description"]="This is a textfield based on 'dijit.form.ValidationTextBox'";
 			schema["example"]=dojo.toJson({code:'name',type:'string'},true);
 			var properties={};
-			properties.type={type:"string",required:true,enum:["string"]};
+			properties.type={type:"string",required:true,"enum":["string"]};
 			dijitHelper.addSchemaProperties(properties);
 			dijitHelper.addSchemaProperty("required",properties);
 			dijitHelper.addSchemaProperty("maxLength",properties);

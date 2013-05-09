@@ -54,7 +54,7 @@ define([ "dojo/_base/array", //
 			schema["example"]=dojo.toJson({code:'birthday',type:'date'},true);
 			schema["instanceExample"]=dojo.toJson({birthday:"2013-01-31"},true);
 			schema.properties=properties;
-			properties.type={type:"string",required:true,enum:["date"]};
+			properties.type={type:"string",required:true,"enum":["date"]};
 			dijitHelper.addSchemaProperties(properties);
 			dijitHelper.addSchemaProperty("required",properties);
 			properties["readOnly"]={ type : "boolean"};
