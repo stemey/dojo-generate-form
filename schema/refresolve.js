@@ -5,12 +5,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","./Resolver
 	function resolveRecursively(obj,resolver) {
 		resolver = resolver || new Resolver();
 		_resolve(resolver,obj,null);
-		var promise=resolver.finish();
-		if (promise.isResolved()) {
-			return obj;
-		} else {
-			return {result: obj, promise:promise}
-		}	
+		return resolver.finish();
 	}
 
 	function _resolve(resolver,obj,setter) {
