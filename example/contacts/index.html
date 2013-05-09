@@ -24,7 +24,7 @@
 			parser.parse();
 			try {
 				var schema = json.parse(jsonSchema);
-				var resolved= refresolve(schema, new Resolver({baseUrl: "/gform/example/contacts/"}));
+				var resolved= refresolve(schema, new Resolver());
 			} catch (e) {
 				console.log(e.message+"  "+ e.stack);
 			}
