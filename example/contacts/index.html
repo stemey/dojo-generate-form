@@ -28,7 +28,7 @@
 			} catch (e) {
 				console.log(e.message+"  "+ e.stack);
 			}
-			when(resolved.promise).then(function(result) {
+			when(resolved).then(function() {
 				var meta = convertSchema(schema);
 
 				var editorFactory = createEditorFactory();
