@@ -83,6 +83,7 @@ INSTALLATION
 ------------
 
 this project is organized like most dojo libraries. If your project is based on the dojo boilerplate layout you can integrate it by adding it as a git submodule named "gform" (not dojo-generate-form) parallel to dojo, dijit, dojox and util. 
+
 To just checkout the tests, tutorials and the documentation clone gform parallel to dojo, dojox, dijit and util.
 To view the tutorials you also need to install [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) in a parallel directory named sh.
 To view the [gridx](http://github.com/oria/gridx) examples install gridx in a parallel directory called gridx. 
