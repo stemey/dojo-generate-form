@@ -1,9 +1,9 @@
 define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declare",
 		 "dijit/layout/_LayoutWidget", "dijit/layout/utils", "dojo/dom-style","dojo/dom-geometry",
-		"dojo/dom-construct", "dojo/dom-class" ], function(array, aspect,  lang,
-		declare,  _LayoutWidget, layoutUtils, domStyle, domGeometry, domConstruct, domClass) {
+		"dojo/dom-construct", "dojo/dom-class", "../group/_GroupMixin" ], function(array, aspect,  lang,
+		declare,  _LayoutWidget, layoutUtils, domStyle, domGeometry, domConstruct, domClass, _GroupMixin) {
 
-	return declare("gform.layout.ColumnContainer", [_LayoutWidget], {
+	return declare("gform.layout.ColumnContainer", [_LayoutWidget, _GroupMixin], {
 		baseClass : "gformColumnContainer",
 		buildRendering: function() {
 			this.inherited(arguments);
