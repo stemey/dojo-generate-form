@@ -11,14 +11,16 @@
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../../dojo/dojo.js"
-		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: false"></script>
+	<!-- this is the optimized gform library - not availabe in dev mode -->
+	<script type="text/javascript" src="../../../dojo/gform.js"></script>
 
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful",  "gform/createLayoutEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
 		"dojo/text!./kitchensink_schema.json", "dojo/text!./kitchensink_data.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button"//
-		], function(ready, json, Editor, Stateful, doh, createStandardEditorFactory ,on,RepeatedEmbeddedAttributeFactory, meta, entity, registry,BorderContainer,parser,ListPaneGroupFactory) {
+		], function(ready, json, Editor, Stateful, createStandardEditorFactory ,on,RepeatedEmbeddedAttributeFactory, meta, entity, registry,BorderContainer,parser,ListPaneGroupFactory) {
 			parser.parse();
 			var editorFactory = createStandardEditorFactory();
 			 editor = new Editor({
