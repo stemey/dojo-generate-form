@@ -18,18 +18,16 @@ define([ "dojo/_base/array", //
 			}
 		},
 		convertAttribute: function(prop,attribute,converted) {
-			
-			//attribute.type=prop.type;
 			this.copy("description","description",prop,attribute);
 			this.copy("title","label",prop,attribute);
 			this.copy("required","required",prop,attribute);
 			this.copy("visible","visible",prop,attribute);
 			this.copy("readonly","readonly",prop,attribute);
-			if (prop.enum) {
+			if (prop["enum"]) {
 				attribute.values=[];
-				for (var key in prop.enum) {
+				for (var key in prop["enum"]) {
 					if (key!="__parent") {
-						attribute.values.push(prop.enum[key]);
+						attribute.values.push(prop["enum"][key]);
 					}
 				}
 			}
@@ -81,8 +79,6 @@ define([ "dojo/_base/array", //
 			}
 		},
 		convert: function(schema,converted,/**local variables*/meta) {
-			//schema=ref.resolveJson(schema);
-			//refresolve(schema);
 			if (!schema.properties) {
 				throw new Error("no properties defined in schema "+schema);
 			}
@@ -98,9 +94,7 @@ define([ "dojo/_base/array", //
 				meta.code=schema.id;
 				converted[schema.id]=meta;
 			}
-			//return  meta;
 			for (var key in schema.properties) {
-				// "__parent" is added by dojox/json/ref
 				if (key!="__parent") {
 					var attribute={};
 					attribute.code=key;
