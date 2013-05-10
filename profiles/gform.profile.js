@@ -4,6 +4,7 @@ dependencies = {
 	optimize:"shrinksafe",
 	stripConsole: "normal",
 	cssOptimize: "comments",
+	copyTests: "build",
 	layers: [{
 		name: "gform.js",
 		dependencies: [
@@ -18,6 +19,6 @@ dependencies = {
 		[ "doh", "../util/doh" ],
 		[ "gform", "../gform" ],
 		[ "gridx", "../gridx" ],
-		//[ "json-schema", "../json-schema" ]
+		[ "json-schema", "../json-schema" ]
 	]
 }
