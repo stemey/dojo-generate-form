@@ -31,7 +31,6 @@ define([ "dojo/_base/array", //
 				var tabWidget = this.editorFactory.create(tab, modelHandle);
 				tabWidget.set("title", tab.label);
 				tabWidget.set("meta",tab);
-				tabWidget.set("iconClass", "dijitErrorIcon");
 				tc.addChild(tabWidget);
 				tc.on("state-changed", lang.hitch(this,"onValidChanged"));
 			}, this);
@@ -52,10 +51,8 @@ define([ "dojo/_base/array", //
 			var tabWidget=e.source;
 			var tab=tabWidget.get("meta");
 			if (tabWidget.get("errorCount")>0) {
-				tabWidget.set("iconClass", "dijitIconError");
-				titlePaneWidget.set("title", titlePane.title + "(<span class='errorTooltipNode'>" + titlePaneWidget.get("errorCount") + "</span>)");
+				tabWidget.set("title", tab.label + "<span class='errorTooltipNode'>" + tabWidget.get("errorCount") + "</span>");
 			} else {
-				tabWidget.set("iconClass", "");
 				tabWidget.set("title", tab.label);
 			}
 		},		
