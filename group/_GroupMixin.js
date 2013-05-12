@@ -81,7 +81,6 @@ define([ "dojo/_base/array", //
 		getChildrenToValidate: function() {
 			return this.getChildren() || children;
 		},	
-		
 		_validateChildren: function(children,force,errorCount){
 			if (!children) {
 				return 0;
@@ -119,6 +118,27 @@ define([ "dojo/_base/array", //
 			}
 			return errorCount;
 		},
+		_resetChildren: function(children){
+			if (children) {
+				array.forEach(children,function(child,ec) {
+					if (child.isValidationContainer) {
+						child.reset();
+					}else if (child.validate){
+						// this will trigger an update to the errorCount in the surrounding GroupMixin. The number will be picked up later 
+						console.debug("reset blur "+child.id);
+						child._hasBeenBlurred=false;
+						child.set("message",null);
+						child.set("state","");
+					}
+				},this);
+			}
+		},
+		reset: function() {
+			console.debug("reset "+this.id);
+			if (this.validateChildren) {
+				this._resetChildren(this.getChildrenToValidate());
+			}
+		},		
 		_getIncompleteCountChildren: function(children,incompleteCount){
 			if (!children) {
 				return 0;

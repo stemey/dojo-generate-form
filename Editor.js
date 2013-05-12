@@ -180,7 +180,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		//		visit the data attribute defined by the path. The path elements are separated by dots -even the indices (e.g.: "person.friends.1.name"). 
 			var pathElements=path.split(".");
 			var model=this.get("modelHandle");
-			//TODO we need to consult the editorFactory t do this properly. 
+			//TODO we need to consult the editorFactory to do this properly. 
 			array.forEach(pathElements,function(pathElement){
 				if (!model) {
 					throw new Error("cannot resolve path "+path);
@@ -201,6 +201,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		//		reset the data to its original value.
 			var oldValue=this.modelHandle.oldValue;
 			this.set("plainValue",oldValue);
+			this.inherited(arguments);
 		},	
 		_destroyBody : function() {
 			if (this.widget != null) {
