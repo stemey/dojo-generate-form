@@ -22,7 +22,7 @@ define([ "dojo/_base/array", //
 			var titlePaneWidget = e.source;
 			var titlePane = titlePaneWidget.get("meta");
 			if (titlePaneWidget.get("errorCount") > 0) {
-				titlePaneWidget.set("title", titlePane.title + "(<span class='errorTooltipNode'>" + titlePaneWidget.get("errorCount") + "</span>)");
+				titlePaneWidget.set("title", titlePane.title + "<span class='errorTooltipNode'>" + titlePaneWidget.get("errorCount") + "</span>");
 			} else {
 				titlePaneWidget.set("title", titlePane.title);
 			}
