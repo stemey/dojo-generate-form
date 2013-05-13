@@ -6,8 +6,8 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		// module: 
 		//		gform/Editor
 
-	// at needs to be globally defined.
-	window.at = at; 
+	// at needs to be available globally.
+	window.at = at;
 
 	return declare("gform.Editor", [ Container,_GroupMixin ], {
 		// summary:
@@ -17,7 +17,9 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		// 		the editorFactory is responsible for translating the schema into a widget tree.
 
 		widget : null,
-		children : null,
+		// summary:
+		//		this is the single child widget.
+
 		modelHandle : null,
 		// summary:
 		// 		the data that is bound to the form.
@@ -26,20 +28,16 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		// summary:
 		// 		the schema describing the form.
 
-		// _relTargetProp: String
-		// The name of the property that is used by child
-		// widgets for relative
-		// data binding.
-		_relTargetProp : "children",
 		isLayoutContainer:true,
+		// summary:
+		//		Editor supports layouts by propagating the resizing to its child.
 		
 		// remember all field paths where an explicit error message was added via addError()
 		_explicitErrorPaths : [],
 
-		// //////////////////// PRIVATE METHODS
-		// ////////////////////////
-
 		setMetaAndPlainValue: function(meta,value) {
+		// summary:
+		//		Change the schema and the value simultaneously.
 			if (value==null) {
 				value={};
 			}
@@ -71,82 +69,10 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			// send change event because oldValue changed and hasChanged will return something new
 			this.emit("value-changed");
 		},
-		_getPlainValueAttr: function() {
-			return getPlainValue(this.modelHandle);
-		},
-		_setMetaUrlAttr: function(url) {
-			var me = this;
-			require(["dojo/text!"+url],function(metaJson) {
-				me.set("meta",dojo.fromJson(metaJson));
-			});
-		},
 		hasChanged: function() {
 		// summary:
 		// 		returns true if the data was changed.
 			return hasChanged(this.modelHandle);
-		},
-		resize: function(dim) {
-			this.dim=dim;
-			if (this.widget && this.widget.resize) {
-				if (dim) {
-					this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
-				} else {
-					this.widget.resize();
-				}
-			}
-		},
-		postCreate : function() {
-			this.inherited(arguments);
-			this.containerNode=this.domNode;
-			this.watch("meta", lang.hitch(this, "_buildContained"));
-			if (this.meta) {
-				this._buildContained();
-			}
-		},
-		startup : function() {
-			this.inherited(arguments);
-			this._started=true;
-			if (this.widget) {
-				this.widget.startup();
-			}
-			this.resize();
-		},
-		_buildContained: function() {
-			if (this.modelHandle == null) {
-				this.set("plainValue",{});
-			}
-			try {
-				if (this.widget) {
-					this.widget.destroy();
-				}
-				if (this.get("meta") && this.editorFactory) {
-					this.widget = this.editorFactory.create(this.get("meta"),
-							this.modelHandle);
-					if (typeof this.get("doLayout")!="undefined") {
-						this.widget.set("doLayout",this.get("doLayout"));
-						var widget = this.widget;	
-						if (widget.resize) {
-							aspect.after(this.widget,"startup",function() {
-							//	widget.resize();
-							});
-						}
-					}
-					if (this.widget && this.domNode) {
-						domConstruct.place(this.widget.domNode, this.domNode);
-						if (this._started) {
-							this.widget.startup();
-						}
-					}
-					if (this._started && this.dim) {
-						this.resize(this.dim);
-					}else if (this._started){
-						this.resize();
-					}
-				}
-			} catch (e) {
-				console.log("cannot create editor. " + e.message+" "+ e.stack);
-				 throw e;
-			}
 		},
 		addError: function(path,message) {
 		// summary:
@@ -203,6 +129,78 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			this.set("plainValue",oldValue);
 			this.inherited(arguments);
 		},	
+		resize: function(dim) {
+			this.dim=dim;
+			if (this.widget && this.widget.resize) {
+				if (dim) {
+					this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
+				} else {
+					this.widget.resize();
+				}
+			}
+		},
+		postCreate : function() {
+			this.inherited(arguments);
+			this.containerNode=this.domNode;
+			this.watch("meta", lang.hitch(this, "_buildContained"));
+			if (this.meta) {
+				this._buildContained();
+			}
+		},
+		startup : function() {
+			this.inherited(arguments);
+			this._started=true;
+			if (this.widget) {
+				this.widget.startup();
+			}
+			this.resize();
+		},
+		_getPlainValueAttr: function() {
+			return getPlainValue(this.modelHandle);
+		},
+		_setMetaUrlAttr: function(url) {
+			var me = this;
+			require(["dojo/text!"+url],function(metaJson) {
+				me.set("meta",dojo.fromJson(metaJson));
+			});
+		},
+		_buildContained: function() {
+			if (this.modelHandle == null) {
+				this.set("plainValue",{});
+			}
+			try {
+				if (this.widget) {
+					this.widget.destroy();
+				}
+				if (this.get("meta") && this.editorFactory) {
+					this.widget = this.editorFactory.create(this.get("meta"),
+							this.modelHandle);
+					if (typeof this.get("doLayout")!="undefined") {
+						this.widget.set("doLayout",this.get("doLayout"));
+						var widget = this.widget;	
+						if (widget.resize) {
+							aspect.after(this.widget,"startup",function() {
+							//	widget.resize();
+							});
+						}
+					}
+					if (this.widget && this.domNode) {
+						domConstruct.place(this.widget.domNode, this.domNode);
+						if (this._started) {
+							this.widget.startup();
+						}
+					}
+					if (this._started && this.dim) {
+						this.resize(this.dim);
+					}else if (this._started){
+						this.resize();
+					}
+				}
+			} catch (e) {
+				console.log("cannot create editor. " + e.message+" "+ e.stack);
+				 throw e;
+			}
+		},
 		_destroyBody : function() {
 			if (this.widget != null) {
 				this.widget.destroy();
