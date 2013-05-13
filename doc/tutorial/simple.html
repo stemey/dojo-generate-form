@@ -3,12 +3,12 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<title>Getting Started</title>
-	<script src="/sh/scripts/XRegExp.js"></script>
-	<script src="/sh/scripts/shCore.js"></script>
-	<script src="/sh/scripts/shBrushJScript.js"></script>
-	<link type="text/css" rel="stylesheet" href="/sh/styles/shCoreDefault.css"/>
-	<script src='/sh/scripts/shBrushXml.js' type='text/javascript'></script>
-	<script src='/sh/scripts/shBrushCss.js' type='text/javascript'></script>
+	<script src="../../../sh/scripts/XRegExp.js"></script>
+	<script src="../../../sh/scripts/shCore.js"></script>
+	<script src="../../../sh/scripts/shBrushJScript.js"></script>
+	<link type="text/css" rel="stylesheet" href="../../../sh/styles/shCoreDefault.css"/>
+	<script src='../../../sh/scripts/shBrushXml.js' type='text/javascript'></script>
+	<script src='../../../sh/scripts/shBrushCss.js' type='text/javascript'></script>
 	<script>
 		SyntaxHighlighter.all();
 	</script>
@@ -16,8 +16,15 @@
 <body>
 	<h2>Getting Started with Gform</h2>
 	<ol>
+		<li><a href="#model">Defining the data model</a></li>
+		<li><a href="#declarative">Declarative example</a></li>
+		<li><a href="#programmatic">Programmatic example</a></li>
+		<li><a href="#state">Displaying state</a></li>
+		<li><a href="#save">Validate and save</a></li>
+	</ol>
+	<ol>
 		<li>
-			<h3>Defining the data model</h3>
+			<h3><a namw="model">Defining the data model</a></h3>
 			<p>
 				Gform is all about schemas. Our data model has two fields of type "string". Both are required and only allow letters as input. 
 			</p>
@@ -41,7 +48,7 @@
 			</pre>
 		</li>
 		<li>	
-		<h3>Declarative example</h3>
+		<h3><a name="declarative">Declarative example</a></h3>
 		<p>
 			The first step is to load an editorFactory. EditorFactories are responsible for creating the form according to the schema. There are two predefined editorFactories: one for general use and one especially for use inside layout containers. You can either load the editorFactory with the module "createXXXEditorFactory" which returns a function to create it or you can have the editorFactory be made available in the global variable "gform.ef.XXX" by using the module "registerXXXLEditorFactory". 
 		</p>
@@ -63,7 +70,7 @@
 		</p>
 		</li>
 		<li>
-		<h3>Programmatic example</h3>
+		<h3><a name="programmatic">Programmatic example</a></h3>
 		<p>
 			This time we assemble the widget and then put it in the dom. 
 		</p>
@@ -91,7 +98,7 @@
 		</p>
 		</li>
 		<li>
-		<h3>Displaying state</h3>
+		<h3><a name="state">Displaying state</a></h3>
 		<p>
 			Some dijits support validation and so do the attributes that use them. The attribute for type "string" is based on dijit/ValidationTextBox which supports the constraints "required" and "regex pattern". These dijits support three states: invalid ("Error"), incomplete ("Incomplete") and valid (""). Incomplete fields require the user to input a value but the user has not touched them yet. The state of the whole form is therefore  characterized by the numbers "errorCount" and "incompleteCount". 
 	</p>
@@ -132,7 +139,7 @@
 		</p>
 		</li>
 		<li>
-		<h3>Validating and Saving</h3>
+		<h3><a name="save">Validating and Saving</a></h3>
 		<p>
 			After the user has finished editing he will want to save/submit/send the changed json. Beforehand the json needs to be validated by calling 'validate(true)'. If the data is valid the json will be displayed in a popup.  
 	</p>

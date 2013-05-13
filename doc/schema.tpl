@@ -1,12 +1,12 @@
 <div>
-	<h2>Documentation of gform schema</h3>
-	<p>This documentation was generated for the standard editorFactory. EditorFactories create the form from the schema. They differ in the attributes and groups they support. An editorFactory for mobiles will support a different set of attributes. The generally supported attributes will probably be the same for mobile and desktop devices but the actual dijits will be different and support different features.
+	<h2>Gform schema documentation</h3>
+	<p>This documentation was generated for the standard editorFactory. EditorFactories create a form according to a schema. They differ in the attributes and groups they support. An editorFactory for mobiles will support a different set of attributes. The attributes that are generally supported are most likely the same for mobile and desktop devices but the widgets are different and support different features.
 </p> 	
 
 	<h3>Attributes</h3>
 
 <p>
-	An attribute may be displayed in different ways. A string can be edited in a textfield or a textarea or a wysiwyg editor. The dijit representing the attribute can be defined using different strategies. Either it is chosen by an id called `editor` or it is chosen programmatically by its properties. A string with maxLength greater than 1000 characters should rather be displayed in a textarea. This logic is implemented in the `create` function of the attributeFactory that handles attributes of type `string`. To choose the dijit by its id the attribute in the gform schema must define the property `editor`.
+	An attribute may be displayed in different ways. A string can be edited in a textfield or a textarea or a wysiwyg editor. The widget representing the attribute can be defined using different strategies. Either it is chosen by an id called `editor` or it is chosen programmatically by its properties. A string with maxLength greater than 1000 characters should rather be displayed in a textarea. This logic is implemented in the `create` function of the attributeFactory that handles attributes of type `string`. To choose the dijit by its id the attribute in the gform schema must define the property `editor`.
 </p>
 
 <p>
