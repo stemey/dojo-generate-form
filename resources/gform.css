@@ -61,7 +61,7 @@ body,html {
 
 .editor.row {
 	margin-bottom: 0.8em;
-	margin-right: 0.5em;
+	//margin-right: 0.5em;
 	position:relative;
 	-webkit-column-break-inside: avoid;
 	-moz-column-break-inside: avoid;
@@ -71,7 +71,7 @@ body,html {
 
 .editor .body {
 	padding-left: 1.5em;
-	padding-right: 1.5em;
+	//padding-right: 1.5em;
 }
 
 .editor .label {
@@ -84,7 +84,7 @@ div.label {
 }
 
 .label label {
-	margin-right: 10px;
+	//margin-right: 10px;
 }
 
 .editor .dijitSelect {

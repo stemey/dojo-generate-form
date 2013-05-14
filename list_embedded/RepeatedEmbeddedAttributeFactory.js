@@ -7,7 +7,7 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
-"dojox/mvc/WidgetList",//
+"../LayoutWidgetList",//
 "./RepeatedEmbeddedWidget",//
 "../updateModelHandle",//
 "dojox/mvc/StatefulArray",//
@@ -39,8 +39,7 @@ define([ "dojo/_base/array", //
 
 			var childMeta = attribute.validTypes? attribute:attribute.type;
 
-			var wlc = declare([WidgetList,_LayoutMixin]);;
-			var widgetList = new wlc();
+			var widgetList = new WidgetList();
 			widgetList.set("partialRebuild", true);
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
