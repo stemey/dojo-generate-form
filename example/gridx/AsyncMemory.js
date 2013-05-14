@@ -50,7 +50,7 @@ return declare([], {
 		var me = this;
 		var entity = this.wrapped.get(id);
 		return finishDeferred(entity.error,function(){
-			return me.wrapped.get(id);
+			return me.wrapped.remove(id);
 		});
 	},
 	query: function(query, options){

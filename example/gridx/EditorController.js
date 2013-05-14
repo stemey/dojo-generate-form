@@ -105,7 +105,8 @@ return declare("gform.tests.gridx.EditorController", [ _WidgetBase, _TemplatedMi
 			}
 		},
 		_onAdd: function(result) {
-			this.set("state","edit");
+			this.set("state","create");
+			this.editor.reset();	
 			this._removeChangeIndicator();
 		},
 		_removeChangeIndicator: function() {
