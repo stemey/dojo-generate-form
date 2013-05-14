@@ -16,11 +16,14 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		layout: function() {
 			var oldColumnCount=this.columnCount;
 			var childCount=this._getChildCount();
-			var maxChildWidth =this._getMaxChildWidth();
-			this.columnCount=Math.floor(this._contentBox.w/maxChildWidth); 
-			if (this._contentBox.w>650) {
-				console.log("very wide "+this._contentBox.w+"  "+maxChildWidth+ " "+Math.floor(this.columnCount));
+			if (!this.maxChildWidth) {
+				var width = this._getMaxChildWidth();
+				if (width>0) {
+					this.maxChildWidth = width;
+					console.log("maxChildWidth "+width+" width :"+this._contentBox.w);
+				}
 			}
+			this.columnCount=Math.floor(this._contentBox.w/this.maxChildWidth); 
 			if (isNaN(this.columnCount)) {
 				this.columnCount=1;
 			}
@@ -60,10 +63,25 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			var maxChildWidth=0;
 			array.forEach(this.getChildren(),function(child) {
 				var dim=domGeometry.getMarginBox(child.domNode);
-				if (dim.w>maxChildWidth) {
-					maxChildWidth=dim.w;
+				if (dim.w<this._contentBox.w-1) {
+					console.log("new width "+dim.w+ ">" +this._contentBox.w);
+					if (dim.w>maxChildWidth) {
+						maxChildWidth=dim.w;
+					}
+				} else {
+					console.log("skipping direct child "+dim.w+ ">=" +this._contentBox.w);
+					array.forEach(child.domNode.childNodes,function(childNode) {
+						if (childNode.nodeType==1) {
+							var dim=domGeometry.getMarginBox(childNode);
+							console.log("child width "+childNode.nodeName+"  "+dim.w);
+							if (dim.w>maxChildWidth && dim.w<this._contentBox.w-1) {
+								maxChildWidth=dim.w;
+							}
+						}
+					}, this);
 				}
-			});
+			}, this);
+			console.debug("maxChildWidth "+maxChildWidth);
 			return maxChildWidth;
 		}	
 	});
