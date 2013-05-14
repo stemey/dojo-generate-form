@@ -50,7 +50,7 @@ define([ "dojo/_base/array", //
 
 
 			array.forEach(combinedAttributes,function(attribute) {
-				tableHeader.addChild(new TableElementHeader({label:attribute.label||attribute.code}));
+				tableHeader.addChild(new TableElementHeader({label: attribute.label || attribute.code, description: attribute.description}));
 			},this);
 			select.addChild(tableHeader);
 			
