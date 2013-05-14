@@ -196,6 +196,9 @@ span.errorTooltipNode{
 	-webkit-column-gap:0px;
 	-moz-column-gap:0px;
 }
+.gformColumnCanvas div.Decorator{
+	display: inline-block;
+}
 .gformColumnCanvas.columns_5 {
 	-webkit-column-count:5;
 	-moz-column-count:5;

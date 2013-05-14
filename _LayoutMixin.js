@@ -39,7 +39,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			array.forEach(this.getChildren(),function(widget) {
 				if (widget.resize) {
 					if (dim) {
-						console.log(" resisze child "+widget.id+"  "+childWidth);
+						//console.log(" resize child "+widget.id+"  "+childWidth);
 						widget.resize({t:0,l:0,w: childWidth});
 					} else {
 						widget.resize();

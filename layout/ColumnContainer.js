@@ -56,15 +56,15 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		addChild: function(child) {
 			this.inherited(arguments);
 			// we need to add a br, because the child maybe "inline-block", to make its size computable.
-			//var br = document.createElement("br");
-			//this.domNode.appendChild(br);
+			var br = document.createElement("br");
+			this.containerNode.appendChild(br);
 		},	
 		_getMaxChildWidth: function() {
 			var maxChildWidth=0;
 			array.forEach(this.getChildren(),function(child) {
-				var w = child.getMinWidth();
-				if (w>maxChildWidth) {
-					maxChildWidth=w;
+				var mb = domGeometry.getMarginBox(child.domNode);
+				if (mb.w>maxChildWidth) {
+					maxChildWidth=mb.w;
 				}
 			}, this);
 			//console.debug("maxChildWidth "+maxChildWidth);
