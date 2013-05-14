@@ -66,15 +66,21 @@ body,html {
 	-webkit-column-break-inside: avoid;
 	-moz-column-break-inside: avoid;
 	column-break-inside: avoid;
+
 }
 
 .editor .body {
-	margin-left: 1.5em;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
 }
 
 .editor .label {
 	margin-bottom: 0.6em;
 	vertical-align:top;
+}
+
+div.label {
+	display:inline-block
 }
 
 .label label {
@@ -83,6 +89,21 @@ body,html {
 
 .editor .dijitSelect {
 	margin: 0;
+}
+
+.tableHeader {
+	font-size: 13px;
+	font-weight: normal;
+}
+
+th.tableHeader {
+	padding: 5px;
+	border-bottom-width : 2px;	
+	border-bottom-color : #333;	
+}
+
+.gformTableList td {
+	padding: 5px;
 }
 
 .editor table tr td.dijitArrowButtonContainer.dijitDownArrowButton{
@@ -104,21 +125,21 @@ body,html {
 
 
 
-.label span.error {
+span.error.indicator {
 	color: red;
 	border-color: red;
 	padding: 1px 4px;
 }
-.label span.changes {
+span.changes.indicator {
 	color: green;
 	border-color: green;
 }
-.label span.description {
+span.description.indicator {
 	color: #666;
 	border-color: #666;
 }
 
-.label span{
+ span.indicator{
 	font-weight: bold;
 	font-size: 5pt;	
 	border: 1px solid;
@@ -161,13 +182,19 @@ span.errorTooltipNode{
 
 .gformColumnContainer .Decorator {
 	/* inline-block so that ColumnContainer computes proper column size. But this makes following decorators float*/
-	float: left;
-	clear: both;	
+  display:block;
+		 
+	//float: left;
+	//clear: both;	
 }
 
 .gformColumnContainer {
 	overflow: auto;
 	padding: 8px;
+}
+.gformColumnCanvas {
+	-webkit-column-gap:0px;
+	-moz-column-gap:0px;
 }
 .gformColumnCanvas.columns_5 {
 	-webkit-column-count:5;

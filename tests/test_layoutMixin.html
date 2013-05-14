@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+	<link rel="stylesheet" href="../resources/gform.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+		require(["dojo/ready", "doh/runner", "gform/tests/LayoutMixinWidget"//
+		         ],function(ready, doh, LayoutMixinWidget) {
+			
+				widget=new LayoutMixinWidget();
+				widget.placeAt(container);
+				widget.startup();
+				doh.register("standard", [
+							{
+								name: 'init',
+								runTest: function(t){
+								}
+							}
+						]);			
+			doh.run();
+		});
+		
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test</h1>
+
+
+	<div id="container"></div>
+
+</body>
+</html>
