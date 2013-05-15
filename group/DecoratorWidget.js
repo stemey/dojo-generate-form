@@ -16,26 +16,6 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dijit/_Wi
 				this.domNode.style.display="none";
 			}
 		},
-		getMinWidth: function() {
-			// minWidth is the containerNode extents plus its child's margin width
-			var cs = domStyle.getComputedStyle(this.containerNode);
-			var me = domGeometry.getMarginExtents(this.containerNode, cs);
-			var be = domGeometry.getBorderExtents(this.containerNode, cs);
-			var pe = domGeometry.getPadExtents(this.containerNode, cs);
-			var mb = domGeometry.getMarginBox(this.containerNode, cs);
-			var minWidth =0;
-			array.forEach(this.containerNode.childNodes, function(child) {
-				if (child.nodeType==1) {
-					var ccs = domStyle.getComputedStyle(child);
-					var cmb = domGeometry.getMarginBox(child, ccs);
-					var w=cmb.w+be.w+pe.w+me.w;
-					if (w>minWidth) {
-						minWidth=w;
-					}	
-				}
-			},this); 
-			return minWidth;
-		},
 		templateString : template,
 	
 	});
