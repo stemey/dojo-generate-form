@@ -2,8 +2,9 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "./ListPane",//
-"./DescriptionWidget"
-], function(array, lang, declare, ListPane, DescriptionWidget) {
+"./DescriptionWidget",
+"../updateModelHandle"
+], function(array, lang, declare, ListPane, DescriptionWidget, updateModelHandle) {
 
 	return declare("gform.ListGroupFactory", null, {
 		constructor : function(kwArgs) {
@@ -27,10 +28,11 @@ define([ "dojo/_base/array", //
 		},
 		collectAttributes: function(group) {
 			var attributes=[];
-			array.forEach(group.groups, function(group) {
-				array.forEach(group.attributes, function(attribute) {
-					attributes.push(attribute);
-				},this);
+			array.forEach(group.groups, function(subgroup) {
+				var subAttributes = updateModelHandle.collectAttributes(subgroup,this.editorFactory);
+				array.forEach(subAttributes,function(a) {
+					attributes.push(a);
+				});
 			},this);
 			return attributes;
 		},
