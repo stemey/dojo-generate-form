@@ -7,6 +7,12 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		baseClass : "gformColumnContainer",
 		buildRendering: function() {
 			this.inherited(arguments);
+			if (this.meta.description) {
+				var description = document.createElement("p");
+				description.innerHTML=this.meta.description;
+				domClass.add(description, "columnContainerDescription");
+				this.domNode.appendChild(description);				
+			}
 			var canvas = document.createElement("div");
 			domClass.add(canvas, "gformColumnCanvas");
 			this.domNode.appendChild(canvas);

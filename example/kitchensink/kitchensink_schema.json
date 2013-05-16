@@ -4,7 +4,7 @@
         {
             label:"primitives",
 						groupType:"columnsgroup",
-						description:"This tab contains primitive attributes.",
+						description:"This tab contains primitive attributes. They are contained in a columngroup which arranges its children in as many columns as possible. The number of columns is recalculated when te columngroup is resized.",
             "attributes":[
                 {
                     "type":"string",
