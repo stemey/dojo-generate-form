@@ -44,8 +44,8 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/parser","dojo/_base/declare","dijit/_WidgetBase", "dijit/_WidgetsInTemplateMixin","dojox/dtl/_Templated","gform/schema/schemaGenerator" ,"gform/createStandardEditorFactory", "gform/convertSchema", "gform/schema/refresolve", "dojo/text!./schema.tpl", "gform/doc/Template", "dojox/highlight", "dojox/highlight/languages/javascript", "dojox/highlight/widget/Code"
-		], function(parser, declare, _WidgetBase, _WidgetsInTemplateMixin, _Templated, schemaGenerator, createStandardEditorFactory, convertSchema, refresolve, schemaTemplate, Template ,highlight) {
+		require([ "dojo/parser","dojo/_base/declare","dijit/_WidgetBase", "dijit/_WidgetsInTemplateMixin","dojox/dtl/_Templated","gform/schema/schemaGenerator" ,"gform/createStandardEditorFactory", "gform/convertSchema", "gform/schema/refresolve", "dojo/text!./schema.tpl", "gform/doc/Template", "gform/doc/TemplateContext", "dojox/highlight", "dojox/highlight/languages/javascript", "dojox/highlight/widget/Code"
+		], function(parser, declare, _WidgetBase, _WidgetsInTemplateMixin, _Templated, schemaGenerator, createStandardEditorFactory, convertSchema, refresolve, schemaTemplate, Template, TemplateContext ,highlight) {
 
 			var ef = createStandardEditorFactory();
 			var schema = schemaGenerator.generate(ef);
@@ -68,7 +68,7 @@
 			}
 
 			var template = new Template(schemaTemplate);
-			var ctx = {attributes:attributes,groups:groups};
+			var ctx = {attributes:attributes,groups:groups,ctx: new TemplateContext()};
 			var html=template.render(ctx);
 			dojo.byId("inline").innerHTML=html;
 			parser.parse();

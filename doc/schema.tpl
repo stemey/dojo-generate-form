@@ -47,17 +47,19 @@
 					<% for (var key in attribute.properties) { var prop=attribute.properties[key]; %>
 						<li>	<%=key%>	
 							<% if (key=="validTypes") { %>
-								<ul><li>An array of groups. Each group needs to provide a code property and optionally a label property.</li></ul>
+								<ul><li>An array of groups/types. Each group needs to provide a code property and optionally a label property.</li></ul>
 							<% } else if (key=="mapped_values") { %>
 								<ul><li>An object whose values are options. Options are arrays containing strings or objects with label and value properties. The key of the object is matched against the value of the mapped_atribute.</li></ul>
 							<% } else if (key=="values") { %>
 								<ul><li>Values are the options to choose from in a drop down list or similar elements. These arrays contain strings or objects with label and value properties. </li></ul>
 							<% } else { %>
 							<ul>
-								<% for ( var propKey in prop) { %>
-									<li><%=propKey%>:<%=prop[propKey]%>	
+								<% for ( var propKey in prop) { 
+										if (ctx.included(propKey, prop[propKey])) {
+								%>
+									<li><%=ctx.getObject(propKey, prop[propKey])["key"]%>:<%=ctx.getObject(propKey, prop[propKey])["value"]%>	
 									</li>
-								<% } %>
+								<% }} %>
 							</ul>
 							<% } %>
 						</li>
@@ -91,12 +93,17 @@
 							<% } else if (key=="groups") { %>
 								<ul><li>An array of group definitions.</li></ul>
 							<% } else { %>
-								<% for ( var propKey in prop) { %>
 								<ul>
-									<li><%=propKey%>:<%=prop[propKey]%>	
+
+								<% for ( var propKey in prop) { 
+										if (ctx.included(propKey, prop[propKey])) {
+								%>
+									<li><%=ctx.getObject(propKey, prop[propKey])["key"]%>:<%=ctx.getObject(propKey, prop[propKey])["value"]%>	
 									</li>
+								<% }} %>
+
+
 								</ul>
-								<% } %>
 							<% } %>
 						</li>
 					<% } %>
