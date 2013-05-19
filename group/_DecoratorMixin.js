@@ -74,7 +74,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			return message;
 		},
 		onOldValueChange: function(propName,old,nu) {
-			this.changesTooltip.label=this.getOldValueMessage(old);
+			this.changesTooltip.label=this.getOldValueMessage(nu);
 			this.updateState();
 		},
 
