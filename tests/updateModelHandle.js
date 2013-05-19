@@ -85,6 +85,10 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 			}
 		}
 
+		var assertEqual = function(expected, actual) {
+			doh.assertEqual(dojo.toJson(expected), dojo.toJson(actual));
+		}
+
     doh.register("gform-updateModelHandle", [
       function testValue(){
 				var modelHandle = updateModelHandle.createMeta();
@@ -178,6 +182,7 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 				var expected ={ext_type:"thing1",a:"1",b:"2"};
         updateModelHandle.updateMergedObject(meta,expected,modelHandle);
 				var plainValue = getPlainValue(modelHandle);
+				assertEqual(expected,plainValue);
 				console.log("expected"+dojo.toJson(expected));
 				console.log("actual"+dojo.toJson(plainValue));
       },
@@ -198,6 +203,18 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 				var plainValue = getPlainValue(modelHandle);
 				console.log("expected"+dojo.toJson(expected));
 				console.log("actual"+dojo.toJson(plainValue));
+				assertEqual(expected,plainValue);
+      },
+      function testNumberNull(){
+				var meta={
+					type:"number"
+				};
+				var modelHandle = updateModelHandle.createMeta();
+ 	      updateModelHandle.updateNumber(meta,5,modelHandle);
+        updateModelHandle.updateNumber(meta,null,modelHandle);
+        var plainValue = getPlainValue(modelHandle);
+				doh.assertEqual(null,plainValue);
+				doh.assertEqual(null, modelHandle.oldValue);
       },
       function testUpdateMergedObjectWithDifferentType(){
 				var meta={
@@ -216,8 +233,10 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 				var plainValue = getPlainValue(modelHandle);
 				console.log("expected"+dojo.toJson(expected));
 				console.log("actual"+dojo.toJson(plainValue));
-      }
+ 				assertEqual(expected,plainValue);
+     }
     ]);
 
+     
 });
 

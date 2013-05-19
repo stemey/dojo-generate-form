@@ -6,7 +6,7 @@ define(
 		"./NumberTextBox",//
 "../meta",//
 "./dijitHelper",
-"./mixinTextboxBindings"
+"./mixinNumberboxBindings"
 		],
 		function(array, lang, declare, at, NumberTextBox,meta,dijitHelper, mixinNumberboxBindings) {
 
