@@ -166,7 +166,7 @@ define([
 			modelHandle.set("oldValue",modelHandle.value);
 		},
 		updateNumber: function(meta,plainValue, modelHandle,editorFactory) {
-			if (!plainValue) {
+			if (plainValue == null || typeof plainValue == "undefined") {
 				modelHandle.set("value",null);
 			}else{
 				modelHandle.set("value",plainValue);
