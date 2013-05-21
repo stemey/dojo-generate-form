@@ -105,6 +105,20 @@
                     "code":"simplelongtext",
                     "array":false
                 },
+                {
+                    "type":"ref",
+                    "label":"reference",
+										"description":"this attribute selects a reference to another entity.",
+                    "code":"reference",
+										"required": false,	
+                    "array":false,
+										values: [
+											{name: "Missouri", id: "/Country/1"},
+											{name: "Alabama", id: "/Country/2"},
+											{name: "Oklahoma", id: "/Country/3"},
+											{name: "Califormia", id: "/Country/4"},
+										]
+                },
 						]},{
             label:"mapped primitives",
 						description:"This tab contains mapped select attributes. A mapped select's options depends on the value of another attribute. ",

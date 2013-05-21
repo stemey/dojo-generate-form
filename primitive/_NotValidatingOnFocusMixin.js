@@ -5,7 +5,9 @@ define([
 ], function(declare, kernel, i18n, DateTextBox, template){
 
 	// module:
-	//		dijit/form/DateTextBox
+	//		gform/primitive/_NotValidatingOnFocusMixin
+	// summary:
+	//		Prevents validation on focus. 
 
 	return declare("gform._NotValidatingOnFocusMixin", [], {
 		

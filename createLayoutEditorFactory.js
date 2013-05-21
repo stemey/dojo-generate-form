@@ -23,6 +23,7 @@ define([
 "./primitive/NumberAttributeFactory",//
 "./primitive/CurrencyAmountAttributeFactory",//
 "./primitive/MappedContentPaneFactory",//
+"./primitive/ReferenceAttributeFactory",//
 "./group/AttributeListWidget",//
 "./group/ColumnsGroupFactory",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//,
@@ -34,7 +35,7 @@ define([
 		MappedCheckedMultiSelectAttributeFactory,
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
 		TimeAttributeFactory, EmbeddedAttributeFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory, NumberAttributeFactory, 
-		CurrencyAmountAttributeFactory, MappedContentPaneFactory,
+		CurrencyAmountAttributeFactory, MappedContentPaneFactory, ReferenceAttributeFactory,
 		AttributeListWidget, ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 
 			var editorFactory = new EditorFactory();
@@ -58,6 +59,7 @@ define([
 			       				new MappedSelectAttributeFactory({editorFactory:editorFactory}),//
 			       				new PrimitiveListAttributeFactory({editorFactory:editorFactory}),//
 			       				new NumberAttributeFactory({editorFactory:editorFactory}),//
+			       				new ReferenceAttributeFactory({editorFactory:editorFactory}), //
 			       				new SelectAttributeFactory({editorFactory:editorFactory}), // 
 			       				new BooleanAttributeFactory({editorFactory:editorFactory}), // 
 			       				new StringAttributeFactory({editorFactory:editorFactory}), //

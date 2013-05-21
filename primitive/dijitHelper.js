@@ -39,7 +39,7 @@ define([ "dojo/_base/array", //
 			lang.mixin(props,standardProps);
 		},
 		copyProperty: function(key,attribute,dijitProps) {
-			if (typeof attribute[key] !="undefined" && attribute[key]!=null && attribute[key]!="") {
+			if (typeof attribute[key] !="undefined" && attribute[key]!=null && attribute[key]!=="") {
 				dijitProps[key]=attribute[key];
 			}
 		},

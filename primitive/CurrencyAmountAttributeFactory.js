@@ -2,7 +2,7 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"dijit/form/CurrencyTextBox",//
+"./CurrencyTextBox",//
 "../meta",//
 "./dijitHelper",//
 "dojo/cldr/monetary"
