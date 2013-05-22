@@ -3,29 +3,52 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojo/Stateful"//
 ], function(array, lang, declare, Stateful ) {
+// module:
+//		gform/AttributeFactoryFinder
 
 	return declare("app.editor.AttributeFactoryFinder", Stateful, {
-		constructor : function(kwArgs) {
+		// summary:
+		//		Manages all attributeFactories.
+		constructor: function(kwArgs) {	
 			lang.mixin(this, kwArgs);
 		},
-		
 		attributeFactoryMap : {
 		},
-		
-		addAttributeFactory : function(id,factory) {
-			this.attributeFactoryMap[id]=factory;
+		addAttributeFactory : function(/*String*/editor, /*gform/api/AttributeFactory*/factory) {
+			// summary:
+			//		Add attributeFactory.
+			// editor:
+			//		the id referenced by schema attributes.
+			// factory:
+			//		the attributeFactory.
+			this.attributeFactoryMap[editor]=factory;
 		},
 		getAttributeFactories: function() {
+			// summary:
+			//		get all registered factories. This does not include factories added solely by id.
+			// returns: [gform/api/AttributeFactory]
+			//		attributeFactories
 			return this.attributeFactories;
 		},		
 		getAttributeFactoryMap: function() {
+			// summary:
+			//		get the mapping of id to factoriy. 
+			// returns: Object
+			//		map of id to attributeFactory
 			return this.attributeFactoryMap;
 		},		
 		getFactory : function(attribute) {
+			// summary:
+			//		get factory for attribute.
+			// attribute:
+			//		the attribute to find a factory for 
+			// returns: gform/api/AttributeFactory
+			//		attributeFactory for attribute
 			var factory = this.attributeFactoryMap[attribute.editor];
 			if (factory && factory.handles(attribute)) {
 				return factory;
 			} if (factory && attribute.array && !attribute.elementEditor) {
+				// TODO this seems wrong. Don't change the schema.
 				attribute.elementEditor=attribute.editor;
 				delete attribute.editor;
 			}else if (factory) {
@@ -33,9 +56,6 @@ define([ "dojo/_base/array", //
 				return null;
 			}
 
-			// if (factory == null) {
-			// factory = this.attributeFactoryMap[attribute.type.code];
-			// }
 			if (!factory) {
 				var factories = array.filter(this.attributeFactories,
 						function(af) {
