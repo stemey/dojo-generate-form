@@ -17,11 +17,10 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/registerBuilderEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-	"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve","gform/schema/schemaGenerator"
+	"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve","gform/schema/schemaGenerator", "dijit/form/Button", "dijit/Dialog"
 		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve,schemaGenerator) {
 			parser.parse();
 			try {
-				//var schema = dojo.fromJson(metaJson);
 				var schema = schemaGenerator.generate(gform.ef.layout);
 				refresolve(schema);
 			  var meta = convertSchema(schema);
@@ -33,7 +32,18 @@
 						generatedEditor.setMetaAndPlainValue(editor.get("plainValue").group,{});
 					}
 				});
+				var exportDialog = registry.byId("exportDialog");
+				var exportContent = dojo.byId("exportContent");
+				registry.byId("exportInstance").set("onClick",function(e) {
+					exportContent.value = dojo.toJson(generatedEditor.get("plainValue"),true);
+					exportDialog.show();
+				});
+				registry.byId("exportSchema").set("onClick",function(e) {
+					exportContent.value=dojo.toJson(editor.get("plainValue"),true);
+					exportDialog.show();
+				});
 			} catch (e) {console.log(e.message+" "+e.stack)};
+
 			
 			
 			
@@ -47,6 +57,10 @@
 		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'" >
 			<h2>Form Builder</h2>	
 			<p>The builder is a tool to create a form. The builder is merely for exploring the features of gform. Usually the schemas are generated from data models.</p>
+			<span>
+				<button  type="button" data-dojo-type="dijit.form.Button" data-dojo-props="id:'exportSchema'">export schema</button>
+				<button  type="button" data-dojo-type="dijit.form.Button" data-dojo-props="id:'exportInstance'">export instance</button>
+		</span>
 		</div>
 		<div id="container" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center',id:'container'" style="height:100%">
 			<div data-dojo-type="gform.Editor" data-dojo-props="id:'form',editorFactory:gform.ef.layout"></div>
@@ -55,6 +69,13 @@
 			<div data-dojo-type="gform.Editor" data-dojo-props="id:'resultForm',editorFactory:gform.ef.layout"></div>
 		</div>
 	</div>
+  <div id="exportDialog" data-dojo-type="dijit.Dialog" style="width: 600px;height:400px" data-dojo-props="title: 'Export'">
+		<div data-dojo-type="dijit/layout/ContentPane">
+			<textarea id="exportContent" style="width:560px;height:320px"  >
+			</textarea>
+		</div>
+		
+  </div>
 
 </body>
 </html>	
