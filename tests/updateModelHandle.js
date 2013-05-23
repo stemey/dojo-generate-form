@@ -197,7 +197,7 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 				};
 				var modelHandle = updateModelHandle.createMeta();
 				var initialValue ={ext_type:"thing1",a:"1",b:"2"};
-				var expected ={ext_type:"thing2",c:"",b:"2"};
+				var expected ={ext_type:"thing2",b:"2",c:null};
         updateModelHandle.updateMergedObject(meta,expected,modelHandle);
         updateModelHandle.switchTypeInMergedObject(meta,"thing2",modelHandle);
 				var plainValue = getPlainValue(modelHandle);

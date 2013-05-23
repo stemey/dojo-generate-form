@@ -185,7 +185,7 @@ define([
 			var combinedAttributes=modelHandle.tmp.combininedAttributes;
 			if (!combinedAttributes) {
 				combinedAttributes=this.mergeAttributeDefinitions(meta.validTypes);
-				modelHandle.tmp.combininedAttributes=combinedAttributes;
+				modelHandle.tmp.combinedAttributes=combinedAttributes;
 			}
 			if (!modelHandle.value) {
 				modelHandle.set("value",new Stateful());
@@ -217,10 +217,10 @@ define([
 			modelHandle.value[meta.type_property].set("value",typeCode);
 			var type=this.getFromValidTypes(meta.validTypes,typeCode);
 			array.forEach(modelHandle.tmp.combinedAttributes,function(attribute) {
-				modelHandle.value[attribute.code].ignore=false;					
+				modelHandle.value[attribute.code].ignore=true;					
 			},this);
 			array.forEach(type.attributes,function(attribute) {
-				modelHandle.value[attribute.code].ignore=true;					
+				modelHandle.value[attribute.code].ignore=false;					
 			},this);
 		},
 		mergeAttributeDefinitions: function(validTypes) {
