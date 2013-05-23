@@ -3,6 +3,10 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare"//
 
 ], function(array, lang, declare) {
+	// module: 
+	//		gform/Resolver
+	// summary:
+	//		Allows access to sibling attributes of modelHandle. 
 
 	var Resolver= declare("gform.Resolver", null, {
 		constructor : function(modelHandle, path) {
@@ -10,13 +14,29 @@ define([ "dojo/_base/array", //
 			this.path=path || "";
 		},
 		getPath: function() {
+			// summary:
+			//		get the absolute path to the current attribute
+			// returns: String
+			//		absolute path
 			return this.path;
 		},
-		get : function(propName) {
-			return this.modelHandle.value.get(propName).value;
+		get : function(attributeCode) {
+			// summary:
+			//		get value of sibling attribute
+			// attributeCode: String
+			//		the name of he sibling attribute
+			return this.modelHandle.value.get(attributeCode).value;
 		},
-		watch: function(propName,watchCallback) {
-			return this.modelHandle.value[propName].watch("value",watchCallback);
+		watch: function(attributeCode,watchCallback) {
+			// summary:
+			//		watch value of sibling attribute
+			// attributeCode: String
+			//		the name of he sibling attribute
+			// watchCallback: function
+			//		callback
+			// returns: Object
+			//		WatchHandle
+			return this.modelHandle.value[attributeCode].watch("value",watchCallback);
 		}
 	})
 	return Resolver;

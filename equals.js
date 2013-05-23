@@ -3,7 +3,10 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/equals"//
 ], function(array, lang, declare, equals) {
-
+// module:
+//		gform/equals
+// summary:
+//		This equals extends dojox/mvc/equals so that modelhandles can be compared. modelHandles contain objects with a property "__type" with the value "meta". The comparison is cascaded to the value property of the meta object.
 	var equalsOptions = {
 		getType: function(/*Anything*/ v){
 			// summary:

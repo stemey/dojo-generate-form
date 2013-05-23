@@ -7,7 +7,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 
 	return declare("gform._LayoutMixin", [], {
 		//	summary:
-		//		This LayoutContainer notitifes nested LayoutContainers that they are being shown and need to layout
+		//		This LayoutContainer notifies nested LayoutContainers that they are being shown and need to layout
 		isLayoutContainer:false,
 		resize: function() {
 			array.forEach(this.getChildren(),function(widget) {

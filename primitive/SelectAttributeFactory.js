@@ -16,7 +16,7 @@ define([ "dojo/_base/array", //
 	return declare("gform.SelectAttributeFactory", [], {
 
 		handles : function(attribute) {
-			var values = meta.getTypeAttribute(attribute, "values");
+			var values = attribute["values"];
 			return !attribute.array && values != null && values.length > 0;
 		},
 

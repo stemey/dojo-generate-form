@@ -2,15 +2,16 @@ define(["dojo/_base/declare",//
 "dojo/_base/array",//
 "dojox/mvc/WidgetList" ], function(declare, array, WidgetList) {
 		// module: 
-		//		gform/_LayoutMixin
+		//		gform/LayoutWidgetList
 
 
 	return declare( [WidgetList], {
 		//	summary:
-		//		This LayoutContainer notitifes nested LayoutContainers that they are being shown and need to layout
-		//		Also it resizes the width of children to the width of its containerNode. 
+		//		WidgetList with layouting. sets the children's width to its own.  
 		isLayoutContainer:true,
 		addChild: function() {
+		// summary:
+		//		layout this container if children are added.
 			this.inherited(arguments);
 			this.resize();
 		},

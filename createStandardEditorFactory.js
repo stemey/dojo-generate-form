@@ -36,6 +36,10 @@ define([
 		TimeAttributeFactory, EmbeddedAttributeFactory, NumberAttributeFactory, 
 		CurrencyAmountAttributeFactory, MappedContentPaneFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory,
 		AttributeListWidget, ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
+// module:
+//		gform/createStandardEditorFactory
+// description:
+//		The main export is a function to create an editorFactory for general use.
 
 			var editorFactory = new EditorFactory();
 			editorFactory.addGroupFactory("list", new GroupFactory({editorFactory:editorFactory}));

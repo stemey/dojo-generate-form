@@ -3,6 +3,10 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "gform/schema/refresolve",
 ], function(array, lang, declare, refresolve) {
+// module:
+//		gform/convertSchema
+// description:
+//		The main export is a function to convert a json schema to a gform schema.
 
   var formatToTypeMapping= {
 		date:"date",
@@ -78,7 +82,13 @@ define([ "dojo/_base/array", //
 				return [this.convert(prop.type,converted)];
 			}
 		},
-		convert: function(schema,converted,/**local variables*/meta) {
+		convert: function(/*Object*/schema,/*Object*/converted,/**local variables*/meta) {
+			// summary:
+			//		converts a json schema to a gform schema
+			// schema:
+			//		the json schema
+			// returns: Object
+			//		the gform schema
 			if (!schema.properties) {
 				throw new Error("no properties defined in schema "+schema);
 			}

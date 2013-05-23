@@ -1,25 +1,15 @@
 define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function(array, lang,
 		declare, Container, at, domConstruct,
 		 Stateful) {
+	// module: 
+	//		gform/Meta
+	// summary:
+	//		provides convenient functions for schema.
 
-	var Meta= declare("kkk", [  ], {
-		primitiveTypes: [
-			"string","boolean","date","number"
-		],
-		defaults:{
-			"string":"",
-			"number":0,
-			"boolean":false,
-			"date":null
-		},
-		getDefaultAttributeValue : function(attribute) {
-			var  defaultValue=this.defaults[attribute.type];
-			return defaultValue;
- 		},
-		getPrimitiveType : function(attribute) {
-			return this.normalizedPrimitiveType(this.getType(attribute));
-		},
+	var Meta= declare("gform.Meta", [ ], {
 		getType : function(attribute) {
+		// summary:
+		//		find type of attribute.
 			if (!attribute.type) {
 				return null;
 			}
@@ -29,24 +19,12 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
 				return attribute.type.code;
 			}
  		},
- 		getTypeAttribute: function(attribute,attributeCode) {
-			return attribute[attributeCode];
- 		},
 		isType : function(attribute,typeCode) {
+		// summary:
+		//		check if attribute is of given type.
 			return typeCode==this.getType(attribute);
 		},
- 		normalizedPrimitiveType: function(code) {
- 			var matches= array.filter(this.primitiveTypes,function(type) {
- 				return type==code;
- 			});
- 			if (matches.length==1) {
- 				return matches[0];
- 			}else{
- 				return null;
- 			}
- 		}
-		
-
+ 
 	});
 	return new Meta();
 	
