@@ -5,8 +5,9 @@ define([ "dojo/_base/array", //
 "./CurrencyTextBox",//
 "../meta",//
 "./dijitHelper",//
-"dojo/cldr/monetary"
-], function(array, lang, declare, at, CurrencyTextBox, meta, dijitHelper, monetary) {
+"dojo/cldr/monetary",//
+"./nullableNumberConverter",//
+], function(array, lang, declare, at, CurrencyTextBox, meta, dijitHelper, monetary, nullableNumberConverter) {
 
 	return declare( "gform.CurrencyAmountAttributeFactory", [], {
 		handles : function(attribute) {
@@ -15,10 +16,12 @@ define([ "dojo/_base/array", //
 		
 		create : function(attribute, modelHandle) {
 			var currency = attribute.currency;
-			var valueConverter = this.createValueConverter(monetary.getData(currency).places);
 			var valueAt = at(modelHandle, "value");
 			if (!attribute.amountFractional) {
+				var valueConverter = this.createValueConverter(monetary.getData(currency).places);
 				valueAt.transform(valueConverter);
+			} else {
+				valueAt.transform(nullableNumberConverter);
 			}
 			var props={
 				constraints:{}
@@ -37,14 +40,22 @@ define([ "dojo/_base/array", //
 			var operand = Math.pow(10,places);
 			return {
 				format : function(value) {
-					if (value == null) {
-						return null;
+					if (typeof value == "undefined") {
+						return value;
+					} else if (value == null) {
+						return NaN;
 					} else {
 						return value / operand;
 					}
 				},
 				parse : function(value) {
-					return Math.round(value * operand);
+					if (typeof value == "undefined") {
+						return value;
+					} else if (isNaN(value)) {
+						return null;
+					} else {
+						return Math.round(value * operand);
+					}
 				}
 			};
 		},

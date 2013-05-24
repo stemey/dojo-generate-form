@@ -25,7 +25,7 @@
 			var container = dojo.byId("container");
 			editor.placeAt(container);
 			editor.startup();
-			var priceText = dijit.byId("dijit_form_CurrencyTextBox_0");
+			var priceText = dijit.byId("gform_CurrencyTextBox_0");
 			doh.register("standard", [
 				{
 					name : 'init',
@@ -37,8 +37,8 @@
 				{
 					name : 'null',
 					runTest : function(t) {
-						priceText.set("value",null);
-						t.assertEqual(NaN, editor.get("plainValue").price);
+						priceText.set("value","");
+						t.assertEqual(null, editor.get("plainValue").price);
 					}
 				} 
 			]);

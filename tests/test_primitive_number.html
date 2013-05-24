@@ -35,12 +35,20 @@
 					}
 				}, 
 				{
+					name : 'invalid input',
+					runTest : function(t) {
+						intText.set("value","gggg");
+						// this should not be written through to the value	
+						t.assertTrue(typeof editor.get("plainValue").int == "undefined");
+					}
+				}, 
+				{
 					name : 'null',
 					runTest : function(t) {
-						intText.set("value",null);
-						t.assertEqual(NaN, editor.get("plainValue").int);
+						editor.set("plainValue",{int:null});
+						t.assertEqual(NaN, intText.get("value"));
 					}
-				} 
+				}  
 			]);
 			doh.run();
 		});

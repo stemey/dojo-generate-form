@@ -6,10 +6,18 @@ define([ "dojo/_base/array", //
 
 	 return {
 				format : function(value) {
-					return value == null ? "" : value;
+					if (typeof value == "undefined") {
+						return value;
+					} else if (value == null) {
+						return NaN;
+					} else {
+						return value;
+					}
 				},
 				parse : function(value) {
-					if (value == "" || isNaN(value)) {
+					if (typeof value == "undefined") {
+						return value;
+					} else if (isNaN(value)) {
 						return null;
 					} else {
 						return value;

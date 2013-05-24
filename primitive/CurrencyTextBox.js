@@ -8,21 +8,12 @@ define([
 
 
 
-	return declare("gform.NumberTextBox", [CurrencyTextBox,_NotValidatingOnFocusMixin], {
+	return declare("gform.CurrencyTextBox", [CurrencyTextBox,_NotValidatingOnFocusMixin], {
 		// summary:
 		//		Base class for textbox widgets with the ability to validate content of various types and provide user feedback.
 
 		displayMessage: function(/*String*/ message){
-		},
-		_setValueAttr: function(value){
-			// summary:
-			//		Make sure an invalid value does not fire a value change. 
-			if(typeof value == "number"){
-					if(!isNaN(value)) {
-						this.inherited(arguments);
-					}
-			}
-		},
+		}
 
 	});
 });

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Declarative Editor Example</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+		require([ "dojo/Stateful", "dojox/mvc/at", "dijit/form/NumberTextBox", "dojo/ready" ],
+			function(Stateful, at, NumberTextBox){
+				var converter = {
+					format : function(value) {
+						console.log("write to widget "+value);
+						if (typeof value=="undefined") {
+							return undefined;
+						} else if (value==null) {
+							return NaN;
+						} else {
+							return value;
+						}
+					},
+					parse : function(value) {
+						console.log("write to model " +value);
+						if (typeof value=="undefined") {
+							return undefined;
+						} else if (isNaN(value)) {
+							return null;
+						} else {
+							return value;
+						}
+					}
+				}
+				model = new Stateful();
+				model.set("number",55);	
+				input = new NumberTextBox({"value": at(model, "number").transform(converter)});
+				input.placeAt("editor");
+				input.startup();
+		});
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Declarative Editor Example</h1>
+
+
+	<div id="editor">
+	</div>
+
+</body>
+</html>
