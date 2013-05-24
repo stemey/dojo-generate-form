@@ -9,9 +9,9 @@ define(
 		"./dijitHelper",
 		"dojo/store/Memory",
 		"dojo/store/JsonRest",
-		"./nullablePrimitiveConverter"
+		"./refConverter"
 		],
-		function(array, lang, declare, when, at, FilteringSelect, meta, dijitHelper, Memory, Store, nullablePrimitiveConverter) {
+		function(array, lang, declare, when, at, FilteringSelect, meta, dijitHelper, Memory, Store, refConverter) {
 
 	return declare(
 			"gform.ReferenceAttributeFactory",
@@ -26,7 +26,7 @@ define(
 				var searchProperty = attribute.searchProperty || "name";
 				var props = {};
 				dijitHelper.copyDijitProperties(attribute, props);
-				props["value"]=at(modelHandle, "value").transform(nullablePrimitiveConverter);
+				props["value"]=at(modelHandle, "value").transform(refConverter);
 				props["message"]=at(modelHandle, "message");
 				props["state"]=at(modelHandle, "state");
 				if (attribute.url) {	

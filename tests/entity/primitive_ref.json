@@ -1,0 +1,3 @@
+{
+	state : {$ref:"/state/2"}
+}

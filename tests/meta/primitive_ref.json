@@ -1,0 +1,20 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"ref",
+						"searchProperty":"label",
+            "idProperty":"value",
+            "description":"select a reference",
+            "code":"state",
+						values: [
+							{label:"Missouri", value:"/state/1"},
+							{label:"Mississippi", value:"/state/2"},
+							{label:"Washington", value:"/state/3"},
+							{label:"idaho", value:"/state/4"},
+						]
+        }
+    ],
+    "type_property":"ext_type"
+}
