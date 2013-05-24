@@ -6,7 +6,7 @@ General
 -------
 
 
-See the [wiki](http://github.com/stemey/dojo-generate-form/wiki) for documentation.
+Start reading about gform [here] (http://toobop.net/gform).
 
 
 The basic dijit to generate a form is called 'Editor'. It has three properties:
