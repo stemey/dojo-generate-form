@@ -40,6 +40,12 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		    });
 			this.updateState();
 			this.changesTooltip.label=this.getOldValueMessage(this.modelHandle.oldValue);
+			if (this.labelNode && this.meta.required && !this.meta.array) {
+				var sup = document.createElement("sup");
+				sup.innerHTML="*";
+				// TODO insert after label and not before errorTooltipNode
+				this.labelNode.parentNode.insertBefore(sup,this.errorTooltipNode);
+			}
 		},
 		destroy: function() {
 			this.inherited(arguments);
