@@ -6,10 +6,26 @@ define([
 	"./getPlainValue",
 	"./Resolver"
 ], function(array, lang, Stateful, StatefulArray, getPlainValue, Resolver){
-
+// module:
+//		gform/updateModelHandle
+// summary:
+//		this object offers functions to update a modelHandle with a new plainValue. 
+//		The update is performed according to the gform schema and by cosulting the responsible AttributeFactories.
 
   var updateModelHandle= {
-		getFromValidTypes: function(validTypes,typeCode) {
+	// summary:
+	//		this object offers a function to update a modelHandle. 
+	//		Also it offers functions to update individual attributes of a modelHandle.
+
+		getFromValidTypes: function(/*Array*/validTypes, /*String*/typeCode) {
+			// summary:
+			//		get the schema for a certain type from the array of types.
+			// validTypes:
+			//		the array of valid types. This is a required property of complex attributes.
+			// typeCode:
+			//		the code of one of the types in the array.
+			// returns: Object
+			//		returns the element of the validTypes array with the specified code 
 			if (validTypes.length==1) {
 				return validTypes[0];
 			}
@@ -20,7 +36,15 @@ define([
 			});
 			return types.length > 0 ? types[0] : null;
 		},
-		collectAttributes: function(groupOrType,editorFactory) {
+		collectAttributes: function(/*Object*/groupOrType, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		creates an array of all attributes in the given group. In case of a tab group this function will find all attributes in all tabs. The function must delegate to the responsible GroupFactory's implementation.
+			// groupOrType: 
+			//		the group or type.
+			// editorFactory:
+			//		used to find the responsible GroupFactory.
+			// returns: Array
+			//		returns an array of attributes 
 			if (groupOrType.attributes){
 				return groupOrType.attributes; 
 			}else{
@@ -32,10 +56,17 @@ define([
 				}
 			}
 		},
-		update: function(groupOrType, plainValue, modelHandle,editorFactory) {
-			this.updateObjectType(null,groupOrType, plainValue, modelHandle,editorFactory);
-		},
-		updateObjectType: function(type_property,groupOrType, plainValue, modelHandle,editorFactory) {
+		update: function(/*Object*/groupOrType, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		update the group with the given plainValue
+			// groupOrType:
+			//		the schema of the group.
+			// plainValue:
+			//		the new value of the modelHandle
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			var attributes = this.collectAttributes(groupOrType,editorFactory);
 			if (plainValue==null) {
 				modelHandle.set("value",null);
@@ -55,26 +86,7 @@ define([
 				},this);
 			}
 		},
-//		setNull: function(meta,modelHandle) {
-//			if (modelHandle.value==null) {
-//				return;
-//			}
-//			modelHandle.nonNullValue.set("value",modelHandle.value);
-//			modelHandle.set("value",null);
-//		},
-//		setEmpty: function(modelHandle) {
-//			if (!modelHandle.nonNullValue) {
-//				modelHandle.nonNullValue=this.createMeta();
-//				modelHandle.nonNullValue.value=new Stateful({});
-//			}else {
-//				this.resetMeta(modelHandle.nonNullValue);
-//			}
-//			modelHandle.set("value",modelHandle.nonNullValue.value);
-//		}, 
 		updateObject: function( meta, plainValue, modelHandle,editorFactory) {
-			if (meta.code=="P_ALLNET") {
-				var x =0;
-			}
 			if (meta.validTypes.length>1 && !meta.type_property) {
 				throw new Error("more than one type defined but no type property");
 			}
@@ -84,7 +96,7 @@ define([
 				modelHandle.nonNullValue.value=new Stateful();
 			}
 			var initialValue= plainValue || {};
-			this.updateObjectType(meta.type_property,type,initialValue,modelHandle.nonNullValue,editorFactory);
+			this.update(type,initialValue,modelHandle.nonNullValue,editorFactory);
 			if (plainValue==null) {
 				modelHandle.set("value",null);
 			}else{
@@ -106,9 +118,9 @@ define([
 					metaObject.value[meta.type_property].value=type.code;
 					modelHandle.typeToValue[type.code]=metaObject;
 					if (type.code==typeCode)  {
-						this.updateObjectType(meta.type_property,type,plainValue,metaObject,editorFactory);
+						this.update(type,plainValue,metaObject,editorFactory);
 					}else{
-						this.updateObjectType(meta.type_property,type,{},metaObject,editorFactory);
+						this.update(type,{},metaObject,editorFactory);
 					}
 				},this);
 				typeToValue=modelHandle.typeToValue;
@@ -116,9 +128,9 @@ define([
 				array.forEach(meta.validTypes,function(type) {
 					var metaObject = typeToValue[type.code];
 					if (type.code==typeCode)  {
-						this.updateObjectType(meta.type_property,type,plainValue,metaObject,editorFactory);
+						this.update(type,plainValue,metaObject,editorFactory);
 					}else{
-						this.updateObjectType(meta.type_property,type,{},metaObject,editorFactory);
+						this.update(type,{},metaObject,editorFactory);
 					}
 				},this);
 			}

@@ -92,7 +92,7 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
     doh.register("gform-updateModelHandle", [
       function testValue(){
 				var modelHandle = updateModelHandle.createMeta();
-        updateModelHandle.updateObjectType(null,type1,{},modelHandle);
+        updateModelHandle.update(type1,{},modelHandle);
 				var plainValue = getPlainValue(modelHandle);
 				console.log("expected"+dojo.toJson(emptyType1));
 				console.log("actual"+dojo.toJson(plainValue));
@@ -162,7 +162,7 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
       function testPimitiveArray(){
 				var modelHandle = updateModelHandle.createMeta();
 				var expected ={things:["a","b"]};
-        updateModelHandle.updateObjectType(null,primitiveArray,expected,modelHandle);
+        updateModelHandle.update(primitiveArray,expected,modelHandle);
 				var plainValue = getPlainValue(modelHandle);
 				console.log("expected"+dojo.toJson(expected));
 				console.log("actual"+dojo.toJson(plainValue));
