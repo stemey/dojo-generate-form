@@ -53,7 +53,9 @@ define(
 					// value is the id
 					var promise = store.get(modelHandle.get("value"));
 					when(promise).then(function(result) {
-						f.set("name", result[searchProperty]);
+						if (result) {
+							f.set("name", result[searchProperty]);
+						}
 					});
 				}
 							

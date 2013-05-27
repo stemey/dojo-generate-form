@@ -30,8 +30,8 @@
 				{
 					name : 'init',
 					runTest : function(t) {
-						t.assertEqual(model.state, editor.get("plainValue").state);
-						t.assertEqual(model.state, select.get("value"));
+						t.assertEqual(model.state.$ref, editor.get("plainValue").state.$ref);
+						t.assertEqual(model.state.$ref, select.get("value"));
 					}
 				}
 			]);
