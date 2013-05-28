@@ -7,13 +7,13 @@ define([ "dojo/_base/array", //
 	 return {
 				format : function(value) {
 					if (value == null) {
-						return null;
+						return "";
 					} else {
 						return value.$ref;
 					}
 				},
 				parse : function(value) {
-					if (value==null) {
+					if (value=="" || value==null) {
 						return null;
 					} else {
 						return {$ref:value};
