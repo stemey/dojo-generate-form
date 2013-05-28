@@ -9,10 +9,11 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template,
 		attribute:null,
+		childAttribute:null,
 		messages:messages,
 		_addElement : function() {
 			var modelHandle=updateModelHandle.createMeta();
-			updateModelHandle.cascadeAttribute(this.attribute,null,modelHandle,this.editorFactory);	
+			updateModelHandle.cascadeAttribute(this.childAttribute,null,modelHandle,this.editorFactory);	
 			this.target.value.push(modelHandle);
 		},
 		postCreate : function() {

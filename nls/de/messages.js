@@ -2,7 +2,8 @@ define({
 	"addButtonLabel":"neu",
 	"removeButtonLabel":"löschen",
 	"oldValueChanged":"war {oldValue}",
-	"oldValueWasNull":"neu",
+	"newElement":"neu",
+	"oldValueWasNull":"war leer",
 	"emptySelectLabel":"--wähle--"
 })
 

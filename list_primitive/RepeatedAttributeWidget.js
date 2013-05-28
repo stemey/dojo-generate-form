@@ -2,14 +2,21 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
 		"../AttributeFactoryFinder",//
 		"dijit/_WidgetsInTemplateMixin","dojo/Stateful",
-		"dojo/text!./repeated_attribute.html", "dijit/form/TextBox", "dojo/i18n!../nls/messages","../group/_DecoratorMixin","../group/_GroupMixin"//
+		"dojo/text!./repeated_attribute.html", "dijit/form/TextBox", "dojo/i18n!../nls/messages","../group/_DecoratorMixin","../group/_GroupMixin", "dojo/i18n", "dojo/i18n!../nls/messages"//
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, AttributeFactoryFinder,
-		_WidgetsInTemplateMixin, Stateful,template, TextBox, messages, _DecoratorMixin, _GroupMixin) {
+		_WidgetsInTemplateMixin, Stateful,template, TextBox, messages, _DecoratorMixin, _GroupMixin, i18n, messages) {
 
 	return declare("gform.RepeatedAttributeWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin, _DecoratorMixin,  _GroupMixin ], {
 		templateString : template,
-		messages:messages,	
+		messages:messages,
+		getOldValueMessage: function(old) {
+			if (typeof old == "undefined" || old == null) {
+				return messages["newElement"];
+			} else {
+				return this.inherited(arguments);
+			}
+		},	
 		postCreate : function() {
 			this.inherited(arguments);
 			var attribute=this.get("meta");
