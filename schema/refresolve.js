@@ -17,14 +17,13 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","./Resolver
 						break;
 					}else	if (name=="id") {
 						resolver.addElement(obj);
-						//break;
 					}else{
-					var setter = (function(obj1,name1) {
+						var setter = (function(obj1,name1) {
 							return	function(value) {
 								obj1[name1]=value;
 							}
 						})(obj,name);
-					_resolve(resolver,obj[name],setter);
+						_resolve(resolver,obj[name],setter);
 					}
 				}
 			}

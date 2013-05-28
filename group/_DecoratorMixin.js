@@ -5,10 +5,8 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 	return declare("..._DecoratorMixin",[ _GroupMixin ], {
 		baseClass:"Decorator",
 		isValidationContainer:true,
-		
 		messageWatch : null,
 		valueWatch : null,
-		
 		postCreate: function() {
 			this.inherited(arguments);
 			if (this.modelHandle && typeof this.modelHandle.watch == "function") {

@@ -86,7 +86,17 @@ define([
 				},this);
 			}
 		},
-		updateObject: function( meta, plainValue, modelHandle,editorFactory) {
+		updateObject: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		update the attribute with the given plainValue. Attribute has a single valid type.
+			// meta:
+			//		the schema for the attribute.
+			// plainValue:
+			//		the new value of the attribute
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (meta.validTypes.length>1 && !meta.type_property) {
 				throw new Error("more than one type defined but no type property");
 			}
@@ -104,7 +114,17 @@ define([
 			}
 			modelHandle.set("oldValue",getPlainValue(modelHandle.value));
 		},
-		updatePolyObject: function( meta, plainValue, modelHandle,editorFactory) {
+		updatePolyObject: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		update the attribute of type object with the given plainValue. The attribute has more than one valid type. There is a modelHandle for each type. These can be bound to different gform/Editor instances. Switching the type will switch visibility of the widget instances.
+			// meta:
+			//		the schema for the attribute.
+			// plainValue:
+			//		the new value of the attribute
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (plainValue!=null) {
 				var typeCode=plainValue[meta.type_property];
 			}
@@ -153,7 +173,17 @@ define([
 			}
 			modelHandle.set("oldValue",getPlainValue(modelHandle.value));
 		},
-		updateString: function(meta,plainValue, modelHandle,editorFactory) {
+		updateString: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		update an attribute of type string.	null or undefined is initialized with empty string.
+			// meta:
+			//		the schema for the attribute.
+			// plainValue:
+			//		the new value of the attribute
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (!plainValue) {
 				modelHandle.set("value","");
 			}else{
@@ -161,7 +191,17 @@ define([
 			}
 			modelHandle.set("oldValue",modelHandle.value);
 		},
-		updateNullableString: function(meta,plainValue, modelHandle,editorFactory) {
+		updateNullableString: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		update an attribute of type string.	undefined is initialized with null.
+			// meta:
+			//		the schema for the attribute.
+			// plainValue:
+			//		the new value of the attribute
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (!plainValue) {
 				modelHandle.set("value",null);
 			}else{
@@ -169,15 +209,35 @@ define([
 			}
 			modelHandle.set("oldValue",modelHandle.value);
 		},
-		updateBoolean: function(meta,plainValue, modelHandle,editorFactory) {
+		updateBoolean: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		update an attribute of type boolean.	null && undefined is initialized with false.
+			// meta:
+			//		the schema for the attribute.
+			// plainValue:
+			//		the new value of the attribute
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (plainValue==null) {
 				modelHandle.set("value",false);
 			}else{
-				modelHandle.set("value",plainValue);
+				modelHandle.set("value",!!plainValue);
 			}
 			modelHandle.set("oldValue",modelHandle.value);
 		},
-		updateNumber: function(meta,plainValue, modelHandle,editorFactory) {
+		updateNumber: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		update an attribute of type number.	undefined is initialized with null.
+			// meta:
+			//		the schema for the attribute.
+			// plainValue:
+			//		the new value of the attribute
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (plainValue == null || typeof plainValue == "undefined") {
 				modelHandle.set("value",null);
 			}else{
@@ -185,7 +245,17 @@ define([
 			}
 			modelHandle.set("oldValue",modelHandle.value);
 		},
-		updateAny: function(meta,plainValue, modelHandle) {
+		updateAny: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		update an attribute of type any.	undefined is initialized with null.
+			// meta:
+			//		the schema for the attribute.
+			// plainValue:
+			//		the new value of the attribute
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (typeof plainValue=="undefined") {
 				modelHandle.set("value",null);
 			}else{
@@ -193,7 +263,17 @@ define([
 			}
 			modelHandle.set("oldValue",modelHandle.value);
 		},
-		updateMergedObject: function(meta,plainValue, modelHandle,editorFactory) {
+		updateMergedObject: function(/*Object*/meta, /*Object*/plainValue, /*dojo/stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		update the attribute of type object with the given plainValue. The attribute has more than one valid type. The modelHandle keeps all attributes in a single Stateful. This way the model can be bound to a single row of a table.
+			// meta:
+			//		the schema for the attribute.
+			// plainValue:
+			//		the new value of the attribute
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			var combinedAttributes=modelHandle.tmp.combininedAttributes;
 			if (!combinedAttributes) {
 				combinedAttributes=this.mergeAttributeDefinitions(meta.validTypes);
@@ -225,7 +305,15 @@ define([
 			}
 		
 		},
-		switchTypeInMergedObject: function(meta,typeCode,modelHandle) {
+		switchTypeInMergedObject: function(/*Object*/meta, /*String*/typeCode, /*dojo/Stateful*/modelHandle) {
+			// summary:
+			//		switch the type of a merged modelHandle. this will set the ignore meta value on the types attributes.
+			// metypeCode:
+			//		the of the type to switch to.
+			// meta:
+			//		the schema for the attribute.
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
 			modelHandle.value[meta.type_property].set("value",typeCode);
 			var type=this.getFromValidTypes(meta.validTypes,typeCode);
 			array.forEach(modelHandle.tmp.combinedAttributes,function(attribute) {
@@ -236,6 +324,12 @@ define([
 			},this);
 		},
 		mergeAttributeDefinitions: function(validTypes) {
+		// summary:
+		//		merge attributes from all valid types into an array. Consider attributes with the same code as equal and keep only one instance.
+		// validTypes: Array
+		//		the array of valid types.
+		// returns: Array
+		//		an array of attributes.
 			var combinedAttributes = [];
 			var addedAttributes={};
 			array.forEach(validTypes, function(type) {
@@ -251,7 +345,19 @@ define([
 			}, this);
 			return combinedAttributes;
 		},
-		updateArray: function(meta,plainValue, modelHandle,editorFactory,cascadeAttribute) {
+		updateArray: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, cascadeAttribute/*function*/) {
+			// summary:
+			//		update the array attribute with the given plainValue. The corresponding value is a StatefulArray. The update operation will be delegated for the value of the elements. 
+			// meta:
+			//		the schema for the attribute.
+			// plainValue:
+			//		the new value of the attribute
+			// modelHandle:
+			//		the modelHandle bound to the Editor.
+			// editorFactory:
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
+			// cascadeAttribute:
+			//		if not null the function will be called to update  the element modelHandle. 
 			if (modelHandle.value==null) {
 				modelHandle.set("value",new StatefulArray([]));
 			}
@@ -278,7 +384,17 @@ define([
 				modelHandle.set("oldValue",plainValue);
 			}
 		},
-		updateSelectModelHandle : function(meta, plainValue, modelHandle,options) {
+		updateSelectModelHandle : function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*Array*/options) {
+		// summary:
+		//		update attribute with options. Make sure that the value is to the first element if necessary.
+		// meta:
+		//		the attribute meta data
+		// plainValue:
+		//		the value
+		// modelHandle:
+		//		the modelHandle to update
+		// options:
+		//		the options
 			if (!plainValue && meta.required) {
 				this.updateNullableString(meta, options[0].value,
 						modelHandle);
@@ -288,17 +404,35 @@ define([
 			}
 		},
 		createMeta: function() {
+			// summary:
+			//		create a meta object
+			// returns: dojo/Stateful
 			var meta= new Stateful({__type:"meta",state:"",message:null});
 			meta.set("tmp",new Stateful());
 			return meta;	
 		},
-		resetMeta: function(meta) {
+		resetMeta: function(/*dojo/Stateful*/meta) {
+			// summary:
+			//		rest meta object
+			// meta: dojo/Stateful
 			meta.set("tmp",new Stateful());
 			meta.set("message",null);
 			meta.set("state","");
 			return meta;	
 		},
-		cascadeAttribute: function(meta,plainValue,modelHandle,editorFactory,resolver) {
+		cascadeAttribute: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, /*gform/Resolver*/resolver) {
+			// summary:
+			//		delegate the update to the appropriate function
+			// meta:
+			//		the attribute meta data
+			// plainValue:
+			//		the value
+			// modelHandle:
+			//		the modelHandle to update
+			// editorFactory:
+			//		consult the editorFactory for the proper update function
+			// resolver:
+			//		pass the resolver to update
 			if (editorFactory) {
 				var handle=editorFactory.getUpdateModelHandle(meta);
 				if (handle && handle.updateModelHandle) {
@@ -316,6 +450,10 @@ define([
 			}else if (meta.type=="date") {
 				this.updateNullableString(meta,plainValue,modelHandle);
 			}else if (meta.type=="number") {
+				this.updateNumber(meta,plainValue,modelHandle);
+			}else if (meta.type=="ref") {
+				this.updateNumber(meta,plainValue,modelHandle);
+			}else if (meta.type=="time") {
 				this.updateNumber(meta,plainValue,modelHandle);
 			}else if (meta.type=="boolean") {
 				this.updateBoolean(meta,plainValue,modelHandle);
