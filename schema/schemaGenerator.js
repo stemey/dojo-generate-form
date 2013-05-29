@@ -4,9 +4,16 @@ define([ "dojo/_base/array", //
 ], function(array, lang, declare) {
 
 	var SchemaGenerator= declare("gform.SchemaGenerator", null, {
+		// summary:
+		//		creates a json schema for an EditorFactory
 		GROUPS_REF:"groups",
 		ATTRIBUTES_REF:"attributes",
-		generate: function(editorFactory) {
+		generate: function(/*gform/EditorFactory*/editorFactory) {
+			// summary:
+			//		creates schema for an EditorFactory.
+			// editorFactory:
+			// returns: Object
+			//		the json schema for the editorFactory is returned.
 			var schema = {};
 			var groupsRef=[];
 			var attributesRef=[];

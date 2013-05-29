@@ -1,10 +1,17 @@
 define([ "dojo/_base/declare", "dojo/_base/lang",
 		"dijit/Tooltip","./_GroupMixin","../hasChanged", "dojo/i18n", "dojo/i18n!../nls/messages"
 ], function(declare, lang,	Tooltip,_GroupMixin, hasChanged, i18n, messages) {
+// module:
+//		gform/group/_DecoratorMixin	
+	return declare("gform.group._DecoratorMixin",[ _GroupMixin ], {
+		// summary:
+		//		This Mixin manages the label of an attribute. The attribute meta data needs to be provided in the	 			//		meta property. The modelHandle is in the property modelHandle. 
+		//		Also the following nodes for indicators need to be provided:  descriptionTooltipNode, errorTooltipNode and changesTooltipNode. 
+		//		This Mixin will update the indicators, the tooltips and their content on changes to the modelHandle's state and message meta data.
+		// Also this mixin emits value-change event when the model changes.
+		 
 
-	return declare("..._DecoratorMixin",[ _GroupMixin ], {
 		baseClass:"Decorator",
-		isValidationContainer:true,
 		messageWatch : null,
 		valueWatch : null,
 		postCreate: function() {

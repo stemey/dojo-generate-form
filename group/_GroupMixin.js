@@ -2,13 +2,18 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare"//
 ], function(array, lang, declare) {
-//the _GroupMixin listens to modelHandle.state and updates the cached errorCount. It also listens to state-changed fire by embedded attributes and updates the errorCount. 
 
 	return declare("gform.group._GroupMixin", null, {
+		// summary:
+		//		the _GroupMixin listens to modelHandle.state and updates the cached errorCount and incompleteCount. 
+		//		It also listens to state-changed fire by embedded attributes and updates the state counts. 
+		//		It provides two properties errorCount and incompleteCount which describes the associated attribute's state. 
 		isValidationContainer:true,
+
 		validateChildren:true,
+
 		persistable:false,
-		
+
 		validWatch : null,
 		
 		postCreate : function() {
@@ -28,14 +33,29 @@ define([ "dojo/_base/array", //
 				this.validWatch.remove();
 			}
 		},
-		
-		getPrefix: function() {
-			return this.id;	
+		reset: function() {
+			console.debug("reset "+this.id);
+			if (this.validateChildren) {
+				this._resetChildren(this.getChildrenToValidate());
+			}
+		},		
+		validate : function(/*boolean*/force, errorCount) {
+		// summary:
+		//		validates the children of this group and returns the errorCount.
+		// force:
+		//		if set to true will force validation of dijits, so that they will be in state "Error" rather than "Incomplete".
+			errorCount=0;	
+			if (this.validateChildren) {
+				errorCount+= this._validateChildren(this.getChildrenToValidate(),force);
+			}
+			if (this.modelHandle && this.modelHandle.get("state")=="Error") {
+				errorCount++;	
+			}
+			return errorCount;
 		},
-		
 		onModelStateChanged: function(propName,old,nu) {
 			if (old!=nu) {
-				this.validateAndFire();
+				this._validateAndFire();
 			}
 		},
 		
@@ -44,7 +64,7 @@ define([ "dojo/_base/array", //
 				return;
 			}
 			event.stopPropagation();
-			this.validateAndFire();
+			this._validateAndFire();
 		},
 		
 		_getErrorCountAttr: function() {
@@ -69,8 +89,9 @@ define([ "dojo/_base/array", //
 				this.modelHandle.tmp[this.id+"errorCount"]=errorCount;
 			}
 		},
-		
-		validateAndFire: function(errorCount){
+		_validateAndFire: function(errorCount){
+			// summary:
+			//		get the children errorCounts and save the value. emit state-change
 			errorCount=this.validate();
 			if (this.persistable) {
 				this.set("errorCount",errorCount);
@@ -79,6 +100,8 @@ define([ "dojo/_base/array", //
 		},
 		
 		getChildrenToValidate: function() {
+			// summary:
+			//		returns the children widgets to validate.
 			return this.getChildren() || children;
 		},	
 		_validateChildren: function(children,force,errorCount){
@@ -104,20 +127,6 @@ define([ "dojo/_base/array", //
 			return errorCount;
 		},
 		
-		validate : function(force,errorCount) {
-		// summary:
-		//		validates the children of this group and returns the errorCount.
-		// force:
-		//		if set to true will force validation of dijits, so that they will be in state "Error" rather than "Incomplete".
-			errorCount=0;	
-			if (this.validateChildren) {
-				errorCount+= this._validateChildren(this.getChildrenToValidate(),force);
-			}
-			if (this.modelHandle && this.modelHandle.get("state")=="Error") {
-				errorCount++;	
-			}
-			return errorCount;
-		},
 		_resetChildren: function(children){
 			if (children) {
 				array.forEach(children,function(child,ec) {
@@ -133,12 +142,6 @@ define([ "dojo/_base/array", //
 				},this);
 			}
 		},
-		reset: function() {
-			console.debug("reset "+this.id);
-			if (this.validateChildren) {
-				this._resetChildren(this.getChildrenToValidate());
-			}
-		},		
 		_getIncompleteCountChildren: function(children,incompleteCount){
 			if (!children) {
 				return 0;

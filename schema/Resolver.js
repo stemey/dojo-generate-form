@@ -1,9 +1,13 @@
 define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","dojo/promise/all", "dojo/request/xhr"
 		 ], function(array, lang,
 		declare, all, request) {
+// module:
+//		gform/schema/Resolver
 
 
 	return declare("gform.Resolver",[],{
+		// summary: 
+		//		Resolver helps resolving references.
 			constructor: function(kwargs) {
 				lang.mixin(this,kwargs);
 			},
@@ -11,16 +15,30 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","dojo/promi
 			references:[],
 			values:{},
 			addReference: function(id,setter) {
+			// summary:
+			//		a reference is added
+			// id:
+			//		the value of the reference
+			// setter:
+			//		function to be called when ref is resolved.
 				if (id) {
 					this.references.push({id:id,setter:setter});
 				}
 			},
 			addElement: function(element) {
+			// summary:
+			//		an element with an id was found
+			// element:
+			//		the element with id
 				if (element.id) {
 					this.values[element.id]=element;
 				}
 			},
 			finish:function() {
+			// summary:
+			//		resolve references (asynchronuously) and updates the object.
+			// returns: dojo/Promise
+			//		returns a promise		
 				var deferred =[];
 				array.forEach(this.references,function(ref) {
 					var value = this.values[ref.id];
@@ -36,7 +54,11 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","dojo/promi
 				},this);
 				return all(deferred);
 			},
-			load: function(ref) {
+			load: function(/*String*/ref) {
+			// summary:
+			//		load an external reference
+			// ref:
+			//		the reference value
 				if (ref.id.substring(0,1)=="/") {
 					var url=ref.id;
 				}else	if (ref.id.substring(0,2)=="./") {
@@ -51,7 +73,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","dojo/promi
 							ref.setter(schema)
 						},
 						function(e) {
-							console.log("cannot find schema "+ref.id+" "+e.message);
+							console.log("cannot find entity "+ref.id+" "+e.message);
 						}
 				);
 				return deferred;

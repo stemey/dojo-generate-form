@@ -1,8 +1,16 @@
 define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","./Resolver"
 		 ], function(array, lang,	declare, Resolver) {
+// module:
+//		gform/schema/refresolve
 
-
-	function resolveRecursively(obj,resolver) {
+	function resolveRecursively(/*Object*/obj, /*gform/schema/Resolver*/resolver) {
+		// summary:
+		//		resolve all references in the object. Handles external refs (e.g.: "/country/2" and refs by id "embedded_object". Does not resolve path-based references.
+		// obj:
+		//		The references in this object will be resolved.
+		// resolver:
+		//		The resolver helps resolving refs.
+		// returns: dojo/Promise
 		resolver = resolver || new Resolver();
 		_resolve(resolver,obj,null);
 		return resolver.finish();

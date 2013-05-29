@@ -3,8 +3,12 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dijit/_Wi
 		"dijit/Tooltip","./_DecoratorMixin","../_LayoutMixin", "dojo/dom-geometry", "dojo/dom-style"
 ], function(declare, lang, array, _WidgetBase, _Container,_TemplatedMixin, _WidgetsInTemplateMixin,
 		template,Tooltip,_DecoratorMixin, _LayoutMixin, domGeometry, domStyle) {
+// module:
+//		gform/group/DecoratorWidget
 
-	return declare("app.DecoratorWidget",[ _WidgetBase,_Container, _TemplatedMixin, _WidgetsInTemplateMixin,_DecoratorMixin, _LayoutMixin ], {
+	return declare("gform.group.DecoratorWidget",[ _WidgetBase,_Container, _TemplatedMixin, _WidgetsInTemplateMixin,_DecoratorMixin, _LayoutMixin ], {
+		// summary:
+		//		this widget container has a single child, which represents an attribute. This widget attaches provides the label and the state indicators for the attribute. 
 		constructor:function(config) {
 			this.inherited(arguments);
 			lang.mixin(this,config);
