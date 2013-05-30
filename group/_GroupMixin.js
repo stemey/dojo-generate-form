@@ -15,7 +15,7 @@ define([ "dojo/_base/array", //
 		persistable:false,
 
 		validWatch : null,
-		
+
 		postCreate : function() {
 			this.inherited(arguments);
 			this.persistable=typeof this.modelHandle != "undefined" && this.modelHandle!=null;
@@ -55,16 +55,18 @@ define([ "dojo/_base/array", //
 		},
 		onModelStateChanged: function(propName,old,nu) {
 			if (old!=nu) {
-				this._validateAndFire();
+				this.validateAndFire();
 			}
 		},
-		
+		childValueChanged: function(prop, old, nu) {
+			this.validateAndFire();
+		},
 		onStateChanged: function(event) {
 			if (event.source==this) {
 				return;
 			}
 			event.stopPropagation();
-			this._validateAndFire();
+			this.validateAndFire();
 		},
 		
 		_getErrorCountAttr: function() {
@@ -89,7 +91,7 @@ define([ "dojo/_base/array", //
 				this.modelHandle.tmp[this.id+"errorCount"]=errorCount;
 			}
 		},
-		_validateAndFire: function(errorCount){
+		validateAndFire: function(errorCount){
 			// summary:
 			//		get the children errorCounts and save the value. emit state-change
 			errorCount=this.validate();
