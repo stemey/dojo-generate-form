@@ -20,7 +20,8 @@ define([ "dojo/_base/array",
 			
 			var select = new Select({
 				value : at(modelHandle, "value"),
-				options : options
+				options : options,
+				maxHeight: -1
 			});
 			
 			if (attribute.required && !modelHandle.value) {
