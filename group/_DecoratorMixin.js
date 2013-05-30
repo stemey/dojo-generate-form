@@ -52,6 +52,11 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 				this.labelNode.parentNode.insertBefore(sup,this.errorTooltipNode);
 			}
 		},
+		startup: function() {
+			this.inherited(arguments);
+			var children = this.getChildrenToValidate();
+			this.singleNonValidatingChild=children.length==1 && !children[0].validate;
+		},
 		destroy: function() {
 			this.inherited(arguments);
 			if (this.modelHandle) {
@@ -61,9 +66,6 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			}
 		},
 
-		startup: function() {
-			this.inherited(arguments);
-		},
 		
 		onValueChange: function(e) {
 			if (e.src!=this) {
@@ -72,6 +74,9 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		},
 		
 		onModelValueChange: function(propName,old,nu) {
+			if (this.singleNonValidatingChild && this.modelHandle.state!="") {
+				this.modelHandle.set("state","");
+			}
 			this.updateState();
 			this.emit("value-changed",{src:this,oldValue:old,newValue:nu});
 		},
