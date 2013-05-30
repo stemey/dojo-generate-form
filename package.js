@@ -13,7 +13,7 @@ var profile = {
 		// It is strongly recommended that the `mini` build flag be used instead of `copyTests`. Therefore, no files
 		// are marked with the `test` tag here.
 		test: function (filename, mid) {
-			return false;
+			return /^(tests\/|example\/|doc\/)/.test(filename);
 		},
 
 		// Files that should be copied as-is without being modified by the build system.
