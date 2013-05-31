@@ -35,9 +35,7 @@ var profile = {
 		// In this case, we are excluding this package configuration file which is not necessary in a built copy of
 		// the application.
 		miniExclude: function (filename, mid) {
-			return mid in {
-				'gform/package': 1
-			};
+			return /^(tests\/|example\/|package\.js\/|doc\/)/.test(filename);
 		}
 	}
 };
