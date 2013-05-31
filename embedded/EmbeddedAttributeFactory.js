@@ -14,10 +14,12 @@ define([ "dojo/_base/array", //
 "dojo/text!./embeddedInstanceExample.json"
 ], function(array, lang, json,declare, at, GroupPanelWidget, SingleTypePanelWidget,
 		StackContainer,  Stateful, TitlePane,updateModelHandle,embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
-
+// module: 
+//		gform/embedded/EmbeddedAttributeFactory
 	return declare("app.EmbeddedGroupFactory", [],{
+		// summary:
+		//		This AttributeFactory create the widget for single embedded attributes.
 		handles : function(attribute, modelHandle) {
-			// check if the attribute is complex.
 			return attribute != null
 					&& attribute.validTypes
 					&& !attribute.array;
