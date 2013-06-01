@@ -9,6 +9,10 @@ define([ "dojo/_base/array", //
 	return declare("app.editor.AttributeFactoryFinder", Stateful, {
 		// summary:
 		//		Manages all attributeFactories.
+		// description:
+		//		used internally by EditorFactory.
+		// tags:
+		//		deprecated
 		constructor: function(kwArgs) {	
 			lang.mixin(this, kwArgs);
 		},

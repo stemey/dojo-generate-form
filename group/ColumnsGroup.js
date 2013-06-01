@@ -3,7 +3,9 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		"dojo/dom-construct", "dojo/dom-class", "../group/_GroupMixin" ], function(array, aspect,  lang,
 		declare,  _LayoutWidget, layoutUtils, domStyle, domGeometry, domConstruct, domClass, _GroupMixin) {
 
-	return declare("gform.layout.ColumnContainer", [_LayoutWidget, _GroupMixin], {
+	return declare([_LayoutWidget, _GroupMixin], {
+	// module:
+	//		The ColumnsGroup display an array of attributes in as many columns as possible. It first calculates the maximum width of all its children. Then it sets a class that will create the approproate number of columns via css-columns. Children are automatically are display:inline-block by ths container style, so that there size can be accurately measured. <br> are inserted to create a break after each of he children.
 		baseClass : "gformColumnContainer",
 		buildRendering: function() {
 			this.inherited(arguments);

@@ -5,20 +5,23 @@ define([ "dojo/_base/array", //
 "./DecoratorWidget",//
 "./ExpandableDecoratorWidget",//
 "./AttributeListWidget",//
-"../AttributeFactoryFinder",//
-"../Resolver"
-
+"../model/Resolver",//
 ], function(array, lang, declare, at, DecoratorWidget, ExpandableDecoratorWidget, AttributeListWidget,
-		AttributeFactoryFinder,Resolver) {
+		Resolver) {
 // module
 //		gform/group/GroupFactory
-	return declare("gform.group.GroupFactory", null, {
+
+
+
+	return declare("gform.group.GroupFactory", [], {
 		// summary:
-		//		this factory handles simple groups containing an array of attributes.
+		//		this factory handles simple groups containing an array of attributes. Creates an instance of ./AttributeListWidget
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		createAttribute : function(attribute, modelHandle,resolver) {
+		// summary:
+		//		creates a widget for an embedded attribute.	
 			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute);
 			if (factory != null) {
 				return factory.create(attribute, modelHandle,resolver);
@@ -27,6 +30,12 @@ define([ "dojo/_base/array", //
 			}
 		},
 		createWidget: function(group) {
+		// summary:
+		//		return the widget for the group.
+		// group: Object
+		//		group meta data
+		// returns: dijit/_Container
+		//		the container, that the attribute widgets will be added to.		
 			return new AttributeListWidget({meta:group});
 		},	
 		create : function(group, modelHandle, resolver) {

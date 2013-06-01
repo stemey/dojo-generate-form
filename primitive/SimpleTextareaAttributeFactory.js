@@ -4,7 +4,7 @@ define([ "dojo/_base/array", //
 "dojo/aspect",//
 "dojox/mvc/at",//
 "dijit/form/SimpleTextarea",//
-"../meta",//
+"../schema/meta",//
 "./mixinTextboxBindings",
 "./dijitHelper"
 ], function(array, lang, declare, aspect, at, SimpleTextarea, meta, mixinTextboxBindings, dijitHelper) {

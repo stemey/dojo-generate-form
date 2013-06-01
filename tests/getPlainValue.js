@@ -1,4 +1,4 @@
-define(["doh/runner","gform/getPlainValue","gform/updateModelHandle"], function(doh,getPlainValue,updateModelHandle){
+define(["doh/runner","gform/model/getPlainValue","gform/model/updateModelHandle"], function(doh,getPlainValue,updateModelHandle){
 
 		var getStateful = function(object) {
 			var mh = updateModelHandle.createMeta();

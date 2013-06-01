@@ -1,20 +1,18 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-"gform/schema/refresolve",
 ], function(array, lang, declare, refresolve) {
 // module:
-//		gform/convertSchema
-// description:
-//		The main export is a function to convert a json schema to a gform schema.
+//		gform/schema/JsonSchemaConverter
 
-  var formatToTypeMapping= {
-		date:"date",
-		time:"time",
-		"date-time":"date-time"
-	}	
-
-	var convert = {
+	return declare([],{
+		// summary:
+		//		converts json schema to gform schema.
+	 formatToTypeMapping: {
+			date:"date",
+			time:"time",
+			"date-time":"date-time"
+		},	
 		copy: function(propSource,propTarget,prop,attribute) {
 			var value = prop[propSource];
 			if (typeof value != "undefined") {
@@ -43,7 +41,7 @@ define([ "dojo/_base/array", //
 					attribute.type_property=prop.gform_type_property || "ext_type";
 					attribute.validTypes=types;
 				}else	if (typeof prop.items.type == "string") {
-					var type = formatToTypeMapping[prop.format];
+					var type = this.formatToTypeMapping[prop.format];
 					attribute.type=type || prop.items.type;
 				}else{
 					var types = this.convertType(prop.items,converted);
@@ -57,7 +55,7 @@ define([ "dojo/_base/array", //
 				attribute.type_property=prop.gform_type_property || "ext_type";
 				attribute.validTypes=types;
 			}else if (typeof prop.type == "string") {
-				var type = formatToTypeMapping[prop.format];
+				var type = this.formatToTypeMapping[prop.format];
 				attribute.type=type || prop.type;
 			}else{
 				var types = this.convertType(prop,converted);
@@ -84,9 +82,11 @@ define([ "dojo/_base/array", //
 		},
 		convert: function(/*Object*/schema,/*Object*/converted,/**local variables*/meta) {
 			// summary:
-			//		converts a json schema to a gform schema
-			// schema:
+			//		converts a json schema to a gform schema. subschemas with id that have already been converted will be reused.
+			// schema: Object
 			//		the json schema
+			// converter?: Object
+			//		the map of original json schema id to converted gform schema
 			// returns: Object
 			//		the gform schema
 			if (!schema.properties) {
@@ -115,8 +115,8 @@ define([ "dojo/_base/array", //
 			}		
 			return meta;
 		}
-	}
+	})
+	
 
-	return lang.hitch(convert,"convert");
 });
 

@@ -1,31 +1,31 @@
 define([ 
 "dojo/_base/lang",//
-"./EditorFactory", //
-"./AttributeFactoryFinder",//
-"./group/GroupFactory",//
-"./group/ListPaneGroupFactory",//
-"./group/TabGroupFactory",//
-"./group/TitlePaneGroupFactory",//
-"./group/ListGroupFactory",//
-"./list_primitive/PrimitiveListAttributeFactory",//
-"./primitive/StringAttributeFactory",//
-"./primitive/BooleanAttributeFactory",//
-"./primitive/SelectAttributeFactory",//
-"./primitive/CheckedSelectAttributeFactory",//
-"./primitive/MappedCheckedMultiSelectAttributeFactory",//
-"./primitive/CheckedMultiSelectAttributeFactory",//
-"./primitive/MappedSelectAttributeFactory",//
-"./primitive/DateAttributeFactory",//
-"./primitive/TimeAttributeFactory",//
-"./embedded/EmbeddedAttributeFactory",//
-"./primitive/TextareaAttributeFactory",//
-"./primitive/SimpleTextareaAttributeFactory",//
-"./primitive/NumberAttributeFactory",//
-"./primitive/CurrencyAmountAttributeFactory",//
-"./primitive/MappedContentPaneFactory",//
-"./group/AttributeListWidget",//
-"./list_embedded/RepeatedEmbeddedAttributeFactory",//,
-"./list_table/RepeatedEmbeddedAttributeFactory"
+"../../EditorFactory", //
+"../../AttributeFactoryFinder",//
+"../../group/GroupFactory",//
+"../../group/ListPaneGroupFactory",//
+"../../group/TabGroupFactory",//
+"../../group/TitlePaneGroupFactory",//
+"../../group/ListGroupFactory",//
+"../../list_primitive/PrimitiveListAttributeFactory",//
+"../../primitive/StringAttributeFactory",//
+"../../primitive/BooleanAttributeFactory",//
+"../../primitive/SelectAttributeFactory",//
+"../../primitive/CheckedSelectAttributeFactory",//
+"../../primitive/MappedCheckedMultiSelectAttributeFactory",//
+"../../primitive/CheckedMultiSelectAttributeFactory",//
+"../../primitive/MappedSelectAttributeFactory",//
+"../../primitive/DateAttributeFactory",//
+"../../primitive/TimeAttributeFactory",//
+"../../embedded/EmbeddedAttributeFactory",//
+"../../primitive/TextareaAttributeFactory",//
+"../../primitive/SimpleTextareaAttributeFactory",//
+"../../primitive/NumberAttributeFactory",//
+"../../primitive/CurrencyAmountAttributeFactory",//
+"../../primitive/MappedContentPaneFactory",//
+"../../group/AttributeListWidget",//
+"../../list_embedded/RepeatedEmbeddedAttributeFactory",//,
+"../../list_table/RepeatedEmbeddedAttributeFactory"
 
 ], function(lang,EditorFactory,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
 		TitlePaneGroupFactory, ListGroupFactory,PrimitiveListAttributeFactory,StringAttributeFactory,

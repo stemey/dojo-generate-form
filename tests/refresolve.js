@@ -1,4 +1,4 @@
-define(["doh/runner","dojo/_base/lang","gform/schema/refresolve"], function(doh,lang,refresolve){
+define(["doh/runner","dojo/_base/lang","gform/util/refresolve"], function(doh,lang,refresolve){
 
 		var schema=					
 				{

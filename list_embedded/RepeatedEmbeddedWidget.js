@@ -2,7 +2,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
 		"dijit/_WidgetsInTemplateMixin","dojo/Stateful","./PolymorphicMemberWidget","../Editor",
 		"dojo/text!./repeated_embedded_attribute.html", "dijit/TitlePane", "dojo/i18n!../nls/messages",
-		"../_LayoutMixin",
+		"../layout/_LayoutMixin",
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, Stateful,PolymorphicMemberWidget,Editor,template, TitlePane, messages, _LayoutMixin) {
 

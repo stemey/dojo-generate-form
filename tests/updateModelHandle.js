@@ -1,4 +1,4 @@
-define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform/getPlainValue","gform/updateModelHandle","dojo/_base/json"], function(doh,lang,equals,Stateful,getPlainValue,updateModelHandle){
+define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform/model/getPlainValue","gform/model/updateModelHandle","dojo/_base/json"], function(doh,lang,equals,Stateful,getPlainValue,updateModelHandle){
 
 		var type1=					
 				{

@@ -1,4 +1,4 @@
-define(["doh/runner","gform/schema/schemaGenerator","gform/schema/refresolve","gform/createStandardEditorFactory","json-schema/lib/validate","dojo/text!json-schema/draft-03/schema"], function(doh,schemaGenerator, refresolve, createStandardEditorFactory,validate,schemaSchema){
+define(["doh/runner","gform/schema/schemaGenerator","gform/util/refresolve","gform/createStandardEditorFactory","json-schema/lib/validate","dojo/text!json-schema/draft-03/schema"], function(doh,schemaGenerator, refresolve, createStandardEditorFactory,validate,schemaSchema){
 
 	
 	function addSchemaTest(schema,tests) {

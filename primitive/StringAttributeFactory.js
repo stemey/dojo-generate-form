@@ -5,7 +5,7 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "dojox/mvc/at",//
 "./ValidationTextBox",//
-"../meta",//
+"../schema/meta",//
 "./mixinTextboxBindings",
 "./dijitHelper"
 ], function(array, lang, declare, aspect, Stateful, at, TextBox,  meta, mixinTextboxBindings, dijitHelper) {

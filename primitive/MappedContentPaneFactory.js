@@ -3,7 +3,7 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dijit/layout/ContentPane",//
-"../meta"
+"../schema/meta"
 ], function(array, lang, declare, at, ContentPane, meta) {
 
 	return declare("gform.MappedContentPaneFactory", [], {

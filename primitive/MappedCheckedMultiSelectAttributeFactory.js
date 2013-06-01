@@ -5,11 +5,11 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dojox/form/CheckedMultiSelect",//
 "./_MappedSelectAttributeFactoryBase",//
-"./bindArray",//
-"../getPlainValue",//
+"./bindWidget",//
+"../model/getPlainValue",//
 "dojox/mvc/StatefulArray"
 ], function(array, lang, declare, domClass, at, CheckedMultiSelect, _MappedSelectAttributeFactoryBase, //
-		 bindArray, getPlainValue,StatefulArray) {
+		 bindWidget, getPlainValue,StatefulArray) {
 
 	return declare("gform.MappedCheckedMultiSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
 
@@ -30,7 +30,7 @@ define([ "dojo/_base/array", //
 				value : clonedValues
 			});
 
-			bindArray(modelHandle,select,"value");
+			bindWidget(modelHandle,select,"value");
 			this._watchMappedAttribute(attribute,select,resolver);
 			
 			return select;

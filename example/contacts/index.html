@@ -18,8 +18,8 @@
 
 		require([ "dojo/ready", "dojo/json", "dojo/when", "gform/Editor", "gform/createLayoutEditorFactory",
 		"dojo/text!./address.json", "dojo/text!./address_data.json", "dijit/registry", //
-		"dijit/layout/BorderContainer","dojo/parser", "gform/convertSchema", //
-		"gform/schema/refresolve", "gform/schema/Resolver", "dijit/form/Button"//
+		"dijit/layout/BorderContainer","dojo/parser", "gform/schema/convertSchema", //
+		"gform/util/refresolve", "gform/schema/Resolver", "dijit/form/Button"//
 		], function(ready, json, when, Editor, createEditorFactory, jsonSchema, entity, registry,BorderContainer,parser, convertSchema, refresolve, Resolver) {
 			parser.parse();
 			try {

@@ -5,7 +5,7 @@ define(
 		"dojo/when",//
 		"dojox/mvc/at",//
 		"./FilteringSelect",//
-		"../meta",//
+		"../schema/meta",//
 		"./dijitHelper",
 		"dojo/store/Memory",
 		"dojo/store/JsonRest",

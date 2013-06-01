@@ -4,7 +4,7 @@ define(
 		"dojo/_base/declare",//
 		"dojox/mvc/at",//
 		"./NumberTextBox",//
-"../meta",//
+"../schema/meta",//
 "./dijitHelper",
 "./mixinNumberboxBindings"
 		],

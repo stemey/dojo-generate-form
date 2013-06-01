@@ -1,10 +1,12 @@
 define([ "dojo/_base/declare", "dojo/_base/lang",
-		"dijit/Tooltip","./_GroupMixin","../hasChanged", "dojo/i18n", "dojo/i18n!../nls/messages"
+		"dijit/Tooltip","./_GroupMixin","../model/hasChanged", "dojo/i18n", "dojo/i18n!../nls/messages"
 ], function(declare, lang,	Tooltip,_GroupMixin, hasChanged, i18n, messages) {
 // module:
 //		gform/group/_DecoratorMixin	
 	return declare("gform.group._DecoratorMixin",[ _GroupMixin ], {
 		// summary:
+		//		Displays and manages an attribute's static and dynamic meta data. Should be mixed into Decorators.
+		// description:
 		//		This Mixin manages the label of an attribute. The attribute meta data needs to be provided in the	 			//		meta property. The modelHandle is in the property modelHandle. 
 		//		Also the following nodes for indicators need to be provided:  descriptionTooltipNode, errorTooltipNode and changesTooltipNode. 
 		//		This Mixin will update the indicators, the tooltips and their content on changes to the modelHandle's state and message meta data.
@@ -12,8 +14,33 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		 
 
 		baseClass:"Decorator",
+		// meta: Object
+		//		The attribute meta data
+		meta : null,
+		// modelHandle: Object
+		//		The attribute modelHandle
+		modelHandle : null,
+		// messageWatch: Object
+		//		the watchHandle for the message in modelHandle
 		messageWatch : null,
+		// valueWatch: Object
+		//		the watchHandle for the value in modelHandle
 		valueWatch : null,
+		// changesTooltipNode:
+		//		tooltip for change description will be attached here
+		changesTooltipNode: null,
+		// errorTooltipNode:
+		//		tooltip for error message will be attached here
+		errorTooltipNode: null,
+		// descriptionTooltipNode:
+		//		tooltip for description will be attached here
+		descriptionTooltipNode: null,
+		// changesTooltip:dijit/Tooltip
+		//		tooltip for change description
+		changesTooltip: null,
+		// errorTooltip: dijit/Tooltip
+		//		tooltip for error message
+		errorTooltipNode: null,
 		postCreate: function() {
 			this.inherited(arguments);
 			if (this.modelHandle && typeof this.modelHandle.watch == "function") {

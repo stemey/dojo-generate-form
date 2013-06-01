@@ -39,8 +39,6 @@ define([
 		AttributeListWidget, ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 // module:
 //		gform/createStandardEditorFactory
-// description:
-//		The main export is a function to create an editorFactory for general use.
 
 			var editorFactory = new EditorFactory();
 			editorFactory.addGroupFactory("list", new GroupFactory({editorFactory:editorFactory}));
@@ -83,6 +81,10 @@ define([
 			editorFactory.set("attributeFactoryFinder",attributeFactoryFinder);
 		
 			return function() {
+				// summary:
+				//		StandardEditorFactory will created simple list as default group. 
+				// returns: gform/EditorFactory
+				//		return the cached editorFactory instance.
 				return editorFactory;
 			};	
 

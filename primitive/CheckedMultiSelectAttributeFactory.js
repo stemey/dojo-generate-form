@@ -3,12 +3,12 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojo/aspect",//
 "dojox/form/CheckedMultiSelect",//
-"../updateModelHandle",//
+"../model/updateModelHandle",//
 "./createOptions",//
-"./bindArray",//
-"../getPlainValue",//
+"./bindWidget",//
+"../model/getPlainValue",//
 "dojox/mvc/StatefulArray"
-], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle,   createOptions,bindArray,getPlainValue,StatefulArray) {
+], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle,   createOptions,bindWidget,getPlainValue,StatefulArray) {
 
 	return declare("gform.CheckedMultiSelectAttributeFactory", [  ], {
  		
@@ -30,7 +30,7 @@ define([ "dojo/_base/array", //
 				multiple : true
 			});
 			
-			bindArray(modelHandle,select,"value");
+			bindWidget(modelHandle,select,"value");
 			
 			return select;
 		},

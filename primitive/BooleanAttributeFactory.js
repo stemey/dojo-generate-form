@@ -4,7 +4,7 @@ define([ "dojo/_base/array", //
 "dojo/aspect",//
 "dojox/mvc/at",//
 "dijit/form/CheckBox",//
-"../meta",//
+"../schema/meta",//
 "./dijitHelper"
 ], function(array, lang, declare, aspect, at, CheckBox,  meta, dijitHelper) {
 

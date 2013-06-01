@@ -2,7 +2,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		"dojo/dom-geometry", "dojo/dom-style" ], function(array, aspect,  lang,
 		declare, domGeometry, domStyle) {
 		// module: 
-		//		gform/_LayoutMixin
+		//		gform/layout/_LayoutMixin
 
 
 	return declare("gform._LayoutMixin", [], {

@@ -39,8 +39,6 @@ define([
 		AttributeListWidget, ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory,TableListAttributeFactory) {
 // module:
 //		gform/createLayoutEditorFactory
-// description:
-//		The main export is a function to create an editorFactory for use in layout containers.
 
 			var editorFactory = new EditorFactory();
 			editorFactory.addGroupFactory("list", new GroupFactory({editorFactory:editorFactory}));
@@ -83,6 +81,10 @@ define([
 			editorFactory.set("attributeFactoryFinder",attributeFactoryFinder);
 		
 			return function() {
+				// summary:
+				//		LayoutEditorFactory will created ListPanes as default group. These work well in LayoutContainers
+				// returns: gform/EditorFactory
+				//		return the cached editorFactory instance.
 				return editorFactory;
 			}				
 

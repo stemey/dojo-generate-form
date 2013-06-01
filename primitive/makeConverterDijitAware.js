@@ -7,21 +7,23 @@ define([ "dojo/_base/array", //
 //		gform/primitive/makeConverterDijitAware
 
 		return function(converter) {
-			// sumary:
-			//		the parse function is wrapped. The wrapper checks the dijit's state and throws an exception if the state is "Error".
+			// summary:
+			//		the converter is wrapped. The wrapper checks the dijit's state and throws an exception if the state is "Error". The dijit instance needs to be set as converter.dijit.
 			// converter: Object
-			//		the original converter. Attach the dijit instance to the converter.		
+			//		the original converter.		
 			// returns: Object
 			//		returns the wrapped converter 
-			var originalParse = converter.parse;
-			converter.parse=function(value) {
-				if (converter.dijit && converter.dijit.get("state")=="Error") {
+			var wrapper = {};
+			var parse=function(value) {
+				if (wrapper.dijit && wrapper.dijit.get("state")=="Error") {
 					throw new Error("dijit value is invalid");
 				} else {
-					return originalParse(value);
+					return converter.parse(value);
 				}
 			}
-			return converter;
+			wrapper.format= converter.format;
+			wrapper.parse= parse;
+			return wrapper;
 		}
 
 });

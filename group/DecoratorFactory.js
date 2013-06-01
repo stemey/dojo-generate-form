@@ -14,6 +14,12 @@ define([ "dojo/_base/array", //
 		create : function(attribute, modelHandle) {
 			// summary:
 			//		creates the decorator widget
+			// attribute: Object
+			//		the attribute meta data
+			// modelHandle: dojo/Stateful
+			//		the modelHandle containing state, messag meta data. These should be dislayed by the decorator
+			// returns: dijit/_Container
+			//		The widget for the atribute will be added as only child.	
 			return new DecoratorWidget({meta:attribute, modelHandle:modelHandle});
 		}	
 	})

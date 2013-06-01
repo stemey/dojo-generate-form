@@ -3,7 +3,7 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "./ListPane",//
 "./DescriptionWidget",
-"../updateModelHandle"
+"../model/updateModelHandle"
 ], function(array, lang, declare, ListPane, DescriptionWidget, updateModelHandle) {
 // module:
 //		gform/group/ListGroupFactory

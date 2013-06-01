@@ -9,7 +9,7 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "./TableWidgetList",//
 "./RepeatedEmbeddedWidget",//
-"../updateModelHandle",//
+"../model/updateModelHandle",//
 "./TableHeader",//
 "./TableElementHeader",//
 "./mergeAttributeDefinitions",//

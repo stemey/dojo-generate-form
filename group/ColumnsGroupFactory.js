@@ -2,16 +2,16 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "./GroupFactory",//
-"../layout/ColumnContainer"
+"./ColumnsGroup"
 
-], function(array, lang, declare, GroupFactory,  ColumnContainer, _GroupMixin) {
+], function(array, lang, declare, GroupFactory,  ColumnsGroup, _GroupMixin) {
 // module:
 //			gform/ColumnsGroupFactory
-	return declare("gform.ColumnsGroupFactory", [GroupFactory], {
+	return declare([GroupFactory], {
 		// summary:
-		//		the column group arranges its child attributes in columns.
+		//		the column group arranges its child attributes in columns using ./ColumnsGroup.
 		createWidget : function(group) {
-			var pane = new ColumnContainer({meta:group});
+			var pane = new ColumnsGroup({meta:group});
 			return pane;
 		},
 		getSchema: function() {

@@ -4,7 +4,7 @@ define([ "dojo/_base/array", //
 "dojo/aspect",//
 "dojox/mvc/at",//
 "./ValidationTextBox",//
-"../meta",//
+"../schema/meta",//
 ], function(array, lang, declare, aspect, at, TextBox, meta) {
 
 	return function(modelHandle,props) {

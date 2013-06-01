@@ -1,4 +1,4 @@
-define(["doh/runner","gform/schema/refresolve","gform/convertSchema","dojo/text!./meta/contacts_schema.json"], function(doh,refresolve,convertSchema,contactsSchemaJson){
+define(["doh/runner","gform/util/refresolve","gform/schema/convertSchema","dojo/text!./meta/contacts_schema.json"], function(doh,refresolve,convertSchema,contactsSchemaJson){
 
 	
 

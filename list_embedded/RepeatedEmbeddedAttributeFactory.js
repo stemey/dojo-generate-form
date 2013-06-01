@@ -7,11 +7,11 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
-"../LayoutWidgetList",//
+"../layout/LayoutWidgetList",//
 "./RepeatedEmbeddedWidget",//
-"../updateModelHandle",//
+"../model/updateModelHandle",//
 "dojox/mvc/StatefulArray",//
-"../_LayoutMixin"
+"../layout/_LayoutMixin"
 ], function(array, lang, Editor, declare, at, 
 		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, StatefulArray, _LayoutMixin) {
 

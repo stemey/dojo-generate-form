@@ -5,8 +5,6 @@ define([ "dojo/_base/array", //
 ], function(array, lang, declare, equals) {
 // module:
 //		gform/equals
-// summary:
-//		This equals extends dojox/mvc/equals so that modelhandles can be compared. modelHandles contain objects with a property "__type" with the value "meta". The comparison is cascaded to the value property of the meta object.
 	var equalsOptions = {
 		getType: function(/*Anything*/ v){
 			// summary:
@@ -26,6 +24,14 @@ define([ "dojo/_base/array", //
 	lang.mixin(options,equals);
 	lang.mixin(options,equalsOptions);
 	var equalsModelHandle = function(src,dst) {
+	// summary:
+	//		This equals extends dojox/mvc/equals so that modelhandles can be compared. modelHandles contain objects with a property "__type" with the value "meta". The comparison is cascaded to the value property of the meta object.
+	// src: dojo/Stateful
+	//		modelHandle
+	// dst: dojo/Stateful
+	//		modelHandle
+	// returns: boolean
+	//		true if src and dst is equal
 		return equals(src,dst, options);
 	}
 	return equalsModelHandle;

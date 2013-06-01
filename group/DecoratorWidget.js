@@ -1,6 +1,6 @@
 define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dijit/_WidgetBase", "dijit/_Container","dijit/_TemplatedMixin",
 		"dijit/_WidgetsInTemplateMixin", "dojo/text!./decorator.html",
-		"dijit/Tooltip","./_DecoratorMixin","../_LayoutMixin", "dojo/dom-geometry", "dojo/dom-style"
+		"dijit/Tooltip","./_DecoratorMixin","../layout/_LayoutMixin", "dojo/dom-geometry", "dojo/dom-style"
 ], function(declare, lang, array, _WidgetBase, _Container,_TemplatedMixin, _WidgetsInTemplateMixin,
 		template,Tooltip,_DecoratorMixin, _LayoutMixin, domGeometry, domStyle) {
 // module:

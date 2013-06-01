@@ -6,7 +6,14 @@ define([
 //		gform/api/DecoratorFactory
 	return declare( [], {
 		// summary:
-		//		the DecoratorFactory creates the decorators wrapped around the attributes. The Decorator displays static and dynamic meta data about the attribute: label, description, validity of the user input.
+		//		the DecoratorFactory creates the decorators wrapped around the attributes. 
+		// description:
+		//		The Decorator displays static and dynamic meta data about the attribute:
+		//		 
+		//		* label
+		//		* description
+		//		* error message
+		//		* required property
 		create : function(attribute, modelHandle) {
 			// summary:
 			//		creates the decorator widget

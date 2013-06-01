@@ -6,18 +6,23 @@
 
 
 	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
-	<link id="themeStyles" rel="stylesheet" href="../../gform/resources/gform_layout.css"/>
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css"/>
+	<link id="themeStyles" rel="stylesheet" href="../../../gform/resources/gform_layout.css"/>
 
 	<!-- required: dojo.js -->
-	<script type="text/javascript" src="../../dojo/dojo.js"
-		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+	<script type="text/javascript">
+		var dojoConfig = {
+			async: true,
+			isDebug: true,
+		}
+	</script>
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
 
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/registerBuilderEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-	"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve","gform/schema/schemaGenerator", "dijit/form/Button", "dijit/Dialog"
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/example/formbuilder/registerBuilderEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
+	"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/schema/convertSchema","gform/util/refresolve","gform/schema/schemaGenerator", "dijit/form/Button", "dijit/Dialog"
 		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve,schemaGenerator) {
 			parser.parse();
 			try {

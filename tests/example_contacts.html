@@ -17,7 +17,7 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-		"dojo/text!./meta/contacts_schema.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/schema/refresolve", "dojo/request",  "gform/schema/Resolver", "dijit/form/Textarea"
+		"dojo/text!./meta/contacts_schema.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/convertSchema","gform/util/refresolve", "dojo/request",  "gform/schema/Resolver", "dijit/form/Textarea"
 		], function(ready, json, Editor, Stateful, doh,createEditorFactory,on,RepeatedEmbeddedAttributeFactory, meta,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema, refresolve, request, Resolver) {
 			parser.parse();
 			var ef=createEditorFactory();

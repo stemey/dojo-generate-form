@@ -4,7 +4,7 @@ define([ "dojo/_base/array", //
 "dojox/form/CheckedMultiSelect",//
 "./createOptions",//
 "./nullablePrimitiveConverter",//
-"../updateModelHandle",//
+"../model/updateModelHandle",//
 ], function(array, lang, declare, CheckedMultiSelect, createOptions, nullablePrimitiveConverter, updateModelHandle) {
 
 	return declare("gform.CheckedSelectAttributeFactory", [ ], {

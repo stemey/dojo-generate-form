@@ -1,6 +1,6 @@
 define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declare",
 		"dojox/mvc/_Container", "dijit/layout/_LayoutWidget","dojox/mvc/at", 
-		"dojo/dom-construct", "dojo/Stateful", "./getPlainValue","./updateModelHandle","./hasChanged","./group/_GroupMixin" ], function(array, aspect,  lang,
+		"dojo/dom-construct", "dojo/Stateful", "./model/getPlainValue","./model/updateModelHandle","./model/hasChanged","./group/_GroupMixin" ], function(array, aspect,  lang,
 		declare, Container, _LayoutWidget,at, domConstruct,
 		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin) {
 		// module: 
@@ -12,25 +12,42 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 	return declare("gform.Editor", [ Container,_GroupMixin ], {
 		// summary:
 		//		this widget generates a form based on a schema.
-		editorFactory : null,
-		// summary:
+		// description:
+		//		Editor needs a schema and a gform/EditorFactory that helps creating the widget tree appropriate for the schema.
+		//		| require(["gform/createStandardEditorFactory"],
+		//		|					function(createStandardEditorFactory){ 
+		//		| var myGformSchema= 
+		//		|  {attributes:[
+		//		|    {code: "name", type: "string"}
+		//		|   ]}
+		//		| var editorFactory= createStandardEditorFactory();
+		//		| var editor= new Editor(
+		//		|				{meta: myGformSchema, 
+		//		|				editorFactory: editorFactory()
+		//		|				});
+		//		| editor.placeAt("myContainer");
+		//		| }
+		//
+
+		// editorFactory:
 		// 		the editorFactory is responsible for translating the schema into a widget tree.
+		editorFactory : null,
 
+		// widget:
+		//		this is the single child group widget.
 		widget : null,
-		// summary:
-		//		this is the single child widget.
 
-		modelHandle : null,
-		// summary:
+		// modelHandle:
 		// 		the data that is bound to the form.
+		modelHandle : null,
 
-		meta : null,
-		// summary:
+		// meta:
 		// 		the schema describing the form.
+		meta : null,
 
-		isLayoutContainer:true,
-		// summary:
+		// isLayoutContainer:
 		//		Editor supports layouts by propagating the resizing to its child.
+		isLayoutContainer:true,
 		
 		// remember all field paths where an explicit error message was added via addError()
 		_explicitErrorPaths : [],
@@ -52,6 +69,20 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			
 			this._buildContained();
 		},
+		setPlainValue: function(/*Object*/ plainValue) {
+		// summary:
+		//		update the modelHandle bound to the editor
+		// plainValue:
+		//		the plainValue.
+			this.set("plainValue",plainValue);
+		},
+		getPlainValue: function() {
+		// summary:
+		//		gets the plainValue from the current modelHandle.
+		// returns: Object
+		//		the plainValue.
+			return this.get("plainValue");
+		},
 		_setPlainValueAttr: function(value) {
 			if (value==null) {
 				value={};
@@ -72,11 +103,16 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		hasChanged: function() {
 		// summary:
 		// 		returns true if the data was changed.
+		// returns: Boolean
 			return hasChanged(this.modelHandle);
 		},
 		addError: function(path,message) {
 		// summary:
 		//		add an error message to an attribute defined by the path.
+		// path: String
+		//		path like "addresses.0.name"
+		// message: String
+		//		the error message 
 			this.visit(path,function(model) {
 				model.set("state","Error");
 				model.set("message",message);
@@ -97,13 +133,22 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		updateValue: function(path,value) {
 		// summary:
 		//		update an attribute of the data.
+		// path: String
+		//		path like "addresses.0.name"
+		// value: String
+		//		the new value 
 			this.visit(path,function(model) {
+				// TODO this only works for primitive types. Otherwise we need to use updateModelHandle.
 				model.set("value",value);
 			});
 		},
 		visit: function(path,cb) {
 		// summary:
 		//		visit the data attribute defined by the path. The path elements are separated by dots -even the indices (e.g.: "person.friends.1.name"). 
+		// path: String
+		//		path like "addresses.0.name"
+		// cb: function
+		//		callback.  
 			var pathElements=path.split(".");
 			var model=this.get("modelHandle");
 			//TODO we need to consult the editorFactory to do this properly. 

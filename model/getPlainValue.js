@@ -5,9 +5,7 @@ define([ "dojo/_base/array", //
 "dojox/mvc/getPlainValue"//
 ], function(array, lang, declare, Stateful, getPlainValue) {
 // module:
-//		gform/getPlainValue
-// summary:
-//		This getPlainValue extends dojox/mvc/getPlainValue so that modelhandles can be converted to plainValues. modelHandles contain objects with a property "__type" with the value "meta". Only the value property is included in the plainValue. If the meta object has a property ignore with value true, the value is not included.
+//		gform/model/getPlainValue
 
    
 	var getPlainValueOptions = {
@@ -37,7 +35,13 @@ define([ "dojo/_base/array", //
 	lang.mixin(options,getPlainValue);
 	lang.mixin(options,getPlainValueOptions);
 	
-	var getPlainValueWithMetaData = function(v) {
+	var getPlainValueWithMetaData = function(modelHandle) {
+// summary:
+//		This getPlainValue extends dojox/mvc/model/getPlainValue so that modelhandles can be converted to plainValues. 
+// modelHandle: dojo/Stateful
+//		the modelHandle
+// returns: Object
+//		returns the plainValue	
 		return getPlainValue(v, options);
 	}
 	return getPlainValueWithMetaData;

@@ -3,17 +3,31 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare"//
 ], function(array, lang, declare) {
 
-	return declare("gform.group._GroupMixin", null, {
+	return declare( null, {
 		// summary:
+		//		provides errorCount and stateCount properties. Should be mixed into all Decorators and Groups.
+		// description:
 		//		the _GroupMixin listens to modelHandle.state and updates the cached errorCount and incompleteCount. 
 		//		It also listens to state-changed fire by embedded attributes and updates the state counts. 
 		//		It provides two properties errorCount and incompleteCount which describes the associated attribute's state. 
+		// isValidationContainer: Boolean
+		//		Can be used by the parent to delegate to this widget validation methods. 
 		isValidationContainer:true,
 
+		// validateChildren
+		//		if false the children will not be validated. TODO probably the same as getChildrenToValidate() returns empty array.
 		validateChildren:true,
 
+		// persistable: Boolean
+		//		if this.modelHandle is set then persistable is true and the state counts will be cached in the modelhandle. Otherwise the state counts will be recalculated on each call.
 		persistable:false,
 
+		// validWatch: Object
+		//		watchHandle to modelHandle.state
+		validWatch : null,
+
+		// modelHandle: dojo/Stateful
+		//		the modelHandle provides access to attributes' state. Also used to cache state count.
 		validWatch : null,
 
 		postCreate : function() {
@@ -33,8 +47,37 @@ define([ "dojo/_base/array", //
 				this.validWatch.remove();
 			}
 		},
+		validateAndFire: function(errorCount){
+			// summary:
+			//		get the children errorCounts and cache the value. Then emit state-change
+			errorCount=this.validate();
+			if (this.persistable) {
+				this.set("errorCount",errorCount);
+			}
+			this.emit("state-changed",{source:this});
+		},
+		getErrorCount: function() {
+		// summary:
+		//		calculate the error count of all contained attributes.
+		// returns: int
+		//		number of errors
+			return this.get("errorCount");
+		},
+		getIncompleteCount: function() {
+		// summary:
+		//		calculate the incomplete count of all contained attributes.
+		// returns: int
+		//		number of incomplete attributes
+			return this.get("incompleteCount");
+		},
+		getChildrenToValidate: function() {
+			// summary:
+			//		returns the children widgets to validate.
+			return this.getChildren() || children;
+		},	
 		reset: function() {
-			console.debug("reset "+this.id);
+		// summary:
+		//		resets the message and state in children. Also  resets the _hasBeenBlurred property in children.
 			if (this.validateChildren) {
 				this._resetChildren(this.getChildrenToValidate());
 			}
@@ -91,21 +134,6 @@ define([ "dojo/_base/array", //
 				this.modelHandle.tmp[this.id+"errorCount"]=errorCount;
 			}
 		},
-		validateAndFire: function(errorCount){
-			// summary:
-			//		get the children errorCounts and save the value. emit state-change
-			errorCount=this.validate();
-			if (this.persistable) {
-				this.set("errorCount",errorCount);
-			}
-			this.emit("state-changed",{source:this});
-		},
-		
-		getChildrenToValidate: function() {
-			// summary:
-			//		returns the children widgets to validate.
-			return this.getChildren() || children;
-		},	
 		_validateChildren: function(children,force,errorCount){
 			if (!children) {
 				return 0;
@@ -136,7 +164,7 @@ define([ "dojo/_base/array", //
 						child.reset();
 					}else if (child.validate){
 						// this will trigger an update to the errorCount in the surrounding GroupMixin. The number will be picked up later 
-						console.debug("reset blur "+child.id);
+						//console.debug("reset blur "+child.id);
 						child._hasBeenBlurred=false;
 						child.set("message",null);
 						child.set("state","");

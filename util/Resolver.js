@@ -2,7 +2,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","dojo/promi
 		 ], function(array, lang,
 		declare, all, request) {
 // module:
-//		gform/schema/Resolver
+//		gform/util/Resolver
 
 
 	return declare("gform.Resolver",[],{
@@ -68,9 +68,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare","dojo/promi
 				}
 				var deferred = request(url,{handleAs:"json",method:"GET"});
 				deferred.then(
-						function(schema){
-							schema.id=ref.id;
-							ref.setter(schema)
+						function(util){
+							util.id=ref.id;
+							ref.setter(util)
 						},
 						function(e) {
 							console.log("cannot find entity "+ref.id+" "+e.message);

@@ -4,7 +4,7 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dojo/date/stamp",//
 "./DateTextBox",//
-"../meta",//
+"../schema/meta",//
 "./dijitHelper"
 ], function(array, lang, declare, at, dateStamp, DateTextBox, meta, dijitHelper ) {
 

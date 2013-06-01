@@ -3,8 +3,8 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojo/dom-class",//
 "dojox/mvc/at",//
-"../meta",//
-"../getPlainValue",//
+"../schema/meta",//
+"../model/getPlainValue",//
 "dojox/mvc/StatefulArray",//
 "dojo/i18n!../nls/messages"
 ], function(array, lang, declare, domClass, at,  meta,getPlainValue,StatefulArray, messages) {

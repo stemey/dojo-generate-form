@@ -4,8 +4,8 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dojo/aspect",//
 "./Select",//
-"../updateModelHandle",//
-"../meta",//
+"../model/updateModelHandle",//
+"../schema/meta",//
 "./createOptions",//
 "./nullablePrimitiveConverter" ,//
 "./dijitHelper" 

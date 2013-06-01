@@ -3,8 +3,8 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./singletype_embedded_attribute.html", "dojo/text!./singletype_embedded_required_attribute.html",
-		"dijit/layout/StackContainer", "dojo/Stateful","../updateModelHandle", "../Editor","../group/_GroupMixin",
-"../_LayoutMixin"
+		"dijit/layout/StackContainer", "dojo/Stateful","../model/updateModelHandle", "../Editor","../group/_GroupMixin",
+"../layout/_LayoutMixin"
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, requiredTemplate, StackContainer, Stateful,updateModelHandle,
 		Editor,_GroupMixin,_LayoutMixin) {

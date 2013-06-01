@@ -3,7 +3,7 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "./CurrencyTextBox",//
-"../meta",//
+"../schema/meta",//
 "./dijitHelper",//
 "dojo/cldr/monetary",//
 "./nullableNumberConverter",//

@@ -3,27 +3,47 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dojo/Stateful", //
-"./Resolver", //
+"./model/Resolver", //
 "./group/DecoratorFactory" //
 ], function(array, lang, declare, at, Stateful, Resolver, DecoratorFactory) {
 	// module: 
 	//		gform/EditorFactory
-	// summary:
-	//		An editorFactory defines the mapping of a gform schema to a widget tree.	
 
 	return declare("gform.EditorFactory", [Stateful], {
+	// summary:
+	//		EditorFactory defines the mapping of a gform schema to a widget tree.	
 		constructor : function() {
 			this.groupFactories={};
 			this.decoratorFactory=new DecoratorFactory();
 		},
 		addGroupFactory: function(id,factory) {
+		// summary:
+		//		add a groupFactory by id
+		// id: String
+		//		matched against the groupType from the schema
+		// factory: gform/api/GroupFactory
+		//		the groupFactory
 			this.groupFactories[id]=factory;
 		},
 		setDefaultGroupFactory: function(id) {
+		// summary:
+		//		set default groupFactory by id
+		// id: String
+		//		the id of the default groupFactory
 			this.defaultGroupFactory=this.groupFactories[id];
 		},
+		// decoratorFactory:
+		//		used to create decorators
 		decoratorFactory: null,
+		// defaultGroupFactory:
+		//		used to create group if groupType property is absent from schema.
 		defaultGroupFactory:null,
+		// groupFactories:
+		//		map of all groupFactories.
+		groupFactories: null,
+		// attributeFactoryFinder:
+		//		manages the attributeFactories.
+		attributeFactoryFinder: null,
 		createDecorator: function(/*Object*/attribute, /*dojo.Stateful*/modelHandle) {
 			// summary:
 			//		creates a Decorator Widget for the given attribute. The Decorator displays the label, description and state of the attribute. The actual widget for editing the attribute's value is added as a child.
@@ -59,22 +79,37 @@ define([ "dojo/_base/array", //
 			}
 		},
 		getGroupFactory: function(group) {
+			// summary:
+			//		get the groupFactory by meta data
+			// group: Object
+			//		the group meta data
+			// returns: gform/api/GroupFactory
 			return this.find(group.groupType);
 		},
 		getGroupFactoryMap: function() {
+			// summary:
+			//		get the map of groupType to groupFactory
+			// returns: Object
 			return this.groupFactories;
 		},
-		getUpdateModelHandle: function(meta) {
-			var factory=this.attributeFactoryFinder.getFactory(meta);
-			return factory;
-		},
 		find : function(groupType) {
+			// summary:
+			//		get groupFactory by type
+			// groupType: String
+			//		the groupType as in the meta data
+			// returns: gform/api/GroupFactory
 			return this.groupFactories[groupType];
 		},
 		getAttributeFactories: function() {
+			// summary:
+			//		get all attributeFactories
+			// returns: Array
 			return this.attributeFactoryFinder.getAttributeFactories();
 		},
 		getAttributeFactoryMap: function() {
+			// summary:
+			//		get the map of editor is to AttributeFactory
+			// returns: Object
 			return this.attributeFactoryFinder.getAttributeFactoryMap();
 		}
 

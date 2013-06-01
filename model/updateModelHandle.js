@@ -8,14 +8,15 @@ define([
 ], function(array, lang, Stateful, StatefulArray, getPlainValue, Resolver){
 // module:
 //		gform/updateModelHandle
-// summary:
-//		this object offers functions to update a modelHandle with a new plainValue. 
-//		The update is performed according to the gform schema and by cosulting the responsible AttributeFactories.
 
   var updateModelHandle= {
 	// summary:
 	//		this object offers a function to update a modelHandle. 
 	//		Also it offers functions to update individual attributes of a modelHandle.
+	// description:	
+	//		| var editorFactory = createStandardEditorFactory();
+	//		| var modelHandle = updateModelHandle.createMeta();
+	//		| updateModelHandle.update(schema, {}, modelHandle, editorFactory);
 
 		getFromValidTypes: function(/*Array*/validTypes, /*String*/typeCode) {
 			// summary:
@@ -420,7 +421,7 @@ define([
 			meta.set("state","");
 			return meta;	
 		},
-		cascadeAttribute: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, /*gform/Resolver*/resolver) {
+		cascadeAttribute: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, /*gform/model/Resolver*/resolver) {
 			// summary:
 			//		delegate the update to the appropriate function
 			// meta:

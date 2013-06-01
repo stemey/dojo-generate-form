@@ -5,7 +5,7 @@ define([ "dojo/_base/array", //
 "dijit/layout/TabContainer",//
 "./DecoratorWidget",//
 "../AttributeFactoryFinder",//
-"../updateModelHandle",
+"../model/updateModelHandle",
 "dojo/on",
 
 ], function(array, lang, declare, at, TabContainer, DecoratorWidget,

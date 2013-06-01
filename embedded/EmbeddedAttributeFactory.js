@@ -8,7 +8,7 @@ define([ "dojo/_base/array", //
 "dijit/layout/StackContainer",//
 "dojo/Stateful",//
 "dijit/TitlePane",//
-"../updateModelHandle",//
+"../model/updateModelHandle",//
 "dojo/text!../schema/embeddedAttributeProperties.json",//
 "dojo/text!./embeddedExample.json",
 "dojo/text!./embeddedInstanceExample.json"

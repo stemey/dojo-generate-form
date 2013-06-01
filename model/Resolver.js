@@ -5,10 +5,10 @@ define([ "dojo/_base/array", //
 ], function(array, lang, declare) {
 	// module: 
 	//		gform/Resolver
-	// summary:
-	//		Allows access to sibling attributes of modelHandle. 
 
-	var Resolver= declare("gform.Resolver", null, {
+	var Resolver= declare(null, {
+	// summary:
+	//		Provides access to sibling attributes of modelHandle. 
 		constructor : function(modelHandle, path) {
 			this.modelHandle=modelHandle;
 			this.path=path || "";

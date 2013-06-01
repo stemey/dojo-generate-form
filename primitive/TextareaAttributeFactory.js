@@ -3,7 +3,7 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dijit/form/Textarea",//
-"../meta",//
+"../schema/meta",//
 "./mixinTextboxBindings",
 "./dijitHelper"
 ], function(array, lang, declare, at, Textarea, meta, mixinTextboxBindings, dijitHelper) {

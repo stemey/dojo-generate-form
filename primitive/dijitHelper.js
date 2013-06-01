@@ -2,6 +2,8 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare"//
 ], function(array, lang, declare) {
+// module:
+//		gform/primitive/dijitHelper
 
 	var standardProps={};
 			standardProps["code"]={ type : "string", required:true,description:"the name of the property"};
@@ -32,23 +34,51 @@ define([ "dojo/_base/array", //
 			}
 
 	var dijitHelper = {
+		// summary:
+		//		object that provides functions to initialize dijits and create schemas for attributes.
 		addSchemaProperty: function(key,props) {
+		// summary: 
+		//		add predefined extra schema property (e.g. "maxLength").
+		// props: Object
+		//		the schema to add properties to		
 			props[key]=extraProps[key];
 		},
 		addSchemaProperties: function(props) {
+		// summary: 
+		//		add all predefined schema properties (e.g. "required").
+		// props: Object
+		//		the schema to add properties to		
 			lang.mixin(props,standardProps);
 		},
 		copyProperty: function(key,attribute,dijitProps) {
+		// summary: 
+		//		copy attribute's  property to widget property.
+		// key: Stringject
+		//		name of the property (e.g. "required")	
+		// attribute: Object
+		//		the attribute schema	
+		// dijitProps: Object
+		//		the dijit config object
 			if (typeof attribute[key] !="undefined" && attribute[key]!=null && attribute[key]!=="") {
 				dijitProps[key]=attribute[key];
 			}
 		},
 		copyDijitProperties: function(attribute,dijitProps) {
+		// summary: 
+		//		copy all standard and extra properties in attribute to dijitProps.
+		// attribute: Object
+		//		the attribute schema	
+		// dijitProps: Object
+		//		the dijit config object
 			for (var key in allDijitProperties) {
 				this.copyProperty(allDijitProperties[key],attribute,dijitProps);
 			}
 		},
 		getMappedValuesSchema: function() {	
+		// summary:
+		//		the schema for mapped values is returned.
+		// returns: Object
+		//		the schema for mapped values
 			return {
 				type:"object",
 				description:"a map of options.",

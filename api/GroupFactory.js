@@ -3,7 +3,13 @@ define([ "dojo/_base/declare", //
 // module:
 //		gform/api/GroupFactory
 
-	return declare("gform.api.Groupfactory", null, {
+	return declare( null, {
+	// summary:
+	//		GroupFactory manages groups. The converts the group meta data into widgets and delegate to editorFactory to create contained attributes / groups.	
+
+		// editorFactory:
+		//		GroupFactory uses editorFactory to create embedded attributes/groups.
+		editorFactory: null,
 		create : function(/*Object*/group, /*dojo/Stateful*/modelHandle) {
 		// summary:
 		//		create a widget for the group. Also create widgets for the contained attriutes/groups  
