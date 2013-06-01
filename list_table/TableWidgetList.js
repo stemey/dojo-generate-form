@@ -7,11 +7,10 @@ define([
 	return declare("gform.TableWidgetList", [ WidgetList ], {
 		buildRendering : function() {
 			// summary:
-			// Construct the UI for this widget, setting this.domNode.
-			// Most widgets will mixin `dijit._TemplatedMixin`, which implements
-			// this method.
+			//		Construct the UI for this widget, setting this.domNode.
+			//		Most widgets will mixin `dijit._TemplatedMixin`, which implements this method.
 			// tags:
-			// protected
+			//		protected
 
 			if (!this.domNode) {
 				// Create root node if it wasn't created by _Templated

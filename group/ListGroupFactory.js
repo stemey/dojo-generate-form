@@ -5,17 +5,18 @@ define([ "dojo/_base/array", //
 "./DescriptionWidget",
 "../updateModelHandle"
 ], function(array, lang, declare, ListPane, DescriptionWidget, updateModelHandle) {
-
+// module:
+//		gform/group/ListGroupFactory
 	return declare("gform.ListGroupFactory", null, {
+		// summary:
+		//		the ListGroupFactory handles an array of groups. These are displayed in a list.	
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		
 		create : function(group, modelHandle) {
 			var listWidget = new ListPane({
 				meta:group
 			});
-			
 			if (group.description) {
 				listWidget.addChild(new DescriptionWidget({description:group.description}));
 			}
@@ -23,7 +24,6 @@ define([ "dojo/_base/array", //
 				var groupWidget = this.editorFactory.create(childGroup, modelHandle);
 				listWidget.addChild(groupWidget);
 			}, this);
-			
 			return listWidget;
 		},
 		collectAttributes: function(group) {

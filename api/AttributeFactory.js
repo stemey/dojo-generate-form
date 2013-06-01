@@ -11,7 +11,7 @@ define([
 		//		Lifecycle:
 		//		1. updateModelHandle is called to initialize the modelHandle
 		//		2. create is called to create the widget
-		//		3. updaeModelHandle is called again when the data of the form is set to a new plainValue
+		//		3. updateModelHandle is called again when the data of the form is set to a new plainValue
 		handles : function(/*Object*/attribute, /*dojo/stateful*/modelHandle) {
 			// summary:
 			//		check if the attribute can be managed by this AttributeFactory.

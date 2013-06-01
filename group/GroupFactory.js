@@ -10,8 +10,11 @@ define([ "dojo/_base/array", //
 
 ], function(array, lang, declare, at, DecoratorWidget, ExpandableDecoratorWidget, AttributeListWidget,
 		AttributeFactoryFinder,Resolver) {
-
-	return declare("app.Groupfactory", null, {
+// module
+//		gform/group/GroupFactory
+	return declare("gform.group.GroupFactory", null, {
+		// summary:
+		//		this factory handles simple groups containing an array of attributes.
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},

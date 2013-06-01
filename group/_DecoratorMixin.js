@@ -8,7 +8,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		//		This Mixin manages the label of an attribute. The attribute meta data needs to be provided in the	 			//		meta property. The modelHandle is in the property modelHandle. 
 		//		Also the following nodes for indicators need to be provided:  descriptionTooltipNode, errorTooltipNode and changesTooltipNode. 
 		//		This Mixin will update the indicators, the tooltips and their content on changes to the modelHandle's state and message meta data.
-		// Also this mixin emits value-change event when the model changes.
+		//		Also this mixin emits value-change event when the model changes.
 		 
 
 		baseClass:"Decorator",
@@ -65,14 +65,11 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 				this.valueWatch.remove();
 			}
 		},
-
-		
 		onValueChange: function(e) {
 			if (e.src!=this) {
 				this.updateState();
 			}
 		},
-		
 		onModelValueChange: function(propName,old,nu) {
 			if (this.singleNonValidatingChild && this.modelHandle.state!="") {
 				this.modelHandle.set("state","");
@@ -93,11 +90,9 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			this.changesTooltip.label=this.getOldValueMessage(nu);
 			this.updateState();
 		},
-
 		onStateChange: function(e	) {
 			this.updateState();
 		},
-		
 		updateState: function() {
 			if (!this.modelHandle) {
 				return;
@@ -116,10 +111,9 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 				this.errorTooltipNode.style.display="";
 				this.set("state","Error");
 			}
-		},	
-		
-		onMessageChange: function(a,old,nu) {
-			this.errorTooltip.label=nu;
+		},
+		onMessageChange: function (propname, old, nu) {
+			this.errorTooltip.label = nu;
 		}
 	});
 
