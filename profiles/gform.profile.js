@@ -4,21 +4,18 @@ dependencies = {
 	optimize:"shrinksafe",
 	stripConsole: "normal",
 	cssOptimize: "comments",
-	copyTests: "build",
 	layers: [{
 		name: "gform.js",
 		dependencies: [
 			"gform/createStandardEditorFactory",
 			"gform/createLayoutEditorFactory",
-			"doh/runner"
+			"gform/Editor",
 		]}
 	],
 	prefixes: [
 		[ "dijit", "../dijit" ],
 		[ "dojox", "../dojox" ],
-		[ "doh", "../util/doh" ],
 		[ "gform", "../gform" ],
 		[ "gridx", "../gridx" ],
-		[ "json-schema", "../json-schema" ]
 	]
 }
