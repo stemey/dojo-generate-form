@@ -100,6 +100,14 @@ define([ "dojo/_base/array", //
 			// returns: gform/api/GroupFactory
 			return this.groupFactories[groupType];
 		},
+		getAttributeFactory: function(attribute) {
+			// summary:
+			//		get attributeFactory by meta data
+			// attribute:
+			//		attribute meta data
+			// returns: gform/api/AttributeFactory
+			return this.attributeFactoryFinder.getFactory(attribute);
+		},
 		getAttributeFactories: function() {
 			// summary:
 			//		get all attributeFactories

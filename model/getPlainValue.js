@@ -42,7 +42,7 @@ define([ "dojo/_base/array", //
 //		the modelHandle
 // returns: Object
 //		returns the plainValue	
-		return getPlainValue(v, options);
+		return getPlainValue(modelHandle, options);
 	}
 	return getPlainValueWithMetaData;
 })

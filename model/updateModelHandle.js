@@ -435,7 +435,7 @@ define([
 			// resolver:
 			//		pass the resolver to update
 			if (editorFactory) {
-				var handle=editorFactory.getUpdateModelHandle(meta);
+				var handle=editorFactory.getAttributeFactory(meta);
 				if (handle && handle.updateModelHandle) {
 					return handle.updateModelHandle(meta,plainValue,modelHandle,resolver);
 				}
