@@ -97,8 +97,8 @@ define([ "dojo/_base/array", //
 							if (oldValue!="null") {
 								var oldMeta = this.typeToGroup[oldValue].meta;
 								array.forEach(oldMeta.attributes,function(attribute) {
-									//only copy primitives
-									if (!attribute.validTypes && typeof modelHandle.value[attribute.code]!= "undefined") {
+									//only copy single primitive attributes
+									if (!attribute.array && !attribute.validTypes && typeof modelHandle.value[attribute.code]!= "undefined") {
 										modelHandle.value[attribute.code].set("value",oldModelHandleValue[attribute.code].value);
 									}
 								},this);
