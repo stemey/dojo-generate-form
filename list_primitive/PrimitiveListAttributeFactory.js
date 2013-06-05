@@ -36,6 +36,7 @@ define([ "dojo/_base/array", //
                        var childAttribute ={};
                        lang.mixin(childAttribute, attribute)
                        childAttribute.array=false;
+		       delete childAttribute.editor;
                         
 
 			
