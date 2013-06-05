@@ -91,6 +91,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		},	
 		
 		onMessageChange: function(a,old,nu) {
+			this.updateState();	
 			this.errorTooltip.label=nu;
 		}
 	});
