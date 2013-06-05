@@ -30,10 +30,18 @@ define([ "dojo/_base/array", //
 			if (modelHandle.value==null) {
 				modelHandle.value=new StatefulArray([]);
 			}	
+
+
+
+                       var childAttribute ={};
+                       lang.mixin(childAttribute, attribute)
+                       childAttribute.array=false;
+                        
+
 			
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
-				attribute : attribute,
+				attribute : childAttribute,
 				editorFactory:this.editorFactory
 			});
 
@@ -42,7 +50,7 @@ define([ "dojo/_base/array", //
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedAttributeWidget);
 			widgetList.set("childParams", {
-				meta : attribute,
+				meta : childAttribute,
 				_relTargetProp : "modelHandle",
 				editorFactory : this.editorFactory
 			});
