@@ -1,5 +1,6 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
+"dojo/aspect",//
 "../Editor",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
@@ -9,9 +10,12 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "dojox/mvc/WidgetList",//
 "./RepeatedAttributeWidget",//
-"dojox/mvc/StatefulArray"
-], function(array, lang, Editor, declare, at, StatefulArray, Stateful,
-		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget ,StatefulArray) {
+"dojox/mvc/StatefulArray",//
+"dojo/dnd/Source",//
+"../model/updateModelHandle",//
+"dijit/registry"
+], function(array, lang, aspect, Editor, declare, at, StatefulArray, Stateful,
+		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget ,StatefulArray, DndSource, updateModelHandle, registry) {
 
 	return declare("app.PrimitiveListAttributeFactory", [], {
 
@@ -51,6 +55,37 @@ define([ "dojo/_base/array", //
 				editorFactory : this.editorFactory
 			});
 			select.addChild(widgetList);
+			
+			aspect.after(widgetList, "startup", function() {
+				var dndSource=new DndSource(widgetList.domNode, {copyOnly:false, singular:true});
+				widgetList.dndSource= dndSource;
+				dndSource.onDropInternal= function(nodes, copy) {
+					var sarray= modelHandle.value;
+					var anchorModelHandle = registry.byNode(dndSource.targetAnchor);
+					var anchorPos = widgetList.getChildren().indexOf(anchorModelHandle);
+					var dragged = null;
+					for (var key in dndSource.selection) {
+						dragged=key;
+						break;
+					}
+					var currentModelHandle = registry.byId(dragged);
+					var currentPos = widgetList.getChildren().indexOf(currentModelHandle);
+					dndSource._removeSelection()
+					console.log(" move from "+currentPos+" to "+anchorPos);
+					var removed = modelHandle.value.splice(currentPos, 1)[0]; 
+					if (anchorPos>currentPos) {
+						anchorPos--;
+					}
+					var newMh=updateModelHandle.createMeta();
+					newMh.value=removed.value;
+					modelHandle.value.splice(anchorPos, 0, newMh) 
+					dndSource.sync();
+
+				};
+				
+			});
+			
+			
 
 			return select;
 
