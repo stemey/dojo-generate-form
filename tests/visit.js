@@ -52,44 +52,34 @@ define(["doh/runner","dojo/_base/lang","dojo/_base/array","dojox/mvc/equals","do
 
 		var createVisitor= function() {
 			return {
-				stack:[{}],
-				peek: function() {
-					return this.stack[this.stack.length-1];
-				},
-				visitElement: function(meta, modelHandle, goon){
+				visitElement: function(meta, modelHandle, goon, idx, ctx){
 					if (metaHelper.isComplex(meta)) {
 						var value={};
 						var type_property= metaHelper.getTypeProperty(meta);	
 						if (type_property) {
 							value[type_property]= modelHandle.value[type_property].value;
 						}
-						this.peek().push(value);	
-						this.stack.push(value);
-						goon();
-						this.stack.pop();
+						ctx.push(value);	
+						goon(value);
 					}else	if (metaHelper.isPrimitive(meta)) {
-						this.peek().push(modelHandle.value);
+						ctx.push(modelHandle.value);
 					}
 				},
-				visit: function(meta, modelHandle, goon){
+				visit: function(meta, modelHandle, goon, ctx){
 					if (metaHelper.isArray(meta)) {
 						var value=[];
-						this.peek()[meta.code]=value;	
-						this.stack.push(value);
-						goon();
-						this.stack.pop();
+						ctx[meta.code]=value;	
+						goon(value);
 					}else if (metaHelper.isComplex(meta)) {
 						var value={};
 						var type_property= metaHelper.getTypeProperty(meta);	
 						if (type_property) {
 							value[type_property]= modelHandle.value[type_property].value;
 						}
-						this.peek()[meta.code]=value;	
-						this.stack.push(value);
-						goon();
-						this.stack.pop();
+						ctx[meta.code]=value;	
+						goon(value);
 					}else	if (metaHelper.isPrimitive(meta)) {
-						this.peek()[meta.code]=modelHandle.value;
+						ctx[meta.code]=modelHandle.value;
 					}
 				}	
 			}
@@ -106,8 +96,9 @@ define(["doh/runner","dojo/_base/lang","dojo/_base/array","dojox/mvc/equals","do
         updateModelHandle.update(type1,input,modelHandle);
 				var expected = getPlainValue(modelHandle);
 				var visitor = createVisitor();
-				visit(type1, modelHandle,visitor);
-				doh.assertTrue(equals(visitor.peek(),expected));
+				var ctx ={};
+				visit(visitor,null,type1, modelHandle,ctx);
+				doh.assertTrue(equals(ctx,expected));
       },
      function testPrimitiveArray(){
 				var modelHandle = updateModelHandle.createMeta();
@@ -115,8 +106,9 @@ define(["doh/runner","dojo/_base/lang","dojo/_base/array","dojox/mvc/equals","do
         updateModelHandle.update(primitiveArray,expected,modelHandle);
 				var expected = getPlainValue(modelHandle);
 				var visitor = createVisitor();
-				visit(primitiveArray, modelHandle,visitor);
-				doh.assertTrue(equals(visitor.peek(),expected));
+				var ctx ={};
+				visit(visitor,null,primitiveArray, modelHandle,ctx);
+				doh.assertTrue(equals(ctx,expected));
       },
      function testComplexArray(){
 				var modelHandle = updateModelHandle.createMeta();
@@ -128,8 +120,9 @@ define(["doh/runner","dojo/_base/lang","dojo/_base/array","dojox/mvc/equals","do
         updateModelHandle.update(polyArray,input,modelHandle);
 				var expected = getPlainValue(modelHandle);
 				var visitor = createVisitor();
-				visit(polyArray, modelHandle,visitor);
-				doh.assertTrue(equals(visitor.peek(),expected));
+				var ctx ={};
+				visit(visitor,null,polyArray, modelHandle,ctx);
+				doh.assertTrue(equals(ctx,expected));
       },
     ]);
 

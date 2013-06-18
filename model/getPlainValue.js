@@ -29,6 +29,17 @@ define([ "dojo/_base/array", //
 			}else{
 				return getPlainValue(a.value,this);
 			}
+		},
+		getPlainMap: function(arrayValue) {
+			var keyCode = arrayValue.__key;
+			var plainValue={};
+			arrayValue.forEach(function(element) {
+					var value =options.getPlainMeta(element);
+					var key = value[keyCode];
+					delete value[keyCode];
+					plainValue[key]=value;	
+			});
+			return plainValue;
 		}
 	}
   var options = {};

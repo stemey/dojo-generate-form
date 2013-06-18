@@ -4,8 +4,10 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dojo/Stateful", //
 "./model/Resolver", //
-"./group/DecoratorFactory" //
-], function(array, lang, declare, at, Stateful, Resolver, DecoratorFactory) {
+"./group/DecoratorFactory", //
+"./validate/UniqueProperties",//
+"./model/path"
+], function(array, lang, declare, at, Stateful, Resolver, DecoratorFactory, UniqueProperties, path) {
 	// module: 
 	//		gform/EditorFactory
 
@@ -119,7 +121,27 @@ define([ "dojo/_base/array", //
 			//		get the map of editor is to AttributeFactory
 			// returns: Object
 			return this.attributeFactoryFinder.getAttributeFactoryMap();
+		},
+		getModelValidators: function(attribute) {
+		// summary:
+		//		attach validation to modelHandle.  
+		//
+			var validators =[];
+			for (var key in  this.arrayValidators) {
+				if (attribute[key]) {	
+					var validate = this.arrayValidators[key];
+					if (validate) {
+						validators.push(validate(attribute[key]));			
+					}
+				}
+			}
+			return validators;
+		},
+		arrayValidators:{
+			uniqueProperties: UniqueProperties
 		}
+		
+
 
 	});
 });

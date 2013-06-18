@@ -4,8 +4,9 @@ define([
 	"dojo/Stateful",
 	"dojox/mvc/StatefulArray",
 	"./getPlainValue",
-	"./Resolver"
-], function(array, lang, Stateful, StatefulArray, getPlainValue, Resolver){
+	"./Resolver",
+	"../schema/meta"
+], function(array, lang, Stateful, StatefulArray, getPlainValue, Resolver, metaHelper){
 // module:
 //		gform/updateModelHandle
 
@@ -18,25 +19,6 @@ define([
 	//		| var modelHandle = updateModelHandle.createMeta();
 	//		| updateModelHandle.update(schema, {}, modelHandle, editorFactory);
 
-		getFromValidTypes: function(/*Array*/validTypes, /*String*/typeCode) {
-			// summary:
-			//		get the schema for a certain type from the array of types.
-			// validTypes:
-			//		the array of valid types. This is a required property of complex attributes.
-			// typeCode:
-			//		the code of one of the types in the array.
-			// returns: Object
-			//		returns the element of the validTypes array with the specified code 
-			if (validTypes.length==1) {
-				return validTypes[0];
-			}
-			var types=array.filter(validTypes,function(type) {
-				if (type.code==typeCode) {
-					return type;
-				}
-			});
-			return types.length > 0 ? types[0] : null;
-		},
 		collectAttributes: function(/*Object*/groupOrType, /*gform/EditorFactory*/editorFactory) {
 			// summary:
 			//		creates an array of all attributes in the given group. In case of a tab group this function will find all attributes in all tabs. The function must delegate to the responsible GroupFactory's implementation.
@@ -165,7 +147,7 @@ define([
 				if (meta.validTypes.length>1 && !meta.type_property) {
 					throw new Error("more than one type defined but no type property");
 				}
-				var type=this.getFromValidTypes(meta.validTypes,typeCode);
+				var type=metaHelper.getFromValidTypes(meta.validTypes,typeCode);
 				if (type==null) {
 					throw new Error("type "+typeCode+" is invalid");
 				}
@@ -299,7 +281,7 @@ define([
 				attributeModelHandle.ignore=true;
 			}, this);
 			if (typeCode!=null) {
-				var type=this.getFromValidTypes(meta.validTypes,typeCode);
+				var type=metaHelper.getFromValidTypes(meta.validTypes,typeCode);
 				array.forEach(type.attributes,function(attribute) {
 					modelHandle.value[attribute.code].ignore=false;					
 				},this);
@@ -316,7 +298,7 @@ define([
 			// modelHandle:
 			//		the modelHandle bound to the Editor.
 			modelHandle.value[meta.type_property].set("value",typeCode);
-			var type=this.getFromValidTypes(meta.validTypes,typeCode);
+			var type=metaHelper.getFromValidTypes(meta.validTypes,typeCode);
 			array.forEach(modelHandle.tmp.combinedAttributes,function(attribute) {
 				modelHandle.value[attribute.code].ignore=true;					
 			},this);

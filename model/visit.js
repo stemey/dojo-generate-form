@@ -1,49 +1,62 @@
 define([ 
 "dojo/_base/lang",//
 "dojo/_base/array",//
+"dojo/_base/declare",//
 "../schema/meta",//
-], function(lang, array, metaHelper) {
+], function(lang, array, declare, metaHelper) {
 // module:
 //		gform/model/visit
 
-	var visit = function(meta, modelHandle, visitor, editorFactory) {
-		var factory = editorFactory? editorFactory.getFactory(meta): null;
-		if (factory==null || !factory.visit) {
-			var attributes =  meta.attributes;
-			array.forEach(attributes, function(attribute) {
-				if (metaHelper.isSingleComplex(attribute)) {
-					goonComplex(attribute, modelHandle.value[attribute.code]);
-				} else if (metaHelper.isArray(attribute)) {
-					goonArray(attribute, modelHandle.value[attribute.code], visitor, editorFactory);
-				} else {
-					goon(attribute, modelHandle.value[attribute.code], visitor, editorFactory);
+	var Visiting = declare(null,{
+		constructor: function(visitor,editorFactory) {
+			this.editorFactory=editorFactory;
+			this.visitor=visitor;
+		},	
+		visit: function(meta, modelHandle, ctx) {
+				var factory = this.editorFactory? this.editorFactory.getFactory(meta): null;
+				if (factory==null || !factory.visit) {
+					var attributes =  meta.attributes;
+					array.forEach(attributes, function(attribute) {
+						if (metaHelper.isSingleComplex(attribute)) {
+							this.goonComplex(attribute, modelHandle.value[attribute.code], ctx);
+						} else if (metaHelper.isArray(attribute)) {
+							this.goonArray(attribute, modelHandle.value[attribute.code], ctx);
+						} else {
+							this.goon(attribute, modelHandle.value[attribute.code], ctx);
+						}
+					}, this);
+				}else{
+					factory.visit(meta, modelHandle, callback);
 				}
-			});
-		}else{
-			factory.visit(meta, modelHandle, callback);
-		}
-	}
-	var visitAttribute = function(meta, modelHandle, visitor, editorFactory) {
-			var type =metaHelper.getComplexType(meta, modelHandle);
-			visit(type, modelHandle, visitor, editorFactory);
-	}
-	var goon = function(meta, modelHandle, visitor, editorFactory) {
-		visitor.visit(meta, modelHandle, function(){visit(meta, modelHandle, visitor, editorFactory);});	
-	}
-	var goonComplex = function(meta, modelHandle, visitor, editorFactory) {
-		visitor.visit(meta, modelHandle, function(){visitAttribute(meta, modelHandle, visitor, editorFactory);});	
-	}
-	var goonElement = function(meta, modelHandle, visitor, editorFactory) {
-			array.forEach(modelHandle.value, function(el) {
-				var single = metaHelper.createElement(meta);
-				visitor.visitElement(single, el, function(){visitAttribute(single, el, visitor, editorFactory);});	
-			});
-	}
-	var goonArray = function(meta, modelHandle, visitor, editorFactory) {
-		visitor.visit(meta, modelHandle, function(){goonElement(meta, modelHandle, visitor, editorFactory);});	
-	}
+			},
+			visitAttribute : function(meta, modelHandle, ctx) {
+					var type =metaHelper.getComplexType(meta, modelHandle);
+					this.visit(type, modelHandle, ctx);
+			},
+		  goon : function(meta, modelHandle, ctx) {
+				var me=this;
+				this.visitor.visit(meta, modelHandle, function(x){me.visit(meta, modelHandle, x);}, ctx);	
+			},
+			goonComplex : function(meta, modelHandle, ctx) {
+				var me=this;
+				this.visitor.visit(meta, modelHandle, function(x){me.visitAttribute(meta, modelHandle, ctx);},ctx);	
+			},
+			goonElement : function(meta, modelHandle, ctx) {
+					array.forEach(modelHandle.value, function(el, idx) {
+						var single = metaHelper.createElement(meta);
+						var me=this;
+						this.visitor.visitElement(single, el, function(x){me.visitAttribute(single, el, x);}, idx,ctx);	
+					}, this);
+			},
+			goonArray : function(meta, modelHandle, ctx) {
+				var me=this;
+				this.visitor.visit(meta, modelHandle, function(x){me.goonElement(meta, modelHandle, x);}, ctx);	
+			}
+		});
 		
-	return visit;
+	return function(visitor, ef, meta, modelHandle,ctx) {
+			new Visiting(visitor,ef).visit(meta, modelHandle,ctx);
+	};
 
 
 })
