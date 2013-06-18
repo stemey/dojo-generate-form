@@ -1,0 +1,9 @@
+{
+	things : {a: {
+		yes : false,
+		message:"a"
+	},b: {
+		yes : true,
+		message:"b"
+	} }
+}
