@@ -17,19 +17,7 @@ define([
 
 		templateString: template,
 
-		_setValueAttr: function(value){
-			// summary:
-			//		Make sure an invalid value does not fire a value change. 
-			var oldValue = this.get("value");
-			this._set("value",value);
-			this.validate(this.focused);
-			this._set("value", oldValue);
-			if (this.state!="Error") {
-				this.inherited(arguments);
-			} else {
-				this.validate(this.focused);
-			}
-		},
+		
 		displayMessage: function(/*String*/ message){
 		}
 	});
