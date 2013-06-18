@@ -31,12 +31,14 @@ define([ "dojo/_base/array", //
 				modelHandle.value=new StatefulArray([]);
 			}	
 
+
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
 				attribute:attribute,
 				editorFactory: this.editorFactory
 			});
 
+			// TODO we need to clone here
 			var childMeta = attribute.validTypes? attribute:attribute.type;
 
 			var widgetList = new WidgetList();
