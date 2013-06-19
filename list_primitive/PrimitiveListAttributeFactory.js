@@ -55,10 +55,16 @@ define([ "dojo/_base/array", //
 				editorFactory : this.editorFactory
 			});
 			select.addChild(widgetList);
+
 			
 			aspect.after(widgetList, "startup", function() {
 				var dndSource=new DndSource(widgetList.domNode, {copyOnly:false, singular:true});
 				widgetList.dndSource= dndSource;
+				modelHandle.value.watchElements(function() {
+					dndSource.sync();
+				});
+				dndSource.onDropExternal= function(nodes, copy) {
+				}
 				dndSource.onDropInternal= function(nodes, copy) {
 					var sarray= modelHandle.value;
 					var anchorModelHandle = registry.byNode(dndSource.targetAnchor);
