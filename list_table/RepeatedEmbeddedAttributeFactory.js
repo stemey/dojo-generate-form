@@ -1,10 +1,12 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
+"dojo/aspect",//
 "../Editor",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dojox/mvc/StatefulArray",//
 "dojo/Stateful",//
+"../widget/MvcDndSource",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
 "./TableWidgetList",//
@@ -16,8 +18,8 @@ define([ "dojo/_base/array", //
 "dojo/text!../schema/embeddedAttributeProperties.json",
 "dojo/text!./embeddedExample.json",
 "dojo/text!./embeddedInstanceExample.json"
-], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle,TableHeader,TableElementHeader,mergeAttributeDefinitions, embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
+], function(array, lang, aspect, Editor, declare, at, 
+		StatefulArray, Stateful, DndSource, EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle,TableHeader,TableElementHeader,mergeAttributeDefinitions, embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -65,6 +67,17 @@ define([ "dojo/_base/array", //
 				editorFactory: this.editorFactory
 			});
 			select.addChild(widgetList);
+
+			var copy = function(original) {
+				var newMh=updateModelHandle.createMeta();
+				newMh.value=original.value;
+				newMh.oldValue=original.oldValue;
+				return newMh;
+			}
+			aspect.after(widgetList, "startup", function() {
+				new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true});
+			});
+
 
 			return select;
 
