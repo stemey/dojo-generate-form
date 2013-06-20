@@ -10,12 +10,11 @@ define([ "dojo/_base/array", //
 "dojox/mvc/sync",//
 "dojox/mvc/WidgetList",//
 "./RepeatedAttributeWidget",//
-"dojox/mvc/StatefulArray",//
-"dojo/dnd/Source",//
+"../widget/MvcDndSource",//
 "../model/updateModelHandle",//
 "dijit/registry"
 ], function(array, lang, aspect, Editor, declare, at, StatefulArray, Stateful,
-		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget ,StatefulArray, DndSource, updateModelHandle, registry) {
+		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget , DndSource, updateModelHandle, registry) {
 
 	return declare("app.PrimitiveListAttributeFactory", [], {
 
@@ -24,9 +23,6 @@ define([ "dojo/_base/array", //
 		},
 		handles : function(attribute) {
 			return attribute != null && !attribute.validTypes && attribute.array;
-		},
-		_getModelHandleValue: function() {
-			return this.modelHandle.value;
 		},
 		create : function(attribute, modelHandle) {
 
@@ -54,42 +50,19 @@ define([ "dojo/_base/array", //
 				_relTargetProp : "modelHandle",
 				editorFactory : this.editorFactory
 			});
+			var copy = function(original) {
+				var newMh=updateModelHandle.createMeta();
+				newMh.value=original.value;
+				newMh.oldValue=original.oldValue;
+				return newMh;
+			}
+			aspect.after(widgetList, "startup", function() {
+				new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true});
+			});
 			select.addChild(widgetList);
 
 			
-			aspect.after(widgetList, "startup", function() {
-				var dndSource=new DndSource(widgetList.domNode, {copyOnly:false, singular:true});
-				widgetList.dndSource= dndSource;
-				modelHandle.value.watchElements(function() {
-					dndSource.sync();
-				});
-				dndSource.onDropExternal= function(nodes, copy) {
-				}
-				dndSource.onDropInternal= function(nodes, copy) {
-					var sarray= modelHandle.value;
-					var anchorModelHandle = registry.byNode(dndSource.targetAnchor);
-					var anchorPos = widgetList.getChildren().indexOf(anchorModelHandle);
-					var dragged = null;
-					for (var key in dndSource.selection) {
-						dragged=key;
-						break;
-					}
-					var currentModelHandle = registry.byId(dragged);
-					var currentPos = widgetList.getChildren().indexOf(currentModelHandle);
-					dndSource._removeSelection()
-					console.log(" move from "+currentPos+" to "+anchorPos);
-					var removed = modelHandle.value.splice(currentPos, 1)[0]; 
-					if (anchorPos>currentPos) {
-						anchorPos--;
-					}
-					var newMh=updateModelHandle.createMeta();
-					newMh.value=removed.value;
-					modelHandle.value.splice(anchorPos, 0, newMh) 
-					dndSource.sync();
 
-				};
-				
-			});
 			
 			
 
