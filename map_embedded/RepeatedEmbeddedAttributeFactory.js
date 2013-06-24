@@ -8,14 +8,16 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
+"../widget/MvcDndSource",//
 "../layout/LayoutWidgetList",//
 "../list_embedded/RepeatedEmbeddedWidget",//
 "../model/updateModelHandle",//
+"../model/getPlainValue",//
 "../model/validate",//
 "dojox/mvc/StatefulArray",//
 "../layout/_LayoutMixin"
 ], function(array, lang, aspect, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, validate, StatefulArray, _LayoutMixin) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, validate, StatefulArray, _LayoutMixin) {
 
 	return declare([], {
 
@@ -29,7 +31,7 @@ define([ "dojo/_base/array", //
 
 
 			if (modelHandle.value==null) {
-				modelHandle.value=new StatefulArray([]);
+				throw "set default value";
 			}	
 
 			var childMeta = this._createChildMeta(attribute, "__key");
@@ -53,23 +55,12 @@ define([ "dojo/_base/array", //
 				editorFactory: this.editorFactory
 			});
 			select.addChild(widgetList);
-			modelHandle.value.watch(function(){
-				var i=0;
-				array.forEach(modelHandle.value,
-					function(e){
-						e.set("index",i++);
-					}
-				)
-			});
-			var i=0;
-			array.forEach(modelHandle.value,
-				function(e){
-					e.set("index",i++);
-				}
-			)
+
 			var validators = this.editorFactory.getModelValidators(childMeta);
 			var validationFunction = validate(modelHandle, validators);
 			widgetList.on("value-changed", validationFunction);	
+
+
 			return select;
 
 		},
