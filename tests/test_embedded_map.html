@@ -27,41 +27,17 @@
 							{
 								name: 'init',
 								runTest: function(t){
-									t.assertEqual(2,editor.get("plainValue").things.length);
 									var message1=dijit.byId("gform_ValidationTextBox_0").get("value");
 									t.assertEqual("a",message1);
-								}
-							},
-							{
-								name: 'remove',
-								runTest: function(t){
-									dijit.byId("dijit_form_Button_1").onClick();
-									t.assertEqual(1,editor.get("plainValue").things.length);
-								}
-							},
-							{
+								},
+							},{
 								name: 'add',
 								runTest: function(t){
+									var value=editor.getPlainValue();
 									dijit.byId("dijit_form_Button_0").onClick();
-									t.assertEqual(2,editor.get("plainValue").things.length);
-								},
-							},
-							{
-								name: 'initWithNull',
-								runTest: function(t){
-									editor.set("plainValue",null);
-									dijit.byId("dijit_form_Button_0").onClick();
-									t.assertEqual(1,editor.get("plainValue").things.length);
-								}
-							},
-							{
-								name: 'resetValue',
-								runTest: function(t){
-									editor.set("plainValue",null);
-									editor.set("plainValue",dojo.fromJson(entity));
-									t.assertEqual(2,editor.get("plainValue").things.length);
-									var message1=dijit.byId("gform_ValidationTextBox_5").get("value");
-									t.assertEqual("b",message1);
+									dijit.byId("gform_ValidationTextBox_4").set("value","ll");
+									dijit.byId("gform_ValidationTextBox_5").set("value","hi");
+									t.assertEqual("hi",editor.get("plainValue").things.ll.message);
 								}
 							}
 					]);			
