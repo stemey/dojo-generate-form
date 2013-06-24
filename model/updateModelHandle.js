@@ -2,11 +2,12 @@ define([
 	"dojo/_base/array",
 	"dojo/_base/lang",
 	"dojo/Stateful",
-	"dojox/mvc/StatefulArray",
+	"../patch/StatefulArray",
 	"./getPlainValue",
+	"./enhanceArray",
 	"./Resolver",
 	"../schema/meta"
-], function(array, lang, Stateful, StatefulArray, getPlainValue, Resolver, metaHelper){
+], function(array, lang, Stateful, StatefulArray, getPlainValue, enhanceArray, Resolver, metaHelper){
 // module:
 //		gform/updateModelHandle
 
@@ -344,6 +345,7 @@ define([
 			if (modelHandle.value==null) {
 				modelHandle.set("value",new StatefulArray([]));
 			}
+			enhanceArray(modelHandle);
 			modelHandle.value.splice(0,modelHandle.value.length);
 			if (plainValue==null) {
 				modelHandle.set("oldValue",[]);
