@@ -46,6 +46,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
 			if (!attribute.validTypes) {
 				throw new Error("not a complex attribute");
 			}
+			if (attribute.validTypes.length==1) {
+				return attribute.validTypes[0];
+			}
 			if (modelHandle.value==null) {
 				if (attribute.validTypes.length==1){
 					return attribute.validTypes[0];
