@@ -28,7 +28,7 @@ define([ "dojo/_base/array", //
 
 			
 			if (modelHandle.value==null) {
-				modelHandle.value=new StatefulArray([]);
+				throw new "provide a default value";//modelHandle.value=new StatefulArray([]);
 			}	
 			var childAttribute ={};
 			lang.mixin(childAttribute, attribute)
