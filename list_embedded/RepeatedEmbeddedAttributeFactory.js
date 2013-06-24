@@ -1,5 +1,6 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
+"dojo/aspect",//
 "../Editor",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
@@ -7,13 +8,15 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
+"../widget/MvcDndSource",//
 "../layout/LayoutWidgetList",//
 "./RepeatedEmbeddedWidget",//
 "../model/updateModelHandle",//
+"../model/getPlainValue",//
 "dojox/mvc/StatefulArray",//
 "../layout/_LayoutMixin"
-], function(array, lang, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, StatefulArray, _LayoutMixin) {
+], function(array, lang, aspect, Editor, declare, at, 
+		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList, RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, StatefulArray, _LayoutMixin) {
 
 	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
 
@@ -28,7 +31,7 @@ define([ "dojo/_base/array", //
 
 
 			if (modelHandle.value==null) {
-				modelHandle.value=new StatefulArray([]);
+				throw new "provide a default value";
 			}	
 
 
@@ -51,20 +54,25 @@ define([ "dojo/_base/array", //
 				editorFactory: this.editorFactory
 			});
 			select.addChild(widgetList);
-			modelHandle.value.watch(function(){
-				var i=0;
-				array.forEach(modelHandle.value,
-					function(e){
-						e.set("index",i++);
-					}
-				)
+			
+
+			var copy = function(original) {
+				var plainValue= getPlainValue(original);
+				var newMh=updateModelHandle.createMeta();
+				if (attribute.validTypes.length>1) {
+					updateModelHandle.updatePolyObject(attribute,plainValue,newMh, this.editorFactory);
+				}else{
+					updateModelHandle.updateObject(attribute,plainValue,newMh, this.editorFactory);
+				}
+				newMh.oldValue=plainValue;
+				return newMh;
+			}
+			//var copyFn=lang.hitch(this,copy);
+			aspect.after(widgetList, "startup", function() {
+				new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true});
 			});
-				var i=0;
-				array.forEach(modelHandle.value,
-					function(e){
-						e.set("index",i++);
-					}
-				)
+
+
 			return select;
 
 		},
