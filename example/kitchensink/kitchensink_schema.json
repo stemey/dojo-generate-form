@@ -297,7 +297,7 @@
         },
         {
             label:"list",
-						description:"This tab contains a single complex array. The elements have a complex attribute themselves.",
+						description:"This tab contains a single complex array. The elements have a complex attribute themselves. The order of the elements can be changed by drag and drop",
             "attributes":[
                 {
                     "required":false,
@@ -364,8 +364,45 @@
             ]
         },
         {
+            label:"map",
+						description:"This tab contains a single complex map. Its functionality is the same as the list but it has the extra key property, which is required and unique.",
+            "attributes":[
+                {
+                    "required":false,
+                    "label":"map",
+                    "code":"map",
+                    "map":true,
+                    "type":"ExampleThing",
+                    "validTypes":[
+                        {
+                            "code":"ExampleThing",
+                            "label":"ExampleThing",
+                            "attributes":[
+                                {
+                                    "required":false,
+                                    "type":"boolean",
+                                    "label":"yes",
+                                    "code":"yes",
+                                    "array":false
+                                }
+                                ,
+                                {
+                                    "required":false,
+                                    "type":"string",
+                                    "label":"message",
+                                    "code":"message",
+																		"pattern":"[a-zA-Z]*",
+                                    "array":false
+                                },
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             label:"table-list",
-						description:"This is a different way to display complex arrays. The elements are displayed in a table. Changing the type will hide and show different sets of cells.",
+						description:"This is a different way to display complex arrays. The elements are displayed in a table. Changing the type will hide and show different sets of cells. The order of the elements can be changed by drag and drop.",
             "attributes":[
                 {
 										"editor":"table",

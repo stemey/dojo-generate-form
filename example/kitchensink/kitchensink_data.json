@@ -64,6 +64,15 @@
 			"message": "OOOOOOOO",
 			"text": "rrrrrrrrrrrr"
 		}
-	]	
+	]	,
+	"map": {
+		a:{
+			"yes": true,
+			"message": "IIIIII"
+		},
+		b:{
+			"message": "OOOOOOOO",
+		}
+	}
 	
 }

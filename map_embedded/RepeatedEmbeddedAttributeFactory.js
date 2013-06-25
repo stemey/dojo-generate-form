@@ -8,7 +8,6 @@ define([ "dojo/_base/array", //
 "dojo/Stateful",//
 "./EmbeddedListWidget",//
 "dojox/mvc/sync",//
-"../widget/MvcDndSource",//
 "../layout/LayoutWidgetList",//
 "../list_embedded/RepeatedEmbeddedWidget",//
 "../model/updateModelHandle",//
@@ -17,7 +16,7 @@ define([ "dojo/_base/array", //
 "dojox/mvc/StatefulArray",//
 "../layout/_LayoutMixin"
 ], function(array, lang, aspect, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, validate, StatefulArray, _LayoutMixin) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, validate, StatefulArray, _LayoutMixin) {
 
 	return declare([], {
 
@@ -69,7 +68,7 @@ define([ "dojo/_base/array", //
 			lang.mixin(attributeMeta, attribute);
 			attributeMeta.array=true;
 			attributeMeta.map=false;
-			var keyAttribute = {type: "string", code: keyAttributeCode, required: true, label: "key"};
+			var keyAttribute = {type: "string", code: keyAttributeCode, required: true, label: attribute.keyLabel || "key", description: attribute.keyDescription || null};
 			var xTypes= array.map(attribute.validTypes, function(type) {
 				if (!type.attributes) {
 					throw new Error("cannot handle group of groups");
@@ -105,6 +104,7 @@ define([ "dojo/_base/array", //
 
 			modelHandle.value.__key=keyAttributeCode;
 			modelHandle.value.__type="map";
+			modelHandle.oldValue=getPlainValue(modelHandle);	
 
 
 		},

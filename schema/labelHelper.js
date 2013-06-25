@@ -13,7 +13,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare", "./meta" ]
 				labelAttribute = type.labelAttribute;
 			} else {
 				array.forEach(type.attributes, function(a) {
-					if (labelAttribute == null && a.type == "string") {
+					if (labelAttribute == null && a.type == "string" && metaHelper.isSingle(a)) {
 						labelAttribute = a.code;
 					}
 				});

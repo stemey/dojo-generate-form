@@ -8,6 +8,8 @@
             "code":"things",
             "map":true,
             "type":"ExampleThing",
+						"keyLabel": "beast",	
+						"keyDescription": "the key of the beast",	
             "validTypes":[{
                 "code":"ExampleThing",
                 "label":"ExampleThing",
