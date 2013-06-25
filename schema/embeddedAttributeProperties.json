@@ -2,15 +2,17 @@
 	type:"object",
 	"properties": {
 		"code":{"type":"string",required:true},
-		"type_property":{"type":"string",required:true,description:"This property selects the group from the array of validTypes. Not necessary if there is only one group."},
+		"type_property":{"type":"string",description:"This property selects the group from the array of validTypes. Not necessary if there is only one group."},
 		"array":{"type":"boolean"},
+		"map":{"type":"boolean", description:"checked to create a map"},
+		"keyLabel":{"type":"string", description:"the label of the key attribute"},
 		"reorderable":{type:"boolean"},
 		"validTypes": {description:"The list of valid groups (types) that describe the properties in the complex object or array.",
 					type:"array",
 					gform_property:"type",
 					items:{type:{"type":"object",
 							"properties": {
-								"code":{type:"string",required:"true"},
+								"code":{type:"string"},
 								"attributes":{"$ref":"attributes"}
 						}}
 		}}
