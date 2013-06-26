@@ -6,6 +6,7 @@
 		"array":{"type":"boolean"},
 		"map":{"type":"boolean", description:"checked to create a map"},
 		"keyLabel":{"type":"string", description:"the label of the key attribute"},
+		"keyDescription":{"type":"string", description:"the description of the key attribute"},
 		"reorderable":{type:"boolean"},
 		"validTypes": {description:"The list of valid groups (types) that describe the properties in the complex object or array.",
 					type:"array",

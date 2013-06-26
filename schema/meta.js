@@ -70,6 +70,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
 		isArray: function(meta) {
 			return meta.array;
 		},
+		isMap: function(meta) {
+			return meta.map;
+		},
 		isComplex: function(meta) {
 			return meta.validTypes;
 		},
