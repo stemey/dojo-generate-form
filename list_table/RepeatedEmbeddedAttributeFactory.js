@@ -68,15 +68,17 @@ define([ "dojo/_base/array", //
 			});
 			select.addChild(widgetList);
 
-			var copy = function(original) {
-				var newMh=updateModelHandle.createMeta();
-				newMh.value=original.value;
-				newMh.oldValue=original.oldValue;
-				return newMh;
+			if (attribute.reorderable!==false) {
+				var copy = function(original) {
+					var newMh=updateModelHandle.createMeta();
+					newMh.value=original.value;
+					newMh.oldValue=original.oldValue;
+					return newMh;
+				}
+				aspect.after(widgetList, "startup", function() {
+					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true});
+				});
 			}
-			aspect.after(widgetList, "startup", function() {
-				new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true});
-			});
 
 
 			return select;
