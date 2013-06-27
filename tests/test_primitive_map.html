@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner", "gform/createStandardEditorFactory",//
+		         "dojo/text!./meta/primitive_map.json","dojo/text!./entity/primitive_map.json"//
+		         ],function(ready,json,Editor,Stateful,doh,createStandardEditorFactory,meta,entity) {
+			
+				 editor=new Editor({"plainValue": dojo.fromJson(entity),
+				"meta":dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
+				var container= dojo.byId("container");
+				editor.placeAt(container);
+				editor.startup();
+				doh.register("standard", [
+							{
+								name: 'init',
+								runTest: function(t){
+									var message1=dijit.byId("gform_ValidationTextBox_0").get("value");
+									t.assertEqual("a",message1);
+									var message1=dijit.byId("gform_ValidationTextBox_1").get("value");
+									t.assertEqual("hi you",message1);
+									t.assertEqual(dojo.fromJson(entity),editor.getPlainValue());
+								},
+							},{
+								name: 'add',
+								runTest: function(t){
+									var value=editor.getPlainValue();
+									dijit.byId("dijit_form_Button_0").onClick();
+									dijit.byId("gform_ValidationTextBox_4").set("value","ll");
+									dijit.byId("gform_ValidationTextBox_5").set("value","hi");
+									t.assertEqual("hi",editor.get("plainValue").things.ll);
+								}
+							}
+					]);			
+			doh.run();
+		});
+		
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test</h1>
+
+
+	<div id="container"></div>
+
+</body>
+</html>

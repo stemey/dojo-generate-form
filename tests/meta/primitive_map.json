@@ -1,0 +1,16 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "required":false,
+            "label":"things",
+            "code":"things",
+            "map":true,
+            "type":"string",
+						"keyLabel": "beast",	
+						"keyDescription": "the key of the beast",	
+       }
+    ],
+    "type_property":"ext_type"
+}

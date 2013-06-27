@@ -11,6 +11,7 @@ define ("gform.tests.module",[
 	try {
 		doh.registerUrl("gform.tests.embedded_list", dojo.moduleUrl("gform","tests/test_embedded_list.html")); 
 		doh.registerUrl("gform.tests.embedded_map", dojo.moduleUrl("gform","tests/test_embedded_map.html")); 
+		doh.registerUrl("gform.tests.primitive_map", dojo.moduleUrl("gform","tests/test_primitive_map.html")); 
 		doh.registerUrl("gform.tests.embedded_list_polymorphic", dojo.moduleUrl("gform","tests/test_embedded_list_polymorphic.html"));
 		doh.registerUrl("gform.tests.tab_list_polymorphic", dojo.moduleUrl("gform","tests/test_tab_list_polymorphic.html"));
 		doh.registerUrl("gform.tests.tab_list", dojo.moduleUrl("gform","tests/test_tab_list.html"));

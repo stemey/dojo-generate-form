@@ -40,6 +40,17 @@ define([ "dojo/_base/array", //
 					plainValue[key]=value;	
 			});
 			return plainValue;
+		},
+		getPlainPrimitiveMap: function(arrayValue) {
+			var keyCode = arrayValue.__key;
+			var plainValue={};
+			arrayValue.forEach(function(element) {
+					var value =options.getPlainMeta(element);
+					var key = value[keyCode];
+					delete value[keyCode];
+					plainValue[key]=value["value"];	
+			});
+			return plainValue;
 		}
 	}
   var options = {};

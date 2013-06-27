@@ -1,0 +1,6 @@
+{
+	things : {
+		a: "hi you",
+		b: "good bye"
+	}
+}
