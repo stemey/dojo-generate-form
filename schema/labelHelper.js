@@ -8,6 +8,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare", "./meta" ]
 	//		provides convenience functions for schema access. Also abstracts over schema changes.
 		getLabel : function(attribute, modelHandle) {
 			var type=metaHelper.getComplexType(attribute, modelHandle); 
+			return this.getTypeLabel(type, modelHandle);
+		},
+		getTypeLabel : function(type, modelHandle) {
 			var labelAttribute = null;
 			if (type.labelAttribute) {
 				labelAttribute = type.labelAttribute;
@@ -18,7 +21,12 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare", "./meta" ]
 					}
 				});
 				if (labelAttribute!=null) {
-					return modelHandle.value[labelAttribute].value;
+					if (modelHandle.value) {
+						return modelHandle.value[labelAttribute].value;
+					} else {
+						// we also support plain values	
+						return modelHandle[labelAttribute];
+					}
 				} else {
 					return null;
 				}

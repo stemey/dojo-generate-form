@@ -1,17 +1,14 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
-"dojo/_base/declare"//
-
-], function(array, lang, declare) {
+"dojo/_base/declare",//
+"dojo/Stateful"
+], function(array, lang, declare, Stateful) {
 	// module: 
 	//		gform/Resolver
 
-	var Resolver= declare(null, {
+	return declare([Stateful], {
 	// summary:
 	//		Provides access to sibling attributes of modelHandle. 
-		constructor : function(kwArgs) {
-			lang.mixin(this, kwArgs);	
-		},
 		getPath: function(modelHandle) {
 			// summary:
 			//		get the absolute path to the current attribute
@@ -19,14 +16,14 @@ define([ "dojo/_base/array", //
 			//		absolute path
 			return "";
 		},
-		get : function(modelHandle, attributeCode) {
+		getParent : function(attributeCode) {
 			// summary:
 			//		get value of sibling attribute
 			// attributeCode: String
 			//		the name of he sibling attribute
-			return modelHandle.parent.value.get(attributeCode).value;
+			return this.parent.value.get(attributeCode).value;
 		},
-		watch: function(modelHandle, attributeCode, watchCallback) {
+		watchParent: function( attributeCode, watchCallback) {
 			// summary:
 			//		watch value of sibling attribute
 			// attributeCode: String
@@ -35,8 +32,7 @@ define([ "dojo/_base/array", //
 			//		callback
 			// returns: Object
 			//		WatchHandle
-			return modelHandle.parent.value[attributeCode].watch("value",watchCallback);
+			return this.parent.value[attributeCode].watch("value",watchCallback);
 		},
 	})
-	return new Resolver();
 });

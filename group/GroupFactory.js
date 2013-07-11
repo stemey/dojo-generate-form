@@ -5,7 +5,6 @@ define([ "dojo/_base/array", //
 "./DecoratorWidget",//
 "./ExpandableDecoratorWidget",//
 "./AttributeListWidget",//
-"../model/Resolver",//
 ], function(array, lang, declare, at, DecoratorWidget, ExpandableDecoratorWidget, AttributeListWidget,
 		Resolver) {
 // module
@@ -19,12 +18,12 @@ define([ "dojo/_base/array", //
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		createAttribute : function(attribute, modelHandle,resolver) {
+		createAttribute : function(attribute, modelHandle,ctx) {
 		// summary:
 		//		creates a widget for an embedded attribute.	
 			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute);
 			if (factory != null) {
-				return factory.create(attribute, modelHandle,resolver);
+				return factory.create(attribute, modelHandle,ctx);
 			} else {
 				return null;
 			}
@@ -38,7 +37,7 @@ define([ "dojo/_base/array", //
 		//		the container, that the attribute widgets will be added to.		
 			return new AttributeListWidget({meta:group});
 		},	
-		create : function(group, modelHandle, resolver) {
+		create : function(group, modelHandle, ctx) {
 			var listWidget = this.createWidget(group);
 
 			array.forEach(group.attributes, function(attribute) {
@@ -49,10 +48,9 @@ define([ "dojo/_base/array", //
 				if (!modelHandle.value[attribute.code]) {
 					throw new Error("provide a default value"+attribute.code);
 				}
-				var childResolver = new Resolver(modelHandle,attribute.code);
-
+	
 				var attributeEditor = this.createAttribute(attribute,
-						modelHandle.value[attribute.code], childResolver);
+						modelHandle.value[attribute.code], ctx);
 				var widget = this.editorFactory.createDecorator(attribute, modelHandle.value[attribute.code]);
 				if (attributeEditor != null) {
 					widget.addChild(attributeEditor);

@@ -11,7 +11,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		messages:messages,
 		attribute:null,
 		_addElement : function() {
-			var newModelHandle = updateModelHandle.createMeta();
+			var newModelHandle = updateModelHandle.createMeta(this.target);
 			var type=this.attribute.validTypes[0].code;
 			var type_property=this.attribute.type_property;
 			var newValue={};

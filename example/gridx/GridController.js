@@ -37,7 +37,7 @@ return declare("gform.tests.gridx.GridController", [ _WidgetBase, _TemplatedMixi
 			var props={ id: "grid"};
 			props.cacheClass=Cache;
 			props.structure = dojo.fromJson(tableStructure);
-			this.store = new Store(new Memory({idProperty: 'id', data:dojo.fromJson(tabledata)}));
+			this.store = new Store({idProperty: 'id', data:dojo.fromJson(tabledata)});
 			props.store = this.store;
 			props.modules= [
 				VirtualVScroller,

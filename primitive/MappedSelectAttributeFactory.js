@@ -19,7 +19,7 @@ define([ "dojo/_base/array",
 		},
 		
 		create : function(attribute, modelHandle, resolver) {
-			var options = this._createMappedOptions(attribute, resolver);
+			var options = this._createMappedOptions(modelHandle, attribute, resolver);
 			
 			var select = new Select({
 				value : at(modelHandle, "value"),
@@ -31,7 +31,7 @@ define([ "dojo/_base/array",
 				modelHandle.set("value",options[0].value);
 			}
 			
-			resolver.watch(attribute.mapped_attribute, 
+			modelHandle.watchParent(attribute.mapped_attribute, 
 					lang.hitch(this, "_onMappedAttributeChanged", modelHandle, select, attribute, resolver));
 			
 			
@@ -39,7 +39,7 @@ define([ "dojo/_base/array",
 		},
 		
 		_onMappedAttributeChanged : function(modelHandle, select, attribute, resolver) {
-			var options = this._createMappedOptions(attribute, resolver);
+			var options = this._createMappedOptions(modelHandle, attribute, resolver);
 			
 			var valueValid = false;
 			for (var key in options) {
@@ -58,8 +58,8 @@ define([ "dojo/_base/array",
 				modelHandle.set("value", options[0].value);
 			}
 		},
-		updateModelHandle : function(meta, plainValue, modelHandle,resolver) {
-			var options = this._createMappedOptions(meta, resolver);
+		updateModelHandle : function(meta, plainValue, modelHandle) {
+			var options = this._createMappedOptions(modelHandle, meta);
 			updateModelHandle.updateSelectModelHandle(meta, plainValue, modelHandle,options);
 		},
 		getSchema:function(){

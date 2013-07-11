@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+	<link rel="stylesheet" href="../../gform/resources/gform.css"/>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../dojo/dojo.js"
+		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/parser", "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
+		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json",//
+		"gform/opener/SingleEditorTabOpener", "dijit/registry", "gform/controller/ConfirmDialog"
+		], function(parser, ready, json, Editor, Stateful, doh,createEditorFactory, meta, entity, SingleEditorTabOpener, registry) {
+			parser.parse();
+			var container = registry.byId("tabContainer");
+			var confirmDialog = registry.byId("confirmDialog");
+			var ctx = {};
+			ctx.opener = new SingleEditorTabOpener({tabContainer: container, confirmDialog: confirmDialog});
+			var model = dojo.fromJson(entity);
+			editor =registry.byId("mainEditor");
+			editor.set("ctx", ctx);
+			editor.set("editorFactory", createEditorFactory());
+			editor.setMetaAndPlainValue(dojo.fromJson(meta), model);
+			editor.set("title", "main");
+
+	
+			var select = dijit.byId("gform_FilteringSelect_0");
+			doh.register("standard", [
+				{
+					name : 'init',
+					runTest : function(t) {
+						t.assertEqual(model.state.$ref, editor.get("plainValue").state.$ref);
+						t.assertEqual(model.state.$ref, select.get("value"));
+					}
+				}
+			]);
+			doh.run();
+		});
+	</script>
+</head>
+<body class="claro" >
+	<h1 class="testTitle">Editor Test</h1>
+
+	<div data-dojo-type="dijit/layout/TabContainer" style="width:100%, height:500px" data-dojo-props="doLayout:false" id='tabContainer'>
+		<div data-dojo-type="gform/Editor" id='mainEditor'></div>
+	</div>
+
+	<div id="confirmDialog" data-dojo-type="gform/controller/ConfirmDialog">
+	</div>	
+
+</body>
+</html>	

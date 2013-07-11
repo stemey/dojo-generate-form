@@ -3,11 +3,11 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dojo/Stateful", //
-"./model/Resolver", //
+"./Context", //
 "./group/DecoratorFactory", //
 "./validate/UniqueProperties",//
 "./model/path"
-], function(array, lang, declare, at, Stateful, Resolver, DecoratorFactory, UniqueProperties, path) {
+], function(array, lang, declare, at, Stateful, Context, DecoratorFactory, UniqueProperties, path) {
 	// module: 
 	//		gform/EditorFactory
 
@@ -57,7 +57,7 @@ define([ "dojo/_base/array", //
 			//		The Widget ich contains all widgets for the attributes and groups contained in the given attribute schema.	
 			return this.decoratorFactory.create(/*Object*/attribute, /*dojo/stateful*/modelHandle);
 		},	
-		create : function(group, modelHandle) {
+		create : function(group, modelHandle, ctx) {
 			// summary:
 			//		creates a group widget.
 			// group: Object
@@ -74,10 +74,10 @@ define([ "dojo/_base/array", //
 				if (groupFactory==null) {
 					throw new Error("cannot find group factory "+group.groupType);
 				}
-				return groupFactory.create(group, modelHandle, new Resolver(modelHandle));
+				return groupFactory.create(group, modelHandle, ctx);
 			} 
 			else if (lang.isArray(group.attributes)) {
-				return this.defaultGroupFactory.create(group, modelHandle, new Resolver(modelHandle));
+				return this.defaultGroupFactory.create(group, modelHandle, ctx);
 			}
 		},
 		getGroupFactory: function(group) {

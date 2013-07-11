@@ -13,8 +13,8 @@ define([ "dojo/_base/array", //
 
 
 		
-		_onMappedAttributeChanged : function(select, attribute, resolver) {
-			var newOptions = this._createMappedOptions(attribute, resolver);
+		_onMappedAttributeChanged : function(modelHandle, select, attribute) {
+			var newOptions = this._createMappedOptions(modelHandle, attribute);
 			//var value = 
 			var value = select.get("value");
 			select.removeOption(select.get("options"));
@@ -22,13 +22,13 @@ define([ "dojo/_base/array", //
 			select.set("value",value);
 		},
 
-		_watchMappedAttribute: function(attribute,select,resolver) {
-			resolver.watch(attribute.mapped_attribute, 
-				lang.hitch(this, "_onMappedAttributeChanged", select, attribute, resolver));
+		_watchMappedAttribute: function(modelHandle, attribute,select) {
+			modelHandle.watchParent(attribute.mapped_attribute, 
+				lang.hitch(this, "_onMappedAttributeChanged", modelHandle, select, attribute));
 		},
 
-		_createMappedOptions : function(attribute, resolver) {
-			var mappedValue = resolver.get(attribute.mapped_attribute);
+		_createMappedOptions : function(modelHandle, attribute) {
+			var mappedValue = modelHandle.getParent(attribute.mapped_attribute);
 			var values = attribute.mapped_values[mappedValue];
 			
 			var options = [];

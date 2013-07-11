@@ -5,7 +5,6 @@ define(
 		"dojo/when",//
 		"dojox/mvc/at",//
 		"./FilteringSelect",//
-		"./RefSelect",//
 		"../schema/meta",//
 		"./dijitHelper",
 		"dojo/store/Memory",
@@ -13,20 +12,17 @@ define(
 		"./refConverter",
 		"./makeConverterDijitAware"
 		],
-		function(array, lang, declare, when, at, FilteringSelect, RefSelect, meta, dijitHelper, Memory, Store, refConverter, makeConverterDijitAware) {
+		function(array, lang, declare, when, at, FilteringSelect, meta, dijitHelper, Memory, Store, refConverter, makeConverterDijitAware) {
 
 	return declare(
 			"gform.ReferenceAttributeFactory",
 			[],
 			{
-			constructor: function(kwArgs) {
-				lang.mixin(this, kwArgs);
-			},
 			handles : function(attribute) {
 				return meta.isType(attribute,"ref")
 						&& !attribute.array;
 			},
-			create : function(attribute, modelHandle, ctx) {
+			create : function(attribute, modelHandle) {
 				var idProperty = attribute.idProperty || "id";
 				var searchProperty = attribute.searchProperty || "name";
 				var props = {};
@@ -36,8 +32,10 @@ define(
 				props["message"]=at(modelHandle, "message");
 				props["state"]=at(modelHandle, "state");
 				if (attribute.url) {	
-					var store = ctx.getStore(attribute.url,
-						{target: attribute.url,idProperty: idProperty	});
+					var store = new Store({
+						targetUrl: attribute.url,
+						idProperty: idProperty
+					});
 				} else if (attribute.values) {
 					var store = new Memory({
 						data: attribute.values, 
@@ -65,8 +63,7 @@ define(
 					});
 				}
 							
-				var refSelect = new RefSelect({meta: attribute, opener:ctx.opener,filteringSelect:f, editorFactory: this.editorFactory});
-				return refSelect;
+				return f;
 			}
 	})
 });

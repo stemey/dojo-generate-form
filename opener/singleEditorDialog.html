@@ -1,0 +1,15 @@
+<div>
+	<div class="dijitHidden">
+	    <div data-dojo-type="dijit.Dialog" class="gformSingleEditor"  data-dojo-props="title: 'Entity'"
+	    	data-dojo-attach-point="dialog">
+			
+				
+				<div data-dojo-type="gform/controller/CrudController" class="editor" data-dojo-attach-point="crudController"></div>
+				<span class="error" data-dojo-attach-point="errorNode"></span>
+				<div data-dojo-type="dijit/ProgressBar" class="loading" data-dojo-props="indeterminate: true"></div>
+
+	    </div>
+			<div data-dojo-type="gform/controller/ConfirmDialog" data-dojo-attach-point="confirmDialog"></div>
+
+	</div>
+</div>

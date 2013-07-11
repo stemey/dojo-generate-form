@@ -8,6 +8,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dijit/lay
 		var cb = domGeometry.getContentBox(this.containerNode);
 		array.forEach(this.getChildren(), function(widget){
 			if(widget.resize){
+				console.log("listpane: "+cb.w);	
 				widget.resize({w: cb.w});
 			}
 		});

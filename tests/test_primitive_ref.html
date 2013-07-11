@@ -7,6 +7,7 @@
 
 	<!-- required: a default dijit theme: -->
 	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+	<link rel="stylesheet" href="../../gform/resources/gform.css"/>
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../dojo/dojo.js"
@@ -16,10 +17,18 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
-		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json"//
-		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
+		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json", "dojo/text!./entity/state_collection.json", "gform/example/gridx/AsyncMemory",//
+		"gform/opener/SingleEditorDialogOpener", "gform/controller/ConfirmDialog", "gform/Context"
+		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, SingleEditorDialogOpener, ConfirmDialog,Context) {
+			var ctx = new Context();
+			ctx.opener = new SingleEditorDialogOpener();
+			ctx.opener.storeRegistry = ctx.storeRegistry;
+			ctx.opener.placeAt("dialog");
+			ctx.opener.startup();
 			var model = dojo.fromJson(entity);
+			ctx.storeRegistry.register("/gform/tests/entity/state/", new Store({data:JSON.parse(stateCollection), idProperty:"id"}));
 			editor = new Editor({
+					ctx:ctx,
 					"plainValue": model,
 					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 			var container = dojo.byId("container");
@@ -44,6 +53,8 @@
 
 
 	<div id="container"></div>
+	<div id="dialog"></div>
+	</div>	
 
 </body>
 </html>	

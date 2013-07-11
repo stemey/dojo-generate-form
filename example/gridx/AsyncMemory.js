@@ -20,15 +20,19 @@ function(declare, Deferred, Memory, QueryResults){
 	}	
 
 return declare([], {
-	constructor: function(memory) {
-		this.wrapped=memory;
+	constructor: function(props) {
+		this.wrapped=new Memory(props);
 	},
 	get: function(id){
 		var me = this;
 		var entity = this.wrapped.get(id);
-		return finishDeferred(entity.error,function(){
+		if (entity) {
+		return finishDeferred(!!entity.error,function(){
 			return entity;
 		});
+		} else{
+			return null;
+		}
 	},
 	put: function(object, options){
 		var me = this;

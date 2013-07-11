@@ -8,12 +8,11 @@
             "idProperty":"value",
             "description":"select a reference",
             "code":"state",
-						values: [
-							{label:"Missouri", value:"/state/1"},
-							{label:"Mississippi", value:"/state/2"},
-							{label:"Washington", value:"/state/3"},
-							{label:"idaho", value:"/state/4"},
-						]
+						baseUrl: "/gform/tests/entity/state/",
+						url: "/gform/tests/entity/state/",
+						collectionUrl: "/gform/tests/entity/state/",
+						schemaUrl: "/gform/tests/meta/refs.json"
+						
         }
     ],
     "type_property":"ext_type"

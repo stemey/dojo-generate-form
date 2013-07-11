@@ -32,19 +32,19 @@ define([
 					&& attribute.validTypes
 					&& !attribute.array;
 		},
-		create : function(/*Object*/attribute, /*dojo/stateful*/modelHandle, /*gform/model/Resolver*/ resolver) {
+		create : function(/*Object*/attribute, /*dojo/stateful*/modelHandle, /*gform/Context*/ context) {
 			// summary:
 			//		create a widget and bind it to the modelHandle.
 			// attribute: Object
 			//		the attribute meta data
 			// modelHandle: dojo/Stateful
 			//		the modelHandle to bind to the widget
-			// resolver: gform/Resolver
+			// context: gform/Context
 			//		resolver allows access to sibling attributes and their modelHandles.
 			// returns: dijit/_WidgetBase
 			//		The widget will be wrapped with a Decorator and added to the widget tree.
 		},
-		updateModelHandle: function(/*Object*/attribute, /*Object*/plainValue, /*dojo/stateful*/modelHandle, /*gform/model/Resolver*/ resolver) {
+		updateModelHandle: function(/*Object*/attribute, /*Object*/plainValue, /*dojo/stateful*/modelHandle, /*gform/Context*/ context) {
 			// summary:
 			//		create a widget and bind it to the modelHandle.
 			// description:
@@ -55,7 +55,7 @@ define([
 			//		the new value tof the modelHandle
 			// modelHandle: dojo/Stateful
 			//		the modelHandle to update
-			// resolver: gform/Resolver
+			// context: gform/Context
 			//		resolver allows access to sibling attributes and their modelHandles.
 		},
 		getSchema: function() {

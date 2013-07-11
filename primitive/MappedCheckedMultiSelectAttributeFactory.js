@@ -17,7 +17,7 @@ define([ "dojo/_base/array", //
 			return attribute != null && attribute.array && !attribute.validTypes && attribute.mapped_values;
 		},
 			create : function(attribute, modelHandle, resolver) {
-			var options = this._createMappedOptions(attribute, resolver);
+			var options = this._createMappedOptions(modelHandle, attribute, resolver);
 			
 			var clonedValues = [];
 			array.forEach(modelHandle.value, function(value) {
@@ -31,7 +31,7 @@ define([ "dojo/_base/array", //
 			});
 
 			bindWidget(modelHandle,select,"value");
-			this._watchMappedAttribute(attribute,select,resolver);
+			this._watchMappedAttribute(modelHandle, attribute,select,resolver);
 			
 			return select;
 		},

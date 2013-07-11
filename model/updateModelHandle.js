@@ -5,9 +5,10 @@ define([
 	"../patch/StatefulArray",
 	"./getPlainValue",
 	"./enhanceArray",
-	"./Resolver",
+	"../Context",
+	"./MetaModel",
 	"../schema/meta"
-], function(array, lang, Stateful, StatefulArray, getPlainValue, enhanceArray, Resolver, metaHelper){
+], function(array, lang, Stateful, StatefulArray, getPlainValue, enhanceArray, Context, MetaModel, metaHelper){
 // module:
 //		gform/updateModelHandle
 
@@ -40,7 +41,7 @@ define([
 				}
 			}
 		},
-		update: function(/*Object*/groupOrType, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+		update: function(/*Object*/groupOrType, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, context) {
 			// summary:
 			//		update the group with the given plainValue
 			// groupOrType:
@@ -61,12 +62,12 @@ define([
 				array.forEach(attributes,function(attribute) {
 					var childHandle = modelHandle.value[attribute.code];
 					if (!childHandle) {
-						childHandle=this.createMeta();
+						childHandle=this.createMeta(modelHandle);
 						modelHandle.value[attribute.code]=childHandle;
 					}else {
 						this.resetMeta(childHandle);
 					}
-					this.cascadeAttribute(attribute,plainValue[attribute.code], childHandle,editorFactory, new Resolver(modelHandle));
+					this.cascadeAttribute(attribute,plainValue[attribute.code], childHandle,editorFactory, context);
 				},this);
 			}
 		},
@@ -98,7 +99,7 @@ define([
 			}
 			modelHandle.set("oldValue",getPlainValue(modelHandle.value));
 		},
-		updatePolyObject: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+		updatePolyObject: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, context) {
 			// summary:
 			//		update the attribute of type object with the given plainValue. The attribute has more than one valid type. There is a modelHandle for each type. These can be bound to different gform/Editor instances. Switching the type will switch visibility of the widget instances.
 			// meta:
@@ -118,7 +119,7 @@ define([
 				array.forEach(meta.validTypes,function(type) {
 					var metaObject= this.createMeta();
 					metaObject.value=new Stateful({});
-					metaObject.value[meta.type_property]=this.createMeta();
+					metaObject.value[meta.type_property]=this.createMeta(modelHandle);
 					metaObject.value[meta.type_property].value=type.code;
 					modelHandle.typeToValue[type.code]=metaObject;
 					if (type.code==typeCode)  {
@@ -132,9 +133,9 @@ define([
 				array.forEach(meta.validTypes,function(type) {
 					var metaObject = typeToValue[type.code];
 					if (type.code==typeCode)  {
-						this.update(type,plainValue,metaObject,editorFactory);
+						this.update(type,plainValue,metaObject,editorFactory, context);
 					}else{
-						this.update(type,{},metaObject,editorFactory);
+						this.update(type,{},metaObject,editorFactory, context);
 					}
 				},this);
 			}
@@ -247,7 +248,7 @@ define([
 			}
 			modelHandle.set("oldValue",modelHandle.value);
 		},
-		updateMergedObject: function(/*Object*/meta, /*Object*/plainValue, /*dojo/stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
+		updateMergedObject: function(/*Object*/meta, /*Object*/plainValue, /*dojo/stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, context) {
 			// summary:
 			//		update the attribute of type object with the given plainValue. The attribute has more than one valid type. The modelHandle keeps all attributes in a single Stateful. This way the model can be bound to a single row of a table.
 			// meta:
@@ -268,17 +269,17 @@ define([
 			}
 			var typeCode=plainValue ? plainValue[meta.type_property] :null;
 			if (!modelHandle.value[meta.type_property]) {
-				modelHandle.value[meta.type_property]=this.createMeta();
+				modelHandle.value[meta.type_property]=this.createMeta(modelHandle);
 			}else{
 				this.resetMeta(modelHandle.value[meta.type_property]);
 			}
 			modelHandle.value[meta.type_property].set("value",typeCode);
 			array.forEach(combinedAttributes, function(attribute) {
 				if (!modelHandle.value[attribute.code]) {
-					modelHandle.value[attribute.code]=this.createMeta();
+					modelHandle.value[attribute.code]=this.createMeta(modelHandle);
 				}
 				var attributeModelHandle=modelHandle.value[attribute.code];
-				this.cascadeAttribute(attribute,plainValue[attribute.code],attributeModelHandle,editorFactory, new Resolver(modelHandle));
+				this.cascadeAttribute(attribute,plainValue[attribute.code],attributeModelHandle,editorFactory, context);
 				attributeModelHandle.ignore=true;
 			}, this);
 			if (typeCode!=null) {
@@ -329,7 +330,7 @@ define([
 			}, this);
 			return combinedAttributes;
 		},
-		updateArray: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, cascadeAttribute/*function*/) {
+		updateArray: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, cascadeAttribute/*function*/, context) {
 			// summary:
 			//		update the array attribute with the given plainValue. The corresponding value is a StatefulArray. The update operation will be delegated for the value of the elements. 
 			// meta:
@@ -359,11 +360,11 @@ define([
 				array.forEach(plainValue,function(element,i) {
 					var model=modelArray[i];
 					if (model==null) {
-						model = this.createMeta();
+						model = this.createMeta(modelHandle);
 					}else {
 						this.resetMeta(model);
 					}
-					(cascadeAttribute || this.cascadeAttribute).apply(this,[childMeta,element,model,editorFactory, new Resolver(modelHandle)]);
+					(cascadeAttribute || this.cascadeAttribute).apply(this,[childMeta,element,model,editorFactory, context]);
 					modelArray.push(model);
 				},this);
 				modelHandle.set("oldValue",plainValue);
@@ -388,12 +389,13 @@ define([
 					modelHandle);
 			}
 		},
-		createMeta: function() {
+		createMeta: function(parent) {
 			// summary:
 			//		create a meta object
 			// returns: dojo/Stateful
-			var meta= new Stateful({__type:"meta",state:"",message:null});
+			var meta= new MetaModel({__type:"meta",state:"",message:null});
 			meta.set("tmp",new Stateful());
+			meta.parent=parent;
 			return meta;	
 		},
 		resetMeta: function(/*dojo/Stateful*/meta) {
@@ -405,7 +407,7 @@ define([
 			meta.set("state","");
 			return meta;	
 		},
-		cascadeAttribute: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, /*gform/model/Resolver*/resolver) {
+		cascadeAttribute: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, /*gform/Context*/context) {
 			// summary:
 			//		delegate the update to the appropriate function
 			// meta:
@@ -416,20 +418,20 @@ define([
 			//		the modelHandle to update
 			// editorFactory:
 			//		consult the editorFactory for the proper update function
-			// resolver:
-			//		pass the resolver to update
+			// context:
+			//		pass the context to update
 			if (editorFactory) {
 				var handle=editorFactory.getAttributeFactory(meta);
 				if (handle && handle.updateModelHandle) {
-					return handle.updateModelHandle(meta,plainValue,modelHandle,resolver);
+					return handle.updateModelHandle(meta,plainValue,modelHandle,context);
 				}
 			}
 			if (meta.array ) {
-				this.updateArray(meta,plainValue,modelHandle);
+				this.updateArray(meta,plainValue,modelHandle,editorFactory, context);
 			}else if (meta.validTypes && meta.validTypes.length==1) {
-				this.updateObject(meta,plainValue,modelHandle);
+				this.updateObject(meta,plainValue,modelHandle, context);
 			}else if (meta.validTypes && meta.validTypes.length>1) {
-				this.updatePolyObject(meta,plainValue,modelHandle);
+				this.updatePolyObject(meta,plainValue,modelHandle, context);
 			}else if (meta.type=="string") {
 				this.updateNullableString(meta,plainValue,modelHandle);
 			}else if (meta.type=="date") {

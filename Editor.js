@@ -1,8 +1,8 @@
 define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declare",
 		"dojox/mvc/_Container", "dijit/layout/_LayoutWidget","dojox/mvc/at", 
-		"dojo/dom-construct", "dojo/Stateful", "./model/getPlainValue","./model/updateModelHandle","./model/hasChanged","./group/_GroupMixin" ], function(array, aspect,  lang,
+		"dojo/dom-construct", "dojo/Stateful", "./model/getPlainValue","./model/updateModelHandle","./model/hasChanged","./group/_GroupMixin", "./schema/labelHelper" ], function(array, aspect,  lang,
 		declare, Container, _LayoutWidget,at, domConstruct,
-		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin) {
+		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin, labelHelper) {
 		// module: 
 		//		gform/Editor
 
@@ -40,6 +40,10 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		// modelHandle:
 		// 		the data that is bound to the form.
 		modelHandle : null,
+
+		// context:
+		//		the context provides extra features for this editor instance
+		context : null,
 
 		// meta:
 		// 		the schema describing the form.
@@ -192,6 +196,13 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				this._buildContained();
 			}
 		},
+		getLabel: function() {
+			if (this.meta) {
+				return labelHelper.getTypeLabel(this.meta, this.modelHandle);
+			} else {
+				return "";
+			}
+		},
 		startup : function() {
 			this.inherited(arguments);
 			this._started=true;
@@ -219,7 +230,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				}
 				if (this.get("meta") && this.editorFactory) {
 					this.widget = this.editorFactory.create(this.get("meta"),
-							this.modelHandle);
+							this.modelHandle, this.ctx);
 					if (typeof this.get("doLayout")!="undefined") {
 						this.widget.set("doLayout",this.get("doLayout"));
 						var widget = this.widget;	

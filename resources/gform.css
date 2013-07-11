@@ -225,3 +225,46 @@ span.errorTooltipNode{
 }
 
 
+.gformSingleEditor.error .error {
+	display: block;	
+}
+.gformSingleEditor .error {
+	display: none;	
+}
+.gformSingleEditor.loading .loading {
+	display: block;	
+}
+.gformSingleEditor .loading {
+	display: none;	
+}
+.gformSingleEditor .editor {
+	display: block;	
+}
+.gformSingleEditor.error .editor {
+	display: none;	
+}
+.gformSingleEditor.loading .editor {
+	display: none;	
+}
+
+
+div.gformEditorController .new {
+	display:none;	
+}
+div.gformEditorController.create .new {
+	display:block;
+}
+div.gformEditorController .edit {
+	display:none;	
+}
+div.gformEditorController.edit .edit {
+	display:block;	
+}
+div.gformEditorController .working {
+	display:none;	
+}
+div.gformEditorController.working .working {
+	display:block;	
+}
+
+
