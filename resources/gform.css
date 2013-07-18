@@ -224,7 +224,8 @@ span.errorTooltipNode{
 	-moz-column-count:1;
 }
 
-
+/*
+TODO: state of dialog editor interfers with display of attribute errors
 .gformSingleEditor.error .error {
 	display: block;	
 }
@@ -246,7 +247,7 @@ span.errorTooltipNode{
 .gformSingleEditor.loading .editor {
 	display: none;	
 }
-
+*/
 
 div.gformEditorController .new {
 	display:none;	
@@ -260,11 +261,25 @@ div.gformEditorController .edit {
 div.gformEditorController.edit .edit {
 	display:block;	
 }
-div.gformEditorController .working {
+/* loading icon. TODO needs to be centered */
+div.gformEditorController .loading {
 	display:none;	
 }
-div.gformEditorController.working .working {
+div.gformEditorController.loading .loading {
 	display:block;	
+	padding: 20px;
+}
+div.gformEditorController.loading .editor {
+	display:none;	
+}
+div.gformEditorController.loading .actions {
+	display:none;	
+}
+
+/* the message above the progress bar in crudController  */
+/* TODO: not working  */
+.progressMessage {
+	margin: 15px;	
 }
 
 

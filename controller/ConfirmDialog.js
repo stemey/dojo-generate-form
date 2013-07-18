@@ -12,7 +12,6 @@ define([
 	"../createLayoutEditorFactory",	
 	"../schema/labelHelper",
 	"dijit/registry",
-	"../controller/CrudController",	
 	"dojo/store/JsonRest",
   "dijit/_WidgetBase", 
 	"dijit/_TemplatedMixin",
@@ -23,7 +22,7 @@ define([
 	"dijit/layout/ContentPane",
 	"dijit/ProgressBar",
 	"dijit/Dialog",
-], function(declare, lang, array,json, request, all, domClass, when,  Editor,  domClass, createLayoutEditorFactory, labelHelper, registry, CrudController, Store, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template){
+], function(declare, lang, array,json, request, all, domClass, when,  Editor,  domClass, createLayoutEditorFactory, labelHelper, registry, Store, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template){
 
 
 	

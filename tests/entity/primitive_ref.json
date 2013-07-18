@@ -1,3 +1,3 @@
 {
-	state : {$ref:"/tests/entity/state/2"}
+	state : {$ref:"2"}
 }

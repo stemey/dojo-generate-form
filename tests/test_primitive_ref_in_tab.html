@@ -8,6 +8,7 @@
 	<!-- required: a default dijit theme: -->
 	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
 	<link rel="stylesheet" href="../../gform/resources/gform.css"/>
+	<link rel="stylesheet" href="../../gform/resources/gform_layout.css"/>
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../dojo/dojo.js"
@@ -18,13 +19,15 @@
 
 		require([ "dojo/parser", "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
 		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json",//
-		"gform/opener/SingleEditorTabOpener", "dijit/registry", "gform/controller/ConfirmDialog"
-		], function(parser, ready, json, Editor, Stateful, doh,createEditorFactory, meta, entity, SingleEditorTabOpener, registry) {
+		"gform/opener/SingleEditorTabOpener", "dijit/registry", "gform/Context", "dojo/text!./entity/state_collection.json", "gform/example/gridx/AsyncMemory", "gform/controller/ConfirmDialog", "dijit/layout/BorderContainer"
+		], function(parser, ready, json, Editor, Stateful, doh,createEditorFactory, meta, entity, SingleEditorTabOpener, registry, Context, stateCollection, Store) {
 			parser.parse();
 			var container = registry.byId("tabContainer");
 			var confirmDialog = registry.byId("confirmDialog");
-			var ctx = {};
+			var ctx = new Context();
 			ctx.opener = new SingleEditorTabOpener({tabContainer: container, confirmDialog: confirmDialog});
+			ctx.opener.storeRegistry = ctx.storeRegistry;
+			ctx.storeRegistry.register("/gform/tests/entity/state/", new Store({data:JSON.parse(stateCollection), idProperty:"id"}));
 			var model = dojo.fromJson(entity);
 			editor =registry.byId("mainEditor");
 			editor.set("ctx", ctx);
@@ -47,13 +50,15 @@
 		});
 	</script>
 </head>
-<body class="claro" >
+<body class="claro">
+	<div data-dojo-type="dijit/layout/BorderContainer" style="width: 100%; height: 100%">
+	<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props=" region: 'top'">
 	<h1 class="testTitle">Editor Test</h1>
-
-	<div data-dojo-type="dijit/layout/TabContainer" style="width:100%, height:500px" data-dojo-props="doLayout:false" id='tabContainer'>
+	</div>
+	<div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="doLayout: true, region: 'center'" id='tabContainer'>
 		<div data-dojo-type="gform/Editor" id='mainEditor'></div>
 	</div>
-
+</div>
 	<div id="confirmDialog" data-dojo-type="gform/controller/ConfirmDialog">
 	</div>	
 

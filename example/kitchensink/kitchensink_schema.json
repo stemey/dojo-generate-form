@@ -106,18 +106,15 @@
                     "array":false
                 },
                 {
-                    "type":"ref",
-                    "label":"reference",
-										"description":"this attribute selects a reference to another entity.",
-                    "code":"reference",
-										"required": false,	
-                    "array":false,
-										values: [
-											{name: "Missouri", id: "/Country/1"},
-											{name: "Alabama", id: "/Country/2"},
-											{name: "Oklahoma", id: "/Country/3"},
-											{name: "Califormia", id: "/Country/4"},
-										]
+						      "type":"ref",
+									"searchProperty":"label",
+						      "idProperty":"value",
+						      "description":"select a reference",
+						      "code":"state",
+									baseUrl: "/gform/tests/entity/state/",
+									url: "/gform/tests/entity/state/",
+									collectionUrl: "/gform/tests/entity/state/",
+									schemaUrl: "/gform/tests/meta/refs.json"
                 },
 						]},{
             label:"mapped primitives",

@@ -16,14 +16,14 @@ define([
 	"dojo/dom-class",
 	"../createLayoutEditorFactory",	
 	"../schema/labelHelper",
-	"../controller/CrudController",
+	"../controller/DialogCrudController",
 	"dojo/store/JsonRest",	
 	"dijit/form/Button",
 	"dijit/layout/StackContainer",
 	"dijit/layout/ContentPane",
 	"dijit/ProgressBar",
 	"dijit/Dialog",
-], function(declare, lang, array,json, aspect, request, all, domClass, when,  Editor,  _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, domClass, createLayoutEditorFactory, labelHelper, CrudController, Store){
+], function(declare, lang, array,json, aspect, request, all, domClass, when,  Editor,  _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, domClass, createLayoutEditorFactory, labelHelper, DialogCrudController, Store){
 
 
 	

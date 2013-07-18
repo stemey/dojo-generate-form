@@ -2,7 +2,8 @@
   "attributes":[
     {
       "type":"string",
-			"code": "label"
+			"code": "label",
+			"required" : true
     },
     {
       "type":"number",

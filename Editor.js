@@ -188,6 +188,10 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				}
 			}
 		},
+		removeChangeIndicators: function() {
+			var value = this.getPlainValue();
+			this.setPlainValue(value);
+		},
 		postCreate : function() {
 			this.inherited(arguments);
 			this.containerNode=this.domNode;

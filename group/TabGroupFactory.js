@@ -20,7 +20,7 @@ define([ "dojo/_base/array", //
 					.getFactory(attribute.editor);
 			return factory.create(attribute, modelHandle);
 		},
-		create : function(group, modelHandle) {
+		create : function(group, modelHandle, ctx) {
 			var tc = new TabContainer({
 				style : "height: 100%; width: 100%;"
 			});
@@ -28,7 +28,7 @@ define([ "dojo/_base/array", //
 				if (!tab.groupType) {
 					tab.groupType="listpane";
 				}
-				var tabWidget = this.editorFactory.create(tab, modelHandle);
+				var tabWidget = this.editorFactory.create(tab, modelHandle, ctx);
 				tabWidget.set("title", tab.label);
 				tabWidget.set("meta",tab);
 				tc.addChild(tabWidget);
