@@ -105,6 +105,11 @@
                     "code":"simplelongtext",
                     "array":false
                 },
+						]},        
+						{
+            label:"references",
+						description:"This tab contains reference attributes. references are edited and created in a separate editor (form). The opener attached to an editor's context defines if the new editor is shown in a dialog, separate tab or another location. In this example the editor is opened in a dialog.",
+            "attributes":[
                 {
 						      "type":"ref",
 									"searchProperty":"label",
@@ -116,7 +121,20 @@
 									collectionUrl: "/gform/tests/entity/state/",
 									schemaUrl: "/gform/tests/meta/refs.json"
                 },
-						]},{
+                {
+						      "type":"ref",
+									"array": true,	
+									"searchProperty":"label",
+						      "idProperty":"value",
+						      "description":"select a reference",
+						      "code":"states",
+									baseUrl: "/gform/tests/entity/state/",
+									url: "/gform/tests/entity/state/",
+									collectionUrl: "/gform/tests/entity/state/",
+									schemaUrl: "/gform/tests/meta/refs.json"
+                },
+						]},
+						{
             label:"mapped primitives",
 						description:"This tab contains mapped select attributes. A mapped select's options depends on the value of another attribute. ",
             "attributes":[

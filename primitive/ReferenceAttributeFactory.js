@@ -27,6 +27,13 @@ define(
 						&& !attribute.array;
 			},
 			create : function(attribute, modelHandle, ctx) {
+
+				if (typeof attribute.targetCreatable != "undefined") {
+					var targetCreatable = attribute.targetCreatable;
+				} else {
+					var targetCreatable = true;
+				}
+
 				var idProperty = attribute.idProperty || "id";
 				var searchProperty = attribute.searchProperty || "name";
 				var props = {};
@@ -65,7 +72,7 @@ define(
 					});
 				}
 							
-				var refSelect = new RefSelect({meta: attribute, opener:ctx.opener,filteringSelect:f, editorFactory: this.editorFactory});
+				var refSelect = new RefSelect({targetCreatable: targetCreatable, meta: attribute, opener:ctx.opener,filteringSelect:f, editorFactory: this.editorFactory});
 				return refSelect;
 			}
 	})

@@ -8,7 +8,8 @@
 	"integer2": 4,
 	"date": "2013-03-21",
 	"time": "T15:00:00",
-	"reference": {$ref:2}	,
+	"state": {$ref:2}	,
+	"states": [{$ref:2}, {$ref: 3}]	,
 	"language": "german",
 	"salutation": "Frau",
 	"salutation_array": [

@@ -17,12 +17,16 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		selectContainer:null,
 		meta: null,
 		editButton:null,
+		targetCreatable: false,
 		postCreate: function() {
 			this.inherited(arguments);
 			this.editButton.on("click", lang.hitch(this, "openref"));
 			this.createButton.on("click", lang.hitch(this, "createref"));
 			this.filteringSelect.watch("value", lang.hitch(this, "updateState"));
 			this.filteringSelect.watch("state", lang.hitch(this, "updateState"));
+			if (!this.targetCreatable) {
+				this.createButton.domNode.style.display="none";
+			}
 		},
 		startup: function() {
 			this.filteringSelect.placeAt(this.selectContainer);

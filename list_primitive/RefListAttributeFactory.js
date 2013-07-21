@@ -6,23 +6,25 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dojox/mvc/StatefulArray",//
 "dojo/Stateful",//
-"./EmbeddedListWidget",//
+"./RefListWidget",//
 "dojox/mvc/sync",//
 "dojox/mvc/WidgetList",//
 "./RepeatedAttributeWidget",//
 "../widget/MvcDndSource",//
 "../model/updateModelHandle",//
+"../schema/meta",//
 "dijit/registry"
 ], function(array, lang, aspect, Editor, declare, at, StatefulArray, Stateful,
-		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget , DndSource, updateModelHandle, registry) {
+		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget , DndSource, updateModelHandle, metaHelper, registry) {
 
-	return declare("app.PrimitiveListAttributeFactory", [], {
+	return declare( [], {
 
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		handles : function(attribute) {
-			return attribute != null && !attribute.validTypes && attribute.array;
+				return metaHelper.isType(attribute,"ref")
+						&& attribute.array;
 		},
 		create : function(attribute, modelHandle, ctx) {
 			if (modelHandle.value==null) {
@@ -31,6 +33,7 @@ define([ "dojo/_base/array", //
 			var childAttribute ={};
 			lang.mixin(childAttribute, attribute)
 			childAttribute.array=false;
+			childAttribute.targetCreatable=false;
 			delete childAttribute.editor;
 			
 			var select = new EmbeddedListWidget({

@@ -9,6 +9,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 	return declare("gform.RepeatedAttributeWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin, _DecoratorMixin,  _GroupMixin ], {
 		templateString : template,
+		ctx: null,
 		messages:messages,
 		getOldValueMessage: function(old) {
 			if (typeof old == "undefined" || old == null) {
@@ -34,7 +35,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare",
 			}
 
 			var factory = this.editorFactory.attributeFactoryFinder.getFactory(singleAttribute);
-			var editor = factory.create(attribute,this.modelHandle);
+			var editor = factory.create(attribute, this.modelHandle, this.ctx);
 			
 			this.addChild(editor);
 			this.set("target", panelModel);
