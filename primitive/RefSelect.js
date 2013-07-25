@@ -55,16 +55,15 @@ define([ "dojo/_base/lang",
 				this.createButton.domNode.style.display="none";
 			}
 			var select = this.filteringSelect;
-			if (select.store.notify) {
-				aspect.after(select.store, "put", function(result, args) {
-					when(result).then(function(id) {
-						var entity = args[0];
-						if (id==""+select.get("value")) {
-							select.set("item", entity);
-						}
-					});
+			this.storeListener = aspect.after(select.store, "put", function(result, args) {
+				when(result).then(function(id) {
+					var entity = args[0];
+					if (id==""+select.get("value")) {
+						select.set("item", entity);
+					}
 				});
-			}
+				return result;
+			});
 		},
 		startup: function() {
 			this.filteringSelect.placeAt(this.selectContainer);
@@ -106,7 +105,11 @@ define([ "dojo/_base/lang",
 			//  id:
 			//		the id of the newly created entity.
 			this.filteringSelect.set("value", ""+id);
-		}
+		},
+		destroy: function() {
+			this.inherited(arguments);
+			this.storeListener.remove();
+		}	
 	});
 
 });

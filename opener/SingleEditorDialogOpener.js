@@ -30,15 +30,17 @@ define([
 	
 return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		//  description:
-		//		This dijit provides a dialog and an embedded CrudController. 
+		//		This dijit provides a dialog and an embedded CrudController. This dijit is designed o be used as opener in a gform/Context. 
 
 		templateString : template,
+		//  editorFactory:
+		//		The editorFactory to use. If set will override the one passed to the openSingle/createSingle methods.
+		editorFactory: null,
 		//  storeRegistry:
 		//		The storeRegistry used to access the resources handled by the editor.
 		storeRegistry:null,
 		startup: function() {
 			var me = this;
-			this.crudController.editor.set("editorFactory", createLayoutEditorFactory());
 			this.crudController.dialog = this.confirmDialog;
 			aspect.around(this.dialog, "hide", function(originalFn) {
 				return lang.hitch(me, "onClose", originalFn);
@@ -55,11 +57,12 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			//		open the dialog to edit an existing resource.
 			//  options:
 			//		must provide the schemaUrl to load the gform schema from. 
-			//		Must also provide the url to the resource edited.
+			//		Must also provide the url to the resource edited. Options may provide EditorFactory.
 			var url = options.url.substring(0,options.url.lastIndexOf("/")+1)
 			var id = options.url.substring(options.url.lastIndexOf("/")+1)
 
 			var store = this.storeRegistry.get(url, {target: url});
+			this.crudController.editor.set("editorFactory", this.editorFactory || options.editorFactory || createLayoutEditorFactory() );
 			this.crudController.set("store", store);
 			this.crudController.edit(id, options.schemaUrl);
 			var me =this;
@@ -74,11 +77,12 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			//  options:
 			//		must provide the schemaUrl to load the gform schema from. 
 			//		Must also provide the url to the resource's collection. 
-			//		A callback which gets passed the new id may also be specified.
+			//		A callback which gets passed the new id may also be specified.  Options may provide EditorFactory.
 			var url = options.url.substring(0,options.url.lastIndexOf("/")+1)
 	
 			var store = this.storeRegistry.get(url, {target: url});
 			this.crudController.set("store", store);
+			this.crudController.editor.set("editorFactory", this.editorFactory || options.editorFactory || createLayoutEditorFactory() );
 			this.crudController.createNew(options.schemaUrl, options.callback);
 			var me =this;
 			this.dialog.on("editor-changed", function() {

@@ -8,7 +8,6 @@ define([
 	
 	return declare( [], {
 			id2store:{},
-			makeStoreObservable: true,
 			StoreClass:DefaultStore,
 			idProperty:"target",
 			get: function(id, props) {
@@ -20,9 +19,6 @@ define([
 				return cached;
 			}	,
 			register: function(id, store) {
-				if (!store.observe && this.makeStoreObservable) {
-					store = new Observable(store);
-				} 
 				this.id2store[id] = store;
 			}	
 		});
