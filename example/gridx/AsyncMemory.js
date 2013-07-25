@@ -47,7 +47,8 @@ return declare([], {
 		var me = this;
 		object.id=currentId++;
 		return finishDeferred(object.error,function(){
-			return me.wrapped.add(object,options);
+			me.wrapped.add(object,options);
+			return object.id;
 		});
 	},
 	remove: function(id){

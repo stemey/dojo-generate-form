@@ -55,6 +55,7 @@ define(
 				}
 				props["store"]= store;
 				props["searchAttr"]= searchProperty;
+				props["labelAttr"]= searchProperty;
 
 				dijitHelper.copyDijitProperties(attribute,props);
 				var f = new FilteringSelect(props);

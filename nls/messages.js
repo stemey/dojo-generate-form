@@ -1,7 +1,9 @@
 define({
 	root: ({
+		"editButtonLabel":"edit",
 		"addButtonLabel":"add",
 		"createAndAddButtonLabel":"new",
+		"createButtonLabel":"new",
 		"removeButtonLabel":"remove",
 		"oldValueChanged":"was {oldValue}",
 		"newElement":"new",

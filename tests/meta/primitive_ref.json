@@ -5,7 +5,7 @@
         {
             "type":"ref",
 						"searchProperty":"label",
-            "idProperty":"value",
+            "idProperty":"id",
             "description":"select a reference",
             "code":"state",
 						baseUrl: "/gform/tests/entity/state/",

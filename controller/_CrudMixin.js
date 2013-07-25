@@ -33,6 +33,7 @@ define([
 	
 return declare( [Stateful], {
 		state:"loading",
+		store:null,
 		_checkState: function(callback) {
 			var openDialog=false;
 			if (this.state=="create" && this.editor.hasChanged()) {
@@ -97,7 +98,8 @@ return declare( [Stateful], {
 		_execute: function(promise, command) {
 			when(promise,lang.hitch(this,"_on"+command),lang.hitch(this,"_on"+command+"Failed"));
 		},
-		createNew: function(schemaUrl) {
+		createNew: function(schemaUrl, createCallback) {
+			this.createCallback= createCallback;
 			if (schemaUrl) {
 				this._checkState(lang.hitch(this,"_createNewAndSchema", schemaUrl));
 			} else {			
@@ -134,6 +136,12 @@ return declare( [Stateful], {
 		_startConfirmDialog: function(message,callback) {
 			this.ctrl.dialog.show({message: message, callback: callback});
 		},
+		onCreated: function(id) {
+			if (this.createCallback) {
+				this.createCallback(id);
+			}
+			this.createCallback= null;
+		}
 
 	});
 

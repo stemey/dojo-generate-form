@@ -38,10 +38,19 @@ return declare( [_ActionMixin], {
 				}
 			}		
 		},
-		_onAdd: function(result) {
+		_onAdd: function(generatedId) {
 			this.ctrl.hideProgressBar();	
 			this.ctrl.set("state","edit");
 			this.ctrl.editor.removeChangeIndicators();
+			if (generatedId) {
+				var me = this;
+				var entity = this.ctrl.store.get(generatedId);	
+				when(entity).then(function(e) {
+					me.ctrl.editor.setPlainValue(e);
+				});
+				
+			}
+			this.ctrl.onCreated(generatedId);
 			//this.ctrl.editor.set("plainValue",{});
 			//this.ctrl.editor.reset();	
 			//this.ctrl._removeChangeIndicator();

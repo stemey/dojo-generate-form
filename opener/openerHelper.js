@@ -26,7 +26,6 @@ define([
 return declare([], {
 		tabContainer:null,
 		storeRegistry:null,
-		confirmDialog:null,
 		constructor: function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
