@@ -47,17 +47,15 @@ return declare( [  _CrudMixin,_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMi
 		},
 		_onStateChange: function(e) {
 			this.progressBar.hide();
-			array.forEach(["create","edit","working","loading"], function(e) {
+			array.forEach(["create","edit","loading"], function(e) {
 				domClass.toggle(this.domNode,e,this.state==e);
 			},this);
 		},
 		showProgressBar: function(message) {
-			//this.set("state","working");	
 			this.progressBar.show();
 			this.progressMessage.innerHTML=message; 
 		},
 		hideProgressBar: function() {
-			//this.set("state","working");	
 			this.progressBar.hide();
 		},
 		postCreate: function() {
@@ -69,6 +67,11 @@ return declare( [  _CrudMixin,_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMi
 			this.editor.set("editorFactory",this.editorFactory);
 			this.editor.set("meta",{});
 			this.editor.on("value-changed",lang.hitch(this,"_onValueChange"));
+			this.on("editor-changed",lang.hitch(this,"_onEditorChange"));
+			this._onStateChange();
+		},
+		_onEditorChange: function() {
+			this.borderContainer.layout();
 		},
 		onClose: function() {
 			// danger w. robinson: possibly endless recursion ahead

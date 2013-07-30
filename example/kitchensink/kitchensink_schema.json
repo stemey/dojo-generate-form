@@ -117,8 +117,8 @@
 						      "description":"select a reference",
 						      "code":"state",
 									baseUrl: "/gform/tests/entity/state/",
-									url: "/gform/tests/entity/state/",
-									collectionUrl: "/gform/tests/entity/state/",
+									url: "/gform/tests/entity/state",
+									collectionUrl: "/gform/tests/entity/state",
 									schemaUrl: "/gform/tests/meta/refs.json"
                 },
                 {
@@ -129,8 +129,8 @@
 						      "description":"select a reference",
 						      "code":"states",
 									baseUrl: "/gform/tests/entity/state/",
-									url: "/gform/tests/entity/state/",
-									collectionUrl: "/gform/tests/entity/state/",
+									url: "/gform/tests/entity/state",
+									collectionUrl: "/gform/tests/entity/state",
 									schemaUrl: "/gform/tests/meta/refs.json"
                 },
 						]},

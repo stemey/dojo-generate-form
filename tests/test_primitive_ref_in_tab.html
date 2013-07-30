@@ -19,7 +19,7 @@
 
 		require([ "dojo/parser", "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
 		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json",//
-		"gform/opener/SingleEditorTabOpener", "dijit/registry", "gform/Context", "dojo/text!./entity/state_collection.json", "gform/example/gridx/AsyncMemory", "gform/controller/ConfirmDialog", "dijit/layout/BorderContainer"
+		"gform/opener/SingleEditorTabOpener", "dijit/registry", "gform/Context", "dojo/text!./entity/state_collection.json", "dojo/store/Memory", "gform/controller/ConfirmDialog", "dijit/layout/BorderContainer"
 		], function(parser, ready, json, Editor, Stateful, doh,createEditorFactory, meta, entity, SingleEditorTabOpener, registry, Context, stateCollection, Store) {
 			parser.parse();
 			var container = registry.byId("tabContainer");
@@ -27,7 +27,7 @@
 			var ctx = new Context();
 			ctx.opener = new SingleEditorTabOpener({tabContainer: container, confirmDialog: confirmDialog});
 			ctx.opener.storeRegistry = ctx.storeRegistry;
-			ctx.storeRegistry.register("/gform/tests/entity/state/", new Store({data:JSON.parse(stateCollection), idProperty:"id"}));
+			ctx.storeRegistry.register("/gform/tests/entity/state", new Store({data:JSON.parse(stateCollection), idProperty:"id"}));
 			var model = dojo.fromJson(entity);
 			editor =registry.byId("mainEditor");
 			editor.set("ctx", ctx);
@@ -41,10 +41,17 @@
 				{
 					name : 'init',
 					runTest : function(t) {
-						t.assertEqual(model.state.$ref, editor.get("plainValue").state.$ref);
+						t.assertEqual(model.state.$ref, editor.getPlainValue().state.$ref);
 						t.assertEqual(model.state.$ref, select.get("value"));
 					}
-				}
+				},
+				{
+					name : 'open',
+					runTest : function(t) {
+						registry.byId("dijit_form_Button_2").onClick();
+						// we really need a webdriver test here.
+					}
+				},
 			]);
 			doh.run();
 		});

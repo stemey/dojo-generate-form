@@ -30,7 +30,7 @@
 			ctx.opener.placeAt("dialog");
 			ctx.opener.startup();
 			var model = dojo.fromJson(entity);
-			ctx.storeRegistry.register("/gform/tests/entity/state/", new Store({data:stateCollection, idProperty:"id"})); 
+			ctx.storeRegistry.register("/gform/tests/entity/state", new Store({data:stateCollection, idProperty:"id"})); 
 
 
 			var editorFactory = createStandardEditorFactory();

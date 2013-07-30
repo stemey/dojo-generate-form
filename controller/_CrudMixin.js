@@ -28,29 +28,60 @@ define([
 	"dijit/layout/BorderContainer",
 	"dijit/layout/ContentPane",
 ], function(declare, lang, array, domClass, request, all, when, Stateful, Editor, createEditorFactory, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, labelHelper, domStyle, domGeometry, Save, Discard, Delete, messages, Button	){
-
-
+// module:
+//		gform/controller/_CrudMixin
 	
 return declare( [Stateful], {
+	// summary:
+	//		the _CrudMixin wraps an editor and a store. Methods for loading or creating entities from a store are provided.
+		
+		// state:
+		//		maybe "loading", "edit", "create".
 		state:"loading",
+
+		// store:
+		//		the store used to persist the entity.
 		store:null,
+
+		// editor:
+		//		the editor
+		editor:null,
+
+		// dialog: gform/controller/ConfimDialog
+		//		used to inform user of pending changes.
+		dialog: null,
+
 		_checkState: function(callback) {
-			var openDialog=false;
+		// summary:
+		//		check if there are pending changes. If so a dialog will be displayed to ask the user to either 
+		//		cancel his action or discard the changes.  
+		// return: boolean
+		//		true if a dialog was opened
+			var dialogOpened=false;
 			if (this.state=="create" && this.editor.hasChanged()) {
-				openDialog=true;
-				this._startConfirmDialog(messages["actions.unsavedNewEntity"],callback);
+				this.startConfirmDialog(messages["actions.unsavedNewEntity"],callback);
+				dialogOpened=true;
 			} else if (this.state=="edit" && this.editor.hasChanged()) {
-				this._startConfirmDialog(messages["actions.unsavedChanges"],callback);
-				openDialog=true;
+				this.startConfirmDialog(messages["actions.unsavedChanges"],callback);
+				dialogOpened=true;
 			}else if (callback) {
 				callback(true);
 			}
-			return openDialog;
+			return dialogOpened;
 		},
 		alert: function(message) {
+			// summary:
+			//		display messages to user
+			// message: String	
 			alert(message);
 		},
 		edit: function(id, schemaUrl) {
+			// summary:
+			//		load entity in editor
+			// id:
+			//		the id of the entity
+			// schemaUrl: String
+			//		the schema is loaded from the url.
 			this._checkState(lang.hitch(this,"_edit", id, schemaUrl));
 		},
 		_showLoading: function() {
@@ -65,7 +96,7 @@ return declare( [Stateful], {
 				var promise = all([instancePromise, schemaPromise]);
 				var me = this;
 				this._showLoading();
-				this._execute(promise,"LoadForEditAndSchema");
+				this._execute(promise	,"LoadForEditAndSchema");
 			}else {
 				var promise = instancePromise;
 				this._showLoading();
@@ -89,16 +120,21 @@ return declare( [Stateful], {
 			this.set("state","edit");
 			alert("error while loading entity");
 		},
-		showProgressBar: function(message) {
-			this.ctrl.showProgressBar();
-		},
-		hideProgressBar: function() {
-			this.ctrl.hideProgressBar();
+		startConfirmDialog: function(message,callback) {
+			// summary:
+			//		is called to signal pending changes to user.
+			this.dialog.show({message:message, callback:callback});
 		},
 		_execute: function(promise, command) {
 			when(promise,lang.hitch(this,"_on"+command),lang.hitch(this,"_on"+command+"Failed"));
 		},
 		createNew: function(schemaUrl, createCallback) {
+			// summary:
+			//		display empty editor
+			// schemaUrl: String
+			//		the schema is loaded from the url.
+			// callback: function
+			//		callback will be called once the entity is saved. id will be passed as single parameter.
 			this.createCallback= createCallback;
 			if (schemaUrl) {
 				this._checkState(lang.hitch(this,"_createNewAndSchema", schemaUrl));
@@ -132,9 +168,6 @@ return declare( [Stateful], {
 		_removeChangeIndicator: function() {
 			var entity = this.editor.get("plainValue");
 			this.editor.set("plainValue",entity);
-		},
-		_startConfirmDialog: function(message,callback) {
-			this.ctrl.dialog.show({message: message, callback: callback});
 		},
 		onCreated: function(id) {
 			if (this.createCallback) {

@@ -21,8 +21,8 @@ return declare( [_ActionMixin], {
 			if (this.ctrl.state == "create") {
 				var errorCount = this.ctrl.editor.validate(true);
 				if (errorCount==0) {	
-					var promise = this.ctrl.store.add(entity);
 					this.ctrl.showProgressBar(message);	
+					var promise = this.ctrl.store.add(entity);
 					this._execute(promise,"Add");
 				}
 			}else{
@@ -31,8 +31,8 @@ return declare( [_ActionMixin], {
 				}else{
 					var errorCount = this.ctrl.editor.validate(true);
 					if (errorCount==0) {	
-						var promise = this.ctrl.store.put(entity);
 						this.ctrl.showProgressBar(message);	
+						var promise = this.ctrl.store.put(entity);
 						this._execute(promise,"Update");
 					}
 				}

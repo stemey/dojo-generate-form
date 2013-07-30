@@ -20,7 +20,7 @@ define([
 				var entity = this.ctrl.editor.get("plainValue");
 				this.ctrl._removeChangeIndicator();
 				this.ctrl.showProgressBar("deleting "+this.ctrl.editor.getLabel());	
-				this.ctrl.store.remove(entity.id)
+				when(this.ctrl.store.remove(entity.id))
 					.then(lang.hitch(this,"_onRemoved"))
 					.otherwise(lang.hitch(this,"_onRemoveFailed"));
 			}

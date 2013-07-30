@@ -2,34 +2,29 @@ define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
 	"dojo/_base/array",
-	"dojo/json",
 	"dojo/aspect",
-	"dojo/request",
-	"dojo/promise/all",	
-	"dojo/dom-class",
-	"dojo/when",
-	"../Editor",	
+	"dojo/json",
+	"../utils/restHelper",
   "dijit/_WidgetBase", 
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
 	"dojo/text!./singleEditorDialog.html",
-	"dojo/dom-class",
 	"../createLayoutEditorFactory",	
 	"../schema/labelHelper",
 	"../controller/DialogCrudController",
-	"dojo/store/JsonRest",	
+	"./ActionProgressBar",	
 	"dijit/form/Button",
 	"dijit/layout/StackContainer",
 	"dijit/layout/ContentPane",
 	"dijit/ProgressBar",
 	"dijit/Dialog",
-], function(declare, lang, array,json, aspect, request, all, domClass, when,  Editor,  _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, domClass, createLayoutEditorFactory, labelHelper, DialogCrudController, Store){
-//  module:
+], function(declare, lang, array, aspect, json, restHelper, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,  createLayoutEditorFactory, labelHelper, DialogCrudController, ActionProgressBar){
+// module:
 //		gform/opener/SingleEditorDialogOpener
 
 	
 return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-		//  description:
+		// summary:
 		//		This dijit provides a dialog and an embedded CrudController. This dijit is designed o be used as opener in a gform/Context. 
 
 		templateString : template,
@@ -39,9 +34,18 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		//  storeRegistry:
 		//		The storeRegistry used to access the resources handled by the editor.
 		storeRegistry:null,
+		// dialog: dijit/Dialog
+		//		the dialog holding the editor
+		dialog:null,
+		progressBar:null,
+		progressMessage:null,
+		// crudController: gform/controller/DialogCrudController
+		//		the crudController to launch.
+		crudController:null,
 		startup: function() {
 			var me = this;
-			this.crudController.dialog = this.confirmDialog;
+			this.crudController.dialog=this.confirmDialog;
+			this.crudController.progressBar=new ActionProgressBar({progressBar:this.progressBar, progressMessage:this.progressMessage});
 			aspect.around(this.dialog, "hide", function(originalFn) {
 				return lang.hitch(me, "onClose", originalFn);
 			});	
@@ -53,42 +57,44 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			});
 		},
 		openSingle: function(options) {
-			//  description:
+			// summary:
 			//		open the dialog to edit an existing resource.
 			//  options:
 			//		must provide the schemaUrl to load the gform schema from. 
 			//		Must also provide the url to the resource edited. Options may provide EditorFactory.
-			var url = options.url.substring(0,options.url.lastIndexOf("/")+1)
-			var id = options.url.substring(options.url.lastIndexOf("/")+1)
+				
+			var restUrl = restHelper.decompose(options.url);
+			var url = restUrl.url
+			var id = restUrl.id;
 
-			var store = this.storeRegistry.get(url, {target: url});
-			this.crudController.editor.set("editorFactory", this.editorFactory || options.editorFactory || createLayoutEditorFactory() );
+			var store = this.storeRegistry.get(url, {target: url, idProperty: options.idProperty || "id"});
+			this.crudController.setEditorFactory( this.editorFactory || options.editorFactory || createLayoutEditorFactory() );
 			this.crudController.set("store", store);
 			this.crudController.edit(id, options.schemaUrl);
 			var me =this;
 			this.dialog.on("editor-changed", function() {
 				me.dialog.resize();
 			});
-			this.dialog.show();
+			return this.dialog.show();
 		},
 		createSingle: function(options) {
-			//  description:
+			// summary:
 			//		open the dialog to create a new resource.
 			//  options:
 			//		must provide the schemaUrl to load the gform schema from. 
 			//		Must also provide the url to the resource's collection. 
 			//		A callback which gets passed the new id may also be specified.  Options may provide EditorFactory.
-			var url = options.url.substring(0,options.url.lastIndexOf("/")+1)
+			var url = options.url;
 	
 			var store = this.storeRegistry.get(url, {target: url});
 			this.crudController.set("store", store);
-			this.crudController.editor.set("editorFactory", this.editorFactory || options.editorFactory || createLayoutEditorFactory() );
+			this.crudController.setEditorFactory(this.editorFactory || options.editorFactory || createLayoutEditorFactory() );
 			this.crudController.createNew(options.schemaUrl, options.callback);
 			var me =this;
 			this.dialog.on("editor-changed", function() {
 				me.dialog.resize();
 			});
-			this.dialog.show();
+			return this.dialog.show();
 
 
 		}

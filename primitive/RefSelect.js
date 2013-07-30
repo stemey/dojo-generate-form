@@ -22,25 +22,25 @@ define([ "dojo/_base/lang",
 			lang.mixin(this,kwargs);
 		},
 		templateString: template,
-		// description:
+		// opener:
 		//		the opener manages the opening of another editor.
 		opener:null,
-		// description:
+		// filteringSelect:
 		//		the FilteringSelect.
 		filteringSelect: null,
-		// description:
+		// editorFactory:
 		//		the editorFctory is passed to the opener.
 		editorFactory: null,
-		// description:
+		// selectContainer:
 		//		the container where the FilteringSelect is placed.
 		selectContainer:null,
-		// description:
+		// meta:
 		//		the attribute meta data.
 		meta: null,
-		// description:
+		// editButton:
 		//		the opener manages the opening of another editor.
 		editButton:null,
-		// description:
+		// targetCreatable:
 		//		if a button to create a target should be displayed.
 		targetCreatable: false,
 		postCreate: function() {
