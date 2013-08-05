@@ -81,9 +81,9 @@ define([ "dojo/_base/lang",
 			//  description:
 			//		open the selected reference in a separate editor.
 			var ref = this.filteringSelect.get("value");
-			var url = (this.meta.baseUrl || "")+ref;
+			var url = (this.meta.url || "")+"/"+ref;
 			this.opener.openSingle({
-				url:url, 
+				url:url, 	
 				schemaUrl:this.meta.schemaUrl, 
 				editorFactory:this.editorFactory
 			});
@@ -91,9 +91,8 @@ define([ "dojo/_base/lang",
 		createref: function() {
 			//  description:
 			//		open a new reference in a separate editor.
-			var url = this.meta.collectionUrl;
 			this.opener.createSingle({
-				url: this.meta.collectionUrl, 
+				url: this.meta.url, 
 				schemaUrl:this.meta.schemaUrl, 
 				editorFactory:this.editorFactory, 
 				callback: lang.hitch(this, "onCreated")

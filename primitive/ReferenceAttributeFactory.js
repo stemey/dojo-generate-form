@@ -75,6 +75,31 @@ define(
 							
 				var refSelect = new RefSelect({targetCreatable: targetCreatable, meta: attribute, opener:ctx.opener,filteringSelect:f, editorFactory: this.editorFactory});
 				return refSelect;
-			}
+			},
+		getSchema:function(){
+			var schema={};
+			schema["id"]="ref";
+			var properties={};
+			schema["description"]="This is a select displaying the labels od referenced entities. The autocomplete functionality allows searching through possible entities to associate. It is based on 'dijit.form.FilteringSelect'";
+			schema["example"]=dojo.toJson({code:'firend',type:'ref', url:"/service/people", idProperty:"id",
+
+ searchProperty: "name", schemaUrl:"/service/people?schema" },true);
+
+			schema["instanceExample"]=dojo.toJson({ref: {$ref: "/services/people/1"}},true);
+			schema.properties=properties;
+			properties.type={type:"string",required:true,"enum":["ref"]};
+			properties.url={type:"string",required:true,description:"the url of the restful resources assoicated with theis property."};
+			properties.idProperty={type:"string",required:false,description:"the id property in the rest services json resources"};
+			properties.searchProperty={type:"string",required:false,description:"the property displayed and matched against the user input."};
+			properties.schemaUrl={type:"string",required:true,description:"the url to the schema of the referenced entity."};
+			dijitHelper.addSchemaProperties(properties);
+			dijitHelper.addSchemaProperty("required",properties);
+			properties["readOnly"]={ type : "boolean"};
+			dijitHelper.addSchemaProperty("missingMessage",properties);
+			dijitHelper.addSchemaProperty("promptMessage",properties);
+			dijitHelper.addSchemaProperty("placeHolder",properties);
+			dijitHelper.addSchemaProperty("invalidMessage",properties);
+			return schema;
+		}
 	})
 });

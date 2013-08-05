@@ -170,6 +170,10 @@ return declare( [Stateful], {
 			this.editor.set("plainValue",entity);
 		},
 		onCreated: function(id) {
+			// summary:
+			//		call when the entity is persisted. will notify the creator of the editor if interested.
+			// id: String
+			//		the id of the newly persisted entity.
 			if (this.createCallback) {
 				this.createCallback(id);
 			}

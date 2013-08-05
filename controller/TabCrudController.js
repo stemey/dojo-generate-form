@@ -28,15 +28,26 @@ define([
 	"dijit/layout/BorderContainer",
 	"dijit/layout/ContentPane",
 ], function(declare, lang, array, domClass, request, all, when, Editor, createEditorFactory, _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, labelHelper, domStyle, domGeometry, Save, Discard, Delete, createActions, messages, Button	){
-
+// module:
+//		gform/controller/TabCrudController
 
 	
 return declare( [  _CrudMixin,_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin ], {
+	// summary:
+	//		This crudController should be usd as a direct child of a TabContainer. The title of the tab is the label of the entity.
 		baseClass : "gformEditorController",
 		templateString : template,
+		// container: dijit/layout/TabContainer
+		//		he tabContainer
 		container:null,
+		// actonContainer:
+		//		the html element where the buttons go.
 		actionContainer:null,
+		// closing:
+		//		the user has initiated the closing of the tab. If closing is true, then we don't intercept.
 		closing: false,
+		// actionClasses: array
+		//		an array of ActionClasses used to populate the actionCOntainer with buttons.
 		actionClasses:[Save, Discard, Delete],
 		constructor: function(props) {
 			lang.mixin(this, props);
@@ -81,14 +92,16 @@ return declare( [  _CrudMixin,_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMi
 			}
 			this.closing=true;
 			var me =this;
-			var openDialog = this._checkState(function(close){
-				if (close && openDialog)  {
-					me.container.closeChild(me);
-				} else {
-					// closing was cancelled 
-					me.closing = false;
+			var openDialog = this._checkState(
+				function(close){
+					if (close && openDialog)  {
+						me.container.closeChild(me);
+					} else {
+						// closing was cancelled 
+						me.closing = false;
+					}
 				}
-			});
+			);
 			return !openDialog;
 		},		
 		resize: function(dim) {

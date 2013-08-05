@@ -19,6 +19,7 @@ define([
 "../../primitive/TimeAttributeFactory",//
 "../../embedded/EmbeddedAttributeFactory",//
 "../../primitive/TextareaAttributeFactory",//
+"../../primitive/ReferenceAttributeFactory",//
 "../../primitive/SimpleTextareaAttributeFactory",//
 "../../primitive/NumberAttributeFactory",//
 "../../primitive/CurrencyAmountAttributeFactory",//
@@ -33,7 +34,7 @@ define([
 		BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, 
 		MappedCheckedMultiSelectAttributeFactory,
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
-		TimeAttributeFactory, EmbeddedAttributeFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory, NumberAttributeFactory, 
+		TimeAttributeFactory, EmbeddedAttributeFactory, TextareaAttributeFactory, ReferenceAttributeFactory, SimpleTextareaAttributeFactory, NumberAttributeFactory, 
 		CurrencyAmountAttributeFactory, MappedContentPaneFactory,
 		AttributeListWidget, RepeatedEmbeddedAttributeFactory, MapAttributeFactory, TableListAttributeFactory) {
 
@@ -62,6 +63,7 @@ define([
 			       				new BooleanAttributeFactory({editorFactory:editorFactory}), // 
 			       				new StringAttributeFactory({editorFactory:editorFactory}), //
 			       				new DateAttributeFactory({editorFactory:editorFactory}), //
+			       				new ReferenceAttributeFactory({editorFactory:editorFactory}), //
 			       				new TimeAttributeFactory({editorFactory:editorFactory}), //
 			       				new MappedContentPaneFactory({editorFactory:editorFactory}) //
 			       				];

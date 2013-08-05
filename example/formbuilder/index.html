@@ -22,16 +22,25 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/example/formbuilder/registerBuilderEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-	"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/schema/convertSchema","gform/util/refresolve","gform/schema/schemaGenerator", "dijit/form/Button", "dijit/Dialog"
-		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve,schemaGenerator) {
+	"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/schema/convertSchema","gform/util/refresolve","gform/schema/schemaGenerator", "dojo/text!gform/tests/entity/state_collection.json", "gform/example/gridx/AsyncMemory", "gform/opener/SingleEditorDialogOpener", "gform/Context", "gform/example/formbuilder/SingleStoreRegistry", "dijit/form/Button", "dijit/Dialog"
+		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve,schemaGenerator, stateCollection, Store, SingleEditorDialogOpener, Context, SingleStoreRegistry) {
 			parser.parse();
 			try {
-				var schema = schemaGenerator.generate(gform.ef.layout);
+			var ctx = new Context();
+			store = new Store({data:JSON.parse(stateCollection), idProperty:"id"});	
+			ctx.storeRegistry = new SingleStoreRegistry(store);
+			opener = new SingleEditorDialogOpener();
+			opener.storeRegistry = ctx.storeRegistry; 
+			opener.placeAt("dialog");
+			opener.startup();
+			ctx.opener = opener;
+			var schema = schemaGenerator.generate(gform.ef.layout);
 				refresolve(schema);
 			  var meta = convertSchema(schema);
 			  editor =dijit.byId("form");
 				editor.set("meta",meta);
 				generatedEditor=dijit.byId("resultForm");
+				generatedEditor.set("ctx", ctx);
 				editor.on("value-changed",function(){
 					if (editor.get("errorCount")==0 && editor.get("incompleteCount")==0) {
 						generatedEditor.setMetaAndPlainValue(editor.get("plainValue").group,{});
@@ -63,7 +72,7 @@
 			<h2>Form Builder</h2>	
 			<p>The builder is a tool to create forms. It is merely for exploring the features of gform. Usually the schemas are generated from data models. The FormBuilder doesn't support all of gform's features.</p>
 <p>
-	The form on the right will be updated when the data on the left is valid. Required fields are indicated by asteriks
+	The form on the right will be updated when the data on the left is valid. Required fields are indicated by asteriks. 
 </p>
 			<span>
 				<button  type="button" data-dojo-type="dijit.form.Button" data-dojo-props="id:'exportSchema'">export schema</button>
@@ -84,6 +93,7 @@
 		</div>
 		
   </div>
+	<div id="dialog"></div>
 
 </body>
 </html>	

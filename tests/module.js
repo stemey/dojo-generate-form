@@ -30,6 +30,7 @@ define ("gform.tests.module",[
 		doh.registerUrl("gform.tests.primitive_ref", dojo.moduleUrl("gform","tests/test_primitive_ref.html"));
 		doh.registerUrl("gform.tests.primitive_ref_in_tab", dojo.moduleUrl("gform","tests/test_primitive_ref_in_tab.html"));
 		doh.registerUrl("gform.tests.primitive_ref_in_dialog", dojo.moduleUrl("gform","tests/test_primitive_ref_in_dialog.html"));
+		doh.registerUrl("gform.tests.crudController", dojo.moduleUrl("gform","tests/test_crudController.html"));
 		doh.registerUrl("gform.tests.primitive_checkedselect", dojo.moduleUrl("gform","tests/test_primitive_checkedselect.html"));
 		doh.registerUrl("gform.tests.primitive_mapped_select", dojo.moduleUrl("gform","tests/test_primitive_mapped_select.html"));
 		doh.registerUrl("gform.tests.primitive_checkedmultiselect", dojo.moduleUrl("gform","tests/test_primitive_checkedmultiselect.html"));
@@ -39,7 +40,6 @@ define ("gform.tests.module",[
 		doh.registerUrl("gform.tests.group_tab", dojo.moduleUrl("gform","tests/test_group_tab.html"));
 		doh.registerUrl("gform.tests.group_decorator", dojo.moduleUrl("gform","tests/test_group_decorator.html"));
 		doh.registerUrl("gform.tests.validation", dojo.moduleUrl("gform","tests/test_validation.html"));
-		//doh.registerTest("gform.tests.getPlainValue", gform.getPlainValue);
 	}catch(e){
 		doh.debug(e);
 	}
