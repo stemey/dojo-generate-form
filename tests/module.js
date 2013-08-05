@@ -28,6 +28,8 @@ define ("gform.tests.module",[
 		doh.registerUrl("gform.tests.primitive_textarea", dojo.moduleUrl("gform","tests/test_primitive_textarea.html"));
 		doh.registerUrl("gform.tests.primitive_select", dojo.moduleUrl("gform","tests/test_primitive_select.html"));
 		doh.registerUrl("gform.tests.primitive_ref", dojo.moduleUrl("gform","tests/test_primitive_ref.html"));
+		doh.registerUrl("gform.tests.array_ref", dojo.moduleUrl("gform","tests/test_array_ref.html"));
+
 		doh.registerUrl("gform.tests.primitive_ref_in_tab", dojo.moduleUrl("gform","tests/test_primitive_ref_in_tab.html"));
 		doh.registerUrl("gform.tests.primitive_ref_in_dialog", dojo.moduleUrl("gform","tests/test_primitive_ref_in_dialog.html"));
 		doh.registerUrl("gform.tests.crudController", dojo.moduleUrl("gform","tests/test_crudController.html"));

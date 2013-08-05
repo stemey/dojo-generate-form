@@ -5,7 +5,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 ], function(lang, declare, _WidgetBase, _Container, _TemplatedMixin, meta,
 		_WidgetsInTemplateMixin,  Stateful,template, TextBox,updateModelHandle, messages) {
 
-	return declare("app.EmbeddedListWidget", [ _WidgetBase, _Container,
+	return declare( [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		templateString : template,
 		attribute:null,

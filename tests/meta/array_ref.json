@@ -1,0 +1,18 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"ref",
+						"searchProperty":"label",
+            "idProperty":"id",
+            "description":"select a reference",
+            "code":"state",
+						"array":true,
+						url: "/gform/tests/entity/state",
+						schemaUrl: "/gform/tests/meta/refs.json"
+						
+        }
+    ],
+    "type_property":"ext_type"
+}

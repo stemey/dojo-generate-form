@@ -7,6 +7,7 @@ define([
 "../../group/TabGroupFactory",//
 "../../group/TitlePaneGroupFactory",//
 "../../group/ListGroupFactory",//
+"../../list_primitive/RefListAttributeFactory",//
 "../../list_primitive/PrimitiveListAttributeFactory",//
 "../../primitive/StringAttributeFactory",//
 "../../primitive/BooleanAttributeFactory",//
@@ -30,7 +31,7 @@ define([
 "../../list_table/RepeatedEmbeddedAttributeFactory"
 
 ], function(lang,EditorFactory,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
-		TitlePaneGroupFactory, ListGroupFactory,PrimitiveListAttributeFactory,StringAttributeFactory,
+		TitlePaneGroupFactory, ListGroupFactory, RefListAttributeFactory, PrimitiveListAttributeFactory,StringAttributeFactory,
 		BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, 
 		MappedCheckedMultiSelectAttributeFactory,
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
@@ -69,6 +70,7 @@ define([
 			       				];
 			attributeFactoryFinder.addAttributeFactory("table", new TableListAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("primitive_list", new PrimitiveListAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("ref_list", new RefListAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("mapped_contentpane", new MappedContentPaneFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("currencyamount", new CurrencyAmountAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("textarea", new TextareaAttributeFactory({editorFactory:editorFactory}));
