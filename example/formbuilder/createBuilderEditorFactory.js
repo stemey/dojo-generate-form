@@ -9,6 +9,7 @@ define([
 "../../group/ListGroupFactory",//
 "../../list_primitive/RefListAttributeFactory",//
 "../../list_primitive/PrimitiveListAttributeFactory",//
+"../../map_primitive/PrimitiveMapAttributeFactory",//
 "../../primitive/StringAttributeFactory",//
 "../../primitive/BooleanAttributeFactory",//
 "../../primitive/SelectAttributeFactory",//
@@ -31,7 +32,7 @@ define([
 "../../list_table/RepeatedEmbeddedAttributeFactory"
 
 ], function(lang,EditorFactory,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
-		TitlePaneGroupFactory, ListGroupFactory, RefListAttributeFactory, PrimitiveListAttributeFactory,StringAttributeFactory,
+		TitlePaneGroupFactory, ListGroupFactory, RefListAttributeFactory, PrimitiveListAttributeFactory, PrimitiveMapAttributeFactory, StringAttributeFactory,
 		BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, 
 		MappedCheckedMultiSelectAttributeFactory,
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
@@ -59,6 +60,7 @@ define([
 			       				//new CheckedMultiSelectAttributeFactory({editorFactory:editorFactory}), // 
 			       				//new MappedSelectAttributeFactory({editorFactory:editorFactory}),//
 			       				new PrimitiveListAttributeFactory({editorFactory:editorFactory}),//
+			       				new PrimitiveMapAttributeFactory({editorFactory:editorFactory}),//
 			       				new NumberAttributeFactory({editorFactory:editorFactory}),//
 			       				new SelectAttributeFactory({editorFactory:editorFactory}), // 
 			       				new BooleanAttributeFactory({editorFactory:editorFactory}), // 

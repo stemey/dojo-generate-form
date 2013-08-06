@@ -75,9 +75,9 @@ define([ "dojo/_base/array", //
 		},
 		getSchema:function(){
 			var schema={};
-			schema["id"]="ref";
+			schema["id"]="ref-list";
 			var properties={};
-			schema["description"]="This is a select displaying the labels od referenced entities. The autocomplete functionality allows searching through possible entities to associate. It is based on 'dijit.form.FilteringSelect'";
+			schema["description"]="This is a a list of Selects displaying the labels of referenced entities. The autocomplete functionality allows searching through possible entities to associate. It is based on 'dijit.form.FilteringSelect'";
 			schema["example"]=dojo.toJson({code:'friend',type:'ref', array:true, url:"/service/people", idProperty:"id",
 
  searchProperty: "name", schemaUrl:"/service/people?schema" },true);
@@ -85,7 +85,6 @@ define([ "dojo/_base/array", //
 			schema["instanceExample"]=dojo.toJson({refs: [{$ref: "/services/people/1"}]},true);
 			schema.properties=properties;
 			properties.type={type:"string",required:true,"enum":["ref"]};
-			properties.array={type:"boolean","enum":[true]};
 			properties.url={type:"string",required:true,description:"the url of the restful resources assoicated with theis property."};
 			properties.idProperty={type:"string",required:false,description:"the id property in the rest services json resources"};
 			properties.searchProperty={type:"string",required:false,description:"the property displayed and matched against the user input."};
@@ -97,6 +96,7 @@ define([ "dojo/_base/array", //
 			dijitHelper.addSchemaProperty("promptMessage",properties);
 			dijitHelper.addSchemaProperty("placeHolder",properties);
 			dijitHelper.addSchemaProperty("invalidMessage",properties);
+			properties.array={type:"boolean","enum":[true]};
 			return schema;
 		}
 	})
