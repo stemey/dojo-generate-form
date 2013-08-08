@@ -18,8 +18,8 @@
 
 		require([ "dojo/ready", "dojo/_base/lang", "dojo/json", "dijit/registry", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
 		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json", "dojo/text!./entity/state_collection.json", "dojo/store/Memory", "dojo/store/Observable",//
-		"gform/opener/SingleEditorDialogOpener", "gform/controller/ConfirmDialog", "gform/Context", "dojo/when"
-		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when) {
+		"gform/opener/SingleEditorDialogOpener", "gform/controller/ConfirmDialog", "gform/Context", "dojo/when", "gform/util/restHelper"
+		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when, restHelper) {
 			var ctx = new Context();
 			ctx.opener = {
 				openSingle: function(param) {
@@ -45,7 +45,7 @@
 					name : 'init',
 					runTest : function(t) {
 						t.assertEqual(model.state.$ref, editor.get("plainValue").state.$ref);
-						t.assertEqual(model.state.$ref, select.get("value"));
+						t.assertEqual("2", select.get("value"));
 					}
 				},
 				{
@@ -69,7 +69,7 @@
 						when(store.add({label:"created", size:34}))
 							.then(function(id) {
 								param.callback(id);
-								t.assertEqual(id, editor.getPlainValue().state.$ref);
+								t.assertEqual(id, restHelper.decompose(editor.getPlainValue().state.$ref).id);
 							});
 					
 					}
@@ -77,7 +77,7 @@
 				{
 					name : 'update',
 					runTest : function(t) {
-						var id =editor.getPlainValue().state.$ref;
+						var id = restHelper.decompose(editor.getPlainValue().state.$ref).id;
 						var entity = store.get(id);
 						var updated = {};
 						lang.mixin(updated, entity);

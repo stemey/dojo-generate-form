@@ -10,11 +10,10 @@ define(
 		"./dijitHelper",
 		"dojo/store/Memory",
 		"dojo/store/JsonRest",
-		"./refConverter",
 		"./makeConverterDijitAware"
 		],
-		function(array, lang, declare, when, at, FilteringSelect, RefSelect, meta, dijitHelper, Memory, Store, refConverter, makeConverterDijitAware) {
-
+		function(array, lang, declare, when, at, FilteringSelect, RefSelect, meta, dijitHelper, Memory, Store,  makeConverterDijitAware) {
+	// 
 	return declare(
 			"gform.ReferenceAttributeFactory",
 			[],
@@ -33,6 +32,7 @@ define(
 				} else {
 					var targetCreatable = true;
 				}
+				var refConverter= this.editorFactory.getConverter(attribute);
 
 				var idProperty = attribute.idProperty || "id";
 				var searchProperty = attribute.searchProperty || "name";

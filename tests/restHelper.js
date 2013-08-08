@@ -1,4 +1,4 @@
-define(["doh/runner","gform/utils/restHelper"], function(doh, restHelper){
+define(["doh/runner","gform/util/restHelper"], function(doh, restHelper){
 
     doh.register("gform-restHelper", [
       function parseId(){
@@ -7,7 +7,7 @@ define(["doh/runner","gform/utils/restHelper"], function(doh, restHelper){
 				doh.assertEqual("/state/x", restUrl.url);
       },
       function parseUrl(){
-				var url = restHelper.createUrl("/state/x",1);
+				var url = restHelper.compose("/state/x",1);
 				doh.assertEqual("/state/x/1", url);
       }
     ]);

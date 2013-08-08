@@ -24,7 +24,9 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "./EmbeddedListWidget", "dojo/
 			// id: String
 			//		the id of the newly created.
 			var modelHandle=updateModelHandle.createMeta();
-			updateModelHandle.cascadeAttribute(this.childAttribute,{$ref:id},modelHandle,this.editorFactory);	
+			var converter = this.editorFactory.getConverter(this.attribute);
+			var value = converter.parse(id);
+			updateModelHandle.cascadeAttribute(this.childAttribute, value, modelHandle,this.editorFactory);	
 			this.target.value.push(modelHandle);
 		},
 		postCreate : function() {

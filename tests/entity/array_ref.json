@@ -1,6 +1,6 @@
 {
 	state : [
-		{$ref:"2"},
-		{$ref:"3"}
+		{$ref:"/gform/tests/entity/state/2"},
+		{$ref:"/gform/tests/entity/state/3"}
 	]
 }

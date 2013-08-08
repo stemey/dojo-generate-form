@@ -39,13 +39,6 @@
 			var select = dijit.byId("gform_FilteringSelect_0");
 			doh.register("standard", [
 				{
-					name : 'init',
-					runTest : function(t) {
-						t.assertEqual(model.state.$ref, editor.get("plainValue").state.$ref);
-						t.assertEqual(model.state.$ref, select.get("value"));
-					}
-				},
-				{
 					name : 'open',
 					runTest : function(t) {
 						registry.byId("dijit_form_Button_5").onClick();

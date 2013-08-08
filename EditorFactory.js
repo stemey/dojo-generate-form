@@ -3,20 +3,24 @@ define([ "dojo/_base/array", //
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "dojo/Stateful", //
+"./converter/urlToIdConverter", //
 "./Context", //
 "./group/DecoratorFactory", //
 "./validate/UniqueProperties",//
 "./model/path"
-], function(array, lang, declare, at, Stateful, Context, DecoratorFactory, UniqueProperties, path) {
+], function(array, lang, declare, at, Stateful, urlToIdConverter, Context, DecoratorFactory, UniqueProperties, path) {
 	// module: 
 	//		gform/EditorFactory
 
 	return declare("gform.EditorFactory", [Stateful], {
 	// summary:
 	//		EditorFactory defines the mapping of a gform schema to a widget tree.	
+		convertersById:{},
+		convertersByType:{},
 		constructor : function() {
 			this.groupFactories={};
 			this.decoratorFactory=new DecoratorFactory();
+			this.addConverterForType(urlToIdConverter, "ref");
 		},
 		addGroupFactory: function(id,factory) {
 		// summary:
@@ -139,9 +143,27 @@ define([ "dojo/_base/array", //
 		},
 		arrayValidators:{
 			uniqueProperties: UniqueProperties
+		}, 
+		getConverter: function(attribute) {
+			var c;
+			if (attribute.converter) {
+				c = this.convertersById[attribute.converter];
+				
+			} else {
+				c = this.convertersByType[attribute.type];
+			}
+			if (typeof c == "function") {
+				return new c(attribute);
+			} else {
+				return c;
+			}
+		},
+		addConverterForType: function(converter, type) {
+			this.convertersByType[type]=converter;
+		},
+		addConverterForid: function(converter, id) {
+			this.convertersById[id]=converter;
 		}
-		
-
 
 	});
 });

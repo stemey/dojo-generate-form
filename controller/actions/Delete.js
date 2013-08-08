@@ -10,10 +10,13 @@ define([
 	"dojo/i18n!../../nls/messages",	
 	
 ], function(declare, lang, array, domClass, request, all, when, _ActionMixin, messages	){
-
+// module:
+//		gform/controller/actions/Delete
 
 	
 	return declare( [_ActionMixin], {
+		// summary:
+		//		Deletes the entity. Afterwards the editor is cleared and can be used to create a new entity.
 		messageModule: "actions.delete",
 		execute: function() {
 			if (this.state!="create") {

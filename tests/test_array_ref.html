@@ -18,8 +18,8 @@
 
 		require([ "dojo/ready", "dojo/_base/lang", "dojo/json", "dijit/registry", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
 		"dojo/text!./meta/array_ref.json", "dojo/text!./entity/array_ref.json", "dojo/text!./entity/state_collection.json", "dojo/store/Memory", "dojo/store/Observable",//
-		"gform/opener/SingleEditorDialogOpener", "gform/controller/ConfirmDialog", "gform/Context", "dojo/when"
-		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when) {
+		"gform/opener/SingleEditorDialogOpener", "gform/controller/ConfirmDialog", "gform/Context", "dojo/when", "gform/util/restHelper"
+		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when, restHelper) {
 			var ctx = new Context();
 			ctx.opener = {
 				openSingle: function(param) {
@@ -45,7 +45,7 @@
 					name : 'init',
 					runTest : function(t) {
 						t.assertEqual(model.state[0].$ref, editor.get("plainValue").state[0].$ref);
-						t.assertEqual(model.state[0].$ref, select.get("value"));
+						t.assertEqual(restHelper.decompose(model.state[0].$ref).id, select.get("value"));
 					}
 				},
 				{

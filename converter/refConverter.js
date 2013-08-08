@@ -7,6 +7,8 @@ define([ "dojo/_base/array", //
 //		gform/converter/refConverter
 
 	 var refConverter= {
+		// summary:
+		//		converts a ref {$ref: "66"} into an id {$ref: "66"}
 				format : function(value) {
 					if (value == null) {
 						return "";

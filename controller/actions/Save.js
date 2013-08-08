@@ -10,10 +10,13 @@ define([
 	"dojo/i18n!../../nls/messages",	
 	
 ], function(declare, lang, array, domClass, request, all, when, _ActionMixin, messages	){
-
+// module:
+//		gform/controller/actions/Save
 
 	
 return declare( [_ActionMixin], {
+	// summary:
+	//		Saves the entity. If the entity was persistent it will be update otherwise it will be inserted.
 	messageModule: "actions.save",
 	execute: function() {
 		var entity = this.ctrl.editor.get("plainValue");

@@ -8,8 +8,8 @@
 	"integer2": 4,
 	"date": "2013-03-21",
 	"time": "T15:00:00",
-	"state": {$ref:2}	,
-	"states": [{$ref:2}, {$ref: 3}]	,
+	"state": {$ref:"/gform/tests/entity/state/2"}	,
+	"states": [{$ref:"/gform/tests/entity/state/2"}, {$ref: "/gform/tests/entity/state/3"}]	,
 	"language": "german",
 	"salutation": "Frau",
 	"salutation_array": [
