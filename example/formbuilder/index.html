@@ -31,8 +31,7 @@
 			ctx.storeRegistry = new SingleStoreRegistry(store);
 			ctx.schemaRegistry = new SingleSchemaRegistry(JSON.parse(schema));
 			opener = new SingleEditorDialogOpener();
-			opener.storeRegistry = ctx.storeRegistry; 
-			opener.schemaRegistry = ctx.schemaRegistry; 
+			opener.ctx = ctx; 
 			opener.placeAt("dialog");
 			opener.startup();
 			ctx.opener = opener;

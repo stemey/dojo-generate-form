@@ -30,6 +30,9 @@
 	<li>
 			array: true if the attribute represents an array. The elements of the array are described by type and validTypes. In the future this property will probably be replaced by a property whose values can be `array` or `map`.   
 	</li>
+	<li>
+			map: true if the attribute represents a map. The values of the array are described by type and validTypes. The key is described by the properties `keyLabel` and `keyDescription`.   
+	</li>
 </ul> 
 </p>
 <p>
