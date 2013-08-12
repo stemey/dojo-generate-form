@@ -17,15 +17,20 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/parser", "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
-		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json", "dijit/registry", "gform/Context", "dojo/text!./entity/state_collection.json", "dojo/store/Memory", "gform/controller/ConfirmDialog", "dijit/layout/BorderContainer", "gform/controller/CrudController"
-		], function(parser, ready, json, Editor, Stateful, doh,createEditorFactory, meta, entity,  registry, Context, stateCollection, Store) {
+		require([ "dojo/parser", "dojo/ready", "doh/runner", "gform/createLayoutEditorFactory",//
+		"dojo/text!gform/tests/meta/refs.json",  "dijit/registry", "gform/Context", "dojo/text!./entity/state_collection.json", "dojo/store/Memory", "gform/controller/SchemaRegistry", "gform/controller/ConfirmDialog", "dijit/layout/BorderContainer", "gform/controller/CrudController"
+		], function(parser, ready, doh, createEditorFactory, schema,   registry, Context, stateCollection, Store, SchemaRegistry) {
 			parser.parse();
-			var confirmDialog = registry.byId("confirmDialog");
-			var ctx = new Context();
 			var store= new Store({data:JSON.parse(stateCollection), idProperty:"id"});
+			var schemaRegistry= new SchemaRegistry();
+
+			var ctx = new Context();
+			ctx.schemaRegistry=schemaRegistry;
+			var confirmDialog = registry.byId("confirmDialog");
+			schemaRegistry.register("/gform/tests/meta/refs.json", JSON.parse(schema));
 			crudController =registry.byId("crudController");
 			crudController.set("store", store);
+			crudController.setCtx(ctx);
 			crudController.set("dialog", confirmDialog);
 			crudController.setEditorFactory(createEditorFactory());
 
@@ -41,7 +46,7 @@
 				{
 					name : 'create',
 					runTest : function(t) {
-						crudController.createNew( "/gform/tests/meta/refs.json")
+						crudController.createNew( "/gform/tests/meta/refs.json");
 					}
 				},
 			]);

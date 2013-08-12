@@ -8,8 +8,8 @@
             "idProperty":"id",
             "description":"select a reference",
             "code":"state",
-						url: "/gform/tests/entity/state",
-						schemaUrl: "/gform/tests/meta/refs.json"
+						"url": "/gform/tests/entity/state",
+						"schemaUrl": "/gform/tests/meta/refs.json"
 						
         }
     ],

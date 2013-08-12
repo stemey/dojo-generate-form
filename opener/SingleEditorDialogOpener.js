@@ -33,7 +33,7 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		editorFactory: null,
 		//  storeRegistry:
 		//		The storeRegistry used to access the resources handled by the editor.
-		storeRegistry:null,
+		ctx:null,
 		// dialog: dijit/Dialog
 		//		the dialog holding the editor
 		dialog:null,
@@ -45,6 +45,7 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		startup: function() {
 			var me = this;
 			this.crudController.dialog=this.confirmDialog;
+			this.crudController.setCtx(this.ctx);
 			this.crudController.progressBar=new ActionProgressBar({progressBar:this.progressBar, progressMessage:this.progressMessage});
 			aspect.around(this.dialog, "hide", function(originalFn) {
 				return lang.hitch(me, "onClose", originalFn);
@@ -61,13 +62,13 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			//		open the dialog to edit an existing resource.
 			//  options:
 			//		must provide the schemaUrl to load the gform schema from. 
-			//		Must also provide the url to the resource edited. Options may provide EditorFactory.
+			//		Must also provide the url to the resource edited. 
 				
 			var restUrl = restHelper.decompose(options.url);
 			var url = restUrl.url
 			var id = restUrl.id;
 
-			var store = this.storeRegistry.get(url, {target: url, idProperty: options.idProperty || "id"});
+			var store = this.ctx.getStore(url, {target: url, idProperty: options.idProperty || "id"});
 			this.crudController.setEditorFactory( this.editorFactory || options.editorFactory || createLayoutEditorFactory() );
 			this.crudController.set("store", store);
 			this.crudController.edit(id, options.schemaUrl);
@@ -86,7 +87,7 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			//		A callback which gets passed the new id may also be specified.  Options may provide EditorFactory.
 			var url = options.url;
 	
-			var store = this.storeRegistry.get(url, {target: url});
+			var store = this.ctx.getStore(url, {target: url});
 			this.crudController.set("store", store);
 			this.crudController.setEditorFactory(this.editorFactory || options.editorFactory || createLayoutEditorFactory() );
 			this.crudController.createNew(options.schemaUrl, options.callback);

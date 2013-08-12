@@ -22,15 +22,17 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/example/formbuilder/registerBuilderEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-	"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/schema/convertSchema","gform/util/refresolve","gform/schema/schemaGenerator", "dojo/text!gform/tests/entity/state_collection.json", "gform/example/gridx/AsyncMemory", "gform/opener/SingleEditorDialogOpener", "gform/Context", "gform/example/formbuilder/SingleStoreRegistry", "dijit/form/Button", "dijit/Dialog"
-		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve,schemaGenerator, stateCollection, Store, SingleEditorDialogOpener, Context, SingleStoreRegistry) {
+	"dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","dijit/form/Button","gform/schema/convertSchema","gform/util/refresolve","gform/schema/schemaGenerator", "dojo/text!gform/tests/entity/state_collection.json", "dojo/text!gform/tests/meta/refs.json", "gform/example/gridx/AsyncMemory", "gform/opener/SingleEditorDialogOpener", "gform/Context", "gform/example/formbuilder/SingleStoreRegistry", "gform/example/formbuilder/SingleSchemaRegistry", "dijit/form/Button", "dijit/Dialog"
+		], function(ready, json, Editor, Stateful, doh,registerLayoutEditorFactory,on,RepeatedEmbeddedAttributeFactory,  registry,BorderContainer,parser,ListPaneGroupFactory,Button,convertSchema,refresolve,schemaGenerator, stateCollection, schema, Store, SingleEditorDialogOpener, Context, SingleStoreRegistry, SingleSchemaRegistry) {
 			parser.parse();
 			try {
 			var ctx = new Context();
 			store = new Store({data:JSON.parse(stateCollection), idProperty:"id"});	
 			ctx.storeRegistry = new SingleStoreRegistry(store);
+			ctx.schemaRegistry = new SingleSchemaRegistry(JSON.parse(schema));
 			opener = new SingleEditorDialogOpener();
 			opener.storeRegistry = ctx.storeRegistry; 
+			opener.schemaRegistry = ctx.schemaRegistry; 
 			opener.placeAt("dialog");
 			opener.startup();
 			ctx.opener = opener;

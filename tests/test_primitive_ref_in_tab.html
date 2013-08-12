@@ -26,7 +26,7 @@
 			var confirmDialog = registry.byId("confirmDialog");
 			var ctx = new Context();
 			ctx.opener = new SingleEditorTabOpener({tabContainer: container, confirmDialog: confirmDialog});
-			ctx.opener.storeRegistry = ctx.storeRegistry;
+			ctx.opener.ctx = ctx;
 			ctx.storeRegistry.register("/gform/tests/entity/state", new Store({data:JSON.parse(stateCollection), idProperty:"id"}));
 			var model = dojo.fromJson(entity);
 			editor =registry.byId("mainEditor");

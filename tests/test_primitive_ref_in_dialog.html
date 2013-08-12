@@ -22,7 +22,7 @@
 		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when) {
 			var ctx = new Context();
 			opener = new SingleEditorDialogOpener();
-			opener.storeRegistry = ctx.storeRegistry; 
+			opener.ctx = ctx; 
 			opener.placeAt("dialog");
 			opener.startup();
 			ctx.opener = opener;

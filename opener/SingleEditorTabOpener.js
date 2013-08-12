@@ -27,9 +27,9 @@ return declare([], {
 		//		the tabContainer
 		tabContainer:null,
 	
-		// storeRegistry:
-		//		the storeRegistry
-		storeRegistry:null,
+		//  schemaRegistry:
+		//		The schemaRegistry used to access the resources handled by the editor.
+		ctx:null,
 		// confirmDialog:
 		//		the confirmDialog is used to display a message if the user aborts an editing session by closing the tab.
 		confirmDialog:null,
@@ -51,7 +51,9 @@ return declare([], {
 			props.store=store;
 			props.container= this.tabContainer;	
 			props.dialog= this.confirmDialog;	
+			//props.ctx = this.ctx;
 			var controller = new TabCrudController(props);
+			controller.setCtx(this.ctx);
 			this.tabContainer.addChild(controller);
 			this.tabContainer.selectChild(controller);
 			controller.createNew(options.schemaUrl, options.callback);
@@ -71,14 +73,16 @@ return declare([], {
 				var restUrl = restHelper.decompose(options.url);
 				var url = restUrl.url;
 				var id = restUrl.id
-				var store = this.storeRegistry.get(url, {target: url, idProperty: options.idProperty || "id"});
+				var store = this.ctx.getStore(url, {target: url, idProperty: options.idProperty || "id"});
 				props.id=wid;
 				props.closable=true;
 				props.editorFactory=this.editorFactory || options.editorFactory || createLayoutEditorFactory();
 				props.store=store;
 				props.container= this.tabContainer;	
 				props.dialog= this.confirmDialog;	
+				//props.ctx = this.ctx;
 				var controller = new TabCrudController(props);
+				controller.setCtx(this.ctx);
 				this.tabContainer.addChild(controller);
 				this.tabContainer.selectChild(controller);
 				controller.edit(id, options.schemaUrl);

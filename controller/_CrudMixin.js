@@ -75,6 +75,9 @@ return declare( [Stateful], {
 			// message: String	
 			alert(message);
 		},
+		setCtx: function(ctx) {
+			this.editor.set("ctx", ctx);
+		},	
 		edit: function(id, schemaUrl) {
 			// summary:
 			//		load entity in editor
@@ -87,12 +90,15 @@ return declare( [Stateful], {
 		_showLoading: function() {
 			this.set("state","loading");	
 		},
+		getSchema: function(url) {
+			return this.editor.ctx.getSchema(url);
+		},
 		_edit: function(id, schemaUrl) {
 			var instancePromise = this.store.get(id);
 			if (schemaUrl) {
 				// remove form 
 				this.editor.set("meta", {});
-				var schemaPromise = request.get(schemaUrl, {handleAs: "json"});
+				var schemaPromise = this.getSchema(schemaUrl);
 				var promise = all([instancePromise, schemaPromise]);
 				var me = this;
 				this._showLoading();
@@ -151,7 +157,7 @@ return declare( [Stateful], {
 			this.editor.set("plainValue", {});
 		},
 		_createNewAndSchema: function(schemaUrl) {
-			var schemaPromise = request.get(schemaUrl, {handleAs: "json"});
+			var schemaPromise = this.getSchema(schemaUrl);
 			var me = this;
 			this._showLoading();
 			this._execute(schemaPromise,"LoadForCreateAndSchema");

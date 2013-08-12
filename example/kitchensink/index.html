@@ -7,7 +7,8 @@
 
 	<!-- required: a default dijit theme: -->
 	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css"/>
-	<link id="themeStyles" rel="stylesheet" href="../../resources/gform.css"/>
+	<link id="gformStyles" rel="stylesheet" href="../../resources/gform.css"/>
+	<link id="multiSelectStyles" rel="stylesheet" href="../../../dojox/form/resources/CheckedMultiSelect.css" />
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../../dojo/dojo.js"
@@ -27,6 +28,7 @@
 			var ctx = new Context();
 			ctx.opener = new SingleEditorDialogOpener();
 			ctx.opener.storeRegistry = ctx.storeRegistry;
+			ctx.opener.schemaRegistry = ctx.schemaRegistry;
 			ctx.opener.placeAt("dialog");
 			ctx.opener.startup();
 			var model = dojo.fromJson(entity);
