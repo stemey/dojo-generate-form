@@ -80,7 +80,7 @@ define(
 			var schema={};
 			schema["id"]="ref";
 			var properties={};
-			schema["description"]="This is a select displaying the labels od referenced entities. The autocomplete functionality allows searching through possible entities to associate. It is based on 'dijit.form.FilteringSelect'";
+			schema["description"]="This is a select displaying the labels od referenced entities. The autocomplete functionality allows searching through possible entities to associate. It is based on 'dijit.form.FilteringSelect'. There are also buttons to edit the referenced entity or create a new entity in a separate editor. The location of the editor is defined by the opener in the parent editor's context.";
 			schema["example"]=dojo.toJson({code:'firend',type:'ref', url:"/service/people", idProperty:"id",
 
  searchProperty: "name", schemaUrl:"/service/people?schema" },true);
