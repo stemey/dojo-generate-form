@@ -8,12 +8,27 @@ define([
 //		gform/moded/Validator
 
 	return declare([], {
+		// summary:
+		//		a stateful model validator. 
+
+		// oldErrors: array
+		//		the errors set during last run.
 		oldErrors:[],
+		
+		// modelHandle: dojo/Stateful
+		//		the modelHandle to validate	
 		modelHandle:null,
+	
+		// validators: array
+		//		the stateless validators
 		validators:null,
 		constructor: function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
+		// summary:
+		//		first remove old errors. then validate the model and new errors.
+		// returns: int
+		//		number of errors
 		validate: function() {
 			this.errors=[];
 			error.remove(this.modelHandle, this.oldErrors);

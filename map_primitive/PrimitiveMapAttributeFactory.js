@@ -13,11 +13,10 @@ define([ "dojo/_base/array", //
 "../list_table/RepeatedEmbeddedWidget",//
 "../model/updateModelHandle",//
 "../model/getPlainValue",//
-"../model/validate",//
 "dojox/mvc/StatefulArray",//
 "../layout/_LayoutMixin"
 ], function(array, lang, aspect, Editor, metaHelper, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, validate, StatefulArray, _LayoutMixin) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, StatefulArray, _LayoutMixin) {
 
 	return declare([], {
 
