@@ -41,6 +41,16 @@
 									dijit.byId("gform_ValidationTextBox_4").set("value","ll");
 									dijit.byId("gform_ValidationTextBox_5").set("value","hi");
 									t.assertEqual("hi",editor.get("plainValue").things.ll);
+								},
+							},{
+								name: 'uniqueKey',
+								runTest: function(t){
+									var value=editor.getPlainValue();
+									dijit.byId("dijit_form_Button_0").onClick();
+									dijit.byId("gform_ValidationTextBox_6").set("value","ll");
+									dijit.byId("gform_ValidationTextBox_7").set("value","hi");
+									var c =editor.validate(true);
+									t.assertEqual(1, editor.getErrorCount());
 								}
 							}
 					]);			

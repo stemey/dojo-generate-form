@@ -39,6 +39,18 @@
 									dijit.byId("gform_ValidationTextBox_5").set("value","hi");
 									t.assertEqual("hi",editor.get("plainValue").things.ll.message);
 								}
+							},{
+								name: 'uniqueKey',
+								runTest: function(t){
+									var value=editor.getPlainValue();
+									dijit.byId("dijit_form_Button_0").onClick();
+									dijit.byId("gform_ValidationTextBox_6").set("value","ll");
+									dijit.byId("gform_ValidationTextBox_7").set("value","ho");
+									// async model validation-> 0
+									t.assertEqual(0,editor.getErrorCount());
+									editor.validate(true);
+									t.assertEqual(1,editor.getErrorCount());
+								}
 							}
 					]);			
 			doh.run();

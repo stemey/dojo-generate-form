@@ -12,11 +12,10 @@ define([ "dojo/_base/array", //
 "../list_embedded/RepeatedEmbeddedWidget",//
 "../model/updateModelHandle",//
 "../model/getPlainValue",//
-"../model/validate",//
 "dojox/mvc/StatefulArray",//
 "../layout/_LayoutMixin"
 ], function(array, lang, aspect, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, validate, StatefulArray, _LayoutMixin) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, StatefulArray, _LayoutMixin) {
 
 	return declare([], {
 
@@ -55,9 +54,6 @@ define([ "dojo/_base/array", //
 			});
 			select.addChild(widgetList);
 
-			var validators = this.editorFactory.getModelValidators(childMeta);
-			var validationFunction = validate(modelHandle, validators);
-			widgetList.on("value-changed", validationFunction);	
 
 
 			return select;

@@ -15,6 +15,11 @@ define([ "dojo/_base/array", //
 	return declare("gform.EditorFactory", [Stateful], {
 	// summary:
 	//		EditorFactory defines the mapping of a gform schema to a widget tree.	
+
+		// asyncModelValidation: boolean
+		//		dijits validate after setting the value. Therefore model validation must happen asynchronuously
+		//		to value change events.
+		asyncModelValidation:true,
 		convertersById:{},
 		convertersByType:{},
 		constructor : function() {
@@ -141,6 +146,21 @@ define([ "dojo/_base/array", //
 			}
 			return validators;
 		},
+		createValidateFunction: function(validator) {
+			var validateFn=null
+			if (this.asyncModelValidation) {
+				validateFn = function() {
+					setTimeout( function(){
+						validator.validate();
+					}, 0);
+				};
+			} else {
+				validateFn = function() {
+					validator.validate();
+				};
+			}
+			return validateFn;
+		},	
 		arrayValidators:{
 			uniqueProperties: UniqueProperties
 		}, 

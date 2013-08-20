@@ -23,7 +23,7 @@
                     }
                     ,
                     {
-                        "required":false,
+                        "required":true,
                         "type":"string",
                         "label":"message",
                         "code":"message",

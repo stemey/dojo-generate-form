@@ -30,6 +30,12 @@ define([ "dojo/_base/array", //
 		//		the modelHandle provides access to attributes' state. Also used to cache state count.
 		validWatch : null,
 
+		// ignoreEvents: boolean
+		//		validation works in two modes. When a value changes validation is triggered by the bubbling change evnts.
+		//		The errors are cached if there is an appropriate modelHandle otherwise recalculated at each level.
+		//		The other mode is validation starting at the root. IgnoreEvents is set to true in that mode so that validation is not triggerd by change events.		 
+		ignoreEvents:false,
+
 		postCreate : function() {
 			this.inherited(arguments);
 			this.persistable=typeof this.modelHandle != "undefined" && this.modelHandle!=null;
@@ -50,10 +56,11 @@ define([ "dojo/_base/array", //
 		validateAndFire: function(errorCount){
 			// summary:
 			//		get the children errorCounts and cache the value. Then emit state-change
-			errorCount=this.validate();
+			errorCount= this.validate();
 			if (this.persistable) {
 				this.set("errorCount",errorCount);
 			}
+
 			this.emit("state-changed",{source:this});
 		},
 		getErrorCount: function() {
@@ -82,32 +89,47 @@ define([ "dojo/_base/array", //
 				this._resetChildren(this.getChildrenToValidate());
 			}
 		},		
-		validate : function(/*boolean*/force, errorCount) {
+		validate : function(/*boolean*/force, errorCount, oldIgnoreEvents) {
 		// summary:
 		//		validates the children of this group and returns the errorCount.
 		// force:
 		//		if set to true will force validation of dijits, so that they will be in state "Error" rather than "Incomplete".
+			oldIgnoreEvents=this.ignoreEvents;
+			this.ignoreEvents=true;
 			errorCount=0;	
 			if (this.validateChildren) {
 				errorCount+= this._validateChildren(this.getChildrenToValidate(),force);
 			}
+			if (force && this.validateModel) {
+				errorCount+=this.validateModel();
+			} 
 			if (this.modelHandle && this.modelHandle.get("state")=="Error") {
 				errorCount++;	
 			}
+			this.set("errorCount", errorCount);
+			this.ignoreEvents=oldIgnoreEvents;
 			return errorCount;
 		},
 		onModelStateChanged: function(propName,old,nu) {
-			if (old!=nu) {
+			if (this.ignoreEvents) {
+				return;
+			}
+			if (old!=nu ) {
 				this.validateAndFire();
 			}
 		},
 		childValueChanged: function(prop, old, nu) {
+			if (this.ignoreEvents) {
+				return;
+			}
 			this.validateAndFire();
 		},
 		onStateChanged: function(event) {
-			if (event.source==this) {
+			if (this.ignoreEvents || event.source==this) {
+				console.log("ignore "+this.id);
 				return;
 			}
+			console.log("bubble "+this.id);
 			event.stopPropagation();
 			this.validateAndFire();
 		},
