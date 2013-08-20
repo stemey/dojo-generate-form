@@ -22,6 +22,10 @@ define([ "dojo/_base/array", //
 		//		if this.modelHandle is set then persistable is true and the state counts will be cached in the modelhandle. Otherwise the state counts will be recalculated on each call.
 		persistable:false,
 
+		// validator: gform/model/Validator
+		//			The model validator (optional)
+		validator: null,
+
 		// validWatch: Object
 		//		watchHandle to modelHandle.state
 		validWatch : null,
@@ -126,10 +130,8 @@ define([ "dojo/_base/array", //
 		},
 		onStateChanged: function(event) {
 			if (this.ignoreEvents || event.source==this) {
-				console.log("ignore "+this.id);
 				return;
 			}
-			console.log("bubble "+this.id);
 			event.stopPropagation();
 			this.validateAndFire();
 		},
@@ -209,7 +211,6 @@ define([ "dojo/_base/array", //
 			},this);
 			return incompleteCount;
 		},
-		
 		_getIncompleteCount : function(incompleteCount) {
 			incompleteCount=0;	
 			if (this.validateChildren) {
@@ -219,6 +220,13 @@ define([ "dojo/_base/array", //
 				incompleteCount++;	
 			}
 			return incompleteCount;
+		},
+		validateModel: function() {
+			if (this.validator) {
+					return this.validator.validate();
+			} else {
+				return 0;
+			}
 		}
 	});
 });

@@ -31,11 +31,6 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 			var validateFn = this.editorFactory.createValidateFunction(this.validator);
 			this.on("value-changed", validateFn);	
 
-		},
-		validateModel: function() {
-			if (this.validator) {
-					return this.validator.validate();
-			}
 		}
 	});
 
