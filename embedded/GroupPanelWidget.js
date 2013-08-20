@@ -76,9 +76,11 @@ define([ "dojo/_base/array", //
 		getChildrenToValidate: function() {
 			if (this.modelHandle.value==null) {
 				return [];
-			}else{
+			}else if (this.typeStack.selectedChildWidget){
 				return [this.typeStack.selectedChildWidget];
-			}
+			} else{
+				return[];
+			}	
 		},
 		switchType: function(propName,oldValue,newValue) {
 				var type = newValue;
