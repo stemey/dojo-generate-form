@@ -26,12 +26,10 @@
 
 			var ctx = new Context();
 			ctx.schemaRegistry=schemaRegistry;
-			var confirmDialog = registry.byId("confirmDialog");
 			schemaRegistry.register("/gform/tests/meta/refs.json", JSON.parse(schema));
 			crudController =registry.byId("crudController");
 			crudController.set("store", store);
 			crudController.setCtx(ctx);
-			crudController.set("dialog", confirmDialog);
 			crudController.setEditorFactory(createEditorFactory());
 
 	
@@ -62,8 +60,7 @@
 		<div data-dojo-type="gform/controller/CrudController" data-dojo-props="doLayout: true, region: 'center'" id='crudController'>
 		</div>
 	</div>
-	<div id="confirmDialog" data-dojo-type="gform/controller/ConfirmDialog">
-	</div>	
+	
 
 </body>
 </html>	

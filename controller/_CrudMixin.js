@@ -57,15 +57,18 @@ return declare( [Stateful], {
 		//		cancel his action or discard the changes.  
 		// return: boolean
 		//		true if a dialog was opened
+			var wrappedCallback= function(execute) {
+				if (execute) callback();
+			}
 			var dialogOpened=false;
 			if (this.state=="create" && this.editor.hasChanged()) {
-				this.startConfirmDialog(messages["actions.unsavedNewEntity"],callback);
+				this.startConfirmDialog(messages["actions.unsavedNewEntity"],wrappedCallback);
 				dialogOpened=true;
 			} else if (this.state=="edit" && this.editor.hasChanged()) {
-				this.startConfirmDialog(messages["actions.unsavedChanges"],callback);
+				this.startConfirmDialog(messages["actions.unsavedChanges"],wrappedCallback);
 				dialogOpened=true;
 			}else if (callback) {
-				callback(true);
+				callback();
 			}
 			return dialogOpened;
 		},

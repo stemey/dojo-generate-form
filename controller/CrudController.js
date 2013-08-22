@@ -29,6 +29,7 @@ define([
 	"dijit/Dialog",
 	"dijit/layout/BorderContainer",
 	"dijit/layout/ContentPane",
+	"./ConfirmDialog",
 ], function(declare, lang, array, domClass, request, all, when, Editor, createEditorFactory, _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Container, template, labelHelper, domStyle, domGeometry, Save, Discard, Delete, createActions, messages, _InvisibleMixin, Button	){
 // module:
 //		gform/controller/CrudController
