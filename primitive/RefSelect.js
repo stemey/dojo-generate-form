@@ -5,7 +5,7 @@ define([ "dojo/_base/lang",
 		"dijit/_WidgetBase",
 		"dijit/_TemplatedMixin",
 		"dijit/_WidgetsInTemplateMixin",
-		"dojo/text!./refSelect.html",
+		"dojo/text!./RefSelect.html",
 		"dojo/i18n!../nls/messages",
 ], function(lang, declare, aspect, when, _WidgetBase, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, messages) {
