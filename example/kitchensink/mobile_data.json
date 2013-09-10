@@ -1,0 +1,9 @@
+{
+	"string": "Hello",
+	"date": "2013-03-21",
+	"array_string": [
+		"Mercedes",
+		"Cadillac"
+	],
+	selected:true,
+}

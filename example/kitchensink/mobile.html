@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mobile Kitchensink</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+
+	<script type="text/javascript" src="../../../dojox/mobile/deviceTheme.js"></script>
+	<script type="text/javascript" src="../../../dojo/dojo.js" data-dojo-config="async: true, parseOnLoad: false"></script>
+
+   
+
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/query", "dojox/mobile/parser", "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/mobile/createMobileEditorFactory",//
+		"dojo/text!./mobile_meta.json", "dojo/text!./mobile_data.json", "dojox/mobile/View", "gform/mobile/MobileContext", "gform/mobile/DatePickerDialog", "dojox/mobile", "dojox/mobile/compat", "dojox/mobile/ToolBarButton"
+		], function(query, parser, ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, View, MobileContext) {
+
+			parser.parse();
+			var view = dijit.byId("container");
+
+			var ctx = new MobileContext();
+			ctx.setInitialView(view);
+			var dp=dijit.byId("datePickerDialog");
+			ctx.datePicker = dp;
+			
+			editor = new Editor({
+					"plainValue": dojo.fromJson(entity),
+					"meta": dojo.fromJson(meta),
+					ctx:ctx,
+					editorFactory:createStandardEditorFactory()});
+			view.addChild(editor);
+
+			var exportBtn=dijit.byId("exportBtn");
+			exportBtn.on("click", function(e) {
+				alert(dojo.toJson(editor.getPlainValue(), true));
+			});
+		});
+	</script>
+
+
+</head>
+<body  style="visibility:hidden;">
+	<div id="datePickerDialog" data-dojo-type="gform/mobile/DatePickerDialog"></div>	
+	<div id="container" data-dojo-type="dojox.mobile.View">
+		<div data-dojo-type="dojox/mobile/Heading"><span id="exportBtn" data-dojo-type="dojox/mobile/ToolBarButton" data-dojo-props='light:false'>export</span>Kitchensink</div>
+	</div>
+
+</body>
+</html>

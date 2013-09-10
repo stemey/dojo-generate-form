@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mobile Test</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+
+	<script type="text/javascript" src="../../../dojox/mobile/deviceTheme.js" data-dojo-config="mblThemeFiles: ['base', 'Button']"></script>
+	<script type="text/javascript" src="../../../dojo/dojo.js" data-dojo-config="async: true, parseOnLoad: false"></script>
+
+   
+
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/query", "dojox/mobile/parser", "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/mobile/createMobileEditorFactory",//
+		"dojo/text!../meta/primitive_list.json", "dojo/text!../entity/primitive_list.json", "dojox/mobile/View", "gform/tests/mobile/MobileContext", "dojox/mobile", "dojox/mobile/compat"
+		], function(query, parser, ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, View, MobileContext) {
+
+			parser.parse();
+			var view = dijit.byId("container");
+
+			var ctx = new MobileContext();
+			ctx.setInitialView(view);
+			
+			editor = new Editor({
+					"plainValue": dojo.fromJson(entity),
+					"meta": dojo.fromJson(meta),
+					ctx:ctx,
+					editorFactory:createStandardEditorFactory()});
+			view.addChild(editor);
+
+
+			query(".mblListItem")[0].click();
+			var textField=query('input[type=text]')[1];
+			var textDijit=dijit.byNode(textField);
+			var addButton=dijit.byId("dojox_mobile_ToolBarButton_1");
+			doh.register("standard", [
+				{
+					name : 'init',
+					runTest : function(t) {
+						t.assertEqual("bye", editor.get("plainValue").things[1]);
+						t.assertEqual("bye", textField.value);
+					}
+				},
+				{
+					name : 'reset',
+					runTest : function(t) {
+						textDijit.set("value","something");
+						t.assertTrue(editor.hasChanged());
+						editor.reset();
+						t.assertEqual("bye", query('input[type=text]')[1].value);
+					}
+				},
+				{
+					name : 'add',
+					runTest : function(t) {
+						addButton.onClick();
+						t.assertEqual(3,query('input[type=text]').length);
+						t.assertEqual(3,editor.getPlainValue().things.length);
+					}
+				},
+				{
+					name : 'remove',
+					runTest : function(t) {
+						query('button.mblRedButton')[1].click();
+						t.assertEqual(2,editor.getPlainValue().things.length);
+					}
+				}
+			]);
+			doh.run();
+		});
+	</script>
+
+
+</head>
+<body  style="visibility:hidden;">
+	<div id="container" data-dojo-type="dojox.mobile.View">
+		<div data-dojo-type="dojox.mobile.Heading">Settings</div>
+	</div>
+</body>
+</html>

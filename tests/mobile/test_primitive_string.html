@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mobile Test</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+
+	<script type="text/javascript" src="../../../dojox/mobile/deviceTheme.js" data-dojo-config="mblThemeFiles: ['base']"></script>
+	<script type="text/javascript" src="../../../dojo/dojo.js" data-dojo-config="async: true, parseOnLoad: false"></script>
+
+
+
+	<script type="text/javascript">
+
+		require([ "dojox/mobile/parser", "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/mobile/createMobileEditorFactory",//
+		"dojo/text!../meta/primitive_string.json", "dojo/text!../entity/primitive_string.json", "dojox/mobile/View", "dojox/mobile", "dojox/mobile/compat"//
+		], function(parser, ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
+
+			parser.parse();
+			editor = new Editor({
+					"plainValue": dojo.fromJson(entity),
+					"meta": dojo.fromJson(meta),
+					editorFactory:createStandardEditorFactory()});
+			var container = dijit.byId("container");
+			container.addChild(editor);
+			var intText = dijit.byId("dojox_mobile_TextBox_0");
+			doh.register("standard", [
+				{
+					name : 'init',
+					runTest : function(t) {
+						t.assertEqual("hallo", editor.get("plainValue").text);
+						t.assertEqual("hallo", intText.get("value"));
+					}
+				},
+				{
+					name : 'reset',
+					runTest : function(t) {
+						intText.set("value","something");
+						t.assertTrue(editor.hasChanged());
+						editor.reset();
+						t.assertEqual("hallo", intText.get("value"));
+					}
+				}
+			]);
+			doh.run();
+		});
+	</script>
+
+
+</head>
+<body>
+	<div id="container" data-dojo-type="dojox/mobile/View">
+		<div data-dojo-type="dojox.mobile.Heading">String test</div>
+	</div>
+</body>
+</html>
