@@ -4,7 +4,7 @@ define([
 	"dojo/_base/array",
 	"dojo/aspect",
 	"dojo/json",
-	"../utils/restHelper",
+	"../util/restHelper",
   "dijit/_WidgetBase", 
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",

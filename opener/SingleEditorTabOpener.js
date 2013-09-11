@@ -3,7 +3,7 @@ define([
 	"dojo/_base/lang",
 	"dojo/_base/array",
 	"dojo/json",
-	"../utils/restHelper",
+	"../util/restHelper",
 	"../createLayoutEditorFactory",	
 	"../schema/labelHelper",
 	"dijit/registry",
