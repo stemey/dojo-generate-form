@@ -2,7 +2,7 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojo/aspect",//
-"dojox/mobile/View", //
+"dojox/mobile/ScrollableView", //
 "dijit/_TemplatedMixin",
 "dijit/_WidgetsInTemplateMixin",
 "dojo/text!./SubView.html",
