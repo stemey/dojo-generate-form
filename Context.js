@@ -36,6 +36,9 @@ define([ "dojo/_base/array", //
 		getStore: function(id, props) {
 			return this.storeRegistry.get(id, props);
 		},
+		getUrl: function(id) {
+			return getStore(id).target;
+		},
 		getSchema: function(url) {
 			return this.schemaRegistry.get(url);
 		}

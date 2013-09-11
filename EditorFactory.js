@@ -164,7 +164,13 @@ define([ "dojo/_base/array", //
 		arrayValidators:{
 			uniqueProperties: UniqueProperties
 		}, 
-		getConverter: function(attribute) {
+		// summary:
+		//		get a converter for the given attribute.
+		// attribute: object
+		//		the attribute meta data. the type property is usually used to lookup a converter
+		// ctx: gform/Context
+		//		the context provides extra information (e.g. the storeRegistry that can translate from store ids to actual urls).		
+		getConverter: function(attribute, ctx) {
 			var c;
 			if (attribute.converter) {
 				c = this.convertersById[attribute.converter];
@@ -173,14 +179,26 @@ define([ "dojo/_base/array", //
 				c = this.convertersByType[attribute.type];
 			}
 			if (typeof c == "function") {
-				return new c(attribute);
+				return new c(attribute, ctx);
 			} else {
 				return c;
 			}
 		},
+		// summary:
+		//		add a converter for a specific type
+		// converter: 
+		//		The converter may be an instance or a constructor. constructor will be called with the parameters attribute and ctx.	
+		// type: string
+		//		type (e.g. "string", "ref")	
 		addConverterForType: function(converter, type) {
 			this.convertersByType[type]=converter;
 		},
+		// summary:
+		//		add a converter for a specific id (ids an be used in the schema).
+		// converter: 
+		//		The converter may be an instance or a constructor. constructor will be called with the parameters attribute and ctx.	
+		// id: string
+		//		the id is matched against the converter property in the attribute meta data.
 		addConverterForid: function(converter, id) {
 			this.convertersById[id]=converter;
 		}

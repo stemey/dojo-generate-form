@@ -32,7 +32,7 @@ define(
 				} else {
 					var targetCreatable = true;
 				}
-				var refConverter= this.editorFactory.getConverter(attribute);
+				var refConverter= this.editorFactory.getConverter(attribute, ctx);
 
 				var idProperty = attribute.idProperty || "id";
 				var searchProperty = attribute.searchProperty || "name";
