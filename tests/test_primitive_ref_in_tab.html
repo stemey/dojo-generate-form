@@ -18,16 +18,18 @@
 	<script type="text/javascript">
 
 		require([ "dojo/parser", "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
-		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json",//
-		"gform/opener/SingleEditorTabOpener", "dijit/registry", "gform/Context", "dojo/text!./entity/state_collection.json", "dojo/store/Memory", "gform/controller/ConfirmDialog", "dijit/layout/BorderContainer"
-		], function(parser, ready, json, Editor, Stateful, doh,createEditorFactory, meta, entity, SingleEditorTabOpener, registry, Context, stateCollection, Store) {
+		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json", "dojo/text!./meta/refs.json",//
+		"gform/opener/SingleEditorTabOpener", "dijit/registry", "gform/Context", "dojo/text!./entity/state_collection.json", "gform/store/GeneratingIdMemory", "gform/controller/ConfirmDialog", "dijit/layout/BorderContainer"
+		], function(parser, ready, json, Editor, Stateful, doh,createEditorFactory, meta, entity, schema, SingleEditorTabOpener, registry, Context, stateCollection, Store) {
 			parser.parse();
-			var container = registry.byId("tabContainer");
-			var confirmDialog = registry.byId("confirmDialog");
+			container = registry.byId("tabContainer");
+			confirmDialog = registry.byId("confirmDialog");
+			confirmDialog.dialog.duration=0;
 			var ctx = new Context();
 			ctx.opener = new SingleEditorTabOpener({tabContainer: container, confirmDialog: confirmDialog});
 			ctx.opener.ctx = ctx;
 			ctx.storeRegistry.register("/gform/tests/entity/state", new Store({data:JSON.parse(stateCollection), idProperty:"id"}));
+			ctx.schemaRegistry.register("/gform/tests/meta/refs.json", dojo.fromJson(schema));
 			var model = dojo.fromJson(entity);
 			editor =registry.byId("mainEditor");
 			editor.set("ctx", ctx);
@@ -42,7 +44,48 @@
 					name : 'open',
 					runTest : function(t) {
 						registry.byId("dijit_form_Button_2").onClick();
-						// we really need a webdriver test here.
+						doh.assertEqual(2, container.getChildren().length)
+					}
+				},
+				{
+					name : 'changeLabel',
+					runTest : function(t) {
+						registry.byId("gform_ValidationTextBox_0").set("value", "changedLabel");
+						doh.assertEqual("changedLabel", container.selectedChildWidget.get("title"));
+						registry.byId("dijit_form_Button_4").onClick();
+						doh.assertEqual("changedLabel",registry.byId("gform_FilteringSelect_0").item.label);
+					}
+				},
+				{
+					name : 'changeCloseCancel',
+					runTest : function(t) {
+						registry.byId("gform_ValidationTextBox_0").set("value", "changedLabelAgain");
+						container.closeChild(container.selectedChildWidget);
+						doh.assertEqual(true, confirmDialog.dialog.open);
+						confirmDialog.dialogNoButton.onClick();
+						doh.assertEqual(false, confirmDialog.dialog.open);
+						doh.assertEqual(2, container.getChildren().length)
+					}
+				},
+				{
+					name : 'changeCloseDiscard',
+					runTest : function(t) {
+						container.closeChild(container.selectedChildWidget);
+						doh.assertEqual(true, confirmDialog.dialog.open);
+						confirmDialog.dialogYesButton.onClick();
+						doh.assertEqual(false, confirmDialog.dialog.open);
+						doh.assertEqual(1, container.getChildren().length)
+					}
+				},
+				{
+					name : 'create',
+					runTest : function(t) {
+						registry.byId("dijit_form_Button_3").onClick();
+						doh.assertEqual(2, container.getChildren().length)
+						registry.byId("gform_ValidationTextBox_1").set("value", "createdLabel");
+						doh.assertEqual("createdLabel", container.selectedChildWidget.get("title"));
+						registry.byId("dijit_form_Button_7").onClick();
+						doh.assertEqual("createdLabel",registry.byId("gform_FilteringSelect_0").item.label);
 					}
 				},
 			]);

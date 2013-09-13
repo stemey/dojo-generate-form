@@ -37,8 +37,11 @@ return declare( [  _CrudMixin,_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMi
 	//		This crudController should be usd as a direct child of a TabContainer. The title of the tab is the label of the entity.
 		baseClass : "gformEditorController",
 		templateString : template,
+		// borderContainer: dijit/layout/BorderContainer
+		//		direct child of this widget that supports layouting
+		borderContainer: null,
 		// container: dijit/layout/TabContainer
-		//		he tabContainer
+		//		the tabContainer this tabController is added to
 		container:null,
 		// actonContainer:
 		//		the html element where the buttons go.
@@ -106,11 +109,11 @@ return declare( [  _CrudMixin,_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMi
 		},		
 		resize: function(dim) {
 			this.dim=dim;
-			if (this.widget && this.widget.resize) {
+			if (this.borderContainer && this.borderContainer.resize) {
 				if (dim) {
-					this.widget.resize({t:0,l:0,w:dim.w,h:dim.h});
+					this.borderContainer.resize({t:0,l:0,w:dim.w,h:dim.h});
 				} else {
-					this.widget.resize();
+					this.borderContainer.resize();
 				}
 			}
 		},

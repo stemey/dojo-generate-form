@@ -45,7 +45,7 @@ return declare([], {
 			//		A callback which gets passed the new id may also be specified.  Options may provide EditorFactory.
 			var props ={};
 			var url = options.url;
-			var store = this.storeRegistry.get(url, {target: url});
+			var store = this.ctx.getStore(url, {target: url});
 			props.closable=true;
 			props.editorFactory=this.editorFactory || options.editorFactory || createLayoutEditorFactory();
 			props.store=store;

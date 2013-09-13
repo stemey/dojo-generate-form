@@ -51,24 +51,35 @@ return declare( [Stateful], {
 		//		used to inform user of pending changes.
 		dialog: null,
 
+		invokeIfOk: function(callback) {
+		// summary:
+		//		check if there are pending changes. If so a dialog will be displayed to ask the user to either 
+		//		cancel his action or discard the changes.  
+		// callback: function
+		//		will be invoked if no changes or changes can be discarded.
+			var wrappedCallback = function(ok) {
+				if (ok) callback();
+			}
+			this._checkState(wrappedCallback);
+		},
+
 		_checkState: function(callback) {
 		// summary:
 		//		check if there are pending changes. If so a dialog will be displayed to ask the user to either 
 		//		cancel his action or discard the changes.  
+		// callback: function
+		//		will be invoked with parameter true if no changes or changes can be discarded.
 		// return: boolean
 		//		true if a dialog was opened
-			var wrappedCallback= function(execute) {
-				if (execute) callback();
-			}
 			var dialogOpened=false;
 			if (this.state=="create" && this.editor.hasChanged()) {
-				this.startConfirmDialog(messages["actions.unsavedNewEntity"],wrappedCallback);
+				this.startConfirmDialog(messages["actions.unsavedNewEntity"],callback);
 				dialogOpened=true;
 			} else if (this.state=="edit" && this.editor.hasChanged()) {
-				this.startConfirmDialog(messages["actions.unsavedChanges"],wrappedCallback);
+				this.startConfirmDialog(messages["actions.unsavedChanges"],callback);
 				dialogOpened=true;
 			}else if (callback) {
-				callback();
+				callback(true);
 			}
 			return dialogOpened;
 		},
@@ -88,7 +99,7 @@ return declare( [Stateful], {
 			//		the id of the entity
 			// schemaUrl: String
 			//		the schema is loaded from the url.
-			this._checkState(lang.hitch(this,"_edit", id, schemaUrl));
+			this.invokeIfOk(lang.hitch(this,"_edit", id, schemaUrl));
 		},
 		_showLoading: function() {
 			this.set("state","loading");	
@@ -146,12 +157,12 @@ return declare( [Stateful], {
 			//		callback will be called once the entity is saved. id will be passed as single parameter.
 			this.createCallback= createCallback;
 			if (schemaUrl) {
-				this._checkState(lang.hitch(this,"_createNewAndSchema", schemaUrl));
+				this.invokeIfOk(lang.hitch(this,"_createNewAndSchema", schemaUrl));
 			} else {			
 				if (this.state=="create") {
 					this.editor.reset();
 				}	else {
-					this._checkState(lang.hitch(this,"_createNew"));
+					this.invokeIfOk(lang.hitch(this,"_createNew"));
 				}
 			}
 		},

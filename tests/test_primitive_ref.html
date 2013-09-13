@@ -66,11 +66,9 @@
 						t.assertEqual(editor.editorFactory, param.editorFactory);
 						t.assertEqual("/gform/tests/meta/refs.json", param.schemaUrl);
 						t.assertEqual("/gform/tests/entity/state", param.url);
-						when(store.add({label:"created", size:34}))
-							.then(function(id) {
-								param.callback(id);
-								t.assertEqual(id, restHelper.decompose(editor.getPlainValue().state.$ref).id);
-							});
+						var id=store.add({label:"created", size:34});
+						param.callback(id);
+						t.assertEqual(id, restHelper.decompose(editor.getPlainValue().state.$ref).id);
 					
 					}
 				},
