@@ -17,11 +17,13 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/_base/lang", "dojo/json", "dijit/registry", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
-		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json", "dojo/text!./entity/state_collection.json", "dojo/store/Memory", "dojo/store/Observable",//
+		"dojo/text!./meta/primitive_ref.json", "dojo/text!./entity/primitive_ref.json", "dojo/text!./entity/state_collection.json", "dojo/text!/gform/tests/meta/refs.json", "gform/store/GeneratingIdMemory", "dojo/store/Observable",//
 		"gform/opener/SingleEditorDialogOpener", "gform/controller/ConfirmDialog", "gform/Context", "dojo/when"
-		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when) {
+		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, schema,Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when) {
 			var ctx = new Context();
 			opener = new SingleEditorDialogOpener();
+			opener.confirmDialog.dialog.duration=0;
+			opener.dialog.duration=0;
 			opener.ctx = ctx; 
 			opener.placeAt("dialog");
 			opener.startup();
@@ -29,6 +31,7 @@
 			var model = dojo.fromJson(entity);
 			store = new Store({data:JSON.parse(stateCollection), idProperty:"id"});	
 			ctx.storeRegistry.register("/gform/tests/entity/state", store);
+			ctx.schemaRegistry.register("/gform/tests/meta/refs.json", dojo.fromJson(schema));
 			editor = new Editor({
 					ctx:ctx,
 					"plainValue": model,
@@ -42,7 +45,46 @@
 					name : 'open',
 					runTest : function(t) {
 						registry.byId("dijit_form_Button_5").onClick();
-						// we really need a webdriver test here.
+						doh.assertEqual(true, opener.dialog.open);
+					}
+				},
+				{
+					name : 'changeLabel',
+					runTest : function(t) {
+						registry.byId("gform_ValidationTextBox_0").set("value", "changedLabel");
+						registry.byId("dijit_form_Button_0").onClick();
+						doh.assertEqual("changedLabel",registry.byId("gform_FilteringSelect_0").item.label);
+					}
+				},
+				{
+					name : 'changeCloseCancel',
+					runTest : function(t) {
+						registry.byId("gform_ValidationTextBox_0").set("value", "changedLabelAgain");
+						opener.dialog.hide();
+						doh.assertEqual(true, opener.confirmDialog.dialog.open);
+						opener.confirmDialog.dialogNoButton.onClick();
+						doh.assertEqual(false, opener.confirmDialog.dialog.open);
+						doh.assertEqual(true, opener.dialog.open)
+					}
+				},
+				{
+					name : 'changeCloseDiscard',
+					runTest : function(t) {
+						opener.dialog.hide();
+						doh.assertEqual(true, opener.confirmDialog.dialog.open);
+						opener.confirmDialog.dialogYesButton.onClick();
+						doh.assertEqual(false, opener.confirmDialog.dialog.open);
+						doh.assertEqual(false, opener.dialog.open)
+					}
+				},
+				{
+					name : 'create',
+					runTest : function(t) {
+						registry.byId("dijit_form_Button_6").onClick();
+						doh.assertEqual(true, opener.dialog.open);
+						registry.byId("gform_ValidationTextBox_1").set("value", "createdLabel");
+						registry.byId("dijit_form_Button_0").onClick();
+						doh.assertEqual("createdLabel",registry.byId("gform_FilteringSelect_0").item.label);
 					}
 				},
 			]);

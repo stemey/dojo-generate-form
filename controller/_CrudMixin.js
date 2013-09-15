@@ -60,7 +60,8 @@ return declare( [Stateful], {
 			var wrappedCallback = function(ok) {
 				if (ok) callback();
 			}
-			this._checkState(wrappedCallback);
+			var dialogOpened = this._checkState(wrappedCallback);
+			if (!dialogOpened) callback();
 		},
 
 		_checkState: function(callback) {
@@ -78,8 +79,6 @@ return declare( [Stateful], {
 			} else if (this.state=="edit" && this.editor.hasChanged()) {
 				this.startConfirmDialog(messages["actions.unsavedChanges"],callback);
 				dialogOpened=true;
-			}else if (callback) {
-				callback(true);
 			}
 			return dialogOpened;
 		},
@@ -99,7 +98,8 @@ return declare( [Stateful], {
 			//		the id of the entity
 			// schemaUrl: String
 			//		the schema is loaded from the url.
-			this.invokeIfOk(lang.hitch(this,"_edit", id, schemaUrl));
+			var dialogOpened=this.invokeIfOk(lang.hitch(this,"_edit", id, schemaUrl));
+			
 		},
 		_showLoading: function() {
 			this.set("state","loading");	

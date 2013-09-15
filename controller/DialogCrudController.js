@@ -116,6 +116,11 @@ return declare( [  _CrudMixin,_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMi
 					closeFn();
 				}
 			});
+			if (!openDialog) {
+				// if blur and changeevnt is fired after click, then the editor is changed at this oint. -> reset
+				this.editor.reset();
+				closeFn();
+			}
 		}
 	});
 
