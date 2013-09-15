@@ -1,8 +1,8 @@
 define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declare",
 		"dojox/mvc/_Container", "dijit/layout/_LayoutWidget","dojox/mvc/at", 
-		"dojo/dom-construct", "dojo/Stateful", "./model/getPlainValue","./model/updateModelHandle","./model/hasChanged","./group/_GroupMixin", "./schema/labelHelper" ], function(array, aspect,  lang,
+		"dojo/dom-construct", "dojo/Stateful", "./model/getPlainValue","./model/updateModelHandle","./model/hasChanged","./group/_GroupMixin", "./schema/labelHelper", "dojo/query", "dijit/registry" ], function(array, aspect,  lang,
 		declare, Container, _LayoutWidget,at, domConstruct,
-		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin, labelHelper) {
+		 Stateful,getPlainValue,updateModelHandle,hasChanged,_GroupMixin, labelHelper, query, registry) {
 		// module: 
 		//		gform/Editor
 
@@ -103,6 +103,13 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			this._explicitErrorPaths = [];
 			// send change event because oldValue changed and hasChanged will return something new
 			this.emit("value-changed");
+		},
+		syncPendingChanges: function() {
+			var focused = query("input:focus", this.domNode);
+			if (focused && focused.length==1) {
+				var dijit = registry.getEnclosingWidget(focused[0]);
+				dijit._onBlur();
+			}
 		},
 		hasChanged: function() {
 		// summary:

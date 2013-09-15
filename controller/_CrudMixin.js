@@ -2,8 +2,8 @@ define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
 	"dojo/_base/array",
-	"dojo/dom-class",
-	"dojo/request",
+	"dojo/query",
+	"dijit/registry",
 	"dojo/promise/all",	
 	"dojo/when",
 	"dojo/Stateful",	
@@ -27,7 +27,7 @@ define([
 	"dijit/Dialog",
 	"dijit/layout/BorderContainer",
 	"dijit/layout/ContentPane",
-], function(declare, lang, array, domClass, request, all, when, Stateful, Editor, createEditorFactory, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, labelHelper, domStyle, domGeometry, Save, Discard, Delete, messages, Button	){
+], function(declare, lang, array, query, registry, all, when, Stateful, Editor, createEditorFactory, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, labelHelper, domStyle, domGeometry, Save, Discard, Delete, messages, Button	){
 // module:
 //		gform/controller/_CrudMixin
 	
@@ -69,9 +69,10 @@ return declare( [Stateful], {
 		//		check if there are pending changes. If so a dialog will be displayed to ask the user to either 
 		//		cancel his action or discard the changes.  
 		// callback: function
-		//		will be invoked with parameter true if no changes or changes can be discarded.
+		//		will be invoked with parameter true if no changes or changes shall be discarded.
 		// return: boolean
 		//		true if a dialog was opened
+			this.editor.syncPendingChanges();
 			var dialogOpened=false;
 			if (this.state=="create" && this.editor.hasChanged()) {
 				this.startConfirmDialog(messages["actions.unsavedNewEntity"],callback);

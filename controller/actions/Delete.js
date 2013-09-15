@@ -21,6 +21,7 @@ define([
 		execute: function() {
 			if (this.state!="create") {
 				var entity = this.ctrl.editor.get("plainValue");
+				this.ctrl.editor.reset();
 				this.ctrl._removeChangeIndicator();
 				this.ctrl.showProgressBar("deleting "+this.ctrl.editor.getLabel());	
 				when(this.ctrl.store.remove(entity.id))

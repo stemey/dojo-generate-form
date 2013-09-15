@@ -19,6 +19,7 @@ return declare( [_ActionMixin], {
 	//		the editor's changes are removed.
 	messageModule: "actions.discard",
 	execute: function() {
+			this.ctrl.editor.syncPendingChanges();
 			this.ctrl.editor.reset();	
 		},
 	});

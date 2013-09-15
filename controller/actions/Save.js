@@ -19,6 +19,7 @@ return declare( [_ActionMixin], {
 	//		Saves the entity. If the entity was persistent it will be update otherwise it will be inserted.
 	messageModule: "actions.save",
 	execute: function() {
+		this.ctrl.editor.syncPendingChanges();
 		var entity = this.ctrl.editor.get("plainValue");
 		var message = "saving "+this.ctrl.editor.getLabel();
 			if (this.ctrl.state == "create") {
