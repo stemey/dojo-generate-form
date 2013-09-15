@@ -104,6 +104,8 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			// send change event because oldValue changed and hasChanged will return something new
 			this.emit("value-changed");
 		},
+		// summary:
+		//		if an input in the form still has fcus then its current value may be different from the widget's value. We force a synchronization (and validation) here.
 		syncPendingChanges: function() {
 			var focused = query("input:focus", this.domNode);
 			if (focused && focused.length==1) {
