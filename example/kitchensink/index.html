@@ -27,6 +27,7 @@
 			var stateCollection = JSON.parse(stateCollectionJson);
 			var ctx = new Context();
 			ctx.opener = new SingleEditorDialogOpener();
+			ctx.opener.ctx=ctx;
 			ctx.opener.storeRegistry = ctx.storeRegistry;
 			ctx.opener.schemaRegistry = ctx.schemaRegistry;
 			ctx.opener.placeAt("dialog");
