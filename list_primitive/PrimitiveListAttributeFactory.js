@@ -16,7 +16,7 @@ define([ "dojo/_base/array", //
 ], function(array, lang, aspect, Editor, declare, at, StatefulArray, Stateful,
 		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget , DndSource, updateModelHandle, registry) {
 
-	return declare("app.PrimitiveListAttributeFactory", [], {
+	return declare( [], {
 
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
@@ -58,7 +58,7 @@ define([ "dojo/_base/array", //
 					return newMh;
 				}
 				aspect.after(widgetList, "startup", function() {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true});
+					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true, withHandles:true});
 				});
 			}
 			select.addChild(widgetList);

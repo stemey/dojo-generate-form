@@ -66,7 +66,7 @@ define([ "dojo/_base/array", //
 					return newMh;
 				}
 				aspect.after(widgetList, "startup", function() {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true});
+					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true, withHandles:true});
 				});
 			}
 			select.addChild(widgetList);

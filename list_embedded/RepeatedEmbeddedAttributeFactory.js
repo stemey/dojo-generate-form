@@ -70,7 +70,7 @@ define([ "dojo/_base/array", //
 				}
 				//var copyFn=lang.hitch(this,copy);
 				aspect.after(widgetList, "startup", function() {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true});
+					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true, withHandles: true});
 				});
 			}
 

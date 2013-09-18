@@ -11,9 +11,10 @@ define([ "dojo/_base/array", //
 "dojox/mvc/StatefulArray",//
 "dojo/dnd/Source",//
 "../model/updateModelHandle",//
-"dijit/registry"
+"dijit/registry",//
+"dojo/dom-class"
 ], function(array, lang, aspect, Editor, declare, at, StatefulArray, Stateful,
-		 sync, WidgetList, StatefulArray, DndSource, updateModelHandle, registry) {
+		 sync, WidgetList, StatefulArray, DndSource, updateModelHandle, registry, domClass) {
 
 	return declare( [DndSource], {
 				copyFn:null,
@@ -56,7 +57,8 @@ define([ "dojo/_base/array", //
 					var copied = this.copyFn(sourceModel, copy); 
 					model.splice(anchorPos, 0, copied);
 			
-			}			
+			}	,
+		
 		});
 
 });

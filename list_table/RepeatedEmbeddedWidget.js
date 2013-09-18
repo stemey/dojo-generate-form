@@ -1,11 +1,11 @@
 define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/Stateful", "../Editor",
-		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox", "./TableElementDecorator", "./TableValueDecorator",
+		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox", "./TableElementDecorator", "./TableValueDecorator", "../widget/DndIndicator",
 		"dijit/form/Button", "dijit/form/Select", "../model/updateModelHandle","./mergeAttributeDefinitions","dojo/dom-class", "dojo/i18n!../nls/messages"//
 ], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, Stateful, Editor,
-		template, TextBox, TableElementDecorator,TableValueDecorator, Button, Select,  updateModelHandle,mergeAttributeDefinitions,domClass, messages) {
+		template, TextBox, TableElementDecorator, TableValueDecorator, DndIndicator, Button, Select,  updateModelHandle,mergeAttributeDefinitions,domClass, messages) {
 
-	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin ],
+	return declare( [ _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin ],
 			{
 				templateString : template,
 				postCreate : function() {
@@ -43,6 +43,11 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 					});
 					decorator.addChild(deleteButton);
 					this.addChild(decorator);
+					if (this.meta.reorderable!=false) {
+						var dndDecorator = new TableElementDecorator();
+						dndDecorator.addChild(new DndIndicator());
+						this.addChild(dndDecorator);
+					}
 
 					deleteButton.set("onClick", lang.hitch(this, "_delete"));
 				},

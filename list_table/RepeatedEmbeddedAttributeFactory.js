@@ -21,7 +21,7 @@ define([ "dojo/_base/array", //
 ], function(array, lang, aspect, Editor, declare, at, 
 		StatefulArray, Stateful, DndSource, EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle,TableHeader,TableElementHeader,mergeAttributeDefinitions, embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
 
-	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
+	return declare( [], {
 
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
@@ -77,7 +77,7 @@ define([ "dojo/_base/array", //
 					return newMh;
 				}
 				aspect.after(widgetList, "startup", function() {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true});
+					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true, withHandles: true});
 				});
 			}
 

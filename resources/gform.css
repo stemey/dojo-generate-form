@@ -276,4 +276,27 @@ div.gformEditorController.loading .actions {
 	margin: 15px;	
 }
 
+/* DND */
+.area {
+	top:3px;
+	position: relative;
+	width:24px;
+	padding: 0 4px 0 4px ;
+	display:inline-block;
+}
+/*.area::hover {
+	visibility: visible;
+}*/
+.bars{
+	height:3px; 
+	margin-top:3px;
+	-webkit-box-shadow:0 2px 0 rgba(255,255,255,0.8);
+	background-color:rgba(55,55,55,0.2); 
+	width:100% ;
+	display:block;
+}
+
+
+
+
 
