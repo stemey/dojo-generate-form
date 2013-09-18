@@ -29,6 +29,7 @@ define([
 "./group/ColumnsGroupFactory",//
 "./map_embedded/RepeatedEmbeddedAttributeFactory",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//,
+"./map_primitive/PrimitiveMapAttributeFactory",//
 "./list_table/RepeatedEmbeddedAttributeFactory"
 
 ], function(lang,EditorFactory,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
@@ -38,7 +39,7 @@ define([
 		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
 		TimeAttributeFactory, EmbeddedAttributeFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory, NumberAttributeFactory, 
 		CurrencyAmountAttributeFactory, MappedContentPaneFactory, ReferenceAttributeFactory,
-		AttributeListWidget, ColumnsGroupFactory, MapAttributeFactory, RepeatedEmbeddedAttributeFactory, TableListAttributeFactory) {
+		AttributeListWidget, ColumnsGroupFactory, MapAttributeFactory, RepeatedEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, TableListAttributeFactory) {
 // module:
 //		gform/createLayoutEditorFactory
 
@@ -58,6 +59,7 @@ define([
 			var attributeFactories = [ //
 			       				new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 			       				new MapAttributeFactory({editorFactory:editorFactory}),//
+			       				new PrimitiveMapAttributeFactory({editorFactory:editorFactory}),//
 			       				new EmbeddedAttributeFactory({editorFactory:editorFactory}),//
 			       				new MappedCheckedMultiSelectAttributeFactory({editorFactory:editorFactory}), // 
 			       				new CheckedMultiSelectAttributeFactory({editorFactory:editorFactory}), // 

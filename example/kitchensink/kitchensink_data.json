@@ -74,6 +74,11 @@
 		b:{
 			"message": "OOOOOOOO",
 		}
-	}
+	},
+	"primitive_map": {
+		"one": "eins",
+		"two": "zwei",
+		"three": "drei"
+	}	
 	
 }

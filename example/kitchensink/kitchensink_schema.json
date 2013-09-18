@@ -387,6 +387,8 @@
                     "label":"map",
                     "code":"map",
                     "map":true,
+										"keyLabel": "this is the key",	
+										"keyDescription": "the key may be given an appropriate label.",	
                     "type":"ExampleThing",
                     "validTypes":[
                         {
@@ -412,6 +414,20 @@
                             ]
                         }
                     ]
+                },
+            ]
+        },
+				{
+					label: "primitive map",
+					attributes: [
+                {
+                    "required":false,
+                    "label":"numbers in german",
+                    "code":"primitive_map",
+                    "map":true,
+										"keyLabel": "english",	
+										"keyDescription": "numbers in english.",	
+                    "type":"string",
                 }
             ]
         },
