@@ -31,7 +31,7 @@ define([ "dojo/_base/array", //
 			}	
 			var childAttribute ={};
 			lang.mixin(childAttribute, attribute)
-			childAttribute.array=false;
+			childAttribute['array']=false;
 			delete childAttribute.editor;
 			
 			
@@ -58,17 +58,13 @@ define([ "dojo/_base/array", //
 			var view =ctx.createView();
 			view.addChild(select);
 
-			var addButton = new ToolBarButton({label:'+', style:{float:"right"}});
+			var addButton = new ToolBarButton({'label':'+', 'style':{'float':"right"}});
 			view.heading.addChild(addButton);
 			addButton.on("click", lang.hitch(select,"addElement"));
 
 
-			
-	
-
-
 			var transition=function() {ctx.transitionTo(view)};
-			var link = new Link({label:"weiter", transition:transition});
+			var link = new Link({'label':"weiter", 'transition':transition});
 			return link;
 
 		}

@@ -28,5 +28,5 @@
 	"bugs": "https://github.com/stemey/dojo-generate-form/issues",
 	"keywords": ["JavaScript", "Dojo", "Generate", "Form"],
 	"homepage": "http://toobop.net/gform",
-	"dojoBuild": "profile/gform.profile.js"
+	"dojoBuild": "profiles/gform.profile.js"
 }
