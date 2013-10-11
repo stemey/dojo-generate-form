@@ -61,17 +61,6 @@ define(
 				var f = new FilteringSelect(props);
 				dijitAwareConverter.dijit=f;
 				
-
-				var currentId = modelHandle.get("value");
-				if (currentId) {
-					// value is the id
-					var promise = store.get(modelHandle.get("value"));
-					when(promise).then(function(result) {
-						if (result) {
-							f.set("name", result[searchProperty]);
-						}
-					});
-				}
 							
 				var refSelect = new RefSelect({targetCreatable: targetCreatable, meta: attribute, opener:ctx.opener,filteringSelect:f, editorFactory: this.editorFactory});
 				return refSelect;
