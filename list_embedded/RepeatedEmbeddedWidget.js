@@ -19,24 +19,30 @@ define([ "dojo/_base/lang", "dojo/dom-class",  "dojo/_base/array", "dojo/_base/d
 			panelModel.set("title", "");
 			var me=this;
 			var modelHandle = this.get("modelHandle");
-			var editor;
 			if (this.meta.validTypes && this.meta.validTypes.length>1) {
-				editor = new PolymorphicMemberWidget({"modelHandle": modelHandle, "meta": this.meta, nullable: false, editorFactory: this.editorFactory});
+				this.editor = new PolymorphicMemberWidget({"shown":false, "modelHandle": modelHandle, "meta": this.meta, nullable: false, editorFactory: this.editorFactory});
 			}else{
 				var meta = this.meta.validTypes ? this.meta.validTypes[0] : this.meta;
-				editor = new Editor({"modelHandle":modelHandle,"meta":meta,editorFactory:this.editorFactory});
+				this.editor = new Editor({"shown":false, "modelHandle":modelHandle, "meta":meta,editorFactory:this.editorFactory});
 			}
 		  //var titlePane = new TitlePane({title:at(modelHandle,"index")});
 			//titlePane.addChild(editor);
-			this.addChild(editor);
+			this.addChild(this.editor);
 			this.set("target", panelModel);
 			domClass.add(this.titlePane.titleBarNode, "dojoDndHandle");
 			
 			modelHandle.watch("index", lang.hitch(this, "indexChanged"));
 			this.on("value-changed", lang.hitch(this, "titleChanged"));
+			this.titlePane.watch("open", lang.hitch(this, "titlePaneToggled"));
+			this.titlePane.set("open", false);
 
 			this.deleteButton.set("onClick", lang.hitch(this, "_delete"));
 			this.titleChanged();
+		},
+		titlePaneToggled: function() {
+			if (this.titlePane.open) {
+				this.getChildren()[0].show();
+			}
 		},
 		indexChanged: function(propName, old, nu) {
 			this.titleChanged();

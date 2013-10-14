@@ -15,6 +15,13 @@ define([ "dojo/_base/array", //
 		templateString : template,
 		typeStack:null,
 		nullable:true,
+		shown: true,
+		show: function() {
+			if (!this.shown) {
+				this.shown=true;
+				this.typeStack.selectedChildWidget.show();
+			}
+		},
 		postCreate: function() {
 			var attribute=this.get("meta");
 			var validTypes = attribute.validTypes;
@@ -53,7 +60,8 @@ define([ "dojo/_base/array", //
 				var editor = new Editor(
 					{
 						"modelHandle": typeToValue[type.code],
-						"meta":type,editorFactory:this.editorFactory
+						"meta":type,editorFactory:this.editorFactory,
+						"shown": type==currentType && this.shown
 					});
 				this.typeStack.addChild(editor);
 				this.typeToGroup[type.code] = editor;
@@ -114,6 +122,7 @@ define([ "dojo/_base/array", //
 						}
 					}
 					this.typeStack.selectChild(this.typeToGroup[type]);
+					if (this.shown) this.typeToGroup[type].show();
 					if (domClass.contains(this.typeToGroup[type].domNode,"dijitHidden")) {
 						// there is an issue with initial visibility
 						domClass.replace(this.typeToGroup[type].domNode, "dijitVisible", "dijitHidden");

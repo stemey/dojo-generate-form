@@ -45,6 +45,8 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		//		the context provides extra features for this editor instance
 		context : null,
 
+		shown:true,
+
 		// meta:
 		// 		the schema describing the form.
 		meta : null,
@@ -205,7 +207,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			this.inherited(arguments);
 			this.containerNode=this.domNode;
 			this.watch("meta", lang.hitch(this, "_buildContained"));
-			if (this.meta) {
+			if (this.meta && this.shown) {
 				this._buildContained();
 			}
 		},
@@ -214,6 +216,12 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				return labelHelper.getTypeLabel(this.meta, this.modelHandle);
 			} else {
 				return "";
+			}
+		},
+		show: function() {
+			if (!this.shown) {
+				this.shown=true;
+				this._buildContained();
 			}
 		},
 		startup : function() {
