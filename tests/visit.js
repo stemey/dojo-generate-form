@@ -44,7 +44,7 @@ define(["doh/runner","dojo/_base/lang","dojo/_base/array","dojox/mvc/equals","do
 
 		var primitiveArray= {
 			attributes:[
-				{code:"things",array:true,type:"string"}
+				{code:"things","array":true,type:"string"}
 			]
 		}
 
