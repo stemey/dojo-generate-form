@@ -206,7 +206,11 @@ define([
 			// editorFactory:
 			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (plainValue==null) {
-				modelHandle.set("value",false);
+				if (typeof meta.default != "undefined") {
+					modelHandle.set("value",meta.default);
+				} else {
+					modelHandle.set("value",false);
+				}
 			}else{
 				modelHandle.set("value",!!plainValue);
 			}

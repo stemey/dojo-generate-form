@@ -15,6 +15,7 @@ define([ "dojo/_base/array", //
 			standardProps["keyDescription"]={ type : "string",description:"description of the map's key."};
 			standardProps["reorderable"]={ type : "boolean",description:"if checked the array is reorderable"};
 			standardProps["disabled"]={ type : "boolean",description:"if checked the value is not editable"};
+			standardProps["visible"]={ type : "boolean",description:"if checked the value is not visible", "default": true};
 
 	var extraProps={};
 			extraProps["missingMessage"]={ type : "string",description:"the error message for required but empty values."};
