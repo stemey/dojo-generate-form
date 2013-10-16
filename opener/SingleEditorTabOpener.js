@@ -2,6 +2,7 @@ define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
 	"dojo/_base/array",
+	"dojo/aspect",
 	"dojo/json",
 	"../util/restHelper",
 	"../createLayoutEditorFactory",	
@@ -9,12 +10,13 @@ define([
 	"dijit/registry",
 	"../controller/TabCrudController",	
 	"dojo/store/JsonRest",
+	"gform/util/restHelper",
 	"dijit/form/Button",
 	"dijit/layout/StackContainer",
 	"dijit/layout/ContentPane",
 	"dijit/ProgressBar",
 	"dijit/Dialog",
-], function(declare, lang, array, json, restHelper, createLayoutEditorFactory, labelHelper, registry, TabCrudController, Store){
+], function(declare, lang, array, aspect, json, restHelper, createLayoutEditorFactory, labelHelper, registry, TabCrudController, Store){
 //  module:
 //		gform/opener/SingleEditorTabOpener
 
@@ -26,6 +28,14 @@ return declare([], {
 		// tabContainer:
 		//		the tabContainer
 		tabContainer:null,
+
+		url2widget: {},
+
+		controllerConfig:null,
+
+		// editorFactory:
+		//		the default editorFactory. Can be overriden by th eoptions passes to open/create methods.
+		editorFactory:null,
 	
 		//  schemaRegistry:
 		//		The schemaRegistry used to access the resources handled by the editor.
@@ -53,9 +63,15 @@ return declare([], {
 			props.dialog= this.confirmDialog;	
 			//props.ctx = this.ctx;
 			var controller = new TabCrudController(props);
+			lang.mixin(controller, this.controllerConfig); 
 			controller.setCtx(this.ctx);
 			this.tabContainer.addChild(controller);
 			this.tabContainer.selectChild(controller);
+			var me = this;
+			aspect.after(controller, "onCreated", function(result, args) {
+				var singleUrl = restHelper.compose(url, args[0]);
+				me.url2widget[singleUrl] = controller;
+			});
 			controller.createNew(options.schemaUrl, options.callback);
 		},
 		openSingle: function(options) {
@@ -68,6 +84,8 @@ return declare([], {
 			var controller =registry.byId(wid);
 			if (controller!=null) {
 				this.tabContainer.selectChild(controller);
+			} else if (this.url2widget[options.url]!=null) {
+				this.tabContainer.selectChild(this.url2widget[options.url]);
 			} else {
 				var props ={};
 				var restUrl = restHelper.decompose(options.url);
@@ -82,6 +100,7 @@ return declare([], {
 				props.dialog= this.confirmDialog;	
 				//props.ctx = this.ctx;
 				var controller = new TabCrudController(props);
+				lang.mixin(controller, this.controllerConfig); 
 				controller.setCtx(this.ctx);
 				this.tabContainer.addChild(controller);
 				this.tabContainer.selectChild(controller);

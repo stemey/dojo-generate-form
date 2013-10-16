@@ -28,6 +28,7 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		//		This dijit provides a dialog and an embedded CrudController. This dijit is designed o be used as opener in a gform/Context. 
 
 		templateString : template,
+		controllerConfig:null,
 		//  editorFactory:
 		//		The editorFactory to use. If set will override the one passed to the openSingle/createSingle methods.
 		editorFactory: null,
@@ -45,6 +46,7 @@ return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		startup: function() {
 			var me = this;
 			this.crudController.dialog=this.confirmDialog;
+			lang.mixin(this.crudController, this.controllerConfig); 
 			this.crudController.setCtx(this.ctx);
 			this.crudController.progressBar=new ActionProgressBar({progressBar:this.progressBar, progressMessage:this.progressMessage});
 			aspect.around(this.dialog, "hide", function(originalFn) {
