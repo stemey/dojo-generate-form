@@ -39,6 +39,10 @@ return declare( [Stateful], {
 		//		maybe "loading", "edit", "create".
 		state:"loading",
 
+		// plainValueFactory: function
+		//		creates an instance of plainValue. parameter is the schema.
+		plainValueFactory: null,
+		
 		// store:
 		//		the store used to persist the entity.
 		store:null,
@@ -169,7 +173,7 @@ return declare( [Stateful], {
 		},
 		_createNew: function() {
 			this.set("state","create");
-			this.editor.set("plainValue", {});
+			this.editor.set("plainValue", this.createPlainValue(editor.meta));
 		},
 		_createNewAndSchema: function(schemaUrl) {
 			var schemaPromise = this.getSchema(schemaUrl);
@@ -177,9 +181,16 @@ return declare( [Stateful], {
 			this._showLoading();
 			this._execute(schemaPromise,"LoadForCreateAndSchema");
 		},
+		createPlainValue: function(schema) {
+			if (this.plainValueFactory) {
+				return this.plainValueFactory(schema);
+			} else {
+				return {};
+			}
+		},
 		_onLoadForCreateAndSchema: function(schema) {
 			this.set("state","create");
-			this.editor.setMetaAndPlainValue(schema, {});
+			this.editor.setMetaAndPlainValue(schema, this.createPlainValue(schema));
 			this.emit("editor-changed");
 		},
 		_onLoadForCreateAndSchemaFailed: function(error) {
