@@ -51,10 +51,12 @@ return declare( [_ActionMixin], {
 				var entity = this.ctrl.store.get(generatedId);	
 				when(entity).then(function(e) {
 					me.ctrl.editor.setPlainValue(e);
+					me.ctrl.onCreated(generatedId);
 				});
-				
+			} else {
+				var idProperty = this.ctrl.store.idProperty  || "id";
+				this.ctrl.onCreated(this.editor.getPlainValue()[idProperty]);
 			}
-			this.ctrl.onCreated(generatedId);
 			//this.ctrl.editor.set("plainValue",{});
 			//this.ctrl.editor.reset();	
 			//this.ctrl._removeChangeIndicator();
