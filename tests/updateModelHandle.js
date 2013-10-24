@@ -2,7 +2,7 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 
 		var type1=					
 				{
-						code:"thing1",
+						type: "object"
 						attributes:
 							[
 								{code:"stringP",type:"string"},
@@ -12,7 +12,6 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 					}
 		var type2=					
 				{
-						code:"thing2",
 						attributes:
 							[
 								{code:"stringP2",type:"string"},
@@ -32,15 +31,17 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 					]
 			}
 		var polyAttribute={
+						type: "multi-object",
 						type_property:"ext_type",
-						code:"objectP",
-						validTypes:[
+						code: "objectP",
+						groups:[
 							type1,
 							type2
 						]
 		}
 
 		var requiredPolyAttribute={
+						type: "multi-object",
 						type_property:"ext_type",
 						code:"objectP",
 						required:true,
@@ -51,16 +52,15 @@ define(["doh/runner","dojo/_base/lang","dojox/mvc/equals","dojo/Stateful","gform
 		}
 
 		var objectAttribute={
+						type: "object",
 						type_property:"ext_type",
 						code:"objectP",
-						validTypes:[
-							type1
-						]
-		}
+						group:
+							type1		}
 
 		var primitiveArray= {
 			attributes:[
-				{code:"things",array:true,type:"string"}
+				{code:"things",array:true,type:"array", items: {type: "string"}}
 			]
 		}
 

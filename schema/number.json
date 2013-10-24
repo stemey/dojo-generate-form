@@ -1,0 +1,4 @@
+{
+	"type": {"type": "string", "values":["number"]},
+	"required": {"type": "boolean"}
+}

@@ -71,34 +71,6 @@ define([
 				},this);
 			}
 		},
-		updateObject: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory) {
-			// summary:
-			//		update the attribute with the given plainValue. Attribute has a single valid type.
-			// meta:
-			//		the schema for the attribute.
-			// plainValue:
-			//		the new value of the attribute
-			// modelHandle:
-			//		the modelHandle bound to the Editor.
-			// editorFactory:
-			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
-			if (meta.validTypes.length>1 && !meta.type_property) {
-				throw new Error("more than one type defined but no type property");
-			}
-			var type=meta.validTypes[0];
-			if (!modelHandle.nonNullValue) {
-				modelHandle.nonNullValue=this.createMeta();
-				modelHandle.nonNullValue.value=new Stateful();
-			}
-			var initialValue= plainValue || {};
-			this.update(type,initialValue,modelHandle.nonNullValue,editorFactory);
-			if (plainValue==null) {
-				modelHandle.set("value",null);
-			}else{
-				modelHandle.set("value",modelHandle.nonNullValue.value);
-			}
-			modelHandle.set("oldValue",getPlainValue(modelHandle.value));
-		},
 		updatePolyObject: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, context) {
 			// summary:
 			//		update the attribute of type object with the given plainValue. The attribute has more than one valid type. There is a modelHandle for each type. These can be bound to different gform/Editor instances. Switching the type will switch visibility of the widget instances.
@@ -111,16 +83,16 @@ define([
 			// editorFactory:
 			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (plainValue!=null) {
-				var typeCode=plainValue[meta.type_property];
+				var typeCode=plainValue[meta.typeProperty];
 			}
 			var typeToValue=modelHandle.typeToValue;
 			if (!typeToValue) {
 				modelHandle.typeToValue={};
-				array.forEach(meta.validTypes,function(type) {
+				array.forEach(meta.groups,function(type) {
 					var metaObject= this.createMeta();
 					metaObject.value=new Stateful({});
-					metaObject.value[meta.type_property]=this.createMeta(modelHandle);
-					metaObject.value[meta.type_property].value=type.code;
+					metaObject.value[meta.typeProperty]=this.createMeta(modelHandle);
+					metaObject.value[meta.typeProperty].value=type.code;
 					modelHandle.typeToValue[type.code]=metaObject;
 					if (type.code==typeCode)  {
 						this.update(type,plainValue,metaObject,editorFactory);
@@ -130,7 +102,7 @@ define([
 				},this);
 				typeToValue=modelHandle.typeToValue;
 			}else{
-				array.forEach(meta.validTypes,function(type) {
+				array.forEach(meta.groups,function(type) {
 					var metaObject = typeToValue[type.code];
 					if (type.code==typeCode)  {
 						this.update(type,plainValue,metaObject,editorFactory, context);
@@ -141,15 +113,15 @@ define([
 			}
 			if (plainValue==null) {
 				if (meta.required) {
-					modelHandle.set("value",modelHandle.typeToValue[meta.validTypes[0].code].value);
+					modelHandle.set("value",modelHandle.typeToValue[meta.groups[0].code].value);
 				} else {
 					modelHandle.set("value",null);
 				}	
 			}else{
-				if (meta.validTypes.length>1 && !meta.type_property) {
+				if (meta.groups.length>1 && !meta.typeProperty) {
 					throw new Error("more than one type defined but no type property");
 				}
-				var type=metaHelper.getFromValidTypes(meta.validTypes,typeCode);
+				var type=metaHelper.getFromValidTypes(meta.groups,typeCode);
 				if (type==null) {
 					throw new Error("type "+typeCode+" is invalid");
 				}
@@ -358,9 +330,6 @@ define([
 				modelHandle.set("oldValue",[]);
 			}else{
 				var modelArray=modelHandle.value;
-				var childMeta={};
-				lang.mixin(childMeta,meta);
-				childMeta.array=false;
 				array.forEach(plainValue,function(element,i) {
 					var model=modelArray[i];
 					if (model==null) {
@@ -368,7 +337,7 @@ define([
 					}else {
 						this.resetMeta(model);
 					}
-					(cascadeAttribute || this.cascadeAttribute).apply(this,[childMeta,element,model,editorFactory, context]);
+					(cascadeAttribute || this.cascadeAttribute).apply(this,[meta.items,element,model,editorFactory, context]);
 					modelArray.push(model);
 				},this);
 				modelHandle.set("oldValue",plainValue);
@@ -393,24 +362,7 @@ define([
 					modelHandle);
 			}
 		},
-		createMeta: function(parent) {
-			// summary:
-			//		create a meta object
-			// returns: dojo/Stateful
-			var meta= new MetaModel({__type:"meta",state:"",message:null});
-			meta.set("tmp",new Stateful());
-			meta.parent=parent;
-			return meta;	
-		},
-		resetMeta: function(/*dojo/Stateful*/meta) {
-			// summary:
-			//		rest meta object
-			// meta: dojo/Stateful
-			meta.set("tmp",new Stateful());
-			meta.set("message",null);
-			meta.set("state","");
-			return meta;	
-		},
+
 		cascadeAttribute: function(/*Object*/meta, /*Object*/plainValue, /*dojo/Stateful*/modelHandle, /*gform/EditorFactory*/editorFactory, /*gform/Context*/context) {
 			// summary:
 			//		delegate the update to the appropriate function

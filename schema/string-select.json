@@ -1,0 +1,12 @@
+{
+	"editor": {"type": "string", "values":["string-select"]},
+	"type": {"type": "string", "values":["string"]},
+	"required": {"type": "boolean"},
+	"values": {"type": "object-array", "group": {"attributes": 
+																									[				
+																										{"code": "value", "type": "string", "required": true},
+																										{"code": "label", "type": "string", "required": false},
+																									]
+																							}
+						}	
+}

@@ -1,0 +1,20 @@
+[
+	{code: "type", "type": "string", "enum":["array"]},
+	{code: "minItems", "type": "number"},
+	{code: "maxItems", "type": "number"},
+	items: 
+		{
+			type: "array",
+			items:{
+				type: {
+					{
+						type: "object,
+						properties: {
+							code: {type: "string"},
+							attributes: {$ref: "attributes"}	
+						}
+					}				
+				}
+			}
+		}
+}

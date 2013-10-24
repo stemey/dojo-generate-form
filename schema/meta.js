@@ -19,8 +19,6 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
 			}
 			if (typeof attribute.type == "string") {
 				return attribute.type;
-			}else{
-				return attribute.type.code;
 			}
  		},
 		getTypeProperty : function(attribute) {
@@ -68,13 +66,19 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
 			return !meta.validTypes;
 		},
 		isArray: function(meta) {
-			return meta.array;
+			return meta.type== "array";
 		},
 		isMap: function(meta) {
-			return meta.map;
+			return meta.type = "map";
+		},
+		isSingleObject: function(meta) {
+			return meta.type == "object";
+		},
+		isMultiObject: function(meta) {
+			return  meta.type=="multi-object";
 		},
 		isComplex: function(meta) {
-			return meta.validTypes;
+			return  this.isSingleObject() || this.isMultiObject();
 		},
 		createElement: function(meta) {
 			var element ={};
@@ -82,19 +86,19 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
 			delete element.array;
 			return element;	
 		},
-		getFromValidTypes: function(/*Array*/validTypes, /*String*/typeCode) {
+		getFromValidTypes: function(/*Array*/groups, /*String*/typeCode) {
 			// summary:
 			//		get the schema for a certain type from the array of types.
-			// validTypes:
+			// groups:
 			//		the array of valid types. This is a required property of complex attributes.
 			// typeCode:
 			//		the code of one of the types in the array.
 			// returns: Object
 			//		returns the element of the validTypes array with the specified code 
-			if (validTypes.length==1) {
-				return validTypes[0];
+			if (groups.length==1) {
+				return groups[0];
 			}
-			var types=array.filter(validTypes,function(type) {
+			var types=array.filter(groups,function(type) {
 				if (type.code==typeCode) {
 					return type;
 				}

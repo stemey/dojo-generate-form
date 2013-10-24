@@ -1,0 +1,7 @@
+[
+		{"code": "type", "type": "string-select", "values":["primitive-array"]},
+		{"code": "minItems", "type": "number"},
+		{"code": "maxItems", "type": "number"},
+		{"code": "items", "type": "multi-object", "groupType": "editor", "groups": {"$ref": "primitive-types"}}
+]
+

@@ -4,13 +4,20 @@ dependencies = {
 	optimize:"shrinksafe",
 	stripConsole: "normal",
 	cssOptimize: "comments",
-	layers: [{
-		name: "gform.js",
+	layers: [
+		{
+		name: "gform-layout.js",
 		dependencies: [
 			"gform/createStandardEditorFactory",
 			"gform/createLayoutEditorFactory",
 			"gform/Editor",
-		]}
+		]},
+		{
+		name: "gform-mobile.js",
+		dependencies: [
+			"gform/mobile/createMobileEditorFactory",
+			"gform/Editor",
+		]},
 	],
 	prefixes: [
 		[ "dijit", "../dijit" ],
