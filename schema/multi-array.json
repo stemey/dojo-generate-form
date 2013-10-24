@@ -1,0 +1,33 @@
+[
+	{"code": "code", "type": "string", "required": true},
+	{"code": "type", "type": "string", "values":["multi-array"], "required": true},
+	{"code": "minItems", "type": "number"},
+	{"code": "maxItems", "type": "number"},
+	{"code": "typeCode", "type": "string"},
+	{"code": "items", "type": "multi-array", "typeCode": "type", "groups": {"$ref": "groups"}}
+]
+"maybe add typeCode to items object"
+
+
+"primitive array"
+{
+   "code": "as",
+		"items": {
+				"type":"string"
+			}
+}
+"single-array"
+{
+   "code": "as",
+		"items": {
+				"attributes":[]
+			}
+}
+"multi-array"
+{
+   "code": "as",
+		"typeCode":"",
+		"items": {"groups": []}
+}
+
+

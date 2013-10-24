@@ -1,0 +1,6 @@
+[
+	{"code": "code", "type": "string", "required": true},
+	{"code": "editor", "type": "string", "values":["multi-object"], "required": true},
+	{"code": "typeCode", "type": "string"},
+	{"code": "groups", "type": "multi-map", "typeCode": "groupType", "items": {"$ref": "groups-map"}}
+}

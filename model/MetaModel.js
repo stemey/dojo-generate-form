@@ -9,6 +9,18 @@ define([ "dojo/_base/array", //
 	return declare([Stateful], {
 	// summary:
 	//		Provides access to sibling attributes of modelHandle. 
+
+		// schema:,
+		//		the schema of this model
+		schema:null	,
+
+		// parent:,
+		//		the parent model
+		parent:null	,
+
+		editorFactory: null,
+
+
 		getPath: function(modelHandle) {
 			// summary:
 			//		get the absolute path to the current attribute
@@ -34,5 +46,22 @@ define([ "dojo/_base/array", //
 			//		WatchHandle
 			return this.parent.value[attributeCode].watch("value",watchCallback);
 		},
-	})
+		createMeta: function(schema) {
+			// summary:
+			//		create a meta object
+			// returns: dojo/Stateful
+			var meta= this.editorFactory.createMeta(schema);
+			meta.set("tmp",new Stateful());
+			meta.parent=this;
+			return meta;	
+		},
+		resetMeta: function(/*dojo/Stateful*/meta) {
+			// summary:
+			//		rest meta object
+			// meta: dojo/Stateful
+			meta.set("tmp",new Stateful());
+			meta.set("message",null);
+			meta.set("state","");
+			return meta;	
+		},	})
 });

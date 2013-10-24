@@ -1,0 +1,5 @@
+[
+	{"code": "type", "type": "string", "values":["listpane"], "required": true},
+	{"code": "description", "type": "string"},	
+	{"code": "attributes", "type": "multi-array", "typeCode": "editor", "groups": {"$ref": "attributes"}}
+}
