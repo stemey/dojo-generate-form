@@ -1,8 +1,9 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
-"dojo/Stateful"
-], function(array, lang, declare, Stateful) {
+"dojo/Stateful",//
+"./equals",
+], function(array, lang, declare, Stateful, equals) {
 	// module: 
 	//		gform/Resolver
 
@@ -17,8 +18,10 @@ define([ "dojo/_base/array", //
 		// parent:,
 		//		the parent model
 		parent:null	,
+		state:"",
 
 		editorFactory: null,
+		tmp:{},
 
 
 		getPath: function(modelHandle) {
@@ -54,6 +57,9 @@ define([ "dojo/_base/array", //
 			meta.set("tmp",new Stateful());
 			meta.parent=this;
 			return meta;	
+		},
+		hasChanged: function() {
+			return !equals(this.getPlainValue(), this.oldValue);
 		},
 		resetMeta: function(/*dojo/Stateful*/meta) {
 			// summary:

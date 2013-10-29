@@ -2,18 +2,28 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "dojox/mvc/at",//
+"../model/MultiGroup",//
 "dijit/layout/TabContainer",//
 "./DecoratorWidget",//
 "../AttributeFactoryFinder",//
 "../model/updateModelHandle",
 "dojo/on",
 
-], function(array, lang, declare, at, TabContainer, DecoratorWidget,
+], function(array, lang, declare, at, MultiGroup, TabContainer, DecoratorWidget,
 		AttributeFactoryFinder, updateModelHandle, on) {
 
-	return declare("app.Groupfactory", null, {
+	return declare( [], {
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
+		},
+		createModel: function(meta, plainValue) {
+			var groups = [];
+			meta.tabs.forEach( function(group) {
+				groups.push(this.editorFactory.createGroupModel(group));
+			}, this);
+			var model = new MultiGroup({groups:groups});
+			model.update(plainValue);
+			return model;
 		},
 		createAttribute : function(attribute, modelHandle) {
 			var factory = this.editorFactory.attributeFactoryFinder
@@ -24,16 +34,17 @@ define([ "dojo/_base/array", //
 			var tc = new TabContainer({
 				style : "height: 100%; width: 100%;"
 			});
-			array.forEach(group.tabs, function(tab) {
+			for (var index =0; index<group.tabs.length;index++) {
+				var tab = group.tabs[index];
 				if (!tab.groupType) {
 					tab.groupType="listpane";
 				}
-				var tabWidget = this.editorFactory.create(tab, modelHandle, ctx);
+				var tabWidget = this.editorFactory.create(tab, modelHandle.getModelByIndex(index), ctx);
 				tabWidget.set("title", tab.label);
 				tabWidget.set("meta",tab);
 				tc.addChild(tabWidget);
 				tc.on("state-changed", lang.hitch(this,"onValidChanged"));
-			}, this);
+			};
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
 		},

@@ -61,17 +61,8 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		setMetaAndPlainValue: function(meta,value) {
 		// summary:
 		//		Change the schema and the value simultaneously.
-			if (value==null) {
-				value={};
-			}
 			this.meta=meta;
-			this.modelHandle=updateModelHandle.createMeta();
-			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
-			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
-			// send change event beause oldValue changed and hasChanged will return something new
-			this.emit("value-changed");
-			
-			this._explicitErrorPaths = [];
+			this.setPlainValue(value);
 			
 			this._buildContained();
 		},
@@ -94,13 +85,13 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				value={};
 			}
 			if (!this.modelHandle) {
-				this.modelHandle=updateModelHandle.createMeta();
+				this.modelHandle=this.editorFactory.createGroupModel(this.meta, value);
+			} else {
+				this.modelHandle.update(value);
 			}
 			if (!this.meta) {
 				throw new Error("cannot set plainValue before setting meta");
 			}
-			updateModelHandle.update(this.meta,value,this.modelHandle,this.editorFactory);
-			this.modelHandle.oldValue=getPlainValue(this.modelHandle);
 			
 			this._explicitErrorPaths = [];
 			// send change event because oldValue changed and hasChanged will return something new
@@ -164,29 +155,14 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		//		path like "addresses.0.name"
 		// cb: function
 		//		callback.  
-			var pathElements=path.split(".");
-			var model=this.get("modelHandle");
-			//TODO we need to consult the editorFactory to do this properly. 
-			array.forEach(pathElements,function(pathElement){
-				if (!model) {
-					throw new Error("cannot resolve path "+path);
-				}
-				model=model.value;
-				if (!model) {
-					throw new Error("cannot resolve path "+path);
-				}
-				model=model[pathElement];
-			},this);
-				if (!model) {
-					throw new Error("cannot resolve path "+path);
-				}
+			var model = this.modelHandle.getPath(path);
 			cb(model);
 		},
 		reset: function() {
 		// summary:
 		//		reset the data to its original value.
 			var oldValue=this.modelHandle.oldValue;
-			this.set("plainValue",oldValue);
+			this.modelHandle.update(oldValue);
 			this.inherited(arguments);
 		},	
 		resize: function(dim) {
@@ -233,7 +209,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			this.resize();
 		},
 		_getPlainValueAttr: function() {
-			return getPlainValue(this.modelHandle);
+			return this.modelHandle.getPlainValue();
 		},
 		_setMetaUrlAttr: function(url) {
 			var me = this;
@@ -242,7 +218,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			});
 		},
 		_buildContained: function() {
-			if (this.modelHandle == null) {
+			if (!this.modelHandle) {
 				this.set("plainValue",{});
 			}
 			try {

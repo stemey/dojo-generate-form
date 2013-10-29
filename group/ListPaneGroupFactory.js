@@ -12,7 +12,7 @@ define([ "dojo/_base/array", //
 ], function(array, lang, declare, at, GroupFactory,  ListPaneGroupWidget,
 		AttributeFactoryFinder, on, ListPane, DescriptionWidget, _GroupMixin) {
 
-	return declare("gform.ListPaneGroupFactory", [GroupFactory], {
+	return declare( [GroupFactory], {
 		createWidget : function(group) {
 			var pane = new ListPane({meta:group});
 			pane.addChild(new DescriptionWidget({description:group.description}));

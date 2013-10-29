@@ -9,7 +9,7 @@ define([ "dojo/_base/array", //
 	return declare([MetaModel], {
 	// summary:
 	//		Provides access to sibling attributes of modelHandle. 
-		update: function(/*Object*/plainValue, editorFactory) {
+		update: function(/*Object*/plainValue) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
@@ -24,6 +24,7 @@ define([ "dojo/_base/array", //
 		getPlainValue: function() {
 			return this.value;
 		}
+
 
 	})
 });

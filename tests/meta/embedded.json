@@ -4,25 +4,18 @@
     "attributes":[
         {
             "required":false,
-            "type":"test",
-            validTypes:[
+            "type":"object",
+            "attributes":[
                 {
-                    code:"thing1",
-                    "attributes":[
-                        {
-                            "required":false,
-                            "type":"string",
-                            "label":"name",
-                            "code":"name",
-                            "array":false
-                        }
-                    ]
+                    "required":false,
+                    "type":"string",
+                    "label":"name",
+                    "code":"name",
+                    "array":false
                 }
             ],
             "label":"thing",
             "code":"thing",
-            "array":false
         }
     ],
-    "type_property":"ext_type"
 }

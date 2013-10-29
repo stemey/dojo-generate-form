@@ -10,33 +10,33 @@ define([ "dojo/_base/array", //
 	return declare([MetaModel], {
 	// summary:
 	//		Provides access to sibling attributes of modelHandle.
-		nonNullValue:null, 
 		attributes:null,
+		isNull:true,
 		constructor: function(kwArgs) {
 				lang.mixin(this, kwArgs);
-				this.nonNullValue=new Stateful();
-				this.nonNullValue.value=new Stateful();
 		},
 		update: function(/*Object*/plainValue) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
 			//		the new value of the attribute
-			var initialValue= plainValue || {};
-			this.updateGroup(initialValue);
-			if (plainValue==null) {
-				this.set("value",null);
-			}else{
-				this.set("value",this.nonNullValue.value);
-			}
-			this.set("oldValue",this.getPlainValue(this.value));
+			this.updateGroup(plainValue);
+			this.set("oldValue",this.getPlainValue());
 		},
 		getValue: function(attributeCode) {
-			if (this.value==null) {
+			if (this.isNull) {
 				return null;
 			} else {
 				return this.attributes[attributeCode].getPlainValue();
 			}
+		},
+		setValue: function(attributeCode, value) {
+			if (!this.isNull) {
+				this.getModel(attributeCode).update(value);
+			}
+		},
+		getModel: function(attributeCode) {
+			return this.attributes[attributeCode];
 		},
 		updateGroup: function(/*Object*/plainValue) {
 			// summary:
@@ -50,11 +50,9 @@ define([ "dojo/_base/array", //
 			// editorFactory:
 			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
 			if (plainValue==null) {
-				this.set("value",null);
+				this.isNull=true;
 			}else{
-				if (this.value==null ) {
-					this.value = this.nonNullValue.value;
-				}
+				this.isNull=false;
 				for (var key in this.attributes) {
 					this.attributes[key].update(plainValue[key]);
 				} 
@@ -74,7 +72,7 @@ define([ "dojo/_base/array", //
 			return this.attributes[code];
 		},
 		getPlainValue: function() {
-			if (this.value==null) {
+			if (this.isNull) {
 				return null;
 			} else {
 				var plainValue={};
@@ -82,6 +80,22 @@ define([ "dojo/_base/array", //
 					plainValue[key]=this.attributes[key].getPlainValue();
 				};	
 				return plainValue;
+			}
+		},
+		getPath: function(path) {
+			if (this.isNull) {
+				return null;
+			}	
+			if (typeof path.push != "function") {
+				path = path.split(".");
+			}
+			if (path.length==0) {
+				return this;
+			}else if (path.length==1) {
+				return this.getModel(path[0]);
+			} else{
+				var model = this.getModel(path[0]);
+				return model.getPath(path.slice(2));
 			}
 		}
 	})
