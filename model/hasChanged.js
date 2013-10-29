@@ -16,11 +16,7 @@ define([ "dojo/_base/array", //
 			if (modelHandle==null) {
 				throw new Error("modelHandle is null");
 			}else{
-				if (modelHandle.__type && modelHandle.__type=="meta") {
-					return !equals(getPlainValue(modelHandle.value),modelHandle.oldValue);
-				}else{
-					throw new Error("not a modelHandle");
-				}
+				return modelHandle.hasChanged();
 			}
 	}
 })

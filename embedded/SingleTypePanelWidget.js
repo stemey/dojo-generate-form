@@ -4,12 +4,12 @@ define([ "dojo/_base/array", //
 		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 		"dojo/text!./singletype_embedded_attribute.html", "dojo/text!./singletype_embedded_required_attribute.html",
 		"dijit/layout/StackContainer", "dojo/Stateful","../model/updateModelHandle", "../Editor","../group/_GroupMixin",
-"../layout/_LayoutMixin"
+"../layout/_LayoutMixin", "dijit/form/CheckBox"
 ], function(array, lang, declare, _WidgetBase, _Container, _TemplatedMixin,
 		_WidgetsInTemplateMixin, template, requiredTemplate, StackContainer, Stateful,updateModelHandle,
 		Editor,_GroupMixin,_LayoutMixin) {
 
-	return declare("gform.SingleTypePanelWidget", [ _WidgetBase, _Container,
+	return declare( [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin,_GroupMixin, _LayoutMixin ], {
 
 		templateString : null,
@@ -27,12 +27,12 @@ define([ "dojo/_base/array", //
 			var attribute = this.get("meta");
 				this.panelModel = new dojo.Stateful();
 			this.panelModel.watch("empty", lang.hitch(this,"panelChanged"));
-			this.panelModel.set("empty", modelHandle.value==null);
+			this.panelModel.set("empty", modelHandle.isNull);
 			this.panelModel.set("title", "");
-			modelHandle.watch("value",lang.hitch(this,"modelChanged"));
+			modelHandle.watch("isNull",lang.hitch(this,"modelChanged"));
 			
 			// is not contained in layout container  so should take as much space as necessary -> doLayout=false
-			this.editor = new Editor({doLayout:false,"modelHandle": modelHandle.nonNullValue,"meta": attribute.validTypes[0],editorFactory:this.editorFactory});
+			this.editor = new Editor({doLayout:false,"modelHandle": modelHandle,"meta": attribute,editorFactory:this.editorFactory});
 			this.addChild(this.editor);
 			this.set("target", this.panelModel);
 		},
@@ -46,11 +46,11 @@ define([ "dojo/_base/array", //
 		}, 
 
 		modelChanged: function(propName,old,nu) {
-			if (nu==null && old!=null) {
+			if (nu==true) {
 				if (this.panelModel.get("empty")==false) {
 					this.panelModel.set("empty",true);
 				}
-			}else if (old==null && nu!=null){
+			}else if (nu==false){
 				if (this.panelModel.get("empty")==true) {
 					this.panelModel.set("empty",false);
 				}
@@ -70,14 +70,10 @@ define([ "dojo/_base/array", //
 				var modelHandle=this.get("modelHandle");
 				if (this.panelModel.get("empty")) {
 					this._switchedToNull();
-					if (modelHandle.value!=null) {
-						modelHandle.set("value",null);
-					}
+					modelHandle.set("isNull", true );
 				} else {
 					this._switchedFromNull();
-					if (modelHandle.value==null) {
-						modelHandle.set("value",modelHandle.nonNullValue.value);
-					}
+					modelHandle.set("isNull", false);
 					this.validateAndFire();
 				}
 		}	

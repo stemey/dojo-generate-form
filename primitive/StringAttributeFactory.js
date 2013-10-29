@@ -7,10 +7,11 @@ define([ "dojo/_base/array", //
 "./ValidationTextBox",//
 "../schema/meta",//
 "./mixinTextboxBindings",
-"./dijitHelper"
-], function(array, lang, declare, aspect, Stateful, at, TextBox,  meta, mixinTextboxBindings, dijitHelper) {
+"./dijitHelper",
+"../model/PrimitiveModel"
+], function(array, lang, declare, aspect, Stateful, at, TextBox,  meta, mixinTextboxBindings, dijitHelper, PrimitiveModel) {
 
-	return declare("gform.TextAttributeFactory", [Stateful], {
+	return declare([Stateful], {
 		handles : function(attribute) {
 			return meta.isType(attribute, "string") && !attribute.array;
 		},
@@ -24,6 +25,13 @@ define([ "dojo/_base/array", //
 			return new TextBox(props);
 
 		},
+		createModel: function(schema, plainValue) {
+			var model = new PrimitiveModel();
+			if (typeof plainValue != "undefined") {
+				model.update(plainValue);
+			}
+			return model
+		},	
 		getSchema:function(){
 			var schema={};
 			schema["id"]="string";

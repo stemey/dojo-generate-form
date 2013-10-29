@@ -27,6 +27,16 @@ define([ "dojo/_base/array", //
 			this.decoratorFactory=new DecoratorFactory();
 			this.addConverterForType(urlToIdConverter, "ref");
 		},
+		createGroupModel: function(schema, plainValue) {
+			if (schema.groupType) {
+				return this.getGroupFactory(schema.groupType).createModel(schema, plainValue);
+			} else {
+				return this.defaultGroupFactory.createModel(schema, plainValue);
+			}
+		},
+		createAttributeModel: function(attribute, plainValue) {
+			return this.getAttributeFactory(attribute).createModel(attribute, plainValue);
+		},
 		addGroupFactory: function(id,factory) {
 		// summary:
 		//		add a groupFactory by id
@@ -95,7 +105,7 @@ define([ "dojo/_base/array", //
 			// group: Object
 			//		the group meta data
 			// returns: gform/api/GroupFactory
-			return this.find(group.groupType);
+			return this.find(group);
 		},
 		getGroupFactoryMap: function() {
 			// summary:

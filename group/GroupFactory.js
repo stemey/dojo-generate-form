@@ -5,8 +5,9 @@ define([ "dojo/_base/array", //
 "./DecoratorWidget",//
 "./ExpandableDecoratorWidget",//
 "./AttributeListWidget",//
+"../model/SingleObject",//
 ], function(array, lang, declare, at, DecoratorWidget, ExpandableDecoratorWidget, AttributeListWidget,
-		Resolver) {
+		SingleObject) {
 // module
 //		gform/group/GroupFactory
 
@@ -37,21 +38,26 @@ define([ "dojo/_base/array", //
 		//		the container, that the attribute widgets will be added to.		
 			return new AttributeListWidget({meta:group});
 		},	
+		createModel: function(schema,plainValue) {
+			var attributes = {};
+			schema.attributes.forEach(function(attribute) {
+				var attributeValue = plainValue ? plainValue[attribute.code] : null;
+				attributes[attribute.code]=this.editorFactory.createAttributeModel(attribute, null);
+			}, this);
+			var model = new SingleObject({attributes:attributes});
+			model.update(plainValue);
+			return model;
+		},
 		create : function(group, modelHandle, ctx) {
 			var listWidget = this.createWidget(group);
 
 			array.forEach(group.attributes, function(attribute) {
 				var label = attribute.label;
-				if (!modelHandle.value) {
-					throw new Error("provide a meta object "+attribute.code);
-				}
-				if (!modelHandle.value[attribute.code]) {
-					throw new Error("provide a default value"+attribute.code);
-				}
-	
-				var attributeEditor = this.createAttribute(attribute,
-						modelHandle.value[attribute.code], ctx);
-				var widget = this.editorFactory.createDecorator(attribute, modelHandle.value[attribute.code]);
+
+				var attributeModel = modelHandle.getModel(attribute.code);
+				var attributeEditor = this.createAttribute(attribute, attributeModel
+						, ctx);
+				var widget = this.editorFactory.createDecorator(attribute, attributeModel);
 				if (attributeEditor != null) {
 					widget.addChild(attributeEditor);
 					listWidget.addChild(widget);
