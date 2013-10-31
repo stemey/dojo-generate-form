@@ -1,5 +1,6 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
+"dojo/aspect",//	
 "dojo/_base/declare",//
 "dojox/mvc/at",//
 "../model/MultiGroup",//
@@ -9,7 +10,7 @@ define([ "dojo/_base/array", //
 "../model/updateModelHandle",
 "dojo/on",
 
-], function(array, lang, declare, at, MultiGroup, TabContainer, DecoratorWidget,
+], function(array, lang, aspect, declare, at, MultiGroup, TabContainer, DecoratorWidget,
 		AttributeFactoryFinder, updateModelHandle, on) {
 
 	return declare( [], {
@@ -39,11 +40,12 @@ define([ "dojo/_base/array", //
 				if (!tab.groupType) {
 					tab.groupType="listpane";
 				}
-				var tabWidget = this.editorFactory.create(tab, modelHandle.getModelByIndex(index), ctx);
+				var model = modelHandle.getModelByIndex(index);
+				var tabWidget = this.editorFactory.create(tab, model , ctx);
 				tabWidget.set("title", tab.label);
 				tabWidget.set("meta",tab);
 				tc.addChild(tabWidget);
-				tc.on("state-changed", lang.hitch(this,"onValidChanged"));
+				aspect.after(modelHandle.getModelByIndex(index), "onChange",lang.hitch(this,"onValidChanged", tabWidget, model, tab.label ));
 			};
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
@@ -58,13 +60,11 @@ define([ "dojo/_base/array", //
 			},this);
 			return attributes;
 		},
-		onValidChanged: function(e) {
-			var tabWidget=e.source;
-			var tab=tabWidget.get("meta");
-			if (tabWidget.get("errorCount")>0) {
-				tabWidget.set("title", tab.label + "<span class='errorTooltipNode'>" + tabWidget.get("errorCount") + "</span>");
+		onValidChanged: function(tabWidget, model, label) {
+			if (model.get("errorCount")>0) {
+				tabWidget.set("title", label + "<span class='errorTooltipNode'>" + model.get("errorCount") + "</span>");
 			} else {
-				tabWidget.set("title", tab.label);
+				tabWidget.set("title", label);
 			}
 		},		
 		getSchema: function() {

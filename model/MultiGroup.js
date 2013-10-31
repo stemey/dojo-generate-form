@@ -29,6 +29,11 @@ define([ "dojo/_base/array", //
 				});
 			}
 		},
+		iterateChildren: function(cb) {
+			for (var index =0; index< this.groups.length;index++) {
+				cb.call(this, this.getModelByIndex(index));
+			}
+		},
 		getModelByIndex: function(index) {
 			return this.groups[index];
 		},

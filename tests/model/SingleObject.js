@@ -42,6 +42,15 @@ define(["doh/runner","dojo/_base/lang", "dojo/Stateful", "gform/model/SingleObje
 				so.update({});	
 				var plainValue = so.getPlainValue(so);
 				assertEqual({stringP: null, booleanP: null, numberP:null}, plainValue);
+      },
+			function testState(){
+				assertEqual(0, so.errorCount);
+				so.getAttribute("stringP").set("state","Error");	
+				assertEqual(1, so.errorCount);
+      },
+			function testChanged(){
+				so.setValue("stringP", "x");	
+				assertEqual(1, so.changedCount);
       }
     ]);
 
