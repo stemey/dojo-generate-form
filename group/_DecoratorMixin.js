@@ -1,9 +1,9 @@
-define([ "dojo/_base/declare", "dojo/_base/lang",
+define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
 		"dijit/Tooltip","./_GroupMixin","../model/hasChanged", "dojo/i18n", "dojo/i18n!../nls/messages"
-], function(declare, lang,	Tooltip,_GroupMixin, hasChanged, i18n, messages) {
+], function(declare, lang,aspect,	Tooltip,_GroupMixin, hasChanged, i18n, messages) {
 // module:
 //		gform/group/_DecoratorMixin	
-	return declare("gform.group._DecoratorMixin",[ _GroupMixin ], {
+	return declare([  ], {
 		// summary:
 		//		Displays and manages an attribute's static and dynamic meta data. Should be mixed into Decorators.
 		// description:
@@ -47,8 +47,10 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 				this.messageWatch=this.modelHandle.watch("message",lang.hitch(this,"onMessageChange"));
 				this.oldValueWatch=this.modelHandle.watch("oldValue",lang.hitch(this,"onOldValueChange"));
 				this.valueWatch=this.modelHandle.watch("value",lang.hitch(this,"onModelValueChange"));
-				this.on("value-changed",lang.hitch(this,"onValueChange"));
-				this.on("state-changed",lang.hitch(this,"onStateChange"));
+				aspect.after(this.modelHandle, "onChange",lang.hitch(this,"updateState"));
+				//this.modelHandle.watch("changedCount",lang.hitch(this,"updateState"));
+				//this.on("value-changed",lang.hitch(this,"onValueChange"));
+				//this.on("state-changed",lang.hitch(this,"onStateChange"));
 			}else{
 				console.log("modelHandle is null "+this.label);
 			}
@@ -81,8 +83,8 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		},
 		startup: function() {
 			this.inherited(arguments);
-			var children = this.getChildrenToValidate();
-			this.singleNonValidatingChild=children.length==1 && !children[0].validate;
+			//var children = this.getChildrenToValidate();
+			//this.singleNonValidatingChild=children.length==1 && !children[0].validate;
 		},
 		destroy: function() {
 			this.inherited(arguments);
@@ -99,6 +101,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 		},
 		onModelValueChange: function(propName,old,nu) {
 			if (this.singleNonValidatingChild && this.modelHandle.state!="") {
+				// value changes set state back to unvalidated
 				this.modelHandle.set("state","");
 			}
 			this.updateState();
@@ -124,19 +127,18 @@ define([ "dojo/_base/declare", "dojo/_base/lang",
 			if (!this.modelHandle) {
 				return;
 			}
-			if (this.modelHandle.state=="") {
-				if (hasChanged(this.modelHandle)) {
-					this.set("state","Changed");
-					this.changesTooltipNode.style.display="";
-				}else{
-					this.set("state","");
-					this.changesTooltipNode.style.display="none";
-				}
-				this.errorTooltipNode.style.display="none";
-			}else if (this.modelHandle.state=="Error"){
+			if (this.modelHandle.errorCount>0){
 				this.changesTooltipNode.style.display="none";
 				this.errorTooltipNode.style.display="";
-				this.set("state","Error");
+				//this.set("state","Error");
+			}	else if (this.modelHandle.changedCount>0) {
+				//this.set("state","Changed");
+				this.changesTooltipNode.style.display="";
+				this.errorTooltipNode.style.display="none";
+			}else{
+				//this.set("state","");
+				this.changesTooltipNode.style.display="none";
+				this.errorTooltipNode.style.display="none";
 			}
 		},
 		onMessageChange: function (propname, old, nu) {

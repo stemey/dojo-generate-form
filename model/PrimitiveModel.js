@@ -9,20 +9,32 @@ define([ "dojo/_base/array", //
 	return declare([MetaModel], {
 	// summary:
 	//		Provides access to sibling attributes of modelHandle. 
-		update: function(/*Object*/plainValue) {
+		value:null,
+		oldValue:null,
+		update: function(/*Object*/plainValue, bubble) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
 			//		the new value of the attribute
-			if (typeof plainValue=="undefined") {
-				this.set("value",null);
-			}else{
-				this.set("value",plainValue);
+			this._execute( function() {
+				if (typeof plainValue=="undefined") {
+					this.set("value",null);
+				}else{
+					this.set("value",plainValue);
+				}
+				this.set("oldValue",this.value);
+				this.computeProperties();
+			});
+
+			if (this.parent && bubble!==false) {
+				this.parent.onChange();	
 			}
-			this.set("oldValue",this.value);
+
 		},
 		getPlainValue: function() {
 			return this.value;
+		},
+		iterateChildren: function( cb) {
 		}
 
 

@@ -12,16 +12,19 @@ define([ "dojo/_base/array", //
 	//		Provides access to sibling attributes of modelHandle.
 		attributes:null,
 		isNull:true,
-		constructor: function(kwArgs) {
-				lang.mixin(this, kwArgs);
-		},
-		update: function(/*Object*/plainValue) {
+		update: function(/*Object*/plainValue, bubble) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
 			//		the new value of the attribute
-			this.updateGroup(plainValue);
-			this.set("oldValue",this.getPlainValue());
+			this._execute( function() {
+				this.updateGroup(plainValue);
+				this.set("oldValue",this.getPlainValue());
+				this.computeProperties();
+			});
+			if (this.parent && bubble!==false) {
+				this.parent.onChange();	
+			}
 		},
 		getValue: function(attributeCode) {
 			if (this.isNull) {
@@ -54,7 +57,7 @@ define([ "dojo/_base/array", //
 			}else{
 				this.isNull=false;
 				for (var key in this.attributes) {
-					this.attributes[key].update(plainValue[key]);
+					this.attributes[key].update(plainValue[key], this.bubble);
 				} 
 			}
 		},
@@ -80,6 +83,11 @@ define([ "dojo/_base/array", //
 					plainValue[key]=this.attributes[key].getPlainValue();
 				};	
 				return plainValue;
+			}
+		},
+		iterateChildren: function( cb) {
+			for (var key in this.getAttributeCodes()) {
+				cb.call(this, this.getAttribute(this.getAttributeCodes()[key]));
 			}
 		},
 		getPath: function(path) {
