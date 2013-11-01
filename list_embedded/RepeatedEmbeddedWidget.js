@@ -19,11 +19,10 @@ define([ "dojo/_base/lang", "dojo/dom-class",  "dojo/_base/array", "dojo/_base/d
 			panelModel.set("title", "");
 			var me=this;
 			var modelHandle = this.get("modelHandle");
-			if (this.meta.validTypes && this.meta.validTypes.length>1) {
-				this.editor = new PolymorphicMemberWidget({"shown":false, "modelHandle": modelHandle, "meta": this.meta, nullable: false, editorFactory: this.editorFactory});
+			if (this.groups) {
+				this.editor = new PolymorphicMemberWidget({"shown":false, "modelHandle": modelHandle, "meta": this.groups, nullable: false, editorFactory: this.editorFactory});
 			}else{
-				var meta = this.meta.validTypes ? this.meta.validTypes[0] : this.meta;
-				this.editor = new Editor({"shown":false, "modelHandle":modelHandle, "meta":meta,editorFactory:this.editorFactory});
+				this.editor = new Editor({"shown":false, "modelHandle":modelHandle, "meta":this.group,editorFactory:this.editorFactory});
 			}
 		  //var titlePane = new TitlePane({title:at(modelHandle,"index")});
 			//titlePane.addChild(editor);

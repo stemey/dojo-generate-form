@@ -18,22 +18,15 @@ define([ "dojo/_base/array", //
 ], function(array, lang, aspect, Editor, declare, at, 
 		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList, RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, StatefulArray, _LayoutMixin) {
 
-	return declare("app.RepeatedEmbeddedAttributeFactory", [], {
+	return declare([], {
 
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		handles : function(attribute) {
-			return attribute != null && ((attribute.type && 	attribute.type.attributes) || attribute.validTypes)
-					&& attribute.array;
+			return attribute != null && attribute.type == "single-array";
 		},
 		create : function(attribute, modelHandle) {
-
-
-			if (modelHandle.value==null) {
-				throw new "provide a default value";
-			}	
-
 
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
@@ -42,7 +35,7 @@ define([ "dojo/_base/array", //
 			});
 
 			// TODO we need to clone here
-			var childMeta = attribute.validTypes? attribute:attribute.type;
+			var childMeta = attribute.group
 
 			var widgetList = new WidgetList();
 			widgetList.set("partialRebuild", true);
@@ -56,15 +49,13 @@ define([ "dojo/_base/array", //
 			select.addChild(widgetList);
 			
 
+			
 			if (attribute.reorderable!==false) {
+				var me = this;
 				var copy = function(original) {
-					var plainValue= getPlainValue(original);
-					var newMh=updateModelHandle.createMeta();
-					if (attribute.validTypes.length>1) {
-						updateModelHandle.updatePolyObject(attribute,plainValue,newMh, this.editorFactory);
-					}else{
-						updateModelHandle.updateObject(attribute,plainValue,newMh, this.editorFactory);
-					}
+					var plainValue= original.getPlainValue();
+					var newMh=me.editorFactory.createGroupModel(group);
+					newMh.update(plainValue);
 					newMh.oldValue=plainValue;
 					return newMh;
 				}
@@ -78,8 +69,10 @@ define([ "dojo/_base/array", //
 			return select;
 
 		},
-		updateModelHandle: function(meta,plainValue,modelHandle) {
-			updateModelHandle.updateArray(meta,plainValue,modelHandle,this.editorFactory);
+		createModel: function(meta,plainValue) {
+			var model = new ArrayModel();
+			model.update(plainValue);
+			return model;
 		},
 /* getSchema() is implemented in gform/embedded/EmbeddedAttributeFactory */
 	})

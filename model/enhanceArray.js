@@ -8,19 +8,21 @@ define([
 //		gform/ValidationRegistrar
 
 
-	return function(modelHandle) {
-			modelHandle.value.watch(function(){
+	return function(arrayModel) {
+			arrayModel.value.watch(function(){
 				var i=0;
-				array.forEach(modelHandle.value,
+				array.forEach(arrayModel.value,
 					function(e){
 						e.set("index",i++);
+						e.parent=arrayModel;
 					}
 				)
 			});
 			var i=0;
-			array.forEach(modelHandle.value,
+			array.forEach(arrayModel.value,
 				function(e){
 					e.set("index",i++);
+					e.parent=arrayModel;
 				}
 			)
 		}		
