@@ -13,10 +13,10 @@ define([ "dojo/_base/array", //
 "./RepeatedEmbeddedWidget",//
 "../model/updateModelHandle",//
 "../model/getPlainValue",//
-"dojox/mvc/StatefulArray",//
+"../model/ArrayModel",//
 "../layout/_LayoutMixin"
 ], function(array, lang, aspect, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList, RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, StatefulArray, _LayoutMixin) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList, RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, ArrayModel, _LayoutMixin) {
 
 	return declare([], {
 
@@ -42,7 +42,7 @@ define([ "dojo/_base/array", //
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {
-				meta : childMeta,
+				group : childMeta,
 				_relTargetProp : "modelHandle",
 				editorFactory: this.editorFactory
 			});
@@ -71,6 +71,15 @@ define([ "dojo/_base/array", //
 		},
 		createModel: function(meta,plainValue) {
 			var model = new ArrayModel();
+			var me = this;
+			var ef = function(value) {
+				var model = me.editorFactory.createGroupModel(meta.group);
+				if (value) {
+					model.update(value);
+				}
+				return model;
+			}
+			model.elementFactory = ef;
 			model.update(plainValue);
 			return model;
 		},

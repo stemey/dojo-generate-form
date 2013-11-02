@@ -7,17 +7,14 @@
             "label":"things",
             "code":"things",
             "array":true,
-            "type":"ExampleThing",
-            "validTypes":[{
-                "code":"ExampleThing",
-                "label":"ExampleThing",
+            "type":"single-array",
+            "group":{
                 "attributes":[
                     {
                         "required":false,
-                        "type":"boolean",
+                        "type":"string",
                         "label":"yes",
                         "code":"yes",
-                        "array":false
                     }
                     ,
                     {
@@ -25,11 +22,9 @@
                         "type":"string",
                         "label":"message",
                         "code":"message",
-                        "array":false,
                     }
                 ],
-                "type_property":"ext_type"
-            }]
+            }
         }
     ],
     "type_property":"ext_type"
