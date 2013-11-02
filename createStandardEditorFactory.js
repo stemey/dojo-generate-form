@@ -27,7 +27,7 @@ define([
 //"./primitive/SimpleTextareaAttributeFactory",//
 //"./group/AttributeListWidget",//
 //"./group/ColumnsGroupFactory",//
-//"./list_embedded/RepeatedEmbeddedAttributeFactory",//
+"./list_embedded/RepeatedEmbeddedAttributeFactory",//
 //"./map_embedded/RepeatedEmbeddedAttributeFactory",//
 //"./map_primitive/PrimitiveMapAttributeFactory",//
 //"./list_table/RepeatedEmbeddedAttributeFactory"//
@@ -42,10 +42,12 @@ ListPaneGroupFactory,
 //		MappedCheckedMultiSelectAttributeFactory,
 //		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
 //		TimeAttributeFactory, 
-		EmbeddedAttributeFactory
+		EmbeddedAttributeFactory,
 //	NumberAttributeFactory, 
 //		CurrencyAmountAttributeFactory, MappedContentPaneFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory,
-//		AttributeListWidget, ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, TableListAttributeFactory
+//		AttributeListWidget, ColumnsGroupFactory, 
+RepeatedEmbeddedAttributeFactory 
+//PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, TableListAttributeFactory
 ) {
 // module:
 //		gform/createStandardEditorFactory
@@ -64,7 +66,7 @@ ListPaneGroupFactory,
 			});
 
 			var attributeFactories = [ //
-		//	       				new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory}),//
+			       				new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 		//	       				new MapEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 		//	       				new PrimitiveMapAttributeFactory({editorFactory:editorFactory}),//
 			       				new EmbeddedAttributeFactory({editorFactory:editorFactory}),//

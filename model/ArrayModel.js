@@ -37,7 +37,7 @@ define([ "dojo/_base/array", //
 				this.value.splice(0,this.value.length);
 				this.set("oldValue",[]);
 			}else if (Array.isArray(plainValue)) {
-				var removeCount= plainValue.length - this.value.length;
+				var removeCount= this.value.length - plainValue.length;
 				if (removeCount>0) {	
 					this.value.splice(0, removeCount);
 				}

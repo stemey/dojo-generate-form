@@ -6,9 +6,8 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare", "./meta" ]
 	var LabelHelper= declare([ ], {
 	// summary:
 	//		provides convenience functions for schema access. Also abstracts over schema changes.
-		getLabel : function(attribute, modelHandle) {
-			var type=metaHelper.getComplexType(attribute, modelHandle); 
-			return this.getTypeLabel(type, modelHandle);
+		getLabel : function(group, modelHandle) {
+			return this.getTypeLabel(group, modelHandle);
 		},
 		getTypeLabel : function(type, modelHandle) {
 			var labelAttribute = null;
