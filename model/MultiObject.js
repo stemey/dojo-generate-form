@@ -28,14 +28,14 @@ define([ "dojo/_base/array", //
 			//		the new value of the attribute
 			if (plainValue==null) {
 				if (this.required) {
-					this.currentTypeCode = this.groups[0].getValue(this.typeProperty);
+					this.set("currentTypeCode", this.groups[0].getValue(this.typeProperty));
 					//this.value= getGroup(this.currentTypeCode);
 				}else {
-					this.currentTypeCode = null;
+					this.set("currentTypeCode", null);
 					//this.value=null;
 				}
 			} else {
-				this.currentTypeCode = plainValue[this.typeProperty];
+				this.set("currentTypeCode", plainValue[this.typeProperty]);
 				//this.value= this.getGroup(this.currentTypCode);
 			} 
 			array.forEach(this.groups,function(group) {
@@ -46,28 +46,41 @@ define([ "dojo/_base/array", //
 			this.set("oldValue",this.getPlainValue());
 		},
 		_currentTypeCodeSetter: function(typeCode) {
+			if (this.currentTypeCode==typeCode) {
+				return;
+			}
 			var prevGroup = this.getGroup(this.currentTypeCode);
 			this._changeAttrValue("currentTypeCode", typeCode);
-			var value = this.getPlainValue();
+			var value = this.getPlainValue() || {};
 			var nextGroup = this.getGroup(this.currentTypeCode);
-			prevGroup.getAttributeCodes().forEach(
-				function(attributeCode) {
-					var nextAttribute =nextGroup.getAttribute(attributeCode);				
-					if (nextAttribute) {
-						value[attributeCode]=prevGroup.getValue(attributeCode);
-					}	
-				}
-			)
+			if (prevGroup && nextGroup) {
+				prevGroup.iterateChildren(
+					function(model) {
+						var attributeCode = model.code;
+						var nextAttribute =nextGroup.getAttribute(attributeCode);				
+						if (nextAttribute) {
+							value[attributeCode]=prevGroup.getValue(attributeCode);
+						}	
+					}
+				);
+			}
 			
 			value[this.typeProperty] = typeCode;
 			this.update(value);
 		},	
+		iterateChildren: function(cb) {
+			if (this.currentTypeCode!=null) {
+				getGroup(this.currentTypeCode).iterateChildren(cb);
+			}
+		},
 		getPlainValue: function() {
-			if (this.currentTypeCode==null) {
+			if (!this.currentTypeCode ) {
 				return null;
 			} else {
 				var group = this.getGroup(this.currentTypeCode);
-				return group.getPlainValue();
+				var value = group.getPlainValue();
+				value[this.typeProperty]=this.currentTypeCode;
+				return value;
 			}
 		}
 	})

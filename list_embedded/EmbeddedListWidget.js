@@ -10,28 +10,31 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 			_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin, _GroupMixin ], {
 		templateString : template,
 		messages:messages,
+		group:null,
+		typeProperty:null,
 		_addElement : function() {
-			var newModelHandle = updateModelHandle.createMeta(this.target);
-			var type=this.attribute.validTypes[0].code;
-			var type_property=this.attribute.type_property;
+			//var model = this.target.createElement();	
+			//var type=this.attribute.validTypes[0].code;
+			
 			var newValue={};
-			newValue[type_property]=type;
-
-			if (this.attribute.validTypes.length>1) {
-				updateModelHandle.updatePolyObject(this.attribute,newValue,newModelHandle, this.editorFactory);
-			}else{
-				updateModelHandle.updateObject(this.attribute,newValue,newModelHandle, this.editorFactory);
+			if (this.typeProperty){
+				newValue[this.typeProperty]=this.group.code;
 			}
-			this.target.value.push(newModelHandle);
-			this.emit("state-changed");
-			this.emit("value-changed");
+			//if (this.attribute.validTypes.length>1) {
+			//	updateModelHandle.updatePolyObject(this.attribute,newValue,newModelHandle, this.editorFactory);
+			//}else{
+			//	updateModelHandle.updateObject(this.attribute,newValue,newModelHandle, this.editorFactory);
+			//}
+			this.target.push({});
+			//this.emit("state-changed");
+			//this.emit("value-changed");
 		},
 		postCreate : function() {
 			this.addButton.set("onClick", lang.hitch(this, "_addElement"));
-			var validators = this.editorFactory.getModelValidators(this.attribute);
-			this.validator = new Validator({modelHandle:this.target, validators:validators});
-			var validateFn = this.editorFactory.createValidateFunction(this.validator);
-			this.on("value-changed", validateFn);	
+			//var validators = this.editorFactory.getModelValidators(this.attribute);
+			//this.validator = new Validator({modelHandle:this.target, validators:validators});
+			//var validateFn = this.editorFactory.createValidateFunction(this.validator);
+			//this.on("value-changed", validateFn);	
 		}
 	});
 

@@ -1,6 +1,6 @@
 define ("gform.tests.module",[
-"gform/tests/getPlainValue",//
-"gform/tests/updateModelHandle",//
+//"gform/tests/getPlainValue",//
+//"gform/tests/updateModelHandle",//
 "gform/tests/refresolve",//
 "gform/tests/convertSchema",//
 "gform/tests/schemaGenerator",//

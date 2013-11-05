@@ -29,13 +29,21 @@ define([ "dojo/_base/array", //
 		},
 		createGroupModel: function(schema, plainValue) {
 			if (schema.groupType) {
-				return this.getGroupFactory(schema.groupType).createModel(schema, plainValue);
+				factory = this.getGroupFactory(schema.groupType);
 			} else {
-				return this.defaultGroupFactory.createModel(schema, plainValue);
+				factory = this.defaultGroupFactory;
 			}
+			if (factory==null) {
+				throw new Error("cannot find group factory for type "+group.type);
+			}
+			return factory.createModel(schema, plainValue);
 		},
 		createAttributeModel: function(attribute, plainValue) {
-			return this.getAttributeFactory(attribute).createModel(attribute, plainValue);
+			var factory = this.getAttributeFactory(attribute);
+			if (factory==null) {
+				throw new Error("cannot find attribute factory for type "+attribute.type);
+			}
+			return factory.createModel(attribute, plainValue);
 		},
 		addGroupFactory: function(id,factory) {
 		// summary:
