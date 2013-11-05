@@ -11,7 +11,7 @@ define([
 //"./list_primitive/RefListAttributeFactory",//
 "./primitive/StringAttributeFactory",//
 //"./primitive/ReferenceAttributeFactory",//
-//"./primitive/BooleanAttributeFactory",//
+"./primitive/BooleanAttributeFactory",//
 //"./primitive/SelectAttributeFactory",//
 //"./primitive/CheckedSelectAttributeFactory",//
 //"./primitive/MappedCheckedMultiSelectAttributeFactory",//
@@ -20,6 +20,7 @@ define([
 //"./primitive/DateAttributeFactory",//
 //"./primitive/TimeAttributeFactory",//
 "./embedded/EmbeddedAttributeFactory",//
+"./embedded/MultiEmbeddedAttributeFactory",//
 //"./primitive/NumberAttributeFactory",//
 //"./primitive/CurrencyAmountAttributeFactory",//
 //"./primitive/MappedContentPaneFactory",//
@@ -28,6 +29,7 @@ define([
 //"./group/AttributeListWidget",//
 //"./group/ColumnsGroupFactory",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//
+"./list_embedded/RepeatedMultiEmbeddedAttributeFactory",//
 //"./map_embedded/RepeatedEmbeddedAttributeFactory",//
 //"./map_primitive/PrimitiveMapAttributeFactory",//
 //"./list_table/RepeatedEmbeddedAttributeFactory"//
@@ -38,15 +40,17 @@ ListPaneGroupFactory,
 //		TitlePaneGroupFactory, ListGroupFactory,PrimitiveListAttributeFactory, RefListAttributeFactory,
  StringAttributeFactory, 
 //ReferenceAttributeFactory,
-//		BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, 
+		BooleanAttributeFactory, 
+// SelectAttributeFactory, CheckedSelectAttributeFactory, 
 //		MappedCheckedMultiSelectAttributeFactory,
 //		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
 //		TimeAttributeFactory, 
-		EmbeddedAttributeFactory,
+		EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory,
 //	NumberAttributeFactory, 
 //		CurrencyAmountAttributeFactory, MappedContentPaneFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory,
 //		AttributeListWidget, ColumnsGroupFactory, 
-RepeatedEmbeddedAttributeFactory 
+RepeatedEmbeddedAttributeFactory ,
+RepeatedMultiEmbeddedAttributeFactory 
 //PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, TableListAttributeFactory
 ) {
 // module:
@@ -67,9 +71,11 @@ RepeatedEmbeddedAttributeFactory
 
 			var attributeFactories = [ //
 			       				new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory}),//
+			       				new RepeatedMultiEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 		//	       				new MapEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 		//	       				new PrimitiveMapAttributeFactory({editorFactory:editorFactory}),//
 			       				new EmbeddedAttributeFactory({editorFactory:editorFactory}),//
+			       				new MultiEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 		//	       				new MappedCheckedMultiSelectAttributeFactory({editorFactory:editorFactory}), // 
 		//	       				new CheckedMultiSelectAttributeFactory({editorFactory:editorFactory}), // 
 		//	       				new MappedSelectAttributeFactory({editorFactory:editorFactory}),//
@@ -78,7 +84,7 @@ RepeatedEmbeddedAttributeFactory
 		//	       				new ReferenceAttributeFactory({editorFactory:editorFactory}),//
 		//	       				new NumberAttributeFactory({editorFactory:editorFactory}),//
 		//	       				new SelectAttributeFactory({editorFactory:editorFactory}), // 
-		//	       				new BooleanAttributeFactory({editorFactory:editorFactory}), // 
+			       				new BooleanAttributeFactory({editorFactory:editorFactory}), // 
 			       				new StringAttributeFactory({editorFactory:editorFactory}), //
 		//	       				new DateAttributeFactory({editorFactory:editorFactory}), //
 		//	       				new TimeAttributeFactory({editorFactory:editorFactory}), //

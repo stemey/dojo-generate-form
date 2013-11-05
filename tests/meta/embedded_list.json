@@ -12,7 +12,7 @@
                 "attributes":[
                     {
                         "required":false,
-                        "type":"string",
+                        "type":"boolean",
                         "label":"yes",
                         "code":"yes",
                     }

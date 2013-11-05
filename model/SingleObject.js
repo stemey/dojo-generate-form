@@ -12,6 +12,12 @@ define([ "dojo/_base/array", //
 	//		Provides access to sibling attributes of modelHandle.
 		attributes:null,
 		isNull:true,
+		typeCode:null,
+		constructor: function(kwArgs) {
+			for (var key in kwArgs.attributes) {
+				kwArgs.attributes[key].code=key;	
+			}
+		},	
 		update: function(/*Object*/plainValue, bubble) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.

@@ -46,6 +46,7 @@ define([ "dojo/_base/array", //
 			}, this);
 			var model = new SingleObject({attributes:attributes});
 			model.update(plainValue);
+			model.typeCode=schema.code;
 			return model;
 		},
 		create : function(group, modelHandle, ctx) {

@@ -5,10 +5,11 @@ define([ "dojo/_base/array", //
 "dojox/mvc/at",//
 "dijit/form/CheckBox",//
 "../schema/meta",//
-"./dijitHelper"
-], function(array, lang, declare, aspect, at, CheckBox,  meta, dijitHelper) {
+"./dijitHelper",//
+"../model/PrimitiveModel",
+], function(array, lang, declare, aspect, at, CheckBox,  meta, dijitHelper, PrimitiveModel) {
 
-	return declare("app.BooleanAttributeFactory", [], {
+	return declare( [], {
 		handles : function(attribute) {
 			return meta.isType(attribute,"boolean") && !attribute.array;
 		},
@@ -26,6 +27,11 @@ define([ "dojo/_base/array", //
 			});
 			return box;
 
+		},
+		createModel: function(meta, plainValue) {
+			var model = new PrimitiveModel();
+			model.update(plainValue);
+			return model;
 		},
 		getSchema:function(){
 			var schema={};

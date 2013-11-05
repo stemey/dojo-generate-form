@@ -48,7 +48,8 @@ define([ "dojo/_base/lang", "dojo/dom-class",  "dojo/_base/array", "dojo/_base/d
 		titleChanged: function() {
 				
 			var title = this.modelHandle.index+1+". ";
-			var label =labelHelper.getLabel(this.group, this.modelHandle);
+			// todo fix this.group[0]
+			var label = labelHelper.getLabel(this.group || this.groups[0], this.modelHandle);
 			title+=label==null?"":label;
 			if (this.titlePane) {this.titlePane.set("title",title);} 
 		},
@@ -58,8 +59,8 @@ define([ "dojo/_base/lang", "dojo/dom-class",  "dojo/_base/array", "dojo/_base/d
 			if (index >= 0) {
 				this.parent.children.splice(index, 1);
 			}
-			eventDispatcher.emit("state-changed");
-			eventDispatcher.emit("value-changed");
+			//eventDispatcher.emit("state-changed");
+			//eventDispatcher.emit("value-changed");
 		},
 		destroy: function() {
 			array.forEach(this.getChildren(),function(child) {

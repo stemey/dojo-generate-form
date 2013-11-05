@@ -4,9 +4,9 @@
     "attributes":[
         {
             "required":false,
-            type:"thing",
-            "type_property":"ext_type",
-            "validTypes":[
+            "type":"multi-array",
+            "typeProperty":"ext_type",
+            "groups":[
                 {
                     "code":"thing1",
                     "label":"thing1",
@@ -61,7 +61,6 @@
             ],
             "label":"things",
             "code":"things",
-            "array":true
         }
     ],
     "type_property":"ext_type"

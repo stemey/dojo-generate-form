@@ -4,12 +4,11 @@
     "attributes":[
         {
             "required":false,
-            "type":"thing1",
-            "type_property":"ext_type",
+            "type":"multi-object",
+            "typeProperty":"ext_type",
             "label":"thing",
             "code":"thing",
-            "array":false,
-            "validTypes":[
+            "groups":[
                 {
                     "code":"thing1",
                     "label":"thing1",

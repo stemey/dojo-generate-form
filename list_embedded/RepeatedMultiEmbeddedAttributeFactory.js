@@ -18,32 +18,40 @@ define([ "dojo/_base/array", //
 ], function(array, lang, aspect, Editor, declare, at, 
 		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList, RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, ArrayModel, _LayoutMixin) {
 
+	var findGroup = function(code, allGroups) {
+			var groups = allGroups.filter(function(group) {
+				return group.code==code;
+			});
+			return groups[0];
+	}
+
 	return declare([], {
 
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		handles : function(attribute) {
-			return attribute != null && attribute.type == "single-array";
+			return attribute != null && attribute.type == "multi-array";
 		},
 		create : function(attribute, modelHandle) {
 
+			var childMeta = attribute.groups[0]
+
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
-				group:attribute.group,
+				group:childMeta,
 				typeProperty: attribute.typeProperty,
 				editorFactory: this.editorFactory
 			});
 
-			// TODO we need to clone here
-			var childMeta = attribute.group
 
 			var widgetList = new WidgetList();
 			widgetList.set("partialRebuild", true);
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {
-				group : childMeta,
+				groups : attribute.groups,
+				typeProperty:attribute.typeProperty,
 				_relTargetProp : "modelHandle",
 				editorFactory: this.editorFactory
 			});
@@ -55,7 +63,8 @@ define([ "dojo/_base/array", //
 				var me = this;
 				var copy = function(original) {
 					var plainValue= original.getPlainValue();
-					var newMh=me.editorFactory.createGroupModel(group);
+					var type = plainValue[attribute.typePropery];
+					var newMh=me.editorFactory.createGroupModel(findGroup(type, attribute.groups));
 					newMh.update(plainValue);
 					newMh.oldValue=plainValue;
 					return newMh;
@@ -74,7 +83,8 @@ define([ "dojo/_base/array", //
 			var model = new ArrayModel();
 			var me = this;
 			var ef = function(value) {
-				var model = me.editorFactory.createGroupModel(meta.group);
+				var group = findGroup(value[meta.typeProperty], meta.groups);	
+				var model = me.editorFactory.createGroupModel(group);
 				if (value) {
 					model.update(value);
 				}
