@@ -19,7 +19,7 @@ define([ "dojo/_base/lang", "dojo/dom-class",  "dojo/_base/array", "dojo/_base/d
 			var me=this;
 			var modelHandle = this.get("modelHandle");
 			if (this.groups) {
-				this.editor = new PolymorphicMemberWidget({"shown":false, "modelHandle": modelHandle, "meta": this.groups, nullable: false, editorFactory: this.editorFactory});
+				this.editor = new PolymorphicMemberWidget({"shown":false, "modelHandle": modelHandle, "groups": this.groups, nullable: false, editorFactory: this.editorFactory});
 			}else{
 				this.editor = new Editor({"shown":false, "modelHandle":modelHandle, "meta":this.group,editorFactory:this.editorFactory});
 			}

@@ -11,10 +11,11 @@ define([ "dojo/_base/array", //
 "dojox/mvc/WidgetList",//
 "./RepeatedAttributeWidget",//
 "../widget/MvcDndSource",//
-"../model/updateModelHandle",//
+"../model/ArrayModel",//
+"../model/PrimitiveModel",//
 "dijit/registry"
 ], function(array, lang, aspect, Editor, declare, at, StatefulArray, Stateful,
-		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget , DndSource, updateModelHandle, registry) {
+		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget , DndSource, ArrayModel, PrimitiveModel, registry) {
 
 	return declare( [], {
 
@@ -22,16 +23,22 @@ define([ "dojo/_base/array", //
 			lang.mixin(this, kwArgs);
 		},
 		handles : function(attribute) {
-			return attribute != null && !attribute.validTypes && attribute.array;
+			return attribute != null && attribute.type=="primitive-array";
 		},
+		createModel: function(attribute, plainValue) {
+			var model = new ArrayModel();
+			var ef = function(value) {
+				var model = new PrimitiveModel();
+				model.update(value);
+				return model;
+			}
+			model.elementFactory = ef;
+			model.update(plainValue);
+			return model;
+			
+		},	
 		create : function(attribute, modelHandle, ctx) {
-			if (modelHandle.value==null) {
-				throw new "provide a default value";//modelHandle.value=new StatefulArray([]);
-			}	
-			var childAttribute ={};
-			lang.mixin(childAttribute, attribute)
-			childAttribute.array=false;
-			delete childAttribute.editor;
+			var childAttribute =attribute.element;
 			
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
@@ -52,9 +59,10 @@ define([ "dojo/_base/array", //
 			});
 			if (attribute.reorderable !== false) {
 				var copy = function(original) {
-					var newMh=updateModelHandle.createMeta();
-					newMh.value=original.value;
-					newMh.oldValue=original.oldValue;
+					var plainValue= original.getPlainValue();
+					var newMh=new PrimitiveModel();
+					newMh.update(plainValue);
+					newMh.oldValue=plainValue;
 					return newMh;
 				}
 				aspect.after(widgetList, "startup", function() {

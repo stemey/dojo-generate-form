@@ -3,15 +3,16 @@
     "label":"example",
     "attributes":[
         {
-            "type":"ref",
-						"searchProperty":"label",
-            "idProperty":"id",
-            "description":"select a reference",
-            "code":"state",
-						"array":true,
-						url: "/gform/tests/entity/state",
-						schemaUrl: "/gform/tests/meta/refs.json"
-						
+            "type":"primitive-array",
+	          "code":"state",
+	          "description":"select a reference",
+						"element": {
+							"type":"ref",
+							"searchProperty":"label",
+		          "idProperty":"id",
+							url: "/gform/tests/entity/state",
+							schemaUrl: "/gform/tests/meta/refs.json"
+						}
         }
     ],
     "type_property":"ext_type"

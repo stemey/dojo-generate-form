@@ -10,13 +10,12 @@ define(
 		"./dijitHelper",
 		"dojo/store/Memory",
 		"dojo/store/JsonRest",
-		"./makeConverterDijitAware"
+		"./makeConverterDijitAware",
+		"./PrimitiveAttributeFactory"
 		],
-		function(array, lang, declare, when, at, FilteringSelect, RefSelect, meta, dijitHelper, Memory, Store,  makeConverterDijitAware) {
+		function(array, lang, declare, when, at, FilteringSelect, RefSelect, meta, dijitHelper, Memory, Store,  makeConverterDijitAware, PrimitiveAttributeFactory) {
 	// 
-	return declare(
-			"gform.ReferenceAttributeFactory",
-			[],
+	return declare([PrimitiveAttributeFactory],
 			{
 			constructor: function(kwArgs) {
 				lang.mixin(this, kwArgs);

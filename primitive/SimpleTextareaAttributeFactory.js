@@ -6,10 +6,11 @@ define([ "dojo/_base/array", //
 "dijit/form/SimpleTextarea",//
 "../schema/meta",//
 "./mixinTextboxBindings",
-"./dijitHelper"
-], function(array, lang, declare, aspect, at, SimpleTextarea, meta, mixinTextboxBindings, dijitHelper) {
+"./dijitHelper",
+"./PrimitiveAttributeFactory"
+], function(array, lang, declare, aspect, at, SimpleTextarea, meta, mixinTextboxBindings, dijitHelper, PrimitiveAttributeFactory) {
 
-	return declare("gform.SimpleTextareaAttributeFactory", [], {
+	return declare( [PrimitiveAttributeFactory], {
 		handles : function(attribute) {
 			return meta.isType(attribute, "string") && !attribute.array;
 		},
