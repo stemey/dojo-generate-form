@@ -31,11 +31,10 @@ define([ "dojo/_base/array", //
 			var select = new EmbeddedListWidget({
 				target : modelHandle,
 				group:attribute.group,
-				typeProperty: attribute.typeProperty,
+				//typeProperty: attribute.typeProperty,
 				editorFactory: this.editorFactory
 			});
 
-			// TODO we need to clone here
 			var childMeta = attribute.group
 
 			var widgetList = new WidgetList();
