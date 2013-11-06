@@ -6,32 +6,32 @@
             "required":false,
             "label":"things",
             "code":"things",
-            "map":true,
-            "type":"ExampleThing",
-						"keyLabel": "beast",	
-						"keyDescription": "the key of the beast",	
-            "validTypes":[{
-                "code":"ExampleThing",
-                "label":"ExampleThing",
+            "type":"single-map",
+						"keyProperty": "beast",	
+            "group":{
                 "attributes":[
+                    {
+                        "required":true,
+                        "type":"string",
+                        "label":"beast",
+                        "code":"beast"
+                    }
+                    ,
                     {
                         "required":false,
                         "type":"boolean",
                         "label":"yes",
-                        "code":"yes",
-                        "array":false
+                        "code":"yes"
                     }
                     ,
                     {
                         "required":true,
                         "type":"string",
                         "label":"message",
-                        "code":"message",
-                        "array":false,
+                        "code":"message"
                     }
                 ],
-                "type_property":"ext_type"
-            }]
+            }
         }
     ],
     "type_property":"ext_type"

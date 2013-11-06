@@ -30,7 +30,7 @@ define([
 //"./group/ColumnsGroupFactory",//
 "./list_embedded/RepeatedEmbeddedAttributeFactory",//
 "./list_embedded/RepeatedMultiEmbeddedAttributeFactory",//
-//"./map_embedded/RepeatedEmbeddedAttributeFactory",//
+"./map_embedded/RepeatedEmbeddedAttributeFactory",//
 //"./map_primitive/PrimitiveMapAttributeFactory",//
 //"./list_table/RepeatedEmbeddedAttributeFactory"//
 
@@ -56,8 +56,10 @@ ReferenceAttributeFactory,
 	TextareaAttributeFactory, SimpleTextareaAttributeFactory,
 //		AttributeListWidget, ColumnsGroupFactory, 
 RepeatedEmbeddedAttributeFactory ,
-RepeatedMultiEmbeddedAttributeFactory 
-//PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, TableListAttributeFactory
+RepeatedMultiEmbeddedAttributeFactory ,
+//PrimitiveMapAttributeFactory, 
+	MapEmbeddedAttributeFactory 
+//TableListAttributeFactory
 ) {
 // module:
 //		gform/createStandardEditorFactory
@@ -78,7 +80,7 @@ RepeatedMultiEmbeddedAttributeFactory
 			var attributeFactories = [ //
 			       				new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 			       				new RepeatedMultiEmbeddedAttributeFactory({editorFactory:editorFactory}),//
-		//	       				new MapEmbeddedAttributeFactory({editorFactory:editorFactory}),//
+			       				new MapEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 		//	       				new PrimitiveMapAttributeFactory({editorFactory:editorFactory}),//
 			       				new EmbeddedAttributeFactory({editorFactory:editorFactory}),//
 			       				new MultiEmbeddedAttributeFactory({editorFactory:editorFactory}),//
