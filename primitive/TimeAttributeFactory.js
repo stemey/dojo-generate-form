@@ -5,10 +5,11 @@ define([ "dojo/_base/array", //
 "dojo/date/stamp",//
 "./TimeTextBox",//
 "../schema/meta",//
-"./standardAttributeProperties"
-], function(array, lang, declare, at, dateStamp, TimeTextBox, meta, standardAttributeProperties) {
+"./standardAttributeProperties",
+"./PrimitiveAttributeFactory"
+], function(array, lang, declare, at, dateStamp, TimeTextBox, meta, standardAttributeProperties,PrimitiveAttributeFactory) {
 
-	return declare("app.TimeAttributeFactory", [], {
+	return declare( [PrimitiveAttributeFactory], {
 		
 		handles : function(attribute) {
 			return meta.isType(attribute, "time") && !attribute.array;

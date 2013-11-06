@@ -3,12 +3,14 @@
     "label":"example",
     "attributes":[
         {
-            "required":false,
             "label":"things",
             "code":"things",
-            "array":true,
-            "type":"string",
-						"pattern":"[a-zA-Z0-9]"          
+            "type":"primitive-array",
+            "required":false,
+						"element": {	
+ 		          "type":"string",
+							"pattern":"[a-zA-Z0-9]" 
+						}         
         }
     ],
     "type_property":"ext_type"

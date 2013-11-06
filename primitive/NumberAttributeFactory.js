@@ -6,13 +6,13 @@ define(
 		"./NumberTextBox",//
 "../schema/meta",//
 "./dijitHelper",
-"./mixinNumberboxBindings"
+"./mixinNumberboxBindings",
+"./PrimitiveAttributeFactory"
 		],
-		function(array, lang, declare, at, NumberTextBox,meta,dijitHelper, mixinNumberboxBindings) {
+		function(array, lang, declare, at, NumberTextBox,meta,dijitHelper, mixinNumberboxBindings, PrimitiveAttributeFactory) {
 
 	return declare(
-			"gform.NumberAttributeFactory",
-			[],
+			[PrimitiveAttributeFactory],
 			{
 			handles : function(attribute) {
 				return meta.isType(attribute,"number")

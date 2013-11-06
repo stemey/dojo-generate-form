@@ -5,10 +5,11 @@ define([ "dojo/_base/array", //
 "dojo/date/stamp",//
 "./DateTextBox",//
 "../schema/meta",//
-"./dijitHelper"
-], function(array, lang, declare, at, dateStamp, DateTextBox, meta, dijitHelper ) {
+"./dijitHelper",//
+"./PrimitiveAttributeFactory"
+], function(array, lang, declare, at, dateStamp, DateTextBox, meta, dijitHelper, PrimitiveAttributeFactory ) {
 
-	return declare("app.DateAttributeFactory", [], {
+	return declare( [PrimitiveAttributeFactory], {
 		
 		handles : function(attribute) {
 			return attribute.type == "date" && !attribute.array;

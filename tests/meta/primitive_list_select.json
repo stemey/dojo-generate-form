@@ -3,14 +3,14 @@
     "label":"example",
     "attributes":[
         {
-        	editor:"primitive_list",
-            "required":false,
-            "label":"things",
-            "code":"things",
-            "array":true,
+        	type:"primitive-array",
+          "required":false,
+          "label":"things",
+          "code":"things",
+          "element": {
             "type":"string",
-						editor:"primitive_list",
-            values : ["moin","bye","buenos dias"]           
+            values : ["moin","bye","buenos dias"]      
+					}     
         }
     ],
     "type_property":"ext_type"

@@ -14,9 +14,10 @@ define([ "dojo/_base/array", //
 "../model/updateModelHandle",//
 "../model/getPlainValue",//
 "../model/ArrayModel",//
+"../model/MultiObject",//
 "../layout/_LayoutMixin"
 ], function(array, lang, aspect, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList, RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, ArrayModel, _LayoutMixin) {
+		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList, RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, ArrayModel, MultiObject, _LayoutMixin) {
 
 	var findGroup = function(code, allGroups) {
 			var groups = allGroups.filter(function(group) {
@@ -83,11 +84,14 @@ define([ "dojo/_base/array", //
 			var model = new ArrayModel();
 			var me = this;
 			var ef = function(value) {
-				var group = findGroup(value[meta.typeProperty], meta.groups);	
-				var model = me.editorFactory.createGroupModel(group);
-				if (value) {
-					model.update(value);
-				}
+				var groups = [];
+				meta.groups.forEach(function(group) {
+					var model = me.editorFactory.createGroupModel(group);
+					model.update({});
+					groups.push(model);
+				}, this);
+				var model = new MultiObject({groups:groups, typeProperty:meta.typeProperty});
+				model.update(value);
 				return model;
 			}
 			model.elementFactory = ef;

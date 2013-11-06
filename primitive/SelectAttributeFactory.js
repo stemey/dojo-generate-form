@@ -8,12 +8,14 @@ define([ "dojo/_base/array", //
 "../schema/meta",//
 "./createOptions",//
 "./nullablePrimitiveConverter" ,//
-"./dijitHelper" 
+"./dijitHelper" ,
+"./PrimitiveAttributeFactory"
+
 ], function(array, lang, declare, at, aspect,
 		Select, updateModelHandle, meta, createOptions,
-		nullablePrimitiveConverter, dijitHelper) {
+		nullablePrimitiveConverter, dijitHelper, PrimitiveAttributeFactory) {
 
-	return declare("gform.SelectAttributeFactory", [], {
+	return declare([PrimitiveAttributeFactory], {
 
 		handles : function(attribute) {
 			var values = attribute["values"];

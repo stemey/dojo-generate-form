@@ -7,9 +7,10 @@ define([ "dojo/_base/array", //
 "./dijitHelper",//
 "dojo/cldr/monetary",//
 "./nullableNumberConverter",//
-], function(array, lang, declare, at, CurrencyTextBox, meta, dijitHelper, monetary, nullableNumberConverter) {
+"./PrimitiveAttributeFactory",
+], function(array, lang, declare, at, CurrencyTextBox, meta, dijitHelper, monetary, nullableNumberConverter, PrimitiveAttributeFactory) {
 
-	return declare( "gform.CurrencyAmountAttributeFactory", [], {
+	return declare( [PrimitiveAttributeFactory], {
 		handles : function(attribute) {
 			return attribute.type="number" && !attribute.array;
 		},
@@ -35,7 +36,6 @@ define([ "dojo/_base/array", //
 			dijitHelper.copyProperty("max",attribute,props.constraints)
 			return new CurrencyTextBox(props);
 		},
-		
 		createValueConverter : function(places) {
 			var operand = Math.pow(10,places);
 			return {

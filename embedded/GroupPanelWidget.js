@@ -80,7 +80,7 @@ define([ "dojo/_base/array", //
 				}
 		},
 		switchType: function(newType) {
-					if (newType=="null") {
+					if (newType==null) {
  						domClass.replace(this.typeToGroup[this.modelHandle.currentTypeCode].domNode, "dijitHidden", "dijitVisible");
 						this.modelHandle.set("currentTypeCode", null);
  					} else {
@@ -93,6 +93,9 @@ define([ "dojo/_base/array", //
 		},
 		onTypeSelectorChanged: function(propName,oldValue,newValue) {
 				if (oldValue!=newValue) {
+					if (newValue="null") {
+						newValue=null;
+					}
 					this.switchType(newValue);
 				}
 		},

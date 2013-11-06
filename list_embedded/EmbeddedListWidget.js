@@ -25,7 +25,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 			//}else{
 			//	updateModelHandle.updateObject(this.attribute,newValue,newModelHandle, this.editorFactory);
 			//}
-			this.target.push({});
+			this.target.push(newValue);
 			//this.emit("state-changed");
 			//this.emit("value-changed");
 		},
