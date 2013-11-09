@@ -107,6 +107,11 @@ define([ "dojo/_base/array", //
 			this.set("changedCount", changedCount);
 			this.set("errorCount", errorCount);
 		},
+		remove: function() {
+			if (this.parent && this.parent.removeChild) {
+				this.parent.removeChild(this);
+			}
+		},
 		resetMeta: function(/*dojo/Stateful*/meta) {
 			// summary:
 			//		rest meta object

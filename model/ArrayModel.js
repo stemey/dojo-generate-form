@@ -59,6 +59,10 @@ define([ "dojo/_base/array", //
 				cb.call(this, model);
 			}, this);
 		},
+		removeChild: function(child) {
+			var index = this.value.indexOf(child);
+			this.value.splice(index,1);
+		},
 		getPlainValue: function() {
 			var plainValue=[];
 			this.value.forEach(function(model) {

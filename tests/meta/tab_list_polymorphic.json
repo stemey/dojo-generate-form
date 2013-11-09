@@ -4,10 +4,9 @@
     "attributes":[
         {
             "required":false,
-            type:"thing",
-						"editor":"table",	
-            "type_property":"ext_type",
-            "validTypes":[
+            "type":"table-multi-array",
+						"typeProperty":"ext_type",
+            "groups":[
                 {
                     "code":"thing1",
                     "label":"thing1",

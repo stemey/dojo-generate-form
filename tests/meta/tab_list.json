@@ -6,10 +6,9 @@
             "required":false,
             "label":"things",
             "code":"things",
-            "array":true,
-			"editor":"table",
-            "type":"ExampleThing",
-            "validTypes":[{
+            "typeProperty":"ext_type",
+            "type":"table-multi-array",
+            "groups":[{
                 "code":"ExampleThing",
                 "label":"ExampleThing",
                 "attributes":[
@@ -28,8 +27,7 @@
                         "code":"message",
                         "array":false
                     }
-                ],
-                "type_property":"ext_type"
+                ]
             }]
         }
     ],

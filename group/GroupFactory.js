@@ -42,7 +42,7 @@ define([ "dojo/_base/array", //
 			var attributes = {};
 			schema.attributes.forEach(function(attribute) {
 				var attributeValue = plainValue ? plainValue[attribute.code] : null;
-				attributes[attribute.code]=this.editorFactory.createAttributeModel(attribute, null);
+				attributes[attribute.code]=this.editorFactory.createAttributeModel(attribute, attributeValue);
 			}, this);
 			var model = new SingleObject({attributes:attributes});
 			model.update(plainValue);

@@ -24,7 +24,7 @@ define([ "dojo/_base/array", //
 			lang.mixin(this, kwArgs);
 		},
 		handles : function(attribute) {
-			return metaHelper.isMap(attribute) && metaHelper.isPrimitive(attribute);
+			return attribute.type=="primitive-map";
 		},
 		create : function(attribute, modelHandle) {
 
@@ -32,65 +32,37 @@ define([ "dojo/_base/array", //
 				throw "set default value";
 			}	
 
-			var childMeta = this._createChildMeta(attribute, "__key");
-			var elementMeta = this._createChildMeta(attribute, "__key");
-			elementMeta.array=false;
-
+			var childMeta = this.createTableMeta(attribute);
+			
 			var factory = this.editorFactory.getAttributeFactory(childMeta);
 			return factory.create(childMeta, modelHandle);
 
 
 		},
-		_createChildMeta: function(attribute, keyAttributeCode) {
-	 		var attributeMeta = {};
-			lang.mixin(attributeMeta, attribute);
-			attributeMeta.array=true;
-			attributeMeta.map=false;
-			attributeMeta.editor="table";
-			attributeMeta.reorderable=false;
-			var attributes=[];
-			attributeMeta.validTypes=[
-				{
-					attributes:attributes
-				}
-			]
-			var keyAttribute = {type: "string", code: keyAttributeCode, required: true, label: attribute.keyLabel || "key", description: attribute.keyDescription || null};
-
-			var valueAttribute=	{code: "value",
-					label: "value",
-					type: attribute.type,
-					required: attribute.required}
-
-
-			attributes.push(keyAttribute);
-			attributes.push(valueAttribute);
-			
-			
-			
-			attributeMeta.uniqueProperties = attributeMeta.uniqueProperties || [];
-			attributeMeta.uniqueProperties.push(keyAttribute.code);
-			return	attributeMeta;		
+		createTableMeta: function(schema) {
+			var tableMeta = {type:"table-single-array", reorderable:false, attributes:[]};
+			var attributes=tableMeta.attributes;	
+			var key = {};
+			lang.mixin(key, schema.keyAttribute);
+			key.type="string";
+			key.code="key";
+			key.required=true;
+			attributes.push(key);
+			var value = {};
+			lang.mixin(key, schema.valueAttribute);
+			value.code="code";
+			attributes.push(value);
+			return tableMeta
 		},
-		updateModelHandle: function(/*Object*/attribute, /*Object*/plainValue, /*dojo/Stateful*/modelHandle) {
-			var keyAttributeCode = "__key";
-			var attributeMeta=this._createChildMeta(attribute, keyAttributeCode);
+		createModel: function(schema, value) {
 			
-			var plainArray=[];
-			for (var key in plainValue) {
-				var entry={};
-				entry[keyAttributeCode]=key;
-				entry["value"]=plainValue[key];
-				plainArray.push(entry);
+			var map = new MapModel({keyProperty:"key"});
+			map.elementFactory= function(value) {
+				var model = SingleObject({attributes:createTableMeta(schema).attributes});
+				model.update(value);
+				return model;
 			}
-
-			var factory = this.editorFactory.getAttributeFactory(attributeMeta);
-			factory.updateModelHandle(attributeMeta, plainArray, modelHandle);
-
-			modelHandle.value.__key=keyAttributeCode;
-			modelHandle.value.__type="primitiveMap";
-			modelHandle.oldValue=getPlainValue(modelHandle);	
-
-
-		},
+			return map;
+		}
 	})
 });

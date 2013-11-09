@@ -1,19 +1,18 @@
 define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
-		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/Stateful", "../Editor",
+		"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "../model/ArrayModel", "../Editor",
 		"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox", "./TableElementDecorator", "./TableValueDecorator", "../widget/DndIndicator",
-		"dijit/form/Button", "dijit/form/Select", "../model/updateModelHandle","./mergeAttributeDefinitions","dojo/dom-class", "dojo/i18n!../nls/messages"//
-], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, Stateful, Editor,
-		template, TextBox, TableElementDecorator, TableValueDecorator, DndIndicator, Button, Select,  updateModelHandle,mergeAttributeDefinitions,domClass, messages) {
+		"dijit/form/Button", "dijit/form/Select", "../model/MergedMultiObject","./mergeAttributeDefinitions","dojo/dom-class", "dojo/i18n!../nls/messages","dojo/Stateful"//
+], function(lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, ArrayModel, Editor,
+		template, TextBox, TableElementDecorator, TableValueDecorator, DndIndicator, Button, Select,  MergedMultiObject,mergeAttributeDefinitions,domClass, messages, Stateful) {
 
 	return declare( [ _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin ],
 			{
 				templateString : template,
 				postCreate : function() {
 
-					if (this.meta.validTypes && this.meta.validTypes.length > 1) {
+					if (this.meta.groups && this.meta.groups.length > 1) {
 
-						var currentType = this.modelHandle && this.modelHandle.value[this.meta.type_property] ? this.modelHandle.value
-								.get(this.meta.type_property).value : this.meta.validTypes[0].code
+						var currentType = this.modelHandle.get("currentTypeCode");
 
 						var select=this._createTypeSelect(currentType);
 								
@@ -22,12 +21,10 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 						this._createTableRow(select,currentType);
 
 					} else {
-						var meta = this.meta.validTypes ? this.meta.validTypes[0] : this.meta;
+						var meta = this.meta.groups ? this.meta.groups[0] : this.meta;
 						array.forEach(meta.attributes, function(attribute) {
-							if (!this.modelHandle.value[attribute.code]) {
-								throw new Error(" attribute "+attribute.code+" was not initialiaized");
-							}
-							var attributeModelHandle=this.modelHandle.value[attribute.code];
+							
+							var attributeModelHandle=this.modelHandle.getModelByKey(attribute.code);
 							var tdWidget = this.editorFactory.attributeFactoryFinder.getFactory(attribute).create(
 									attribute, attributeModelHandle);
 							var decorator = new TableValueDecorator({meta:attribute,modelHandle:attributeModelHandle});
@@ -52,23 +49,18 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 					deleteButton.set("onClick", lang.hitch(this, "_delete"));
 				},
 				_delete : function(e) {
-					var eventDispatcher = this.getParent();
-					var index = this.getParent().getChildren().indexOf(this);
-					if (index >= 0) {
-						this.parent.children.splice(index, 1);
-					}
-					eventDispatcher.emit("state-changed");
+					this.modelHandle.remove();
 				},
 				switchedType:	function(propName,oldType,newType) {
 						if (oldType!=newType) {	
-							updateModelHandle.switchTypeInMergedObject(this.meta,newType,this.modelHandle);
+							this.modelHandle.set("currentTypeCode", newType);
 						}
 				},
 				_createTypeSelect: function(currentType) {
-						var validTypeOptions = array.map(this.meta.validTypes, function(validType) {
+						var validTypeOptions = array.map(this.meta.groups, function(group) {
 							return {
-								value : validType.code,
-								label : validType.label
+								value : group.code,
+								label : group.label
 							};
 						});
 						var panelModel= new Stateful({
@@ -92,7 +84,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 						var combinedAttributes=this.combinedAttributes;
 						
 						array.forEach(combinedAttributes, function(attribute) {
-							var attributeModelHandle=this.modelHandle.value[attribute.code];
+							var attributeModelHandle=this.modelHandle.getModelByKey(attribute.code);
 							var tdWidget = this.editorFactory.attributeFactoryFinder.getFactory(attribute).create(
 									attribute, attributeModelHandle);
 							var decorator = new TableValueDecorator({meta:attribute,modelHandle:attributeModelHandle});

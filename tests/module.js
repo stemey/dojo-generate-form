@@ -1,10 +1,14 @@
 define ("gform.tests.module",[
-//"gform/tests/getPlainValue",//
-//"gform/tests/updateModelHandle",//
 "gform/tests/refresolve",//
-"gform/tests/convertSchema",//
-"gform/tests/schemaGenerator",//
-"gform/tests/visit",//
+//"gform/tests/convertSchema",//
+//"gform/tests/schemaGenerator",//
+//"gform/tests/visit",//
+//"gform/tests/model/PrimitiveModel",//
+"gform/tests/model/MultiGroup",//
+"gform/tests/model/ArrayModel",//
+"gform/tests/model/SingleObject",//
+"gform/tests/model/MultiObject",//
+"gform/tests/model/MergedMultiObject",//
 "gform/tests/equals",//
 "gform/tests/restHelper"
 ],function() {
