@@ -5,7 +5,7 @@ define([
     	"dojo/dom-class",
 "dojox/mvc/WidgetList" ], function(array,lang,declare, domClass, WidgetList) {
 
-	return declare("gform.TableWidgetList", [ WidgetList ], {
+	return declare( [ WidgetList ], {
 		buildRendering : function() {
 			// summary:
 			//		Construct the UI for this widget, setting this.domNode.

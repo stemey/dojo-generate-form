@@ -32,7 +32,7 @@ define([
 "./list_embedded/RepeatedMultiEmbeddedAttributeFactory",//
 "./map_embedded/RepeatedEmbeddedAttributeFactory",//
 //"./map_primitive/PrimitiveMapAttributeFactory",//
-//"./list_table/RepeatedEmbeddedAttributeFactory"//
+"./list_table/RepeatedEmbeddedAttributeFactory"//
 
 ], function(lang,EditorFactory,AttributeFactoryFinder, GroupFactory, 
 ListPaneGroupFactory, 
@@ -58,8 +58,8 @@ ReferenceAttributeFactory,
 RepeatedEmbeddedAttributeFactory ,
 RepeatedMultiEmbeddedAttributeFactory ,
 //PrimitiveMapAttributeFactory, 
-	MapEmbeddedAttributeFactory 
-//TableListAttributeFactory
+	MapEmbeddedAttributeFactory ,
+TableListAttributeFactory
 ) {
 // module:
 //		gform/createStandardEditorFactory
@@ -78,6 +78,7 @@ RepeatedMultiEmbeddedAttributeFactory ,
 			});
 
 			var attributeFactories = [ //
+			       				new TableListAttributeFactory({editorFactory:editorFactory}),//
 			       				new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 			       				new RepeatedMultiEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 			       				new MapEmbeddedAttributeFactory({editorFactory:editorFactory}),//
@@ -98,8 +99,8 @@ RepeatedMultiEmbeddedAttributeFactory ,
 			       				new TimeAttributeFactory({editorFactory:editorFactory}), //
 		//	       				new MappedContentPaneFactory({editorFactory:editorFactory}) //
 			       				];
-//			attributeFactoryFinder.addAttributeFactory("table", new TableListAttributeFactory({editorFactory:editorFactory}));
-//			attributeFactoryFinder.addAttributeFactory("primitive_list", new PrimitiveListAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("table", new TableListAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("primitive_list", new PrimitiveListAttributeFactory({editorFactory:editorFactory}));
 //			attributeFactoryFinder.addAttributeFactory("mapped_contentpane", new MappedContentPaneFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("currencyamount", new CurrencyAmountAttributeFactory({editorFactory:editorFactory}));
 //			attributeFactoryFinder.addAttributeFactory("checked_select",new CheckedSelectAttributeFactory({editorFactory:editorFactory}));

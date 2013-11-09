@@ -3,14 +3,16 @@
     "label":"example",
     "attributes":[
         {
-            "required":false,
-            "label":"things",
-            "code":"things",
-            "map":true,
+					"type":"primitive-map",
+          "label":"things",
+          "code":"things",
+					"keyAttribute": {
+						"label": "beast"
+					},
+					"valueAttribute": {
             "type":"string",
-						"keyLabel": "beast",	
-						"keyDescription": "the key of the beast",	
+						"label": "beastValue"
+					}
        }
-    ],
-    "type_property":"ext_type"
+    ]
 }
