@@ -7,7 +7,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dijit/_Wi
 //		gform/AttributeListWidget
 	
 
-	return declare("gform.AttributeListWidget",[ _WidgetBase,_Container, _TemplatedMixin, _WidgetsInTemplateMixin ,_GroupMixin], {
+	return declare([ _WidgetBase,_Container, _TemplatedMixin, _WidgetsInTemplateMixin ], {
 		// summary:
 		//		A group widget displaying a list of attributes.
 		constructor: function(kwArgs) {

@@ -10,22 +10,21 @@
             "values":["english","german"]
         },
         {
-            "type":"string",
+            "type":"mapped-select",
             "label":"salutation",
             "code":"salutation",
             "required":true,
-            "array":false,
             "mapped_attribute":"language",
-			"mapped_values":{
-				"english":[
-					{label: "Mr.", value: "Mr."},
-					{label: "Mrs.", value: "Mrs."}
-				],
-				"german":[
-					{label: "Herr", value: "Herr"},
-					{label: "Frau", value: "Frau"}
-				],
-			}
+						"mapped_values":{
+							"english":[
+								{label: "Mr.", value: "Mr."},
+								{label: "Mrs.", value: "Mrs."}
+							],
+							"german":[
+								{label: "Herr", value: "Herr"},
+								{label: "Frau", value: "Frau"}
+							],
+						}
         }
     ],
     "type_property":"ext_type"

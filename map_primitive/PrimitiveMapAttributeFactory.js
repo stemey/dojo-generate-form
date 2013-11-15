@@ -5,7 +5,7 @@ define([ "dojo/_base/array", //
 "../schema/meta",//	
 "dojo/_base/declare",//
 "dojox/mvc/at",//
-"dojox/mvc/StatefulArray",//
+"../model/SingleObject",//
 "dojo/Stateful",//
 "../list_table/EmbeddedListWidget",//
 "dojox/mvc/sync",//
@@ -13,12 +13,13 @@ define([ "dojo/_base/array", //
 "../list_table/RepeatedEmbeddedWidget",//
 "../model/updateModelHandle",//
 "../model/getPlainValue",//
-"dojox/mvc/StatefulArray",//
-"../layout/_LayoutMixin"
+"../model/PrimitiveMapModel",//
+"../layout/_LayoutMixin",
+"../list_table/TableAttributeFactory",
 ], function(array, lang, aspect, Editor, metaHelper, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, StatefulArray, _LayoutMixin) {
+		SingleObject, Stateful,EmbeddedListWidget, sync, WidgetList,RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, MapModel, _LayoutMixin, TableAttributeFactory) {
 
-	return declare([], {
+	return declare([TableAttributeFactory], {
 
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
@@ -32,10 +33,10 @@ define([ "dojo/_base/array", //
 				throw "set default value";
 			}	
 
-			var childMeta = this.createTableMeta(attribute);
+			var tableMeta = this.createTableMeta(attribute);
 			
-			var factory = this.editorFactory.getAttributeFactory(childMeta);
-			return factory.create(childMeta, modelHandle);
+			var widget = this.inherited(arguments, [tableMeta, modelHandle]);
+			return widget;
 
 
 		},
@@ -49,16 +50,20 @@ define([ "dojo/_base/array", //
 			key.required=true;
 			attributes.push(key);
 			var value = {};
-			lang.mixin(key, schema.valueAttribute);
-			value.code="code";
+			lang.mixin(value, schema.valueAttribute);
+			value.code="value";
 			attributes.push(value);
 			return tableMeta
 		},
 		createModel: function(schema, value) {
-			
+			var me = this;
 			var map = new MapModel({keyProperty:"key"});
 			map.elementFactory= function(value) {
-				var model = SingleObject({attributes:createTableMeta(schema).attributes});
+				var aModels = {};
+				me.createTableMeta(schema).attributes.forEach(function(attribute) {
+					aModels[attribute.code]=me.editorFactory.createAttributeModel(attribute);
+				}, this);
+				var model = SingleObject({attributes:aModels});
 				model.update(value);
 				return model;
 			}

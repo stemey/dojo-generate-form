@@ -6,18 +6,18 @@ define([ "dojo/_base/array", //
 "dojox/form/CheckedMultiSelect",//
 "./_MappedSelectAttributeFactoryBase",//
 "./bindWidget",//
-"../model/getPlainValue",//
+"../model/PrimitiveModel",//
 "dojox/mvc/StatefulArray"
 ], function(array, lang, declare, domClass, at, CheckedMultiSelect, _MappedSelectAttributeFactoryBase, //
-		 bindWidget, getPlainValue,StatefulArray) {
+		 bindWidget, PrimitiveModel, StatefulArray) {
 
-	return declare("gform.MappedCheckedMultiSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
+	return declare( [ _MappedSelectAttributeFactoryBase ], {
 
 		handles : function(attribute) {
-			return attribute != null && attribute.array && !attribute.validTypes && attribute.mapped_values;
+			return attribute != null && attribute.type=="primitive-array" && attribute.element.mapped_values;
 		},
-			create : function(attribute, modelHandle, resolver) {
-			var options = this._createMappedOptions(modelHandle, attribute, resolver);
+			create : function(attribute, modelHandle) {
+			var options = this._createMappedOptions(modelHandle, attribute.element);
 			
 			var clonedValues = [];
 			array.forEach(modelHandle.value, function(value) {
@@ -31,16 +31,14 @@ define([ "dojo/_base/array", //
 			});
 
 			bindWidget(modelHandle,select,"value");
-			this._watchMappedAttribute(modelHandle, attribute,select,resolver);
+			this._watchMappedAttribute(modelHandle, attribute.element,select);
 			
 			return select;
 		},
-		updateModelHandle: function(meta,plainValue,modelHandle) {
-			if (!plainValue) {
-				plainValue=[];
-			}
-			modelHandle.set("value",plainValue);
-			modelHandle.set("oldValue",plainValue);
+		createModel: function(meta,plainValue) {
+			var model = new PrimitiveModel();
+			model.update(plainValue);
+			return model;
 		}
 		
 

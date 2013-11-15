@@ -6,21 +6,21 @@ define([ "dojo/_base/array", //
 "../model/updateModelHandle",//
 "./createOptions",//
 "./bindWidget",//
-"../model/getPlainValue",//
+"../model/PrimitiveModel",//
 "dojox/mvc/StatefulArray"
-], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle,   createOptions,bindWidget,getPlainValue,StatefulArray) {
+], function(array, lang, declare, aspect, CheckedMultiSelect, updateModelHandle,   createOptions,bindWidget,PrimitiveModel,StatefulArray) {
 
-	return declare("gform.CheckedMultiSelectAttributeFactory", [  ], {
+	return declare( [  ], {
  		
 		handles : function(attribute) {
-			return attribute != null && attribute.array && !attribute.validTypes && attribute.values;
+			return attribute != null && attribute.type=="primitive-array" && attribute.element.values;
 		},
  		
  		create: function(meta, modelHandle) {
-			var options= createOptions(meta,false);
+			var options= createOptions(meta.element,false);
 
 			var clonedValues = [];
-			array.forEach(modelHandle.value, function(value) {
+			array.forEach(modelHandle.getPlainValue(), function(value) {
 				clonedValues.push(value);
 			});
 			
@@ -35,12 +35,13 @@ define([ "dojo/_base/array", //
 			return select;
 		},
 		
-		updateModelHandle: function(meta,plainValue,modelHandle) {
+		createModel: function(meta,plainValue) {
 			if (!plainValue) {
 				plainValue=[];
 			}
-			modelHandle.set("value",plainValue);
-			modelHandle.set("oldValue",plainValue);
+			var model = new PrimitiveModel();
+			model.update(plainValue);
+			return model;
 		}
 	});
 });

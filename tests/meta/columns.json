@@ -1,0 +1,14 @@
+{
+	groupType : "columnsgroup",
+  attributes : [{
+      type : "string",
+      label : "name",
+      code : "name",
+      required : true,
+  },{
+      type : "boolean",
+      label : "do",
+      code : "do",
+      required : true,
+  }]
+}

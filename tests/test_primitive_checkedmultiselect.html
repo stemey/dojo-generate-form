@@ -31,7 +31,7 @@
 				{
 					name : 'init',
 					runTest : function(t) {
-						t.assertEqual(2, editor.get("modelHandle").value.multiselect.get("value").length);
+						t.assertEqual(2, editor.getPlainValue().multiselect.length);
 						t.assertEqual(2, intText.get("value").length);
 					} 
 				},{

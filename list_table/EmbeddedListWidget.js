@@ -13,7 +13,9 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		_addElement : function() {
 			
 			var value = {};
-			value[this.attribute.typeProperty]=	this.attribute.groups[0].code;
+			if (this.attribute.groups) {
+				value[this.attribute.typeProperty]=	this.attribute.groups[0].code;
+			}
 			this.target.push(value);	
 			//sthis.emit("state-changed");
 		},

@@ -46,7 +46,7 @@ define([ "dojo/_base/array", //
 			//		get value of sibling attribute
 			// attributeCode: String
 			//		the name of he sibling attribute
-			return this.parent.value.get(attributeCode).value;
+			return this.parent.getModelByKey(attributeCode).getPlainValue();
 		},
 		watchParent: function( attributeCode, watchCallback) {
 			// summary:
@@ -56,8 +56,10 @@ define([ "dojo/_base/array", //
 			// watchCallback: function
 			//		callback
 			// returns: Object
-			//		WatchHandle
-			return this.parent.value[attributeCode].watch("value",watchCallback);
+			//		WatchHandle and sibling a PrimitiveModel
+			
+			// TODO only works for parent being an object
+			return this.parent.getModelByKey(attributeCode).watch("value",watchCallback);
 		},
 		createMeta: function(schema) {
 			// summary:

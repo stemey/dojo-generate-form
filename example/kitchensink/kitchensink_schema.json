@@ -15,7 +15,6 @@
 										"pattern":"[a-zA-Z]*",
 										"placeHolder":"enter a text",	
                     "code":"string",
-                    "array":false
                 },
                 {
                     "type":"string",
@@ -25,7 +24,6 @@
 										"required":false,
 										"values":["Mr.","Mrs.","Sir"],	
                     "code":"select",
-                    "array":false
                 },
                 {
 										"editor":"checked_select",
@@ -36,14 +34,12 @@
 										"required":false,
 										"values":["Mr.","Mrs.","Sir"],	
                     "code":"radios",
-                    "array":false
                 },
                 {
                     "type":"boolean",
                     "label":"boolean",
                     "description":"we need to know",
                     "code":"boolean",
-                    "array":false
                 },
                 {
                     "type":"number",
@@ -51,7 +47,6 @@
                     "description":"up to three fractional digits",
 										places:"0,3",
                     "code":"fractional",
-                    "array":false
                 },
                 {
                     "type":"number",
@@ -60,7 +55,6 @@
                     "editor":"currencyamount",
                     "description":"currency amount",
                     "code":"currencyamount",
-                    "array":false
                 },
                 {
                     "type":"number",
@@ -70,21 +64,18 @@
 										places:0,
 										min:3,
 										max:9,
-										"array":false
                 },
                 {
                     "type":"date",
                     "label":"date",
                     "description":"date",
                     "code":"date",
-										"array":false
                 },
                 {
                     "type":"time",
                     "label":"time",
                     "description":"time",
                     "code":"time",
-										"array":false
                 },
                 {
                     "type":"string",
@@ -93,7 +84,6 @@
 										"cols":20,
                     "description":"this attribute displays the text in a textarea that grows vertically.",
                     "code":"longtext",
-                    "array":false
                 },
                 {
                     "type":"string",
@@ -103,7 +93,6 @@
 										"rows":4,
                     "description":"this attribute displays the text in a textarea with fixed rows.",
                     "code":"simplelongtext",
-                    "array":false
                 },
 						]},        
 						{
@@ -122,16 +111,18 @@
 									schemaUrl: "/gform/tests/meta/refs.json"
                 },
                 {
-						      "type":"ref",
-									"array": true,	
-									"searchProperty":"label",
-						      "idProperty":"value",
-						      "description":"select a reference",
-						      "code":"states",
-									baseUrl: "/gform/tests/entity/state/",
-									url: "/gform/tests/entity/state",
-									collectionUrl: "/gform/tests/entity/state",
-									schemaUrl: "/gform/tests/meta/refs.json"
+									"type":"primitive-array",
+							    "description":"select a reference",
+							    "code":"states",
+									"element": {
+								    "type":"ref",
+										"searchProperty":"label",
+								    "idProperty":"value",
+										baseUrl: "/gform/tests/entity/state/",
+										url: "/gform/tests/entity/state",
+										collectionUrl: "/gform/tests/entity/state",
+										schemaUrl: "/gform/tests/meta/refs.json"
+									}
                 },
 						]},
 						{
@@ -157,16 +148,18 @@
                     "code":"salutation",
                 },
                 {
-                    "type":"string",
-										"array":true,
+										"type": "primitive-array",
                     "label":"array of salutations",
 										"description":"select language specific salutations",
-										"mapped_attribute":"language",
-										"mapped_values":{
-											"english":["Mr.","Mrs."],
-											"german":["Herr","Frau"]
-										},
                     "code":"salutation_array",
+										"element" :{
+		                  "type":"string",
+											"mapped_attribute":"language",
+											"mapped_values":{
+												"english":["Mr.","Mrs."],
+												"german":["Herr","Frau"]
+										},
+									}
                 }
 							]
 						},{
@@ -174,35 +167,41 @@
 						description:"This tab contains primitive array attributes.",
             "attributes":[
                 {
-                    "type":"string",
+                    "type":"primitive-array",
                     "label":"array of strings",
-                    "description":"This is a simple string attribute with array set to true. All primitives auspport 'array=true' and will be displayed similarly.",
-                    "errorMessage":"only use letters",
 										"required":true,
-										"pattern":"[a-zA-Z]*",	
-                    "code":"array_string",
-                    "array":true
+                    "description":"This is a simple string attribute with array set to true. All primitives auspport 'array=true' and will be displayed similarly.",
+	                  "code":"array_string",
+										"element" : {
+											"type": "string",	
+		                  "errorMessage":"only use letters",
+											"pattern":"[a-zA-Z]*",	
+                   }
                 },
                 {
-                    "type":"string",
+                    "type":"primitive-array",
                     "label":"array of selects 1",
                     "description":"This is a special widget for an array of select values.",
-                    "errorMessage":"required",
 										"required":false,
-										"values":["Mr.","Mrs.","Sir."],	
                     "code":"array_select_1",
-                    "array":true
+										"element": {	
+											"type": "string",	
+		                  "errorMessage":"required",
+											"values":["Mr.","Mrs.","Sir."]
+										}
                 },
                 {
-                    "type":"string",
+                    "type":"primitive-array",
                     "description":"this is the other way of displaying an array of select values.",
 										"editor":"primitive_list",				
                     "label":"array of selects 2",
-                    "errorMessage":"required",
 										"required":false,
-										"values":["Mr.","Mrs.","Sir."],	
                     "code":"array_select_2",
-                    "array":true
+										"element": {
+											"type": "string",
+		                  "errorMessage":"required",
+											"values":["Mr.","Mrs.","Sir."],	
+                    }
                 }
 						]},{
             label:"embedded",
@@ -210,13 +209,13 @@
             "attributes":[
                 {
                     "required":false,
-                    "type":"thing1",
-                    "type_property":"ext_type",
+                    "type":"multi-object",
+                    "typeProperty":"ext_type",
                     "label":"polything",
                     "code":"polything",			
 										"description":"this is a complex attribute. Changing the type in the select field will change the form.",
                     "array":false,
-                    "validTypes":[
+                    "groups":[
                         {
                             "code":"thing1",
                             "label":"thing1",
@@ -261,12 +260,11 @@
                 },
                 {
                     "required":true,
-                    "type":"thing1",
+                    "type":"object",
                     "label":"thing",
                     "code":"thing",
-                    "array":false,
 										"description":"this complex attribute is required and can only be of one type. Its attributes are grouped in a tab", 
-                    "validTypes":[
+                    "group":
                         {
 														groupType:"tab",
 	                          "code":"thing1",
@@ -278,15 +276,13 @@
 		                                  "required":false,
 		                                  "type":"string",
 		                                  "label":"name",
-		                                  "code":"name",
-		                                  "array":false
+		                                  "code":"name"
 		                              },
 		                              {
 		                                  "required":false,
 		                                  "type":"string",
 		                                  "label":"common",
-		                                  "code":"common",
-		                                  "array":false
+		                                  "code":"common"
 		                              }
 		                          ]
 														},
@@ -297,14 +293,12 @@
 		                                  "required":false,
 		                                  "type":"number",
 		                                  "label":"count",
-		                                  "code":"count",
-		                                  "array":false
+		                                  "code":"count"
 		                              }
 		                          ]
 														}
 													]
                         }
-                    ]
                 }
 
             ]
@@ -319,8 +313,8 @@
                     "label":"things",
                     "code":"things",
                     "array":true,
-                    "type":"ExampleThing",
-                    "validTypes":[
+                    "type":"single-array",
+                    "group":
                         {
                             "code":"ExampleThing",
                             "label":"ExampleThing",
@@ -343,12 +337,11 @@
                                 },
 																{
 														      "required":false,
-														      "type":"thing",
-														      "type_property":"ext_type",
+														      "type":"single-array",
 														      "label":"thingx",
 														      "code":"thingx",
 														      "array":true,
-														      "validTypes":[
+														      "group":
 														          	{
 														              "code":"thing1",
 														              "label":"thing1",
@@ -357,24 +350,20 @@
 														                      "required":false,
 														                      "type":"string",
 														                      "label":"name",
-														                      "code":"name",
-														                      "array":false
+														                      "code":"name"
 														                  },
 														                  {
 														                      "required":false,
 														                      "type":"string",
 														                      "label":"common",
-														                      "code":"common",
-														                      "array":false
+														                      "code":"common"
 														                  }
 														              ]
 														          }
-																	]
+																	
 																}
-                            ],
-                            "type_property":"ext_type"
+                            ]
                         }
-                    ]
                 }
             ]
         },
@@ -386,21 +375,22 @@
                     "required":false,
                     "label":"map",
                     "code":"map",
-                    "map":true,
-										"keyLabel": "this is the key",	
-										"keyDescription": "the key may be given an appropriate label.",	
-                    "type":"ExampleThing",
-                    "validTypes":[
+										"type":"single-map",	
+										"keyAttribute":"key",
+                    "group":[
                         {
-                            "code":"ExampleThing",
-                            "label":"ExampleThing",
                             "attributes":[
+                                {
+                                    "required":true,
+                                    "label":"this is the key",
+																		"code":"key"
+                                }
+                                ,
                                 {
                                     "required":false,
                                     "type":"boolean",
                                     "label":"yes",
-                                    "code":"yes",
-                                    "array":false
+                                    "code":"yes"
                                 }
                                 ,
                                 {
@@ -408,8 +398,7 @@
                                     "type":"string",
                                     "label":"message",
                                     "code":"message",
-																		"pattern":"[a-zA-Z]*",
-                                    "array":false
+																		"pattern":"[a-zA-Z]*"
                                 },
                             ]
                         }
@@ -421,13 +410,18 @@
 					label: "primitive map",
 					attributes: [
                 {
+										"type": "primitive-map",	
                     "required":false,
                     "label":"numbers in german",
                     "code":"primitive_map",
-                    "map":true,
-										"keyLabel": "english",	
-										"keyDescription": "numbers in english.",	
-                    "type":"string",
+                    "keyAttribute": {
+											"label": "english",	
+											"description": "numbers in english."
+										}	,
+										"valueAttribute": {
+											"type":"string",
+											"label":"value"
+										}
                 }
             ]
         },
@@ -436,14 +430,12 @@
 						description:"This is a different way to display complex arrays. The elements are displayed in a table. Changing the type will hide and show different sets of cells. The order of the elements can be changed by drag and drop.",
             "attributes":[
                 {
-										"editor":"table",
-                    "required":false,
+										"required":false,
                     "label":"morethings",
                     "code":"morethings",
-                    "array":true,
-                    "type":"ExampleThing",
-                    "type_property":"ext_type",
-                    "validTypes":[
+                    "type":"table-multi-array",
+                    "typeProperty":"ext_type",
+                    "groups":[
                        	 		{
                             "code":"ExampleThing",
                             "label":"ExampleThing",
@@ -452,8 +444,7 @@
                                     "required":false,
                                     "type":"boolean",
                                     "label":"yes",
-                                    "code":"yes",
-                                    "array":false
+                                    "code":"yes"
                                 }
                                 ,
                                 {
@@ -461,11 +452,9 @@
                                     "type":"string",
                                     "label":"message",
                                     "code":"message",
-																		"pattern":"[a-zA-Z]*",
-                                    "array":false
+																		"pattern":"[a-zA-Z]*"
                                 }
-                            ],
-                            "type_property":"ext_type"
+                            ]
                         },{
                             "code":"ExampleThing1",
                             "label":"ExampleThing1",
@@ -474,8 +463,7 @@
                                     "required":false,
                                     "type":"string",
                                     "label":"text",
-                                    "code":"text",
-                                    "array":false
+                                    "code":"text"
                                 }
                                 ,
                                 {
@@ -483,11 +471,9 @@
                                     "type":"string",
                                     "label":"message",
                                     "code":"message",
-																		"pattern":"[a-zA-Z]*",
-                                    "array":false
+																		"pattern":"[a-zA-Z]*"
                                 }
-                            ],
-                            "type_property":"ext_type"
+                            ]
                         }
                     ]
                 }
