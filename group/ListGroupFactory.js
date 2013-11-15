@@ -2,16 +2,26 @@ define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
 "./ListPane",//
+"../model/MultiGroup",//
 "./DescriptionWidget",
 "../model/updateModelHandle"
-], function(array, lang, declare, ListPane, DescriptionWidget, updateModelHandle) {
+], function(array, lang, declare, ListPane, MultiGroup, DescriptionWidget, updateModelHandle) {
 // module:
 //		gform/group/ListGroupFactory
-	return declare("gform.ListGroupFactory", null, {
+	return declare( null, {
 		// summary:
 		//		the ListGroupFactory handles an array of groups. These are displayed in a list.	
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
+		},
+		createModel: function(meta, plainValue) {
+			var groups = [];
+			meta.groups.forEach( function(group) {
+				groups.push(this.editorFactory.createGroupModel(group));
+			}, this);
+			var model = new MultiGroup({groups:groups});
+			model.update(plainValue);
+			return model;
 		},
 		create : function(group, modelHandle) {
 			var listWidget = new ListPane({
@@ -20,21 +30,13 @@ define([ "dojo/_base/array", //
 			if (group.description) {
 				listWidget.addChild(new DescriptionWidget({description:group.description}));
 			}
-			array.forEach(group.groups, function(childGroup) {
-				var groupWidget = this.editorFactory.create(childGroup, modelHandle);
+			for (var index = 0; index < group.groups.length; index++) {
+				var childGroup =group.groups[index];
+				var childModel = modelHandle.getModelByIndex(index);
+				var groupWidget = this.editorFactory.create(childGroup, childModel);
 				listWidget.addChild(groupWidget);
-			}, this);
+			};
 			return listWidget;
-		},
-		collectAttributes: function(group) {
-			var attributes=[];
-			array.forEach(group.groups, function(subgroup) {
-				var subAttributes = updateModelHandle.collectAttributes(subgroup,this.editorFactory);
-				array.forEach(subAttributes,function(a) {
-					attributes.push(a);
-				});
-			},this);
-			return attributes;
 		},
 		getSchema: function() {
 			var properties= {

@@ -3,18 +3,19 @@
     "label":"example",
     "attributes":[
         {
-            "type":"string",
-            "label":"multiple select",
+            "type":"primitive-array",
+						"label":"multiple select",
             "code":"multiselect",
-            "required":false,
-            "array":true,
-            "values": [
-            	"Hello",
-            	"Hi",
-            	"Good bye",
-            	{label: "Ciao Bella", value: "Ciao"},
-            	{label: "Bye", value: "Bye Bye"}
-            ]
+						"element": {	
+		          "type":"string",
+		          "values": [
+		          	"Hello",
+		          	"Hi",
+		          	"Good bye",
+		          	{label: "Ciao Bella", value: "Ciao"},
+		          	{label: "Bye", value: "Bye Bye"}
+            	]
+						}
         }
     ],
     "type_property":"ext_type"

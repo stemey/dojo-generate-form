@@ -4,14 +4,14 @@ define([ "dojo/_base/array", //
 "dojox/form/CheckedMultiSelect",//
 "./createOptions",//
 "./nullablePrimitiveConverter",//
-"../model/updateModelHandle",//
-], function(array, lang, declare, CheckedMultiSelect, createOptions, nullablePrimitiveConverter, updateModelHandle) {
+"../model/PrimitiveModel",//
+], function(array, lang, declare, CheckedMultiSelect, createOptions, nullablePrimitiveConverter, PrimitiveModel) {
 
-	return declare("gform.CheckedSelectAttributeFactory", [ ], {
+	return declare( [ ], {
 
 		handles : function(attribute) {
 			var values = attribute.values;	
-			return !attribute.array && values != null && values.length > 0;
+			return values != null && values.length > 0;
 		},
  		
 
@@ -24,10 +24,16 @@ define([ "dojo/_base/array", //
 				multiple : false
 			});
 			
+			if (meta.required && !plainValue) {
+				modelHandle.update(options[0]);
+			}
+			
 			return select;
  		},
-		updateModelHandle : function(meta, plainValue, modelHandle) {
-			updateModelHandle.updateSelectModelHandle(meta, plainValue, modelHandle,createOptions(meta,true));
+		createModel : function(meta, plainValue) {
+			var model = new PrimitiveModel();
+			model.update(plainValue);
+			return model;
 		}
 		
 	});

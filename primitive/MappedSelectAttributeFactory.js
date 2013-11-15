@@ -5,21 +5,21 @@ define([ "dojo/_base/array",
 "dijit/form/Select",
 "./_MappedSelectAttributeFactoryBase",
 "../schema/meta",
-"../model/updateModelHandle",
+"../model/PrimitiveModel",
 "./dijitHelper",
 "dojo/text!./mapped_select.json",
 "dojo/text!./mapped_select_doc.json"
-], function(array, lang, declare, at, Select, _MappedSelectAttributeFactoryBase, meta, updateModelHandle, dijitHelper, example,exampleForDoc) {
+], function(array, lang, declare, at, Select, _MappedSelectAttributeFactoryBase, meta, PrimitiveModel, dijitHelper, example,exampleForDoc) {
 
-	return declare("gform.MappedSelectAttributeFactory", [ _MappedSelectAttributeFactoryBase ], {
+	return declare([ _MappedSelectAttributeFactoryBase ], {
 		
 		handles: function(attribute) {
-			var mapped_values=attribute.mapped_values;
-			return !attribute.array && mapped_values;
+			//var mapped_values=attribute.mapped_values;
+			return attribute.type=="mapped-select";
 		},
 		
-		create : function(attribute, modelHandle, resolver) {
-			var options = this._createMappedOptions(modelHandle, attribute, resolver);
+		create : function(attribute, modelHandle) {
+			var options = this._createMappedOptions(modelHandle, attribute);
 			
 			var select = new Select({
 				value : at(modelHandle, "value"),
@@ -27,19 +27,19 @@ define([ "dojo/_base/array",
 				maxHeight: -1
 			});
 			
-			if (attribute.required && !modelHandle.value) {
-				modelHandle.set("value",options[0].value);
+			if (attribute.required && !modelHandle.getPlainValue()) {
+				modelHandle.update(options[0].value);
 			}
 			
 			modelHandle.watchParent(attribute.mapped_attribute, 
-					lang.hitch(this, "_onMappedAttributeChanged", modelHandle, select, attribute, resolver));
+					lang.hitch(this, "_onMappedAttributeChanged", modelHandle, select, attribute));
 			
 			
 			return select;
 		},
 		
-		_onMappedAttributeChanged : function(modelHandle, select, attribute, resolver) {
-			var options = this._createMappedOptions(modelHandle, attribute, resolver);
+		_onMappedAttributeChanged : function(modelHandle, select, attribute) {
+			var options = this._createMappedOptions(modelHandle, attribute);
 			
 			var valueValid = false;
 			for (var key in options) {
@@ -53,14 +53,15 @@ define([ "dojo/_base/array",
 			
 			select.set("options", options);
 			if (options.length==0) {
-				modelHandle.set("value", null);
+				modelHandle.update(null);
 			}else	if (!valueValid) {
-				modelHandle.set("value", options[0].value);
+				modelHandle.update(options[0].value);
 			}
 		},
-		updateModelHandle : function(meta, plainValue, modelHandle) {
-			var options = this._createMappedOptions(modelHandle, meta);
-			updateModelHandle.updateSelectModelHandle(meta, plainValue, modelHandle,options);
+		createModel : function(meta, plainValue) {
+			var model = new PrimitiveModel();
+			model.update(plainValue);
+			return model;
 		},
 		getSchema:function(){
 			var schema={};

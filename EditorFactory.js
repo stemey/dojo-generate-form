@@ -34,7 +34,7 @@ define([ "dojo/_base/array", //
 				factory = this.defaultGroupFactory;
 			}
 			if (factory==null) {
-				throw new Error("cannot find group factory for type "+group.type);
+				throw new Error("cannot find group factory for type "+schema.groupType);
 			}
 			return factory.createModel(schema, plainValue);
 		},

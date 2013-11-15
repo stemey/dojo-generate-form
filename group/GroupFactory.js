@@ -13,7 +13,7 @@ define([ "dojo/_base/array", //
 
 
 
-	return declare("gform.group.GroupFactory", [], {
+	return declare( [], {
 		// summary:
 		//		this factory handles simple groups containing an array of attributes. Creates an instance of ./AttributeListWidget
 		constructor : function(kwArgs) {
@@ -40,17 +40,19 @@ define([ "dojo/_base/array", //
 		},	
 		createModel: function(schema,plainValue) {
 			var attributes = {};
-			schema.attributes.forEach(function(attribute) {
-				var attributeValue = plainValue ? plainValue[attribute.code] : null;
-				attributes[attribute.code]=this.editorFactory.createAttributeModel(attribute, attributeValue);
-			}, this);
+			if (schema.attributes) {
+				schema.attributes.forEach(function(attribute) {
+					var attributeValue = plainValue ? plainValue[attribute.code] : null;
+					attributes[attribute.code]=this.editorFactory.createAttributeModel(attribute, attributeValue);
+				}, this);
+			}
 			var model = new SingleObject({attributes:attributes});
 			model.update(plainValue);
 			model.typeCode=schema.code;
 			return model;
 		},
 		create : function(group, modelHandle, ctx) {
-			var listWidget = this.createWidget(group);
+			var listWidget = this.createWidget(group, modelHandle);
 
 			array.forEach(group.attributes, function(attribute) {
 				var label = attribute.label;

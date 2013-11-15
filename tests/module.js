@@ -6,6 +6,7 @@ define ("gform.tests.module",[
 //"gform/tests/model/PrimitiveModel",//
 "gform/tests/model/MultiGroup",//
 "gform/tests/model/ArrayModel",//
+"gform/tests/model/MapModel",//
 "gform/tests/model/SingleObject",//
 "gform/tests/model/MultiObject",//
 "gform/tests/model/MergedMultiObject",//
@@ -21,6 +22,7 @@ define ("gform.tests.module",[
 		doh.registerUrl("gform.tests.tab_list_polymorphic", dojo.moduleUrl("gform","tests/test_tab_list_polymorphic.html"));
 		doh.registerUrl("gform.tests.tab_list", dojo.moduleUrl("gform","tests/test_tab_list.html"));
 		doh.registerUrl("gform.tests.titlepanes", dojo.moduleUrl("gform","tests/test_titlepanes.html"));
+		doh.registerUrl("gform.tests.columns", dojo.moduleUrl("gform","tests/test_columns.html"));
 		doh.registerUrl("gform.tests.embedded", dojo.moduleUrl("gform","tests/test_embedded.html"));
 		doh.registerUrl("gform.tests.embedded_polymorphic", dojo.moduleUrl("gform","tests/test_embedded_polymorphic.html"));
 		doh.registerUrl("gform.tests.primitive_int", dojo.moduleUrl("gform","tests/test_primitive_number.html"));

@@ -1,12 +1,13 @@
 define([ "dojo/_base/array", //
 "dojo/_base/lang",//
 "dojo/_base/declare",//
+"dojo/aspect",//
 "./GroupFactory",//
 "./TitlePane"//
-], function(array, lang, declare, GroupFactory, TitlePane) {
+], function(array, lang, declare, aspect, GroupFactory, TitlePane) {
 
-	return declare("gform.TitlePaneGroupFactory", [ GroupFactory ], {
-		createWidget : function(group) {
+	return declare([ GroupFactory ], {
+		createWidget : function(group, model) {
 			titlePane = new TitlePane({
 				meta : group,
 				title : group.title,
@@ -14,25 +15,18 @@ define([ "dojo/_base/array", //
 			});
 			//make pane content scrollable. important for usage in layout containers	
 			titlePane.containerNode.style.overflow="auto";
-			titlePane.on("state-changed", lang.hitch(this,"onValidChanged"));
+			aspect.after(model, "onChanged", lang.hitch(this,"onChanged",titlePane, model));
 			return titlePane;
 		},
 		
-		onValidChanged: function(e) {
+		onChanged: function(titlePane,model) {
 			var titlePaneWidget = e.source;
 			var titlePane = titlePaneWidget.get("meta");
-			if (titlePaneWidget.get("errorCount") > 0) {
+			if (model.get("errorCount") > 0) {
 				titlePaneWidget.set("title", titlePane.title + "<span class='errorTooltipNode'>" + titlePaneWidget.get("errorCount") + "</span>");
 			} else {
 				titlePaneWidget.set("title", titlePane.title);
 			}
-		},
-		collectAttributes: function(group) {
-			var attributes=[];
-			array.forEach(group.attributes, function(attribute) {
-				attributes.push(attribute);
-			},this);
-			return attributes;
 		},
 		getSchema: function(){
 			var properties=  {"title":{"type":"string", description: "the title of the pane"},"attributes":{"$ref":"attributes"}};

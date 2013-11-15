@@ -9,7 +9,7 @@ define([ "dojo/_base/array", //
 "dojo/i18n!../nls/messages"
 ], function(array, lang, declare, domClass, at,  meta,getPlainValue,StatefulArray, messages) {
 
-	return declare("gform._MappedSelectAttributeFactoryBase", [], {
+	return declare([], {
 
 
 		

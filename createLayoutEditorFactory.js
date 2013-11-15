@@ -10,6 +10,7 @@ define([
 "./list_primitive/PrimitiveListAttributeFactory",//
 "./list_primitive/RefListAttributeFactory",//
 "./primitive/StringAttributeFactory",//
+"./primitive/ReferenceAttributeFactory",//
 "./primitive/BooleanAttributeFactory",//
 "./primitive/SelectAttributeFactory",//
 "./primitive/CheckedSelectAttributeFactory",//
@@ -19,29 +20,53 @@ define([
 "./primitive/DateAttributeFactory",//
 "./primitive/TimeAttributeFactory",//
 "./embedded/EmbeddedAttributeFactory",//
-"./primitive/TextareaAttributeFactory",//
-"./primitive/SimpleTextareaAttributeFactory",//
+"./embedded/MultiEmbeddedAttributeFactory",//
 "./primitive/NumberAttributeFactory",//
 "./primitive/CurrencyAmountAttributeFactory",//
-"./primitive/MappedContentPaneFactory",//
-"./primitive/ReferenceAttributeFactory",//
-"./group/AttributeListWidget",//
+//"./primitive/MappedContentPaneFactory",//
+"./primitive/TextareaAttributeFactory",//
+"./primitive/SimpleTextareaAttributeFactory",//
+//"./group/AttributeListWidget",//
 "./group/ColumnsGroupFactory",//
+"./list_embedded/RepeatedEmbeddedAttributeFactory",//
+"./list_embedded/RepeatedMultiEmbeddedAttributeFactory",//
 "./map_embedded/RepeatedEmbeddedAttributeFactory",//
-"./list_embedded/RepeatedEmbeddedAttributeFactory",//,
 "./map_primitive/PrimitiveMapAttributeFactory",//
-"./list_table/RepeatedEmbeddedAttributeFactory"
+"./list_table/RepeatedEmbeddedAttributeFactory",//
+"./list_table/TableAttributeFactory"//
 
-], function(lang,EditorFactory,AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
-		TitlePaneGroupFactory, ListGroupFactory,PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory,
-		BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, 
+], function(lang,EditorFactory,AttributeFactoryFinder, GroupFactory, 
+ListPaneGroupFactory, 
+	TabGroupFactory, //
+		TitlePaneGroupFactory, ListGroupFactory,
+	PrimitiveListAttributeFactory, 
+  RefListAttributeFactory,
+ StringAttributeFactory, 
+ReferenceAttributeFactory,
+		BooleanAttributeFactory, 
+ SelectAttributeFactory, 
+	CheckedSelectAttributeFactory, 
 		MappedCheckedMultiSelectAttributeFactory,
-		CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, 
-		TimeAttributeFactory, EmbeddedAttributeFactory, TextareaAttributeFactory, SimpleTextareaAttributeFactory, NumberAttributeFactory, 
-		CurrencyAmountAttributeFactory, MappedContentPaneFactory, ReferenceAttributeFactory,
-		AttributeListWidget, ColumnsGroupFactory, MapAttributeFactory, RepeatedEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, TableListAttributeFactory) {
+		CheckedMultiSelectAttributeFactory, 
+		MappedSelectAttributeFactory, 
+		DateAttributeFactory, 
+		TimeAttributeFactory, 
+		EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory,
+	NumberAttributeFactory, 
+		CurrencyAmountAttributeFactory, 
+//MappedContentPaneFactory, 
+	TextareaAttributeFactory, SimpleTextareaAttributeFactory,
+//		AttributeListWidget, 
+ColumnsGroupFactory, 
+RepeatedEmbeddedAttributeFactory ,
+RepeatedMultiEmbeddedAttributeFactory ,
+PrimitiveMapAttributeFactory, 
+	MapEmbeddedAttributeFactory ,
+MultiTableAttributeFactory,
+TableAttributeFactory
+) {
 // module:
-//		gform/createLayoutEditorFactory
+//		gform/createStandardEditorFactory
 
 			var editorFactory = new EditorFactory();
 			editorFactory.addGroupFactory("list", new GroupFactory({editorFactory:editorFactory}));
@@ -57,41 +82,45 @@ define([
 			});
 
 			var attributeFactories = [ //
+			       				new MultiTableAttributeFactory({editorFactory:editorFactory}),//
+			       				new TableAttributeFactory({editorFactory:editorFactory}),//
 			       				new RepeatedEmbeddedAttributeFactory({editorFactory:editorFactory}),//
-			       				new MapAttributeFactory({editorFactory:editorFactory}),//
+			       				new RepeatedMultiEmbeddedAttributeFactory({editorFactory:editorFactory}),//
+			       				new MapEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 			       				new PrimitiveMapAttributeFactory({editorFactory:editorFactory}),//
 			       				new EmbeddedAttributeFactory({editorFactory:editorFactory}),//
+			       				new MultiEmbeddedAttributeFactory({editorFactory:editorFactory}),//
 			       				new MappedCheckedMultiSelectAttributeFactory({editorFactory:editorFactory}), // 
 			       				new CheckedMultiSelectAttributeFactory({editorFactory:editorFactory}), // 
-			       				new MappedSelectAttributeFactory({editorFactory:editorFactory}),//
+		       					new MappedSelectAttributeFactory({editorFactory:editorFactory}),//
 			       				new RefListAttributeFactory({editorFactory:editorFactory}),//
 			       				new PrimitiveListAttributeFactory({editorFactory:editorFactory}),//
+			       				new ReferenceAttributeFactory({editorFactory:editorFactory}),//
 			       				new NumberAttributeFactory({editorFactory:editorFactory}),//
-			       				new ReferenceAttributeFactory({editorFactory:editorFactory}), //
 			       				new SelectAttributeFactory({editorFactory:editorFactory}), // 
 			       				new BooleanAttributeFactory({editorFactory:editorFactory}), // 
 			       				new StringAttributeFactory({editorFactory:editorFactory}), //
 			       				new DateAttributeFactory({editorFactory:editorFactory}), //
 			       				new TimeAttributeFactory({editorFactory:editorFactory}), //
-			       				new MappedContentPaneFactory({editorFactory:editorFactory}) //
+		//	       				new MappedContentPaneFactory({editorFactory:editorFactory}) //
 			       				];
-			attributeFactoryFinder.addAttributeFactory("table", new TableListAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("table", new MultiTableAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("primitive_list", new PrimitiveListAttributeFactory({editorFactory:editorFactory}));
-			attributeFactoryFinder.addAttributeFactory("mapped_contentpane", new MappedContentPaneFactory({editorFactory:editorFactory}));
+//			attributeFactoryFinder.addAttributeFactory("mapped_contentpane", new MappedContentPaneFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("currencyamount", new CurrencyAmountAttributeFactory({editorFactory:editorFactory}));
+			attributeFactoryFinder.addAttributeFactory("checked_select",new CheckedSelectAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("textarea", new TextareaAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.addAttributeFactory("simpletextarea", new SimpleTextareaAttributeFactory({editorFactory:editorFactory}));
-			attributeFactoryFinder.addAttributeFactory("checked_select",new CheckedSelectAttributeFactory({editorFactory:editorFactory}));
 			attributeFactoryFinder.set("attributeFactories",attributeFactories);
 
 			editorFactory.set("attributeFactoryFinder",attributeFactoryFinder);
 		
 			return function() {
 				// summary:
-				//		LayoutEditorFactory will created ListPanes as default group. These work well in LayoutContainers
+				//		StandardEditorFactory will created simple list as default group. 
 				// returns: gform/EditorFactory
 				//		return the cached editorFactory instance.
 				return editorFactory;
-			}				
+			};	
 
 });

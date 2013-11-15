@@ -5,15 +5,17 @@
         {
             "required":false,
             "type":"object",
-            "attributes":[
-                {
-                    "required":false,
-                    "type":"string",
-                    "label":"name",
-                    "code":"name",
-                    "array":false
-                }
-            ],
+						"group": {	
+		          "attributes":[
+		              {
+		                  "required":false,
+		                  "type":"string",
+		                  "label":"name",
+		                  "code":"name",
+		                  "array":false
+		              }
+		          ]
+						},
             "label":"thing",
             "code":"thing",
         }

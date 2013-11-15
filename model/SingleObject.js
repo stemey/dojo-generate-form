@@ -80,6 +80,9 @@ define([ "dojo/_base/array", //
 		getAttribute: function(code) {
 			return this.attributes[code];
 		},
+		getModelByKey: function(code) {
+			return this.attributes[code];
+		},
 		getPlainValue: function() {
 			if (this.isNull) {
 				return null;

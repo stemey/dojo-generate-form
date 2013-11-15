@@ -27,7 +27,7 @@ define([ "dojo/_base/array", //
 		constructor : function(kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		create : function(attribute, modelHandle) {
+		create : function(attribute, modelHandle, ctx) {
 			panelWidget = new SingleTypePanelWidget({
 				"modelHandle":modelHandle,
 				"meta":attribute,
@@ -37,12 +37,7 @@ define([ "dojo/_base/array", //
 
 		},
 		createModel: function(schema,plainValue) {
-			var attributes = [];
-			schema.attributes.forEach(function(attribute) {
-				attributes[attribute.code]=this.editorFactory.createAttributeModel(attribute);
-			}, this);
-			var model = new SingleObject({attributes:attributes});
-			model.update(plainValue);
+			var model = this.editorFactory.createGroupModel(schema.group, plainValue);
 			return model;
 		}
 		

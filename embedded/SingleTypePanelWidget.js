@@ -32,7 +32,7 @@ define([ "dojo/_base/array", //
 			modelHandle.watch("isNull",lang.hitch(this,"modelChanged"));
 			
 			// is not contained in layout container  so should take as much space as necessary -> doLayout=false
-			this.editor = new Editor({doLayout:false,"modelHandle": modelHandle,"meta": attribute,editorFactory:this.editorFactory});
+			this.editor = new Editor({doLayout:false,"modelHandle": modelHandle,"meta": attribute.group,editorFactory:this.editorFactory});
 			this.addChild(this.editor);
 			this.set("target", this.panelModel);
 		},

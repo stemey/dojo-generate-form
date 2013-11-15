@@ -14,7 +14,7 @@
 	<script type="text/javascript" src="../../../dojo/dojo.js"
 		data-dojo-config="async:true,parseOnLoad: false, isDebug: false"></script>
 	<!-- this is the optimized gform library - not availabe in dev mode -->
-	<script type="text/javascript" src="../../../dojo/gform.js"></script>
+	<!--<script type="text/javascript" src="../../../dojo/gform.js"></script>-->
 
 
 	<script type="text/javascript">
@@ -38,9 +38,10 @@
 
 			var editorFactory = createStandardEditorFactory();
 			 editor = new Editor({
+					editorFactory:editorFactory,
 					"plainValue": dojo.fromJson(entity),
 					"ctx": ctx,	
-					"meta": dojo.fromJson(meta),editorFactory:editorFactory});
+					"meta": dojo.fromJson(meta)});
 			var container = registry.byId("container");
 			editor.set("region","center");
 			container.addChild(editor);
