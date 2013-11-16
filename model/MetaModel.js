@@ -114,13 +114,30 @@ define([ "dojo/_base/array", //
 				this.parent.removeChild(this);
 			}
 		},
-		resetMeta: function(/*dojo/Stateful*/meta) {
+		visit: function(cb, idx) {
+			cb(this, idx);
+		},	
+		resetMetaRecursively: function() {
+			this.visit(function(model, cascade) {
+				model.resetMeta();
+				cascade();
+				model.computeProperties();
+			});
+		},
+		reset: function() {
 			// summary:
-			//		rest meta object
-			// meta: dojo/Stateful
-			meta.set("tmp",new Stateful());
-			meta.set("message",null);
-			meta.set("state","");
-			return meta;	
-		},	})
+			//		reset value and state.
+			this.visit(function(model, cascade, idx) {
+				model.resetMeta();
+				cascade();
+			});
+			this.update(this.oldValue, false);
+		},
+		resetMeta: function() {
+			// summary:
+			//		reset meta data. does not cascade.
+			this.state ="";
+			this.message ="";
+		},	
+	})
 });

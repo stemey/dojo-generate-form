@@ -43,6 +43,13 @@ define(["doh/runner","dojo/_base/lang", "dojo/Stateful", "gform/model/SingleObje
 				var plainValue = so.getPlainValue(so);
 				assertEqual({stringP: null, booleanP: null, numberP:null}, plainValue);
       },
+			function testResetMetaRecursively(){
+				so.getAttribute("stringP").set("state","Error");	
+				so.set("state","Error");	
+				assertEqual(2, so.errorCount);
+				so.resetMetaRecursively();
+				assertEqual(0, so.errorCount);
+      },
 			function testState(){
 				assertEqual(0, so.errorCount);
 				so.getAttribute("stringP").set("state","Error");	

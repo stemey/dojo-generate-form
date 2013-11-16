@@ -49,6 +49,13 @@ define([ "dojo/_base/array", //
 			element[this.keyProperty]=key;
 			this.push(element);
 		},
+		visit: function(cb, parentIdx) {
+			cb(this, function() {
+				this.value.forEach(function(model) {
+					model.visit(cb, model.code);
+				});
+			}, parentIdx);
+		},
 		getPath: function(path) {
 			throw new Error("not implemented yet");
 		}

@@ -99,6 +99,14 @@ define([ "dojo/_base/array", //
 				cb.call(this, this.getAttribute(this.getAttributeCodes()[key]));
 			}
 		},
+		visit: function(cb, parentIdx) {
+			var me =this;
+			cb(this, function() {
+				for (var key in me.attributes) {
+					me.attributes[key].visit(cb, key);
+				}
+			}, parentIdx);
+		},
 		getPath: function(path) {
 			if (this.isNull) {
 				return null;

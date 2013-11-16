@@ -68,6 +68,13 @@ define([ "dojo/_base/array", //
 			value[this.typeProperty] = typeCode;
 			this.update(value);
 		},	
+		visit: function(cb, parentIdx) {
+			if (this.currentTypeCode!=null) {
+				getGroup(this.currentTypeCode).visit(cb,parentIdx);
+			} else {
+				cb(this,parentIdx);
+			}	
+		},
 		iterateChildren: function(cb) {
 			if (this.currentTypeCode!=null) {
 				getGroup(this.currentTypeCode).iterateChildren(cb);
