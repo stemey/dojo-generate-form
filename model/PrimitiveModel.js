@@ -31,10 +31,17 @@ define([ "dojo/_base/array", //
 			}
 
 		},
+		visit: function(cb, idx) {
+			cb(this, function(){}, idx);
+		},	
 		getPlainValue: function() {
 			return this.value;
 		},
 		iterateChildren: function( cb) {
+		},
+		resetMeta: function() {
+			this.state ="";
+			this.message ="";
 		}
 
 
