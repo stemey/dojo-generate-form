@@ -49,10 +49,10 @@ define ("gform.tests.module",[
 		doh.registerUrl("gform.tests.group_decorator", dojo.moduleUrl("gform","tests/test_group_decorator.html"));
 		doh.registerUrl("gform.tests.validation", dojo.moduleUrl("gform","tests/test_validation.html"));
 
-		doh.registerUrl("gform.mobile.primitive_date", dojo.moduleUrl("gform","tests/mobile/test_primitive_date.html"));
-		doh.registerUrl("gform.mobile.primitive_boolean", dojo.moduleUrl("gform","tests/mobile/test_primitive_boolean.html"));
-		doh.registerUrl("gform.mobile.primitive_string", dojo.moduleUrl("gform","tests/mobile/test_primitive_string.html"));
-		doh.registerUrl("gform.mobile.list_primitive", dojo.moduleUrl("gform","tests/mobile/test_list_primitive.html"));
+		//doh.registerUrl("gform.mobile.primitive_date", dojo.moduleUrl("gform","tests/mobile/test_primitive_date.html"));
+		//doh.registerUrl("gform.mobile.primitive_boolean", dojo.moduleUrl("gform","tests/mobile/test_primitive_boolean.html"));
+		//doh.registerUrl("gform.mobile.primitive_string", dojo.moduleUrl("gform","tests/mobile/test_primitive_string.html"));
+		//doh.registerUrl("gform.mobile.list_primitive", dojo.moduleUrl("gform","tests/mobile/test_list_primitive.html"));
 
 	}catch(e){
 		doh.debug(e);

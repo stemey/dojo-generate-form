@@ -1,53 +1,54 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/_base/declare",//
-"dojo/Stateful",//
-"./MetaModel"
-], function(array, lang, declare, Stateful, MetaModel) {
-	// module: 
+define([
+	"dojo/_base/declare",
+	"./MetaModel"
+], function (declare, MetaModel) {
+	// module:
 	//		gform/model/SingleObject
 
 	return declare([MetaModel], {
-	// summary:
-	//		Provides access to sibling attributes of modelHandle.
-		attributes:null,
-		isNull:true,
-		typeCode:null,
-		constructor: function(kwArgs) {
-			for (var key in kwArgs.attributes) {
-				kwArgs.attributes[key].code=key;	
+		// summary:
+		//		Provides access to sibling attributes of modelHandle.
+		attributes: null,
+		isNull: true,
+		subgroup: false,
+		typeCode: null,
+		_attributesSetter: function (attributes) {
+			for (var key in attributes) {
+				attributes[key].parent = this;
+				attributes[key].code = key;
 			}
-		},	
-		update: function(/*Object*/plainValue, bubble) {
+			this._changeAttrValue("attributes", attributes);
+		},
+		update: function (/*Object*/plainValue, bubble) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
 			//		the new value of the attribute
-			this._execute( function() {
+			this._execute(function () {
 				this.updateGroup(plainValue);
-				this.set("oldValue",this.getPlainValue());
+				this.set("oldValue", this.getPlainValue());
 				this.computeProperties();
 			});
-			if (this.parent && bubble!==false) {
-				this.parent.onChange();	
+			if (this.parent && bubble !== false) {
+				this.parent.onChange();
 			}
 		},
-		getValue: function(attributeCode) {
+		getValue: function (attributeCode) {
 			if (this.isNull) {
 				return null;
 			} else {
 				return this.attributes[attributeCode].getPlainValue();
 			}
 		},
-		setValue: function(attributeCode, value) {
+		setValue: function (attributeCode, value) {
 			if (!this.isNull) {
 				this.getModel(attributeCode).update(value);
 			}
 		},
-		getModel: function(attributeCode) {
+		getModel: function (attributeCode) {
 			return this.attributes[attributeCode];
 		},
-		updateGroup: function(/*Object*/plainValue) {
+		updateGroup: function (/*Object*/plainValue) {
 			// summary:
 			//		update the group with the given plainValue
 			// groupOrType:
@@ -57,71 +58,69 @@ define([ "dojo/_base/array", //
 			// modelHandle:
 			//		the modelHandle bound to the Editor.
 			// editorFactory:
-			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the update behavior.
-			if (plainValue==null) {
-				this.isNull=true;
-			}else{
-				this.isNull=false;
+			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the
+			// 		update behavior.
+			if (plainValue == null) {
+				this.isNull = true;
+			} else {
+				this.isNull = false;
 				for (var key in this.attributes) {
 					this.attributes[key].update(plainValue[key], this.bubble);
-				} 
+				}
 			}
 		},
-		getTypeCode: function() {
+		getTypeCode: function () {
 			return this.typeCode;
 		},
-		getAttributeCodes: function() {
-			var codes =[];
+		getAttributeCodes: function () {
+			var codes = [];
 			for (var key in this.attributes) {
 				codes.push(key);
 			}
-			return codes;	
+			return codes;
 		},
-		getAttribute: function(code) {
+		getAttribute: function (code) {
 			return this.attributes[code];
 		},
-		getModelByKey: function(code) {
+		getModelByKey: function (code) {
 			return this.attributes[code];
 		},
-		getPlainValue: function() {
+		getPlainValue: function () {
 			if (this.isNull) {
 				return null;
 			} else {
-				var plainValue={};
+				var plainValue = {};
 				for (var key in this.attributes) {
-					plainValue[key]=this.attributes[key].getPlainValue();
-				};	
+					plainValue[key] = this.attributes[key].getPlainValue();
+				}
 				return plainValue;
 			}
 		},
-		iterateChildren: function( cb) {
+		iterateChildren: function (cb) {
 			for (var key in this.getAttributeCodes()) {
 				cb.call(this, this.getAttribute(this.getAttributeCodes()[key]));
 			}
 		},
-		visit: function(cb, parentIdx) {
-			var me =this;
-			cb(this, function() {
-				for (var key in me.attributes) {
-					me.attributes[key].visit(cb, key);
+		visit: function (cb, parentIdx) {
+			if (this.subgroup && typeof parentIdx === "undefined") {
+				for (var key in this.attributes) {
+					this.attributes[key].visit(cb, key);
 				}
-			}, parentIdx);
+			} else {
+				var me = this;
+				cb(this, function () {
+					for (var key in me.attributes) {
+						me.attributes[key].visit(cb, key);
+					}
+				}, parentIdx);
+			}
 		},
-		getPath: function(path) {
+		_getModelByPath: function (idx, path) {
 			if (this.isNull) {
 				return null;
-			}	
-			if (typeof path.push != "function") {
-				path = path.split(".");
 			}
-			if (path.length==0) {
-				return this;
-			}else if (path.length==1) {
-				return this.getModel(path[0]);
-			} else{
-				var model = this.getModel(path[0]);
-				return model.getPath(path.slice(2));
-			}
+			var model = this.getModel(idx);
+			return model.getModelByPath(path);
 		}
-	})
+	});
 });

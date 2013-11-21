@@ -1,9 +1,8 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/_base/declare",//
-"./controller/StoreRegistry",
-"./controller/SchemaRegistry",
-], function(array, lang, declare, StoreRegistry, SchemaRegistry) {
+define([
+	"dojo/_base/declare",//
+	"./controller/StoreRegistry",
+	"./controller/SchemaRegistry"
+], function (declare, StoreRegistry, SchemaRegistry) {
 	// module: 
 	//		gform/Context
 
@@ -23,9 +22,9 @@ define([ "dojo/_base/array", //
 		// schemaRegistry:
 		//		A registry for schemas
 		schemaRegistry: null,
-		constructor: function() {
-			this.storeRegistry=new StoreRegistry();
-			this.schemaRegistry=new SchemaRegistry();
+		constructor: function () {
+			this.storeRegistry = new StoreRegistry();
+			this.schemaRegistry = new SchemaRegistry();
 		},
 		// summary:
 		//		get a shared store
@@ -33,10 +32,10 @@ define([ "dojo/_base/array", //
 		//		the id of the store. Usually its url.
 		// props: Object
 		//		the properites of the store (e.g.: idProperty and url)
-		getStore: function(id, props) {
+		getStore: function (id, props) {
 			return this.storeRegistry.get(id, props);
 		},
-		getUrl: function(id) {
+		getUrl: function (id) {
 			var actualUrl = this.getStore(id).target;
 			if (actualUrl) {
 				return actualUrl;
@@ -44,8 +43,8 @@ define([ "dojo/_base/array", //
 				return id;
 			}
 		},
-		getSchema: function(url) {
+		getSchema: function (url) {
 			return this.schemaRegistry.get(url);
 		}
-	})
+	});
 });
