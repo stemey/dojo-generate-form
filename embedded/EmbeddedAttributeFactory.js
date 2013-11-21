@@ -1,45 +1,34 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/_base/json",//
-"dojo/_base/declare",//
-"dojox/mvc/at",//
-"./GroupPanelWidget",//
-"./SingleTypePanelWidget",//
-"../model/SingleObject",//
-"dijit/layout/StackContainer",//
-"dojo/Stateful",//
-"dijit/TitlePane",//
-"../model/updateModelHandle",//
-"dojo/text!../schema/embeddedAttributeProperties.json",//
-"dojo/text!./embeddedExample.json",
-"dojo/text!./embeddedInstanceExample.json"
-], function(array, lang, json,declare, at, GroupPanelWidget, SingleTypePanelWidget, SingleObject,
-		StackContainer,  Stateful, TitlePane,updateModelHandle,embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
+define([
+	"dojo/_base/lang",
+	"dojo/_base/declare",
+	"./SingleTypePanelWidget"
+], function (lang, declare, SingleTypePanelWidget) {
 // module: 
 //		gform/embedded/EmbeddedAttributeFactory
-	return declare([],{
+	return declare([], {
 		id: "object",
 		// summary:
 		//		This AttributeFactory create the widget for single embedded attributes.
-		handles : function(attribute, modelHandle) {
-			return attribute.type=="object";
+		handles: function (attribute, modelHandle) {
+			return attribute.type === "object";
 		},
-		constructor : function(kwArgs) {
+		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		create : function(attribute, modelHandle, ctx) {
-			panelWidget = new SingleTypePanelWidget({
-				"modelHandle":modelHandle,
-				"meta":attribute,
-				editorFactory:this.editorFactory
+		create: function (attribute, modelHandle, ctx) {
+			var panelWidget = new SingleTypePanelWidget({
+				"modelHandle": modelHandle,
+				"meta": attribute,
+				editorFactory: this.editorFactory,
+				ctx: ctx
 			});
 			return panelWidget;
 
 		},
-		createModel: function(schema,plainValue) {
+		createModel: function (schema, plainValue) {
 			var model = this.editorFactory.createGroupModel(schema.group, plainValue);
 			return model;
 		}
-		
-	})
+
+	});
 });

@@ -1,11 +1,11 @@
-define([ 
-	"dojo/_base/declare",//
-], function(
+define([
+	"dojo/_base/declare"
+], function (
 	declare
 ) {
 // module: 
 //		gform/api/AttributeFactory
-	return declare( [],{
+	return declare([], {
 		// summary:
 		//		An AttributeFactory manages a class of attributes. 
 		// description:
@@ -19,7 +19,7 @@ define([
 		// editorFactory:
 		//		AttributeFactory uses editorFactory to create embedded attributes/groups.
 		editorFactory: null,
-		handles : function(/*Object*/attribute, /*dojo/stateful*/modelHandle) {
+		handles : function (/*Object*/attribute, /*dojo/stateful*/modelHandle) {
 			// summary:
 			//		check if the attribute can be managed by this AttributeFactory.
 			// attribute: Object
@@ -32,7 +32,7 @@ define([
 					&& attribute.validTypes
 					&& !attribute.array;
 		},
-		create : function(/*Object*/attribute, /*dojo/stateful*/modelHandle, /*gform/Context*/ context) {
+		create : function (/*Object*/attribute, /*dojo/stateful*/modelHandle, /*gform/Context*/ context) {
 			// summary:
 			//		create a widget and bind it to the modelHandle.
 			// attribute: Object
@@ -44,7 +44,7 @@ define([
 			// returns: dijit/_WidgetBase
 			//		The widget will be wrapped with a Decorator and added to the widget tree.
 		},
-		updateModelHandle: function(/*Object*/attribute, /*Object*/plainValue, /*dojo/stateful*/modelHandle, /*gform/Context*/ context) {
+		updateModelHandle: function (/*Object*/attribute, /*Object*/plainValue, /*dojo/stateful*/modelHandle, /*gform/Context*/ context) {
 			// summary:
 			//		create a widget and bind it to the modelHandle.
 			// description:
@@ -58,7 +58,7 @@ define([
 			// context: gform/Context
 			//		resolver allows access to sibling attributes and their modelHandles.
 		},
-		getSchema: function() {
+		getSchema: function () {
 			// summary:
 			//		return the json schema v0.3 describing the attributes this AttributeFactory can handle. 
 			// attribute: Object
