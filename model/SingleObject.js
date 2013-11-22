@@ -120,6 +120,9 @@ define([
 				return null;
 			}
 			var model = this.getModel(idx);
+			if (!model) {
+				return null;
+			}
 			return model.getModelByPath(path);
 		}
 	});

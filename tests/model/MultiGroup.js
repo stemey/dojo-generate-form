@@ -66,6 +66,10 @@ define(['./createVisitor',
 			mg.set("currentTypeCode", "type1");
 			mg.visit(lang.hitch(visitor, "fn"));
 			assertEqual([ "stringP", "booleanP", "numberP"], visitor.events);
+		}, function testGetModelByPath() {
+			mg.update(object);
+			var model = mg.getModelByPath("stringP");
+			doh.assertEqual(mg.groups[0].attributes.stringP, model);
 		}
 	]);
 

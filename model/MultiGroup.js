@@ -45,8 +45,13 @@ define([
 		getModelByIndex: function (index) {
 			return this.groups[index];
 		},
-		getModelByPath: function (index, path) {
-			return this.groups[index].getModelByPath(path);
+		_getModelByPath: function (index, path) {
+			var model = this.getModel(index);
+			if (model == null) {
+				return null;
+			} else {
+				return model.getModelByPath(path);
+			}
 		},
 		getModel: function (attributeCode) {
 			var model = null;
