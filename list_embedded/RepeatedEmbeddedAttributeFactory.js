@@ -1,67 +1,54 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/aspect",//
-"../Editor",//
-"dojo/_base/declare",//
-"dojox/mvc/at",//
-"dojox/mvc/StatefulArray",//
-"dojo/Stateful",//
-"./EmbeddedListWidget",//
-"dojox/mvc/sync",//
-"../widget/MvcDndSource",//
-"../layout/LayoutWidgetList",//
-"./RepeatedEmbeddedWidget",//
-"../model/updateModelHandle",//
-"../model/getPlainValue",//
-"../model/ArrayModel",//
-"../layout/_LayoutMixin"
-], function(array, lang, aspect, Editor, declare, at, 
-		StatefulArray, Stateful,EmbeddedListWidget, sync, DndSource, WidgetList, RepeatedEmbeddedWidget, updateModelHandle, getPlainValue, ArrayModel, _LayoutMixin) {
+define([
+	"dojo/_base/lang",
+	"dojo/aspect",
+	"dojo/_base/declare",
+	"./EmbeddedListWidget",
+	"../widget/MvcDndSource",
+	"../layout/LayoutWidgetList",
+	"./RepeatedEmbeddedWidget",
+	"../model/ArrayModel"
+], function (lang, aspect, declare, EmbeddedListWidget, DndSource, WidgetList, RepeatedEmbeddedWidget, ArrayModel) {
 
 	return declare([], {
 
-		constructor : function(kwArgs) {
+		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		handles : function(attribute) {
+		handles: function (attribute) {
 			return attribute != null && attribute.type == "single-array";
 		},
-		create : function(attribute, modelHandle) {
+		create: function (attribute, modelHandle) {
 
 			var select = new EmbeddedListWidget({
-				target : modelHandle,
-				group:attribute.group,
+				target: modelHandle,
+				group: attribute.group,
 				//typeProperty: attribute.typeProperty,
 				editorFactory: this.editorFactory
 			});
 
-			var childMeta = attribute.group
+			var childMeta = attribute.group;
 
 			var widgetList = new WidgetList();
 			widgetList.set("partialRebuild", true);
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
 			widgetList.set("childParams", {
-				group : childMeta,
-				_relTargetProp : "modelHandle",
+				group: childMeta,
+				_relTargetProp: "modelHandle",
 				editorFactory: this.editorFactory
 			});
 			select.addChild(widgetList);
-			
 
-			
-			if (attribute.reorderable!==false) {
+
+			if (attribute.reorderable !== false) {
 				var me = this;
-				var copy = function(original) {
-					var plainValue= original.getPlainValue();
-					var newMh=me.editorFactory.createGroupModel(group);
-					newMh.update(plainValue);
-					newMh.oldValue=plainValue;
-					return newMh;
+				var copy = function (original) {
+					var plainValue = original.getPlainValue();
+					return modelHandle.elementFactory(plainValue);
 				}
 				//var copyFn=lang.hitch(this,copy);
-				aspect.after(widgetList, "startup", function() {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true, withHandles: true});
+				aspect.after(widgetList, "startup", function () {
+					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});
 				});
 			}
 
@@ -69,10 +56,10 @@ define([ "dojo/_base/array", //
 			return select;
 
 		},
-		createModel: function(meta,plainValue) {
+		createModel: function (meta, plainValue) {
 			var model = new ArrayModel();
 			var me = this;
-			var ef = function(value) {
+			var ef = function (value) {
 				var model = me.editorFactory.createGroupModel(meta.group);
 				if (value) {
 					model.update(value);
@@ -82,7 +69,7 @@ define([ "dojo/_base/array", //
 			model.elementFactory = ef;
 			model.update(plainValue);
 			return model;
-		},
-/* getSchema() is implemented in gform/embedded/EmbeddedAttributeFactory */
-	})
+		}
+		/* getSchema() is implemented in gform/embedded/EmbeddedAttributeFactory */
+	});
 });

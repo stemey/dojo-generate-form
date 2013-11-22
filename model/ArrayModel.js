@@ -18,7 +18,9 @@ define([
 			this._setupIndexes();
 		},
 		push: function (value) {
-			this.value.push(this.elementFactory(value));
+			var model = this.elementFactory(value);
+			this.value.push(model);
+			return model;
 		},
 		getModelByIndex: function (idx) {
 			return this.value[idx];
