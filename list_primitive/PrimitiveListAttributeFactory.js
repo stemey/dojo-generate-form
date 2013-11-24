@@ -1,50 +1,44 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/aspect",//
-"../Editor",//
-"dojo/_base/declare",//
-"dojox/mvc/at",//
-"dojox/mvc/StatefulArray",//
-"dojo/Stateful",//
-"./EmbeddedListWidget",//
-"dojox/mvc/sync",//
-"dojox/mvc/WidgetList",//
-"./RepeatedAttributeWidget",//
-"../widget/MvcDndSource",//
-"../model/ArrayModel",//
-"../model/PrimitiveModel",//
-"dijit/registry"
-], function(array, lang, aspect, Editor, declare, at, StatefulArray, Stateful,
-		EmbeddedListWidget, sync, WidgetList, RepeatedAttributeWidget , DndSource, ArrayModel, PrimitiveModel, registry) {
+define([
+	"dojo/_base/lang",
+	"dojo/aspect",
+	"dojo/_base/declare",
+	"./EmbeddedListWidget",
+	"dojox/mvc/WidgetList",
+	"./RepeatedAttributeWidget",
+	"../widget/MvcDndSource",
+	"../model/ArrayModel",
+	"../model/PrimitiveModel"
+], function (lang, aspect, declare, EmbeddedListWidget, WidgetList, RepeatedAttributeWidget, DndSource, ArrayModel, PrimitiveModel) {
 
-	return declare( [], {
+	return declare([], {
 
-		constructor : function(kwArgs) {
+		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		handles : function(attribute) {
-			return attribute != null && attribute.type=="primitive-array";
+		handles: function (attribute) {
+			return attribute != null && attribute.type == "primitive-array";
 		},
-		createModel: function(attribute, plainValue) {
+		createModel: function (attribute, plainValue) {
 			var model = new ArrayModel();
-			var ef = function(value) {
-				var model = new PrimitiveModel();
+			var me = this;
+			var ef = function (value) {
+				var model = me.editorFactory.createAttributeModel(attribute.element);
 				model.update(value);
 				return model;
-			}
+			};
 			model.elementFactory = ef;
 			model.update(plainValue);
 			return model;
-			
-		},	
-		create : function(attribute, modelHandle, ctx) {
-			var childAttribute =attribute.element;
-			
+
+		},
+		create: function (attribute, modelHandle, ctx) {
+			var childAttribute = attribute.element;
+
 			var select = new EmbeddedListWidget({
-				target : modelHandle,
-				attribute : attribute,
-				childAttribute : childAttribute,
-				editorFactory:this.editorFactory
+				target: modelHandle,
+				attribute: attribute,
+				childAttribute: childAttribute,
+				editorFactory: this.editorFactory
 			});
 
 			var widgetList = new WidgetList();
@@ -52,21 +46,21 @@ define([ "dojo/_base/array", //
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedAttributeWidget);
 			widgetList.set("childParams", {
-				meta : childAttribute,
-				_relTargetProp : "modelHandle",
-				editorFactory : this.editorFactory,
+				meta: childAttribute,
+				_relTargetProp: "modelHandle",
+				editorFactory: this.editorFactory,
 				ctx: ctx
 			});
 			if (attribute.reorderable !== false) {
-				var copy = function(original) {
-					var plainValue= original.getPlainValue();
-					var newMh=new PrimitiveModel();
+				var copy = function (original) {
+					var plainValue = original.getPlainValue();
+					var newMh = new PrimitiveModel();
 					newMh.update(plainValue);
-					newMh.oldValue=plainValue;
+					newMh.oldValue = plainValue;
 					return newMh;
 				}
-				aspect.after(widgetList, "startup", function() {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly:false, singular:true, withHandles:true});
+				aspect.after(widgetList, "startup", function () {
+					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});
 				});
 			}
 			select.addChild(widgetList);

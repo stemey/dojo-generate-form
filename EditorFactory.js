@@ -4,8 +4,9 @@ define([  //
 	"dojo/Stateful", //
 	"./converter/urlToIdConverter", //
 	"./group/DecoratorFactory", //
-	"./validate/UniqueProperties"//
-], function (lang, declare, Stateful, urlToIdConverter, DecoratorFactory, UniqueProperties) {
+	"./validate/UniqueProperties",//
+	"./validate/Pattern"//
+], function (lang, declare, Stateful, urlToIdConverter, DecoratorFactory, UniqueProperties, Pattern) {
 	// module: 
 	//		gform/EditorFactory
 
@@ -177,7 +178,8 @@ define([  //
 			return validateFn;
 		},
 		arrayValidators: {
-			uniqueProperties: UniqueProperties
+			uniqueProperties: UniqueProperties,
+			pattern: Pattern
 		},
 		// summary:
 		//		get a converter for the given attribute.

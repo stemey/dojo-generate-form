@@ -19,9 +19,18 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful",  "gform/createLayoutEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-		"dojo/text!./kitchensink_schema.json", "dojo/text!./kitchensink_data.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","gform/Context", "dojo/text!gform/tests/entity/state_collection.json", "gform/opener/SingleEditorDialogOpener", "gform/example/gridx/AsyncMemory", "dijit/form/Button"//
-		], function(ready, json, Editor, Stateful, createStandardEditorFactory ,on,RepeatedEmbeddedAttributeFactory, meta, entity, registry,BorderContainer,parser,ListPaneGroupFactory, Context, stateCollectionJson, SingleEditorDialogOpener, Store) {
+		require([   "gform/Editor",
+            "gform/createLayoutEditorFactory",//
+		    "dojo/text!./kitchensink_schema.json",
+            "dojo/text!./kitchensink_data.json",
+            "dijit/registry",
+            "dojo/parser",
+            "gform/Context",
+            "dojo/text!../../tests/entity/state_collection.json",
+            "dojo/text!../../tests/meta/refs.json",
+            "gform/opener/SingleEditorDialogOpener",
+            "gform/example/gridx/AsyncMemory"
+        ], function(Editor, createStandardEditorFactory ,meta, entity, registry,parser,Context, stateCollectionJson, ref_schema, SingleEditorDialogOpener, Store) {
 			parser.parse();
 
 			var stateCollection = JSON.parse(stateCollectionJson);
@@ -33,6 +42,7 @@
 			ctx.opener.placeAt("dialog");
 			ctx.opener.startup();
 			var model = dojo.fromJson(entity);
+            ctx.schemaRegistry.register("/gform/tests/meta/refs.json", dojo.fromJson(ref_schema));
 			ctx.storeRegistry.register("/gform/tests/entity/state", new Store({data:stateCollection, idProperty:"id"})); 
 
 

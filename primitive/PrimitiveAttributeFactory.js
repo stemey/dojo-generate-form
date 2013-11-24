@@ -1,15 +1,20 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/_base/declare",//
-"../model/PrimitiveModel",
-], function(array, lang, declare, PrimitiveModel) {
+define([
+	"dojo/_base/lang",
+	"dojo/_base/declare",
+	"../model/PrimitiveModel"
+], function (lang, declare, PrimitiveModel) {
 
-	return declare( [], {
-		createModel: function(meta, plainValue) {
-			var model = new PrimitiveModel();
+	return declare([], {
+		editorFactory: null,
+		constructor: function (kwArgs) {
+			lang.mixin(this, kwArgs);
+		},
+		createModel: function (meta, plainValue) {
+			var validators = this.editorFactory.getModelValidators(meta);
+			var model = new PrimitiveModel({validators: validators});
 			model.update(plainValue);
 			return model;
 		}
 	});
-	
+
 });

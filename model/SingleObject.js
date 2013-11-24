@@ -1,7 +1,8 @@
 define([
+	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"./MetaModel"
-], function (declare, MetaModel) {
+], function (lang, declare, MetaModel) {
 	// module:
 	//		gform/model/SingleObject
 
@@ -12,12 +13,18 @@ define([
 		isNull: true,
 		subgroup: false,
 		typeCode: null,
+		constructor: function () {
+			this.watch("isNull", lang.hitch(this, "_onIsNullChange"));
+		},
 		_attributesSetter: function (attributes) {
 			for (var key in attributes) {
 				attributes[key].parent = this;
 				attributes[key].code = key;
 			}
 			this._changeAttrValue("attributes", attributes);
+		},
+		_onIsNullChange: function () {
+			this.onChange(true);
 		},
 		update: function (/*Object*/plainValue, bubble) {
 			// summary:
@@ -28,7 +35,7 @@ define([
 				this.updateGroup(plainValue);
 				this.set("oldValue", this.getPlainValue());
 				this.computeProperties();
-			});
+			}, false);
 			if (this.parent && bubble !== false) {
 				this.parent.onChange();
 			}
@@ -61,9 +68,9 @@ define([
 			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the
 			// 		update behavior.
 			if (plainValue == null) {
-				this.isNull = true;
+				this.set("isNull", true);
 			} else {
-				this.isNull = false;
+				this.set("isNull", false);
 				for (var key in this.attributes) {
 					this.attributes[key].update(plainValue[key], this.bubble);
 				}
@@ -97,8 +104,10 @@ define([
 			}
 		},
 		iterateChildren: function (cb) {
-			for (var key in this.getAttributeCodes()) {
-				cb.call(this, this.getAttribute(this.getAttributeCodes()[key]));
+			if (!this.isNull) {
+				for (var key in this.getAttributeCodes()) {
+					cb.call(this, this.getAttribute(this.getAttributeCodes()[key]));
+				}
 			}
 		},
 		visit: function (cb, parentIdx) {

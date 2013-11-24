@@ -1,21 +1,21 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/_base/declare",//
-"dojox/mvc/at",//
-"./CurrencyTextBox",//
-"../schema/meta",//
-"./dijitHelper",//
-"dojo/cldr/monetary",//
-"./nullableNumberConverter",//
-"./PrimitiveAttributeFactory",
-], function(array, lang, declare, at, CurrencyTextBox, meta, dijitHelper, monetary, nullableNumberConverter, PrimitiveAttributeFactory) {
+define([  //
+	//
+	"dojo/_base/declare",//
+	"dojox/mvc/at",//
+	"./CurrencyTextBox",//
+	//
+	"./dijitHelper",//
+	"dojo/cldr/monetary",//
+	"./nullableNumberConverter",//
+	"./PrimitiveAttributeFactory"
+], function (declare, at, CurrencyTextBox, dijitHelper, monetary, nullableNumberConverter, PrimitiveAttributeFactory) {
 
-	return declare( [PrimitiveAttributeFactory], {
-		handles : function(attribute) {
-			return attribute.type="number" && !attribute.array;
+	return declare([PrimitiveAttributeFactory], {
+		handles: function (attribute) {
+			return attribute.type = "number" && !attribute.array;
 		},
-		
-		create : function(attribute, modelHandle) {
+
+		create: function (attribute, modelHandle) {
 			var currency = attribute.currency;
 			var valueAt = at(modelHandle, "value");
 			if (!attribute.amountFractional) {
@@ -24,22 +24,22 @@ define([ "dojo/_base/array", //
 			} else {
 				valueAt.transform(nullableNumberConverter);
 			}
-			var props={
-				constraints:{}
+			var props = {
+				constraints: {}
 			}
-			props["value"]=valueAt;
-			props["state"]= at(modelHandle, "state");
-			props["message"]=at(modelHandle, "message");
-			props.currency=currency;
-			dijitHelper.copyDijitProperties(attribute,props);
-			dijitHelper.copyProperty("min",attribute,props.constraints)
-			dijitHelper.copyProperty("max",attribute,props.constraints)
+			props["value"] = valueAt;
+			props["state"] = at(modelHandle, "state");
+			props["message"] = at(modelHandle, "message");
+			props.currency = currency;
+			dijitHelper.copyDijitProperties(attribute, props);
+			dijitHelper.copyProperty("min", attribute, props.constraints)
+			dijitHelper.copyProperty("max", attribute, props.constraints)
 			return new CurrencyTextBox(props);
 		},
-		createValueConverter : function(places) {
-			var operand = Math.pow(10,places);
+		createValueConverter: function (places) {
+			var operand = Math.pow(10, places);
 			return {
-				format : function(value) {
+				format: function (value) {
 					if (typeof value == "undefined") {
 						return value;
 					} else if (value == null) {
@@ -48,7 +48,7 @@ define([ "dojo/_base/array", //
 						return value / operand;
 					}
 				},
-				parse : function(value) {
+				parse: function (value) {
 					if (typeof value == "undefined") {
 						return value;
 					} else if (isNaN(value)) {
@@ -59,28 +59,28 @@ define([ "dojo/_base/array", //
 				}
 			};
 		},
-			getSchema:function(){
-				var schema={};
-				schema["id"]="number";
-				schema["description"]="This is a textfield for numerical amount with currency values based on 'dijit.form.NumberTextBox'.";
-				schema["example"]=dojo.toJson({code:'name',type:'number',editor:"currencyamount",currency:"USD"},true);
-				var properties={};
-				properties.type={type:"string",required:true,"enum":["number"]};
-				properties.currency={type:"string",required:true,maxLength:3,pattern:"[A-Z]{3}",description:"The currency code according to ISO4217"};
-				properties.amountFractional={type:"boolean",description:"If true the value is a fractional value. Otherwise the value is provided in the minor currency like cents instead of dollars."};
-				dijitHelper.addSchemaProperties(properties);
-				dijitHelper.addSchemaProperty("required",properties);
-				dijitHelper.addSchemaProperty("maxLength",properties);
-				properties.min={type:"number",description:"the minimum value"};
-				properties.max={type:"number",description:"the maximum value"};
-				dijitHelper.addSchemaProperty("missingMessage",properties);
-				dijitHelper.addSchemaProperty("promptMessage",properties);
-				dijitHelper.addSchemaProperty("placeHolder",properties);
-				dijitHelper.addSchemaProperty("invalidMessage",properties);
-				
-				schema.properties=properties;
-				return schema;
-			}
+		getSchema: function () {
+			var schema = {};
+			schema["id"] = "number";
+			schema["description"] = "This is a textfield for numerical amount with currency values based on 'dijit.form.NumberTextBox'.";
+			schema["example"] = dojo.toJson({code: 'name', type: 'number', editor: "currencyamount", currency: "USD"}, true);
+			var properties = {};
+			properties.type = {type: "string", required: true, "enum": ["number"]};
+			properties.currency = {type: "string", required: true, maxLength: 3, pattern: "[A-Z]{3}", description: "The currency code according to ISO4217"};
+			properties.amountFractional = {type: "boolean", description: "If true the value is a fractional value. Otherwise the value is provided in the minor currency like cents instead of dollars."};
+			dijitHelper.addSchemaProperties(properties);
+			dijitHelper.addSchemaProperty("required", properties);
+			dijitHelper.addSchemaProperty("maxLength", properties);
+			properties.min = {type: "number", description: "the minimum value"};
+			properties.max = {type: "number", description: "the maximum value"};
+			dijitHelper.addSchemaProperty("missingMessage", properties);
+			dijitHelper.addSchemaProperty("promptMessage", properties);
+			dijitHelper.addSchemaProperty("placeHolder", properties);
+			dijitHelper.addSchemaProperty("invalidMessage", properties);
+
+			schema.properties = properties;
+			return schema;
+		}
 	});
-	
+
 });

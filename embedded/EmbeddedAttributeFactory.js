@@ -22,6 +22,7 @@ define([
 				editorFactory: this.editorFactory,
 				ctx: ctx
 			});
+
 			return panelWidget;
 
 		},
