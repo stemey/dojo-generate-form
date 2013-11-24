@@ -74,7 +74,7 @@ define([ "dojo/_base/array",
 			this.update(value);
 			this.computeProperties();
 			if (this.parent) {
-				this.parent.onChange(this);
+				this.parent.onChange();
 			}
 		},
 		visit: function (cb, parentIdx) {

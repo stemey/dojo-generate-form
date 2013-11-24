@@ -44,13 +44,14 @@ define([
 		},
 		createModel: function (schema, value) {
 			var me = this;
-			var map = new PrimitiveMapModel({keyProperty: "key"});
+			var validators = this.editorFactory.getModelValidators(schema);
+			var map = new PrimitiveMapModel({keyProperty: "key", "validators": validators});
 			map.elementFactory = function (value) {
 				var aModels = {};
 				me.createTableMeta(schema).attributes.forEach(function (attribute) {
 					aModels[attribute.code] = me.editorFactory.createAttributeModel(attribute);
 				}, this);
-				var model = SingleObject({attributes: aModels});
+				var model = new SingleObject({attributes: aModels});
 				model.update(value);
 				return model;
 			};

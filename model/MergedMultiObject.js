@@ -123,7 +123,11 @@ define([
 				attributes[code] = attribute;
 			}
 		}
-		return new MergedMultiObject({currentTypeCode: null, attributes: attributes, typeToAttributes: typeToAttributes, typeProperty: schema.typeProperty, required: false});
+		var mo = new MergedMultiObject({currentTypeCode: null, attributes: attributes, typeToAttributes: typeToAttributes, typeProperty: schema.typeProperty, required: false});
+		for (var key in attributes) {
+			attributes[key].parent = mo;
+		}
+		return mo;
 	};
 	return MergedMultiObject;
 })

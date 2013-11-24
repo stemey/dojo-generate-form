@@ -64,12 +64,16 @@ define([
 				cb.call(this, model);
 			}, this);
 		},
+		forEach: function (cb, ctx) {
+			this.value.forEach(cb, ctx);
+		},
 		_onArrayChanged: function () {
 			var i = 0;
 			this.value.forEach(function (model) {
 				model.set("index", i++);
 				model.parent = this;
 			}, this);
+			this.onChange();
 		},
 		_setupIndexes: function () {
 			this.value.watch(lang.hitch(this, "_onArrayChanged"));

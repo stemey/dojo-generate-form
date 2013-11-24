@@ -72,6 +72,12 @@ define(['dojo/_base/lang',
 		function testChanged() {
 			so.setValue("stringP", "x");
 			assertEqual(1, so.changedCount);
+		},
+		function testError() {
+			so.addError("stringP", "x");
+			assertEqual(1, so.errorCount);
+			so.update(null);
+			assertEqual(0, so.errorCount);
 		}
 	]);
 

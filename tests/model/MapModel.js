@@ -10,12 +10,12 @@ define(["dojo/_base/lang",
 	var elementFactory = function (value) {
 		var element = new PrimitiveModel();
 		var key = new PrimitiveModel();
-		var attributes = {"x": element, "key": key};
+		var attributes = {"x": element, "keyx": key};
 		var model = new SingleObject({attributes: attributes, subgroup: false});
 		model.update(value);
 		return model;
 	};
-	var am = new MapModel({keyProperty: "key", elementFactory: elementFactory});
+	var am = new MapModel({keyProperty: "keyx", elementFactory: elementFactory});
 
 	doh.register("MapModel", [
 		function testParent() {
@@ -53,10 +53,12 @@ define(["dojo/_base/lang",
 			am.visit(lang.hitch(visitor, "fn"));
 			assertEqual(["noidx", "j", "x"], visitor.events);
 		},
-		function testGetModelByPath() {
+		function testUniqueProperties() {
+			am.resetMetaRecursively();
+			assertEqual(0, am.errorCount);
 			am.update({"j": {x: "jjj"}});
-			var pmodel = am.getModelByPath("j.x");
-			doh.assertEqual("jjj", pmodel.getPlainValue());
+			am.push({"keyx": "j", x: "ll"});
+			assertEqual("Error", am.getModelByIndex(1).getModelByPath("keyx").state);
 		}
 	]);
 

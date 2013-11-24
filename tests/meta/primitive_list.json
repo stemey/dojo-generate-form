@@ -1,17 +1,17 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes":[
-        {
-            "label":"things",
-            "code":"things",
-            "type":"primitive-array",
-            "required":false,
-						"element": {	
- 		          "type":"string",
-							"pattern":"[a-zA-Z0-9]" 
-						}         
-        }
-    ],
-    "type_property":"ext_type"
+	"code": "example",
+	"label": "example",
+	"attributes": [
+		{
+			"label": "things",
+			"code": "things",
+			"type": "primitive-array",
+			"required": false,
+			"element": {
+				"type": "string",
+				"pattern": "[a-zA-Z0-9]"
+			}
+		}
+	],
+	"type_property": "ext_type"
 }

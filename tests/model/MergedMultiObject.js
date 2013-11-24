@@ -71,6 +71,8 @@ define(["./createVisitor",
 			var visitor = createVisitor();
 			mo.visit(lang.hitch(visitor, "fn"));
 			assertEqual(["noidx", "type", "booleanP", "numberP"], visitor.events);
+		}, function testParent() {
+			doh.assertEqual(mo, mo.attributes.stringP.parent);
 		},
 		function testGetModelByPath() {
 			mo.update(object2);

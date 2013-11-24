@@ -1,24 +1,22 @@
 define([
-	"dojo/_base/declare", // declare
-	"dojo/_base/kernel", // kernel.deprecated
-	"dojo/i18n", // i18n.getLocalization
+	"dojo/_base/declare",
 	"dijit/form/ValidationTextBox",
-	"dojo/text!./ValidationTextBox.html",//
-	"./_NotValidatingOnFocusMixin"//
-], function(declare, kernel, i18n, ValidationTextBox,  template, _NotValidatingOnFocusMixin){
+	"dojo/text!./ValidationTextBox.html",
+	"./_NotValidatingOnFocusMixin"
+], function (declare, ValidationTextBox, template, _NotValidatingOnFocusMixin) {
 
 	// module:
 	//		dijit/form/ValidationTextBox
 
 
-	return ValidationTextBox = declare("gform.ValidationTextBox", [ValidationTextBox, _NotValidatingOnFocusMixin], {
+	return declare("gform.ValidationTextBox", [ValidationTextBox, _NotValidatingOnFocusMixin], {
 		// summary:
 		//		Base class for textbox widgets with the ability to validate content of various types and provide user feedback.
 
 		templateString: template,
 
-		
-		displayMessage: function(/*String*/ message){
+
+		displayMessage: function (/*String*/ message) {
 		}
 	});
 });

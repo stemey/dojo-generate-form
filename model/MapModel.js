@@ -1,13 +1,13 @@
 define([
+	"./_MapMixin",
 	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"./ArrayModel"
-], function (lang, declare, ArrayModel) {
+], function (MapMixin, lang, declare, ArrayModel) {
 	// module: 
 	//		gform/model/SingleObject
 
-	return declare([ArrayModel], {
-		keyProperty: "key",
+	return declare([ArrayModel, MapMixin], {
 		update: function (/*Object*/plainValue) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
@@ -59,7 +59,15 @@ define([
 			}, parentIdx);
 		},
 		_getModelByPath: function (idx, path) {
-			return this.getModelByKey(idx).getModelByPath(path);
+			var model = this.getModelByKey(idx);
+			if (model === null) {
+				model = this.getModelByIndex(idx)
+			}
+			if (model !== null) {
+				return model.getModelByPath(path);
+			} else {
+				return null;
+			}
 		}
 	});
 });

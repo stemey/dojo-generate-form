@@ -27,12 +27,13 @@ define([
 		errorCount: 0,
 		incompleteCount: 0,
 		changedCount: 0,
-
+		oldErrors: [],
+		validateOnChange: true,
 		editorFactory: null,
 		tmp: {},
 		constructor: function () {
-			this.watch("state", lang.hitch(this, "onChange"));
-			this.watch("value", lang.hitch(this, "onChange"));
+			this.watch("state", lang.hitch(this, "_onChangeState"));
+			this.watch("value", lang.hitch(this, "_onChangeState"));
 		},
 		getPath: function (modelHandle) {
 			// summary:
@@ -71,19 +72,27 @@ define([
 			return meta;
 		},
 		bubble: true,
+		_onChangeState: function (prop, old, nu) {
+			if (old !== nu) {
+				this.onChange(prop !== "state");
+			}
+		},
 		hasChanged: function () {
 			return this.getPlainValue() !== this.oldValue && !equals(this.getPlainValue(), this.oldValue);
 		},
-		onChange: function (child) {
+		onChange: function (validate) {
+			this.computeProperties();
+			if (validate !== false && this.validateOnChange) {
+				this.validate();
+			}
 			if (this.bubble) {
-				this.computeProperties(child);
 				if (this.parent) {
-					this.parent.onChange(this);
+					this.parent.onChange(validate);
 				}
 			}
 		},
 		_execute: function (cb, bubble) {
-			oldBubble = this.bubble;
+			var oldBubble = this.bubble;
 			this.bubble = bubble === true;
 			try {
 				cb.call(this);
@@ -136,6 +145,9 @@ define([
 			this.update(this.oldValue, false);
 		},
 		getModelByPath: function (path) {
+			if (path === "") {
+				return this;
+			}
 			if (!Array.isArray(path)) {
 				path = path.split(".");
 			}
@@ -151,6 +163,65 @@ define([
 			//		reset meta data. does not cascade.
 			this.set("state", "");
 			this.set("message", "");
+		},
+		hasChildrenErrors: function () {
+			if (this.get("errorCount") === 0) {
+				return false;
+			} else if (this.oldErrors.length !== this.get("errorCount")) {
+				return true;
+			} else {
+				return this.oldErrors.some(function (error) {
+					var model = this.getModelByPath(error.path);
+					return model.get("message") !== error.message;
+				}, this);
+			}
+		},
+		validate: function () {
+			this._execute(function () {
+				var errors = [];
+
+				if (this._validate) {
+					errors = errors.concat(this._validate());
+				}
+				if (this.validators) {
+					this.validators.forEach(function (validator) {
+						errors = errors.concat(validator(this));
+					}, this);
+				}
+				var changes = this._getErrorChanges(errors, this.oldErrors);
+				changes.a.forEach(function (error) {
+					this.addError(error.path, error.message);
+				}, this);
+				changes.r.forEach(function (error) {
+					this.removeError(error.path, error.message);
+				}, this);
+				this.oldErrors = errors;
+			}, false);
+		},
+		_getErrorChanges: function (newErrors, oldErrors) {
+			var errorsToRemove = oldErrors.filter(function (oe) {
+				return !newErrors.some(function (e) {
+					return e.path === oe.path;
+				});
+			});
+			var errorsToAdd = newErrors.filter(function (e) {
+				return !oldErrors.some(function (oe) {
+					return e.path === oe.path;
+				});
+			}, this);
+			return {a: errorsToAdd, r: errorsToRemove};
+		},
+		addError: function (path, message) {
+			var model = this.getModelByPath(path);
+			model.set("state", "Error");
+			model.set("message", message);
+		},
+		removeError: function (path, message) {
+			var model = this.getModelByPath(path);
+			if (model.get("message") === message) {
+				model.set("state", "");
+				model.set("message", "");
+			}
 		}
 	});
 });

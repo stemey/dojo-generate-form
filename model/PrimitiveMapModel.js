@@ -1,13 +1,12 @@
-define([ "dojo/_base/array", //
-	"dojo/_base/lang",//
+define([
+	"./_MapMixin",
 	"dojo/_base/declare",//
-	"./ArrayModel",//
-], function (array, lang, declare, ArrayModel) {
+	"./ArrayModel"//
+], function (MapMixin, declare, ArrayModel) {
 	// module: 
 	//		gform/model/SingleObject
 
-	return declare([ArrayModel], {
-		keyProperty: "key",
+	return declare([ArrayModel, MapMixin], {
 		valueProperty: "value",
 		update: function (/*Object*/plainValue) {
 			// summary:

@@ -23,16 +23,30 @@ define([
 				}
 				this.set("oldValue", this.value);
 				this.computeProperties();
-			});
+			}, bubble);
 
 			if (this.parent && bubble !== false) {
 				this.parent.onChange();
 			}
 
 		},
+		onChangeXX: function (validate) {
+			var me = this;
+			var a = arguments;
+			setTimeout(function () {
+				me.inherited(a);
+			}, 0);
+		},
 		visit: function (cb, idx) {
 			cb(this, function () {
 			}, idx);
+		},
+		addErrorKK: function () {
+			var me = this;
+			var a = arguments;
+			setTimeout(function () {
+				me.inherited(a);
+			}, 0);
 		},
 		getPlainValue: function () {
 			return this.value;

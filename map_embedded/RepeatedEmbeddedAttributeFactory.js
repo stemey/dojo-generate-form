@@ -42,7 +42,8 @@ define([
 
 		},
 		createModel: function (attribute, plainValue) {
-			var model = new MapModel({keyProperty: attribute.keyProperty});
+			var validators = this.editorFactory.getModelValidators(attribute);
+			var model = new MapModel({keyProperty: attribute.keyProperty, validators: validators});
 			var me = this;
 			var ef = function (value) {
 				var model = me.editorFactory.createGroupModel(attribute.group);
