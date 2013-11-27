@@ -23,6 +23,7 @@ define([
 		// parent:,
 		//		the parent model
 		parent: null,
+		touched: false,
 		state: "",
 		errorCount: 0,
 		incompleteCount: 0,
@@ -78,13 +79,13 @@ define([
 			}
 		},
 		hasChanged: function () {
-			return this.getPlainValue() !== this.oldValue && !equals(this.getPlainValue(), this.oldValue);
+			return typeof this.oldValue !== "undefined" && this.getPlainValue() !== this.oldValue && !equals(this.getPlainValue(), this.oldValue);
 		},
 		onChange: function (validate) {
-			this.computeProperties();
 			if (validate !== false && this.validateOnChange) {
 				this.validate();
 			}
+			this.computeProperties();
 			if (this.bubble) {
 				if (this.parent) {
 					this.parent.onChange(validate);
@@ -176,7 +177,35 @@ define([
 				}, this);
 			}
 		},
-		validate: function () {
+		isEmpty: function () {
+			return false;
+		},
+		validateRecursively: function (force) {
+			this.visit(function (model, cascade) {
+				cascade();
+				model.validate(force);
+			});
+		},
+		onTouch: function () {
+			this.touched = true;
+		},
+		validate: function (force) {
+			if (this.isEmpty()) {
+				if (this.required) {
+					if (force===true || this.touched || this.hasChanged()) {
+						this.set("state", "Error");
+						this.set("message", "value is missing");
+
+					} else {
+						this.set("state", "Incomplete");
+						this.set("message", "value is missing");
+					}
+					return;
+
+				} else {
+					return;
+				}
+			}
 			this._execute(function () {
 				var errors = [];
 

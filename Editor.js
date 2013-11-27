@@ -1,14 +1,14 @@
 define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declare",
 	"dojox/mvc/_Container", "dojox/mvc/at",
-	"dojo/dom-construct", "./model/hasChanged", "./group/_GroupMixin", "./schema/labelHelper", "dojo/query", "dijit/registry" ],
-	function (array, aspect, lang, declare, Container, at, domConstruct, hasChanged, _GroupMixin, labelHelper, query, registry) {
+	"dojo/dom-construct", "./model/hasChanged", "./schema/labelHelper", "dojo/query", "dijit/registry" ],
+	function (array, aspect, lang, declare, Container, at, domConstruct, hasChanged, labelHelper, query, registry) {
 		// module:
 		//		gform/Editor
 
 		// at needs to be available globally.
 		window.at = at;
 
-		return declare([ Container, _GroupMixin ], {
+		return declare([ Container ], {
 			// summary:
 			//		this widget generates a form based on a schema.
 			// description:
@@ -256,6 +256,16 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			},
 			_getErrorCountAttr: function () {
 				return this.modelHandle.errorCount;
+			},
+			_getIncompleteCountAttr: function () {
+				return this.modelHandle.incompleteCount;
+			},
+			validate: function (force) {
+				this.modelHandle.validateRecursively(force);
+				return this.modelHandle.get("errorCount");
+			},
+			getErrorCount: function () {
+				return this.get("errorCount");
 			}
 
 

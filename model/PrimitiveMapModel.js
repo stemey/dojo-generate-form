@@ -14,6 +14,8 @@ define([
 			// plainValue:
 			//		the new value of the attribute
 
+			// set to undefined so that hasCHanged returns false
+			this.oldValue = undefined;
 			var arrayValue = [];
 			for (var key in plainValue) {
 				var element = {};

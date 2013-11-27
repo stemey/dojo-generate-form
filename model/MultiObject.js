@@ -19,11 +19,18 @@ define([ "dojo/_base/array",
 			}, this);
 			return groups.length === 0 ? null : groups[0];
 		},
+		isEmpty: function () {
+			return this.currentTypeCode === null;
+		},
 		update: function (/*Object*/plainValue) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
 			//		the new value of the attribute
+
+
+			// set to undefined so that hasCHanged returns false
+			this.oldValue = undefined;
 			if (plainValue == null) {
 				if (this.required) {
 					this.set("currentTypeCode", this.groups[0].getValue(this.typeProperty));

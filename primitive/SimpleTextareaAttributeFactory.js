@@ -18,7 +18,9 @@ define([
 			dijitHelper.copyDijitProperties(attribute, props);
 			dijitHelper.copyProperty("cols", attribute, props);
 			dijitHelper.copyProperty("rows", attribute, props);
-			return  new SimpleTextarea(props);
+			var widget = new SimpleTextarea(props);
+			aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
+			return widget;
 		},
 		getSchema: function () {
 			var schema = {};

@@ -53,6 +53,7 @@
 					name : 'incomplete',
 					runTest : function(t) {
 						editor.set("plainValue",{});
+                        t.assertEqual(false,editor.hasChanged());
 						t.assertEqual(1,editor.get("incompleteCount"));
 					}
 				}
