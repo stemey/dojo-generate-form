@@ -4,12 +4,14 @@ define(
 //"gform/tests/convertSchema",//
 //"gform/tests/schemaGenerator",//
 //"gform/tests/visit",//
-//		"gform/tests/model/PrimitiveModel",//
+		"gform/tests/model/MetaModel",//
+		"gform/tests/model/PrimitiveModel",//
 		"gform/tests/model/MultiGroup",//
 		"gform/tests/model/ArrayModel",//
 		"gform/tests/model/MapModel",//
 		"gform/tests/model/SingleObject",//
 		"gform/tests/model/MultiObject",//
+		"gform/tests/model/MappedSelectModel",//
 		"gform/tests/model/MergedMultiObject",//
 		"gform/tests/equals",//
 		"gform/tests/restHelper"

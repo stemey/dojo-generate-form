@@ -5,23 +5,29 @@ define([
 	// module: 
 	//		gform/model/PrimitiveModel
 
-	return declare([MetaModel], {
+	var PrimitiveModel = declare([MetaModel], {
 		// summary:
 		//		Provides access to sibling attributes of modelHandle.
 		value: null,
 		oldValue: null,
+		required: false,
 		update: function (/*Object*/plainValue, bubble) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
 			//		the new value of the attribute
+			if (typeof plainValue === "undefined") {
+				plainValue = null;
+			}
+			if (plainValue !== null && !this.isInstance(plainValue)) {
+				throw new Error("convert value " + plainValue + " to correct type");
+			}
 			this._execute(function () {
-				if (typeof plainValue === "undefined") {
-					this.set("value", null);
-				} else {
-					this.set("value", plainValue);
-				}
-				this.set("oldValue", this.value);
+				// set to undefined so that hasCHanged returns false
+				this.oldValue = undefined;
+				this.set("value", plainValue);
+				this.set("oldValue", this.getPlainValue());
+				this.validate();
 				this.computeProperties();
 			}, bubble);
 
@@ -30,30 +36,21 @@ define([
 			}
 
 		},
-		onChangeXX: function (validate) {
-			var me = this;
-			var a = arguments;
-			setTimeout(function () {
-				me.inherited(a);
-			}, 0);
+		isEmpty: function () {
+			return this.value === null;
+		},
+		isInstance: function (value) {
+			return true;
 		},
 		visit: function (cb, idx) {
 			cb(this, function () {
 			}, idx);
 		},
-		addErrorKK: function () {
-			var me = this;
-			var a = arguments;
-			setTimeout(function () {
-				me.inherited(a);
-			}, 0);
-		},
 		getPlainValue: function () {
 			return this.value;
-		},
-		iterateChildren: function (cb) {
 		}
 
 
 	});
+	return PrimitiveModel;
 });

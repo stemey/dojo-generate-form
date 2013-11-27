@@ -17,14 +17,17 @@ define([
 			this.watch("isNull", lang.hitch(this, "_onIsNullChange"));
 		},
 		_attributesSetter: function (attributes) {
+			this._changeAttrValue("attributes", attributes);
 			for (var key in attributes) {
-				attributes[key].parent = this;
+				attributes[key].set("parent", this);
 				attributes[key].code = key;
 			}
-			this._changeAttrValue("attributes", attributes);
 		},
 		_onIsNullChange: function () {
 			this.onChange(true);
+		},
+		isEmpty: function () {
+			return this.isNull;
 		},
 		update: function (/*Object*/plainValue, bubble) {
 			// summary:
@@ -32,9 +35,11 @@ define([
 			// plainValue:
 			//		the new value of the attribute
 			this._execute(function () {
+				// set to undefined so that hasCHanged returns false
+				this.oldValue = undefined;
 				this.updateGroup(plainValue);
-				this.set("oldValue", this.getPlainValue());
 				this.computeProperties();
+				this.set("oldValue", this.getPlainValue());
 			}, false);
 			if (this.parent && bubble !== false) {
 				this.parent.onChange();

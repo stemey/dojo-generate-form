@@ -1,15 +1,24 @@
 define([
+	'dojo/_base/lang',
+	"dojo/aspect",
+	"../model/StringModel",
 	"./PrimitiveAttributeFactory",
 	"dojo/_base/declare",
 	"./ValidationTextbox",
 	"../schema/meta",
 	"./mixinTextboxBindings",
 	"./dijitHelper"
-], function (PrimitiveAttributeFactory, declare, TextBox, meta, mixinTextboxBindings, dijitHelper) {
+], function (lang, aspect, StringModel, PrimitiveAttributeFactory, declare, TextBox, meta, mixinTextboxBindings, dijitHelper) {
 
 	return declare([PrimitiveAttributeFactory], {
 		handles: function (attribute) {
 			return meta.isType(attribute, "string") && !attribute.array;
+		},
+		createModel: function (meta, plainValue) {
+			var validators = this.editorFactory.getModelValidators(meta);
+			var model = new StringModel({validators: validators, required: meta.required === true});
+			model.update(plainValue);
+			return model;
 		},
 		create: function (attribute, modelHandle) {
 
@@ -18,7 +27,9 @@ define([
 			mixinTextboxBindings(modelHandle, props);
 			dijitHelper.copyProperty("pattern", attribute, props);
 			dijitHelper.copyDijitProperties(attribute, props);
-			return new TextBox(props);
+			var widget = new TextBox(props);
+			aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
+			return widget;
 
 		},
 		getSchema: function () {

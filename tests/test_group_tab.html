@@ -16,9 +16,10 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
+		require([ 'dojo/_base/query',
+            "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
 		"dojo/text!./meta/tab.json", "dojo/text!./entity/tab.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser"//
-		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, registry,BorderContainer,parser) {
+		], function(query, ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, registry,BorderContainer,parser) {
 			parser.parse();
 			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
@@ -32,8 +33,8 @@
 					runTest : function(t) {	
 						editor.addError("name","error");
 						t.assertEqual(1,editor.get("errorCount"));
-						var errors = dijit.byId("gform_ListPane_0").get("errorCount");
-						t.assertEqual(1,errors);	
+                        var errorCount=query(".errorTooltipNode")[0].innerHTML;
+						t.assertEqual(1,errorCount);
 					}
 				},
 				{

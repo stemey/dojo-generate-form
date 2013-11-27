@@ -11,7 +11,7 @@ define([
 		},
 		createModel: function (meta, plainValue) {
 			var validators = this.editorFactory.getModelValidators(meta);
-			var model = new PrimitiveModel({validators: validators});
+			var model = new PrimitiveModel({validators: validators, required: meta.required === true});
 			model.update(plainValue);
 			return model;
 		}

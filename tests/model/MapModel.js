@@ -51,7 +51,7 @@ define(["dojo/_base/lang",
 			am.update({"j": {x: "jjj"}});
 			var visitor = createVisitor();
 			am.visit(lang.hitch(visitor, "fn"));
-			assertEqual(["noidx", "j", "x"], visitor.events);
+			assertEqual(["noidx", "j", "x", "keyx"], visitor.events);
 		},
 		function testUniqueProperties() {
 			am.resetMetaRecursively();

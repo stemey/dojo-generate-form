@@ -7,8 +7,11 @@ define([
 	return function (pattern) {
 		var regex = new RegExp(pattern);
 		return  function (modelHandle) {
-			// TODO currently only handles one unique property
-			var matches = modelHandle.getPlainValue().match(regex);
+			var plainValue = modelHandle.getPlainValue();
+			if (plainValue == null) {
+				return [];
+			}
+			var matches = plainValue.match(regex);
 			var errors = [];
 			if (matches == null) {
 				errors.push({path: "", message: "regex"});
