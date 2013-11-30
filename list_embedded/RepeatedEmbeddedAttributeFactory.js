@@ -15,7 +15,7 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type == "single-array";
+			return attribute != null && attribute.type === "array" && attribute.group;
 		},
 		create: function (attribute, modelHandle) {
 
@@ -41,11 +41,10 @@ define([
 
 
 			if (attribute.reorderable !== false) {
-				var me = this;
 				var copy = function (original) {
 					var plainValue = original.getPlainValue();
 					return modelHandle.elementFactory(plainValue);
-				}
+				};
 				//var copyFn=lang.hitch(this,copy);
 				aspect.after(widgetList, "startup", function () {
 					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});

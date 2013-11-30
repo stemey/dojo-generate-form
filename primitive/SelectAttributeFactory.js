@@ -1,14 +1,14 @@
 define([
+	"../model/SelectModel",
 	"dojo/_base/declare",
 	"dojox/mvc/at",
-	"dojo/aspect",
 	"./Select",
 	"./createOptions",
 	"./nullablePrimitiveConverter",
 	"./dijitHelper",
 	"./PrimitiveAttributeFactory"
 
-], function (declare, at, aspect, Select, createOptions, nullablePrimitiveConverter, dijitHelper, PrimitiveAttributeFactory) {
+], function (SelectModel, declare, at, Select, createOptions, nullablePrimitiveConverter, dijitHelper, PrimitiveAttributeFactory) {
 
 	return declare([PrimitiveAttributeFactory], {
 
@@ -18,25 +18,26 @@ define([
 		},
 
 		create: function (attribute, modelHandle) {
-			var options = createOptions(attribute, true);
 
 			var valueBinding = at(modelHandle, "value").transform(
 				nullablePrimitiveConverter);
 
 			var select = new Select({
 				"value": valueBinding,
-				options: options,
+				options: at(modelHandle, "options"),
 				maxHeight: -1
 			});
 
-			// remove errors when value changes because this select does not validate.
-			aspect.after(select, "onChange", function () {
-				modelHandle.set("message", null);
-				modelHandle.set("valid", true);
-			});
 
 			return select;
 
+		},
+		createModel: function (meta, plainValue) {
+			var validators = this.editorFactory.getModelValidators(meta);
+			var options = createOptions(meta, true);
+			var model = new SelectModel({options: options, validators: validators, required: meta.required === true});
+			model.update(plainValue);
+			return model;
 		},
 		getSchema: function () {
 			var schema = {};

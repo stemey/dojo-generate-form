@@ -27,6 +27,9 @@ define([
 
 		},
 		createModel: function (schema, plainValue) {
+			if (plainValue == null && schema.required) {
+				plainValue = {};
+			}
 			var model = this.editorFactory.createGroupModel(schema.group, plainValue);
 			return model;
 		}

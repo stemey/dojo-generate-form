@@ -79,7 +79,7 @@ define([
 		//	       				new MappedContentPaneFactory({editorFactory:editorFactory}) //
 	];
 	attributeFactoryFinder.addAttributeFactory("table", new MultiTableAttributeFactory({editorFactory: editorFactory}));
-	attributeFactoryFinder.addAttributeFactory("primitive_list", new PrimitiveListAttributeFactory({editorFactory: editorFactory}));
+	attributeFactoryFinder.addAttributeFactory("primitive-array", new PrimitiveListAttributeFactory({editorFactory: editorFactory}));
 //			attributeFactoryFinder.addAttributeFactory("mapped_contentpane", new MappedContentPaneFactory({editorFactory:editorFactory}));
 	attributeFactoryFinder.addAttributeFactory("currencyamount", new CurrencyAmountAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory("checked_select", new CheckedSelectAttributeFactory({editorFactory: editorFactory}));

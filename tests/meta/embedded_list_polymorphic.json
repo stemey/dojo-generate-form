@@ -4,7 +4,7 @@
     "attributes":[
         {
             "required":false,
-            "type":"multi-array",
+            "type":"array",
             "typeProperty":"ext_type",
             "groups":[
                 {

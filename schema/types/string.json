@@ -1,0 +1,12 @@
+[
+	{
+		"code": "type",
+		"type": "string",
+		"values": ["string"]
+	},
+	{
+		"code": "pattern",
+		"type": "string"
+	}
+
+]

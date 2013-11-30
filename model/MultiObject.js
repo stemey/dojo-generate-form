@@ -5,7 +5,7 @@ define([ "dojo/_base/array",
 	// module:
 	//		gform/model/MultiObject
 
-	return declare([MetaModel], {
+	var Model = declare([MetaModel], {
 		// summary:
 		//		Provides access to sibling attributes of modelHandle.
 
@@ -13,11 +13,17 @@ define([ "dojo/_base/array",
 		groups: [],
 		required: false,
 		currentTypeCode: null,
+		typeCodeToGroup: {},
 		getGroup: function (typeCode) {
-			var groups = array.filter(this.groups, function (group) {
-				return group.getTypeCode() === typeCode;
-			}, this);
-			return groups.length === 0 ? null : groups[0];
+			return this.typeCodeToGroup[typeCode];
+		},
+		getTypeCode: function (group) {
+			for (var key in this.typeCodeToGroup) {
+				if (this.typeCodeToGroup[key] === group) {
+					return key;
+				}
+			}
+			return null;
 		},
 		isEmpty: function () {
 			return this.currentTypeCode === null;
@@ -33,7 +39,7 @@ define([ "dojo/_base/array",
 			this.oldValue = undefined;
 			if (plainValue == null) {
 				if (this.required) {
-					this.set("currentTypeCode", this.groups[0].getValue(this.typeProperty));
+					this.set("currentTypeCode", this.getTypeCode(groups[0]));
 					//this.value= getGroup(this.currentTypeCode);
 				} else {
 					this.set("currentTypeCode", null);
@@ -44,7 +50,7 @@ define([ "dojo/_base/array",
 				//this.value= this.getGroup(this.currentTypCode);
 			}
 			array.forEach(this.groups, function (group) {
-				if (group.getTypeCode() === this.currentTypeCode) {
+				if (this.getTypeCode(group) === this.currentTypeCode) {
 					group.update(plainValue);
 				}
 			}, this);
@@ -69,9 +75,9 @@ define([ "dojo/_base/array",
 				prevGroup.iterateChildren(
 					function (model) {
 						var attributeCode = model.code;
-						var nextAttribute = nextGroup.getAttribute(attributeCode);
+						var nextAttribute = nextGroup.getModelByPath(attributeCode);
 						if (nextAttribute) {
-							value[attributeCode] = prevGroup.getValue(attributeCode);
+							value[attributeCode] = nextAttribute.getPlainValue();
 						}
 					}
 				);
@@ -116,4 +122,16 @@ define([ "dojo/_base/array",
 			}
 		}
 	});
+
+	Model.create = function (kwArgs) {
+		var meta = kwArgs.meta;
+		var groups = kwArgs.groups;
+		var typeCodeToGroup = {};
+		meta.groups.forEach(function (e, idx) {
+			typeCodeToGroup[e.code] = groups[idx];
+		});
+		return new Model({typeCodeToGroup: typeCodeToGroup, groups: groups, typeProperty: meta.typeProperty, required: meta.required === true})
+	};
+
+	return Model;
 });

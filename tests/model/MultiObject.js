@@ -55,7 +55,8 @@ define(["dojo/_base/lang",
 
 	var so1 = createSo(type.groups[0]);
 	var so2 = createSo(type.groups[1]);
-	var mo = new MultiObject({groups: [so1, so2], typeProperty: "type", required: false});
+
+	var mo = new MultiObject.create({meta: type, groups: [so1, so2]});
 
 
 	doh.register("MultiObject", [

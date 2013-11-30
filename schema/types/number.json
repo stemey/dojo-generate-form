@@ -1,0 +1,16 @@
+[
+	{
+		"code": "type",
+		"type": "string",
+		"values": ["number"]
+	},
+	{
+		"code": "min",
+		"type": "number"
+	},
+	{
+		"code": "max",
+		"type": "number"
+	}
+
+]

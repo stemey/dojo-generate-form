@@ -8,8 +8,17 @@
 	"integer2": 4,
 	"date": "2013-03-21",
 	"time": "T15:00:00",
-	"state": {$ref:"/gform/tests/entity/state/2"}	,
-	"states": [{$ref:"/gform/tests/entity/state/2"}, {$ref: "/gform/tests/entity/state/3"}]	,
+	"state": {
+		$ref: "/gform/tests/entity/state/2"
+	},
+	"states": [
+		{
+			$ref: "/gform/tests/entity/state/2"
+		},
+		{
+			$ref: "/gform/tests/entity/state/3"
+		}
+	],
 	"language": "german",
 	"salutation": "Frau",
 	"salutation_array": [
@@ -65,13 +74,13 @@
 			"message": "OOOOOOOO",
 			"text": "rrrrrrrrrrrr"
 		}
-	]	,
+	],
 	"map": {
-		a:{
+		a: {
 			"yes": true,
 			"message": "IIIIII"
 		},
-		b:{
+		b: {
 			"message": "OOOOOOOO",
 		}
 	},
@@ -79,6 +88,6 @@
 		"one": "eins",
 		"two": "zwei",
 		"three": "drei"
-	}	
-	
+	}
+
 }

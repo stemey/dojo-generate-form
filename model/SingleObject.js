@@ -12,7 +12,6 @@ define([
 		attributes: null,
 		isNull: true,
 		subgroup: false,
-		typeCode: null,
 		constructor: function () {
 			this.watch("isNull", lang.hitch(this, "_onIsNullChange"));
 		},
@@ -80,9 +79,6 @@ define([
 					this.attributes[key].update(plainValue[key], this.bubble);
 				}
 			}
-		},
-		getTypeCode: function () {
-			return this.typeCode;
 		},
 		getAttributeCodes: function () {
 			var codes = [];

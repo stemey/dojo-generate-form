@@ -32,6 +32,8 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			// 		the editorFactory is responsible for translating the schema into a widget tree.
 			editorFactory: null,
 
+			doLayout: false,
+
 			// widget:
 			//		this is the single child group widget.
 			widget: null,
@@ -159,6 +161,12 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				this.modelHandle.update(oldValue);
 				this.inherited(arguments);
 			},
+			_setDoLayoutAttr: function (doLayout) {
+				this._set("doLayout", doLayout);
+				if (this.widget) {
+					this.widget.set("doLayout", doLayout);
+				}
+			},
 			resize: function (dim) {
 				this.dim = dim;
 				if (this.widget && this.widget.resize) {
@@ -222,6 +230,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 					if (this.get("meta") && this.editorFactory) {
 						this.widget = this.editorFactory.create(this.get("meta"),
 							this.modelHandle, this.ctx);
+						this.widget.set("doLayout", this.doLayout);
 						if (typeof this.get("doLayout") != "undefined") {
 							this.widget.set("doLayout", this.get("doLayout"));
 							var widget = this.widget;
