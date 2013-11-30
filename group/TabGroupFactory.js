@@ -14,7 +14,7 @@ define([ "dojo/_base/array",
 		},
 		createModel: function (meta, plainValue) {
 			var groups = [];
-			meta.tabs.forEach(function (group) {
+			meta.groups.forEach(function (group) {
 				groups.push(this.editorFactory.createGroupModel(group));
 			}, this);
 			var model = new MultiGroup({groups: groups});
@@ -30,8 +30,8 @@ define([ "dojo/_base/array",
 			var tc = new TabContainer({
 				style: "height: 100%; width: 100%;"
 			});
-			for (var index = 0; index < group.tabs.length; index++) {
-				var tab = group.tabs[index];
+			for (var index = 0; index < group.groups.length; index++) {
+				var tab = group.groups[index];
 				if (!tab.groupType) {
 					tab.groupType = "listpane";
 				}
@@ -47,7 +47,7 @@ define([ "dojo/_base/array",
 		},
 		collectAttributes: function (group, /*local variables*/attributes) {
 			attributes = [];
-			array.forEach(group.tabs, function (tab) {
+			array.forEach(group.groups, function (tab) {
 				var subAttributes = updateModelHandle.collectAttributes(tab, this.editorFactory);
 				array.forEach(subAttributes, function (a) {
 					attributes.push(a);

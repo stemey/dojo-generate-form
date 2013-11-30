@@ -35,6 +35,7 @@ define([
 		constructor: function () {
 			this.watch("state", lang.hitch(this, "_onChangeState"));
 			this.watch("value", lang.hitch(this, "_onChangeState"));
+			this.watch("touched", lang.hitch(this, "_onChangeState"));
 		},
 		getPath: function (modelHandle) {
 			// summary:
@@ -164,6 +165,7 @@ define([
 			//		reset meta data. does not cascade.
 			this.set("state", "");
 			this.set("message", "");
+			this.set("touched", false);
 		},
 		hasChildrenErrors: function () {
 			if (this.get("errorCount") === 0) {
@@ -187,12 +189,12 @@ define([
 			});
 		},
 		onTouch: function () {
-			this.touched = true;
+			this.set("touched", true);
 		},
 		validate: function (force) {
 			if (this.isEmpty()) {
 				if (this.required) {
-					if (force===true || this.touched || this.hasChanged()) {
+					if (force === true || this.touched || this.hasChanged()) {
 						this.set("state", "Error");
 						this.set("message", "value is missing");
 
@@ -204,6 +206,10 @@ define([
 
 				} else {
 					return;
+				}
+			} else {
+				if (this.state === "Incomplete") {
+					this.state = "";
 				}
 			}
 			this._execute(function () {

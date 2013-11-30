@@ -16,7 +16,7 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type == "primitive-array";
+			return attribute != null && attribute.type === "array" && attribute.element;
 		},
 		createModel: function (attribute, plainValue) {
 			var model = new ArrayModel();
@@ -58,7 +58,7 @@ define([
 					newMh.update(plainValue);
 					newMh.oldValue = plainValue;
 					return newMh;
-				}
+				};
 				aspect.after(widgetList, "startup", function () {
 					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});
 				});
@@ -67,5 +67,5 @@ define([
 			return select;
 
 		}
-	})
+	});
 });

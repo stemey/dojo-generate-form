@@ -1,13 +1,12 @@
-define([ "dojo/_base/array", //
-	"dojo/_base/lang",//
+define([
 	"dojo/_base/declare",//
 	"dojo/aspect",//
 	"dojox/mvc/at",//
 	"dijit/form/CheckBox",//
 	"../schema/meta",//
 	"./dijitHelper",//
-	"../model/PrimitiveModel",
-], function (array, lang, declare, aspect, at, CheckBox, meta, dijitHelper, PrimitiveModel) {
+	"../model/BooleanModel"
+], function (declare, aspect, at, CheckBox, meta, dijitHelper, BooleanModel) {
 
 	return declare([], {
 		handles: function (attribute) {
@@ -29,7 +28,7 @@ define([ "dojo/_base/array", //
 
 		},
 		createModel: function (meta, plainValue) {
-			var model = new PrimitiveModel();
+			var model = new BooleanModel();
 			model.update(plainValue);
 			return model;
 		},
@@ -42,5 +41,5 @@ define([ "dojo/_base/array", //
 			dijitHelper.addSchemaProperties(properties);
 			return schema;
 		}
-	})
+	});
 });

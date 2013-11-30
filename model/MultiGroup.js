@@ -11,6 +11,9 @@ define([
 		//		Provides access to sibling attributes of modelHandle.
 		groups: null,
 		isNull: true,
+		getTypeCode: function(){
+			return null;
+		},
 		_groupsSetter: function (groups) {
 			groups.forEach(function (group) {
 				group.parent = this;

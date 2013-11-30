@@ -1,4 +1,8 @@
-{
-	"type": {"type": "string", "values":["number"]},
-	"required": {"type": "boolean"}
-}
+[
+	{
+		"code": "type",
+		"type": "string",
+		"values": ["number"]
+	}
+]
+

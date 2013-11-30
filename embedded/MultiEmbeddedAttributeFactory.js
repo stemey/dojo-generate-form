@@ -1,52 +1,42 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/_base/json",//
-"dojo/_base/declare",//
-"dojox/mvc/at",//
-"./GroupPanelWidget",//
-"../model/MultiObject",//
-"dijit/layout/StackContainer",//
-"dojo/Stateful",//
-"dijit/TitlePane",//
-"../model/updateModelHandle",//
-"dojo/text!../schema/embeddedAttributeProperties.json",//
-"dojo/text!./embeddedExample.json",
-"dojo/text!./embeddedInstanceExample.json"
-], function(array, lang, json,declare, at, GroupPanelWidget, MultiObject,
-		StackContainer,  Stateful, TitlePane,updateModelHandle,embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
+define([
+	"dojo/_base/lang",
+	"dojo/_base/declare",
+	"./GroupPanelWidget",
+	"../model/MultiObject"
+], function (lang, declare, GroupPanelWidget, MultiObject) {
 // module: 
 //		gform/embedded/MultiEmbeddedAttributeFactory
-	return declare([],{
+	return declare([], {
 		id: "multi-object",
 		// summary:
 		//		This AttributeFactory create the widget for single embedded attributes.
-		handles : function(attribute, modelHandle) {
-			return attribute.type=="multi-object";
+		handles: function (attribute, modelHandle) {
+			return attribute.type == "multi-object";
 		},
-		constructor : function(kwArgs) {
+		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		create : function(attribute, modelHandle) {
+		create: function (attribute, modelHandle) {
 			panelWidget = new GroupPanelWidget({
-				"modelHandle":modelHandle,
-				"groups":attribute.groups,
+				"modelHandle": modelHandle,
+				"groups": attribute.groups,
 				//"typeProperty":attribute.typeProperty,
-				editorFactory:this.editorFactory
+				editorFactory: this.editorFactory
 			});
 			return panelWidget;
 
 		},
-		createModel: function(schema,plainValue) {
+		createModel: function (schema, plainValue) {
 			var groups = [];
-			schema.groups.forEach(function(group) {
+			schema.groups.forEach(function (group) {
 				var model = this.editorFactory.createGroupModel(group);
 				model.update({});
 				groups.push(model);
 			}, this);
-			var model = new MultiObject({groups:groups, typeProperty:schema.typeProperty});
+			var model =  MultiObject.create({groups: groups, meta: schema});
 			model.update(plainValue);
 			return model;
 		}
-		
-	})
+
+	});
 });

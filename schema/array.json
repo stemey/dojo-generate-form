@@ -1,8 +1,9 @@
-[
-	{code: "type", "type": "string", "enum":["array"]},
+{attributes:[
+	{code: "editor", "type": "string", "values":["array"]},
+	{code: "type", "type": "string", "values":["array"]},
 	{code: "minItems", "type": "number"},
 	{code: "maxItems", "type": "number"},
-	items: 
+	{code:"group",
 		{
 			type: "array",
 			items:{
@@ -11,10 +12,10 @@
 						type: "object,
 						properties: {
 							code: {type: "string"},
-							attributes: {$ref: "attributes"}	
+							attributes: {$ref: "attributes"}
 						}
-					}				
+					}
 				}
 			}
 		}
-}
+]}

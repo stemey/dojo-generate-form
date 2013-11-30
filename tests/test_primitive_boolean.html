@@ -1,55 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>Editor Test</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Editor Test</title>
 
 
-	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+    <!-- required: a default dijit theme: -->
+    <link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
 
-	<!-- required: dojo.js -->
-	<script type="text/javascript" src="../../dojo/dojo.js"
-		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="../../dojo/dojo.js"
+            data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
 
 
-	<script type="text/javascript">
+    <script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
-		"dojo/text!./meta/primitive_boolean.json", "dojo/text!./entity/primitive_boolean.json"//
-		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
+        require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
+            "dojo/text!./meta/primitive_boolean.json", "dojo/text!./entity/primitive_boolean.json"//
+        ], function (ready, json, Editor, Stateful, doh, createStandardEditorFactory, meta, entity) {
 
-			var editor = new Editor({
-					"plainValue": dojo.fromJson(entity),
-					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
-			var container = dojo.byId("container");
-			editor.placeAt(container);
-			editor.startup();
-			var intText = dijit.byId("dijit_form_CheckBox_0");
-			doh.register("standard", [
-				{
-					name : 'init',
-					runTest : function(t) {
-						t.assertEqual(true, editor.get("plainValue").bool);
-						t.assertEqual(true, intText.get("checked"));
-					}
-				},
-				{
-					name : 'testValid',
-					runTest : function(t) {
-						intText.set("state","Error");
-					}
-				}
-			]);
-			doh.run();
-		});
-	</script>
+            var editor = new Editor({
+                "plainValue": {},
+                "meta": dojo.fromJson(meta), editorFactory: createStandardEditorFactory()});
+            var container = dojo.byId("container");
+            editor.placeAt(container);
+            editor.startup();
+            var intText = dijit.byId("dijit_form_CheckBox_0");
+            doh.register("standard", [
+                {
+                    name: "initEmpty",
+                    runTest: function (t) {
+                        t.assertEqual(false, editor.get("plainValue").bool);
+
+                    }
+                },
+                {
+                    name: 'init',
+                    runTest: function (t) {
+                        editor.setPlainValue(dojo.fromJson(entity));
+                        t.assertEqual(true, editor.get("plainValue").bool);
+                        t.assertEqual(true, intText.get("checked"));
+                    }
+                },
+                {
+                    name: 'testValid',
+                    runTest: function (t) {
+                        intText.set("state", "Error");
+                    }
+                }
+            ]);
+            doh.run();
+        });
+    </script>
 </head>
 <body class="claro">
-	<h1 class="testTitle">Editor Test</h1>
+<h1 class="testTitle">Editor Test</h1>
 
 
-	<div id="container"></div>
+<div id="container"></div>
 
 </body>
 </html>	

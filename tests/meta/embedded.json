@@ -1,23 +1,23 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes":[
-        {
-            "required":false,
-            "type":"object",
-						"group": {	
-		          "attributes":[
-		              {
-		                  "required":false,
-		                  "type":"string",
-		                  "label":"name",
-		                  "code":"name",
-		                  "array":false
-		              }
-		          ]
-						},
-            "label":"thing",
-            "code":"thing",
-        }
-    ],
+	"code": "example",
+	"label": "example",
+	"attributes": [
+		{
+			"required": false,
+			"type": "object",
+			"group": {
+				"attributes": [
+					{
+						"required": false,
+						"type": "string",
+						"label": "name",
+						"code": "name",
+						"array": false
+					}
+				]
+			},
+			"label": "thing",
+			"code": "thing"
+		}
+	]
 }

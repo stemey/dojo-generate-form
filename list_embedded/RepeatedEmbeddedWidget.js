@@ -1,10 +1,10 @@
 define([ "dojo/_base/lang", "dojo/dom-class",  "dojo/_base/array", "dojo/_base/declare",
 		"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
-		"dijit/_WidgetsInTemplateMixin","dojo/Stateful", "./PolymorphicMemberWidget","../Editor",
+		"dijit/_WidgetsInTemplateMixin", "./PolymorphicMemberWidget","../Editor",
 		"dojo/text!./repeated_embedded_attribute.html", "dijit/TitlePane", "dojo/i18n!../nls/messages",
 		"../layout/_LayoutMixin","../schema/labelHelper"
 ], function(lang, domClass, array, declare, _WidgetBase, _Container, _TemplatedMixin,
-		_WidgetsInTemplateMixin, Stateful,  PolymorphicMemberWidget,Editor,template, TitlePane, messages, _LayoutMixin, labelHelper) {
+		_WidgetsInTemplateMixin, PolymorphicMemberWidget,Editor,template, TitlePane, messages, _LayoutMixin, labelHelper) {
 
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container,
 			_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin ], {

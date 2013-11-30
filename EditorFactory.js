@@ -26,13 +26,13 @@ define([  //
 			this.addConverterForType(urlToIdConverter, "ref");
 		},
 		createGroupModel: function (schema, plainValue) {
-			if (schema.groupType) {
-				factory = this.getGroupFactory(schema.groupType);
+			if (schema.editor) {
+				factory = this.getGroupFactory(schema.editor);
 			} else {
 				factory = this.defaultGroupFactory;
 			}
 			if (factory == null) {
-				throw new Error("cannot find group factory for type " + schema.groupType);
+				throw new Error("cannot find group factory for type " + schema.editor);
 			}
 			return factory.createModel(schema, plainValue);
 		},
@@ -94,10 +94,10 @@ define([  //
 			if (!group) {
 				return null;
 			}
-			if (group.groupType) {
-				var groupFactory = this.find(group.groupType);
+			if (group.editor) {
+				var groupFactory = this.find(group.editor);
 				if (groupFactory == null) {
-					throw new Error("cannot find group factory " + group.groupType);
+					throw new Error("cannot find group factory " + group.editor);
 				}
 				return groupFactory.create(group, modelHandle, ctx);
 			}

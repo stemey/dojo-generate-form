@@ -7,7 +7,7 @@
             "label":"things",
             "code":"things",
             "array":true,
-            "type":"single-array",
+            "type":"array",
             "group":{
                 "attributes":[
                     {

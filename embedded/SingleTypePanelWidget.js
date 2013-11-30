@@ -11,9 +11,12 @@ define([  //
 		_TemplatedMixin, _WidgetsInTemplateMixin, _GroupMixin, _LayoutMixin ], {
 
 		templateString: null,
+		doLayout: true,
+		required: false,
 		constructor: function (config) {
 			var attribute = config.meta;
 			if (attribute.required) {
+				this.required = true;
 				this.templateString = requiredTemplate;
 			} else {
 				this.templateString = template;
@@ -22,6 +25,9 @@ define([  //
 		},
 		postCreate: function () {
 			var modelHandle = this.get("modelHandle");
+			if (this.required && modelHandle.isEmpty()) {
+				modelHandle.update({});
+			}
 			var attribute = this.get("meta");
 			this.panelModel = new Stateful();
 			this.panelModel.watch("empty", lang.hitch(this, "panelChanged"));
