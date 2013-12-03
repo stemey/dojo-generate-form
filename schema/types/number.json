@@ -1,16 +1,12 @@
-[
-	{
-		"code": "type",
-		"type": "string",
-		"values": ["number"]
-	},
-	{
-		"code": "min",
-		"type": "number"
-	},
-	{
-		"code": "max",
-		"type": "number"
-	}
-
-]
+{
+	"code": "number",
+	"editor": "tab",
+	"groups": [
+		{
+			"$ref":"../attributes/number-constraints.json"
+		},
+		{
+			"$ref": "../attributes/messages.json"
+		}
+	]
+}

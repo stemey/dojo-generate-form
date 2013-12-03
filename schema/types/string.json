@@ -1,12 +1,12 @@
-[
-	{
-		"code": "type",
-		"type": "string",
-		"values": ["string"]
-	},
-	{
-		"code": "pattern",
-		"type": "string"
-	}
-
-]
+{
+	"code": "string",
+	"editor": "tab",
+	"groups": [
+		{
+			"$ref":"../attributes/string-constraints.json"
+		},
+		{
+			"$ref": "../attributes/messages.json"
+		}
+	]
+}

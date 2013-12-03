@@ -1,0 +1,23 @@
+{
+	"code": "listgroup",
+	"attributes": [
+		{
+			"code": "label",
+			"type": "string"
+		},
+		{
+			"code": "description",
+			"type": "string"
+		},
+		{
+			"code": "groups",
+			"type": "array",
+			"editor": "multi-object",
+			"groups": {
+				"$ref": "groups.json"
+			}
+
+		}
+	]
+}
+

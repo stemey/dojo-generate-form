@@ -1,4 +1,8 @@
 [
-	{$ref:"number.json"},
-	{$ref:"string.json"}
+	{
+		"$ref": "number.json"
+	},
+	{
+		"$ref": "string.json"
+	}
 ]

@@ -1,0 +1,39 @@
+{
+	"code": "object",
+	"editor": "listpane",
+	"attributes": [
+		{
+			"code": "code",
+			"type": "string",
+			"required": true
+		},
+		{
+			"code": "required",
+			"type": "boolean"
+		},
+		{
+			"code": "type",
+			"type": "string",
+			"visible": false,
+			"required": true,
+			"values": ["object"]
+		},
+		{
+			"code": "group",
+			"type": "multi-object",
+			"typeProperty": "editor",
+			"required": true,
+			"groups": [
+				{
+					"$ref": "../group/listpane.json"
+				},
+				{
+					"$ref": "../group/titlepane.json"
+				},
+				{
+					"$ref": "../group/listgroup.json"
+				}
+			]
+		}
+	]
+}

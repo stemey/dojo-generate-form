@@ -39,7 +39,10 @@ define([ "dojo/_base/array",
 			this.oldValue = undefined;
 			if (plainValue == null) {
 				if (this.required) {
-					this.set("currentTypeCode", this.getTypeCode(groups[0]));
+					// TODO this updates the value of group. Will be done again at the end of this method.
+					this.set("currentTypeCode", this.getTypeCode(this.groups[0]));
+					plainValue = {};
+					plainValue[this.typeProperty] = this.currentTypeCode;
 					//this.value= getGroup(this.currentTypeCode);
 				} else {
 					this.set("currentTypeCode", null);
@@ -69,15 +72,19 @@ define([ "dojo/_base/array",
 			}
 			var prevGroup = this.getGroup(this.currentTypeCode);
 			this._changeAttrValue("currentTypeCode", typeCode);
-			var value = this.getPlainValue() || {};
 			var nextGroup = this.getGroup(this.currentTypeCode);
+			var value;
+			if (typeof prevGroup === "undefined") {
+				value = {};
+			} else {
+				value = prevGroup.getPlainValue();
+			}
 			if (prevGroup && nextGroup) {
-				prevGroup.iterateChildren(
-					function (model) {
-						var attributeCode = model.code;
-						var nextAttribute = nextGroup.getModelByPath(attributeCode);
+				prevGroup.visit(
+					function (model, cascade, idx) {
+						var nextAttribute = nextGroup.getModelByPath(idx);
 						if (nextAttribute) {
-							value[attributeCode] = nextAttribute.getPlainValue();
+							value[idx] = model.getPlainValue();
 						}
 					}
 				);
@@ -130,7 +137,12 @@ define([ "dojo/_base/array",
 		meta.groups.forEach(function (e, idx) {
 			typeCodeToGroup[e.code] = groups[idx];
 		});
-		return new Model({typeCodeToGroup: typeCodeToGroup, groups: groups, typeProperty: meta.typeProperty, required: meta.required === true})
+		return new Model({
+			typeCodeToGroup: typeCodeToGroup,
+			groups: groups,
+			typeProperty: meta.typeProperty,
+			required: meta.required === true
+		});
 	};
 
 	return Model;
