@@ -1,0 +1,20 @@
+{
+	"label": "constraints",
+	"attributes": [
+		{
+			"code": "min",
+			"type": "number"
+		},
+		{
+			"code": "max",
+			"type": "number"
+		},
+		{
+			"code": "type",
+			"type": "string",
+			"visible": false,
+			"values": ["number"],
+			"required": true
+		}
+	]
+}

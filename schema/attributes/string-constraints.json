@@ -1,0 +1,24 @@
+{
+	"label": "constraints",
+	"attributes": [
+		{
+			"code": "pattern",
+			"type": "string"
+		},
+		{
+			"code": "maxLength",
+			"type": "number"
+		},
+		{
+			"code": "minLength",
+			"type": "number"
+		},
+		{
+			"code": "type",
+			"type": "string",
+			"visible": false,
+			"values": ["string"],
+			"required": true
+		}
+	]
+}

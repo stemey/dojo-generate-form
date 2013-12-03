@@ -1,0 +1,23 @@
+{
+	"label": "general",
+	"attributes": [
+		{
+			"code": "code",
+			"type": "string",
+			"required": true
+		},
+		{
+			"code": "label",
+			"type": "string"
+		},
+		{
+			"code": "description",
+			"editor": "textarea",
+			"type": "string"
+		},
+		{
+			"code": "required",
+			"type": "boolean"
+		}
+	]
+}

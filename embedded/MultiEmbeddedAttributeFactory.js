@@ -20,6 +20,7 @@ define([
 			panelWidget = new GroupPanelWidget({
 				"modelHandle": modelHandle,
 				"groups": attribute.groups,
+				nullable: attribute.required !== true,
 				//"typeProperty":attribute.typeProperty,
 				editorFactory: this.editorFactory
 			});
@@ -33,7 +34,7 @@ define([
 				model.update({});
 				groups.push(model);
 			}, this);
-			var model =  MultiObject.create({groups: groups, meta: schema});
+			var model = MultiObject.create({groups: groups, meta: schema});
 			model.update(plainValue);
 			return model;
 		}

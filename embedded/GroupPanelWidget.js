@@ -13,7 +13,7 @@ define([ "dojo/_base/array", //
 		templateString: template,
 		typeStack: null,
 		typeToGroup: null,
-		doLayout: true,
+		doLayout: false,
 		nullable: true,
 		shown: true,
 		show: function () {
@@ -71,7 +71,11 @@ define([ "dojo/_base/array", //
 			//this.typeStack.selectChild(this.typeToGroup[currentType]);
 			this.addChild(this.typeStack);
 			this.set("target", this.panelModel);
-			this.switchType(currentType);
+			//this.switchType(currentType);
+		},
+		startup: function () {
+			this.inherited(arguments);
+			this.switchType(this.modelHandle.currentTypeCode);
 		},
 		modelTypeChanged: function (prop, old, nu) {
 			if (old !== nu) {
@@ -89,7 +93,6 @@ define([ "dojo/_base/array", //
 				domClass.replace(editor.domNode, "dijitVisible", "dijitHidden");
 				editor.show();
 				this.typeStack.selectChild(editor);
-				//editor.resize();
 			}
 		},
 		onTypeSelectorChanged: function (propName, oldValue, newValue) {

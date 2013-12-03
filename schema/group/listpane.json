@@ -1,0 +1,18 @@
+{
+	"code": "listpane",
+	"attributes": [
+		{
+			"code": "label",
+			"type": "string"
+		},
+		{
+			"code": "editor",
+			"type": "string",
+			"values": ["listpane"],
+			"required": true
+		},
+		{
+			"$ref": "../attributes.json"
+		}
+	]
+}

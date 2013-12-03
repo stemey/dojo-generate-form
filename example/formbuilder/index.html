@@ -22,6 +22,8 @@
     <script type="text/javascript">
 
         require([
+            'dojo/when',
+            'gform/util/Resolver',
             'dojo/aspect',
             "dijit/registry",
             "dojo/parser",
@@ -42,7 +44,7 @@
             "gform/Editor",
             "dijit/form/Button",
             "dijit/Dialog"
-        ], function (aspect, registry, parser, convertSchema, refresolve, schemaGenerator, stateCollection, schema, group, Store, SingleEditorDialogOpener, Context, SingleStoreRegistry, SingleSchemaRegistry) {
+        ], function (when, Resolver, aspect, registry, parser, convertSchema, refresolve, schemaGenerator, stateCollection, schema, group, Store, SingleEditorDialogOpener, Context, SingleStoreRegistry, SingleSchemaRegistry) {
             parser.parse();
             try {
                 var ctx = new Context();
@@ -55,28 +57,34 @@
                 //opener.startup();
                 //ctx.opener = opener;
                 //var schema = schemaGenerator.generate(gform.ef.layout);
-                //refresolve(schema);
                 var meta = dojo.fromJson(group);
-                editor = dijit.byId("form");
-                editor.set("meta", meta);
-                editor.setPlainValue({});
-                generatedEditor = dijit.byId("resultForm");
-                //generatedEditor.set("ctx", ctx);
-                aspect.after(editor.modelHandle, "onChange", function () {
-                    if (editor.get("errorCount") == 0 && editor.get("incompleteCount") == 0) {
-                        generatedEditor.setMetaAndPlainValue(editor.get("plainValue"), {});
-                    }
-                });
-                var exportDialog = registry.byId("exportDialog");
-                var exportContent = dojo.byId("exportContent");
-                registry.byId("exportInstance").set("onClick", function (e) {
-                    exportContent.value = dojo.toJson(generatedEditor.get("plainValue"), true);
-                    exportDialog.show();
-                });
-                registry.byId("exportSchema").set("onClick", function (e) {
-                    exportContent.value = dojo.toJson(editor.get("plainValue"), true);
-                    exportDialog.show();
-                });
+                var loc = window.location.pathname + "../../schema/";
+                var resolver = new Resolver({baseUrl: loc});
+                var promise = refresolve(meta, resolver);
+                when(promise).then(function () {
+                    editor = dijit.byId("form");
+                    editor.set("meta", meta);
+                    editor.setPlainValue({});
+                    generatedEditor = dijit.byId("resultForm");
+                    //generatedEditor.set("ctx", ctx);
+                    aspect.after(editor.modelHandle, "onChange", function () {
+                        if (editor.get("errorCount") == 0 && editor.get("incompleteCount") == 0) {
+                            generatedEditor.setMetaAndPlainValue(editor.get("plainValue"), {});
+                        }
+                    });
+                    var exportDialog = registry.byId("exportDialog");
+                    var exportContent = dojo.byId("exportContent");
+                    registry.byId("exportInstance").set("onClick", function (e) {
+                        exportContent.value = dojo.toJson(generatedEditor.get("plainValue"), true);
+                        exportDialog.show();
+                    });
+                    registry.byId("exportSchema").set("onClick", function (e) {
+                        exportContent.value = dojo.toJson(editor.get("plainValue"), true);
+                        exportDialog.show();
+                    });
+                }).otherwise(function () {
+                            console.log("cannot create meta");
+                 });
             } catch (e) {
                 console.log(e.message + " " + e.stack)
             }

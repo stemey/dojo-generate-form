@@ -1,0 +1,11 @@
+[
+	{
+		"$ref": "listpane.json"
+	},
+	{
+		"$ref": "titlepane.json"
+	},
+	{
+		"$ref": "listgroup.json"
+	}
+]

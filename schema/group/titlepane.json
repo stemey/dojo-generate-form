@@ -1,0 +1,20 @@
+{
+	"code": "titlepane",
+	"attributes": [
+		{
+			"code": "title",
+			"type": "string"
+		},
+		{
+			"code": "editor",
+			"type": "string",
+			"values": ["titlepane"],
+			"required": true
+		},
+		{
+			"$ref": "../attributes.json"
+		}
+	]
+
+}
+

@@ -28,7 +28,7 @@ define([ "dojo/_base/array",
 		},
 		create: function (group, modelHandle, ctx) {
 			var tc = new TabContainer({
-				style: "height: 100%; width: 100%;"
+				doLayout: true,style: "height: 100%; width: 100%;"
 			});
 			for (var index = 0; index < group.groups.length; index++) {
 				var tab = group.groups[index];

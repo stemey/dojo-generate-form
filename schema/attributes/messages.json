@@ -1,0 +1,17 @@
+{
+	"label": "messages",
+	"attributes": [
+		{
+			"code": "missingMessage",
+			"type": "string"
+		},
+		{
+			"code": "invalidMessage",
+			"type": "string"
+		},
+		{
+			"code": "placeHolder",
+			"type": "string"
+		}
+	]
+}
