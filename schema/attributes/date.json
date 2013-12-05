@@ -1,0 +1,34 @@
+{
+	"code": "date",
+	"editor": "tab",
+	"groups": [
+		{
+			"$ref": "header.json"
+		},
+		{
+			"label": "messages",
+			"attributes": [
+				{
+					"code": "missingMessage",
+					"type": "string"
+				},
+				{
+					"code": "invalidMessage",
+					"type": "string"
+				},
+				{
+					"code": "placeHolder",
+					"type": "string"
+				},
+				{
+					"code": "type",
+					"type": "string",
+					"visible":false,
+					"required": true,
+					"values": ["date"]
+				}
+			]
+		}
+	]
+}
+

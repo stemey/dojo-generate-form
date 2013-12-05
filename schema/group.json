@@ -2,7 +2,7 @@
 	"attributes": [
 		{
 			"code": "group",
-			"type": "multi-object",
+			"type": "object",
 			"typeProperty": "editor",
 			"required": true,
 			"groups": [

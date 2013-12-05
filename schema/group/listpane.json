@@ -2,6 +2,10 @@
 	"code": "listpane",
 	"attributes": [
 		{
+			"code": "code",
+			"type": "string"
+		},
+		{
 			"code": "label",
 			"type": "string"
 		},

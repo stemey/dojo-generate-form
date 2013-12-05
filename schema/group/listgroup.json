@@ -2,6 +2,10 @@
 	"code": "listgroup",
 	"attributes": [
 		{
+			"code": "code",
+			"type": "string"
+		},
+		{
 			"code": "label",
 			"type": "string"
 		},
@@ -13,7 +17,6 @@
 		{
 			"code": "groups",
 			"type": "array",
-			"editor": "multi-object",
 			"groups": {
 				"$ref": "groups.json"
 			}

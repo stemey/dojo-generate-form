@@ -1,13 +1,11 @@
-define([ "dojo/_base/array", //
-	"dojo/_base/lang",//
-	"dojo/_base/declare",//
-	"dojox/mvc/at",//
-	"dojo/date/stamp",//
-	"./DateTextBox",//
-	"../schema/meta",//
-	"./dijitHelper",//
+define([
+	"dojo/_base/declare",
+	"dojox/mvc/at",
+	"dojo/date/stamp",
+	"./DateTextBox",
+	"./dijitHelper",
 	"./PrimitiveAttributeFactory"
-], function (array, lang, declare, at, dateStamp, DateTextBox, meta, dijitHelper, PrimitiveAttributeFactory) {
+], function (declare, at, dateStamp, DateTextBox, dijitHelper, PrimitiveAttributeFactory) {
 
 	return declare([PrimitiveAttributeFactory], {
 		id: "date",
@@ -37,8 +35,8 @@ define([ "dojo/_base/array", //
 		createValueConverter: function () {
 			return {
 				parse: function (date) {
-					isoDateString = date;
-					if (typeof date != "string") {
+					var isoDateString = date;
+					if (typeof date !== "string") {
 						isoDateString = dateStamp.toISOString(date, {
 							selector: "date"
 						});

@@ -1,6 +1,0 @@
-[
-	{"code": "type", "type": "string", "enum":["object-array"], "required": true},
-	{"code": "minItems", "type": "number"},
-	{"code": "maxItems", "type": "number"},
-	{"code": "items", "type": "multi-object", "typeCode": "groupType", "groups": {"$ref": "groups"}}
-}

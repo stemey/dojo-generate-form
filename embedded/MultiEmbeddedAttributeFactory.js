@@ -11,7 +11,7 @@ define([
 		// summary:
 		//		This AttributeFactory create the widget for single embedded attributes.
 		handles: function (attribute, modelHandle) {
-			return attribute.type == "multi-object";
+			return attribute.type === "object" && attribute.groups;
 		},
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);

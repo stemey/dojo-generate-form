@@ -1,4 +1,0 @@
-{
-	"type": {"type": "string", "values":["string"]},
-	"required": {"type": "boolean"}
-}

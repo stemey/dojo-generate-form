@@ -1,6 +1,5 @@
 {
-	"code": "primitive-array",
-	"editor": "listpane",
+	"code": "multi-array",
 	"attributes": [
 		{
 			"code": "code",
@@ -16,6 +15,11 @@
 			"type": "boolean"
 		},
 		{
+			"code": "typeProperty",
+			"type": "string",
+			"required":true
+		},
+		{
 			"code": "type",
 			"type": "string",
 			"visible": false,
@@ -23,18 +27,15 @@
 			"values": ["array"]
 		},
 		{
-			"code": "element",
-			"type": "object",
+			"code": "groups",
+			"type": "array",
+			"editor": "multi-array",
 			"typeProperty": "editor",
 			"required": true,
-			"groups": [
-				{
-					"$ref": "../types/number.json"
-				},
-				{
-					"$ref": "../types/string.json"
-				}
-			]
+			"groups": {
+				"$ref": "../group/groups.json"
+			}
+
 		}
 	]
 }

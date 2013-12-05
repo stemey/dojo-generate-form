@@ -93,6 +93,11 @@ define(["dojo/_base/lang",
 			mo.set("currentTypeCode", "type1");
 			mo.visit(lang.hitch(visitor, "fn"));
 			assertEqual(["noidx", "type", "stringP", "booleanP"], visitor.events);
+		},
+		function testNullAndRequired() {
+			mo.required = true;
+			mo.update(null);
+			doh.assertFalse(mo.getPlainValue() == null);
 		}
 	]);
 
