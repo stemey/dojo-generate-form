@@ -1,0 +1,16 @@
+{
+	"code": "number",
+	"editor": "tab",
+	"groups": [
+		{
+			"$ref": "header.json"
+		},
+		{
+			"$ref": "number-constraints.json"
+		},
+		{
+			"$ref": "messages.json"
+		}
+	]
+}
+

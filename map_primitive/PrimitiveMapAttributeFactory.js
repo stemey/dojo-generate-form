@@ -1,13 +1,13 @@
 define([
+	'../list_table/RepeatedSingleEmbeddedAttributeFactory',
 	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"../model/SingleObject",
-	"../model/PrimitiveMapModel",
-	"../list_table/TableAttributeFactory"
-], function (lang, declare, SingleObject, PrimitiveMapModel, TableAttributeFactory) {
+	"../model/PrimitiveMapModel"
+], function (RepeatedSingleEmbeddedAttributeFactory, lang, declare, SingleObject, PrimitiveMapModel) {
 
-	return declare([TableAttributeFactory], {
-
+	return declare([RepeatedSingleEmbeddedAttributeFactory], {
+		id: "primitive-map",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},

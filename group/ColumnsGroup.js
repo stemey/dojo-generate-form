@@ -1,8 +1,8 @@
 define([ "dojo/_base/array", "dojo/_base/declare",
 	"dijit/layout/_LayoutWidget", "dojo/dom-geometry",
-	"dojo/dom-class", "../group/_GroupMixin" ], function (array, declare, _LayoutWidget, domGeometry, domClass, _GroupMixin) {
+	"dojo/dom-class"  ], function (array, declare, _LayoutWidget, domGeometry, domClass) {
 
-	return declare([_LayoutWidget, _GroupMixin], {
+	return declare([_LayoutWidget], {
 		// module:
 		//		The ColumnsGroup display an array of attributes in as many columns as possible. It first calculates the maximum width of all its children. Then it sets a class that will create the approproate number of columns via css-columns. Children are automatically are display:inline-block by ths container style, so that there size can be accurately measured. <br> are inserted to create a break after each of he children.
 		baseClass: "gformColumnContainer",
@@ -47,7 +47,7 @@ define([ "dojo/_base/array", "dojo/_base/declare",
 			}
 			array.forEach(this.getChildren(), function (child) {
 				if (child.resize) {
-					child.resize()
+					child.resize();
 				}
 			});
 
@@ -59,7 +59,7 @@ define([ "dojo/_base/array", "dojo/_base/declare",
 		_getChildCount: function () {
 			return this.getChildren().length;
 		},
-		addChild: function (child) {
+		addChild: function () {
 			this.inherited(arguments);
 			// we need to add a br, because the child maybe "inline-block", to make its size computable.
 			var br = document.createElement("br");

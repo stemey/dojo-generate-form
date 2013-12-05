@@ -3,8 +3,8 @@
     "label":"example",
     "attributes":[
         {
-           type:"primitive-array",
-			editor:"primitive_list",
+           type:"array",
+			editor:"primitive-list",
           "required":false,
           "label":"things",
           "code":"things",

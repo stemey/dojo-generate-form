@@ -33,7 +33,7 @@ define([
 	"./map_embedded/RepeatedEmbeddedAttributeFactory",//
 	"./map_primitive/PrimitiveMapAttributeFactory",//
 	"./list_table/RepeatedEmbeddedAttributeFactory",//
-	"./list_table/TableAttributeFactory"//
+	"./list_table/RepeatedSingleEmbeddedAttributeFactory"//
 
 ], function (lang, EditorFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
 			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
@@ -56,10 +56,10 @@ define([
 	});
 
 	var attributeFactories = [ //
-		new MultiTableAttributeFactory({editorFactory: editorFactory}),//
-		new TableAttributeFactory({editorFactory: editorFactory}),//
 		new RepeatedEmbeddedAttributeFactory({editorFactory: editorFactory}),//
 		new RepeatedMultiEmbeddedAttributeFactory({editorFactory: editorFactory}),//
+		new MultiTableAttributeFactory({editorFactory: editorFactory}),//
+		new TableAttributeFactory({editorFactory: editorFactory}),//
 		new MapEmbeddedAttributeFactory({editorFactory: editorFactory}),//
 		new PrimitiveMapAttributeFactory({editorFactory: editorFactory}),//
 		new EmbeddedAttributeFactory({editorFactory: editorFactory}),//
@@ -78,13 +78,14 @@ define([
 		new TimeAttributeFactory({editorFactory: editorFactory}), //
 		//	       				new MappedContentPaneFactory({editorFactory:editorFactory}) //
 	];
-	attributeFactoryFinder.addAttributeFactory("table", new MultiTableAttributeFactory({editorFactory: editorFactory}));
-	attributeFactoryFinder.addAttributeFactory("primitive-array", new PrimitiveListAttributeFactory({editorFactory: editorFactory}));
+	attributeFactoryFinder.addAttributeFactory(new MultiTableAttributeFactory({editorFactory: editorFactory}));
+	attributeFactoryFinder.addAttributeFactory(new TableAttributeFactory({editorFactory: editorFactory}));
+	attributeFactoryFinder.addAttributeFactory(new PrimitiveListAttributeFactory({editorFactory: editorFactory}));
 //			attributeFactoryFinder.addAttributeFactory("mapped_contentpane", new MappedContentPaneFactory({editorFactory:editorFactory}));
-	attributeFactoryFinder.addAttributeFactory("currencyamount", new CurrencyAmountAttributeFactory({editorFactory: editorFactory}));
-	attributeFactoryFinder.addAttributeFactory("checked_select", new CheckedSelectAttributeFactory({editorFactory: editorFactory}));
-	attributeFactoryFinder.addAttributeFactory("textarea", new TextareaAttributeFactory({editorFactory: editorFactory}));
-	attributeFactoryFinder.addAttributeFactory("simpletextarea", new SimpleTextareaAttributeFactory({editorFactory: editorFactory}));
+	attributeFactoryFinder.addAttributeFactory(new CurrencyAmountAttributeFactory({editorFactory: editorFactory}));
+	attributeFactoryFinder.addAttributeFactory(new CheckedSelectAttributeFactory({editorFactory: editorFactory}));
+	attributeFactoryFinder.addAttributeFactory(new TextareaAttributeFactory({editorFactory: editorFactory}));
+	attributeFactoryFinder.addAttributeFactory(new SimpleTextareaAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.set("attributeFactories", attributeFactories);
 
 	editorFactory.set("attributeFactoryFinder", attributeFactoryFinder);

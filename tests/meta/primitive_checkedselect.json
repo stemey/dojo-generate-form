@@ -1,19 +1,22 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes":[
-        {
-            "editor":"checked_select",
-            "type":"string",
-            "label":"select",
-            "code":"select",
-            "required":false,
-            "emptyValueLabel":"-- no selection --",
-            "values":[
-            	"Hallo",
-            	{label: "Good bye (Label)", value: "Good bye"}
-            ]
-        }
-    ],
-    "type_property":"ext_type"
+	"code": "example",
+	"label": "example",
+	"attributes": [
+		{
+			"editor": "checked-select",
+			"type": "string",
+			"label": "select",
+			"code": "select",
+			"required": false,
+			"emptyValueLabel": "-- no selection --",
+			"values": [
+				"Hallo",
+				{
+					label: "Good bye (Label)",
+					value: "Good bye"
+				}
+			]
+		}
+	],
+	"type_property": "ext_type"
 }

@@ -12,13 +12,13 @@ define([
 
 	var findGroup = function (code, allGroups) {
 		var groups = allGroups.filter(function (group) {
-			return group.code == code;
+			return group.code === code;
 		});
 		return groups[0];
-	}
+	};
 
 	return declare([], {
-
+		id: "multi-array",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},

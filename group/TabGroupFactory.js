@@ -9,6 +9,7 @@ define([ "dojo/_base/array",
 ], function (array, lang, aspect, declare, MultiGroup, TabContainer, updateModelHandle) {
 
 	return declare([], {
+		id: "tab",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
@@ -28,7 +29,7 @@ define([ "dojo/_base/array",
 		},
 		create: function (group, modelHandle, ctx) {
 			var tc = new TabContainer({
-				doLayout: true,style: "height: 100%; width: 100%;"
+				doLayout: true, style: "height: 100%; width: 100%;"
 			});
 			for (var index = 0; index < group.groups.length; index++) {
 				var tab = group.groups[index];
@@ -41,7 +42,8 @@ define([ "dojo/_base/array",
 				tabWidget.set("meta", tab);
 				tc.addChild(tabWidget);
 				aspect.after(modelHandle.getModelByIndex(index), "onChange", lang.hitch(this, "onValidChanged", tabWidget, model, tab.label));
-			};
+			}
+			;
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
 		},

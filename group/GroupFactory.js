@@ -11,6 +11,8 @@ define([ "dojo/_base/array",
 	return declare([], {
 		// summary:
 		//		this factory handles simple groups containing an array of attributes. Creates an instance of ./AttributeListWidget
+
+		id: "group",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
@@ -75,5 +77,5 @@ define([ "dojo/_base/array",
 			return schema;
 
 		}
-	})
+	});
 });

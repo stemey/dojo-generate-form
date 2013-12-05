@@ -1,25 +1,32 @@
 {
-	groupType : "listgroup",
-	groups: [{
-    	groupType : "titlepane",
-    	title : "First pane",
-		open : true,
-        attributes : [{
-            type : "string",
-            label : "name",
-            code : "name",
-            required : true,
-            array : false
-        }]
-	},{
-		groupType : "titlepane",
-    	title : "Second pane",
-		open : false,
-        attributes : [{
-            type : "string",
-            label : "company",
-            code : "company",
-            array : false
-        }]
-	}]
+	editor: "listgroup",
+	groups: [
+		{
+			editor: "titlepane",
+			title: "First pane",
+			open: true,
+			attributes: [
+				{
+					type: "string",
+					label: "name",
+					code: "name",
+					required: true,
+					array: false
+				}
+			]
+		},
+		{
+			editor: "titlepane",
+			title: "Second pane",
+			open: false,
+			attributes: [
+				{
+					type: "string",
+					label: "company",
+					code: "company",
+					array: false
+				}
+			]
+		}
+	]
 }

@@ -7,7 +7,7 @@ define([ "dojo/_base/array",
 ], function (array, declare, CheckedMultiSelect, createOptions, bindWidget, PrimitiveModel) {
 
 	return declare([  ], {
-
+		id: "checked-multi-select",
 		handles: function (attribute) {
 			return attribute != null && attribute.type == "primitive-array" && attribute.element.values;
 		},

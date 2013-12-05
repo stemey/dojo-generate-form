@@ -6,10 +6,9 @@
 			"type": "string"
 		},
 		{
-			"code": "editor",
+			"code": "description",
 			"type": "string",
-			"values": ["listpane"],
-			"required": true
+			"editor": "textarea"
 		},
 		{
 			"$ref": "../attributes.json"

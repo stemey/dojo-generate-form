@@ -6,8 +6,8 @@
             "required":false,
             "label":"things",
             "code":"things",
-            "type":"single-map",
-						"keyProperty": "beast",	
+            "type":"map",
+			"keyProperty": "beast",
             "group":{
                 "attributes":[
                     {

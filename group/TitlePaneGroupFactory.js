@@ -8,6 +8,7 @@ define([
 ], function (lang, json, declare, aspect, GroupFactory, TitlePane) {
 
 	return declare([ GroupFactory ], {
+		id: "titlepane",
 		createWidget: function (group, model) {
 			var titlePane = new TitlePane({
 				meta: group,

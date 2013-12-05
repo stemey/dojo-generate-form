@@ -1,4 +1,5 @@
 define([
+	"../model/SingleObject",
 	"dojo/_base/array",
 	"dojo/_base/lang",
 	"dojo/aspect",
@@ -10,15 +11,15 @@ define([
 	"./RepeatedEmbeddedWidget",
 	"./TableHeader",
 	"./TableElementHeader"
-], function (array, lang, aspect, declare, ArrayModel, DndSource, EmbeddedListWidget, WidgetList, RepeatedEmbeddedWidget, TableHeader, TableElementHeader) {
+], function (SingleObject, array, lang, aspect, declare, ArrayModel, MvcDndSource, EmbeddedListWidget, TableWidgetList, RepeatedEmbeddedWidget, TableHeader, TableElementHeader) {
 
 	return declare([], {
-
+		id: "table",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type == "table-single-array";
+			return attribute != null && attribute.type === "array" && attribute.attributes;
 		},
 
 		create: function (attribute, modelHandle) {
@@ -44,7 +45,7 @@ define([
 			}, this);
 			select.addChild(tableHeader);
 
-			var widgetList = new WidgetList();
+			var widgetList = new TableWidgetList();
 			widgetList.set("partialRebuild", true);
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedEmbeddedWidget);
@@ -62,7 +63,8 @@ define([
 					return modelHandle.elementFactory(value);
 				};
 				aspect.after(widgetList, "startup", function () {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});
+					new MvcDndSource(widgetList.domNode,
+						{copyFn: copy, copyOnly: false, singular: true, withHandles: true});
 				});
 			}
 
@@ -74,16 +76,17 @@ define([
 			var me = this;
 			var model = new ArrayModel();
 			model.elementFactory = function (element) {
-				var aModels = meta.attributes.map(function (attribue) {
-					return me.editorFactory.createAttributeModel(attribute);
+				var aModels = {};
+				meta.attributes.forEach(function (attribute) {
+					aModels[attribute.code] = me.editorFactory.createAttributeModel(attribute);
 				});
 				var elModel = new SingleObject({attributes: aModels});
 				elModel.update(element);
 				return elModel;
-			}
+			};
 			model.update(value);
 			return model;
 
 		}
-	})
+	});
 });

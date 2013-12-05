@@ -16,12 +16,12 @@ define([ "dojo/_base/array", //
 ], function (array, lang, aspect, declare, ArrayModel, DndSource, EmbeddedListWidget, WidgetList, RepeatedEmbeddedWidget, MergedMultiObject, TableHeader, TableElementHeader, embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
 
 	return declare([], {
-
+		id: "multi-table",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type == "table-multi-array";
+			return attribute != null && attribute.type === "array" && attribute.groups;
 		},
 
 		create: function (attribute, modelHandle) {
@@ -91,7 +91,7 @@ define([ "dojo/_base/array", //
 				var elModel = MergedMultiObject.create(meta, me._createFactory());
 				elModel.update(element);
 				return elModel;
-			}
+			};
 			model.update(value);
 			return model;
 

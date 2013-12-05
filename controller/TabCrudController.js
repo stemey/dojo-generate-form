@@ -70,7 +70,7 @@ define([
 			}, this);
 			this.watch("state", lang.hitch(this, "_onStateChange"));
 			this.editor.set("editorFactory", this.editorFactory);
-			this.editor.set("meta", {});
+			this.editor.set("meta", {attributes: []});
 			this.editor.on("value-changed", lang.hitch(this, "_onValueChange"));
 			this.on("editor-changed", lang.hitch(this, "_onEditorChange"));
 			this._onStateChange();

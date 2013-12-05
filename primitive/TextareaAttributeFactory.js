@@ -10,6 +10,7 @@ define([
 ], function (aspect, lang, declare, Textarea, meta, mixinTextboxBindings, dijitHelper, PrimitiveAttributeFactory) {
 
 	return declare([PrimitiveAttributeFactory], {
+		id: "textarea",
 		handles: function (attribute) {
 			return meta.isType(attribute, "string") && !attribute.array;
 		},

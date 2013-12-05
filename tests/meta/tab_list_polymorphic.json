@@ -4,8 +4,9 @@
     "attributes":[
         {
             "required":false,
-            "type":"table-multi-array",
-						"typeProperty":"ext_type",
+            "editor":"multi-table",
+			"type":"array",
+			"typeProperty":"ext_type",
             "groups":[
                 {
                     "code":"thing1",

@@ -1,0 +1,42 @@
+{
+	"code": "textarea",
+	"editor": "tab",
+	"groups": [
+		{
+			"label": "general",
+			"attributes": [
+				{
+					"code": "code",
+					"type": "string",
+					"required": true
+				},
+				{
+					"code": "cols",
+					"type": "number",
+					"places": 0,
+					"description": "the number of characters per line"
+				},
+				{
+					"code": "label",
+					"type": "string"
+				},
+				{
+					"code": "description",
+					"editor": "textarea",
+					"type": "string"
+				},
+				{
+					"code": "required",
+					"type": "boolean"
+				}
+			]
+		},
+		{
+			"$ref": "string-constraints.json"
+		},
+		{
+			"$ref": "messages.json"
+		}
+	]
+}
+
