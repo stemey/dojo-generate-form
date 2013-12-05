@@ -10,7 +10,7 @@ define([
 ], function (lang, aspect, declare, EmbeddedListWidget, DndSource, WidgetList, RepeatedEmbeddedWidget, ArrayModel) {
 
 	return declare([], {
-
+		id: "array",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
@@ -64,7 +64,7 @@ define([
 					model.update(value);
 				}
 				return model;
-			}
+			};
 			model.elementFactory = ef;
 			model.update(plainValue);
 			return model;

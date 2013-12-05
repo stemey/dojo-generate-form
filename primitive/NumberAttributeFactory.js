@@ -11,12 +11,11 @@ define(
 	],
 	function (aspect, lang, declare, NumberTextBox, meta, dijitHelper, mixinNumberboxBindings, PrimitiveAttributeFactory) {
 
-		return declare(
-			[PrimitiveAttributeFactory],
+		return declare([PrimitiveAttributeFactory],
 			{
+				id: "number",
 				handles: function (attribute) {
-					return meta.isType(attribute, "number")
-						&& !attribute.array;
+					return meta.isType(attribute, "number");
 				},
 				create: function (attribute, modelHandle) {
 					var constraints = {};
@@ -27,12 +26,12 @@ define(
 
 					dijitHelper.copyProperty("constraints", attribute, props);
 					dijitHelper.copyDijitProperties(attribute, props);
-					if (attribute.numberFormat && attribute.numberFormat != "") {
+					if (attribute.numberFormat && attribute.numberFormat !== "") {
 						constraints.pattern = attribute.numberFormat;
 					}
-					dijitHelper.copyProperty("places", attribute, constraints)
-					dijitHelper.copyProperty("min", attribute, constraints)
-					dijitHelper.copyProperty("max", attribute, constraints)
+					dijitHelper.copyProperty("places", attribute, constraints);
+					dijitHelper.copyProperty("min", attribute, constraints);
+					dijitHelper.copyProperty("max", attribute, constraints);
 					var widget = new NumberTextBox(props);
 					aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
 					return widget;

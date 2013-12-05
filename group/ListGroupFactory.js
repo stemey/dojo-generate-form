@@ -9,7 +9,9 @@ define([
 //		gform/group/ListGroupFactory
 	return declare(null, {
 		// summary:
-		//		the ListGroupFactory handles an array of groups. These are displayed in a list.	
+		//		the ListGroupFactory handles an array of groups. These are displayed in a list.
+
+		id: "listgroup",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},

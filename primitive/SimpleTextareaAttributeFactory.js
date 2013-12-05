@@ -8,6 +8,7 @@ define([
 ], function (declare, SimpleTextarea, meta, mixinTextboxBindings, dijitHelper, PrimitiveAttributeFactory) {
 
 	return declare([PrimitiveAttributeFactory], {
+		id: "simpletextarea",
 		handles: function (attribute) {
 			return meta.isType(attribute, "string") && !attribute.array;
 		},

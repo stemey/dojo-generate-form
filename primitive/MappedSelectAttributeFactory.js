@@ -10,7 +10,7 @@ define([
 ], function (MappedSelectModel, declare, at, Select, _MappedSelectAttributeFactoryBase, dijitHelper, example, exampleForDoc) {
 
 	return declare([ _MappedSelectAttributeFactoryBase ], {
-
+		id: "mapped-select",
 		handles: function (attribute) {
 			//var mapped_values=attribute.mapped_values;
 			return attribute.type === "mapped-select";

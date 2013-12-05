@@ -1,0 +1,37 @@
+{
+	"code": "select",
+	"editor": "tab",
+	"groups": [
+
+		{
+			"$ref": "header.json"
+		},
+		{
+			"label": "values",
+			"attributes": [
+				{
+					"code": "values",
+					"type": "array",
+					"editor": "table",
+					"attributes": [
+						{
+							"code": "label",
+							"required": "true",
+							"type": "string"
+						},
+						{
+							"code": "value",
+							"type": "string"
+						}
+					]
+
+
+				}
+			]
+		},
+		{
+			"$ref": "messages.json"
+		}
+	]
+}
+

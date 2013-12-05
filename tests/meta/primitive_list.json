@@ -5,7 +5,7 @@
 		{
 			"label": "things",
 			"code": "things",
-			"type": "primitive-array",
+			"type": "array",
 			"required": false,
 			"element": {
 				"type": "string",

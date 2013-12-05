@@ -9,6 +9,7 @@ define([
 ], function (declare, aspect, at, CheckBox, meta, dijitHelper, BooleanModel) {
 
 	return declare([], {
+		id: "boolean",
 		handles: function (attribute) {
 			return meta.isType(attribute, "boolean") && !attribute.array;
 		},

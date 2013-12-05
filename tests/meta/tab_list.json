@@ -7,7 +7,8 @@
             "label":"things",
             "code":"things",
             "typeProperty":"ext_type",
-            "type":"table-single-array",
+			"editor":"table",
+            "type":"array",
              "attributes":[
                 {
                     "required":false,

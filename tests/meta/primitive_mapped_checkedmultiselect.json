@@ -1,39 +1,55 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes": [{
-        "type":"string",
-        "label":"name",
-        "code":"name",
-        "required":false,
-        "values": [ "Henry", "Anni", "Bob" ]
-    },{
-        "type":"primitive-array",
-        "label":"languages",
-        "code":"languages",
-        "required":false,
-				"element": {
-		      "type":"string",
-		      "mapped_attribute":"name",
-					"mapped_values": {
-						"Henry": [
-							"English",
-							"German",
-							"Indish"
-						],
-						"Anni":[
-							{label: "EN", value: "English"},
-							{label: "AE", value: "American English"},
-							{label: "DE", value: "German"},
-							{label: "HI", value: "Hindu"}
-						],
-						"Bob":[
-							"American English",
-							"Ukrainish",
-							"Hindu"
-						],
-					}
+	"code": "example",
+	"label": "example",
+	"attributes": [
+		{
+			"type": "string",
+			"label": "name",
+			"code": "name",
+			"required": false,
+			"values": [ "Henry", "Anni", "Bob" ]
+		},
+		{
+			"type": "primitive-array",
+			"editor":"mapped-checked-multi-select",
+			"label": "languages",
+			"code": "languages",
+			"required": false,
+			"element": {
+				"type": "string",
+				"mapped_attribute": "name",
+				"mapped_values": {
+					"Henry": [
+						"English",
+						"German",
+						"Indish"
+					],
+					"Anni": [
+						{
+							"label": "EN",
+							"value": "English"
+						},
+						{
+							"label": "AE",
+							"value": "American English"
+						},
+						{
+							"label": "DE",
+							"value": "German"
+						},
+						{
+							"label": "HI",
+							"value": "Hindu"
+						}
+					],
+					"Bob": [
+						"American English",
+						"Ukrainish",
+						"Hindu"
+					]
 				}
-    }],
-    "type_property":"ext_type"
+			}
+		}
+	],
+	"type_property": "ext_type"
 }

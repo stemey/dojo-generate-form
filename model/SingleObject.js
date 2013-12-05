@@ -33,6 +33,9 @@ define([
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
 			//		the new value of the attribute
+			if (this.required && plainValue == null) {
+				plainValue = {};
+			}
 			this._execute(function () {
 				// set to undefined so that hasCHanged returns false
 				this.oldValue = undefined;

@@ -78,6 +78,11 @@ define(['dojo/_base/lang',
 			assertEqual(1, so.errorCount);
 			so.update(null);
 			assertEqual(0, so.errorCount);
+		},
+		function testError(t) {
+			so.required = true;
+			so.update(null);
+			t.assertNotEqual(null, so.getPlainValue());
 		}
 	]);
 

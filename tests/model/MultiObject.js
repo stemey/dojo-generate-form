@@ -80,7 +80,6 @@ define(["dojo/_base/lang",
 			mo.set("currentTypeCode", "type2");
 			var plainValue = mo.getPlainValue(mo);
 			assertEqual(true, plainValue.booleanP);
-			assertEqual(3, plainValue.numberP);
 			assertEqual("type2", plainValue.type);
 		},
 		function testGetModelByPath() {

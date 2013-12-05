@@ -1,22 +1,29 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes":[
-        {
-            "type":"primitive-array",
-						"label":"multiple select",
-            "code":"multiselect",
-						"element": {	
-		          "type":"string",
-		          "values": [
-		          	"Hello",
-		          	"Hi",
-		          	"Good bye",
-		          	{label: "Ciao Bella", value: "Ciao"},
-		          	{label: "Bye", value: "Bye Bye"}
-            	]
-						}
-        }
-    ],
-    "type_property":"ext_type"
+	"code": "example",
+	"label": "example",
+	"attributes": [
+		{
+			"type": "primitive-array",
+			"editor": "checked-multi-select",
+			"label": "multiple select",
+			"code": "multiselect",
+			"element": {
+				"type": "string",
+				"values": [
+					"Hello",
+					"Hi",
+					"Good bye",
+					{
+						label: "Ciao Bella",
+						value: "Ciao"
+					},
+					{
+						label: "Bye",
+						value: "Bye Bye"
+					}
+				]
+			}
+		}
+	],
+	"type_property": "ext_type"
 }

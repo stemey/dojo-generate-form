@@ -82,9 +82,13 @@ define([ "dojo/_base/array",
 			if (prevGroup && nextGroup) {
 				prevGroup.visit(
 					function (model, cascade, idx) {
-						var nextAttribute = nextGroup.getModelByPath(idx);
-						if (nextAttribute) {
-							value[idx] = model.getPlainValue();
+						if (typeof idx !== "undefined") {
+							var nextAttribute = nextGroup.getModelByPath(idx);
+							if (nextAttribute) {
+								value[idx] = model.getPlainValue();
+							}
+						} else {
+							cascade();
 						}
 					}
 				);

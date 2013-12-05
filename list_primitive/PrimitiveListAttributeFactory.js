@@ -11,7 +11,7 @@ define([
 ], function (lang, aspect, declare, EmbeddedListWidget, WidgetList, RepeatedAttributeWidget, DndSource, ArrayModel, PrimitiveModel) {
 
 	return declare([], {
-
+		id: "primitive-array",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},

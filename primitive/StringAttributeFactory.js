@@ -1,5 +1,5 @@
 define([
-	'dojo/_base/lang',
+	"dojo/_base/lang",
 	"dojo/aspect",
 	"../model/StringModel",
 	"./PrimitiveAttributeFactory",
@@ -11,6 +11,7 @@ define([
 ], function (lang, aspect, StringModel, PrimitiveAttributeFactory, declare, TextBox, meta, mixinTextboxBindings, dijitHelper) {
 
 	return declare([PrimitiveAttributeFactory], {
+		id: "string",
 		handles: function (attribute) {
 			return meta.isType(attribute, "string") && !attribute.array;
 		},

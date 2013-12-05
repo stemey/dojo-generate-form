@@ -69,7 +69,7 @@
                     //generatedEditor.set("ctx", ctx);
                     aspect.after(editor.modelHandle, "onChange", function () {
                         if (editor.get("errorCount") == 0 && editor.get("incompleteCount") == 0) {
-                            generatedEditor.setMetaAndPlainValue(editor.get("plainValue"), {});
+                            generatedEditor.setMetaAndPlainValue(editor.get("plainValue").group, {});
                         }
                     });
                     var exportDialog = registry.byId("exportDialog");

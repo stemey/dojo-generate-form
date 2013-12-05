@@ -17,7 +17,6 @@ define([  //
 		// asyncModelValidation: boolean
 		//		dijits validate after setting the value. Therefore model validation must happen asynchronuously
 		//		to value change events.
-		asyncModelValidation: true,
 		convertersById: {},
 		convertersByType: {},
 		constructor: function () {
@@ -26,6 +25,7 @@ define([  //
 			this.addConverterForType(urlToIdConverter, "ref");
 		},
 		createGroupModel: function (schema, plainValue) {
+			var factory;
 			if (schema.editor) {
 				factory = this.getGroupFactory(schema.editor);
 			} else {
@@ -101,7 +101,7 @@ define([  //
 				}
 				return groupFactory.create(group, modelHandle, ctx);
 			}
-			else if (lang.isArray(group.attributes)) {
+			else {
 				return this.defaultGroupFactory.create(group, modelHandle, ctx);
 			}
 		},

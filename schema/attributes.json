@@ -1,7 +1,6 @@
 {
 	"code": "attributes",
 	"type": "array",
-	"editor": "multi-object",
 	"typeProperty": "editor",
 	"groups": [
 		{
@@ -9,38 +8,23 @@
 		},
 		{
 			"$ref": "attributes/primitive-array.json"
-		}
-		,
-		{
-			"code": "number",
-			"editor": "tab",
-			"groups": [
-				{
-					"$ref": "attributes/header.json"
-				},
-				{
-					"$ref": "attributes/number-constraints.json"
-				},
-				{
-					"$ref": "attributes/messages.json"
-				}
-			]
 		},
 		{
-			"code": "string",
-			"editor": "tab",
-			"groups": [
-				{
-					"$ref": "attributes/header.json"
-				},
-				{
-					"$ref": "attributes/string-constraints.json"
-				},
-				{
-					"$ref": "attributes/messages.json"
-				}
-			]
+			"$ref": "attributes/string.json"
+		},
+		{
+			"$ref": "attributes/number.json"
+		},
+		{
+			"$ref": "attributes/textarea.json"
+		},
+		{
+			"$ref": "attributes/simpletextarea.json"
+		},
+		{
+			"$ref": "attributes/select.json"
 		}
+
 	]
 }
 

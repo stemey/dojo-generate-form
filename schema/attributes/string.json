@@ -1,0 +1,17 @@
+{
+	"code": "string",
+	"editor": "tab",
+	"groups": [
+		{
+			"$ref": "header.json"
+		},
+		{
+			"$ref": "string-constraints.json"
+		},
+		{
+			"$ref": "messages.json"
+		}
+	]
+}
+
+

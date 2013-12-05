@@ -8,12 +8,12 @@ define([
 ], function (lang, declare, MapModel, EmbeddedListWidget, LayoutWidgetList, RepeatedEmbeddedWidget) {
 
 	return declare([], {
-
+		id: "map",
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type === "single-map";
+			return attribute != null && attribute.type === "map" && attribute.group;
 		},
 		create: function (attribute, modelHandle) {
 

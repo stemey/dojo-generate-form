@@ -11,8 +11,9 @@ define([  //
 ], function (declare, at, CurrencyTextBox, dijitHelper, monetary, nullableNumberConverter, PrimitiveAttributeFactory) {
 
 	return declare([PrimitiveAttributeFactory], {
+		id: "currencyamount",
 		handles: function (attribute) {
-			return attribute.type = "number" && !attribute.array;
+			return attribute.type === "number";
 		},
 
 		create: function (attribute, modelHandle) {
