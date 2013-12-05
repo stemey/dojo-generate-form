@@ -2,6 +2,10 @@
 	"code": "titlepane",
 	"attributes": [
 		{
+			"code": "code",
+			"type": "string"
+		},
+		{
 			"code": "title",
 			"type": "string"
 		},

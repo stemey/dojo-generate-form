@@ -10,6 +10,11 @@
 			"type": "number"
 		},
 		{
+			"code": "numberFormat",
+			"type": "string",
+			"description": "a pattern for displaying the number like ###.###,##. "
+		},
+		{
 			"code": "type",
 			"type": "string",
 			"visible": false,
@@ -18,3 +23,4 @@
 		}
 	]
 }
+

@@ -1,6 +1,5 @@
 {
-	"code": "object",
-	"editor": "listpane",
+	"code": "primitive-map",
 	"attributes": [
 		{
 			"code": "code",
@@ -16,24 +15,17 @@
 			"type": "string",
 			"visible": false,
 			"required": true,
-			"values": ["object"]
+			"values": ["map"]
 		},
 		{
 			"code": "group",
 			"type": "object",
 			"typeProperty": "editor",
 			"required": true,
-			"groups": [
-				{
-					"$ref": "../group/listpane.json"
-				},
-				{
-					"$ref": "../group/titlepane.json"
-				},
-				{
-					"$ref": "../group/listgroup.json"
-				}
-			]
+			"groups": {
+				"$ref": "../group/groups.json"
+			}
+
 		}
 	]
 }

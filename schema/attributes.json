@@ -7,6 +7,15 @@
 			"$ref": "attributes/object.json"
 		},
 		{
+			"$ref": "attributes/array.json"
+		},
+		{
+			"$ref": "attributes/multi-array.json"
+		},
+		{
+			"$ref": "attributes/multi-object.json"
+		},
+		{
 			"$ref": "attributes/primitive-array.json"
 		},
 		{
@@ -14,6 +23,12 @@
 		},
 		{
 			"$ref": "attributes/number.json"
+		},
+		{
+			"$ref": "attributes/date.json"
+		},
+		{
+			"$ref": "attributes/time.json"
 		},
 		{
 			"$ref": "attributes/textarea.json"

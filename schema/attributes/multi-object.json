@@ -1,6 +1,5 @@
 {
-	"code": "object",
-	"editor": "listpane",
+	"code": "multi-object",
 	"attributes": [
 		{
 			"code": "code",
@@ -12,6 +11,11 @@
 			"type": "boolean"
 		},
 		{
+			"code": "typeProperty",
+			"type": "string",
+			"required":true
+		},
+		{
 			"code": "type",
 			"type": "string",
 			"visible": false,
@@ -19,21 +23,14 @@
 			"values": ["object"]
 		},
 		{
-			"code": "group",
-			"type": "object",
+			"code": "groups",
+			"type": "array",
 			"typeProperty": "editor",
 			"required": true,
-			"groups": [
-				{
-					"$ref": "../group/listpane.json"
-				},
-				{
-					"$ref": "../group/titlepane.json"
-				},
-				{
-					"$ref": "../group/listgroup.json"
-				}
-			]
+			"groups": {
+				"$ref": "../group/groups.json"
+			}
+
 		}
 	]
 }
