@@ -90,11 +90,17 @@ define([
 					editorDim.w = this.fullMb.w;
 				}
 				this.editor.resize(editorDim);
-			} else if (this.fullMb && this.fullMb.h > this.barHeight) {
-				// +15 because of scrollbar issues.
-				editorDim = {w: this.fullMb.w + 15, h: this.fullMb.h - this.barHeight + 15};
-				this.editor.resize(editorDim);
 			}
+		},
+		_onLoadForEdit: function (entity) {
+			// clear dim of editor after dialog has resized according to editor
+			this.editor.dim = null;
+			this.inherited(arguments);
+		},
+		_onLoadForEditAndSchema: function (results) {
+			// clear dim of editor after dialog has resized according to editor
+			this.editor.dim = null;
+			this.inherited(arguments);
 		},
 		onCloseDialog: function (closeFn) {
 			// summary:
