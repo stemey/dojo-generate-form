@@ -378,33 +378,32 @@
 					"code": "embeddedmap",
 					"type": "map",
 					"keyProperty": "key",
-					"group": [
-						{
-							"editor": "listpane",
-							"attributes": [
-								{
-									"required": true,
-									"label": "this is the key",
-									"code": "key"
-								}
-								,
-								{
-									"required": false,
-									"type": "boolean",
-									"label": "yes",
-									"code": "yes"
-								}
-								,
-								{
-									"required": false,
-									"type": "string",
-									"label": "message",
-									"code": "message",
-									"pattern": "[a-zA-Z]*"
-								}
-							]
-						}
-					]
+					"group": {
+						"attributes": [
+							{
+								"required": true,
+								"label": "this is the key",
+								"code": "key",
+								"type":"string"
+							}
+							,
+							{
+								"required": false,
+								"type": "boolean",
+								"label": "yes",
+								"code": "yes"
+							}
+							,
+							{
+								"required": false,
+								"type": "string",
+								"label": "message",
+								"code": "message",
+								"pattern": "[a-zA-Z]*"
+							}
+						]
+					}
+
 				}
 			]
 		},
