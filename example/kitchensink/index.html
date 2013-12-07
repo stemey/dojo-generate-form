@@ -20,8 +20,8 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful",  "gform/createLayoutEditorFactory","dojo/on","gform/list_table/RepeatedEmbeddedAttributeFactory",//
-		"dojo/text!./kitchensink_schema.json", "dojo/text!./kitchensink_data.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","gform/Context", "dojo/text!gform/tests/entity/state_collection.json", "gform/opener/SingleEditorDialogOpener", "gform/example/gridx/AsyncMemory", "dijit/form/Button"//
-		], function(ready, json, Editor, Stateful, createStandardEditorFactory ,on,RepeatedEmbeddedAttributeFactory, meta, entity, registry,BorderContainer,parser,ListPaneGroupFactory, Context, stateCollectionJson, SingleEditorDialogOpener, Store) {
+		"dojo/text!./kitchensink_schema.json", "dojo/text!./kitchensink_data.json","dojo/text!../../tests/meta/refs.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser","gform/group/ListPaneGroupFactory","gform/Context", "dojo/text!gform/tests/entity/state_collection.json", "gform/opener/SingleEditorDialogOpener", "gform/example/gridx/AsyncMemory", "dijit/form/Button"//
+		], function(ready, json, Editor, Stateful, createStandardEditorFactory ,on,RepeatedEmbeddedAttributeFactory, meta, entity, refs, registry,BorderContainer,parser,ListPaneGroupFactory, Context, stateCollectionJson, SingleEditorDialogOpener, Store) {
 			parser.parse();
 
 			var stateCollection = JSON.parse(stateCollectionJson);
@@ -33,8 +33,8 @@
 			ctx.opener.placeAt("dialog");
 			ctx.opener.startup();
 			var model = dojo.fromJson(entity);
-			ctx.storeRegistry.register("/gform/tests/entity/state", new Store({data:stateCollection, idProperty:"id"})); 
-
+			ctx.storeRegistry.register("/gform/tests/entity/state", new Store({data:stateCollection, idProperty:"id"}));
+            ctx.schemaRegistry.register("/gform/tests/meta/refs.json", dojo.fromJson(refs));
 
 			var editorFactory = createStandardEditorFactory();
 			 editor = new Editor({
