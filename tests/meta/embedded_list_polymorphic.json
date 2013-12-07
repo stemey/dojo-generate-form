@@ -25,9 +25,9 @@
                             "code":"common",
                             "array":false,
                             "values":[
-                            	{label: "one", value: "one"},
-                            	{label: "two", value: "two"},
-                            	{label: "three", value: "three"}
+                            	{"label": "one", "value": "one"},
+                            	{"label": "two", "value": "two"},
+                            	{"label": "three", "value": "three"}
                             ]
                         }
                     ]
@@ -51,8 +51,8 @@
                             "code":"specific",
                             "array":false,
                             "values":[
-                            	{label: "four", value: "four"},
-                            	{label: "five", value: "five"}
+                            	{"label": "four", "value": "four"},
+                            	{"label": "five", "value": "five"}
                             ]
                         }
                     ]
@@ -60,7 +60,7 @@
                 }
             ],
             "label":"things",
-            "code":"things",
+            "code":"things"
         }
     ],
     "type_property":"ext_type"

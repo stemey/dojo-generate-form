@@ -1,18 +1,18 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes":[
-        {
-					"type":"primitive-map",
-          "label":"things",
-          "code":"things",
-					"keyAttribute": {
-						"label": "beast"
-					},
-					"valueAttribute": {
-            "type":"string",
-						"label": "beastValue"
-					}
-       }
-    ]
+	"code": "example",
+	"label": "example",
+	"attributes": [
+		{
+			"type": "map",
+			"label": "things",
+			"code": "things",
+			"keyAttribute": {
+				"label": "beast"
+			},
+			"valueAttribute": {
+				"type": "string",
+				"label": "beastValue"
+			}
+		}
+	]
 }

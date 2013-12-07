@@ -1,4 +1,5 @@
 define([
+	"dojo/_base/lang",
 	"dojo/aspect",
 	"dojo/_base/declare",
 	"dijit/form/SimpleTextarea",
@@ -6,7 +7,7 @@ define([
 	"./mixinTextboxBindings",
 	"./dijitHelper",
 	"./PrimitiveAttributeFactory"
-], function (aspect, declare, SimpleTextarea, meta, mixinTextboxBindings, dijitHelper, PrimitiveAttributeFactory) {
+], function (lang, aspect, declare, SimpleTextarea, meta, mixinTextboxBindings, dijitHelper, PrimitiveAttributeFactory) {
 
 	return declare([PrimitiveAttributeFactory], {
 		id: "simpletextarea",

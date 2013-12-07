@@ -12,7 +12,7 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute.type === "primitive-map";
+			return attribute.type === "map" && attribute.keyAttribute && attribute.valueAttribute;
 		},
 		create: function (attribute, modelHandle) {
 

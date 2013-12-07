@@ -28,6 +28,7 @@ define([ "dojo/_base/array",
 			return factory.create(attribute, modelHandle);
 		},
 		create: function (group, modelHandle, ctx) {
+			var doLayout = group.doLayout !== false;
 			var tc = new TabContainer({
 				doLayout: true, style: "height: 100%; width: 100%;"
 			});

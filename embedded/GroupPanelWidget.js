@@ -55,6 +55,7 @@ define([ "dojo/_base/array", //
 			array.forEach(this.groups, function (group) {
 				var editor = new Editor(
 					{
+						"doLayout": false,
 						"modelHandle": modelHandle.getGroup(group.code),
 						"meta": group,
 						"editorFactory": this.editorFactory,
