@@ -13,7 +13,7 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type === "map" && attribute.group;
+			return attribute.type === "map" && attribute.group && attribute.keyProperty;
 		},
 		create: function (attribute, modelHandle) {
 

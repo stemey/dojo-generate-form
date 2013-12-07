@@ -38,6 +38,7 @@
 
 			var editorFactory = createStandardEditorFactory();
 			 editor = new Editor({
+                 doLayout:true,
 					editorFactory:editorFactory,
 					"plainValue": dojo.fromJson(entity),
 					"ctx": ctx,	

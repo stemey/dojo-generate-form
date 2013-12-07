@@ -32,7 +32,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			// 		the editorFactory is responsible for translating the schema into a widget tree.
 			editorFactory: null,
 
-			doLayout: false,
+			doLayout: true,
 
 			// widget:
 			//		this is the single child group widget.

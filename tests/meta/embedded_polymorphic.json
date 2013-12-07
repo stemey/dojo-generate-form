@@ -4,7 +4,7 @@
     "attributes":[
         {
             "required":false,
-            "type":"multi-object",
+            "type":"object",
             "typeProperty":"ext_type",
             "label":"thing",
             "code":"thing",
