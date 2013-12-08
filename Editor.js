@@ -1,7 +1,7 @@
 define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declare",
 	"dojox/mvc/_Container", "dojox/mvc/at",
-	"dojo/dom-construct", "./model/hasChanged", "./schema/labelHelper", "dojo/query", "dijit/registry" ],
-	function (array, aspect, lang, declare, Container, at, domConstruct, hasChanged, labelHelper, query, registry) {
+	"dojo/dom-construct", "./schema/labelHelper", "dojo/query", "dijit/registry" ],
+	function (array, aspect, lang, declare, Container, at, domConstruct, labelHelper, query, registry) {
 		// module:
 		//		gform/Editor
 
@@ -112,7 +112,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				// summary:
 				// 		returns true if the data was changed.
 				// returns: Boolean
-				return hasChanged(this.modelHandle);
+				return this.modelHandle.hasChanged();
 			},
 			addError: function (path, message) {
 				// summary:

@@ -2,9 +2,8 @@ define([
 	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"../patch/StatefulArray",
-	"./MetaModel",
-	"./enhanceArray"
-], function (lang, declare, StatefulArray, MetaModel, enhanceArray) {
+	"./MetaModel"
+], function (lang, declare, StatefulArray, MetaModel) {
 	// module: 
 	//		gform/model/SingleObject
 
@@ -30,7 +29,6 @@ define([
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
 			//		the new value of the attribute
-			enhanceArray(this);
 
 			if (plainValue == null) {
 				this.value.splice(0, this.value.length);
