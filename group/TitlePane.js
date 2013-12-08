@@ -1,10 +1,9 @@
 define([
 	"dojo/_base/declare",
-	"dijit/TitlePane",
-	"./_GroupMixin"
-], function (declare, TitlePane, _GroupMixin) {
+	"dijit/TitlePane"
+], function (declare, TitlePane) {
 
-	return declare("gform.TitlePane", [ TitlePane, _GroupMixin ], {
+	return declare("gform.TitlePane", [ TitlePane ], {
 	});
 
 });
