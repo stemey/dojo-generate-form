@@ -1,19 +1,8 @@
-define([ "dojo/_base/array", //
-	"dojo/_base/lang",//
-	"dojo/aspect",//
-	"../Editor",//
-	"dojo/_base/declare",//
-	"dojox/mvc/at",//
-	"dojox/mvc/StatefulArray",//
-	"dojo/Stateful",//
-	"dojox/mvc/sync",//
-	"dojox/mvc/WidgetList",//
-	"dojox/mvc/StatefulArray",//
-	"dojo/dnd/Source",//
-	"../model/updateModelHandle",//
-	"dijit/registry",//
-	"dojo/dom-class"
-], function (array, lang, aspect, Editor, declare, at, StatefulArray, Stateful, sync, WidgetList, StatefulArray, DndSource, updateModelHandle, registry, domClass) {
+define([
+	"dojo/_base/declare",
+	"dojo/dnd/Source",
+	"dijit/registry"
+], function (declare, DndSource, registry) {
 
 	return declare([DndSource], {
 		copyFn: null,

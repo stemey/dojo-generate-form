@@ -3,10 +3,9 @@ define([ "dojo/_base/array",
 	"dojo/aspect",
 	"dojo/_base/declare",
 	"../model/MultiGroup",
-	"dijit/layout/TabContainer",
-	"../model/updateModelHandle"
+	"dijit/layout/TabContainer"
 
-], function (array, lang, aspect, declare, MultiGroup, TabContainer, updateModelHandle) {
+], function (array, lang, aspect, declare, MultiGroup, TabContainer) {
 
 	return declare([], {
 		id: "tab",
@@ -48,16 +47,6 @@ define([ "dojo/_base/array",
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
 		},
-		collectAttributes: function (group, /*local variables*/attributes) {
-			attributes = [];
-			array.forEach(group.groups, function (tab) {
-				var subAttributes = updateModelHandle.collectAttributes(tab, this.editorFactory);
-				array.forEach(subAttributes, function (a) {
-					attributes.push(a);
-				});
-			}, this);
-			return attributes;
-		},
 		onValidChanged: function (tabWidget, model, label) {
 			if (model.get("errorCount") > 0) {
 				tabWidget.set("title", label + "<span class='errorTooltipNode'>" + model.get("errorCount") + "</span>");
@@ -79,5 +68,5 @@ define([ "dojo/_base/array",
 			return schema;
 		}
 
-	})
+	});
 });

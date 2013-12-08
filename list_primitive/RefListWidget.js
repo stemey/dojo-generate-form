@@ -1,6 +1,6 @@
 define([ "dojo/_base/lang", "dojo/_base/declare", "./EmbeddedListWidget",
-	"dojo/text!./embedded_list_ref.html", "../model/updateModelHandle"
-], function (lang, declare, EmbeddedListWidget, template, updateModelHandle) {
+	"dojo/text!./embedded_list_ref.html"
+], function (lang, declare, EmbeddedListWidget, template) {
 // module:
 //		gform/list_primitive/RefListWidget
 	return declare([ EmbeddedListWidget ], {
