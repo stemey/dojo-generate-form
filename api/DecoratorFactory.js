@@ -1,5 +1,5 @@
 define([
-    "dojo/_base/declare"
+	"dojo/_base/declare"
 ], function (declare) {
 // module:
 //		gform/api/DecoratorFactory
@@ -13,12 +13,12 @@ define([
 		//		* description
 		//		* error message
 		//		* required property
-		create : function (attribute, modelHandle) {
+		create: function (attribute, model) {
 			// summary:
 			//		creates the decorator widget
 			// attribute: Object
 			//		the attribute meta data
-			// modelHandle: dojo/Stateful
+			// modelHandle: gform/model/MetaModel
 			//		The meta data of the modelHandle contains state information. This should be displayed by this Decorator.
 			// returns: dijit/_WidgetBase
 		}

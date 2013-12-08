@@ -64,7 +64,7 @@
     "wsh": false,
     "yui": false,
 
-    "maxlen": 120,
+    "maxlen": 200,
     "indent": 4,
     "maxerr": 250,
     "predef": [ "require", "define" ],

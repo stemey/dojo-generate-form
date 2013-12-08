@@ -1,25 +1,25 @@
 define([
 	"dojo/_base/lang",
 	"dojo/_base/declare",
-], function(lang, declare){
+], function (lang, declare) {
 // module:
 //		gform/opener/ActionProgressBar
 
-	
-return declare([], {
+
+	return declare([], {
 		// summary:
 		//		This dijit provides a dialog and an embedded CrudController. This dijit is designed o be used as opener in a gform/Context. 
 
-		constructor: function(kwArgs) {
+		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
 		progressBar: null,
 		progressMessage: null,
-		show: function(message) {
-			this.progressMessage.innerHTML=message;
+		show: function (message) {
+			this.progressMessage.innerHTML = message;
 			this.progressBar.show();
 		},
-		hide: function() {
+		hide: function () {
 			this.progressBar.hide();
 		}
 
