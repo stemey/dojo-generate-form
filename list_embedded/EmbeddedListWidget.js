@@ -2,11 +2,11 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 	"dijit/_Container", "dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
 	"dojo/text!./embedded_list_attribute.html", //
-	"dojo/i18n!../nls/messages", "../layout/_LayoutMixin", "../group/_GroupMixin"
-], function (lang, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, messages, _LayoutMixin, _GroupMixin) {
+	"dojo/i18n!../nls/messages", "../layout/_LayoutMixin"
+], function (lang, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, messages, _LayoutMixin) {
 
 	return declare("...EmbeddedListWidget", [ _WidgetBase, _Container,
-		_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin, _GroupMixin ], {
+		_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin ], {
 		templateString: template,
 		messages: messages,
 		group: null,
