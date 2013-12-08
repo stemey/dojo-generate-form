@@ -1,4 +1,4 @@
-define(["doh/runner","gform/model/equals","gform/model/updateModelHandle"], function(doh,equals,updateModelHandle){
+define(["doh/runner","gform/model/equals"], function(doh,equals){
 
     doh.register("gform-equals", [
       function testMeta(){
