@@ -11,7 +11,7 @@ define([
 		// editorFactory:
 		//		GroupFactory uses editorFactory to create embedded attributes/groups.
 		editorFactory: null,
-		create : function (/*Object*/group, /*dojo/Stateful*/modelHandle) {
+		create : function (/*Object*/group, /*dojo/Stateful*/modelHandle, ctx) {
 		// summary:
 		//		create a widget for the group. Also create widgets for the contained attriutes/groups  
 		// attribute: Object
@@ -21,20 +21,16 @@ define([
 		// returns: dijit/_WidgetBase
 		//		returns the widget
 		},
-		collectAttributes: function (/*Object*/group,/*local variables*/attributes) {
+		createModel: function (/*Object*/group,/*local variables*/value) {
 		// summary:
 		//		collect all contained attributes. Not every group is associated with a unique modelHandle. Therefore groups play a  role in presentation but not in validation and other model operations. This function provides access to the attributes for these operations.
 		// group: Object
 		//		the group meta data
-		// returns: Array
-		//		An array of all contained attributes.			
-		},
-		getSchema: function () {
-		// summary:
-		//		create a json schema v0.3 to describes the group meta data this factory handles.
-		// returns: Object
-		//		json schema.			
+		// value: Object
+		//		the value of the group
+		// returns: gform/model/MetaModel
+		//		the model
 		}
 	
-	})
+	});
 });
