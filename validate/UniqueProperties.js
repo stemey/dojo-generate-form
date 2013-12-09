@@ -20,10 +20,10 @@ define([
 				if (unique) {
 					uniqueKeys[value] = value;
 				} else {
-					errors.push({path: idx + "." + prop, message: "not unique"});
+					errors.push({path: idx + "." + prop, message: "{gform.validation.unique}"});
 				}
 			}, this);
-			console.log("model validation resulted in "+errors.length);
+			console.log("model validation resulted in " + errors.length);
 			return errors;
 		};
 	};

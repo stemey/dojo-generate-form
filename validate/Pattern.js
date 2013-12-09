@@ -14,7 +14,7 @@ define([
 			var matches = plainValue.match(regex);
 			var errors = [];
 			if (matches == null) {
-				errors.push({path: "", message: "regex"});
+				errors.push({path: "", message: "{gform.validation.pattern}"});
 			}
 			return errors;
 		};
