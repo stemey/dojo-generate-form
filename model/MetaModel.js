@@ -10,6 +10,8 @@ define([
 	var emptyCascade = function () {
 	};
 
+	var MESSAGE_PATTERN = /^\{(.*)\}$/;
+
 	return declare([Stateful], {
 		// summary:
 		//		Provides access to sibling attributes of modelHandle.
@@ -26,12 +28,14 @@ define([
 		touched: false,
 		state: "",
 		errorCount: 0,
+		ownErrorCount: 0,
 		incompleteCount: 0,
 		changedCount: 0,
 		oldErrors: [],
 		validateOnChange: true,
 		editorFactory: null,
 		tmp: {},
+		bubble: true,
 		constructor: function () {
 			this.watch("state", lang.hitch(this, "_onChangeState"));
 			this.watch("value", lang.hitch(this, "_onChangeState"));
@@ -73,7 +77,6 @@ define([
 			meta.parent = this;
 			return meta;
 		},
-		bubble: true,
 		_onChangeState: function (prop, old, nu) {
 			if (old !== nu) {
 				this.onChange(prop !== "state");
@@ -106,19 +109,23 @@ define([
 			var errorCount = 0;
 			var incompleteCount = 0;
 			var changedCount = 0;
+			var ownErrorCount = 0;
 			if (this.iterateChildren) {
 				this.iterateChildren(function (model) {
 					errorCount += model.errorCount;
+					//ownErrorCount += model.ownErrorCount;
 					incompleteCount += model.incompleteCount;
 					changedCount += model.changedCount;
 				});
 			}
 			if (this.state === "Error") errorCount++;
 			if (this.state === "Incomplete") incompleteCount++;
+			if (this.oldErrors.length > 0) ownErrorCount++;
 			if (this.hasChanged() && changedCount === 0) {
 				changedCount = 1;
 			}
 			this.set("incompleteCount", incompleteCount);
+			this.set("ownErrorCount", ownErrorCount);
 			this.set("changedCount", changedCount);
 			this.set("errorCount", errorCount);
 		},
@@ -168,16 +175,7 @@ define([
 			this.set("touched", false);
 		},
 		hasChildrenErrors: function () {
-			if (this.get("errorCount") === 0) {
-				return false;
-			} else if (this.oldErrors.length !== this.get("errorCount")) {
-				return true;
-			} else {
-				return this.oldErrors.some(function (error) {
-					var model = this.getModelByPath(error.path);
-					return model.get("message") !== error.message;
-				}, this);
-			}
+			return this.errorCount > this.ownErrorCount;
 		},
 		isEmpty: function () {
 			return false;
@@ -246,16 +244,36 @@ define([
 			}, this);
 			return {a: errorsToAdd, r: errorsToRemove};
 		},
+		getMessage: function (keyOrMessage) {
+			if (this.invalidMessage) {
+				return this.invalidMessage;
+			} else {
+				var key = keyOrMessage.match(MESSAGE_PATTERN);
+				if (key !== null && key.length === 2) {
+					return key[1];
+				} else {
+					return keyOrMessage;
+				}
+			}
+		},
 		addError: function (path, message) {
 			var model = this.getModelByPath(path);
-			model.set("state", "Error");
-			model.set("message", message);
+			model._addError(message);
+		},
+		_addError: function (message) {
+			this.set("state", "Error");
+			this.set("message", this.getMessage(message));
 		},
 		removeError: function (path, message) {
 			var model = this.getModelByPath(path);
-			if (model.get("message") === message) {
-				model.set("state", "");
-				model.set("message", "");
+			if (model) {
+				model._removeError(message);
+			}
+		},
+		_removeError: function (message) {
+			if (this.get("message") === this.getMessage(message)) {
+				this.set("state", "");
+				this.set("message", "");
 			}
 		}
 	});

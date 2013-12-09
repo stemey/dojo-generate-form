@@ -1,12 +1,17 @@
 define([  //
-	"dojo/_base/lang",//
 	"dojo/_base/declare",//
 	"dojo/Stateful", //
 	"./converter/urlToIdConverter", //
 	"./group/DecoratorFactory", //
 	"./validate/UniqueProperties",//
+	"./validate/Min",//
+	"./validate/Max",//
+	"./validate/MinItems",//
+	"./validate/MaxItems",//
+	"./validate/MinLength",//
+	"./validate/MaxLength",//
 	"./validate/Pattern"//
-], function (lang, declare, Stateful, urlToIdConverter, DecoratorFactory, UniqueProperties, Pattern) {
+], function (declare, Stateful, urlToIdConverter, DecoratorFactory, UniqueProperties, Min, Max, MinItems, MaxItems, MinLength, MaxLength, Pattern) {
 	// module: 
 	//		gform/EditorFactory
 
@@ -179,7 +184,13 @@ define([  //
 		},
 		arrayValidators: {
 			uniqueProperties: UniqueProperties,
-			pattern: Pattern
+			pattern: Pattern,
+			minLength: MinLength,
+			maxLength: MaxLength,
+			min: Min,
+			max: Max,
+			minItems: MinItems,
+			maxItems: MaxItems
 		},
 		// summary:
 		//		get a converter for the given attribute.
@@ -195,7 +206,7 @@ define([  //
 			} else {
 				c = this.convertersByType[attribute.type];
 			}
-			if (typeof c == "function") {
+			if (typeof c === "function") {
 				return new c(attribute, ctx);
 			} else {
 				return c;

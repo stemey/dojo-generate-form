@@ -21,8 +21,16 @@ define([
 			this.value.push(model);
 			return model;
 		},
+		length: function () {
+			return this.value.length;
+		},
 		getModelByIndex: function (idx) {
-			return this.value[idx];
+			var value = this.value[idx];
+			if (typeof value === "undefined") {
+				value = null;
+			}
+			return value;
+
 		},
 		update: function (/*Object*/plainValue) {
 			// summary:
@@ -33,7 +41,7 @@ define([
 			if (plainValue == null) {
 				this.value.splice(0, this.value.length);
 				this.set("oldValue", []);
-			} else if (typeof plainValue == "undefined") {
+			} else if (typeof plainValue === "undefined") {
 				this.value.splice(0, this.value.length);
 				this.set("oldValue", []);
 			} else if (Array.isArray(plainValue)) {
@@ -47,7 +55,7 @@ define([
 						model = this.elementFactory(element);
 						this.value.push(model);
 					} else {
-						this.resetMeta(model);
+						model.resetMeta();
 						model.update(element);
 					}
 				}, this);

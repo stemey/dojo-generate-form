@@ -59,6 +59,15 @@ define(["dojo/_base/lang",
 			am.update({"j": {x: "jjj"}});
 			am.push({"keyx": "j", x: "ll"});
 			assertEqual("Error", am.getModelByIndex(1).getModelByPath("keyx").state);
+		},
+		function testUniqueProperties2() {
+			am.resetMetaRecursively();
+			assertEqual(0, am.errorCount);
+			am.update({"j": {x: "jjj"}});
+			am.push({"keyx": "j", x: "ll"});
+			assertEqual("Error", am.getModelByIndex(1).getModelByPath("keyx").state);
+			am.getModelByIndex(1).getModelByPath("x").set("value", "444");
+			assertEqual("Error", am.getModelByIndex(1).getModelByPath("keyx").state);
 		}
 	]);
 
