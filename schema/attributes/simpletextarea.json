@@ -3,13 +3,11 @@
 	"editor": "tab",
 	"groups": [
 		{
-			"label": "general",
+			"$ref": "header.json"
+		},
+		{
+			"label": "dimension",
 			"attributes": [
-				{
-					"code": "code",
-					"type": "string",
-					"required": true
-				},
 				{
 					"code": "cols",
 					"type": "number",
@@ -21,19 +19,6 @@
 					"type": "number",
 					"places": 0,
 					"description": "the number of lines."
-				},
-				{
-					"code": "label",
-					"type": "string"
-				},
-				{
-					"code": "description",
-					"editor": "textarea",
-					"type": "string"
-				},
-				{
-					"code": "required",
-					"type": "boolean"
 				}
 			]
 		},

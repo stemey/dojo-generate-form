@@ -1,5 +1,5 @@
 {
-	"code": "array",
+	"code": "map",
 	"editor": "tab",
 	"groups": [
 		{
@@ -9,11 +9,16 @@
 			"label": "element",
 			"attributes": [
 				{
+					"code": "keyProperty",
+					"type": "string",
+					"required": true
+				},
+				{
 					"code": "type",
 					"type": "string",
 					"visible": false,
 					"required": true,
-					"values": ["array"]
+					"values": ["map"]
 				},
 				{
 					"code": "group",

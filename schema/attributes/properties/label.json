@@ -1,0 +1,5 @@
+{
+	"code": "label",
+	"type": "string",
+	"description": "a label to display instead of the code."
+}

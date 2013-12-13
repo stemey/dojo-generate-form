@@ -1,0 +1,5 @@
+{
+	"code": "missingMessage",
+	"type": "string",
+	"description": "This message is displayed if the input is required but empty."
+}

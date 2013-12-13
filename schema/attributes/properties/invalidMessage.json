@@ -1,0 +1,5 @@
+{
+	"code": "invalidMessage",
+	"type": "string",
+	"description": "This message is displayed id the input is invalid."
+}

@@ -6,9 +6,7 @@
 			"label": "general",
 			"attributes": [
 				{
-					"code": "code",
-					"type": "string",
-					"required": true
+					"$ref":"properties/code.json"
 				},
 				{
 					"code": "cols",
@@ -17,17 +15,13 @@
 					"description": "the number of characters per line"
 				},
 				{
-					"code": "label",
-					"type": "string"
+					"$ref":"properties/label.json"
 				},
 				{
-					"code": "description",
-					"editor": "textarea",
-					"type": "string"
+					"$ref":"properties/description.json"
 				},
 				{
-					"code": "required",
-					"type": "boolean"
+					"$ref":"properties/required.json"
 				}
 			]
 		},

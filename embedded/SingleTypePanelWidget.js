@@ -71,6 +71,9 @@ define([
 		},
 		_switchedFromNull: function () {
 			this.containerNode.style.display = "initial";
+			if (this.getChildren().length === 1) {
+				this.getChildren()[0].resize();
+			}
 		},
 		panelChanged: function (propName, old, nu) {
 			if (old === nu) {

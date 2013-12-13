@@ -1,0 +1,6 @@
+{
+	"code": "description",
+	"editor": "textarea",
+	"type": "string",
+	"description": "a longer descriptive text."
+}

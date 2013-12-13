@@ -1,0 +1,6 @@
+{
+	"code": "maxItems",
+	"type": "number",
+	"numberFormat": "#",
+	"description": "The maximum number of elements in the collection."
+}

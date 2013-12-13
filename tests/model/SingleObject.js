@@ -41,6 +41,15 @@ define(['dojo/_base/lang',
 			so.update(null);
 			var plainValue = so.getPlainValue(so);
 			assertEqual(null, plainValue);
+			so.update({});
+			doh.assertTrue(so.getPlainValue() != null);
+		},
+		function testSetIsNull() {
+			so.update({});
+			so.set("isNull", true);
+			assertEqual(null, so.getPlainValue());
+			so.set("isNull", false);
+			doh.assertTrue(so.getPlainValue() != null);
 		},
 		function testDefaults() {
 			so.update({});

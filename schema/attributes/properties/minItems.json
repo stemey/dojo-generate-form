@@ -1,0 +1,6 @@
+{
+	"code": "minItems",
+	"type": "number",
+	"numberFormat": "#",
+	"description": "The minimum number of elements in the collection."
+}

@@ -1,0 +1,13 @@
+[
+	{
+		"$ref": "attributes/object.json"
+	},
+	{
+
+		"$ref": "attributes/string.json"
+
+	}
+
+]
+
+

@@ -1,0 +1,6 @@
+{
+	"code": "required",
+	"type": "boolean",
+	"description": "true if the input cannot be empty."
+}
+

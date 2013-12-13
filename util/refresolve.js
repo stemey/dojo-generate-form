@@ -1,5 +1,5 @@
-define([  "dojo/_base/lang", "./Resolver"
-], function (lang, Resolver) {
+define([   "./Resolver"
+], function (Resolver) {
 // module:
 //		gform/util/refresolve
 
