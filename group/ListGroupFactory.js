@@ -20,7 +20,7 @@ define([
 			meta.groups.forEach(function (group) {
 				groups.push(this.editorFactory.createGroupModel(group));
 			}, this);
-			var model = new MultiGroup({groups: groups});
+			var model = new MultiGroup({groups: groups, required: meta.required===true});
 			model.update(plainValue);
 			return model;
 		},

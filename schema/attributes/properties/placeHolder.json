@@ -1,0 +1,5 @@
+{
+	"code": "placeHolder",
+	"type": "string",
+	"description": "This text is displayed in the input field as long as the user input is empty."
+}

@@ -1,84 +1,79 @@
 <html>
-	<head>
-	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+<head>
+    <!-- required: a default dijit theme: -->
+    <link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
 
-	<style type="text/css">
-/*		@import "../../../dijit/tests/css/dijitTests.css";*/
+    <style type="text/css">
+        /*		@import "../../../dijit/tests/css/dijitTests.css";*/
+        /* a sample set of definitions to use as a foundation to color your code */
+        @import "../../dojox/highlight/resources/highlight.css";
 
-		/* a sample set of definitions to use as a foundation to color your code */
-		@import "../../dojox/highlight/resources/highlight.css";
+        /* additional styling for this test case */
+        pre.examplecode code[class]:after {
+            content: 'highlight: ' attr(class);
+            display: block;
+            text-align: right;
+            font-size: smaller;
+            color: #CCC;
+            background: white;
+            border-top: solid 1px;
+            padding-top: 0.5em;
+        }
 
-		/* additional styling for this test case */
-		pre.examplecode code[class]:after {
-		  content: 'highlight: ' attr(class);
-		  display: block; text-align: right;
-		  font-size: smaller;
-		  color: #CCC; background: white;
-		  border-top: solid 1px;
-		  padding-top: 0.5em;
-		}
-		
-		pre code {
-		  display: block;
-		}
-		
-		code {
-		  background: #F0F0F0;
-		}
-		
-		pre code, 
-		.ruby .subst {
-		  color: black;
-		}
-	</style>
-	 
+        pre code {
+            display: block;
+        }
 
-	<!-- required: dojo.js -->
-	<script type="text/javascript" src="../../dojo/dojo.js"
-		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+        code {
+            background: #F0F0F0;
+        }
 
-	 
- 
- 
+        pre code,
+        .ruby .subst {
+            color: black;
+        }
+    </style>
 
-	<script type="text/javascript">
 
-		require([ "dojo/parser","dojo/_base/declare","dijit/_WidgetBase", "dijit/_WidgetsInTemplateMixin", "gform/schema/schemaGenerator" ,"gform/createStandardEditorFactory", "gform/schema/convertSchema", "gform/util/refresolve", "dojo/text!./schema.tpl", "gform/doc/Template", "gform/doc/TemplateContext", "dojox/highlight", "dojox/highlight/languages/javascript", "dojox/highlight/widget/Code"
-		], function(parser, declare, _WidgetBase, _WidgetsInTemplateMixin, schemaGenerator, createStandardEditorFactory, convertSchema, refresolve, schemaTemplate, Template, TemplateContext ,highlight) {
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="../../dojo/dojo.js"
+            data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
 
-			var ef = createStandardEditorFactory();
-			var schema = schemaGenerator.generate(ef);
-			refresolve(schema);
-		  //var meta = convertSchema(schema);
-			var attributes;
-			for (var idx in schema.definitions) {
-				var def =schema.definitions[idx];
-				if (def.id=="attributes") {
-					attributes=def.items.type;
-				}
-			}
 
-			var groups;
-			for (var idx in schema.definitions) {
-				var def =schema.definitions[idx];
-				if (def.id=="groups") {
-					groups=def.items.type;
-				}
-			}
+    <script type="text/javascript">
 
-			var template = new Template(schemaTemplate);
-			var ctx = {attributes:attributes,groups:groups,ctx: new TemplateContext()};
-			var html=template.render(ctx);
-			dojo.byId("inline").innerHTML=html;
-			parser.parse();
-		 dojo.query("pre > code").forEach(highlight.init);
-		});
+        require([ './schema/Schema',
+            '../util/Resolver',
+            'dojo/when',
+            'dojo/promise/all',
+            "dojo/parser",
+            "dojo/text!gform/doc/schema/groups.json", "dojo/text!gform/doc/schema/attributes.json",
+            "gform/createStandardEditorFactory", "gform/util/refresolve", "dojo/text!./schema.tpl", "gform/doc/Template", "gform/doc/TemplateContext", "dojox/highlight"
+        ], function (Schema, Resolver, when, all, parser, groups, attributes, createStandardEditorFactory, refresolve, schemaTemplate, Template, TemplateContext, highlight) {
 
-	</script>
-	</head>
-	<body class="claro">
-		<div id="inline">
-		</div>
-	</body>
+            var ef = createStandardEditorFactory();
+            var groupSchemas = JSON.parse(groups);
+            var attributeSchemas = JSON.parse(attributes);
+            var resolver = new Resolver({baseUrl: "../schema/"});
+            when(resolver.resolve(attributeSchemas)).then(function () {
+                //var meta = convertSchema(schema);
+                var schema = new Schema;
+                var as = schema.prepare(attributeSchemas);
+
+                var template = new Template(schemaTemplate);
+                var ctx = {attributes: as, groups: groupSchemas, ctx: new TemplateContext()};
+                var html = template.render(ctx);
+                dojo.byId("inline").innerHTML = html;
+                parser.parse();
+                dojo.query("pre > code").forEach(highlight.init);
+            });
+        });
+
+
+    </script>
+</head>
+<body class="claro">
+<div id="inline">
+</div>
+</body>
 </html>

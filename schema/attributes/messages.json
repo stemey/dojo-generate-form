@@ -2,16 +2,13 @@
 	"label": "messages",
 	"attributes": [
 		{
-			"code": "missingMessage",
-			"type": "string"
+			"$ref": "properties/missingMessage.json"
 		},
 		{
-			"code": "invalidMessage",
-			"type": "string"
+			"$ref": "properties/missingMessage.json"
 		},
 		{
-			"code": "placeHolder",
-			"type": "string"
+			"$ref": "properties/missingMessage.json"
 		}
 	]
 }

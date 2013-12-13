@@ -1,0 +1,6 @@
+{
+	"code": "name",
+	"type": "string",
+	"pattern": "[a-zA-Z]+",
+	"maxLength": 23
+}

@@ -11,8 +11,18 @@ define([
 		//		Provides access to sibling attributes of modelHandle.
 		groups: null,
 		isNull: true,
-		getTypeCode: function(){
+		required:false,
+		getTypeCode: function () {
 			return null;
+		},
+		_isNullSetter: function (value) {
+			if (value !== this.isNull) {
+				if (value === true) {
+					this.update(null);
+				} else {
+					this.update({});
+				}
+			}
 		},
 		_groupsSetter: function (groups) {
 			groups.forEach(function (group) {
@@ -25,6 +35,9 @@ define([
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
 			// plainValue:
 			//		the new value of the attribute
+			if (this.required && plainValue == null) {
+				plainValue = {};
+			}
 			if (plainValue == null) {
 				this.isNull = true;
 			} else {
@@ -79,4 +92,5 @@ define([
 			}
 		}
 	});
-});
+})
+;

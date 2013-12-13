@@ -1,8 +1,7 @@
 define([
-	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"./MetaModel"
-], function (lang, declare, MetaModel) {
+], function (declare, MetaModel) {
 	// module:
 	//		gform/model/SingleObject
 
@@ -12,9 +11,6 @@ define([
 		attributes: null,
 		isNull: true,
 		subgroup: false,
-		constructor: function () {
-			this.watch("isNull", lang.hitch(this, "_onIsNullChange"));
-		},
 		_attributesSetter: function (attributes) {
 			this._changeAttrValue("attributes", attributes);
 			for (var key in attributes) {
@@ -22,7 +18,10 @@ define([
 				attributes[key].code = key;
 			}
 		},
-		_onIsNullChange: function () {
+		_onIsNullChange: function (prop, old, nu) {
+			if (nu == null) {
+
+			}
 			this.onChange(true);
 		},
 		isEmpty: function () {
@@ -75,11 +74,21 @@ define([
 			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the
 			// 		update behavior.
 			if (plainValue == null) {
-				this.set("isNull", true);
+				this.isNull = true;
 			} else {
-				this.set("isNull", false);
+				this.isNull = false;
 				for (var key in this.attributes) {
 					this.attributes[key].update(plainValue[key], this.bubble);
+				}
+			}
+			this.onChange(true);
+		},
+		_isNullSetter: function (value) {
+			if (value !== this.isNull) {
+				if (value === true) {
+					this.updateGroup(null);
+				} else {
+					this.updateGroup({});
 				}
 			}
 		},

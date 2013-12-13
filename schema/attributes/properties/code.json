@@ -1,0 +1,6 @@
+{
+	"code": "code",
+	"type": "string",
+	"required": true,
+	"description": "the json property name."
+}

@@ -31,6 +31,7 @@ define([
 				plainValue = {};
 			}
 			var model = this.editorFactory.createGroupModel(schema.group, plainValue);
+			model.required = schema.required === true;
 			return model;
 		}
 

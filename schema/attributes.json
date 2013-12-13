@@ -19,6 +19,12 @@
 			"$ref": "attributes/primitive-array.json"
 		},
 		{
+			"$ref": "attributes/primitive-map.json"
+		},
+		{
+			"$ref": "attributes/map.json"
+		},
+		{
 			"$ref": "attributes/string.json"
 		},
 		{

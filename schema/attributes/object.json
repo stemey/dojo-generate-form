@@ -1,39 +1,41 @@
 {
 	"code": "object",
-	"editor": "listpane",
-	"attributes": [
+	"editor": "tab",
+	"groups": [
 		{
-			"code": "code",
-			"type": "string",
-			"required": true
+			"$ref": "header.json"
 		},
 		{
-			"code": "required",
-			"type": "boolean"
-		},
-		{
-			"code": "type",
-			"type": "string",
-			"visible": false,
-			"required": true,
-			"values": ["object"]
-		},
-		{
-			"code": "group",
-			"type": "object",
-			"typeProperty": "editor",
-			"required": true,
-			"groups": [
+			"label": "element",
+			"attributes": [
 				{
-					"$ref": "../group/listpane.json"
+					"code": "type",
+					"type": "string",
+					"visible": false,
+					"required": true,
+					"values": ["object"]
 				},
 				{
-					"$ref": "../group/titlepane.json"
-				},
-				{
-					"$ref": "../group/listgroup.json"
+					"code": "group",
+					"description": "a group of attributes.",
+					"type": "object",
+					"typeProperty": "editor",
+					"required": true,
+					"groups": [
+						{
+							"$ref": "../group/listpane.json"
+						},
+						{
+							"$ref": "../group/titlepane.json"
+						},
+						{
+							"$ref": "../group/listgroup.json"
+						}
+					]
 				}
+
 			]
 		}
 	]
+
 }

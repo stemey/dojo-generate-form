@@ -1,0 +1,15 @@
+{
+	"label": "constraints",
+	"attributes": [
+		{
+			"code": "reorderable",
+			"type": "boolean"
+		},
+		{
+			"$ref": "properties/minItems.json"
+		},
+		{
+			"$ref": "properties/maxItems.json"
+		}
+	]
+}
