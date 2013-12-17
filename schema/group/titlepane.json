@@ -3,7 +3,8 @@
 	"attributes": [
 		{
 			"code": "code",
-			"type": "string"
+			"type": "string",
+			"required":true
 		},
 		{
 			"code": "title",
@@ -15,7 +16,13 @@
 			"editor": "textarea"
 		},
 		{
-			"$ref": "../attributes.json"
+
+			"code": "attributes",
+			"type": "array",
+			"typeProperty": "editor",
+			"groups": {
+				"$ref": "../attributes.json"
+			}
 		}
 	]
 

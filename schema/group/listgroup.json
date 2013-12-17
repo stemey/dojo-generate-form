@@ -3,7 +3,8 @@
 	"attributes": [
 		{
 			"code": "code",
-			"type": "string"
+			"type": "string",
+			"required":true
 		},
 		{
 			"code": "label",

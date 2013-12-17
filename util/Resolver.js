@@ -1,4 +1,5 @@
 define([
+	"dojo/_base/url",
 	"dojo/when",
 	"dojo/_base/Deferred",
 	"dojo/_base/array",
@@ -6,19 +7,25 @@ define([
 	"dojo/_base/lang",
 	"dojo/promise/all",
 	"dojo/request/xhr"
-], function (when, Deferred, array, declare, lang, all, xhr) {
+
+], function (Url, when, Deferred, array, declare, lang, all, xhr) {
 // module:
 //		gform/util/Resolver
 
 
 	return declare("gform.Resolver", [], {
-		// summary: 
+		// summary:
 		//		Resolver helps resolving references.
 		constructor: function (kwargs) {
+			this.transformations = {};
+			this.references = [];
+			this.values = {};
 			lang.mixin(this, kwargs);
 		},
+		transformations: null,
 		baseUrl: "",
-		values: {},
+		values: null,
+		references: null,
 		createReference: function (id, setter) {
 			// summary:
 			//		a reference is added
@@ -37,66 +44,104 @@ define([
 				this.values[element.id] = element;
 			}
 		},
+		getUrlForRef: function (relUrl, baseUrl) {
+			return new Url(baseUrl, relUrl).uri;
+		},
 		finish: function (references, baseUrl) {
 			// summary:
-			//		resolve references (asynchronuously) and updates the object.
+			//		external unloaded references are loaded.
 			// returns: dojo/Promise
-			//		returns a promise		
+			//		returns a promise
 			var deferred = [];
 			array.forEach(references, function (ref) {
-				var value = this.values[ref.id];
 				if (typeof value === "undefined") {
 					if (ref.id.substring(0, 1) === "#") {
 						throw new Error("path reference not implemented");
 					} else {
-						deferred.push(this.load(ref, baseUrl));
+						if (!this.values[ref.id]) {
+							deferred.push(this.load(ref, baseUrl));
+						}
 					}
-				} else {
-					ref.setter(value);
 				}
+				this.references.push(ref);
 			}, this);
 			return all(deferred);
 		},
+		createSetter: function (obj, name) {
+			return  (function (obj1, name1) {
+				return    function (value) {
+					obj1[name1] = value;
+				};
+			})(obj, name);
+		},
 		resolveInternally: function (obj, setter, baseUrl) {
+			// summary:
+			//		resolve a single property value
+			// setter:
+			//		if this is a ref then setter needs to be called with the resolved value
 			var references = [];
 			if (lang.isObject(obj) || lang.isArray(obj)) {
 				for (var name in obj) {
 					if (obj.hasOwnProperty(name)) {
 						if (name === "$ref") {
-							references.push(this.createReference(obj.$ref, setter));
+							var url = this.getUrlForRef(obj.$ref, baseUrl);
+							references.push(this.createReference(url, setter));
 							break;
 						} else if (name === "id") {
 							this.addElement(obj);
 						} else {
-							setter = (function (obj1, name1) {
-								return    function (value) {
-									obj1[name1] = value;
-								};
-							})(obj, name);
-							references = references.concat(this.resolveInternally(obj[name], setter, baseUrl));
+							var newSetter = this.createSetter(obj, name);
+							references = references.concat(this.resolveInternally(obj[name], newSetter, baseUrl));
 						}
 					}
 				}
 			}
 			return references;
 		},
-		resolve: function (obj, setter, baseUrl) {
+		callSetters: function () {
+			// TODO we should call transforms last
+			for (var idx = this.references.length - 1; idx >= 0; idx--) {
+				var ref = this.references[idx];
+				when(this.values[ref.id]).then(lang.hitch(this, "callSetter", ref));
+			}
+		},
+		callSetter: function (ref, value) {
+			var t = this.transformations[ref.id];
+			if (t) {
+				value = t.execute(value);
+			}
+			ref.setter(value);
+		},
+		resolveMore: function (obj, baseUrl) {
 			baseUrl = baseUrl || this.baseUrl;
 			var references = this.resolveInternally(obj, null, baseUrl);
 			return this.finish(references, baseUrl);
+		},
+		resolve: function (object, baseUrl) {
+			this.values[baseUrl] = object;
+			var promise = this.resolveMore(object, baseUrl);
+			promise.then(lang.hitch(this, "callSetters"));
+			return promise;
 		},
 		load: function (/*String*/ref, baseUrl) {
 			// summary:
 			//		load an external reference
 			// ref:
 			//		the reference value
-			var url;
-			if (ref.id.substring(0, 1) === "/") {
-				url = ref.id;
-			} else if (ref.id.substring(0, 2) === "./") {
-				url = baseUrl + ref.id.substring(2);
-			} else {
-				url = baseUrl + ref.id;
+
+
+			var id = ref.id;
+
+			var url = id;//new Url(baseUrl, id).uri;
+
+			if (this.values[url]) {
+				throw new Error("already loading");
+			}
+			var originalUrl = url;
+
+			var t = this.transformations[url];
+			if (t) {
+				url = t.url;
 			}
 
 			var index = url.lastIndexOf("/");
@@ -109,33 +154,54 @@ define([
 
 			}
 
+
 			var deferred = new Deferred();
-			var request = xhr(url, {handleAs: "json", method: "GET"});
-			var me = this;
-			console.debug("loading " + url);
-			request.then(
-				function (embedded) {
-					console.debug("loaded " + url);
-					embedded.id = ref.id;
-					ref.setter(embedded);
-					me.values[ref.id] = embedded;
-					var dependentPromise = me.resolve(embedded, null, newBaseUrl);
-					when(dependentPromise).then(function () {
-						console.debug("resolve " + newBaseUrl);
-						deferred.resolve();
-					}).otherwise(function () {
-							console.debug("reject " + newBaseUrl);
-							deferred.reject();
-						});
-
-				},
+			var request = this._load(url);
+			console.debug("loading " + originalUrl);
+			request.then(lang.hitch(this, "onLoaded", newBaseUrl, deferred)).otherwise(
 				function (e) {
-					console.log("cannot find entity " + ref.id + " " + e.message);
-					deferred.reject(e);
-				}
-			);
+					console.debug("reject " + url, e);
+					deferred.reject();
+				});
 
+
+			this.values[originalUrl] = deferred.promise;
 			return deferred.promise;
+		},
+		_load: function (url) {
+			return xhr(url, {handleAs: "json", method: "GET"});
+		},
+		onLoaded: function (newBaseUrl, deferred, resolvedRef) {
+
+//			if (t) {
+//				var transformPromise = new Deferred();
+//				me.values[originalUrl] = transformPromise;
+//			} else {
+//				embedded.id = originalUrl;
+//				ref.setter(embedded);
+//				me.values[originalUrl] = embedded;
+//			}
+			var dependentPromise = this.resolveMore(resolvedRef, newBaseUrl);
+			when(dependentPromise).then(function () {
+//				if (t) {
+//					var transformed = t.execute(embedded);
+//					transformed.id = originalUrl;
+//					ref.setter(transformed);
+//					transformPromise.resolve(transformed);
+//
+//					when(me.resolve(transformed, null, newBaseUrl)).then(function () {
+//						deferred.resolve(transformed);
+//					});
+//				} else {
+				deferred.resolve(resolvedRef);
+//				}
+			}).otherwise(function (e) {
+					console.debug("rejected dependent ", e);
+					deferred.reject();
+				}
+			)
+			;
+
 		}
 
 	});

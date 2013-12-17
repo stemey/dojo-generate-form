@@ -5,17 +5,9 @@
 			"type": "object",
 			"typeProperty": "editor",
 			"required": true,
-			"groups": [
-				{
-					"$ref": "group/listpane.json"
-				},
-				{
-					"$ref": "group/titlepane.json"
-				},
-				{
-					"$ref": "group/listgroup.json"
-				}
-			]
+			"groups": {
+				"$ref": "group/groups-nocode-nolabel.json"
+			}
 		}
 	]
 }
