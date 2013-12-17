@@ -1,8 +1,0 @@
-[
-	{
-		"$ref": "number.json"
-	},
-	{
-		"$ref": "string.json"
-	}
-]

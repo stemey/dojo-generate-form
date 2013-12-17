@@ -20,14 +20,10 @@
 					"type": "object",
 					"typeProperty": "editor",
 					"required": true,
-					"groups": [
-						{
-							"$ref": "../types/number.json"
-						},
-						{
-							"$ref": "../types/string.json"
-						}
-					]
+					"groups": {
+						"$ref": "../attributes-nocode.json"
+					}
+
 				}
 			]
 		},

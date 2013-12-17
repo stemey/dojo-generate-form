@@ -1,51 +1,47 @@
-{
-	"code": "attributes",
-	"type": "array",
-	"typeProperty": "editor",
-	"groups": [
-		{
-			"$ref": "attributes/object.json"
-		},
-		{
-			"$ref": "attributes/array.json"
-		},
-		{
-			"$ref": "attributes/multi-array.json"
-		},
-		{
-			"$ref": "attributes/multi-object.json"
-		},
-		{
-			"$ref": "attributes/primitive-array.json"
-		},
-		{
-			"$ref": "attributes/primitive-map.json"
-		},
-		{
-			"$ref": "attributes/map.json"
-		},
-		{
-			"$ref": "attributes/string.json"
-		},
-		{
-			"$ref": "attributes/number.json"
-		},
-		{
-			"$ref": "attributes/date.json"
-		},
-		{
-			"$ref": "attributes/time.json"
-		},
-		{
-			"$ref": "attributes/textarea.json"
-		},
-		{
-			"$ref": "attributes/simpletextarea.json"
-		},
-		{
-			"$ref": "attributes/select.json"
-		}
+[
+	{
+		"$ref": "attributes/object.json"
+	},
+	{
+		"$ref": "attributes/array.json"
+	},
+	{
+		"$ref": "attributes/multi-array.json"
+	},
+	{
+		"$ref": "attributes/multi-object.json"
+	},
+	{
+		"$ref": "attributes/primitive-array.json"
+	},
+	{
+		"$ref": "attributes/primitive-map.json"
+	},
+	{
+		"$ref": "attributes/map.json"
+	},
+	{
+		"$ref": "attributes/string.json"
+	},
+	{
+		"$ref": "attributes/number.json"
+	},
+	{
+		"$ref": "attributes/date.json"
+	},
+	{
+		"$ref": "attributes/time.json"
+	},
+	{
+		"$ref": "attributes/textarea.json"
+	},
+	{
+		"$ref": "attributes/simpletextarea.json"
+	},
+	{
+		"$ref": "attributes/select.json"
+	}
 
-	]
-}
+]
+
 

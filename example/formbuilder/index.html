@@ -22,6 +22,7 @@
     <script type="text/javascript">
 
         require([
+            '../../schema/transform',
             'dojo/when',
             'gform/util/Resolver',
             'dojo/aspect',
@@ -44,7 +45,7 @@
             "gform/Editor",
             "dijit/form/Button",
             "dijit/Dialog"
-        ], function (when, Resolver, aspect, registry, parser, convertSchema, refresolve, schemaGenerator, stateCollection, schema, group, Store, SingleEditorDialogOpener, Context, SingleStoreRegistry, SingleSchemaRegistry) {
+        ], function (transform, when, Resolver, aspect, registry, parser, convertSchema, refresolve, schemaGenerator, stateCollection, schema, group, Store, SingleEditorDialogOpener, Context, SingleStoreRegistry, SingleSchemaRegistry) {
             parser.parse();
             try {
                 var ctx = new Context();
@@ -59,7 +60,9 @@
                 //var schema = schemaGenerator.generate(gform.ef.layout);
                 var meta = dojo.fromJson(group);
                 var loc = window.location.pathname + "../../schema/";
-                var resolver = new Resolver({baseUrl: loc});
+                var t =transform;
+
+                var resolver = new Resolver({baseUrl: loc, transformations:t});
                 var promise = refresolve(meta, resolver);
                 when(promise).then(function () {
                     editor = dijit.byId("form");
@@ -84,7 +87,7 @@
                     });
                 }).otherwise(function () {
                             console.log("cannot create meta");
-                 });
+                        });
             } catch (e) {
                 console.log(e.message + " " + e.stack)
             }

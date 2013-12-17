@@ -19,9 +19,6 @@ define([
 			}
 		},
 		_onIsNullChange: function (prop, old, nu) {
-			if (nu == null) {
-
-			}
 			this.onChange(true);
 		},
 		isEmpty: function () {
@@ -73,6 +70,8 @@ define([
 			// editorFactory:
 			//		editorFactory provides access to AttributeFactory and GroupFactory which may override the
 			// 		update behavior.
+
+			var oldIsNull = this.isNull;
 			if (plainValue == null) {
 				this.isNull = true;
 			} else {
@@ -80,6 +79,9 @@ define([
 				for (var key in this.attributes) {
 					this.attributes[key].update(plainValue[key], this.bubble);
 				}
+			}
+			if (this.isNull !== oldIsNull) {
+				this._changeAttrValue("isNull", this.isNull);
 			}
 			this.onChange(true);
 		},
