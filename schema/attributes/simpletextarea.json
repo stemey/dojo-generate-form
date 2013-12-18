@@ -1,6 +1,9 @@
 {
 	"code": "simpletextarea",
 	"editor": "tab",
+	"example": {
+		"$ref": "example/simpletextarea.json"
+	},
 	"groups": [
 		{
 			"$ref": "header.json"

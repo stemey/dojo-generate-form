@@ -1,6 +1,9 @@
 {
 	"code": "multi-array",
 	"editor": "tab",
+	"example": {
+		"$ref": "example/multi-array.json"
+	},
 	"groups": [
 		{
 			"$ref": "header.json"

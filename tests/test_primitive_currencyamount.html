@@ -1,56 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>Editor Test</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Editor Test</title>
 
 
-	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+    <!-- required: a default dijit theme: -->
+    <link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
 
-	<!-- required: dojo.js -->
-	<script type="text/javascript" src="../../dojo/dojo.js"
-		data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="../../dojo/dojo.js"
+            data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
 
 
-	<script type="text/javascript">
+    <script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
-		"dojo/text!./meta/primitive_currencyamount.json", "dojo/text!./entity/primitive_currencyamount.json"//
-		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
+        require([   'dojo/query',
+            "gform/Editor", "doh/runner", "gform/createStandardEditorFactory",//
+            "dojo/text!./meta/primitive_currencyamount.json", "dojo/text!./entity/primitive_currencyamount.json"//
+        ], function (query, Editor, doh, createStandardEditorFactory, meta, entity) {
 
-			var editor = new Editor({
-					"plainValue": dojo.fromJson(entity),
-					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
-			var container = dojo.byId("container");
-			editor.placeAt(container);
-			editor.startup();
-			var priceText = dijit.byId("gform_CurrencyTextBox_0");
-			doh.register("standard", [
-				{
-					name : 'init',
-					runTest : function(t) {
-						t.assertEqual(1250, editor.get("plainValue").price);
-						t.assertEqual(12.50, priceText.get("value"));
-					}
-				}, 
-				{
-					name : 'null',
-					runTest : function(t) {
-						priceText.set("value","");
-						t.assertEqual(null, editor.get("plainValue").price);
-					}
-				} 
-			]);
-			doh.run();
-		});
-	</script>
+            editor = new Editor({
+                "plainValue": dojo.fromJson(entity),
+                "meta": dojo.fromJson(meta), editorFactory: createStandardEditorFactory()});
+            var container = dojo.byId("container");
+            editor.placeAt(container);
+            editor.startup();
+            priceText = dijit.byId("gform_CurrencyTextBox_0");
+            doh.register("standard", [
+                {
+                    name: 'init',
+                    runTest: function (t) {
+                        t.assertEqual(1250, editor.get("plainValue").price);
+                        t.assertEqual(12.50, priceText.get("value"));
+                    }
+                },
+                {
+                    name: 'null',
+                    runTest: function (t) {
+                        priceText.set("value", "");
+                        t.assertEqual(null, editor.get("plainValue").price);
+                    }
+                },
+                {
+                    name: 'testInvalid',
+                    runTest: function (t) {
+                        priceText.set("value","dd");
+                        t.assertEqual(null, editor.get("plainValue").price);
+                    }
+                }
+            ]);
+            doh.run();
+        });
+    </script>
 </head>
 <body class="claro">
-	<h1 class="testTitle">Editor Test</h1>
+<h1 class="testTitle">Editor Test</h1>
 
 
-	<div id="container"></div>
+<div id="container"></div>
 
 </body>
 </html>	

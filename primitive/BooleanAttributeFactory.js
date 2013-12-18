@@ -32,15 +32,6 @@ define([
 			var model = new BooleanModel();
 			model.update(plainValue);
 			return model;
-		},
-		getSchema: function () {
-			var schema = {};
-			schema["id"] = "boolean";
-			var properties = {};
-			properties.type = {type: "string", required: true, "enum": ["boolean"]};
-			schema.properties = properties;
-			dijitHelper.addSchemaProperties(properties);
-			return schema;
 		}
 	});
 });

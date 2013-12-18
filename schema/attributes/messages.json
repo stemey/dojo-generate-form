@@ -2,10 +2,10 @@
 	"label": "messages",
 	"attributes": [
 		{
-			"$ref": "properties/missingMessage.json"
+			"$ref": "properties/placeHolder.json"
 		},
 		{
-			"$ref": "properties/missingMessage.json"
+			"$ref": "properties/invalidMessage.json"
 		},
 		{
 			"$ref": "properties/missingMessage.json"

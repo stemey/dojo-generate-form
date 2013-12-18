@@ -36,29 +36,6 @@ define(
 					aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
 					return widget;
 
-				},
-				getSchema: function () {
-					var schema = {};
-					schema["id"] = "number";
-					schema["description"] = "This is a textfield for numerical values based on 'dijit.form.NumberTextBox'.";
-					schema["example"] = dojo.toJson({code: 'name', type: 'number', numberFormat: "#.###"}, true);
-					var properties = {};
-					properties.type = {type: "string", required: true, "enum": ["number"]};
-					dijitHelper.addSchemaProperties(properties);
-					dijitHelper.addSchemaProperty("required", properties);
-					dijitHelper.addSchemaProperty("maxLength", properties);
-					properties.numberFormat = {type: "string", description: "a pattern for displaying the number like ###.###,##"};
-					properties.places = {type: "string", description: "number of decimal places (e.g. '3' or '0,3')"};
-					properties.fractional = {type: "boolean", description: "false if only integers are allowed"};
-					properties.min = {type: "number", description: "the minimum value"};
-					properties.max = {type: "number", description: "the maximum value"};
-					dijitHelper.addSchemaProperty("missingMessage", properties);
-					dijitHelper.addSchemaProperty("promptMessage", properties);
-					dijitHelper.addSchemaProperty("placeHolder", properties);
-					dijitHelper.addSchemaProperty("invalidMessage", properties);
-
-					schema.properties = properties;
-					return schema;
 				}
 			});
 	});

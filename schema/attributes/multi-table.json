@@ -1,0 +1,58 @@
+{
+	"code": "multi-table",
+	"editor": "tab",
+	"example": {
+		"$ref": "example/multi-table.json"
+	},
+	"groups": [
+		{
+			"$ref": "header.json"
+		},
+		{
+			"label": "columns",
+			"attributes": [
+				{
+					"code": "type",
+					"type": "string",
+					"visible": false,
+					"required": true,
+					"values": ["array"]
+				},{
+					"code": "typeProperty",
+					"type": "string",
+					"required": true
+				},
+				{
+					"code": "groups",
+					"type": "array",
+					"group": {
+						"attributes": [
+							{
+								"code": "code",
+								"type": "string",
+								"required": true
+							},
+							{
+								"code": "label",
+								"type": "string"
+							},
+							{
+
+								"code": "attributes",
+								"type": "array",
+								"typeProperty": "editor",
+								"groups": {
+									"$ref": "../attributes.json"
+								}
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"$ref": "array-constraints.json"
+		}
+	]
+
+}

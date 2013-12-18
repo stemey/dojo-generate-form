@@ -1,46 +1,42 @@
 {
-	"type_property": "ext_type",//the value of the property 'ext_type' is either 'thing1' or 'thing2'
+	"type": "object",
+	"typeProperty": "ext_type",
 	"code": "thing",
-	"array": false,
-	"validTypes": [
+	"groups": [
 		{
-			"code": "thing1",// this is type/group 'thing1'
+			"code": "thing1",
 			"label": "thing1",
 			"attributes": [
 				{
 					"required": false,
 					"type": "string",
 					"label": "name",
-					"code": "name",
-					"array": false
+					"code": "name"
 				},
 				{
 					"required": false,
 					"type": "string",
 					"label": "common",
-					"code": "common",
-					"array": false
+					"code": "common"
 				}
 			]
 
 		},
 		{
-			"code": "thing2",// this is type/group 'thing1'
+			"code": "thing2",
 			"label": "thing2",
 			"attributes": [
 				{
 					"required": true,
 					"type": "string",
 					"label": "firstName",
-					"code": "firstName",
-					"array": false
+					"code": "firstName"
 				},
 				{
 					"required": false,
 					"type": "string",
 					"label": "common",
-					"code": "common",
-					"array": false
+					"code": "common"
 				}
 			]
 

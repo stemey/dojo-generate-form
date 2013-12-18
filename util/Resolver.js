@@ -16,11 +16,24 @@ define([
 	return declare("gform.Resolver", [], {
 		// summary:
 		//		Resolver helps resolving references.
-		constructor: function (kwargs) {
+		constructor: function (kwArgs) {
 			this.transformations = {};
 			this.references = [];
 			this.values = {};
-			lang.mixin(this, kwargs);
+			if (kwArgs.baseUrl && kwArgs.transformations) {
+				var rebasedTrans = {};
+				for (var key in kwArgs.transformations) {
+					var rebasedUrl = new Url(kwArgs.baseUrl, key).uri;
+					var t = {};
+					lang.mixin(t, kwArgs.transformations[key]);
+					var newUrl = new Url(kwArgs.baseUrl, kwArgs.transformations[key].url).uri;
+					t.url = newUrl;
+					rebasedTrans[rebasedUrl] = t;
+				}
+				kwArgs.transformations = rebasedTrans;
+			}
+			lang.mixin(this, kwArgs);
+
 		},
 		transformations: null,
 		baseUrl: "",
@@ -100,13 +113,28 @@ define([
 		},
 		callSetters: function () {
 			// TODO we should call transforms last
-			for (var idx = this.references.length - 1; idx >= 0; idx--) {
-				var ref = this.references[idx];
+			var me = this;
+			var ts = this.references.sort(function (e1, e2) {
+				var t1 = me.transformations[e1.id];
+				var t2 = me.transformations[e2.id];
+				if (t1 == null && t2 != null) {
+					return -1;
+				} else if (t1 != null && t2 == null) {
+					return 1;
+				} else if (e1.id === e2.id) {
+					return 0;
+				} else {
+					return  me.references.indexOf(e2) - me.references.indexOf(e1);
+				}
+
+			});
+			ts.forEach(function (ref) {
 				when(this.values[ref.id]).then(lang.hitch(this, "callSetter", ref));
-			}
+			}, this);
 		},
 		callSetter: function (ref, value) {
 			var t = this.transformations[ref.id];
+			console.log("call setter " + ref.id + " with " + t);
 			if (t) {
 				value = t.execute(value);
 			}

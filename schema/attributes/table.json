@@ -1,15 +1,15 @@
 {
-	"code": "primitive-array",
+	"code": "table",
 	"editor": "tab",
 	"example": {
-		"$ref": "example/primitive-array.json"
+		"$ref": "example/table.json"
 	},
 	"groups": [
 		{
 			"$ref": "header.json"
 		},
 		{
-			"label": "element",
+			"label": "columns",
 			"attributes": [
 				{
 					"code": "type",
@@ -19,19 +19,21 @@
 					"values": ["array"]
 				},
 				{
-					"code": "element",
-					"type": "object",
+					"code": "attributes",
+					"type": "array",
 					"typeProperty": "editor",
-					"required": true,
+					"minItems": 1,
 					"groups": {
-						"$ref": "../attributes-nocode.json"
+						"$ref": "../primitive-attributes.json"
 					}
 
 				}
+
 			]
 		},
 		{
-			"$ref": "array-constraints"
+			"$ref": "array-constraints.json"
 		}
 	]
+
 }

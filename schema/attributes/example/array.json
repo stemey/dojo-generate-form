@@ -1,0 +1,23 @@
+{
+	"type": "array",
+	"code": "thing",
+	"group": [
+		{
+			"attributes": [
+				{
+					"required": false,
+					"type": "string",
+					"label": "name",
+					"code": "name"
+				},
+				{
+					"required": false,
+					"type": "string",
+					"label": "common",
+					"code": "common"
+				}
+			]
+
+		}
+	]
+}

@@ -1,0 +1,45 @@
+{
+	"type": "array",
+	"typeProperty": "ext_type",
+	"code": "thing",
+	"groups": [
+		{
+			"code": "thing1",
+			"label": "thing1",
+			"attributes": [
+				{
+					"required": false,
+					"type": "string",
+					"label": "name",
+					"code": "name"
+				},
+				{
+					"required": false,
+					"type": "string",
+					"label": "common",
+					"code": "common"
+				}
+			]
+
+		},
+		{
+			"code": "thing2",
+			"label": "thing2",
+			"attributes": [
+				{
+					"required": true,
+					"type": "string",
+					"label": "firstName",
+					"code": "firstName"
+				},
+				{
+					"required": false,
+					"type": "string",
+					"label": "common",
+					"code": "common"
+				}
+			]
+
+		}
+	]
+}

@@ -42,19 +42,20 @@
 
     <script type="text/javascript">
 
-        require([ './schema/Schema',
+        require([ '../schema/transform',
+            './schema/Schema',
             '../util/Resolver',
             'dojo/when',
             'dojo/promise/all',
             "dojo/parser",
-            "dojo/text!gform/doc/schema/groups.json", "dojo/text!gform/doc/schema/attributes.json",
+            "dojo/text!gform/doc/schema/groups.json", "dojo/text!gform/schema/attributes.json",
             "gform/createStandardEditorFactory", "gform/util/refresolve", "dojo/text!./schema.tpl", "gform/doc/Template", "gform/doc/TemplateContext", "dojox/highlight"
-        ], function (Schema, Resolver, when, all, parser, groups, attributes, createStandardEditorFactory, refresolve, schemaTemplate, Template, TemplateContext, highlight) {
+        ], function (transform, Schema, Resolver, when, all, parser, groups, attributes, createStandardEditorFactory, refresolve, schemaTemplate, Template, TemplateContext, highlight) {
 
             var ef = createStandardEditorFactory();
             var groupSchemas = JSON.parse(groups);
             var attributeSchemas = JSON.parse(attributes);
-            var resolver = new Resolver({baseUrl: "../schema/"});
+            var resolver = new Resolver({baseUrl: "../schema/", transformations: transform});
             when(resolver.resolve(attributeSchemas)).then(function () {
                 //var meta = convertSchema(schema);
                 var schema = new Schema;

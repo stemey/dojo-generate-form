@@ -10,7 +10,7 @@ define([
 		//		Base class for textbox widgets with the ability to validate content of various types and provide user feedback.
 
 		_isValidSubset: function () {
-			// otherwise initially entered illgal characters are not marked as error.
+			// otherwise initially entered illegal characters are not marked as error.
 			return false;
 		},
 		displayMessage: function () {

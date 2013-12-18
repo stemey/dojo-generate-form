@@ -1,0 +1,24 @@
+{
+	"type": "object",
+	"code": "thing",
+	"group": [
+		{
+			"editor": "titlepane",
+			"attributes": [
+				{
+					"required": false,
+					"type": "string",
+					"label": "name",
+					"code": "name"
+				},
+				{
+					"required": false,
+					"type": "string",
+					"label": "common",
+					"code": "common"
+				}
+			]
+
+		}
+	]
+}

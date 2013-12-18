@@ -1,6 +1,9 @@
 {
 	"code": "select",
 	"editor": "tab",
+	"example": {
+		"$ref": "./example/select.json"
+	},
 	"groups": [
 
 		{
@@ -9,6 +12,10 @@
 		{
 			"label": "values",
 			"attributes": [
+				{
+					"code": "emptyValueLabel",
+					"type": "string"
+				},
 				{
 					"code": "values",
 					"type": "array",

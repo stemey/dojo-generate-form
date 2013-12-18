@@ -1,6 +1,9 @@
 {
 	"code": "textarea",
 	"editor": "tab",
+	"example": {
+		"$ref": "example/string.json"
+	},
 	"groups": [
 		{
 			"label": "general",
