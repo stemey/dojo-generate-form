@@ -1,6 +1,9 @@
 {
 	"code": "object",
 	"editor": "tab",
+	"example": {
+		"$ref": "example/object.json"
+	},
 	"groups": [
 		{
 			"$ref": "header.json"

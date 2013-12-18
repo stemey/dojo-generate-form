@@ -15,7 +15,7 @@ define(
 		//
 		return declare([PrimitiveAttributeFactory],
 			{
-				id:"ref",
+				id: "ref",
 				constructor: function (kwArgs) {
 					lang.mixin(this, kwArgs);
 				},
@@ -88,5 +88,5 @@ define(
 					dijitHelper.addSchemaProperty("invalidMessage", properties);
 					return schema;
 				}
-			})
+			});
 	});

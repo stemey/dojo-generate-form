@@ -27,6 +27,9 @@
 		"$ref": "attributes/number.json"
 	},
 	{
+		"$ref": "attributes/currencyamount.json"
+	},
+	{
 		"$ref": "attributes/date.json"
 	},
 	{
@@ -40,6 +43,12 @@
 	},
 	{
 		"$ref": "attributes/select.json"
+	},
+	{
+		"$ref": "attributes/table.json"
+	},
+	{
+		"$ref": "attributes/multi-table.json"
 	}
 
 ]

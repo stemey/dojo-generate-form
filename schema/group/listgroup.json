@@ -4,7 +4,7 @@
 		{
 			"code": "code",
 			"type": "string",
-			"required":true
+			"required": true
 		},
 		{
 			"code": "label",
@@ -13,13 +13,14 @@
 		{
 			"code": "description",
 			"type": "string",
-			"editor":"textarea"
+			"editor": "textarea"
 		},
 		{
 			"code": "groups",
 			"type": "array",
+			"typeProperty": "editor",
 			"groups": {
-				"$ref": "groups.json"
+				"$ref": "groups-nocode-nolabel.json"
 			}
 
 		}

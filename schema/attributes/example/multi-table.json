@@ -1,0 +1,51 @@
+{
+	"label": "things",
+	"code": "things",
+	"editor": "multi-table",
+	"type": "array",
+	"typeProperty": "ext_type",
+	"groups": [
+		{
+			"code": "thing1",
+			"label": "thing1",
+			"attributes": [
+				{
+					"required": false,
+					"type": "string",
+					"label": "name",
+					"code": "name",
+					"array": false
+				},
+				{
+					"required": false,
+					"type": "string",
+					"label": "common",
+					"code": "common",
+					"array": false
+				}
+			]
+
+		},
+		{
+			"code": "thing2",
+			"label": "thing2",
+			"attributes": [
+				{
+					"required": false,
+					"type": "string",
+					"label": "firstName",
+					"code": "firstName",
+					"array": false
+				},
+				{
+					"required": false,
+					"type": "string",
+					"label": "common",
+					"code": "common",
+					"array": false
+				}
+			]
+
+		}
+	]
+}

@@ -1,12 +1,11 @@
 define([
-	"dojo/_base/lang",
+	"dojo/date/stamp",
 	"dojo/_base/declare",
 	"dojox/mvc/at",
 	"./TimeTextBox",
 	"../schema/meta",
-	"./standardAttributeProperties",
 	"./PrimitiveAttributeFactory"
-], function (lang, declare, at, TimeTextBox, meta, standardAttributeProperties, PrimitiveAttributeFactory) {
+], function (stamp, declare, at, TimeTextBox, meta, PrimitiveAttributeFactory) {
 
 	return declare([PrimitiveAttributeFactory], {
 		id: "time",
@@ -41,31 +40,18 @@ define([
 		createValueConverter: function () {
 			return {
 				parse: function (date) {
-					isoDateString = date;
-					if (typeof date != "string") {
-						isoDateString = dateStamp.toISOString(date, {
+					var isoDateString = date;
+					if (typeof date !== "string") {
+						isoDateString = stamp.toISOString(date, {
 							selector: "time"
 						});
 					}
 					return isoDateString;
+				},
+				format: function (value) {
+					return stamp.fromISOString(value);
 				}
 			};
-		},
-		getSchema: function () {
-			var schema = {};
-			schema["id"] = "time";
-			schema.description = "This attribute is a time value formatted according to ISO-8601. The dijit is based on 'dijit.form.TimeTextBox'";
-			schema.example = dojo.toJson({code: "wakeupTime", type: "time"}, true);
-			schema.instanceExample = dojo.toJson({wakeupTime: "8:30"}, true);
-			schema.properties = {};
-			schema.properties.type = {type: "string", required: true, "enum": ["time"]};
-			lang.mixin(schema.properties, standardAttributeProperties);
-			schema.properties["required"] = { type: "boolean"};
-			schema.properties["missingMessage"] = { type: "string"};
-			schema.properties["promptMessage"] = { type: "string"};
-			schema.properties["placeHolder"] = { type: "string"};
-			schema.properties["invalidMessage"] = { type: "string"};
-			return schema;
 		}
 
 	});

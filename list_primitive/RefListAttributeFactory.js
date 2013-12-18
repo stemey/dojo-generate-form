@@ -70,5 +70,5 @@ define([ "dojo/_base/array", //
 			return select;
 
 		}
-	})
+	});
 });

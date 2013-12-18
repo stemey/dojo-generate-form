@@ -15,9 +15,10 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
+		require([ 'dojo/_base/query',
+            "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
 		"dojo/text!./meta/primitive_time.json", "dojo/text!./entity/primitive_time.json"//
-		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
+		], function(query, ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
 
 			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
@@ -33,7 +34,13 @@
 						t.assertEqual("T20:15:00", editor.get("plainValue").startTime);
 						t.assertEqual(new Date(1970, 0, 1, 20, 15, 0, 0), intStartTime.get("value"));
 					}
-				}
+				},{
+                    name : 'setValue',
+                    runTest : function(t) {
+                        intStartTime.set("value",new Date(1970, 0, 1, 12, 00, 0, 0));
+                        t.assertEqual("T12:00:00", editor.get("plainValue").startTime);
+                    }
+                }
 			]);
 			doh.run();
 		});

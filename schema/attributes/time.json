@@ -1,6 +1,7 @@
 {
 	"code": "time",
 	"editor": "tab",
+	"description": "This attribute is a time value formatted according to ISO-8601. The dijit is based on 'dijit.form.TimeTextBox'",
 	"groups": [
 		{
 			"$ref": "header.json"

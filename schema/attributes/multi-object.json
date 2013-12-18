@@ -1,6 +1,9 @@
 {
 	"code": "multi-object",
 	"editor": "tab",
+	"example": {
+		"$ref": "example/multi-object.json"
+	},
 	"groups": [
 		{
 			"$ref": "header.json"
