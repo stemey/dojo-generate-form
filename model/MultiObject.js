@@ -1,4 +1,4 @@
-	define([ "dojo/_base/array",
+define([ "dojo/_base/array",
 	"dojo/_base/declare",
 	"./MetaModel"
 ], function (array, declare, MetaModel) {
@@ -49,7 +49,8 @@
 					//this.value=null;
 				}
 			} else {
-				this.set("currentTypeCode", plainValue[this.typeProperty]);
+				var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.groups[0].code;
+				this.set("currentTypeCode", typeCode);
 				//this.value= this.getGroup(this.currentTypCode);
 			}
 			array.forEach(this.groups, function (group) {
