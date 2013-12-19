@@ -45,6 +45,12 @@
 		"$ref": "attributes/select.json"
 	},
 	{
+		"$ref": "attributes/checked-select.json"
+	},
+	{
+		"$ref": "attributes/multi-checked-select.json"
+	},
+	{
 		"$ref": "attributes/table.json"
 	},
 	{

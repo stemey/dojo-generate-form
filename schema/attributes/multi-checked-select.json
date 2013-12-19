@@ -1,0 +1,64 @@
+{
+	"code": "multi-checked-select",
+	"editor": "tab",
+	"example": {
+		"$ref": "./example/multi-checked-select.json"
+	},
+	"groups": [
+		{
+			"$ref": "header.json"
+		},
+		{
+			"label": "values",
+			"attributes": [
+				{
+					"code": "type",
+					"type": "string",
+					"visible": false,
+					"required": true,
+					"values": ["primitive-array"]
+				},
+				{
+					"code": "element",
+					"type": "object",
+					"required": true,
+					"group": {
+						"attributes": [
+							{
+								"code": "type",
+								"visible": false,
+								"values": ["string"],
+								"required": true
+							},
+							{
+								"code": "values",
+								"type": "array",
+								"editor": "table",
+								"attributes": [
+									{
+										"code": "label",
+										"required": "true",
+										"type": "string"
+									},
+									{
+										"code": "value",
+										"type": "string"
+									}
+								]
+
+
+							}
+						]
+					}
+
+				}
+
+			]
+		},
+		{
+			"$ref": "array-constraints"
+		}
+	]
+}
+
+

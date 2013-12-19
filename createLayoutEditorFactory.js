@@ -65,8 +65,8 @@ define([
 		new EmbeddedAttributeFactory({editorFactory: editorFactory}),//
 		new MultiEmbeddedAttributeFactory({editorFactory: editorFactory}),//
 		new MappedCheckedMultiSelectAttributeFactory({editorFactory: editorFactory}), //
-		new CheckedMultiSelectAttributeFactory({editorFactory: editorFactory}), //
 		new MappedSelectAttributeFactory({editorFactory: editorFactory}),//
+		new CheckedMultiSelectAttributeFactory({editorFactory: editorFactory}), //
 		new RefListAttributeFactory({editorFactory: editorFactory}),//
 		new PrimitiveListAttributeFactory({editorFactory: editorFactory}),//
 		new ReferenceAttributeFactory({editorFactory: editorFactory}),//

@@ -1,8 +1,8 @@
 {
-	"code": "select",
+	"code": "checked-select",
 	"editor": "tab",
 	"example": {
-		"$ref": "./example/select.json"
+		"$ref": "./example/checked-select.json"
 	},
 	"groups": [
 

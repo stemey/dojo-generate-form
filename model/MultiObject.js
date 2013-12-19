@@ -1,4 +1,4 @@
-define([ "dojo/_base/array",
+	define([ "dojo/_base/array",
 	"dojo/_base/declare",
 	"./MetaModel"
 ], function (array, declare, MetaModel) {
