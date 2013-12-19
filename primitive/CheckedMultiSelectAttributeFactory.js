@@ -9,7 +9,7 @@ define([ "dojo/_base/array",
 	return declare([  ], {
 		id: "multi-checked-select",
 		handles: function (attribute) {
-			return attribute != null && attribute.type === "primitive-array" && attribute.element.values;
+			return attribute != null && attribute.type === "array" && attribute.element && attribute.element.values;
 		},
 
 		create: function (meta, modelHandle) {
