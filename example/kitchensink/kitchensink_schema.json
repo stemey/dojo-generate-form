@@ -27,7 +27,7 @@
 					"code": "select"
 				},
 				{
-					"editor": "checked_select",
+					"editor": "checked-select",
 					"type": "string",
 					"label": "radios",
 					"description": "select one",
