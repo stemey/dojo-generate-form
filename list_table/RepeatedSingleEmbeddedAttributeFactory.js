@@ -74,7 +74,8 @@ define([
 		},
 		createModel: function (meta, value) {
 			var me = this;
-			var model = new ArrayModel();
+			var validators = this.editorFactory.getModelValidators(meta);
+			var model = new ArrayModel({validators: validators});
 			model.elementFactory = function (element) {
 				var aModels = {};
 				meta.attributes.forEach(function (attribute) {

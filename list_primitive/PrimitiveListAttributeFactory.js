@@ -19,7 +19,8 @@ define([
 			return attribute != null && attribute.type === "array" && attribute.element;
 		},
 		createModel: function (attribute, plainValue) {
-			var model = new ArrayModel();
+			var validators = this.editorFactory.getModelValidators(attribute);
+			var model = new ArrayModel({validators: validators});
 			var me = this;
 			var ef = function (value) {
 				var model = me.editorFactory.createAttributeModel(attribute.element);

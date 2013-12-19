@@ -24,7 +24,7 @@ define([    'dojo/_base/lang'], function (lang) {
 	var filterPrimitives = function (attributes) {
 		var newArray = [];
 		attributes.forEach(function (e) {
-			if (e.code && !e.code.match(/(object|array|map)/)) {
+			if (e.code && !e.code.match(/(object|array|map|table)/)) {
 				newArray.push(e);
 			}
 		});

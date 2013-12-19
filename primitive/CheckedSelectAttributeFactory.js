@@ -1,10 +1,11 @@
 define([
+	"dojox/mvc/at",
 	"dojo/_base/declare",//
 	"dojox/form/CheckedMultiSelect",//
 	"./createOptions",//
 	"./nullablePrimitiveConverter",//
 	"../model/PrimitiveModel"//
-], function (declare, CheckedMultiSelect, createOptions, nullablePrimitiveConverter, PrimitiveModel) {
+], function (at, declare, CheckedMultiSelect, createOptions, nullablePrimitiveConverter, PrimitiveModel) {
 
 	return declare([ ], {
 		id: "checked-select",
@@ -23,7 +24,8 @@ define([
 				multiple: false
 			});
 
-			if (meta.required && !plainValue) {
+			var plainValue = modelHandle.getPlainValue();
+			if (meta.required && !plainValue && options.length > 0) {
 				modelHandle.update(options[0]);
 			}
 

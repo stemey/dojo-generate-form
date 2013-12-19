@@ -20,6 +20,13 @@
 					"description": "The currency code according to ISO4217"
 				},
 				{
+					"code": "type",
+					"type": "string",
+					"required": true,
+					"values": ["number"],
+					"visible": false
+				},
+				{
 					"code": "amountFractional",
 					"type": "boolean",
 					"description": "If true the value is a fractional value. Otherwise the value is provided in the minor currency like cents instead of dollars."

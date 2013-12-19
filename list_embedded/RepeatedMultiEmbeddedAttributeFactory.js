@@ -66,7 +66,8 @@ define([
 
 		},
 		createModel: function (meta, plainValue) {
-			var model = new ArrayModel();
+			var validators = this.editorFactory.getModelValidators(meta);
+			var model = new ArrayModel({validators: validators});
 			var me = this;
 			var ef = function (value) {
 				var groups = [];

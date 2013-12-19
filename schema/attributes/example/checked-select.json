@@ -1,0 +1,12 @@
+{
+	"type": "string",
+	"code": "select",
+	"emptyValueLabel": "-- Please select --",
+	"values": [
+		"Hallo",
+		{
+			"label": "Bye",
+			"value": "Good bye"
+		}
+	]
+}
