@@ -1,5 +1,6 @@
 {
-	"code": "listgroup",
+	"code": "tab",
+	"description": "The tabgroup displays an array of groups in a 'dijit.layout.TabContainer'.",
 	"attributes": [
 		{
 			"code": "code",
@@ -19,10 +20,10 @@
 		{
 			"code": "groups",
 			"type": "array",
-			"description": "The groups are displayed in a list. A List of Titlepanes constitutes an accordion.",
+			"description": "The groups are displayed in a list.",
 			"typeProperty": "editor",
-			"groups": {
-				"$ref": "../groups-nocode-nolabel.json"
+			"group": {
+				"$ref": "./listpane-nocode.json"
 			}
 
 		}

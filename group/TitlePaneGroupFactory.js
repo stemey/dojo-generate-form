@@ -1,11 +1,10 @@
 define([
 	"dojo/_base/lang",
-	"dojo/json",
 	"dojo/_base/declare",
 	"dojo/aspect",
 	"./GroupFactory",
 	"dijit/TitlePane"
-], function (lang, json, declare, aspect, GroupFactory, TitlePane) {
+], function (lang, declare, aspect, GroupFactory, TitlePane) {
 
 	return declare([ GroupFactory ], {
 		id: "titlepane",
@@ -29,17 +28,6 @@ define([
 			} else {
 				titlePaneWidget.set("title", titlePane.title);
 			}
-		},
-		getSchema: function () {
-			var properties = {"title": {"type": "string", description: "the title of the pane"}, "attributes": {"$ref": "attributes"}};
-			var schema = {description: "The titlepane displays an array of attributes in a 'dijit.TitlePane'."};
-			schema.properties = properties;
-			schema.required = ["attributes"];
-			var example = {groupType: "titlepane", title: "1.", attributes: [
-				{code: "name", type: "string"}
-			]};
-			schema.example = dojo.toJson(example, true);
-			return schema;
 		}
 	});
 });

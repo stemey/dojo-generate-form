@@ -1,5 +1,6 @@
 {
 	"code": "titlepane",
+	"description": "The titlepane displays an array of attributes in a 'dijit.TitlePane'.",
 	"attributes": [
 		{
 			"code": "code",
@@ -8,12 +9,14 @@
 		},
 		{
 			"code": "title",
-			"type": "string"
+			"type": "string",
+			"description": "the title of the pane"
 		},
 		{
 			"code": "description",
 			"type": "string",
-			"editor": "textarea"
+			"editor": "textarea",
+			"description": "a description displayed at the top"
 		},
 		{
 
