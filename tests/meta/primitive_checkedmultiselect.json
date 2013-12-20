@@ -3,7 +3,7 @@
 	"label": "example",
 	"attributes": [
 		{
-			"type": "primitive-array",
+			"type": "array",
 			"editor": "checked-multi-select",
 			"label": "multiple select",
 			"code": "multiselect",
@@ -14,12 +14,12 @@
 					"Hi",
 					"Good bye",
 					{
-						label: "Ciao Bella",
-						value: "Ciao"
+						"label": "Ciao Bella",
+						"value": "Ciao"
 					},
 					{
-						label: "Bye",
-						value: "Bye Bye"
+						"label": "Bye",
+						"value": "Bye Bye"
 					}
 				]
 			}

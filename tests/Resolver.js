@@ -58,7 +58,7 @@ define(['dojo/_base/declare',
 
 	};
 
-	doh.register("gform-refresolve", [
+	doh.register("gform-util-Resolver", [
 		function testById() {
 			var resolver = new LocalResolver();
 			resolver.resolve(schema, "");

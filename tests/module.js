@@ -1,9 +1,6 @@
 define(
 	"gform.tests.module", [
-		"gform/tests/refresolve",//
-//"gform/tests/convertSchema",//
-//"gform/tests/schemaGenerator",//
-//"gform/tests/visit",//
+		"gform/tests/Resolver",//
 		"gform/tests/model/MetaModel",//
 		"gform/tests/model/PrimitiveModel",//
 		"gform/tests/model/MultiGroup",//
@@ -13,7 +10,6 @@ define(
 		"gform/tests/model/MultiObject",//
 		"gform/tests/model/MappedSelectModel",//
 		"gform/tests/model/MergedMultiObject",//
-		"gform/tests/equals",//
 		"gform/tests/restHelper"
 	], function () {
 

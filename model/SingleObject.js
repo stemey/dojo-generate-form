@@ -24,6 +24,10 @@ define([
 		isEmpty: function () {
 			return this.isNull;
 		},
+		watchPath: function (path, watcher) {
+			// TODO only works for path being a simple attribute
+			return this.getModel(path).watch(watcher);
+		},
 		update: function (/*Object*/plainValue, bubble) {
 			// summary:
 			//		update the attribute with the given plainValue. Attribute has a single valid type.
