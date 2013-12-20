@@ -20,7 +20,7 @@
 			"type": "array",
 			"typeProperty": "editor",
 			"groups": {
-				"$ref": "groups-nocode-nolabel.json"
+				"$ref": "../groups-nocode-nolabel.json"
 			}
 
 		}

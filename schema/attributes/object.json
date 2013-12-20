@@ -25,7 +25,7 @@
 					"typeProperty": "editor",
 					"required": true,
 					"groups": {
-						"$ref": "../group/groups-nocode.json"
+						"$ref": "../groups-nocode.json"
 					}
 				}
 

@@ -64,8 +64,8 @@ define([    'dojo/_base/lang'], function (lang) {
 	};
 	t["./primitive-attributes.json"] = {url: "./attributes.json", execute: filterPrimitives};
 	t["./attributes-nocode.json"] = {url: "./attributes.json", execute: removeFirstGroupFromAttributes};
-	t["./group/groups-nocode.json"] = {url: "./group/groups.json", execute: removeCode};
-	t["./group/groups-nocode-nolabel.json"] = {url: "./group/groups.json", execute: removeCodeAndLabel};
+	t["./groups-nocode.json"] = {url: "./groups.json", execute: removeCode};
+	t["./groups-nocode-nolabel.json"] = {url: "./groups.json", execute: removeCodeAndLabel};
 	return t;
 
 });
