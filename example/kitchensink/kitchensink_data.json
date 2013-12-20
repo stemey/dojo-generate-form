@@ -75,13 +75,13 @@
 			"text": "rrrrrrrrrrrr"
 		}
 	],
-	"map": {
+	"embeddedmap": {
 		"a": {
 			"yes": true,
 			"message": "IIIIII"
 		},
 		"b": {
-			"message": "OOOOOOOO",
+			"message": "OOOOOOOO"
 		}
 	},
 	"primitive_map": {

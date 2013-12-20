@@ -37,23 +37,7 @@ define([
 				var groupWidget = this.editorFactory.create(childGroup, childModel);
 				listWidget.addChild(groupWidget);
 			}
-			;
 			return listWidget;
-		},
-		getSchema: function () {
-			var properties = {
-				"label": {"type": "string", description: "for display in a tab"},
-				"description": {"type": "string"},
-				"groups": {"$ref": "groups"}
-			}
-			var schema = {description: "The listgroup displays an array of groups in a list."};
-			schema.properties = properties;
-			schema.required = ["groups"];
-			var example = {groupType: "listgroup", label: "Tab name for display in tab", groups: [
-				{groupType: "titlepane", title: "1.", attributes: []}
-			]};
-			schema.example = dojo.toJson(example, true);
-			return schema;
 		}
 	});
 });

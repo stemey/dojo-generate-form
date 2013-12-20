@@ -1,5 +1,6 @@
 {
-	"code": "listgroup",
+	"code": "list",
+	"description": "Attributes displayed in a list.",
 	"attributes": [
 		{
 			"code": "code",
@@ -14,18 +15,16 @@
 			"code": "description",
 			"type": "string",
 			"editor": "textarea",
-			"description": "a description displayed at the top"
+			"description":"a description displayed at the top"
 		},
 		{
-			"code": "groups",
+
+			"code": "attributes",
 			"type": "array",
-			"description": "The groups are displayed in a list. A List of Titlepanes constitutes an accordion.",
 			"typeProperty": "editor",
 			"groups": {
-				"$ref": "../groups-nocode-nolabel.json"
+				"$ref": "../attributes.json"
 			}
-
 		}
 	]
 }
-

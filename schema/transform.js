@@ -30,6 +30,7 @@ define([    'dojo/_base/lang'], function (lang) {
 		});
 		return newArray;
 	};
+
 	var removeCode = function (groups) {
 		var newArray = [];
 		groups.forEach(function (e) {
@@ -45,6 +46,19 @@ define([    'dojo/_base/lang'], function (lang) {
 			newArray.push(newE);
 		});
 		return newArray;
+	};
+
+	var removeCodeFromSingle = function (group) {
+		var newE = {};
+		lang.mixin(newE, group);
+		var newAttributes = [];
+		group.attributes.forEach(function (prop, idx) {
+			if (prop.code !== "code") {
+				newAttributes.push(prop);
+			}
+		});
+		newE.attributes = newAttributes;
+		return newE;
 	};
 	var removeCodeAndLabel = function (groups) {
 		var newArray = [];
@@ -65,6 +79,7 @@ define([    'dojo/_base/lang'], function (lang) {
 	t["./primitive-attributes.json"] = {url: "./attributes.json", execute: filterPrimitives};
 	t["./attributes-nocode.json"] = {url: "./attributes.json", execute: removeFirstGroupFromAttributes};
 	t["./groups-nocode.json"] = {url: "./groups.json", execute: removeCode};
+	t["./group/listpane-nocode.json"] = {url: "./group/listpane.json", execute: removeCodeFromSingle};
 	t["./groups-nocode-nolabel.json"] = {url: "./groups.json", execute: removeCodeAndLabel};
 	return t;
 
