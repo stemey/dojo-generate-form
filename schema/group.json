@@ -6,7 +6,7 @@
 			"typeProperty": "editor",
 			"required": true,
 			"groups": {
-				"$ref": "./group/groups-nocode-nolabel.json"
+				"$ref": "./groups-nocode-nolabel.json"
 			}
 		}
 	]

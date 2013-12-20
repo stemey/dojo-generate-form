@@ -68,46 +68,42 @@
 
 	<h3>Groups</h3>
 	<p>
-		Groups give structure to a form. Attributes can be grouped in tabs or titlepanes. Groups can be nested. A group is always chosen by the property `groupType`. An editorFactory also defines a default groupfactory wich will be chosen if the `groupType` is absent.
+		Groups give structure to a form. Attributes can be grouped in tabs or titlepanes. Groups can be nested. A group is always chosen by the property `editor`. An editorFactory also defines a default groupfactory wich will be chosen if the `editor` is absent.
 	</p>
-    <% for (var idx in groups) { var group=groups[idx]; %>
-				<div data-dojo-type="dijit/TitlePane" title="<%= group.id %>" data-dojo-props="open:false">
-				<p><% if (group.description) {%><%=group.description%><% } %></p>
-				<% if (group.instanceExample) {%>
-				<pre class="examplecode">
-					<code class="javascript"><%= group.instanceExample %></code>
-				</pre>	
-				<% } %>			
-				<% if (group.example) {%>
-				<h5>schema example</h5>
-				<pre class="examplecode">
-					<code class="javascript"><%= group.example %></code>
-				</pre>	
-				<% } %>			
-				<ul>
-					<% for (var key in group.properties) { var prop=group.properties[key]; %>
-						<li>	<%=key%>	
-							<%  if (key=="attributes") { %>
-								<ul><li>An array of attribute definitions.</li></ul>
-							<% } else if (key=="groups") { %>
-								<ul><li>An array of group definitions.</li></ul>
-							<% } else { %>
-								<ul>
+        <% for (var idx in groups) { var attribute=groups[idx]; %>
+				<div data-dojo-type="dijit/TitlePane" title="<%= attribute.id %>" data-dojo-props="open:false">
+                				<p><% if (attribute.description) {%><%=attribute.description%><% } %></p>
+                				<% if (attribute.instanceExample) {%>
+                				<h5>instance example</h5>
+                				<pre class="examplecode">
+                					<code class="javascript"><%= attribute.instanceExample %></code>
+                				</pre>
+                				<% } %>
+                				<% if (attribute.example) {%>
+                				<h5>schema example</h5>
+                				<pre class="examplecode">
+                					<code class="javascript"><%= attribute.exampleForDoc || attribute.example %></code>
+                				</pre>
+                				<% } %>
+                				<ul>
+                					<% for (var idx in attribute.props) { var prop=attribute.props[idx]; %>
+                						<li>	<%=prop.code%>
+                							<p><%=prop.description%></p>
+                                               <ul>
+                                                        <li>
+                                                           type: <%=prop.type%>
 
-								<% for ( var propKey in prop) { 
-										if (ctx.included(propKey, prop[propKey])) {
-								%>
-									<li><%=ctx.getObject(propKey, prop[propKey])["key"]%>:<%=ctx.getObject(propKey, prop[propKey])["value"]%>	
-									</li>
-								<% }} %>
+                                                        </li>
+                                                        <li>
+                                                            required: <%=prop.required==true%>
 
-
-								</ul>
-							<% } %>
-						</li>
-					<% } %>
-				</div>
-    <% } %>
+                                                        </li>
+                                                </ul>
+                						</li>
+                					<% } %>
+                				</ul>
+                    	</div>
+      <% } %>
 	</ul>
 
 </div>

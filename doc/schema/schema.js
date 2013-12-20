@@ -1,8 +1,6 @@
 define([
-	'dojo/promise/all',
-	'dojo/request/xhr',
 	"dojo/_base/declare"//
-], function (all, xhr, declare) {
+], function (declare) {
 
 	var remove = function (e) {
 		return undefined;

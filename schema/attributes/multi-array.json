@@ -30,7 +30,7 @@
 					"typeProperty": "editor",
 					"required": true,
 					"groups": {
-						"$ref": "../group/groups.json"
+						"$ref": "../groups.json"
 					}
 
 				}
