@@ -11,7 +11,7 @@ define([
 	return declare([ _MappedSelectAttributeFactoryBase ], {
 		id: "mapped-checked-multi-select",
 		handles: function (attribute) {
-			return attribute != null && attribute.type == "primitive-array" && attribute.element.mapped_values;
+			return attribute != null && attribute.type === "array" && attribute.element && attribute.element.mapped_values;
 		},
 		create: function (attribute, modelHandle) {
 			var options = this._createMappedOptions(modelHandle, attribute.element);

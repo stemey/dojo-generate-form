@@ -20,7 +20,7 @@ define([
 			this.transformations = {};
 			this.references = [];
 			this.values = {};
-			if (kwArgs.baseUrl && kwArgs.transformations) {
+			if (kwArgs && kwArgs.baseUrl && kwArgs.transformations) {
 				var rebasedTrans = {};
 				for (var key in kwArgs.transformations) {
 					var rebasedUrl = new Url(kwArgs.baseUrl, key).uri;

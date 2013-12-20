@@ -13,7 +13,7 @@ define([
 		id: "mapped-select",
 		handles: function (attribute) {
 			//var mapped_values=attribute.mapped_values;
-			return attribute.type === "mapped-select";
+			return attribute.type === "string" && attribute.mapped_attribute && attribute.mapped_values;
 		},
 
 		create: function (attribute, modelHandle) {
@@ -49,24 +49,6 @@ define([
 			var model = new MappedSelectModel({mappedValues: mappedValues, mappedAttribute: meta.mapped_attribute, validators: validators, required: meta.required === true});
 			model.update(plainValue);
 			return model;
-		},
-		getSchema: function () {
-			var schema = {};
-			schema["id"] = "mapped-select";
-			var properties = {};
-			schema["description"] = "This is a select field whose options depend on the value of another attribute. The options are specified as an array of label value pairs and or values. It is based on 'dijit.form.Select'";
-			schema["example"] = example;
-			schema["exampleForDoc"] = exampleForDoc;
-			schema.properties = properties;
-			properties.type = {type: "string", required: true, "enum": ["string"]};
-			properties.mapped_values = dijitHelper.getMappedValuesSchema();
-			properties.mapped_attribute = {type: "string", description: "the name of a sibling property"};
-			dijitHelper.addSchemaProperties(properties);
-			dijitHelper.addSchemaProperty("required", properties);
-			dijitHelper.addSchemaProperty("promptMessage", properties);
-			dijitHelper.addSchemaProperty("placeHolder", properties);
-			dijitHelper.addSchemaProperty("invalidMessage", properties);
-			return schema;
 		}
 
 	});

@@ -10,7 +10,7 @@
 			"values": [ "Henry", "Anni", "Bob" ]
 		},
 		{
-			"type": "primitive-array",
+			"type": "array",
 			"editor":"mapped-checked-multi-select",
 			"label": "languages",
 			"code": "languages",

@@ -1,31 +1,43 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes":[
-        {
-            "type":"string",
-            "label":"language",
-            "code":"language",
-            "array":false,
-            "values":["english","german"]
-        },
-        {
-            "type":"mapped-select",
-            "label":"salutation",
-            "code":"salutation",
-            "required":true,
-            "mapped_attribute":"language",
-						"mapped_values":{
-							"english":[
-								{label: "Mr.", value: "Mr."},
-								{label: "Mrs.", value: "Mrs."}
-							],
-							"german":[
-								{label: "Herr", value: "Herr"},
-								{label: "Frau", value: "Frau"}
-							],
-						}
-        }
-    ],
-    "type_property":"ext_type"
+	"code": "example",
+	"label": "example",
+	"attributes": [
+		{
+			"type": "string",
+			"label": "language",
+			"code": "language",
+			"array": false,
+			"values": ["english", "german"]
+		},
+		{
+			"type": "string",
+			"label": "salutation",
+			"code": "salutation",
+			"required": true,
+			"mapped_attribute": "language",
+			"mapped_values": {
+				"english": [
+					{
+						"label": "Mr.",
+						"value": "Mr."
+					},
+					{
+						"label": "Mrs.",
+						"value": "Mrs."
+					}
+				],
+				"german": [
+					{
+						"label": "Herr",
+						"value": "Herr"
+					},
+					{
+						"label": "Frau",
+						"value": "Frau"
+					}
+				]
+			}
+		}
+	],
+	"type_property": "ext_type"
 }

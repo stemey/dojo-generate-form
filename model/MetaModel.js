@@ -53,7 +53,12 @@ define([
 			//		get value of sibling attribute
 			// attributeCode: String
 			//		the name of he sibling attribute
-			return this.parent.getModelByKey(attributeCode).getPlainValue();
+			var model = this.parent.getModelByPath(attributeCode);
+			if (model == null) {
+				return null;
+			} else {
+				return model.getPlainValue();
+			}
 		},
 		watchParent: function (attributeCode, watchCallback) {
 			// summary:
@@ -66,7 +71,7 @@ define([
 			//		WatchHandle and sibling a PrimitiveModel
 
 			// TODO only works for parent being an object
-			return this.parent.getModelByKey(attributeCode).watch("value", watchCallback);
+			return this.parent.watchPath(attributeCode, watchCallback);
 		},
 		createMeta: function (schema) {
 			// summary:
@@ -243,6 +248,9 @@ define([
 				});
 			}, this);
 			return {a: errorsToAdd, r: errorsToRemove};
+		},
+		watchPath: function (path, watcher) {
+			return this.getModelByPath(path).watch(watcher);
 		},
 		getMessage: function (keyOrMessage) {
 			if (this.invalidMessage) {
