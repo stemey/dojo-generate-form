@@ -54,6 +54,34 @@ define([
 			]);
 			doh.assertEqual(1, changes.a.length);
 			doh.assertEqual(1, changes.r.length);
+		},
+		function testDefaultMissingMessage() {
+			m.addError("", "{missingMessage}");
+			doh.assertNotEqual("", m.message);
+			doh.assertNotEqual("{missingMessage}", m.message);
+		},
+		function testSpecialMissingMessage() {
+			m.messages.missingMessage = "missing";
+			m.addError("", "{missingMessage}");
+			doh.assertEqual("missing", m.message);
+		},
+		function testDefaultInvalidMessage() {
+			m.message = "";
+			m.addError("", "{invalidMessage}");
+			doh.assertNotEqual("", m.message);
+			doh.assertNotEqual("{invalidMessage}", m.message);
+		},
+		function testSpecialInvalidMessage() {
+			m.message = "";
+			m.messages.invalidMessage = "invalid";
+			m.addError("", "{invalidMessage}");
+			doh.assertEqual("invalid", m.message);
+		},
+		function testSpecialInvalidMessageForNoKey() {
+			m.message = "";
+			m.messages.invalidMessage = "invalid";
+			m.addError("");
+			doh.assertEqual("invalid", m.message);
 		}
 	]);
 

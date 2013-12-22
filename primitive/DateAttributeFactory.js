@@ -9,6 +9,7 @@ define([
 
 	return declare([PrimitiveAttributeFactory], {
 		id: "date",
+		alwaysUseInvalidMessage: true,
 		handles: function (attribute) {
 			return attribute.type === "date";
 		},

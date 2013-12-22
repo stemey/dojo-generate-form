@@ -8,7 +8,7 @@
     <!-- required: a default dijit theme: -->
     <link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css"/>
     <link id="themeStyles" rel="stylesheet" href="../../../gform/resources/gform_layout.css"/>
-    <link id="multiSelectStyles" rel="stylesheet" href="../../../dojox/form/resources/CheckedMultiSelect.css" />
+    <link id="multiSelectStyles" rel="stylesheet" href="../../../dojox/form/resources/CheckedMultiSelect.css"/>
 
     <!-- required: dojo.js -->
     <script type="text/javascript">
@@ -29,9 +29,7 @@
             'dojo/aspect',
             "dijit/registry",
             "dojo/parser",
-            "gform/schema/convertSchema",
             "gform/util/refresolve",
-            "gform/schema/schemaGenerator",
             "dojo/text!gform/tests/entity/state_collection.json",
             "dojo/text!gform/tests/meta/refs.json",
             "dojo/text!gform/schema/group.json",
@@ -46,7 +44,7 @@
             "gform/Editor",
             "dijit/form/Button",
             "dijit/Dialog"
-        ], function (transform, when, Resolver, aspect, registry, parser, convertSchema, refresolve, schemaGenerator, stateCollection, schema, group, Store, SingleEditorDialogOpener, Context, SingleStoreRegistry, SingleSchemaRegistry) {
+        ], function (transform, when, Resolver, aspect, registry, parser, refresolve, stateCollection, schema, group, Store, SingleEditorDialogOpener, Context, SingleStoreRegistry, SingleSchemaRegistry) {
             parser.parse();
             try {
                 var ctx = new Context();
@@ -61,9 +59,9 @@
                 //var schema = schemaGenerator.generate(gform.ef.layout);
                 var meta = dojo.fromJson(group);
                 var loc = window.location.pathname + "../../schema/";
-                var t =transform;
+                var t = transform;
 
-                var resolver = new Resolver({baseUrl: loc, transformations:t});
+                var resolver = new Resolver({baseUrl: loc, transformations: t});
                 var promise = refresolve(meta, resolver);
                 when(promise).then(function () {
                     editor = dijit.byId("form");

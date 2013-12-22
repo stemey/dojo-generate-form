@@ -2,8 +2,10 @@ define([
 	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"dojo/Stateful",
+	"dojo/i18n!dijit/form/nls/validate",
+	"dojo/i18n!../nls/validate",
 	"./equals"
-], function (lang, declare, Stateful, equals) {
+], function (lang, declare, Stateful, dijitNls, nls, equals) {
 	// module: 
 	//		gform/Resolver
 
@@ -25,6 +27,7 @@ define([
 		// parent:,
 		//		the parent model
 		parent: null,
+		alwaysUseInvalidMessage: false,
 		touched: false,
 		state: "",
 		errorCount: 0,
@@ -36,7 +39,12 @@ define([
 		editorFactory: null,
 		tmp: {},
 		bubble: true,
-		constructor: function () {
+		constructor: function (kwArgs) {
+			this.messages = this.messages || {};
+			if (kwArgs && kwArgs.meta) {
+				this.messages.missingMessage = kwArgs.meta.missingMessage;
+				this.messages.invalidMessage = kwArgs.meta.invalidMessage;
+			}
 			this.watch("state", lang.hitch(this, "_onChangeState"));
 			this.watch("value", lang.hitch(this, "_onChangeState"));
 			this.watch("touched", lang.hitch(this, "_onChangeState"));
@@ -199,11 +207,11 @@ define([
 				if (this.required) {
 					if (force === true || this.touched || this.hasChanged()) {
 						this.set("state", "Error");
-						this.set("message", "value is missing");
+						this.set("message", this.getMissingMessage());
 
 					} else {
 						this.set("state", "Incomplete");
-						this.set("message", "value is missing");
+						this.set("message", this.getMissingMessage());
 					}
 					return;
 
@@ -252,25 +260,38 @@ define([
 		watchPath: function (path, watcher) {
 			return this.getModelByPath(path).watch(watcher);
 		},
-		getMessage: function (keyOrMessage) {
-			if (this.invalidMessage) {
-				return this.invalidMessage;
+		getMessage: function (keyOrMessage, internal) {
+			// summary:
+			//		get the human readable message. If the parameter is enclosed in curly braces then the message
+			// 		will be served from this model's messages property or the message bundle.  Otherwise it will be returned as is.
+			if (!keyOrMessage) {
+				return this.getMessageForKey("invalidMessage");
+			} else if (internal && this.alwaysUseInvalidMessage) {
+				// TODO this is wrong if the message comes from an model validation.
+				return this.getMessageForKey("invalidMessage");
 			} else {
 				var key = keyOrMessage.match(MESSAGE_PATTERN);
 				if (key !== null && key.length === 2) {
-					return key[1];
+					return this.getMessageForKey(key[1]);
 				} else {
 					return keyOrMessage;
 				}
 			}
+
+		},
+		getMessageForKey: function (key) {
+			return this.messages[key] || nls[key] || dijitNls[key];
+		},
+		getMissingMessage: function () {
+			return this.messages.missingMessage || dijitNls.missingMessage;
 		},
 		addError: function (path, message) {
 			var model = this.getModelByPath(path);
-			model._addError(message);
+			model._addError(message, !path || path.length == 0);
 		},
-		_addError: function (message) {
+		_addError: function (message, internal) {
 			this.set("state", "Error");
-			this.set("message", this.getMessage(message));
+			this.set("message", this.getMessage(message, internal));
 		},
 		removeError: function (path, message) {
 			var model = this.getModelByPath(path);

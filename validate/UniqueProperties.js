@@ -1,5 +1,7 @@
 define([
-], function () {
+	"dojo/_base/lang",
+	"dojo/i18n!../nls/validate"
+], function (lang, nls) {
 // module:
 //		gform/createStandardEditorFactory
 
@@ -20,7 +22,8 @@ define([
 				if (unique) {
 					uniqueKeys[value] = value;
 				} else {
-					errors.push({path: idx + "." + prop, message: "{gform.validation.unique}"});
+					var msg = lang.replace(nls.unique, {unique: unique});
+					errors.push({path: idx + "." + prop, message: msg});
 				}
 			}, this);
 			console.log("model validation resulted in " + errors.length);

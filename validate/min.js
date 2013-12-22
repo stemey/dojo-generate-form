@@ -1,5 +1,7 @@
 define([
-], function () {
+	"dojo/_base/lang",
+	"dojo/i18n!../nls/validate"
+], function (lang, nls) {
 // module:
 //		gform/createStandardEditorFactory
 
@@ -10,7 +12,8 @@ define([
 			var errors = [];
 			if (typeof plainValue === "number") {
 				if (plainValue < min) {
-					errors.push({path: "", message: "{gform.validation.min}"});
+					var msg = lang.replace(nls.min, {min: min});
+					errors.push({path: "", message: msg});
 				}
 			}
 			return errors;

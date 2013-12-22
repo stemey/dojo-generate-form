@@ -211,7 +211,11 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				this.resize();
 			},
 			_getPlainValueAttr: function () {
-				return this.modelHandle.getPlainValue();
+				if (this.modelHandle == null) {
+					return null;
+				} else {
+					return this.modelHandle.getPlainValue();
+				}
 			},
 			_setMetaUrlAttr: function (url) {
 				var me = this;

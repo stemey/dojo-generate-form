@@ -14,6 +14,7 @@ define(
 		return declare([PrimitiveAttributeFactory],
 			{
 				id: "number",
+				alwaysUseInvalidMessage: true,
 				handles: function (attribute) {
 					return meta.isType(attribute, "number");
 				},
