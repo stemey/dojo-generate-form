@@ -9,6 +9,7 @@ define([
 
 	return declare([PrimitiveAttributeFactory], {
 		id: "time",
+		alwaysUseInvalidMessage: true,
 		handles: function (attribute) {
 			return meta.isType(attribute, "time") && !attribute.array;
 		},

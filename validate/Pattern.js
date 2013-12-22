@@ -1,5 +1,7 @@
 define([
-], function () {
+	"dojo/_base/lang",
+	"dojo/i18n!../nls/validate"
+], function (lang, nls) {
 // module:
 //		gform/createStandardEditorFactory
 
@@ -13,8 +15,9 @@ define([
 			}
 			var matches = plainValue.match(regex);
 			var errors = [];
-			if (matches == null) {
-				errors.push({path: "", message: "{gform.validation.pattern}"});
+			if (matches == null || matches[0] === "") {
+				var msg = lang.replace(nls.pattern, {pattern: pattern});
+				errors.push({path: "", message: msg});
 			}
 			return errors;
 		};
