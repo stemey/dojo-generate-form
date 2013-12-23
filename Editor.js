@@ -8,7 +8,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 		// at needs to be available globally.
 		window.at = at;
 
-		return declare([ Container ], {
+		return declare("gform.Editor", [ Container ], {
 			// summary:
 			//		this widget generates a form based on a schema.
 			// description:

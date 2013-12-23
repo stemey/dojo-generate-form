@@ -48,14 +48,14 @@
             parser.parse();
             try {
                 var ctx = new Context();
-                //store = new Store({data: JSON.parse(stateCollection), idProperty: "id"});
-                //ctx.storeRegistry = new SingleStoreRegistry(store);
-                //ctx.schemaRegistry = new SingleSchemaRegistry(JSON.parse(schema));
-                //opener = new SingleEditorDialogOpener();
-                //opener.ctx = ctx;
-                //opener.placeAt("dialog");
-                //opener.startup();
-                //ctx.opener = opener;
+                store = new Store({data: JSON.parse(stateCollection), idProperty: "id"});
+                ctx.storeRegistry = new SingleStoreRegistry(store);
+                ctx.schemaRegistry = new SingleSchemaRegistry(JSON.parse(schema));
+                opener = new SingleEditorDialogOpener();
+                opener.ctx = ctx;
+                opener.placeAt("dialog");
+                opener.startup();
+                ctx.opener = opener;
                 //var schema = schemaGenerator.generate(gform.ef.layout);
                 var meta = dojo.fromJson(group);
                 var loc = window.location.pathname + "../../schema/";
@@ -68,7 +68,7 @@
                     editor.set("meta", meta);
                     editor.setPlainValue({});
                     generatedEditor = dijit.byId("resultForm");
-                    //generatedEditor.set("ctx", ctx);
+                    generatedEditor.set("ctx", ctx);
                     aspect.after(editor.modelHandle, "onChange", function () {
                         if (editor.get("errorCount") == 0 && editor.get("incompleteCount") == 0) {
                             generatedEditor.setMetaAndPlainValue(editor.get("plainValue").group, {});

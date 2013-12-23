@@ -55,6 +55,9 @@
 	},
 	{
 		"$ref": "attributes/multi-table.json"
+	},
+	{
+		"$ref": "attributes/ref.json"
 	}
 
 ]

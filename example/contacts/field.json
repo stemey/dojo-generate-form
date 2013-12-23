@@ -1,9 +1,0 @@
-{
- "description": "An Address following the convention of
-                 http://www.w3.org/TR/2010/WD-contacts-api-20100121/#idl-def-ContactField",
-        "type": "object",
-  "properties": {
-               "types": {"type":"array", "items":{"type":"string"}},
-    	       "value": {"type" : "string"}
-	}
-}
