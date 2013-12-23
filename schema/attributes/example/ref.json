@@ -1,0 +1,8 @@
+{
+	"code": "friend",
+	"type": "ref",
+	"url": "/service/people",
+	"idProperty": "id",
+	"searchProperty": "name",
+	"schemaUrl": "/service/people?schema"
+}

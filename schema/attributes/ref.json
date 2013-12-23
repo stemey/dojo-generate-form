@@ -1,0 +1,51 @@
+{
+	"code": "ref",
+	"editor": "tab",
+	"description": "This is a select displaying the labels od referenced entities. The autocomplete functionality allows searching through possible entities to associate. It is based on 'dijit.form.FilteringSelect'. There are also buttons to edit the referenced entity or create a new entity in a separate editor. The location of the editor is defined by the opener in the parent editor's context. ",
+	"example": {
+		"$ref": "example/ref.json"
+	},
+	"groups": [
+		{
+			"$ref": "header.json"
+		},
+		{
+			"label": "reference",
+			"attributes": [
+				{
+					"code": "type",
+					"type": "string",
+					"visible": false,
+					"required": true,
+					"values": ["ref"]
+				},
+				{
+					"code": "idProperty",
+					"description": "The id property in the referenced resources",
+					"type": "string"
+				},
+				{
+					"code": "searchProperty",
+					"description": "The property displayed and matched against the user input.",
+					"type": "string"
+				},
+				{
+					"code": "schemaUrl",
+					"required": true,
+					"description": "the url to the schema of the referenced resources.",
+					"type": "string"
+				},
+				{
+					"code": "url",
+					"required": true,
+					"description": "the url of the resources referenced by this property.",
+					"type": "string"
+				}
+			]
+		},
+		{
+			"$ref": "messages.json"
+		}
+	]
+
+}

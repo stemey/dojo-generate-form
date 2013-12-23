@@ -18,31 +18,28 @@ define([
 	"dojo/text!./table.json",
 	"dojo/text!./editorschema.json",
 	"gform/controller/CrudController",
-  "dijit/_WidgetBase", 
+	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
 	"dojo/text!./grid.html",
 	"gform/Context",
-	"gform/createLayoutEditorFactory",	
+	"gform/createLayoutEditorFactory",
 	"dijit/layout/BorderContainer",
 	"dijit/layout/ContentPane",
 	"dijit/Toolbar"
-], function(declare, lang, aspect, Grid, Cache, 
-	VirtualVScroller, ColumnResizer, SingleSort, Filter, Focus, RowHeader, RowSelect, Memory,
-	 Store, json, tableStructure, tabledata, editorSchema, CrudController, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Context, createEditorFactory){
+], function (declare, lang, aspect, Grid, Cache, VirtualVScroller, ColumnResizer, SingleSort, Filter, Focus, RowHeader, RowSelect, Memory, Store, json, tableStructure, tabledata, editorSchema, CrudController, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Context, createEditorFactory) {
 
 
-	
-return declare("gform.tests.gridx.GridController", [ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-		baseClass : "gformGridController",
-		templateString : template,
-		postCreate : function() {	
-			var props={ id: "grid"};
-			props.cacheClass=Cache;
+	return declare("gform.tests.gridx.GridController", [ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+		baseClass: "gformGridController",
+		templateString: template,
+		postCreate: function () {
+			var props = { id: "grid"};
+			props.cacheClass = Cache;
 			props.structure = dojo.fromJson(tableStructure);
-			this.store = new Store({idProperty: 'id', data:dojo.fromJson(tabledata)});
+			this.store = new Store({idProperty: 'id', data: dojo.fromJson(tabledata)});
 			props.store = this.store;
-			props.modules= [
+			props.modules = [
 				VirtualVScroller,
 				{
 					moduleClass: RowSelect,
@@ -52,55 +49,55 @@ return declare("gform.tests.gridx.GridController", [ _WidgetBase, _TemplatedMixi
 				RowHeader
 			];
 			this.grid = new Grid(props);
-			window.grid=this.grid;
+			window.grid = this.grid;
 
 			this.ctx = new Context();
 			this.schemaUrl = "myschema";
-			this.ctx.schemaRegistry.register(this.schemaUrl, dojo.fromJson(editorSchema	));
+			this.ctx.schemaRegistry.register(this.schemaUrl, dojo.fromJson(editorSchema));
 
 		},
-		startup: function() {
+		startup: function () {
 			this.inherited(arguments);
-			this.grid.select.row.connect(this.grid.select.row, "onSelected",lang.hitch(this,"rowSelected"));
+			this.grid.select.row.connect(this.grid.select.row, "onSelected", lang.hitch(this, "rowSelected"));
 			this.gridContainer.addChild(this.grid);
 			this.borderContainer.layout();
 			this.editorController.setEditorFactory(createEditorFactory());
 			this.editorController.setCtx(this.ctx);
 			this.editorController.set("store", this.store);
 			this.editorController.createNew(this.schemaUrl);
-			aspect.before(this.store,"remove",lang.hitch(this,"_onDelete"));
+			aspect.before(this.store, "remove", lang.hitch(this, "_onDelete"));
 		},
-		rowSelected: function(e) {
+		rowSelected: function (e) {
 			this.editorController.edit(e.id, this.schemaUrl);
 		},
-		createNew: function() {
+		createNew: function () {
 			this.editorController.createNew(this.schemaUrl);
 		},
-		previous: function() {
+		previous: function () {
 			this._moveSelection(-1);
 		},
-		next: function() {
+		next: function () {
 			this._moveSelection(1);
 		},
-		_onDelete: function() {
+		_onDelete: function () {
 			this._moveSelection(1);
 		},
-		_moveSelection: function(delta) {
+		_moveSelection: function (delta) {
 			var selectedId = this.grid.select.row.getSelected();
 			if (selectedId) {
 				var index = this.grid.model.idToIndex(selectedId);
-				if (index<0) {
+				if (index < 0) {
 					return;
 				}
-				var nextId = this.grid.model.indexToId(index+delta);
+				var nextId = this.grid.model.indexToId(index + delta);
 				if (typeof nextId == "undefined") {
 					return;
-				}else{
+				} else {
 					this.grid.select.row.deselectById(selectedId);
 					this.grid.select.row.selectById(nextId);
 				}
 			}
-		}	
+		}
 	});
 
 

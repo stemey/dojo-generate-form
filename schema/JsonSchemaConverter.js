@@ -11,7 +11,7 @@ define([ "dojo/_base/array", //
 		formatToTypeMapping: {
 			date: "date",
 			time: "time",
-			"date-time": "date-time"
+			"date-time": "date"
 		},
 		copy: function (propSource, propTarget, prop, attribute) {
 			var value = prop[propSource];
@@ -34,50 +34,38 @@ define([ "dojo/_base/array", //
 				}
 			}
 			if (prop.type == "array") {
-				attribute.array = true;
+				attribute.type = "array";
 				if (prop.items.type == "object") {
-					var types = this.convertType(prop.items, converted);
-					attribute.type = "object";
-					attribute.type_property = prop.gform_type_property || "ext_type";
-					attribute.validTypes = types;
-				} else if (typeof prop.items.type == "string") {
+					var group = this.convertGroup(prop.items, converted);
+					attribute.type = "array";
+					attribute.group = group;
+				} else if (typeof prop.items.type === "string") {
+					attribute.element = {};
 					var type = this.formatToTypeMapping[prop.format];
-					attribute.type = type || prop.items.type;
+					attribute.element.type = type || prop.items.type;
 				} else {
-					var types = this.convertType(prop.items, converted);
-					attribute.type = "object";
-					attribute.type_property = prop.gform_type_property || "ext_type";
-					attribute.validTypes = types;
+					var group = this.convertGroup(prop.items, converted);
+					attribute.type = "array";
+					attribute.group = group;
 				}
-			} else if (prop.type == "object") {
-				var types = this.convertType(prop, converted);
+			} else if (prop.type === "object") {
+				var group = this.convertGroup(prop, converted);
 				attribute.type = "object";
-				attribute.type_property = prop.gform_type_property || "ext_type";
-				attribute.validTypes = types;
+				attribute.group = group;
 			} else if (typeof prop.type == "string") {
 				var type = this.formatToTypeMapping[prop.format];
 				attribute.type = type || prop.type;
 			} else {
-				var types = this.convertType(prop, converted);
+				var group = this.convertGroup(prop, converted);
 				attribute.type = "object";
-				attribute.type_property = prop.gform_type_property || "ext_type";
-				attribute.validTypes = types;
+				attribute.group = group;
 			}
 		},
-		convertType: function (prop, converted) {
+		convertGroup: function (prop, converted) {
 			if (prop.type == "object") {
-				return [this.convert(prop, converted)];
-			} else if (lang.isArray(prop.type)) {
-				var types = [];
-				array.forEach(prop.type, function (schema) {
-					if (typeof schema != "string") {
-						types.push(this.convert(schema, converted));
-					}
-				}, this);
-				return types;
-
+				return this.convert(prop, converted);
 			} else {
-				return [this.convert(prop.type, converted)];
+				return this.convert(prop.type, converted);
 			}
 		},
 		convert: function (/*Object*/schema, /*Object*/converted, /**local variables*/meta) {
