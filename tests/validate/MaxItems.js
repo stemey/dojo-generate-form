@@ -22,7 +22,7 @@ define([
 		function testInvalid() {
 			model.update(["1", "2", "3", "4"]);
 			doh.assertEqual(1, model.errorCount);
-			doh.assertEqual("gform.validation.maxItems", model.message);
+			doh.assertTrue(model.message!="");
 		}
 	]);
 

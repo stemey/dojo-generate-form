@@ -10,6 +10,8 @@ define(
 		"gform/tests/model/MultiObject",//
 		"gform/tests/model/MappedSelectModel",//
 		"gform/tests/model/MergedMultiObject",//
+		"gform/tests/validate/MaxItems",//
+		"gform/tests/validate/MinItems",//
 		"gform/tests/restHelper"
 	], function () {
 
