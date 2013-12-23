@@ -279,6 +279,9 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			},
 			getErrorCount: function () {
 				return this.get("errorCount");
+			},
+			onChange: function (cb) {
+				aspect.after(this.modelHandle, "onChange", cb);
 			}
 
 
