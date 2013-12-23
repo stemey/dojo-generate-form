@@ -29,16 +29,20 @@
 				query("#errorCount")[0].innerHTML=editor.get("errorCount");
 				query("#incompleteCount")[0].innerHTML=editor.get("incompleteCount");
 			}
-			editor.on("state-changed",updateState)
+			editor.onChange(updateState)
 			updateState();
 		});
 	</script>
 </head>
 <body class="claro">
-	<h1 class="testTitle">Programmatic Editor Example</h1>
+	<h1 class="testTitle">Displaying state</h1>
+    <ol>
+        <li>See how all fields are required and the number of incomplete fields is 2.</li>
+        <li>Enter data and see how the number of errors and incompletes changes.</li>
+    </ol>
 
 
-	<div id="editor">
+    <div id="editor">
 	</div>
 			<span>errorCount: </span> 
 			<span id="errorCount">
