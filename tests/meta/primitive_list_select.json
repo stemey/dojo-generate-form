@@ -1,18 +1,18 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes":[
-        {
-           type:"array",
-			editor:"primitive-list",
-          "required":false,
-          "label":"things",
-          "code":"things",
-          "element": {
-            "type":"string",
-            values : ["moin","bye","buenos dias"]      
-					}     
-        }
-    ],
-    "type_property":"ext_type"
+	"code": "example",
+	"label": "example",
+	"attributes": [
+		{
+			"type": "array",
+			"editor": "primitive-array",
+			"required": false,
+			"label": "things",
+			"code": "things",
+			"element": {
+				"type": "string",
+				"values": ["moin", "bye", "buenos dias"]
+			}
+		}
+	],
+	"type_property": "ext_type"
 }

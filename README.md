@@ -44,35 +44,7 @@ The editor schema is a json literal that contains all the properties to be displ
 				code: 'birthday',
 				required: false,
 				label: 'date of birth',
-				type: 'string',
-				dateformat : 'yyyy-MM-dd'
-			},
-			{
-				code: 'friends',
-				required: false,
-				label: 'your best friends',
-				type: 'Friend',
-				array: true,
-				validTypes : [
-						{
-							code: 'Friend',
-							attributes: [
-								{
-									code: 'nickname',
-									required: true,
-									label: 'nickname',
-									type: 'string'
-								},
-								{
-									code: 'birthday',
-									required: false,
-									label: 'date of birth',
-									type: 'string',
-									dateformat : 'yyyy-MM-dd'
-								}
-							]
-						}
-					]
+				type: 'string'
 			}
 		]
 	}
