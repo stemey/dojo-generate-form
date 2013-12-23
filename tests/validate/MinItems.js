@@ -22,7 +22,7 @@ define([
 		function testInvalid() {
 			model.update(["1"]);
 			doh.assertEqual(1, model.errorCount);
-			doh.assertEqual("gform.validation.minItems", model.message);
+			doh.assertTrue(model.message!="");
 		}
 	]);
 
