@@ -1,11 +1,11 @@
 define([
 	"dojo/_base/declare",
-	"./MetaModel"
-], function (declare, MetaModel) {
+	"./Model"
+], function (declare, Model) {
 	// module: 
 	//		gform/model/MultiObject
 
-	var MergedMultiObject = declare([MetaModel], {
+	var MergedMultiObject = declare([Model], {
 		// summary:
 		//		Provides access to sibling attributes of modelHandle.
 

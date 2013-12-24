@@ -1,11 +1,11 @@
 define([ "dojo/_base/array",
 	"dojo/_base/declare",
-	"./MetaModel"
-], function (array, declare, MetaModel) {
+	"./Model"
+], function (array, declare, Model) {
 	// module:
 	//		gform/model/MultiObject
 
-	var Model = declare([MetaModel], {
+	var Model = declare([Model], {
 		// summary:
 		//		Provides access to sibling attributes of modelHandle.
 

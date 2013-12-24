@@ -49,7 +49,7 @@ define([
 			//		the attribute meta data
 			// plainValue: Object
 			//		the new value of the model
-			// returns: gform/model/MetaModel
+			// returns: gform/model/Model
 			//		the model
 		}
 

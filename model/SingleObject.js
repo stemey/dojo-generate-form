@@ -1,11 +1,11 @@
 define([
 	"dojo/_base/declare",
-	"./MetaModel"
-], function (declare, MetaModel) {
+	"./Model"
+], function (declare, Model) {
 	// module:
 	//		gform/model/SingleObject
 
-	return declare([MetaModel], {
+	return declare([Model], {
 		// summary:
 		//		Provides access to sibling attributes of modelHandle.
 		attributes: null,

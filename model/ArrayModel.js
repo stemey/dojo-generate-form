@@ -2,12 +2,12 @@ define([
 	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"../patch/StatefulArray",
-	"./MetaModel"
-], function (lang, declare, StatefulArray, MetaModel) {
+	"./Model"
+], function (lang, declare, StatefulArray, Model) {
 	// module: 
 	//		gform/model/SingleObject
 
-	return declare([MetaModel], {
+	return declare([Model], {
 		// summary:
 		//		rovides access to sibling attributes of modelHandle.
 		value: null,

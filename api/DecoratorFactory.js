@@ -18,7 +18,7 @@ define([
 			//		creates the decorator widget
 			// attribute: Object
 			//		the attribute meta data
-			// modelHandle: gform/model/MetaModel
+			// modelHandle: gform/model/Model
 			//		The meta data of the modelHandle contains state information. This should be displayed by this Decorator.
 			// returns: dijit/_WidgetBase
 		}

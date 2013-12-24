@@ -28,7 +28,7 @@ define([
 		//		the group meta data
 		// value: Object
 		//		the value of the group
-		// returns: gform/model/MetaModel
+		// returns: gform/model/Model
 		//		the model
 		}
 	

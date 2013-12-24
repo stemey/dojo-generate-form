@@ -1,13 +1,13 @@
 define([
-	"doh/runner", "gform/model/MetaModel"], function (doh, MetaModel) {
+	"doh/runner", "../../model/Model"], function (doh, Model) {
 
 
-	var m = new MetaModel();
+	var m = new Model();
 	m.getPlainValue = function () {
 		return 0;
 	};
 
-	doh.register("MetaModel", [
+	doh.register("Model", [
 		function testError() {
 			m.set("state", "Error");
 			doh.assertEqual(1, m.errorCount);
