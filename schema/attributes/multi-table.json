@@ -17,10 +17,9 @@
 					"visible": false,
 					"required": true,
 					"values": ["array"]
-				},{
-					"code": "typeProperty",
-					"type": "string",
-					"required": true
+				},
+				{
+					"$ref": "properties/typeProperty.json"
 				},
 				{
 					"code": "groups",

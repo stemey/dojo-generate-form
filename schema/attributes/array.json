@@ -19,14 +19,7 @@
 					"values": ["array"]
 				},
 				{
-					"code": "group",
-					"type": "object",
-					"typeProperty": "editor",
-					"required": true,
-					"groups": {
-						"$ref": "../groups.json"
-					}
-
+					"$ref": "properties/group.json"
 				}
 
 			]

@@ -1,0 +1,10 @@
+{
+	"code": "group",
+	"description": "The group of the embedded object.",
+	"type": "object",
+	"typeProperty": "editor",
+	"required": true,
+	"groups": {
+		"$ref": "../../groups-nocode.json"
+	}
+}

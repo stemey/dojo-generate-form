@@ -1,0 +1,10 @@
+{
+
+	"code": "attributes",
+	"description":"An array of attributes.",
+	"type": "array",
+	"typeProperty": "editor",
+	"groups": {
+		"$ref": "../../attributes.json"
+	}
+}

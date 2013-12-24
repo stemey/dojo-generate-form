@@ -1,0 +1,6 @@
+{
+	"code": "typeProperty",
+	"type": "string",
+	"required": true,
+	"description": "The embedded object has a property with this name. It refers to its group."
+}

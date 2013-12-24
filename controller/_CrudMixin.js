@@ -1,33 +1,11 @@
 define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
-	"dojo/_base/array",
-	"dojo/query",
-	"dijit/registry",
 	"dojo/promise/all",
 	"dojo/when",
 	"dojo/Stateful",
-	"gform/Editor",
-	"gform/createLayoutEditorFactory",
-	"dijit/_WidgetBase",
-	"dijit/_TemplatedMixin",
-	"dijit/_WidgetsInTemplateMixin",
-	"dojo/text!./crudController.html",
-	"../schema/labelHelper",
-	"dojo/dom-style",
-	"dojo/dom-geometry",
-	"./actions/Save",
-	"./actions/Discard",
-	"./actions/Delete",
-	"dojo/i18n!../nls/messages",
-	"dijit/form/Button",
-	"dijit/layout/StackContainer",
-	"dijit/layout/ContentPane",
-	"dijit/ProgressBar",
-	"dijit/Dialog",
-	"dijit/layout/BorderContainer",
-	"dijit/layout/ContentPane",
-], function (declare, lang, array, query, registry, all, when, Stateful, Editor, createEditorFactory, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, labelHelper, domStyle, domGeometry, Save, Discard, Delete, messages, Button) {
+	"dojo/i18n!../nls/messages"
+], function (declare, lang, all, when, Stateful, messages) {
 // module:
 //		gform/controller/_CrudMixin
 

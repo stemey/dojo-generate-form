@@ -19,14 +19,7 @@
 					"values": ["object"]
 				},
 				{
-					"code": "group",
-					"description": "a group of attributes.",
-					"type": "object",
-					"typeProperty": "editor",
-					"required": true,
-					"groups": {
-						"$ref": "../groups-nocode.json"
-					}
+					"$ref": "properties/group.json"
 				}
 
 			]

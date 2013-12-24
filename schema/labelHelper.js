@@ -12,7 +12,7 @@ define([ "dojo/_base/array", "dojo/_base/declare" ], function (array, declare) {
 			var labelAttribute = null;
 			if (type.labelAttribute) {
 				labelAttribute = type.labelAttribute;
-			} else {
+			} else if (type.attributes) {
 				array.forEach(type.attributes, function (a) {
 					if (labelAttribute == null && a.type === "string") {
 						labelAttribute = a.code;
@@ -24,6 +24,8 @@ define([ "dojo/_base/array", "dojo/_base/declare" ], function (array, declare) {
 				} else {
 					return null;
 				}
+			} else if (type.groups) {
+				return this.getTypeLabel(type.groups[0], modelHandle);
 			}
 		}
 

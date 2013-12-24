@@ -3,28 +3,19 @@
 	"description": "Attributes displayed in a list.",
 	"attributes": [
 		{
-			"code": "code",
-			"type": "string",
-			"required": true
+			"$ref":"properties/code.json"
 		},
 		{
-			"code": "label",
-			"type": "string"
+			"$ref":"properties/label.json"
 		},
 		{
-			"code": "description",
-			"type": "string",
-			"editor": "textarea",
-			"description":"a description displayed at the top"
+			"$ref":"properties/description.json"
 		},
 		{
-
-			"code": "attributes",
-			"type": "array",
-			"typeProperty": "editor",
-			"groups": {
-				"$ref": "../attributes.json"
-			}
+			"$ref":"properties/labelAttribute.json"
+		},
+		{
+			"$ref": "properties/attributes.json"
 		}
 	]
 }

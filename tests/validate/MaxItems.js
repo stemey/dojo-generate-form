@@ -22,7 +22,7 @@ define([
 		function testInvalid() {
 			model.update(["1", "2", "3", "4"]);
 			doh.assertEqual(1, model.errorCount);
-			doh.assertTrue(model.message!="");
+			doh.assertTrue(model.message!=="");
 		}
 	]);
 
