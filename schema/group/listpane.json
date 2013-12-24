@@ -3,28 +3,19 @@
 	"description": "The listpane displays an array of attributes in a list. It is useful inside dijit layout containers because it wraps its content in a 'dijit.layout.ContentPane'.",
 	"attributes": [
 		{
-			"code": "code",
-			"type": "string",
-			"required": true
+			"$ref":"properties/code.json"
 		},
 		{
-			"code": "label",
-			"type": "string"
+			"$ref":"properties/label.json"
 		},
 		{
-			"code": "description",
-			"type": "string",
-			"editor": "textarea",
-			"description":"a description displayed at the top"
+			"$ref":"properties/description.json"
 		},
 		{
-
-			"code": "attributes",
-			"type": "array",
-			"typeProperty": "editor",
-			"groups": {
-				"$ref": "../attributes.json"
-			}
+			"$ref":"properties/labelAttribute.json"
+		},
+		{
+			"$ref": "properties/attributes.json"
 		}
 	]
 }

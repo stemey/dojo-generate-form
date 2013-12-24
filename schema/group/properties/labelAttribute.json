@@ -1,0 +1,5 @@
+{
+	"code": "labelAttribute",
+	"type": "string",
+	"description": "Defines the attribute whose value will be displayed as the instance label in dialogs or tabs."
+}

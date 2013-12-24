@@ -12,9 +12,7 @@
 			"label": "element",
 			"attributes": [
 				{
-					"code": "typeProperty",
-					"type": "string",
-					"required": true
+					"$ref": "properties/typeProperty.json"
 				},
 				{
 					"code": "type",
@@ -24,15 +22,7 @@
 					"values": ["array"]
 				},
 				{
-					"code": "groups",
-					"type": "array",
-					"editor": "multi-array",
-					"typeProperty": "editor",
-					"required": true,
-					"groups": {
-						"$ref": "../groups.json"
-					}
-
+					"$ref": "properties/groups.json"
 				}
 
 			]

@@ -2,19 +2,16 @@
 	"code": "listgroup",
 	"attributes": [
 		{
-			"code": "code",
-			"type": "string",
-			"required": true
+			"$ref":"properties/code.json"
 		},
 		{
-			"code": "label",
-			"type": "string"
+			"$ref":"properties/label.json"
 		},
 		{
-			"code": "description",
-			"type": "string",
-			"editor": "textarea",
-			"description": "a description displayed at the top"
+			"$ref":"properties/description.json"
+		},
+		{
+			"$ref":"properties/labelAttribute.json"
 		},
 		{
 			"code": "groups",

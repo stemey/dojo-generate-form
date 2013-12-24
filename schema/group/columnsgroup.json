@@ -3,28 +3,19 @@
 	"description": "This pane arranges its attributes in columns. The maximum of the children's width is calculated and the corresponding number of columns are used. This group is useful for lots of primitive attributes. complex attributes may be nested and are usually not easily arranged in columns with fixed width. <br/>This dijit uses css-columns, which is a relatively new feature and not supported in older browsers. The attribute's nodes must have a calculatable width.",
 	"attributes": [
 		{
-			"code": "code",
-			"type": "string",
-			"required": true
+			"$ref":"properties/code.json"
 		},
 		{
-			"code": "label",
-			"type": "string"
+			"$ref":"properties/label.json"
 		},
 		{
-			"code": "description",
-			"type": "string",
-			"editor": "textarea",
-			"description": "a description displayed at the top"
+			"$ref":"properties/description.json"
 		},
 		{
-
-			"code": "attributes",
-			"type": "array",
-			"typeProperty": "editor",
-			"groups": {
-				"$ref": "../attributes.json"
-			}
+			"$ref":"properties/labelAttribute.json"
+		},
+		{
+			"$ref": "properties/attributes.json"
 		}
 	]
 }

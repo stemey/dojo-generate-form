@@ -1,0 +1,5 @@
+{
+	"code": "label",
+	"type": "string",
+	"description": "The label is displayed in tabs or similar parent groups."
+}

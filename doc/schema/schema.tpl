@@ -1,7 +1,5 @@
 <div>
 	<h2>Gform schema documentation</h3>
-	<p>This documentation was generated
-    </p>
 
 	<h3>Attributes</h3>
 
@@ -10,7 +8,7 @@
 </p>
 
 <p>
-	Most properties for the various attributes are documented here. Some of these properties are available for all attributes and some are specific to the dijit used. General properties for attributes are :
+	Most properties for the various attributes are documented here. Some of these properties are available for all attributes and some are specific to the dijit used. General properties for attributes are:
 <ul>
 	<li>
 			code: the name of the json property described by the attribute and bound to the dijit
@@ -48,18 +46,9 @@
 				<% } %>			
 				<ul>
 					<% for (var idx in attribute.props) { var prop=attribute.props[idx]; %>
-						<li>	<%=prop.code%>
+						<li>	<%=prop.code%> <% if (prop.required) {%><super>*</super><%} %> <span class="type"><%=prop.type%></span>
 							<p><%=prop.description%></p>
-                               <ul>
-                                        <li>
-                                           type: <%=prop.type%>
 
-                                        </li>
-                                        <li>
-                                            required: <%=prop.required==true%>
-
-                                        </li>
-                                </ul>
 						</li>
 					<% } %>
 				</ul>
@@ -68,7 +57,9 @@
 
 	<h3>Groups</h3>
 	<p>
-		Groups give structure to a form. Attributes can be grouped in tabs or titlepanes. Groups can be nested. A group is always chosen by the property `editor`. An editorFactory also defines a default groupfactory wich will be chosen if the `editor` is absent.
+		Groups have two functions. Firstly they define types by grouping attributes and optionally giving it a name (the code). Secondly the group also has a visual representation.
+		Also groups can be nested. The nested groups do not affect the type but add add more structure to the visiual representation (e.g. tabs and accordions).
+		A group is always chosen by the property `editor`. An editorFactory also defines a default groupfactory wich will be chosen if the `editor` is absent.
 	</p>
         <% for (var idx in groups) { var attribute=groups[idx]; %>
 				<div data-dojo-type="dijit/TitlePane" title="<%= attribute.id %>" data-dojo-props="open:false">
@@ -87,18 +78,9 @@
                 				<% } %>
                 				<ul>
                 					<% for (var idx in attribute.props) { var prop=attribute.props[idx]; %>
-                						<li>	<%=prop.code%>
+                						<li>	<%=prop.code%> <% if (prop.required) {%><super>*</super><%} %> <span class="type"><%=prop.type%></span>
                 							<p><%=prop.description%></p>
-                                               <ul>
-                                                        <li>
-                                                           type: <%=prop.type%>
 
-                                                        </li>
-                                                        <li>
-                                                            required: <%=prop.required==true%>
-
-                                                        </li>
-                                                </ul>
                 						</li>
                 					<% } %>
                 				</ul>

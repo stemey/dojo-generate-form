@@ -3,9 +3,7 @@
 	"description": "The titlepane displays an array of attributes in a 'dijit.TitlePane'.",
 	"attributes": [
 		{
-			"code": "code",
-			"type": "string",
-			"required":true
+			"$ref": "properties/code.json"
 		},
 		{
 			"code": "title",
@@ -13,19 +11,16 @@
 			"description": "the title of the pane"
 		},
 		{
-			"code": "description",
-			"type": "string",
-			"editor": "textarea",
-			"description": "a description displayed at the top"
+			"$ref": "properties/code.json"
 		},
 		{
-
-			"code": "attributes",
-			"type": "array",
-			"typeProperty": "editor",
-			"groups": {
-				"$ref": "../attributes.json"
-			}
+			"$ref": "properties/description.json"
+		},
+		{
+			"$ref": "properties/labelAttribute.json"
+		},
+		{
+			"$ref": "properties/attributes.json"
 		}
 	]
 

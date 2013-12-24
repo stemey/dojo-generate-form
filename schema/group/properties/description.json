@@ -1,0 +1,6 @@
+{
+	"code": "description",
+	"type": "string",
+	"editor": "textarea",
+	"description": "a description displayed at the top"
+}

@@ -1,0 +1,6 @@
+{
+	"code": "code",
+	"type": "string",
+	"required": true,
+	"description":"The code is the name of the type. It is usually used in multi-type attributes."
+}
