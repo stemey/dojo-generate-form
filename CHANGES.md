@@ -1,11 +1,11 @@
-0.20.0 (x.12.2013)
+0.20.0 (24.12.2013)
 -----------------
 
 - schema was refactored.
 
--- The definition of arrays and maps were changed. Use type = "array" or "map". Define the elements in separate properties.
+- The definition of arrays and maps were changed. Use type = "array" or "map". Define the elements in separate properties.
 
--- The id of a group was changed from groupType to editor.
+- The id of a group was changed from groupType to editor.
 
 - model was refactored. The model contains all the behavior and has a rich inheritance hierachy. getPlainValue and updateModelHandle were dropped.
 
