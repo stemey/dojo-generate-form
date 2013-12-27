@@ -1,10 +1,7 @@
 define([
 	"dojo/_base/declare",
-	"dojo/_base/lang",
-	"dojo/_base/array",
-	"dojo/store/Observable",
-	"dojo/store/JsonRest",
-], function(declare, lang, array, Observable, DefaultStore){
+    "dojo/store/JsonRest"
+], function(declare, DefaultStore){
 // module:
 //		gform/controller/StoreRegistry
 

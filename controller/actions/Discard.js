@@ -1,15 +1,8 @@
 define([
 	"dojo/_base/declare",
-	"dojo/_base/lang",
-	"dojo/_base/array",
-	"dojo/dom-class",
-	"dojo/request",
-	"dojo/promise/all",	
-	"dojo/when",
-	"./_ActionMixin",
-	"dojo/i18n!../../nls/messages",	
-	
-], function(declare, lang, array, domClass, request, all, when, _ActionMixin, messages	){
+    "./_ActionMixin"
+
+], function(declare, _ActionMixin){
 // module:
 //		gform/controller/actions/Discard
 
@@ -21,6 +14,6 @@ return declare( [_ActionMixin], {
 	execute: function() {
 			this.ctrl.editor.syncPendingChanges();
 			this.ctrl.editor.reset();	
-		},
+		}
 	});
 });

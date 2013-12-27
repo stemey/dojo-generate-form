@@ -20,7 +20,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/_base/array", "dijit/_Wi
 				this.domNode.style.display="none";
 			}
 		},
-		templateString : template,
+		templateString : template
 	
 	});
 

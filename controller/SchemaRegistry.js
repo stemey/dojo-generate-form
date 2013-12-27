@@ -1,9 +1,7 @@
 define([
 	"dojo/_base/declare",
-	"dojo/_base/lang",
-	"dojo/_base/array",
-	"dojo/request",
-], function(declare, lang, array, request){
+    "dojo/request"
+], function(declare, request){
 // module:
 //		gform/controller/SchemaRegistry
 

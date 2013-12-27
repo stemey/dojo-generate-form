@@ -73,7 +73,7 @@ define([
 		},
 		setEditorFactory: function (ef) {
 			this.editor.set("editorFactory", ef);
-		},
+		}
 
 	});
 

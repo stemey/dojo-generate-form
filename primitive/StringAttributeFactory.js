@@ -4,7 +4,7 @@ define([
 	"../model/StringModel",
 	"./PrimitiveAttributeFactory",
 	"dojo/_base/declare",
-	"./ValidationTextbox",
+	"./ValidationTextBox",
 	"../schema/meta",
 	"./mixinTextboxBindings",
 	"./dijitHelper"

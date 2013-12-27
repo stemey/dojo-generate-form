@@ -102,7 +102,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
 				}
 			});
 			return types.length > 0 ? types[0] : null;
-		},
+		}
 
 	});
 	return new Meta();

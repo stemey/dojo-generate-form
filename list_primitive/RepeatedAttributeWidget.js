@@ -8,9 +8,8 @@ define([
 	"dijit/_WidgetsInTemplateMixin",
 	"dojo/text!./repeated_attribute.html",
 	"dojo/i18n!../nls/messages",
-	"../group/_DecoratorMixin",
-	"dojo/i18n!../nls/messages"
-], function (Stateful, lang, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, messages, _DecoratorMixin, messages) {
+	"../group/_DecoratorMixin"
+], function (Stateful, lang, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, messages, _DecoratorMixin) {
 
 	return declare("gform.RepeatedAttributeWidget", [ _WidgetBase, _Container,
 		_TemplatedMixin, _WidgetsInTemplateMixin, _DecoratorMixin ], {

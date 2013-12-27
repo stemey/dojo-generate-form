@@ -1,15 +1,11 @@
 define([
 	"dojo/_base/declare",
-	"dojo/_base/lang",
-	"dojo/_base/array",
-	"dojo/dom-class",
-	"dojo/request",
-	"dojo/promise/all",	
-	"dojo/when",
+    "dojo/_base/array",
+    "dojo/when",
 	"./_ActionMixin",
-	"dojo/i18n!../../nls/messages",	
-	
-], function(declare, lang, array, domClass, request, all, when, _ActionMixin, messages	){
+	"dojo/i18n!../../nls/messages"
+
+], function(declare, array, when, _ActionMixin, messages	){
 // module:
 //		gform/controller/actions/Save
 

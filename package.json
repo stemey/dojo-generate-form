@@ -1,32 +1,42 @@
 {
-	"name": "gform",
-	"author": "Stefan Meyer",
-	"version": "0.8",
-  "maintainers":[
-  	{"name": "Stefan Meyer", "email": "stefan.meyer@sinnerschrader.com"}],
-	"main": "main",
-	"directories": {
-		"lib": "."
-	},
-	"dependencies": {
-		"dojo": "1.8.0",
-		"dijit": "1.8.0",
-		"dojox": "1.8.0",
-		"util": "1.8.0"
-	},
-	"description": "Dojo Generate Form helps to create administrative front ends.",
-	"licenses": [
-		{
-			"type": "AFLv2.1",
-			"url": "http://bugs.dojotoolkit.org/browser/dojo/trunk/LICENSE#L43"
-		},
-		{
-			"type": "BSD",
-			"url": "http://bugs.dojotoolkit.org/browser/dojo/trunk/LICENSE#L13"
-		}
-	],
-	"bugs": "https://github.com/stemey/dojo-generate-form/issues",
-	"keywords": ["JavaScript", "Dojo", "Generate", "Form"],
-	"homepage": "http://toobop.net/gform",
-	"dojoBuild": "profiles/gform.profile.js"
+  "name": "gform",
+  "author": "Stefan Meyer",
+  "version": "0.20.0",
+  "maintainers": [
+    {
+      "name": "Stefan Meyer",
+      "email": "stefan.meyer@sinnerschrader.com"
+    }
+  ],
+  "main": "main",
+  "directories": {
+    "lib": "."
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-dojo": "~0.2.4"
+  },
+  "description": "Dojo Generate Form helps to create administrative front ends.",
+  "licenses": [
+    {
+      "type": "AFLv2.1",
+      "url": "http://bugs.dojotoolkit.org/browser/dojo/trunk/LICENSE#L43"
+    },
+    {
+      "type": "BSD",
+      "url": "http://bugs.dojotoolkit.org/browser/dojo/trunk/LICENSE#L13"
+    }
+  ],
+  "bugs": "https://github.com/stemey/dojo-generate-form/issues",
+  "keywords": [
+    "JavaScript",
+    "Dojo",
+    "Generate",
+    "Form"
+  ],
+  "homepage": "http://toobop.net/gform",
+  "dojoBuild": "package.js"
 }

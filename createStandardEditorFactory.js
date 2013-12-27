@@ -75,7 +75,7 @@ define([
 		new BooleanAttributeFactory({editorFactory: editorFactory}), //
 		new StringAttributeFactory({editorFactory: editorFactory}), //
 		new DateAttributeFactory({editorFactory: editorFactory}), //
-		new TimeAttributeFactory({editorFactory: editorFactory}), //
+		new TimeAttributeFactory({editorFactory: editorFactory}) //
 		//	       				new MappedContentPaneFactory({editorFactory:editorFactory}) //
 	];
 	attributeFactoryFinder.addAttributeFactory(new MultiTableAttributeFactory({editorFactory: editorFactory}));
