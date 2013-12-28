@@ -1,19 +1,16 @@
-define([ "dojo/_base/array", //
-"dojo/_base/lang",//
-"dojo/_base/declare",//
-"dojox/mvc/at"
-], function(array, lang, declare, at) {
+define([
+], function () {
 
-	 return {
-				format : function(value) {
-					return value == null ? "" : value;
-				},
-				parse : function(value) {
-					if (value == "") {
-						return null;
-					} else {
-						return value;
-					}
-				}
-			};
+	return {
+		format: function (value) {
+			return value == null ? "" : value;
+		},
+		parse: function (value) {
+			if (value === "") {
+				return null;
+			} else {
+				return value;
+			}
+		}
+	};
 });

@@ -1,4 +1,5 @@
 define([
+	"../model/PrimitiveModel",
 	"dojo/_base/lang",
 	"dojo/aspect",
 	"dojo/_base/declare",
@@ -7,7 +8,7 @@ define([
 	"dojox/mvc/WidgetList",
 	"./RepeatedAttributeWidget",
 	"../widget/MvcDndSource"
-], function (lang, aspect, declare, EmbeddedListWidget, PrimitiveListAttributeFactory, WidgetList, RepeatedAttributeWidget, DndSource) {
+], function (PrimitiveModel, lang, aspect, declare, EmbeddedListWidget, PrimitiveListAttributeFactory, WidgetList, RepeatedAttributeWidget, DndSource) {
 // module: 
 //		gform/list_primitive/RefListAttributeFactory
 
@@ -18,11 +19,11 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute.type == "ref-array" || (attribute.type == "primitive-array" && attribute.element.type == "ref");
+			return attribute.type === "array" && attribute.element && attribute.element.type === "ref";
 		},
 		create: function (attribute, modelHandle, ctx) {
 			if (modelHandle.value == null) {
-				throw new "provide a default value";//modelHandle.value=new StatefulArray([]);
+				throw new "provide a default value";
 			}
 			var childAttribute = attribute.element;
 
@@ -51,7 +52,7 @@ define([
 					newMh.update(plainValue);
 					newMh.oldValue = plainValue;
 					return newMh;
-				}
+				};
 				aspect.after(widgetList, "startup", function () {
 					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});
 				});

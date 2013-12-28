@@ -11,7 +11,7 @@ define([
 		id: "checked-select",
 		handles: function (attribute) {
 			var values = attribute.values;
-			return values != null && values.length > 0;
+			return values !== null && values.length > 0;
 		},
 
 

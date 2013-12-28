@@ -49,9 +49,6 @@ define([ "dojo/_base/array", //
 
 			this.typeStack = new StackContainer({doLayout: false});
 			this.typeToGroup = {};
-			var me = this;
-			var cloned = new Stateful({});
-			//typeToValue[currentType].value=modelHandle.value;
 			array.forEach(this.groups, function (group) {
 				var editor = new Editor(
 					{
@@ -80,7 +77,9 @@ define([ "dojo/_base/array", //
 		},
 		modelTypeChanged: function (prop, old, nu) {
 			if (old !== nu) {
-				if (nu == null) nu = "null";
+				if (nu == null) {
+					nu = "null";
+				}
 				this.panelModel.set("type", nu);
 			}
 		},

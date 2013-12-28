@@ -24,25 +24,6 @@ define([
 			var widget = new SimpleTextarea(props);
 			aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
 			return widget;
-		},
-		getSchema: function () {
-			var schema = {};
-			schema["id"] = "string";
-			schema["description"] = "This is a textarea based on 'dijit.form.SimpleTextarea'";
-			schema["example"] = dojo.toJson({editor: 'simpletextarea', code: 'name', type: 'string', cols: 30, rows: 4}, true);
-			var properties = {};
-			properties.type = {type: "string", required: true, "enum": ["string"]};
-			properties.cols = {type: "number", places: 0, description: "the number of characters per line"}
-			properties.rows = {type: "number", places: 0, description: "the number of rows o text"}
-			dijitHelper.addSchemaProperties(properties);
-			dijitHelper.addSchemaProperty("required", properties);
-			dijitHelper.addSchemaProperty("maxLength", properties);
-			dijitHelper.addSchemaProperty("missingMessage", properties);
-			dijitHelper.addSchemaProperty("promptMessage", properties);
-			dijitHelper.addSchemaProperty("placeHolder", properties);
-
-			schema.properties = properties;
-			return schema;
 		}
 	});
 });

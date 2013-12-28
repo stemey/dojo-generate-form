@@ -70,6 +70,5 @@ define([
 			model.update(plainValue);
 			return model;
 		}
-		/* getSchema() is implemented in gform/embedded/EmbeddedAttributeFactory */
 	});
 });

@@ -1,30 +1,29 @@
-define([ "dojo/_base/lang", 
-		"dojo/_base/declare", 
-		"dojo/aspect", 
-		"dojo/when", 
-		"dijit/_WidgetBase",
-		"dijit/_TemplatedMixin",
-		"dijit/_WidgetsInTemplateMixin",
-		"dojo/text!./RefSelect.html",
-		"dojo/i18n!../nls/messages"
-], function(lang, declare, aspect, when, _WidgetBase, _TemplatedMixin,
-		_WidgetsInTemplateMixin, template, messages) {
+define([ "dojo/_base/lang",
+	"dojo/_base/declare",
+	"dojo/aspect",
+	"dojo/when",
+	"dijit/_WidgetBase",
+	"dijit/_TemplatedMixin",
+	"dijit/_WidgetsInTemplateMixin",
+	"dojo/text!./RefSelect.html",
+	"dojo/i18n!../nls/messages"
+], function (lang, declare, aspect, when, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, messages) {
 //  module:
 //		gform/primitive/RefSelect
 
 	return declare([ _WidgetBase,
-			_TemplatedMixin, _WidgetsInTemplateMixin ], {
+		_TemplatedMixin, _WidgetsInTemplateMixin ], {
 		//  description:
 		//		RefSelect displays a reference in a dijit/FilteringSelect. Editing the selected reference in
 		//		another editor is supported via its opener. Creating a new entity and associating it
 		//		with the current attribute is supported in the same way. 
-		constructor: function(kwargs) {
-			lang.mixin(this,kwargs);
+		constructor: function (kwargs) {
+			lang.mixin(this, kwargs);
 		},
 		templateString: template,
 		// opener:
 		//		the opener manages the opening of another editor.
-		opener:null,
+		opener: null,
 		// filteringSelect:
 		//		the FilteringSelect.
 		filteringSelect: null,
@@ -33,82 +32,82 @@ define([ "dojo/_base/lang",
 		editorFactory: null,
 		// selectContainer:
 		//		the container where the FilteringSelect is placed.
-		selectContainer:null,
+		selectContainer: null,
 		// meta:
 		//		the attribute meta data.
 		meta: null,
 		// editButton:
 		//		the opener manages the opening of another editor.
-		editButton:null,
+		editButton: null,
 		// targetCreatable:
 		//		if a button to create a target should be displayed.
 		targetCreatable: false,
-		postCreate: function() {
+		postCreate: function () {
 			this.inherited(arguments);
 			this.editButton.on("click", lang.hitch(this, "openref"));
-			this.editButton.set("label", messages["editButtonLabel"]);
+			this.editButton.set("label", messages.editButtonLabel);
 			this.createButton.on("click", lang.hitch(this, "createref"));
-			this.createButton.set("label", messages["createButtonLabel"]);
+			this.createButton.set("label", messages.createButtonLabel);
 			this.filteringSelect.watch("value", lang.hitch(this, "updateState"));
 			this.filteringSelect.watch("state", lang.hitch(this, "updateState"));
 			if (!this.targetCreatable) {
-				this.createButton.domNode.style.display="none";
+				this.createButton.domNode.style.display = "none";
 			}
 			var select = this.filteringSelect;
-			this.storeListener = aspect.after(select.store, "put", function(result, args) {
-				when(result).then(function(id) {
+			this.storeListener = aspect.after(select.store, "put", function (result, args) {
+				when(result).then(function (id) {
 					var entity = args[0];
-					if (id==""+select.get("value")) {
+					if (id === "" + select.get("value")) {
 						select.set("item", entity);
 					}
 				});
 				return result;
 			});
 		},
-		startup: function() {
+		startup: function () {
 			this.filteringSelect.placeAt(this.selectContainer);
 			this.filteringSelect.startup();
 			this.inherited(arguments);
 			this.updateState();
 		},
-		updateState: function() {
+		updateState: function () {
 			//  description:
 			//		updates the button state.
-			var editPossible = this.filteringSelect.state!="Error" && !!this.filteringSelect.value;
+			var editPossible = this.filteringSelect.state !== "Error" && !!this.filteringSelect.value;
 			this.editButton.set("disabled", !editPossible);
 		},
-		openref: function() {
+		openref: function () {
 			//  description:
 			//		open the selected reference in a separate editor.
 			var ref = this.filteringSelect.get("value");
-			var url = (this.meta.url || "")+"/"+ref;
+			var url = (this.meta.url || "") + "/" + ref;
 			this.opener.openSingle({
-				url:url, 	
-				schemaUrl:this.meta.schemaUrl, 
-				editorFactory:this.editorFactory
+				url: url,
+				schemaUrl: this.meta.schemaUrl,
+				editorFactory: this.editorFactory
 			});
 		},
-		createref: function() {
+		createref: function () {
 			//  description:
 			//		open a new reference in a separate editor.
 			this.opener.createSingle({
-				url: this.meta.url, 
-				schemaUrl:this.meta.schemaUrl, 
-				editorFactory:this.editorFactory, 
+				url: this.meta.url,
+				schemaUrl: this.meta.schemaUrl,
+				editorFactory: this.editorFactory,
 				callback: lang.hitch(this, "onCreated")
 			});
 		},
-		onCreated: function(id) {
+		onCreated: function (id) {
 			//  description:
 			//		called when a new entity was created and should be asscoiated with this attribute.
 			//  id:
 			//		the id of the newly created entity.
-			this.filteringSelect.set("value", ""+id);
+			this.filteringSelect.set("value", "" + id);
 		},
-		destroy: function() {
+		destroy: function () {
 			this.inherited(arguments);
 			this.storeListener.remove();
-		}	
+		}
 	});
 
 });

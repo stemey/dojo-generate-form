@@ -1,5 +1,5 @@
 define([
-	'../list_table/RepeatedSingleEmbeddedAttributeFactory',
+	"../list_table/RepeatedSingleEmbeddedAttributeFactory",
 	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"../model/SingleObject",

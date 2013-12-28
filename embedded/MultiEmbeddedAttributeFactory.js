@@ -17,11 +17,10 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		create: function (attribute, modelHandle) {
-			panelWidget = new GroupPanelWidget({
+			var panelWidget = new GroupPanelWidget({
 				"modelHandle": modelHandle,
 				"groups": attribute.groups,
 				nullable: attribute.required !== true,
-				//"typeProperty":attribute.typeProperty,
 				editorFactory: this.editorFactory
 			});
 			return panelWidget;

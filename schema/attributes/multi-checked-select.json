@@ -56,7 +56,7 @@
 			]
 		},
 		{
-			"$ref": "array-constraints"
+			"$ref": "array-constraints.json"
 		}
 	]
 }

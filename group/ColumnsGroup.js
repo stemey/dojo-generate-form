@@ -22,7 +22,6 @@ define([ "dojo/_base/array", "dojo/_base/declare",
 		},
 		layout: function () {
 			var oldColumnCount = this.columnCount;
-			var childCount = this._getChildCount();
 			if (!this.maxChildWidth) {
 				var width = this._getMaxChildWidth();
 				if (width > 0) {
@@ -32,13 +31,12 @@ define([ "dojo/_base/array", "dojo/_base/declare",
 			}
 			this.columnCount = Math.floor(this._contentBox.w / this.maxChildWidth);
 			if (isNaN(this.columnCount)) {
-				columnCount = 1;
+				this.columnCount = 1;
 			}
 			if (this.columnCount > 5) {
 				this.columnCount = 5;
 			}
 			this.columnWidth = Math.floor(this._contentBox.w / this.columnCount);
-			var oldClass = this.currentClass;
 			var currentClass = this.createColumnClass(this.columnCount);
 			if (oldColumnCount) {
 				domClass.replace(this.containerNode, currentClass, this.createColumnClass(oldColumnCount));

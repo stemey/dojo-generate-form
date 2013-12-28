@@ -34,8 +34,8 @@ define([
 				this.tabContainer.selectChild(controller);
 			} else {
 				var props = {};
-				var url = options.url.substring(0, options.url.lastIndexOf("/") + 1)
-				var id = options.url.substring(options.url.lastIndexOf("/") + 1)
+				var url = options.url.substring(0, options.url.lastIndexOf("/") + 1);
+				var id = options.url.substring(options.url.lastIndexOf("/") + 1);
 				var store = this.storeRegistry.get(url, {target: url});
 				props.id = wid;
 				props.closable = true;

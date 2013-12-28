@@ -22,7 +22,7 @@ define(
 					var constraints = {};
 					var props = {
 						constraints: constraints
-					}
+					};
 					mixinNumberboxBindings(modelHandle, props);
 
 					dijitHelper.copyProperty("constraints", attribute, props);

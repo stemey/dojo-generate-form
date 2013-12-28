@@ -24,5 +24,6 @@ define([ "dojo/_base/lang", "dojo/_base/declare"
 			return getRefForId(attribute, this.getIdForUrl(attribute, url));
 		}
 	});
+	return RefHelper;
 
 });

@@ -5,36 +5,36 @@ define([
 //		gform/primitive/dijitHelper
 
 	var standardProps = {};
-	standardProps["code"] = { type: "string", required: true, description: "the name of the property"};
-	standardProps["label"] = { type: "string", description: "the label of the property displayed in a form. If empty the code will be displayed."};
-	standardProps["description"] = { type: "string", description: "the info text for the property.", editor: "simpletextarea"};
-	standardProps["array"] = { type: "boolean", description: "if checked the attribute is an array"};
-	standardProps["map"] = { type: "boolean", description: "if checked the attribute is a map"};
-	standardProps["keyLabel"] = { type: "string", description: "label of the map's key"};
-	standardProps["keyDescription"] = { type: "string", description: "description of the map's key."};
-	standardProps["reorderable"] = { type: "boolean", description: "if checked the array is reorderable"};
-	standardProps["disabled"] = { type: "boolean", description: "if checked the value is not editable"};
-	standardProps["visible"] = { type: "boolean", description: "if checked the value is not visible", "default": true};
+	standardProps.code = { type: "string", required: true, description: "the name of the property"};
+	standardProps.label = { type: "string", description: "the label of the property displayed in a form. If empty the code will be displayed."};
+	standardProps.description = { type: "string", description: "the info text for the property.", editor: "simpletextarea"};
+	standardProps.array = { type: "boolean", description: "if checked the attribute is an array"};
+	standardProps.map = { type: "boolean", description: "if checked the attribute is a map"};
+	standardProps.keyLabel = { type: "string", description: "label of the map's key"};
+	standardProps.keyDescription = { type: "string", description: "description of the map's key."};
+	standardProps.reorderable = { type: "boolean", description: "if checked the array is reorderable"};
+	standardProps.disabled = { type: "boolean", description: "if checked the value is not editable"};
+	standardProps.visible = { type: "boolean", description: "if checked the value is not visible", "default": true};
 
 	var extraProps = {};
-	extraProps["missingMessage"] = { type: "string", description: "the error message for required but empty values."};
-	extraProps["promptMessage"] = { type: "string", description: ""};
-	extraProps["placeHolder"] = { type: "string", description: "the message displayed in a text field when it's value is empty"};
-	extraProps["invalidMessage"] = { type: "string", description: "the error message for invalid values"};
-	extraProps["pattern"] = { type: "string", description: "the regular expression to validate text values"};
-	extraProps["properCase"] = { type: "boolean"};
-	extraProps["upperCase"] = { type: "boolean"};
-	extraProps["maxLength"] = { type: "number", description: "the maximum length of a text value"};
-	extraProps["required"] = { type: "boolean", description: "an empty value is invalid "};
-	extraProps["locale"] = { type: "string", description: "the locale used for formatting."};
+	extraProps.missingMessage = { type: "string", description: "the error message for required but empty values."};
+	extraProps.promptMessage = { type: "string", description: ""};
+	extraProps.placeHolder = { type: "string", description: "the message displayed in a text field when it's value is empty"};
+	extraProps.invalidMessage = { type: "string", description: "the error message for invalid values"};
+	extraProps.pattern = { type: "string", description: "the regular expression to validate text values"};
+	extraProps.properCase = { type: "boolean"};
+	extraProps.upperCase = { type: "boolean"};
+	extraProps.maxLength = { type: "number", description: "the maximum length of a text value"};
+	extraProps.required = { type: "boolean", description: "an empty value is invalid "};
+	extraProps.locale = { type: "string", description: "the locale used for formatting."};
 
 
 	var allDijitProperties = [];
 	for (var key in extraProps) {
 		allDijitProperties.push(key);
 	}
-	for (var key in standardProps) {
-		allDijitProperties.push(key);
+	for (var key2 in standardProps) {
+		allDijitProperties.push(key2);
 	}
 
 	var dijitHelper = {
@@ -63,7 +63,7 @@ define([
 			//		the attribute schema
 			// dijitProps: Object
 			//		the dijit config object
-			if (typeof attribute[key] != "undefined" && attribute[key] != null && attribute[key] !== "") {
+			if (typeof attribute[key] !== "undefined" && attribute[key] != null && attribute[key] !== "") {
 				dijitProps[key] = attribute[key];
 			}
 		},
@@ -95,9 +95,9 @@ define([
 						]
 					}
 				}
-			}
+			};
 		}
-	}
+	};
 
 	return dijitHelper;
 });

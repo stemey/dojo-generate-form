@@ -9,11 +9,8 @@ define([ "dojo/_base/array", //
 	"./RepeatedEmbeddedWidget",//
 	"../model/MergedMultiObject",//
 	"./TableHeader",//
-	"./TableElementHeader",//
-	"dojo/text!../schema/embeddedAttributeProperties.json",
-	"dojo/text!./embeddedExample.json",
-	"dojo/text!./embeddedInstanceExample.json"
-], function (array, lang, aspect, declare, ArrayModel, DndSource, EmbeddedListWidget, WidgetList, RepeatedEmbeddedWidget, MergedMultiObject, TableHeader, TableElementHeader, embeddedAttributeProperties, embeddedExample, embeddedInstanceExample) {
+	"./TableElementHeader"//
+], function (array, lang, aspect, declare, ArrayModel, DndSource, EmbeddedListWidget, WidgetList, RepeatedEmbeddedWidget, MergedMultiObject, TableHeader, TableElementHeader) {
 
 	return declare([], {
 		id: "multi-table",
@@ -63,7 +60,6 @@ define([ "dojo/_base/array", //
 			});
 			select.addChild(widgetList);
 
-			var me = this;
 			if (attribute.reorderable !== false) {
 				var copy = function (original) {
 					return modelHandle.elementFactory(original.getPlainValue());
@@ -118,14 +114,6 @@ define([ "dojo/_base/array", //
 				}, this);
 			}, this);
 			return combinedAttributes;
-		},
-		getSchema: function () {
-			var schema = dojo.fromJson(embeddedAttributeProperties);
-			schema.description = "This attribute represents an array of objects. They are displayed in a table. validTypes describes the possible types/groups of objects. The table columns represent the union of all properties. Common properties appear only once. Proerty cells will be invisible if not applicable to the rows object";
-			schema.example = embeddedExample;
-			schema.instanceExample = embeddedInstanceExample;
-			schema.properties.editor = {type: "string", "enum": ["table"], required: true};
-			return schema;
 		}
-	})
+	});
 });

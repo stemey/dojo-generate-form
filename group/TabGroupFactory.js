@@ -1,11 +1,11 @@
-define([ "dojo/_base/array",
+define([
 	"dojo/_base/lang",
 	"dojo/aspect",
 	"dojo/_base/declare",
 	"../model/MultiGroup",
 	"dijit/layout/TabContainer"
 
-], function (array, lang, aspect, declare, MultiGroup, TabContainer) {
+], function (lang, aspect, declare, MultiGroup, TabContainer) {
 
 	return declare([], {
 		id: "tab",
@@ -17,7 +17,7 @@ define([ "dojo/_base/array",
 			meta.groups.forEach(function (group) {
 				groups.push(this.editorFactory.createGroupModel(group));
 			}, this);
-			var model = new MultiGroup({groups: groups, required: meta.required===true});
+			var model = new MultiGroup({groups: groups, required: meta.required === true});
 			model.update(plainValue);
 			return model;
 		},
@@ -27,9 +27,9 @@ define([ "dojo/_base/array",
 			return factory.create(attribute, modelHandle);
 		},
 		create: function (group, modelHandle, ctx) {
-			var doLayout = group.doLayout !== false;
 			var tc = new TabContainer({
-				doLayout: true, style: "height: 100%; width: 100%;"
+				doLayout: true,
+				style: "height: 100%; width: 100%;"
 			});
 			for (var index = 0; index < group.groups.length; index++) {
 				var tab = group.groups[index];
@@ -43,7 +43,7 @@ define([ "dojo/_base/array",
 				tc.addChild(tabWidget);
 				aspect.after(modelHandle.getModelByIndex(index), "onChange", lang.hitch(this, "onValidChanged", tabWidget, model, tab.label));
 			}
-			;
+
 			tc.selectChild(tc.getChildren()[0]);
 			return tc;
 		},
@@ -53,19 +53,6 @@ define([ "dojo/_base/array",
 			} else {
 				tabWidget.set("title", label);
 			}
-		},
-		getSchema: function () {
-			var properties = {    "tabs": {"$ref": "groups"}}
-			var example = {groupType: "tab", tabs: [
-				{groupType: "listpane", label: "Tab 1", attributes: []},
-				{groupType: "listpane", label: "Tab 2", attributes: []}
-			]};
-			//schema.example=dojo.toJson(example,true);
-			var schema = {description: "The tabgroup displays an array of groups in a 'dijit.layout.TabContainer'."};
-			schema.properties = properties;
-			schema.required = ["tabs"];
-			schema.example = dojo.toJson(example, true);
-			return schema;
 		}
 
 	});

@@ -1,9 +1,10 @@
-define([ "dojo/_base/lang", "dojo/dom-class", "dojo/_base/array", "dojo/_base/declare",
+define([ 'dojo/Stateful',
+	"dojo/_base/lang", "dojo/dom-class", "dojo/_base/array", "dojo/_base/declare",
 	"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin", "./PolymorphicMemberWidget", "../Editor",
 	"dojo/text!./repeated_embedded_attribute.html", "dijit/TitlePane", "dojo/i18n!../nls/messages",
 	"../layout/_LayoutMixin", "../schema/labelHelper"
-], function (lang, domClass, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, PolymorphicMemberWidget, Editor, template, TitlePane, messages, _LayoutMixin, labelHelper) {
+], function (Stateful, lang, domClass, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, PolymorphicMemberWidget, Editor, template, TitlePane, messages, _LayoutMixin, labelHelper) {
 
 	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container,
 		_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin ], {
@@ -13,9 +14,8 @@ define([ "dojo/_base/lang", "dojo/dom-class", "dojo/_base/array", "dojo/_base/de
 			this._set("modelHandle", value);
 		},
 		postCreate: function () {
-			var panelModel = new dojo.Stateful();
+			var panelModel = new Stateful();
 			panelModel.set("title", "");
-			var me = this;
 			var modelHandle = this.get("modelHandle");
 			if (this.groups) {
 				this.editor = new PolymorphicMemberWidget({"shown": false, "modelHandle": modelHandle, "groups": this.groups, nullable: false, editorFactory: this.editorFactory});
@@ -55,13 +55,10 @@ define([ "dojo/_base/lang", "dojo/dom-class", "dojo/_base/array", "dojo/_base/de
 			}
 		},
 		_delete: function (e) {
-			var eventDispatcher = this.getParent();
 			var index = this.getParent().getChildren().indexOf(this);
 			if (index >= 0) {
 				this.parent.children.splice(index, 1);
 			}
-			//eventDispatcher.emit("state-changed");
-			//eventDispatcher.emit("value-changed");
 		},
 		destroy: function () {
 			array.forEach(this.getChildren(), function (child) {
@@ -69,7 +66,6 @@ define([ "dojo/_base/lang", "dojo/dom-class", "dojo/_base/array", "dojo/_base/de
 				//this.removeChild(child);
 			});
 			this.inherited(arguments);
-			//	this.destroyRecursive();
 		}
 
 	});

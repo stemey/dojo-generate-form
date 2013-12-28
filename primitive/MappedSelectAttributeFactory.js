@@ -1,13 +1,10 @@
 define([
-	'../model/MappedSelectModel',
+	"../model/MappedSelectModel",
 	"dojo/_base/declare",
 	"dojox/mvc/at",
 	"dijit/form/Select",
-	"./_MappedSelectAttributeFactoryBase",
-	"./dijitHelper",
-	"dojo/text!./mapped_select.json",
-	"dojo/text!./mapped_select_doc.json"
-], function (MappedSelectModel, declare, at, Select, _MappedSelectAttributeFactoryBase, dijitHelper, example, exampleForDoc) {
+	"./_MappedSelectAttributeFactoryBase"
+], function (MappedSelectModel, declare, at, Select, _MappedSelectAttributeFactoryBase) {
 
 	return declare([ _MappedSelectAttributeFactoryBase ], {
 		id: "mapped-select",

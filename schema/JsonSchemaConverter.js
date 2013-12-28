@@ -1,7 +1,5 @@
-define([ "dojo/_base/array", //
-	"dojo/_base/lang",//
-	"dojo/_base/declare",//
-], function (array, lang, declare, refresolve) {
+define(["dojo/_base/declare"
+], function (declare) {
 // module:
 //		gform/schema/JsonSchemaConverter
 
@@ -68,13 +66,9 @@ define([ "dojo/_base/array", //
 				return this.convert(prop.type, converted);
 			}
 		},
-		convert: function (/*Object*/schema, /*Object*/converted, /**local variables*/meta) {
+		convert: function () {
 			// summary:
 			//		converts a json schema to a gform schema. subschemas with id that have already been converted will be reused.
-			// schema: Object
-			//		the json schema
-			// converter?: Object
-			//		the map of original json schema id to converted gform schema
 			// returns: Object
 			//		the gform schema
 			if (!schema.properties) {

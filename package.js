@@ -1,9 +1,11 @@
 var profile = (function () {
-	var testResourceRe = /^gform\/(tests|mobile)\//,
+	var testResourceRe = /^gform\/(tests|mobile|node_modules)\//,
 
 		copyOnly = function (filename, mid) {
 			var list = {
-				"gform/package.json": 1
+				"gform/package.json": 1,
+                "gform/Gruntfile":1,
+                "gform/jsdoc-config":1
 			};
 			return (mid in list) || (/^gform\/resources\//.test(mid) && !/\.css$/.test(filename)) || /(png|jpg|jpeg|gif|tiff)$/.test(filename);
 		};

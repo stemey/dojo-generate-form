@@ -1,8 +1,9 @@
-define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
+define([ 'dojox/mvc/at',
+	"dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
 	"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "../model/ArrayModel", "../Editor",
 	"dojo/text!./repeated_embedded_attribute.html", "dijit/form/TextBox", "./TableElementDecorator", "./TableValueDecorator", "../widget/DndIndicator",
 	"dijit/form/Button", "dijit/form/Select", "../model/MergedMultiObject", "./mergeAttributeDefinitions", "dojo/dom-class", "dojo/i18n!../nls/messages", "dojo/Stateful"//
-], function (lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, ArrayModel, Editor, template, TextBox, TableElementDecorator, TableValueDecorator, DndIndicator, Button, Select, MergedMultiObject, mergeAttributeDefinitions, domClass, messages, Stateful) {
+], function (at, lang, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, ArrayModel, Editor, template, TextBox, TableElementDecorator, TableValueDecorator, DndIndicator, Button, Select, MergedMultiObject, mergeAttributeDefinitions, domClass, messages, Stateful) {
 
 	return declare([ _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin ],
 		{
@@ -33,13 +34,13 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 				}
 				var decorator = new TableElementDecorator();
 				var deleteButton = new Button({
-					label: messages["removeButtonLabel"],
+					label: messages.removeButtonLabel,
 					showLabel: false,
 					iconClass: "dijitIconDelete"
 				});
 				decorator.addChild(deleteButton);
 				this.addChild(decorator);
-				if (this.meta.reorderable != false) {
+				if (this.meta.reorderable !== false) {
 					var dndDecorator = new TableElementDecorator();
 					dndDecorator.addChild(new DndIndicator());
 					this.addChild(dndDecorator);
@@ -51,7 +52,7 @@ define([ "dojo/_base/lang", "dojo/_base/array", "dojo/_base/declare", "dijit/_Wi
 				this.modelHandle.remove();
 			},
 			switchedType: function (propName, oldType, newType) {
-				if (oldType != newType) {
+				if (oldType !== newType) {
 					this.modelHandle.set("currentTypeCode", newType);
 				}
 			},

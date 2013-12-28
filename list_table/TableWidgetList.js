@@ -1,12 +1,11 @@
-define([ 
-    	"dojo/_base/array",
-    	"dojo/_base/lang",
-    	"dojo/_base/declare",
-    	"dojo/dom-class",
-"dojox/mvc/WidgetList" ], function(array,lang,declare, domClass, WidgetList) {
+define([
+	"dojo/_base/declare",
+	"dojo/dom-class",
+	"dojox/mvc/WidgetList"
+], function (declare, domClass, WidgetList) {
 
-	return declare( [ WidgetList ], {
-		buildRendering : function() {
+	return declare([ WidgetList ], {
+		buildRendering: function () {
 			// summary:
 			//		Construct the UI for this widget, setting this.domNode.
 			//		Most widgets will mixin `dijit._TemplatedMixin`, which implements this method.
@@ -22,5 +21,5 @@ define([
 
 		}
 
-	})
+	});
 });

@@ -1,9 +1,7 @@
-define([  //
-	//
+define([
 	"dojo/_base/declare",//
 	"dojox/mvc/at",//
 	"./CurrencyTextBox",//
-	//
 	"./dijitHelper",//
 	"dojo/cldr/monetary",//
 	"./nullableNumberConverter",//
@@ -28,30 +26,30 @@ define([  //
 			}
 			var props = {
 				constraints: {}
-			}
-			props["value"] = valueAt;
-			props["state"] = at(modelHandle, "state");
-			props["message"] = at(modelHandle, "message");
+			};
+			props.value = valueAt;
+			props.state = at(modelHandle, "state");
+			props.message = at(modelHandle, "message");
 			props.currency = currency;
 			dijitHelper.copyDijitProperties(attribute, props);
-			dijitHelper.copyProperty("min", attribute, props.constraints)
-			dijitHelper.copyProperty("max", attribute, props.constraints)
+			dijitHelper.copyProperty("min", attribute, props.constraints);
+			dijitHelper.copyProperty("max", attribute, props.constraints);
 			return new CurrencyTextBox(props);
 		},
 		createValueConverter: function (places) {
 			var operand = Math.pow(10, places);
 			return {
 				format: function (value) {
-					if (typeof value == "undefined") {
+					if (typeof value === "undefined") {
 						return value;
-					} else if (value == null) {
+					} else if (value === null) {
 						return NaN;
 					} else {
 						return value / operand;
 					}
 				},
 				parse: function (value) {
-					if (typeof value == "undefined") {
+					if (typeof value === "undefined") {
 						return value;
 					} else if (isNaN(value)) {
 						return null;

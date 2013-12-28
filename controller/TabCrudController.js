@@ -53,7 +53,7 @@ define([
 		_onStateChange: function (e) {
 			this.progressBar.hide();
 			array.forEach(["create", "edit", "loading"], function (e) {
-				domClass.toggle(this.domNode, e, this.state == e);
+				domClass.toggle(this.domNode, e, this.state === e);
 			}, this);
 		},
 		showProgressBar: function (message) {

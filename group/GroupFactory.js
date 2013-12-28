@@ -1,4 +1,5 @@
-define([ "dojo/_base/array",
+define([
+	"dojo/_base/array",
 	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"./AttributeListWidget",
@@ -52,8 +53,6 @@ define([ "dojo/_base/array",
 			var listWidget = this.createWidget(group, modelHandle);
 
 			array.forEach(group.attributes, function (attribute) {
-				var label = attribute.label;
-
 				var attributeModel = modelHandle.getModel(attribute.code);
 				var attributeEditor = this.createAttribute(attribute, attributeModel, ctx);
 				var widget = this.editorFactory.createDecorator(attribute, attributeModel);
@@ -63,18 +62,6 @@ define([ "dojo/_base/array",
 				}
 			}, this);
 			return listWidget;
-
-		},
-		getSchema: function () {
-			var properties = {"label": {"type": "string", description: "This label is displayed in a tab."}, "description": {"type": "string", "description": "text displayed above the attributes"}, "attributes": {"$ref": "attributes"}}
-			var schema = {description: "The list displays an array of attributes."};
-			schema.properties = properties;
-			schema.required = ["attributes"];
-			var example = {groupType: "list", description: "This text is displayed at the top of the list", attributes: [
-				{code: "name", type: "string"}
-			]};
-			schema.example = dojo.toJson(example, true);
-			return schema;
 
 		}
 	});

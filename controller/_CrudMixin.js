@@ -41,9 +41,11 @@ define([
 			//		will be invoked if no changes or changes can be discarded.
 			var wrappedCallback = function (ok) {
 				if (ok) callback();
-			}
+			};
 			var dialogOpened = this._checkState(wrappedCallback);
-			if (!dialogOpened) callback();
+			if (!dialogOpened) {
+				callback();
+			}
 		},
 
 		_checkState: function (callback) {
@@ -56,10 +58,10 @@ define([
 			//		true if a dialog was opened
 			this.editor.syncPendingChanges();
 			var dialogOpened = false;
-			if (this.state == "create" && this.editor.hasChanged()) {
+			if (this.state === "create" && this.editor.hasChanged()) {
 				this.startConfirmDialog(messages["actions.unsavedNewEntity"], callback);
 				dialogOpened = true;
-			} else if (this.state == "edit" && this.editor.hasChanged()) {
+			} else if (this.state === "edit" && this.editor.hasChanged()) {
 				this.startConfirmDialog(messages["actions.unsavedChanges"], callback);
 				dialogOpened = true;
 			}
@@ -92,16 +94,16 @@ define([
 		},
 		_edit: function (id, schemaUrl) {
 			var instancePromise = this.store.get(id);
+			var promise;
 			if (schemaUrl) {
 				// remove form 
 				this.editor.set("meta", {});
 				var schemaPromise = this.getSchema(schemaUrl);
-				var promise = all([instancePromise, schemaPromise]);
-				var me = this;
+				promise = all([instancePromise, schemaPromise]);
 				this._showLoading();
 				this._execute(promise, "LoadForEditAndSchema");
 			} else {
-				var promise = instancePromise;
+				promise = instancePromise;
 				this._showLoading();
 				this._execute(promise, "LoadForEdit");
 			}
@@ -142,7 +144,7 @@ define([
 			if (schemaUrl) {
 				this.invokeIfOk(lang.hitch(this, "_createNewAndSchema", schemaUrl));
 			} else {
-				if (this.state == "create") {
+				if (this.state === "create") {
 					this.editor.reset();
 				} else {
 					this.invokeIfOk(lang.hitch(this, "_createNew"));

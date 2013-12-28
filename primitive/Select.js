@@ -1,10 +1,7 @@
 define([
-	"dojo/_base/declare", // declare
-	"dojo/_base/kernel", // kernel.deprecated
-	"dojo/i18n", // i18n.getLocalization
-	"dijit/form/Select",
-	"dojo/dom-class"
-], function(declare, kernel, i18n, Select, domClass){
+	"dojo/_base/declare",
+	"dijit/form/Select"
+], function (declare, Select) {
 
 	// module:
 	//		dijit/form/DateTextBox
@@ -12,9 +9,9 @@ define([
 	return declare("gform.Select", [Select], {
 		// summary:
 		//		Base class for date textbox widgets with the ability to validate content of various types and provide user feedback.
-		
-		displayMessage: function(/*String*/ message){
+
+		displayMessage: function (/*String*/ message) {
 		}
 	});
-	
+
 });
