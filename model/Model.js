@@ -7,7 +7,7 @@ define([
 	"./equals"
 ], function (lang, declare, Stateful, dijitNls, nls, equals) {
 	// module: 
-	//		gform/Resolver
+	//		gform/model/Model
 
 	var emptyCascade = function () {
 	};
@@ -22,22 +22,53 @@ define([
 		//		the schema of this model
 		schema: null,
 
+		// emptyCacade: function
+		//		a no-op function for not cascading visits.
 		emptyCascade: emptyCascade,
 
-		// parent:,
+		// parent: gform/model/Model
 		//		the parent model
 		parent: null,
+
+		// alwaysUseInvalidMessage; boolean
+		//		should be true if the dijit is doing live validation and using the invalid message. Therefore we should always use the general invalid message as  well.
 		alwaysUseInvalidMessage: false,
+
+		// touched: boolean
+		//		once the user has edited this value the value should be true.
+
 		touched: false,
+
+		// state: string
+		//		the state may be one of "", "Incomplete" or "Error"
 		state: "",
+
+		// errorCount: int
+		//		the number of errors in this property and its children
 		errorCount: 0,
+
+		// ownErrorCount: int
+		//		number of errors on this property. Always smaller or euqal to errorCount.
 		ownErrorCount: 0,
+
+		// incompelteCount: int
+		//		number of incomplete properties
 		incompleteCount: 0,
+
+		// changedCount: int
+		//		number of changed properties
 		changedCount: 0,
+
+		// oldErrors: gform/validate/Error
+		//		the old errors. Including children. Used to check if errors changed.
 		oldErrors: [],
+
+		// validateOnChange: boolean
+		//		if true changed to the value will be validated immediately
 		validateOnChange: true,
-		editorFactory: null,
-		tmp: {},
+
+		// bubble: boolean
+		//		if true changes to value or state will bubble by calling onChange on the parent.
 		bubble: true,
 		constructor: function (kwArgs) {
 			this.messages = this.messages || {};
@@ -80,15 +111,6 @@ define([
 
 			// TODO only works for parent being an object
 			return this.parent.watchPath(attributeCode, watchCallback);
-		},
-		createMeta: function (schema) {
-			// summary:
-			//		create a meta object
-			// returns: dojo/Stateful
-			var meta = this.editorFactory.createMeta(schema);
-			meta.set("tmp", new Stateful());
-			meta.parent = this;
-			return meta;
 		},
 		_onChangeState: function (prop, old, nu) {
 			if (old !== nu) {
@@ -267,7 +289,7 @@ define([
 			if (!keyOrMessage) {
 				return this.getMessageForKey("invalidMessage");
 			} else if (internal && this.alwaysUseInvalidMessage) {
-				// TODO this is wrong if the message comes from an model validation.
+				// TODO this is wrong if the message comes from a model validation.
 				return this.getMessageForKey("invalidMessage");
 			} else {
 				var key = keyOrMessage.match(MESSAGE_PATTERN);
@@ -280,12 +302,24 @@ define([
 
 		},
 		getMessageForKey: function (key) {
+			// summary:
+			//		get message for error key. either taken from the messages in schema or from the general message bundle.
+			// key: string
+			//		id of message
 			return this.messages[key] || nls[key] || dijitNls[key];
 		},
 		getMissingMessage: function () {
+			// summary:
+			//		the missing message is either specially dfined in the schema or the default from resource bundle is used.
 			return this.messages.missingMessage || dijitNls.missingMessage;
 		},
 		addError: function (path, message) {
+			// summary:
+			//		add an error the model at path
+			// path: string
+			//		identifies the model
+			// message: string
+			//		the message
 			var model = this.getModelByPath(path);
 			model._addError(message, !path || path.length == 0);
 		},
@@ -294,6 +328,12 @@ define([
 			this.set("message", this.getMessage(message, internal));
 		},
 		removeError: function (path, message) {
+			// summary:
+			//		remove an error from the model on the path
+			// path: string
+			//		the path to the model
+			// message: string
+			//		to identify the message. If a different message is present then it won't be removed.
 			var model = this.getModelByPath(path);
 			if (model) {
 				model._removeError(message);
