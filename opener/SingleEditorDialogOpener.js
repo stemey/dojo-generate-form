@@ -50,12 +50,17 @@ define([
 				return lang.hitch(me, "onClose", originalFn);
 			});
 		},
+
 		onClose: function (originalFn) {
 			var me = this;
 			this.crudController.onCloseDialog(function () {
 				originalFn.apply(me.dialog);
 			});
 		},
+        _setCtxAttr: function(ctx) {
+            this._set("ctx", ctx);
+           this.crudController.setCtx(ctx);
+        },
 		openSingle: function (options) {
 			// summary:
 			//		open the dialog to edit an existing resource.

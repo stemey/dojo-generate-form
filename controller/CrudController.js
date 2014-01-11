@@ -68,9 +68,6 @@ define([
 		_onEditorChange: function () {
 			this.borderContainer.layout();
 		},
-		_onEditorChange: function () {
-			this.borderContainer.layout();
-		},
 		setEditorFactory: function (ef) {
 			this.editor.set("editorFactory", ef);
 		}

@@ -1,5 +1,7 @@
-define(["dojo/_base/declare"
-], function (declare) {
+define([ "dojo/_base/array", //
+	"dojo/_base/lang",//
+	"dojo/_base/declare",//
+], function (array, lang, declare, refresolve) {
 // module:
 //		gform/schema/JsonSchemaConverter
 
@@ -8,8 +10,10 @@ define(["dojo/_base/declare"
 		//		converts json schema to gform schema.
 		formatToTypeMapping: {
 			date: "date",
-			time: "time",
-			"date-time": "date"
+            time: "time",
+            double: "number",
+            int: "number",
+            "date-time": "date"
 		},
 		copy: function (propSource, propTarget, prop, attribute) {
 			var value = prop[propSource];
@@ -51,8 +55,14 @@ define(["dojo/_base/declare"
 				attribute.type = "object";
 				attribute.group = group;
 			} else if (typeof prop.type == "string") {
-				var type = this.formatToTypeMapping[prop.format];
+				var type = this.formatToTypeMapping[prop.format || prop.type];
 				attribute.type = type || prop.type;
+                if (prop.type=="ref") {
+                    attribute.url=prop.url;
+                    attribute.schemaUrl=prop.schemaUrl;
+                    attribute.idProperty=prop.idProperty;
+                    //attribute.url=prop.url;
+                }
 			} else {
 				var group = this.convertGroup(prop, converted);
 				attribute.type = "object";
@@ -66,9 +76,13 @@ define(["dojo/_base/declare"
 				return this.convert(prop.type, converted);
 			}
 		},
-		convert: function () {
+		convert: function (/*Object*/schema, /*Object*/converted, /**local variables*/meta) {
 			// summary:
 			//		converts a json schema to a gform schema. subschemas with id that have already been converted will be reused.
+			// schema: Object
+			//		the json schema
+			// converter?: Object
+			//		the map of original json schema id to converted gform schema
 			// returns: Object
 			//		the gform schema
 			if (!schema.properties) {

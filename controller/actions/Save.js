@@ -21,7 +21,9 @@ return declare( [_ActionMixin], {
 			if (this.ctrl.state == "create") {
 				var errorCount = this.ctrl.editor.validate(true);
 				if (errorCount==0) {	
-					this.ctrl.showProgressBar(message);	
+					this.ctrl.showProgressBar(message);
+                    var idProperty = this.ctrl.store.idProperty;
+                    delete entity[idProperty];
 					var promise = this.ctrl.store.add(entity);
 					this._execute(promise,"Add");
 				}
