@@ -1,19 +1,19 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes":[
+    "code": "example",
+    "label": "example",
+    "attributes": [
         {
-            "type":"primitive-array",
-	          "code":"state",
-	          "description":"select a reference",
-						"element": {
-							"type":"ref",
-							"searchProperty":"label",
-		          "idProperty":"id",
-							url: "/gform/tests/entity/state",
-							schemaUrl: "/gform/tests/meta/refs.json"
-						}
+            "type": "array",
+            "code": "state",
+            "description": "select a reference",
+            "element": {
+                "type": "ref",
+                "searchProperty": "label",
+                "idProperty": "id",
+                "url": "/gform/tests/entity/state",
+                "schemaUrl": "/gform/tests/meta/refs.json"
+            }
         }
     ],
-    "type_property":"ext_type"
+    "type_property": "ext_type"
 }

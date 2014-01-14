@@ -51,7 +51,7 @@ define([
 				}
 				plainValue.forEach(function (element, i) {
 					var model = this.value[i];
-					if (model == null) {
+					if (!model) {
 						model = this.elementFactory(element);
 						this.value.push(model);
 					} else {

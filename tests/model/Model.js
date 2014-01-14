@@ -13,12 +13,7 @@ define([
 			doh.assertEqual(1, m.errorCount);
 		},
 		function testResetMeta() {
-			m.set("state", "Error");
-			m.resetMeta();
-			doh.assertEqual(0, m.errorCount);
-		},
-		function testResetMeta() {
-			m.set("state", "Error");
+            m.set("state", "Error");
 			m.resetMeta();
 			doh.assertEqual(0, m.errorCount);
 		},

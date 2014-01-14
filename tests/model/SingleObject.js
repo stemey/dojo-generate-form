@@ -57,11 +57,16 @@ define(['dojo/_base/lang',
 			assertEqual({stringP: null, booleanP: null, numberP: null}, plainValue);
 		},
 		function testResetMetaRecursively() {
-			so.getAttribute("stringP").set("state", "Error");
-			so.set("state", "Error");
+			so.getAttribute("stringP").set("value", "XXX");
+            so.getAttribute("stringP").set("state", "Error");
+            so.set("state", "Error");
 			assertEqual(2, so.errorCount);
-			so.resetMetaRecursively();
+            assertEqual(1, so.changedCount);
+            assertEqual(true, so.hasChanged());
+            so.resetMetaRecursively();
 			assertEqual(0, so.errorCount);
+            assertEqual(0, so.changedCount);
+            assertEqual(false, so.hasChanged());
 		},
 		function testVisit() {
 			var visitor = createVisitor();

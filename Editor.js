@@ -178,8 +178,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				}
 			},
 			removeChangeIndicators: function () {
-				var value = this.getPlainValue();
-				this.setPlainValue(value);
+				this.modelHandle.resetMetaRecursively();
 			},
 			postCreate: function () {
 				this.inherited(arguments);

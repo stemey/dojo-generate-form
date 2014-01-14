@@ -18,9 +18,9 @@ return declare( [_ActionMixin], {
 		this.ctrl.editor.syncPendingChanges();
 		var entity = this.ctrl.editor.get("plainValue");
 		var message = "saving "+this.ctrl.editor.getLabel();
-			if (this.ctrl.state == "create") {
+			if (this.ctrl.state === "create") {
 				var errorCount = this.ctrl.editor.validate(true);
-				if (errorCount==0) {	
+				if (errorCount===0) {
 					this.ctrl.showProgressBar(message);
                     var idProperty = this.ctrl.store.idProperty;
                     delete entity[idProperty];
@@ -29,7 +29,7 @@ return declare( [_ActionMixin], {
 				}
 			}else{
 				if (!this.ctrl.editor.hasChanged()) {
-					this.ctrl.alert(messages["actions.save.noChanges"]) 
+					this.ctrl.alert(messages["actions.save.noChanges"]) ;
 				}else{
 					var errorCount = this.ctrl.editor.validate(true);
 					if (errorCount==0) {	
@@ -57,7 +57,7 @@ return declare( [_ActionMixin], {
 			}
 			//this.ctrl.editor.set("plainValue",{});
 			//this.ctrl.editor.reset();	
-			//this.ctrl._removeChangeIndicator();
+			this.ctrl.editor.removeChangeIndicators();
 		},
 		_onAddFailed: function(error) {
 			this.ctrl.hideProgressBar();	

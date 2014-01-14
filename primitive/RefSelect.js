@@ -57,7 +57,7 @@ define([ "dojo/_base/lang",
 			this.storeListener = aspect.after(select.store, "put", function (result, args) {
 				when(result).then(function (id) {
 					var entity = args[0];
-					if (id === "" + select.get("value")) {
+					if (id+"" === "" + select.get("value")) {
 						select.set("item", entity);
 					}
 				});
