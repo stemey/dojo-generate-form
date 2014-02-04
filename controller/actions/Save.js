@@ -65,7 +65,12 @@ return declare( [_ActionMixin], {
 			this.ctrl.alert(messages["actions.save.serverError"]);
 		},
 		_onUpdate: function(result) {
-			this.ctrl.hideProgressBar();	
+            if (Array.isArray(result)) {
+                result.forEach(function (update) {
+                    this.ctrl.editor.updateValue(update.path, update.value);
+                }, this);
+            }
+			this.ctrl.hideProgressBar();
 			//this.ctrl._removeChangeIndicator();
 			this.ctrl.editor.removeChangeIndicators();
 			//this.ctrl.editor.reset();	
