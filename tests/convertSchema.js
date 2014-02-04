@@ -11,7 +11,7 @@ define(["doh/runner", "gform/util/refresolve", "gform/schema/convertSchema", "do
 
 	var simpleSchema = {
 		id: "car",
-		properties: {
+        properties: {
 			sisters: {type: "array", items: {type: "string"}},
 			brother: {type: "string"},
 			address: {type: {properties: {city: {type: "string"}}}},
@@ -109,10 +109,10 @@ define(["doh/runner", "gform/util/refresolve", "gform/schema/convertSchema", "do
 		}
 	]);
 
-	function findAttribute(schem, code) {
+	function findAttribute(schema, code) {
 		for (var key in schema.attributes) {
 			var attribute = schema.attributes[key];
-			if (attribute.code == code) {
+			if (attribute.code === code) {
 				return attribute;
 			}
 		}

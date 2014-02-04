@@ -147,10 +147,15 @@ define([
 		},
 		resolve: function (object, baseUrl) {
 			this.values[baseUrl] = object;
+            var finalPromise = new Deferred();
 			var promise = this.resolveMore(object, baseUrl);
-			promise.then(lang.hitch(this, "callSetters"));
-			return promise;
+			promise.then(lang.hitch(this, "wrapUp", finalPromise, object));
+			return finalPromise;
 		},
+        wrapUp: function(finalPromise, object) {
+            this.callSetters();
+            finalPromise.resolve(object);
+        },
 		load: function (/*String*/ref, baseUrl) {
 			// summary:
 			//		load an external reference
