@@ -46,7 +46,9 @@ define([
 					group.update(plainValue);
 				});
 			}
-		},
+            this.oldValue = this.getPlainValue();
+
+        },
 		visit: function (cb, parentIdx) {
 			for (var index = 0; index < this.groups.length; index++) {
 				this.getModelByIndex(index).visit(cb, parentIdx);
