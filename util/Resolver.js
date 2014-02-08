@@ -191,11 +191,7 @@ define([
 			var deferred = new Deferred();
 			var request = this._load(url);
 			console.debug("loading " + originalUrl);
-			request.then(lang.hitch(this, "onLoaded", newBaseUrl, deferred)).otherwise(
-				function (e) {
-					console.debug("reject " + url, e);
-					deferred.reject();
-				});
+			request.then(lang.hitch(this, "onLoaded", newBaseUrl, deferred)).otherwise(lang.hitch(this, "onLoaded", url, newBaseUrl, deferred));
 
 
 			this.values[originalUrl] = deferred.promise;
@@ -204,6 +200,11 @@ define([
 		_load: function (url) {
 			return xhr(url, {handleAs: "json", method: "GET"});
 		},
+        onLoadFailed: function(url, newBaseUrl, deferred, e) {
+            console.debug("reject " + url, e);
+            deferred.reject();
+
+        },
 		onLoaded: function (newBaseUrl, deferred, resolvedRef) {
 
 //			if (t) {
