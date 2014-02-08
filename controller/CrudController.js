@@ -39,7 +39,6 @@ define([
 		actionClasses: [Save, Discard, Delete],
 		constructor: function (props) {
 			lang.mixin(this, props);
-			this.inherited(arguments);
 		},
 		_onStateChange: function (e) {
 			this.progressBar.hide();
