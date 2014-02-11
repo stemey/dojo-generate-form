@@ -12,6 +12,7 @@ define([
             "time": "time",
             "double": "number",
             "int": "number",
+            "integer": "number",
             "date-time": "date"
         },
         copy: function (propSource, propTarget, prop, attribute) {
@@ -21,7 +22,10 @@ define([
             }
         },
         convertString: function (prop, attribute, converted) {
-            var type = this.formatToTypeMapping[prop.format || prop.type];
+            var type = this.formatToTypeMapping[prop.type];
+            if (!type) {
+                this.formatToTypeMapping[prop.format]
+            }
             attribute.type = type || prop.type;
             if (prop["enum"]) {
                 attribute.values = [];
@@ -42,10 +46,10 @@ define([
             attribute.fractional = "#.#";
         },
         convertBoolean: function (prop, attribute, converted) {
-            attribute.type="boolean";
+            attribute.type = "boolean";
         },
         convertDate: function (prop, attribute, converted) {
-            attribute.type="date";
+            attribute.type = "date";
         },
         convertArray: function (prop, attribute, converted) {
             attribute.type = "array";
@@ -76,19 +80,29 @@ define([
             this.copy("readonly", "readonly", prop, attribute);
         },
         convertAttribute: function (prop, attribute, converted) {
-            if (prop.type === "array") {
+            var type = prop.type;
+            var betterType = this.formatToTypeMapping[prop.format];
+            if (betterType) {
+                type = betterType;
+            } else {
+                betterType = this.formatToTypeMapping[prop.type]
+                if (betterType) {
+                    type = betterType;
+                }
+            }
+            if (type === "array") {
                 this.convertArray(prop, attribute, converted);
-            } else if (prop.type === "object" || prop.properties) {
+            } else if (type === "object" || prop.properties) {
                 this.convertObject(prop, attribute, converted);
-            } else if (prop.type === "string") {
+            } else if (type === "string") {
                 this.convertString(prop, attribute, converted);
-            } else if (prop.type === "int") {
+            } else if (type === "number") {
                 this.convertInt(prop, attribute, converted);
-            } else if (prop.type === "double") {
+            } else if (type === "double") {
                 this.convertDouble(prop, attribute, converted);
-            } else if (prop.type === "boolean") {
+            } else if (type === "boolean") {
                 this.convertBoolean(prop, attribute, converted);
-            } else if (prop.type === "date") {
+            } else if (type === "date") {
                 this.convertDate(prop, attribute, converted);
             } else if (typeof prop.type === "object") {
                 attribute.type = "object";
@@ -128,13 +142,18 @@ define([
                 meta.code = schema.id;
                 converted[schema.id] = meta;
             }
-            for (var key in schema.properties) {
+            var required = schema.required || [];
+
+            Object.keys(schema.properties).forEach(function (key) {
                 var attribute = {};
                 attribute.code = key;
                 var prop = schema.properties[key];
+                if (required.indexOf(key)>=0) {
+                    attribute.required=true;
+                }
                 meta.attributes.push(attribute);
                 this.convertAttribute(prop, attribute, converted);
-            }
+            }, this);
             return meta;
         }
     });
