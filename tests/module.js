@@ -1,7 +1,8 @@
 define(
 	"gform.tests.module", [
 		"gform/tests/Resolver",//
-		"gform/tests/model/Model",//
+        "gform/tests/Resolver",//
+		"gform/tests/convertSchema",//
 		"gform/tests/model/PrimitiveModel",//
 		"gform/tests/model/MultiGroup",//
 		"gform/tests/model/ArrayModel",//

@@ -79,7 +79,8 @@ define([
             this.copy("visible", "visible", prop, attribute);
             this.copy("readonly", "readonly", prop, attribute);
         },
-        convertAttribute: function (prop, attribute, converted) {
+        convertAttribute: function (prop, converted) {
+            var attribute = {};
             var type = prop.type;
             var betterType = this.formatToTypeMapping[prop.format];
             if (betterType) {
@@ -108,11 +109,13 @@ define([
                 attribute.type = "object";
                 attribute.group = this.convertGroup(prop, converted);
             } else {
-                throw new Error("unsupported type " + prop.type);
+                console.log("unsupported type " + prop.type);
+                attribute=null;
             }
+            return attribute;
         },
         convertGroup: function (prop, converted) {
-            if (prop.type === "object") {
+            if (prop.type === "object" || prop.properties) {
                 return this.convert(prop, converted);
             } else {
                 return this.convert(prop.type, converted);
@@ -146,13 +149,17 @@ define([
 
             Object.keys(schema.properties).forEach(function (key) {
                 var attribute = {};
-                attribute.code = key;
                 var prop = schema.properties[key];
-                if (required.indexOf(key)>=0) {
-                    attribute.required=true;
+                var attribute = this.convertAttribute(prop, converted);
+                if (attribute) {
+                    if (required.indexOf(key) >= 0) {
+                        attribute.required = true;
+                    }
+                    attribute.code = key;
+                    meta.attributes.push(attribute);
+                } else {
+                    console.log("cannot handle prop " + key + " of type " + prop.type);
                 }
-                meta.attributes.push(attribute);
-                this.convertAttribute(prop, attribute, converted);
             }, this);
             return meta;
         }
