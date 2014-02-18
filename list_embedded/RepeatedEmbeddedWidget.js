@@ -38,7 +38,9 @@ define([ 'dojo/Stateful',
 		},
 		titlePaneToggled: function () {
 			if (this.titlePane.open) {
-				this.getChildren()[0].show();
+                var child = this.getChildren()[0];
+                child.show();
+                child.resize();
 			}
 		},
 		indexChanged: function (propName, old, nu) {
