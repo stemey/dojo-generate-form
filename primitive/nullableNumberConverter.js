@@ -2,6 +2,10 @@ define([], function () {
 
 	return {
 		format: function (value) {
+            if (typeof value === "string") {
+                // sometimes number gets turned into string (e.g. LocalStorage)
+                return parseFloat(value);
+            } else
 			if (typeof value === "undefined") {
 				return value;
 			} else if (value == null) {
