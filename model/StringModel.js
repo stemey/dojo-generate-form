@@ -7,7 +7,8 @@ define([
 	return declare([PrimitiveModel], {
 		code: "string",
 		isEmpty: function () {
-			return this.value === null || this.value.length === 0 || this.value.match(/ +/) !== null;
+//			return this.value === null || this.value.length === 0 || this.value.match(/ +/) !== null;
+			return (!this.value || /^\s*$/.test(this.value));
 		},
 		isInstance: function (value) {
 			return typeof value === "string";
