@@ -1,0 +1,3 @@
+{
+	"source" : "for (var key in object) {console.log(key);}"
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Ace Editor Example</title>
+
+    <link rel="stylesheet" type="text/css"
+          href="../../../dojo/resources/dojo.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="../../../dijit/themes/claro/claro.css"/>
+
+    <!-- required: a default dijit theme: -->
+
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="../dojoConfig.js"></script>
+    <script type="text/javascript" src="../../../dojo/dojo.js" data-dojo-config="baseUrl:'../../../'"></script>
+
+
+    <script type="text/javascript">
+        require(['dijit/registry',
+            "dojo/parser", "doh/runner", "gform/primitive/ace/AceEditor", "dijit/layout/BorderContainer","dojo/domReady!", "ace/mode/javascript"], function (registry, parser, doh) {
+            parser.parse();
+            editor = registry.byNode(ace);
+            doh.register("standard", [
+                {
+                    name: 'init',
+                    runTest: function (t) {
+                        editor.set("value", "do it");
+                        t.assertEqual("do it", editor.get("value"));
+                    }
+                }
+            ]);
+            doh.run();
+        });
+    </script>
+</head>
+<body class="claro" >
+<h1 class="testTitle">Ace Editor Example</h1>
+<div id="ace3" data-dojo-type="gform/primitive/ace/AceEditor" style="width:100%;height:200px" data-dojo-props="value:'fixed size,more of that code'" >
+</div>
+
+<div data-dojo-type="dijit/layout/BorderContainer" style="width:100%;height:500px" data-dojo-props="gutters:true, liveSplitters:true">
+    <div id="ace" data-dojo-type="gform/primitive/ace/AceEditor" data-dojo-props="value:'hi',mode:'ace/mode/javascript',splitter:true,region:'left'" style="width:100px">
+    </div>
+    <div id="ace2" data-dojo-type="gform/primitive/ace/AceEditor" data-dojo-props="value:'my code',splitter:true,region:'center'" >
+    </div>
+<div>
+
+</body>
+</html>

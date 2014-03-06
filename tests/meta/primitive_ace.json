@@ -1,0 +1,13 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"string",
+			"editor":"acetext",
+            "code":"source",
+            "required":true,
+            "mode":"ace/mode/javascript"
+        }
+    ]
+}
