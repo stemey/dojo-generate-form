@@ -57,6 +57,10 @@ define(["./createVisitor",
 			var plainValue = mo.getPlainValue();
 			assertEqual(null, plainValue);
 		},
+        function testPath() {
+            mo.update(object2);
+            doh.assertEqual("booleanP", mo.getModelByPath("booleanP").getPath());
+        },
 		function testSwitchType() {
 			mo.update(object2);
 			mo.update(object1);

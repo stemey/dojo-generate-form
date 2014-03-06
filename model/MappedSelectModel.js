@@ -6,7 +6,7 @@ define([
 	// module:
 	//		gform/model/MappedSelectModel
 
-	return declare([SelectModel], {
+	return declare("gform.model.MappedSelectModel",[SelectModel], {
 		mappedValues: null,
 		mappedAttribute: null,
 		_parentSetter: function (parent) {

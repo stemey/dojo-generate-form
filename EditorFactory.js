@@ -31,15 +31,18 @@ define([  //
 		},
 		createGroupModel: function (schema, plainValue) {
 			var factory;
+            if (typeof plainValue === "undefined") {
+                plainValue=null;
+            }
 			if (schema.editor) {
 				factory = this.getGroupFactory(schema.editor);
 			} else {
 				factory = this.defaultGroupFactory;
 			}
-			if (factory == null) {
+			if (factory === null) {
 				throw new Error("cannot find group factory for type " + schema.editor);
 			}
-			return factory.createModel(schema, plainValue);
+			return factory.createModel(schema, plainValue );
 		},
 		createAttributeModel: function (attribute, plainValue) {
 			var factory = this.getAttributeFactory(attribute);

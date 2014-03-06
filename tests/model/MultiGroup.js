@@ -50,7 +50,12 @@ define(['./createVisitor',
 			var plainValue = mg.getPlainValue();
 			assertEqual(object, plainValue);
 		},
-		function testNull() {
+        function testPath() {
+            mg.update(object);
+            var model = mg.getModelByPath("booleanP");
+            assertEqual("booleanP", model.getPath());
+        },
+        function testNull() {
 			mg.update(null);
 			var plainValue = mg.getPlainValue();
 			assertEqual(null, plainValue);

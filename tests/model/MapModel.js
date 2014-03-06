@@ -22,6 +22,10 @@ define(["dojo/_base/lang",
 			am.update({"x": {"x": 4}});
 			doh.assertEqual(am, am.value[0].parent);
 		},
+        function testPath() {
+            am.update({"x": {"x": 4}});
+            doh.assertEqual("x.x", am.getModelByPath("x.x").getPath());
+        },
 		function testValue() {
 			am.update({"x": {"x": 4}});
 			var plainValue = am.getPlainValue();

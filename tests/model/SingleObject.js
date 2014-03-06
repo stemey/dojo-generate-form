@@ -37,7 +37,12 @@ define(['dojo/_base/lang',
 			var plainValue = so.getPlainValue(so);
 			assertEqual(object, plainValue);
 		},
-		function testNull() {
+        function testPath() {
+            so.update(object);
+            var model = so.getModelByPath("booleanP");
+            assertEqual("booleanP", model.getPath());
+        },
+        function testNull() {
 			so.update(null);
 			var plainValue = so.getPlainValue(so);
 			assertEqual(null, plainValue);

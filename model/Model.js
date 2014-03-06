@@ -14,7 +14,7 @@ define([
 
     var MESSAGE_PATTERN = /^\{(.*)\}$/;
 
-    return declare([Stateful], {
+    return declare("gform.model.Model", [Stateful], {
         // summary:
         //		Provides access to sibling attributes of modelHandle.
 
@@ -75,18 +75,38 @@ define([
             if (kwArgs && kwArgs.meta) {
                 this.messages.missingMessage = kwArgs.meta.missingMessage;
                 this.messages.invalidMessage = kwArgs.meta.invalidMessage;
+                this.schema = kwArgs.meta;
             }
             this.watch("state", lang.hitch(this, "_onChangeState"));
             this.watch("value", lang.hitch(this, "_onChangeState"));
             this.watch("touched", lang.hitch(this, "_onChangeState"));
             this.watch("oldValue", lang.hitch(this, "_onChangeState"));
         },
-        getPath: function (modelHandle) {
+        getPath: function () {
             // summary:
             //		get the absolute path to the current attribute
             // returns: String
             //		absolute path
-            return "";
+            return this.parent ? this.parent.getChildPath(this) : "";
+
+        },
+        getChildPath: function (child) {
+            // summary:
+            //		get the absolute path to the current attribute
+            // returns: String
+            //		absolute path
+            var index = this.getChildIndex(child);
+            if (this.parent) {
+                var parentIndex = this.parent.getChildPath(this);
+                if (parentIndex) {
+                    return parentIndex + "." + index;
+                } else {
+                    return index;
+                }
+            } else {
+                return index;
+            }
+
         },
         getParent: function (attributeCode) {
             // summary:
@@ -94,7 +114,7 @@ define([
             // attributeCode: String
             //		the name of he sibling attribute
             var model = this.parent.getModelByPath(attributeCode);
-            if (model == null) {
+            if (model === null) {
                 return null;
             } else {
                 return model.getPlainValue();
@@ -187,7 +207,7 @@ define([
                 model.resetMeta();
                 cascade();
             });
-            this.update(this.oldValue, false);
+            this.update(this.oldValue, true, false);
         },
         getModelByPath: function (path) {
             if (path === "") {

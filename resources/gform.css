@@ -247,17 +247,17 @@ div.gformEditorController .new {
 	display:none;	
 }
 div.gformEditorController.create .new {
-	display:block;
+	display:initial;
 }
 div.gformEditorController .edit {
 	display:none;	
 }
 div.gformEditorController.edit .edit {
-	display:block;	
+	display:initial;
 }
 /* loading icon. TODO needs to be centered */
 div.gformEditorController .loading {
-	display:none;	
+	display:initial;
 }
 div.gformEditorController.loading .loading {
 	display:block;	

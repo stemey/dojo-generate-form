@@ -4,7 +4,7 @@ define([
 
 ], function (PrimitiveModel, declare) {
 
-	return declare([PrimitiveModel], {
+	return declare("gform.model.BooleanModel",[PrimitiveModel], {
 		_valueSetter: function (value) {
 			if (value == null) {
 				value = false;

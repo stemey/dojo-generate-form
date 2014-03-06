@@ -1,5 +1,5 @@
 define([
-	"dojo/_base/lang",//
+    "dojo/_base/lang",//
 	"./EditorFactory", //
 	"./AttributeFactoryFinder",//
 	"./group/GroupFactory",//
@@ -84,6 +84,7 @@ define([
 	attributeFactoryFinder.addAttributeFactory(new CurrencyAmountAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory(new CheckedSelectAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory(new TextareaAttributeFactory({editorFactory: editorFactory}));
+    //attributeFactoryFinder.addAttributeFactory(new AceTextAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory(new SimpleTextareaAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.set("attributeFactories", attributeFactories);
 

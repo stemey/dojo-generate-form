@@ -47,7 +47,7 @@ define(["dojo/_base/lang",
 		schema.attributes.forEach(function (attribute) {
 			attributes[attribute.code] = new PrimitiveModel();
 		});
-		var so = new SingleObject({typeCode: schema.code, attributes: attributes});
+		var so = new SingleObject({code: schema.code, attributes: attributes});
 		so.update({});
 		return so;
 	};

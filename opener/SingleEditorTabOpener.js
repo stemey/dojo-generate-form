@@ -78,7 +78,7 @@ define([
 			//		Must also provide the url to the resource edited. Options may provide EditorFactory.
 			var wid = "tab_editor_" + options.url;
 			var controller = registry.byId(wid);
-			if (controller != null) {
+			if (controller) {
 				this.tabContainer.selectChild(controller);
 			} else if (this.url2widget[options.url] != null) {
 				this.tabContainer.selectChild(this.url2widget[options.url]);
