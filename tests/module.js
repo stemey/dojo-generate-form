@@ -1,8 +1,7 @@
 define(
 	"gform.tests.module", [
 		"gform/tests/Resolver",//
-        "gform/tests/Resolver",//
-		"gform/tests/convertSchema",//
+		"gform/tests/model/Model",//
 		"gform/tests/model/PrimitiveModel",//
 		"gform/tests/model/MultiGroup",//
 		"gform/tests/model/ArrayModel",//
@@ -29,6 +28,8 @@ define(
 			doh.registerUrl("gform.tests.primitive_int", dojo.moduleUrl("gform", "tests/test_primitive_number.html"));
 			doh.registerUrl("gform.tests.primitive_currencyamount", dojo.moduleUrl("gform", "tests/test_primitive_currencyamount.html"));
 			doh.registerUrl("gform.tests.primitive_boolean", dojo.moduleUrl("gform", "tests/test_primitive_boolean.html"));
+            doh.registerUrl("gform.tests.primitive_ace", dojo.moduleUrl("gform", "tests/test_primitive_ace.html"));
+            doh.registerUrl("gform.tests.ace", dojo.moduleUrl("gform", "tests/ace/test_ace.html"));
 			doh.registerUrl("gform.tests.primitive_date", dojo.moduleUrl("gform", "tests/test_primitive_date.html"));
 			doh.registerUrl("gform.tests.primitive_time", dojo.moduleUrl("gform", "tests/test_primitive_time.html"));
 			doh.registerUrl("gform.tests.primitive_string", dojo.moduleUrl("gform", "tests/test_primitive_string.html"));
@@ -40,6 +41,7 @@ define(
 			doh.registerUrl("gform.tests.primitive_ref_in_tab", dojo.moduleUrl("gform", "tests/test_primitive_ref_in_tab.html"));
 			doh.registerUrl("gform.tests.primitive_ref_in_dialog", dojo.moduleUrl("gform", "tests/test_primitive_ref_in_dialog.html"));
 			doh.registerUrl("gform.tests.crudController", dojo.moduleUrl("gform", "tests/test_crudController.html"));
+            doh.registerUrl("gform.tests.crudMultiController", dojo.moduleUrl("gform", "tests/test_crudMultiController.html"));
 			doh.registerUrl("gform.tests.primitive_checkedselect", dojo.moduleUrl("gform", "tests/test_primitive_checkedselect.html"));
 			doh.registerUrl("gform.tests.primitive_mapped_select", dojo.moduleUrl("gform", "tests/test_primitive_mapped_select.html"));
 			doh.registerUrl("gform.tests.primitive_checkedmultiselect", dojo.moduleUrl("gform", "tests/test_primitive_checkedmultiselect.html"));

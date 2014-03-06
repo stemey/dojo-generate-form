@@ -37,6 +37,8 @@ define([
         // actionClasses:
         //		array of Action modules
         actionClasses: [Save, Discard, Delete],
+        barHeight: null,
+        fullMb: null,
         constructor: function (props) {
             lang.mixin(this, props);
             this.inherited(arguments);
@@ -46,18 +48,6 @@ define([
         setEditorFactory: function (ef) {
             this.editor.set("editorFactory", ef);
         },
-        _onStateChange: function () {
-            this.progressBar.hide();
-            array.forEach(["create", "edit", "loading"], function (e) {
-                domClass.toggle(this.domNode, e, this.state === e);
-            }, this);
-        },
-        showProgressBar: function (message) {
-            this.progressBar.show(message);
-        },
-        hideProgressBar: function () {
-            this.progressBar.hide();
-        },
         postCreate: function () {
             this.inherited(arguments);
             array.forEach(createActions(this.actionClasses, this), function (button) {
@@ -66,8 +56,6 @@ define([
             this.watch("state", lang.hitch(this, "_onStateChange"));
             this.editor.on("value-changed", lang.hitch(this, "_onValueChange"));
         },
-        barHeight: null,
-        fullMb: null,
         _resizeSecondRun: function () {
             this.fullMb = domGeometry.getMarginBox(this.domNode);
             var editorMb = domGeometry.getMarginBox(this.editor.domNode);
@@ -116,6 +104,9 @@ define([
             // clear dim of editor after dialog has resized according to editor
             this.editor.dim = null;
             this.inherited(arguments);
+        },
+        showProgressBar: function (message) {
+            this.progressBar.show(message);
         },
         onCloseDialog: function (closeFn) {
             // summary:

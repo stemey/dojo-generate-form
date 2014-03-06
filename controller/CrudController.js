@@ -2,8 +2,7 @@ define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
 	"dojo/_base/array",
-	"dojo/dom-class",
-	"gform/createLayoutEditorFactory",
+    "gform/createLayoutEditorFactory",
 	"./_CrudMixin",
 	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
@@ -21,7 +20,7 @@ define([
 	"dijit/layout/BorderContainer",
 	"dijit/layout/ContentPane",
 	"./ConfirmDialog"
-], function (declare, lang, array, domClass, createEditorFactory, _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Save, Discard, Delete, createActions, _InvisibleMixin) {
+], function (declare, lang, array, createEditorFactory, _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Save, Discard, Delete, createActions, _InvisibleMixin) {
 // module:
 //		gform/controller/CrudController
 
@@ -39,19 +38,6 @@ define([
 		actionClasses: [Save, Discard, Delete],
 		constructor: function (props) {
 			lang.mixin(this, props);
-		},
-		_onStateChange: function (e) {
-			this.progressBar.hide();
-			array.forEach(["create", "edit", "loading"], function (e) {
-				domClass.toggle(this.domNode, e, this.state == e);
-			}, this);
-		},
-		showProgressBar: function (message) {
-			this.progressBar.show();
-			this.progressMessage.innerHTML = message;
-		},
-		hideProgressBar: function () {
-			this.progressBar.hide();
 		},
 		postCreate: function () {
 			this.inherited(arguments);

@@ -50,19 +50,6 @@ define([
 		_onValueChange: function (e) {
 			this.set("title", this.editor.getLabel());
 		},
-		_onStateChange: function (e) {
-			this.progressBar.hide();
-			array.forEach(["create", "edit", "loading"], function (e) {
-				domClass.toggle(this.domNode, e, this.state === e);
-			}, this);
-		},
-		showProgressBar: function (message) {
-			this.progressBar.show();
-			this.progressMessage.innerHTML = message;
-		},
-		hideProgressBar: function () {
-			this.progressBar.hide();
-		},
 		postCreate: function () {
 			this.inherited(arguments);
 			array.forEach(createActions(this.actionClasses, this), function (button) {

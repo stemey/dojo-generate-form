@@ -1,17 +1,17 @@
 {
-    "attributes":[
+    "attributes": [
         {
-            "type":"string",
-						"code": "label",
+            "type": "string",
+            "code": "label"
         },
         {
-            "type":"number",
-						"disabled":true,	
-						"code": "id",
+            "type": "number",
+            "disabled": true,
+            "code": "id"
         },
         {
-            "type":"number",
-						"code": "size",
+            "type": "number",
+            "code": "size"
         }
-    ],
+    ]
 }

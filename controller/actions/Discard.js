@@ -13,7 +13,7 @@ return declare( [_ActionMixin], {
 	messageModule: "actions.discard",
 	execute: function() {
 			this.ctrl.editor.syncPendingChanges();
-			this.ctrl.editor.reset();	
+            this.ctrl.reset();
 		}
 	});
 });

@@ -1,0 +1,26 @@
+[
+	{
+        "type":"country",
+		"id":1,
+		"label":"Egypt",
+		"size":300
+	},
+	{
+        "type":"country",
+        "id":2,
+		"label":"USA",
+		"size":1300
+	},
+	{
+        "type":"city",
+        "id":3,
+		"label":"New York",
+		"inhabitants":20000
+	},
+	{
+		"id":4,
+        "type":"city",
+		"label":"Utah",
+		"inhabitants":3000000
+	}
+]

@@ -32,7 +32,7 @@ return declare( [_ActionMixin], {
 					this.ctrl.alert(messages["actions.save.noChanges"]) ;
 				}else{
 					var errorCount = this.ctrl.editor.validate(true);
-					if (errorCount==0) {	
+					if (errorCount===0) {
 						this.ctrl.showProgressBar(message);	
 						var promise = this.ctrl.store.put(entity);
 						this._execute(promise,"Update");

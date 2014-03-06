@@ -1,0 +1,24 @@
+{
+    "code": "country",
+    "attributes": [
+        {
+            "type": "string",
+            "code": "label",
+            "required": true
+        },
+        {
+            "type": "string",
+            "code": "type",
+            "required": true
+        },
+        {
+            "type": "number",
+            "code": "size"
+        },
+        {
+            "type": "number",
+            "code": "id",
+            "disabled":true
+        }
+    ]
+}
