@@ -67,6 +67,9 @@ define([
 			aspect.after(controller, "onCreated", function (result, args) {
 				var singleUrl = restHelper.compose(url, args[0]);
 				me.url2widget[singleUrl] = controller;
+                aspect.after(controller, "destroy", function(){
+                    delete me.url2widget[singleUrl];
+                });
 			});
 			controller.createNew(options.schemaUrl, options.callback);
 		},
@@ -80,7 +83,7 @@ define([
 			var controller = registry.byId(wid);
 			if (controller) {
 				this.tabContainer.selectChild(controller);
-			} else if (this.url2widget[options.url] != null) {
+			} else if (this.url2widget[options.url] !== null) {
 				this.tabContainer.selectChild(this.url2widget[options.url]);
 			} else {
 				var props = {};
@@ -98,6 +101,7 @@ define([
 				controller = new TabCrudController(props);
 				lang.mixin(controller, this.controllerConfig);
 				controller.setCtx(this.ctx);
+
 				this.tabContainer.addChild(controller);
 				this.tabContainer.selectChild(controller);
 				controller.edit(id, options.schemaUrl);
