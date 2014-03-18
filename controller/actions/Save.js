@@ -53,7 +53,7 @@ return declare( [_ActionMixin], {
 				});
 			} else {
 				var idProperty = this.ctrl.store.idProperty  || "id";
-				this.ctrl.onCreated(this.editor.getPlainValue()[idProperty]);
+				this.ctrl.onCreated(this.ctrl.editor.getPlainValue()[idProperty]);
 			}
 			//this.ctrl.editor.set("plainValue",{});
 			//this.ctrl.editor.reset();	
