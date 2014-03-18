@@ -46,9 +46,9 @@ define([ 'dijit/layout/_LayoutWidget',
                     this.ace[delegatedProps[prop].setter](value);
                 } else if (this.ace && prop in delegatedSessionProps) {
                     this.ace.getSession()[delegatedSessionProps[prop].setter](value);
-                } else {
-                    this.inherited(arguments);
                 }
+                // always fire event
+                this.inherited(arguments);
             },
             _get: function (prop) {
                 if (this.ace && prop in delegatedProps) {

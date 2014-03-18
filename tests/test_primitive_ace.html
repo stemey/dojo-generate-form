@@ -20,7 +20,7 @@
             "dojo/text!./meta/primitive_ace.json", "dojo/text!./entity/primitive_ace.json"//
         ], function (ready, json, Editor, Stateful, doh, createStandardEditorFactory, meta, entity) {
 
-            var editor = new Editor({
+            editor = new Editor({
                 "plainValue": {},
                 "meta": dojo.fromJson(meta), editorFactory: createStandardEditorFactory()});
             var container = dojo.byId("container");
