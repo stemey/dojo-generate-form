@@ -1,4 +1,4 @@
-Dojo Generate Form: A Dijit to generate a form based on an editor schema
+Gform: A dojo library to generate a form based on an editor schema
 =======================================================================
 
 
