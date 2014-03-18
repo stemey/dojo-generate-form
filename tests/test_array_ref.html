@@ -18,8 +18,8 @@
 
 		require([ "dojo/ready", "dojo/_base/lang", "dojo/json", "dijit/registry", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
 		"dojo/text!./meta/array_ref.json", "dojo/text!./entity/array_ref.json", "dojo/text!./entity/state_collection.json", "dojo/store/Memory", "dojo/store/Observable",//
-		"gform/opener/SingleEditorDialogOpener", "gform/controller/ConfirmDialog", "gform/Context", "dojo/when", "gform/util/restHelper"
-		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when, restHelper) {
+		"gform/opener/SingleEditorDialogOpener", "gform/controller/ConfirmDialog", "gform/Context", "dojo/when", "gform/util/restHelper", "gform/converter/refConverter"
+		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when, restHelper, refConverter ) {
 			var ctx = new Context();
 			ctx.opener = {
 				openSingle: function(param) {
@@ -32,10 +32,11 @@
 			var model = dojo.fromJson(entity);
 			store = new Store({data:JSON.parse(stateCollection), idProperty:"id"});	
 			ctx.storeRegistry.register("/gform/tests/entity/state", store);
-			editor = new Editor({
+            var ef = createStandardEditorFactory();
+            editor = new Editor({
 					ctx:ctx,
 					"plainValue": model,
-					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
+					"meta": dojo.fromJson(meta),editorFactory: ef});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
 			editor.startup();
@@ -56,12 +57,10 @@
 						t.assertEqual(editor.editorFactory, param.editorFactory);
 						t.assertEqual("/gform/tests/meta/refs.json", param.schemaUrl);
 						t.assertEqual("/gform/tests/entity/state", param.url);
-						when(store.add({label:"created", size:34}))
-							.then(function(id) {
-								param.callback(id);
-								t.assertEqual(id, editor.getPlainValue().state[2].$ref);
-							});
-					
+						var id =store.add({label:"created", size:34});
+                        param.callback(id);
+						t.assertEqual("/gform/tests/entity/state/"+id, editor.getPlainValue().state[2].$ref);
+
 					}
 				}
 			]);

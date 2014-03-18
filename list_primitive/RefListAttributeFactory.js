@@ -8,7 +8,7 @@ define([
 	"dojox/mvc/WidgetList",
 	"./RepeatedAttributeWidget",
 	"../widget/MvcDndSource"
-], function (PrimitiveModel, lang, aspect, declare, EmbeddedListWidget, PrimitiveListAttributeFactory, WidgetList, RepeatedAttributeWidget, DndSource) {
+], function (PrimitiveModel, lang, aspect, declare, EmbeddedListWidget, PrimitiveListAttributeFactory, RefListWidget, RepeatedAttributeWidget, DndSource) {
 // module: 
 //		gform/list_primitive/RefListAttributeFactory
 
@@ -27,15 +27,20 @@ define([
 			}
 			var childAttribute = attribute.element;
 
+            var refConverter = this.editorFactory.getConverter(attribute.element, ctx);
+
 			var select = new EmbeddedListWidget({
 				target: modelHandle,
 				attribute: attribute,
 				childAttribute: childAttribute,
 				editorFactory: this.editorFactory,
-				opener: ctx.opener
+				opener: ctx.opener,
+                converter: refConverter
 			});
 
-			var widgetList = new WidgetList();
+
+
+            var widgetList = new RefListWidget();
 			widgetList.set("partialRebuild", true);
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedAttributeWidget);
@@ -43,7 +48,8 @@ define([
 				meta: childAttribute,
 				_relTargetProp: "modelHandle",
 				editorFactory: this.editorFactory,
-				ctx: ctx
+				ctx: ctx,
+                converter: refConverter
 			});
 			if (attribute.reorderable !== false) {
 				var copy = function (original) {
@@ -58,7 +64,7 @@ define([
 				});
 			}
 			select.addChild(widgetList);
-			return select;
+            return select;
 
 		}
 	});

@@ -25,8 +25,8 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "./EmbeddedListWidget",
 			//		the id of the newly created.
 
 
-			var value = converter.parse(id);
-			this.target.value.push(value);
+            var value = this.converter ? this.converter.parse(id) : id;
+            this.target.push(value);
 		},
 		postCreate: function () {
 			this.inherited(arguments);
