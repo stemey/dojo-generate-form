@@ -59,8 +59,12 @@ define(
 					var f = new FilteringSelect(props);
 					dijitAwareConverter.dijit = f;
 
+                    var openerParams={
+                        editorFactory: this.editorFactory,
+                        schemaUrl: attribute.schemaUrl
+                    };
 
-					var refSelect = new RefSelect({targetCreatable: targetCreatable, meta: attribute, opener: ctx.opener, filteringSelect: f, editorFactory: this.editorFactory});
+					var refSelect = new RefSelect({openerParams:openerParams,targetCreatable: targetCreatable, meta: attribute, opener: ctx.opener, filteringSelect: f, editorFactory: this.editorFactory});
 					return refSelect;
 				}
 			});

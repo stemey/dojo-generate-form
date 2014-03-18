@@ -11,6 +11,7 @@ define([
 	"./list_primitive/RefListAttributeFactory",//
 	"./primitive/StringAttributeFactory",//
 	"./primitive/ReferenceAttributeFactory",//
+    "./primitive/MultiReferenceAttributeFactory",//
 	"./primitive/BooleanAttributeFactory",//
 	"./primitive/SelectAttributeFactory",//
 	"./primitive/CheckedSelectAttributeFactory",//
@@ -36,7 +37,7 @@ define([
 	"./list_table/RepeatedSingleEmbeddedAttributeFactory"//
 
 ], function (lang, EditorFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
-			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
+			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory,BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
 			 TextareaAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
 			 ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
 // module:
@@ -70,6 +71,7 @@ define([
 		new RefListAttributeFactory({editorFactory: editorFactory}),//
 		new PrimitiveListAttributeFactory({editorFactory: editorFactory}),//
 		new ReferenceAttributeFactory({editorFactory: editorFactory}),//
+        new MultiReferenceAttributeFactory({editorFactory: editorFactory}),//
 		new NumberAttributeFactory({editorFactory: editorFactory}),//
 		new SelectAttributeFactory({editorFactory: editorFactory}), //
 		new BooleanAttributeFactory({editorFactory: editorFactory}), //

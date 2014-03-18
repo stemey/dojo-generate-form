@@ -71,7 +71,11 @@ define([
                     delete me.url2widget[singleUrl];
                 });
 			});
-			controller.createNew(options.schemaUrl, options.callback);
+            if (options.typeProperty) {
+                controller.createNewMulti(options.schemaUrls, options.typeProperty, options.callback);
+            } else {
+                controller.createNew(options.schemaUrl, options.callback);
+            }
 		},
 		openSingle: function (options) {
 			// summary:
@@ -83,7 +87,7 @@ define([
 			var controller = registry.byId(wid);
 			if (controller) {
 				this.tabContainer.selectChild(controller);
-			} else if (this.url2widget[options.url] !== null) {
+			} else if (this.url2widget[options.url]) {
 				this.tabContainer.selectChild(this.url2widget[options.url]);
 			} else {
 				var props = {};
@@ -104,7 +108,11 @@ define([
 
 				this.tabContainer.addChild(controller);
 				this.tabContainer.selectChild(controller);
-				controller.edit(id, options.schemaUrl);
+                if (options.typeProperty) {
+                    controller.editMulti(options.schemaUrls, options.typeProperty, id);
+                }else{
+                    controller.edit(id, options.schemaUrl);
+                }
 			}
 		}
 	});

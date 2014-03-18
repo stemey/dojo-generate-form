@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+	<link rel="stylesheet" href="../../gform/resources/gform.css"/>
+
+	<script type="text/javascript" src="dojoConfig.js"></script>
+    <script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/ready", "dojo/_base/lang", "dojo/json", "dijit/registry", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
+		"dojo/text!./meta/primitive_multi_ref.json", "dojo/text!./entity/primitive_multi_ref.json", "dojo/text!./entity/shape/collection.json", "dojo/store/Memory", "dojo/store/Observable",//
+		"gform/opener/SingleEditorDialogOpener", "gform/controller/ConfirmDialog", "gform/Context", "dojo/when", "gform/util/restHelper"
+		], function(ready, lang, json, registry, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, stateCollection, Store, Observable, SingleEditorDialogOpener, ConfirmDialog, Context, when, restHelper) {
+			var ctx = new Context();
+			ctx.opener = {
+				openSingle: function(param) {
+					this.openSingleParams=param;
+				},
+				createSingle: function(param) {
+					this.createSingleParams=param;
+				}
+			};
+			var model = dojo.fromJson(entity);
+			store = new Store({data:JSON.parse(stateCollection), idProperty:"id"});	
+			ctx.storeRegistry.register("/gform/tests/entity/shape", store);
+			editor = new Editor({
+					ctx:ctx,
+					"plainValue": model,
+					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
+			var container = dojo.byId("container");
+			editor.placeAt(container);
+			editor.startup();
+			var select = dijit.byId("gform_FilteringSelect_0");
+			doh.register("standard", [
+				{
+					name : 'init',
+					runTest : function(t) {
+						t.assertEqual(model.shape.$ref, editor.get("plainValue").shape.$ref);
+						t.assertEqual("2", select.get("value"));
+					}
+				},
+				{
+					name : 'open',
+					runTest : function(t) {
+						registry.byId("dijit_form_Button_0").onClick();
+						var param = editor.ctx.opener.openSingleParams;
+						t.assertEqual(editor.editorFactory, param.editorFactory);
+						t.assertEqual(2, param.schemaUrls.length);
+                        t.assertEqual("type", param.typeProperty);
+                        t.assertEqual("/gform/tests/entity/shape/2", param.url);
+					}
+				},
+				{
+					name : 'create',
+					runTest : function(t) {
+						registry.byId("dijit_form_Button_1").onClick();
+						var param = editor.ctx.opener.createSingleParams;
+						t.assertEqual(editor.editorFactory, param.editorFactory);
+						t.assertEqual(2, param.schemaUrls.length);
+                        t.assertEqual("type", param.typeProperty);
+                        t.assertEqual("/gform/tests/entity/shape", param.url);
+						var id=store.add({label:"created", size:34});
+						param.callback(id);
+						t.assertEqual(id, restHelper.decompose(editor.getPlainValue().shape.$ref).id);
+					
+					}
+				},
+				{
+					name : 'update',
+					runTest : function(t) {
+						var id = restHelper.decompose(editor.getPlainValue().shape.$ref).id;
+						var entity = store.get(id);
+						var updated = {};
+						lang.mixin(updated, entity);
+						updated.label="updated";
+						store.put(updated);
+						t.assertEqual(updated.label, dijit.byId("gform_FilteringSelect_0").get("displayedValue"));
+					}
+				}
+			]);
+			doh.run();
+		});
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test</h1>
+
+
+	<div id="container"></div>
+	<div id="dialog"></div>
+	</div>	
+
+</body>
+</html>	

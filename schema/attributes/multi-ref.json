@@ -1,0 +1,78 @@
+{
+	"code": "multi-ref",
+	"editor": "tab",
+	"description": "This is a select displaying the labels of referenced entities. The autocomplete functionality allows searching through possible entities to associate. It is based on 'dijit.form.FilteringSelect'. There are also buttons to edit the referenced entity or create a new entity in a separate editor. The location of the editor is defined by the opener in the parent editor's context. There are multiple schemata for the referenced resource. The schema is encoded in the resource's typeProperty.",
+	"example": {
+		"$ref": "example/multi-ref.json"
+	},
+	"groups": [
+		{
+			"$ref": "header.json"
+		},
+		{
+			"label": "reference",
+			"attributes": [
+				{
+					"code": "type",
+					"type": "string",
+					"visible": false,
+					"required": true,
+					"values": ["multi-ref"]
+				},
+				{
+					"code": "idProperty",
+					"description": "The id property in the referenced resources",
+					"type": "string"
+				},
+                {
+					"code": "searchProperty",
+					"description": "The property displayed and matched against the user input.",
+					"type": "string"
+				},
+				{
+					"code": "schemaUrl",
+					"required": true,
+					"description": "the url to the schema of the referenced resources.",
+					"type": "string"
+				},
+				{
+					"code": "url",
+					"required": true,
+					"description": "the url of the resources referenced by this property.",
+					"type": "string"
+				}
+			]
+		},
+        {
+            "label": "schemas",
+            "attributes": [
+                {
+                    "code": "typeProperty",
+                    "description": "The type property in the referenced resources",
+                    "type": "string"
+                },
+                {
+                    "code": "schemas",
+                    "type": "array",
+                    "required": true,
+                    "group": {
+                        "attributes":[
+                            {
+                                "code":"label",
+                                "type":"string"
+                            },
+                            {
+                                "code":"code",
+                                "type":"string"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+		{
+			"$ref": "messages.json"
+		}
+	]
+
+}

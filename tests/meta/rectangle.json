@@ -1,0 +1,30 @@
+{
+    "code":"rectangle",
+    "label":"rectangle",
+    "attributes":[
+        {
+            "type":"string",
+            "code":"label",
+            "required":true
+        },{
+            "type":"string",
+            "code":"_type",
+            "required":true
+        },{
+            "type":"number",
+            "code":"height"
+        },{
+            "type":"number",
+            "code":"id"
+        },{
+            "type":"number",
+            "code":"width"
+        },{
+            "type":"number",
+            "code":"x"
+        },{
+            "type":"number",
+            "code":"y"
+        }
+    ]
+}

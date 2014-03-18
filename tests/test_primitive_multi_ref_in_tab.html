@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+	<link rel="stylesheet" href="../../gform/resources/gform.css"/>
+	<link rel="stylesheet" href="../../gform/resources/gform_layout.css"/>
+
+	<script type="text/javascript" src="dojoConfig.js"></script>
+    <script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/parser", "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
+		"dojo/text!./meta/primitive_multi_ref.json", "dojo/text!./entity/primitive_multi_ref.json", "dojo/text!./meta/circle.json", "dojo/text!./meta/rectangle.json",//
+		"gform/opener/SingleEditorTabOpener", "dijit/registry", "gform/Context", "dojo/text!./entity/shape/collection.json", "gform/store/GeneratingIdMemory", "gform/controller/ConfirmDialog", "dijit/layout/BorderContainer"
+		], function(parser, ready, json, Editor, Stateful, doh,createEditorFactory, meta, entity, circleSchema, rectangleSchema, SingleEditorTabOpener, registry, Context, stateCollection, Store) {
+			parser.parse();
+			container = registry.byId("tabContainer");
+			confirmDialog = registry.byId("confirmDialog");
+			confirmDialog.dialog.duration=0;
+			var ctx = new Context();
+			ctx.opener = new SingleEditorTabOpener({tabContainer: container, confirmDialog: confirmDialog});
+			ctx.opener.ctx = ctx;
+            store = new Store({data:JSON.parse(stateCollection), idProperty:"id"});
+            ctx.storeRegistry.register("/gform/tests/entity/shape", store);
+            ctx.schemaRegistry.register("/gform/tests/meta/circle.json", dojo.fromJson(circleSchema));
+            ctx.schemaRegistry.register("/gform/tests/meta/rectangle.json", dojo.fromJson(rectangleSchema));
+
+			var model = dojo.fromJson(entity);
+			editor =registry.byId("mainEditor");
+			editor.set("ctx", ctx);
+			editor.set("editorFactory", createEditorFactory());
+			editor.setMetaAndPlainValue(dojo.fromJson(meta), model);
+			editor.set("title", "main");
+
+	
+			var select = dijit.byId("gform_FilteringSelect_0");
+			doh.register("standard", [
+				{
+					name : 'open',
+					runTest : function(t) {
+						registry.byId("dijit_form_Button_2").onClick();
+						doh.assertEqual(2, container.getChildren().length)
+					}
+				},
+				{
+					name : 'changeLabel',
+					runTest : function(t) {
+						registry.byId("gform_ValidationTextBox_2").set("value", "changedLabel");
+						doh.assertEqual("changedLabel", container.selectedChildWidget.get("title"));
+						registry.byId("dijit_form_Button_4").onClick();
+						doh.assertEqual("changedLabel",registry.byId("gform_FilteringSelect_0").item.label);
+					}
+				},
+				{
+					name : 'changeCloseCancel',
+					runTest : function(t) {
+						registry.byId("gform_ValidationTextBox_3").set("value", "changedLabelAgain");
+						container.closeChild(container.selectedChildWidget);
+						doh.assertEqual(true, confirmDialog.dialog.open);
+						confirmDialog.dialogNoButton.onClick();
+						doh.assertEqual(false, confirmDialog.dialog.open);
+						doh.assertEqual(2, container.getChildren().length)
+					}
+				},
+				{
+					name : 'changeCloseDiscard',
+					runTest : function(t) {
+						container.closeChild(container.selectedChildWidget);
+						doh.assertEqual(true, confirmDialog.dialog.open);
+						confirmDialog.dialogYesButton.onClick();
+						doh.assertEqual(false, confirmDialog.dialog.open);
+						doh.assertEqual(1, container.getChildren().length)
+					}
+				},
+				{
+					name : 'create',
+					runTest : function(t) {
+						registry.byId("dijit_form_Button_3").onClick();
+						doh.assertEqual(2, container.getChildren().length)
+						registry.byId("gform_ValidationTextBox_4").set("value", "createdLabel");
+						doh.assertEqual("createdLabel", container.selectedChildWidget.get("title"));
+						registry.byId("dijit_form_Button_7").onClick();
+						doh.assertEqual("createdLabel",registry.byId("gform_FilteringSelect_0").item.label);
+					}
+				},
+			]);
+			doh.run();
+		});
+	</script>
+</head>
+<body class="claro">
+	<div data-dojo-type="dijit/layout/BorderContainer" style="width: 100%; height: 100%">
+	<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props=" region: 'top'">
+	<h1 class="testTitle">Editor Test</h1>
+	</div>
+	<div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="doLayout: true, region: 'center'" id='tabContainer'>
+		<div data-dojo-type="gform/Editor" id='mainEditor'></div>
+	</div>
+</div>
+	<div id="confirmDialog" data-dojo-type="gform/controller/ConfirmDialog">
+	</div>	
+
+</body>
+</html>	

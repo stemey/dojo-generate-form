@@ -58,7 +58,10 @@
 	},
 	{
 		"$ref": "attributes/ref.json"
-	}
+	},
+    {
+        "$ref": "attributes/multi-ref.json"
+    }
 
 ]
 

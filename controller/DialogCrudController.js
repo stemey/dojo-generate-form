@@ -41,7 +41,6 @@ define([
         fullMb: null,
         constructor: function (props) {
             lang.mixin(this, props);
-            this.inherited(arguments);
         },
         _onValueChange: function () {
         },

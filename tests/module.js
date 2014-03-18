@@ -40,6 +40,7 @@ define(
 
 			doh.registerUrl("gform.tests.primitive_ref_in_tab", dojo.moduleUrl("gform", "tests/test_primitive_ref_in_tab.html"));
 			doh.registerUrl("gform.tests.primitive_ref_in_dialog", dojo.moduleUrl("gform", "tests/test_primitive_ref_in_dialog.html"));
+            doh.registerUrl("gform.tests.primitive_multi_ref_in_dialog", dojo.moduleUrl("gform", "tests/test_primitive_multi_ref_in_dialog.html"));
 			doh.registerUrl("gform.tests.crudController", dojo.moduleUrl("gform", "tests/test_crudController.html"));
             doh.registerUrl("gform.tests.crudMultiController", dojo.moduleUrl("gform", "tests/test_crudMultiController.html"));
 			doh.registerUrl("gform.tests.primitive_checkedselect", dojo.moduleUrl("gform", "tests/test_primitive_checkedselect.html"));

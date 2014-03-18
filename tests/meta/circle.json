@@ -1,0 +1,27 @@
+{
+    "code":"circle",
+    "label":"Circle",
+    "attributes":[
+        {
+            "type":"string",
+            "code":"label",
+            "required":true
+        },{
+            "type":"string",
+            "code":"_type",
+            "required":true
+        },{
+            "type":"number",
+            "code":"diameter"
+        },{
+            "type":"number",
+            "code":"id"
+        },{
+            "type":"number",
+            "code":"x"
+        },{
+            "type":"number",
+            "code":"y"
+        }
+    ]
+}

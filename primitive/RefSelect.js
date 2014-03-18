@@ -24,6 +24,11 @@ define([ "dojo/_base/lang",
 		// opener:
 		//		the opener manages the opening of another editor.
 		opener: null,
+
+        // openerParams:
+        //      single typed: schemaUrl and editorFactory
+        //      multi typed: schemaUrls, typeProperty and editorFactory
+        openerParams:null,
 		// filteringSelect:
 		//		the FilteringSelect.
 		filteringSelect: null,
@@ -81,21 +86,21 @@ define([ "dojo/_base/lang",
 			//		open the selected reference in a separate editor.
 			var ref = this.filteringSelect.get("value");
 			var url = (this.meta.url || "") + "/" + ref;
-			this.opener.openSingle({
-				url: url,
-				schemaUrl: this.meta.schemaUrl,
-				editorFactory: this.editorFactory
-			});
+            var params = {};
+            lang.mixin(params, this.openerParams);
+            params.url=url;
+
+			this.opener.openSingle(params);
 		},
 		createref: function () {
 			//  description:
 			//		open a new reference in a separate editor.
-			this.opener.createSingle({
-				url: this.meta.url,
-				schemaUrl: this.meta.schemaUrl,
-				editorFactory: this.editorFactory,
-				callback: lang.hitch(this, "onCreated")
-			});
+
+            var params = {};
+            lang.mixin(params, this.openerParams);
+            params.url= this.meta.url;
+            params.callback= lang.hitch(this, "onCreated");
+			this.opener.createSingle(params);
 		},
 		onCreated: function (id) {
 			//  description:

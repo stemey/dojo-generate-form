@@ -75,7 +75,13 @@ define([
 			var store = this.ctx.getStore(url, {target: url, idProperty: options.idProperty || "id"});
 			this.crudController.setEditorFactory(this.editorFactory || options.editorFactory || createLayoutEditorFactory());
 			this.crudController.set("store", store);
-			this.crudController.edit(id, options.schemaUrl);
+
+            if (options.typeProperty) {
+                this.crudController.editMulti(options.schemaUrls, options.typeProperty, id);
+            }else{
+                this.crudController.edit(id, options.schemaUrl);
+            }
+
 			var me = this;
 			this.dialog.on("editor-changed", function () {
 				me.dialog.resize();
@@ -94,7 +100,13 @@ define([
 			var store = this.ctx.getStore(url, {target: url});
 			this.crudController.set("store", store);
 			this.crudController.setEditorFactory(this.editorFactory || options.editorFactory || createLayoutEditorFactory());
-			this.crudController.createNew(options.schemaUrl, options.callback);
+
+            if (options.typeProperty) {
+                this.crudController.createNewMulti(options.schemaUrls, options.typeProperty, options.callback);
+            } else {
+                this.crudController.createNew(options.schemaUrl, options.callback);
+            }
+
 			var me = this;
 			this.dialog.on("editor-changed", function () {
 				me.dialog.resize();

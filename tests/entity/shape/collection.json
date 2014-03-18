@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "_type": "/gform/tests/meta/circle.json",
+        "label":"großer Kreis",
+        "diameter": 300,
+        "x": 0,
+        "y": 0
+    },
+    {
+        "id": 2,
+        "_type": "/gform/tests/meta/rectangle.json",
+        "label":"großes Rechteck",
+        "height": 300,
+        "width": 300,
+        "x": 0,
+        "y": 0
+    },
+    {
+        "id": 3,
+        "_type": "XXX"
+    }
+
+]

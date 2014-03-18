@@ -1,0 +1,17 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"multi-ref",
+			"searchProperty":"label",
+            "idProperty":"id",
+            "typeProperty":"_type",
+            "description":"select a shape",
+            "code":"shape",
+            "url": "/gform/tests/entity/shape",
+            "schemas": ["/gform/tests/meta/circle.json", "/gform/tests/meta/rectangle.json"]
+						
+        }
+    ]
+}

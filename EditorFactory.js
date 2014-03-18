@@ -28,6 +28,7 @@ define([  //
 			this.groupFactories = {};
 			this.decoratorFactory = new DecoratorFactory();
 			this.addConverterForType(urlToIdConverter, "ref");
+            this.addConverterForType(urlToIdConverter, "multi-ref");
 		},
 		createGroupModel: function (schema, plainValue) {
 			var factory;

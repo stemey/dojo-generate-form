@@ -208,16 +208,19 @@ define([
             this.oldType = type;
             this.oldValue = entity;
             var schema = this.getSchema(type);
+            this.schemaSelector.set("value", type);
             this._execute(schema, "LoadMultiSchema", entity);
         },
         _onLoadMultiFailed: function (e) {
+            this.set("state", "edit");
             this.alert("cannot load entity ", e);
         },
         _onLoadMultiSchema: function (entity, schema) {
-            this.schemaSelector.set("value", schema.code);
+            this.set("state", "edit");
             this.editor.setMetaAndPlainValue(schema, entity);
         },
         _onLoadMultiSchemaFailed: function (e) {
+            this.set("state", "edit");
             this.alert("cannot load schema ", e);
         },
         _hideSchemaSelector: function () {
@@ -232,7 +235,7 @@ define([
                     option.id = schema;
                     option.name = schema;
                 } else {
-                    option.id = schema.url;
+                    option.id = schema.code;
                     option.name = schema.label;
                 }
                 options.push(option);
@@ -274,7 +277,7 @@ define([
             var schemaPromise = this.getSchema(schemaUrl);
             var me = this;
             this._showLoading();
-            this._execute(schemaPromise, "LoadForCreateAndSchema");
+            this._execute(schemaPromise, "LoadForCreateAndSchema", schemaUrl);
         },
         createPlainValue: function (schema) {
             if (this.plainValueFactory) {
@@ -283,9 +286,13 @@ define([
                 return {};
             }
         },
-        _onLoadForCreateAndSchema: function (schema) {
+        _onLoadForCreateAndSchema: function (schemaUrl, schema) {
             this.set("state", "create");
-            this.editor.setMetaAndPlainValue(schema, this.createPlainValue(schema));
+            var value =this.createPlainValue(schema);
+            if (this.typeProperty && !(this.typeProperty in value)) {
+                value[this.typeProperty] = schemaUrl;
+            }
+            this.editor.setMetaAndPlainValue(schema, value);
             this.emit("editor-changed");
         },
         _onLoadForCreateAndSchemaFailed: function (error) {

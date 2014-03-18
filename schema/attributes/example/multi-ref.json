@@ -1,0 +1,19 @@
+{
+    "code": "vehicle",
+    "type": "ref",
+    "url": "/service/vehicle",
+    "idProperty": "id",
+    "searchProperty": "name",
+    "typeProperty": "__type",
+    "schemas": [
+        {
+            "label": "truck",
+            "code": "/service/schema/truck.json"
+        },
+        {
+            "label": "car",
+            "code": "/service/schema/car.json"
+        }
+    ]
+
+}
