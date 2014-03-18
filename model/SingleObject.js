@@ -78,7 +78,7 @@ define([
             // 		update behavior.
 
             var oldIsNull = this.isNull;
-            if (plainValue === null) {
+            if (plainValue === null || typeof plainValue === "undefined") {
                 this.isNull = true;
             } else {
                 this.isNull = false;
