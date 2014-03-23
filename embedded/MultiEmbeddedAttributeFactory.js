@@ -16,12 +16,13 @@ define([
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		create: function (attribute, modelHandle) {
+		create: function (attribute, modelHandle,ctx) {
 			var panelWidget = new GroupPanelWidget({
 				"modelHandle": modelHandle,
 				"groups": attribute.groups,
 				nullable: attribute.required !== true,
-				editorFactory: this.editorFactory
+				editorFactory: this.editorFactory,
+                ctx:ctx
 			});
 			return panelWidget;
 

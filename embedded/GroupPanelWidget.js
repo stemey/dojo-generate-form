@@ -13,6 +13,7 @@ define([ "dojo/_base/array", //
         templateString: template,
         typeStack: null,
         typeToGroup: null,
+        ctx:null,
         doLayout: false,
         nullable: true,
         shown: true,
@@ -56,7 +57,8 @@ define([ "dojo/_base/array", //
                         "modelHandle": modelHandle.getGroup(group.code),
                         "meta": group,
                         "editorFactory": this.editorFactory,
-                        "shown": group.code === currentType && this.shown
+                        "shown": group.code === currentType && this.shown,
+                        ctx: this.ctx
                     });
                 this.typeStack.addChild(editor);
                 editor.set("doLayout", this.doLayout);

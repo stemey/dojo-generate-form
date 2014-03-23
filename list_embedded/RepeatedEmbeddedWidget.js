@@ -10,6 +10,7 @@ define([ 'dojo/Stateful',
 		_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin ], {
 		templateString: template,
 		messages: messages,
+        ctx: null,
 		_setModelHandleAttr: function (value) {
 			this._set("modelHandle", value);
 		},
@@ -18,9 +19,9 @@ define([ 'dojo/Stateful',
 			panelModel.set("title", "");
 			var modelHandle = this.get("modelHandle");
 			if (this.groups) {
-				this.editor = new PolymorphicMemberWidget({"shown": false, "modelHandle": modelHandle, "groups": this.groups, nullable: false, editorFactory: this.editorFactory});
+				this.editor = new PolymorphicMemberWidget({"shown": false, "modelHandle": modelHandle, "groups": this.groups, nullable: false, editorFactory: this.editorFactory, ctx:this.ctx});
 			} else {
-				this.editor = new Editor({doLayout: false, "shown": false, "modelHandle": modelHandle, "meta": this.group, editorFactory: this.editorFactory});
+				this.editor = new Editor({doLayout: false, "shown": false, "modelHandle": modelHandle, "meta": this.group, editorFactory: this.editorFactory, ctx:this.ctx});
 			}
 			//var titlePane = new TitlePane({title:at(modelHandle,"index")});
 			//titlePane.addChild(editor);

@@ -25,7 +25,7 @@ define([
 		handles: function (attribute) {
 			return attribute != null && attribute.type === "array" && attribute.groups;
 		},
-		create: function (attribute, modelHandle) {
+		create: function (attribute, modelHandle, ctx) {
 
 			var childMeta = attribute.groups[0];
 
@@ -45,7 +45,8 @@ define([
 				groups: attribute.groups,
 				typeProperty: attribute.typeProperty,
 				_relTargetProp: "modelHandle",
-				editorFactory: this.editorFactory
+				editorFactory: this.editorFactory,
+                ctx: ctx
 			});
 			select.addChild(widgetList);
 

@@ -24,7 +24,7 @@ define([
 			model.update(plainValue);
 			return model;
 		},
-		create: function (group, modelHandle) {
+		create: function (group, modelHandle, ctx) {
 			var listWidget = new ListPane({
 				meta: group
 			});
@@ -34,7 +34,7 @@ define([
 			for (var index = 0; index < group.groups.length; index++) {
 				var childGroup = group.groups[index];
 				var childModel = modelHandle.getModelByIndex(index);
-				var groupWidget = this.editorFactory.create(childGroup, childModel);
+				var groupWidget = this.editorFactory.create(childGroup, childModel, ctx);
 				listWidget.addChild(groupWidget);
 			}
 			return listWidget;

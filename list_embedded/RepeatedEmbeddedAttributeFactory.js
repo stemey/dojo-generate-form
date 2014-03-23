@@ -17,7 +17,7 @@ define([
 		handles: function (attribute) {
 			return attribute != null && attribute.type === "array" && attribute.group;
 		},
-		create: function (attribute, modelHandle) {
+		create: function (attribute, modelHandle, ctx) {
 
 			var select = new EmbeddedListWidget({
 				target: modelHandle,
