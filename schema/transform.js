@@ -1,4 +1,4 @@
-define([    'dojo/_base/lang'], function (lang) {
+define(['dojo/_base/lang'], function (lang) {
 // module:
 //		gform/Meta
 

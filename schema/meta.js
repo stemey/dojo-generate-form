@@ -76,7 +76,7 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
             return  meta.type == "multi-object";
         },
         isComplex: function (meta) {
-            return  this.isSingleObject() || this.isMultiObject();
+            return  this.isSingleObject(meta) || this.isMultiObject(meta);
         },
         createElement: function (meta) {
             var element = {};

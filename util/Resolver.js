@@ -13,30 +13,17 @@ define([
 //		gform/util/Resolver
 
 
-    return declare("gform.Resolver", [], {
+    return declare("gform.util.Resolver", [], {
         // summary:
         //		Resolver helps resolving references.
-        returnNullForFailed:false,
+        returnNullForFailed: false,
+        transformer: null,
         constructor: function (kwArgs) {
-            this.transformations = {};
             this.references = [];
             this.values = {};
-            if (kwArgs && kwArgs.baseUrl && kwArgs.transformations) {
-                var rebasedTrans = {};
-                for (var key in kwArgs.transformations) {
-                    var rebasedUrl = new Url(kwArgs.baseUrl, key).uri;
-                    var t = {};
-                    lang.mixin(t, kwArgs.transformations[key]);
-                    var newUrl = new Url(kwArgs.baseUrl, kwArgs.transformations[key].url).uri;
-                    t.url = newUrl;
-                    rebasedTrans[rebasedUrl] = t;
-                }
-                kwArgs.transformations = rebasedTrans;
-            }
             lang.mixin(this, kwArgs);
 
         },
-        transformations: null,
         baseUrl: "",
         values: null,
         references: null,
@@ -59,7 +46,11 @@ define([
             }
         },
         getUrlForRef: function (relUrl, baseUrl) {
-            return new Url(baseUrl, relUrl).uri;
+            if (this.transformer) {
+                return this.transformer.getUrlForRef(baseUrl, relUrl);
+            } else {
+                return new Url(baseUrl, relUrl).uri;
+            }
         },
         finish: function (references, baseUrl) {
             // summary:
@@ -116,28 +107,34 @@ define([
             // TODO we should call transforms last
             var me = this;
             var ts = this.references.sort(function (e1, e2) {
-                var t1 = me.transformations[e1.id];
-                var t2 = me.transformations[e2.id];
-                if (t1 == null && t2 != null) {
-                    return -1;
-                } else if (t1 != null && t2 == null) {
+                var t1 = me.transformer && me.transformer.isTransform(e1.id);
+                var t2 = me.transformer && me.transformer.isTransform(e2.id);
+                if (t1 && !t2) {
                     return 1;
-                } else if (e1.id === e2.id) {
+                } else if (!t1 && t2) {
+                    return -1;
+                } else if (t1 && t2) {
                     return 0;
                 } else {
                     return  me.references.indexOf(e2) - me.references.indexOf(e1);
                 }
 
-            });
-            ts.forEach(function (ref) {
-                when(this.values[ref.id]).then(lang.hitch(this, "callSetter", ref));
             }, this);
+
+            var promises=Object.keys(this.values).map(function (key) {
+                return me.values[key];
+            });
+            var allPromises = all(promises);
+            when(allPromises).then(function (value) {
+                ts.forEach(function (ref) {
+                    when(me.values[ref.id]).then(lang.hitch(me, "callSetter", ref));
+                });
+            });
         },
         callSetter: function (ref, value) {
-            var t = this.transformations[ref.id];
-            console.log("call setter " + ref.id + " with " + t);
-            if (t) {
-                value = t.execute(value);
+            console.log("call setter " + ref.id);
+            if (this.transformer) {
+                value = this.transformer.transformObject(ref.id, value);
             }
             ref.setter(value);
         },
@@ -153,7 +150,7 @@ define([
             promise.then(lang.hitch(this, "wrapUp", finalPromise, object));
             return finalPromise;
         },
-        wrapUp: function(finalPromise, object) {
+        wrapUp: function (finalPromise, object) {
             this.callSetters();
             finalPromise.resolve(object);
         },
@@ -173,10 +170,10 @@ define([
             }
             var originalUrl = url;
 
-            var t = this.transformations[url];
-            if (t) {
-                url = t.url;
-            }
+            //var t = this.transformations[url];
+            //if (t) {
+            //   url = t.url;
+            //}
 
             var index = url.lastIndexOf("/");
             var newBaseUrl;
@@ -201,45 +198,25 @@ define([
         _load: function (url) {
             return xhr(url, {handleAs: "json", method: "GET"});
         },
-        onLoadFailed: function(url, newBaseUrl, deferred, e) {
+        onLoadFailed: function (url, newBaseUrl, deferred, e) {
             console.debug("reject " + url, e);
             if (this.returnNullForFailed) {
                 deferred.resolve(null);
-            } else{
+            } else {
                 deferred.reject();
             }
 
         },
         onLoaded: function (newBaseUrl, deferred, resolvedRef) {
 
-//			if (t) {
-//				var transformPromise = new Deferred();
-//				me.values[originalUrl] = transformPromise;
-//			} else {
-//				embedded.id = originalUrl;
-//				ref.setter(embedded);
-//				me.values[originalUrl] = embedded;
-//			}
             var dependentPromise = this.resolveMore(resolvedRef, newBaseUrl);
             when(dependentPromise).then(function () {
-//				if (t) {
-//					var transformed = t.execute(embedded);
-//					transformed.id = originalUrl;
-//					ref.setter(transformed);
-//					transformPromise.resolve(transformed);
-//
-//					when(me.resolve(transformed, null, newBaseUrl)).then(function () {
-//						deferred.resolve(transformed);
-//					});
-//				} else {
                 deferred.resolve(resolvedRef);
-//				}
             }).otherwise(function (e) {
                     console.debug("rejected dependent ", e);
                     deferred.reject();
                 }
-            )
-            ;
+            );
 
         }
 

@@ -1,0 +1,5 @@
+{
+	"code": "converter",
+	"type": "string",
+	"description": "the converter id."
+}

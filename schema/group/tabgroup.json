@@ -20,7 +20,7 @@
 			"description": "The groups are displayed in a list.",
 			"typeProperty": "editor",
 			"groups": {
-				"$ref": "../groups-nocode.json"
+				"$ref": "../groups.json?transforms=nocode"
 			}
 
 		}

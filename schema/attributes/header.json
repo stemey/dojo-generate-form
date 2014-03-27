@@ -12,7 +12,10 @@
 		},
 		{
 			"$ref": "properties/required.json"
-		}
+		},
+        {
+            "$ref": "properties/converter.json"
+        }
 
 	]
 }

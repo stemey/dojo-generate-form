@@ -24,7 +24,7 @@
 					"typeProperty": "editor",
 					"minItems": 1,
 					"groups": {
-						"$ref": "../primitive-attributes.json"
+						"$ref": "../attributes.json?transforms=filter"
 					}
 
 				}

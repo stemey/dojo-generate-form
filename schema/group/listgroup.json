@@ -16,10 +16,10 @@
 		{
 			"code": "groups",
 			"type": "array",
-			"description": "The groups are displayed in a list. A List of Titlepanes constitutes an accordion.",
+			"description": "The groups are displayed in a list. A list of Titlepanes constitutes an accordion.",
 			"typeProperty": "editor",
 			"groups": {
-				"$ref": "../groups-nocode-nolabel.json"
+				"$ref": "../groups.json?transforms=nocode&transforms=nolabel"
 			}
 
 		}
