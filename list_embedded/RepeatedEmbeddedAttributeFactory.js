@@ -35,7 +35,8 @@ define([
 			widgetList.set("childParams", {
 				group: childMeta,
 				_relTargetProp: "modelHandle",
-				editorFactory: this.editorFactory
+				editorFactory: this.editorFactory,
+                ctx: ctx
 			});
 			select.addChild(widgetList);
 
