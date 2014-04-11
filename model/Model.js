@@ -64,7 +64,7 @@ define([
         oldErrors: [],
 
         // validateOnChange: boolean
-        //		if true changed to the value will be validated immediately
+        //		if true changes to the value will be validated immediately
         validateOnChange: true,
 
         // bubble: boolean
@@ -150,14 +150,21 @@ define([
                 if (this.parent) {
                     this.parent.onChange(validate);
                 }
+            } else {
+                this.wouldHaveBubbled=true;
             }
         },
         _execute: function (cb, bubble) {
             var oldBubble = this.bubble;
-            this.bubble = bubble === true;
+            this.wouldHaveBubbled=false
+            this.bubble  === true;
             try {
                 cb.call(this);
             } finally {
+                if (this.wouldHaveBubbled && this.parent) {
+                    this.parent.onChange();
+                }
+                this.wouldHaveBubbled=false
                 this.bubble = oldBubble;
             }
         },
@@ -166,14 +173,19 @@ define([
             var incompleteCount = 0;
             var changedCount = 0;
             var ownErrorCount = 0;
-            if (this.iterateChildren) {
-                this.iterateChildren(function (model) {
+            var me = this;
+            this.visit(function (model, cascade) {
+                if (model === me) {
+                    if (cascade) {
+                        cascade();
+                    }
+                } else {
                     errorCount += model.errorCount;
                     //ownErrorCount += model.ownErrorCount;
                     incompleteCount += model.incompleteCount;
                     changedCount += model.changedCount;
-                });
-            }
+                }
+            });
             if (this.state === "Error") errorCount++;
             if (this.state === "Incomplete") incompleteCount++;
             if (this.oldErrors.length > 0) ownErrorCount++;
@@ -239,8 +251,11 @@ define([
             return false;
         },
         validateRecursively: function (force) {
+            var me =this;
             this.visit(function (model, cascade) {
-                cascade();
+                if (!me.isEmpty()) {
+                    cascade();
+                }
                 model.validate(force);
             });
         },
@@ -261,6 +276,8 @@ define([
                     return;
 
                 } else {
+                    //this.set("state", "");
+                    //this.set("message", "");
                     return;
                 }
             } else {
@@ -276,7 +293,7 @@ define([
                 }
                 if (this.validators) {
                     this.validators.forEach(function (validator) {
-                        errors = errors.concat(validator(this));
+                        errors = errors.concat(validator(this, force));
                     }, this);
                 }
                 var changes = this._getErrorChanges(errors, this.oldErrors);
@@ -288,6 +305,7 @@ define([
                 }, this);
                 this.oldErrors = errors;
             }, false);
+
         },
         _getErrorChanges: function (newErrors, oldErrors) {
             var errorsToRemove = oldErrors.filter(function (oe) {
