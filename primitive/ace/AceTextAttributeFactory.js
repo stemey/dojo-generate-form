@@ -5,7 +5,8 @@ define([
     "dojo/_base/declare",
     "../../schema/meta",
     "dojox/mvc/at",
-    "../PrimitiveAttributeFactory"
+    "../PrimitiveAttributeFactory",
+    'ace/ext/language_tools'
 ], function (lang, aspect, AceEditor, declare, meta, at, PrimitiveAttributeFactory) {
 
     return declare([PrimitiveAttributeFactory], {
@@ -18,6 +19,8 @@ define([
             var props = {};
             props.value = at(modelHandle, "value");
             props.mode = attribute.mode;
+            props.options={};
+            props.options.enableBasicAutocompletion=!!attribute.autoComplete;
             var widget = new AceEditor(props);
             aspect.after(widget, "startup", lang.hitch(this, "startup", widget, attribute));
             return widget;
