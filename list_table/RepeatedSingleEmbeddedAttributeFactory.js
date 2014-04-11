@@ -22,7 +22,7 @@ define([
 			return attribute != null && attribute.type === "array" && attribute.attributes;
 		},
 
-		create: function (attribute, modelHandle) {
+		create: function (attribute, modelHandle, ctx) {
 
 			if (modelHandle.value == null) {
 				throw new Error("modelHandle.value should be initialized here");
@@ -31,7 +31,8 @@ define([
 			var select = new EmbeddedListWidget({
 				target: modelHandle,
 				attribute: attribute,
-				editorFactory: this.editorFactory
+				editorFactory: this.editorFactory,
+                ctx:ctx
 			});
 
 
@@ -53,7 +54,8 @@ define([
 				meta: attribute,
 				combinedAttributes: attributes,
 				_relTargetProp: "modelHandle",
-				editorFactory: this.editorFactory
+				editorFactory: this.editorFactory,
+                ctx:ctx
 			});
 			select.addChild(widgetList);
 

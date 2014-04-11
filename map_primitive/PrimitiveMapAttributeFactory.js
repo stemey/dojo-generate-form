@@ -14,7 +14,7 @@ define([
 		handles: function (attribute) {
 			return attribute.type === "map" && attribute.keyAttribute && attribute.valueAttribute;
 		},
-		create: function (attribute, modelHandle) {
+		create: function (attribute, modelHandle,ctx) {
 
 			if (modelHandle.value == null) {
 				throw "set default value";
@@ -22,7 +22,7 @@ define([
 
 			var tableMeta = this.createTableMeta(attribute);
 
-			var widget = this.inherited(arguments, [tableMeta, modelHandle]);
+			var widget = this.inherited(arguments, [tableMeta, modelHandle, ctx]);
 			return widget;
 
 

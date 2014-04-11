@@ -26,7 +26,7 @@ define([ 'dojox/mvc/at',
 
 						var attributeModelHandle = this.modelHandle.getModelByKey(attribute.code);
 						var tdWidget = this.editorFactory.attributeFactoryFinder.getFactory(attribute).create(
-							attribute, attributeModelHandle);
+							attribute, attributeModelHandle, this.ctx);
 						var decorator = new TableValueDecorator({meta: attribute, modelHandle: attributeModelHandle});
 						decorator.addChild(tdWidget);
 						this.addChild(decorator);
