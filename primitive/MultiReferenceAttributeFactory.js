@@ -79,7 +79,9 @@ define(
                     });
                     var typeProperty = attribute.typeProperty;
                     props.query={};
-                    props.query[typeProperty] = {$in: schemas};
+                    if (schemas.length>0) {
+                        props.query[typeProperty] = {$in: schemas};
+                    }
 
                     dijitHelper.copyDijitProperties(attribute, props);
                     var f = new FilteringSelect(props);
