@@ -165,7 +165,7 @@ define([
             } else {
                 this.editor.setMetaAndPlainValue(schema, entity);
             }
-           this.emit("editor-changed");
+            this.emit("editor-changed");
         },
         _onLoadForEntityAndSchemaFailed: function (error) {
             this.set("state", "edit");
@@ -227,24 +227,27 @@ define([
             this.schemaSelector.domNode.style.visibility = "hidden";
         },
         _initializeSchemaSelector: function (schemas) {
-            this.schemaSelector.domNode.style.visibility = "visible";
-            var options = [];
-            schemas.forEach(function (schema) {
-                var option = {};
-                if (typeof schema === "string") {
-                    option.id = schema;
-                    option.name = schema;
-                } else {
-                    option.id = schema.code;
-                    option.name = schema.label;
-                }
-                options.push(option);
-            }, this);
-            var store = new Memory({idProperty: "id"});
-            store.setData(options);
-            this.schemaSelector.set("store", store);
-            this.schemaSelector.set("value", options[0].id);
-
+            if (schemas.length > 0) {
+                this.schemaSelector.domNode.style.visibility = "visible";
+                var options = [];
+                schemas.forEach(function (schema) {
+                    var option = {};
+                    if (typeof schema === "string") {
+                        option.id = schema;
+                        option.name = schema;
+                    } else {
+                        option.id = schema.code;
+                        option.name = schema.label;
+                    }
+                    options.push(option);
+                }, this);
+                var store = new Memory({idProperty: "id"});
+                store.setData(options);
+                this.schemaSelector.set("store", store);
+                this.schemaSelector.set("value", options[0].id);
+            } else {
+                this.schemaSelector.domNode.style.visibility = "hidden";
+            }
         },
         createNew: function (schemaUrl, createCallback) {
             // summary:
@@ -288,7 +291,7 @@ define([
         },
         _onLoadForCreateAndSchema: function (schemaUrl, schema) {
             this.set("state", "create");
-            var value =this.createPlainValue(schema);
+            var value = this.createPlainValue(schema);
             if (this.typeProperty && !(this.typeProperty in value)) {
                 value[this.typeProperty] = schemaUrl;
             }
