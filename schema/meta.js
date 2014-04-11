@@ -84,6 +84,20 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
             delete element.array;
             return element;
         },
+        collectAttributes: function (schema) {
+            if (schema.attributes) {
+                return schema.attributes;
+            } else if (schema.group) {
+                return this.collectAttributes(schema.group);
+            } else if (schema.groups) {
+                var attributes = [];
+                schema.groups.forEach(schema.groups, function (group) {
+                    attributes.push(this.collectAttributes(group));
+                }, this);
+            } else {
+                return [];
+            }
+        },
         getFromValidTypes: function (/*Array*/groups, /*String*/typeCode) {
             // summary:
             //		get the schema for a certain type from the array of types.
