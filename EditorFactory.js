@@ -233,7 +233,10 @@ define([  //
 		//		the id is matched against the converter property in the attribute meta data.
 		addConverterForid: function (converter, id) {
 			this.convertersById[id] = converter;
-		}
+		},
+        addValidator: function(id, validator) {
+            this.arrayValidators[id]=validator;
+        }
 
 	});
 });

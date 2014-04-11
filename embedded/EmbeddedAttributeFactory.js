@@ -30,7 +30,9 @@ define([
 			if (plainValue == null && schema.required) {
 				plainValue = {};
 			}
+            var validators = this.editorFactory.getModelValidators(schema);
 			var model = this.editorFactory.createGroupModel(schema.group, plainValue);
+            model.validators=validators;
 			model.required = schema.required === true;
 			return model;
 		}
