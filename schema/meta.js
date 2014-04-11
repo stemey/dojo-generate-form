@@ -70,10 +70,10 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
             return meta.type = "map";
         },
         isSingleObject: function (meta) {
-            return meta.type == "object";
+            return meta.attributes;
         },
         isMultiObject: function (meta) {
-            return  meta.type == "multi-object";
+            return  meta.type == "multi-object" || meta.groups;
         },
         isComplex: function (meta) {
             return  this.isSingleObject(meta) || this.isMultiObject(meta);
