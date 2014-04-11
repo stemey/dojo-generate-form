@@ -109,7 +109,10 @@ define([ "dojo/_base/array",
         },
         visit: function (cb, parentIdx) {
             if (this.currentTypeCode !== null) {
-                this.getGroup(this.currentTypeCode).visit(cb, parentIdx);
+                var me =this;
+                cb(this, function() {
+                    me.getGroup(me.currentTypeCode).visit(cb, parentIdx);
+                }, parentIdx);
             } else {
                 cb(this, this.emptyCascade, parentIdx);
             }
@@ -136,6 +139,28 @@ define([ "dojo/_base/array",
                 var value = group.getPlainValue();
                 value[this.typeProperty] = this.currentTypeCode;
                 return value;
+            }
+        },
+        addError: function (path, message) {
+            // summary:
+            //		add an error the model at path
+            // path: string
+            //		identifies the model
+            // message: string
+            //		the message
+            var model = path==="" ? this :this.getModelByPath(path);
+            model._addError(message, !path || path.length === 0);
+        },
+        removeError: function (path, message) {
+            // summary:
+            //		remove an error from the model on the path
+            // path: string
+            //		the path to the model
+            // message: string
+            //		to identify the message. If a different message is present then it won't be removed.
+            var model = path==="" ? this :this.getModelByPath(path);
+            if (model) {
+                model._removeError(message);
             }
         }
     });

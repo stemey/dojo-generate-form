@@ -92,13 +92,45 @@ define(["dojo/_base/lang",
 			var visitor = createVisitor();
 			mo.set("currentTypeCode", "type1");
 			mo.visit(lang.hitch(visitor, "fn"));
-			assertEqual(["noidx", "type", "stringP", "booleanP"], visitor.events);
+			assertEqual(["noidx","noidx", "type", "stringP", "booleanP"], visitor.events);
 		},
 		function testNullAndRequired() {
 			mo.required = true;
 			mo.update(null);
-			doh.assertFalse(mo.getPlainValue() == null);
-		}
+			doh.assertFalse(mo.getPlainValue() === null);
+		},
+        function testModelValidation(t) {
+            mo.resetMetaRecursively();
+            mo.validators = [function(model, force) {
+                if (force && model.getModelByPath("stringP").getPlainValue()==="y") {
+                    return [{path:"",message:"stringP must not be y"}];
+                } else {
+                    return [];
+                }
+            }];
+            mo.update({stringP:"y"});
+            t.assertEqual(0, mo.get("errorCount"));
+            mo.validateRecursively(true);
+            t.assertEqual(1, mo.get("errorCount"));
+            mo.resetMetaRecursively();
+            t.assertEqual(0, mo.get("errorCount"));
+        },
+        function testModelValidationWithChildError(t) {
+            mo.resetMetaRecursively();
+            mo.validators = [function(model, force) {
+                if (force && model.getModelByPath("stringP").getPlainValue()==="y") {
+                    return [{path:"stringP",message:"stringP must not be y"}];
+                } else {
+                    return [];
+                }
+            }];
+            mo.update({stringP:"y"});
+            t.assertEqual(0, mo.get("errorCount"));
+            mo.validateRecursively(true);
+            t.assertEqual(1, mo.get("errorCount"));
+            mo.resetMetaRecursively();
+            t.assertEqual(0, mo.get("errorCount"));
+        }
 	]);
 
 
