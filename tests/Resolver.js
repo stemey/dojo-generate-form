@@ -30,8 +30,6 @@ define(['dojo/_base/declare',
 		}
 	});
 
-
-
 	var schemaWithExternalRef =
 	{
 		car: {$ref: "./meta/externalSchema.json"},
@@ -83,6 +81,23 @@ define(['dojo/_base/declare',
 			doh.assertEqual(true, p.isResolved());
 			resolver.callSetters();
 			doh.assertEqual("test", schemaWithExternalRef.car);
+
+
+		},
+		function testByUrlTransform() {
+			var resolver = new LocalResolver();
+			resolver.transformations["transformed.json"] = {
+				url: "original.json",
+				execute: function (o) {
+					return {d: o};
+				}
+			};
+			var p = resolver.resolve(schemaWithTranform, "");
+			doh.assertEqual(false, p.isResolved());
+			var original = {x: "test"};
+			resolver.p["original.json"].resolve(original);
+			doh.assertEqual(true, p.isResolved());
+			doh.assertEqual(original, schemaWithTranform.car.d);
 
 
 		},
