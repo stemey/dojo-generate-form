@@ -27,6 +27,8 @@ define([ 'dijit/layout/_LayoutWidget',
 
                 this.ace = ace.edit(this.domNode);
 
+                this.ace.setOptions(this.options);
+
                 Object.keys(delegatedProps).forEach(function (key) {
                     this.set(key, conf[key]);
                 }, this);
