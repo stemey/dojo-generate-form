@@ -13,7 +13,7 @@ define([
                 return true;
             }
 
-            if(this.store && this.options == 0) /* if store is provided, validate after */ 
+            if(this.store && this.options.length == 0) /* if store is provided, validate after */ 
                 return true;                    /* it's loaded */
 
             return this.options.some(function (e) {
