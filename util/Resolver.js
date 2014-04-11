@@ -126,9 +126,9 @@ define([
             });
             var allPromises = all(promises);
             when(allPromises).then(function (value) {
-                ts.forEach(function (ref) {
-                    when(me.values[ref.id]).then(lang.hitch(me, "callSetter", ref));
-                });
+            ts.forEach(function (ref) {
+                when(me.values[ref.id]).then(lang.hitch(me, "callSetter", ref));
+            });
             });
         },
         callSetter: function (ref, value) {

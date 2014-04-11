@@ -1,6 +1,6 @@
 define(['dojo/_base/declare',
 	'dojo/_base/Deferred',
-	"doh/runner", "gform/util/Resolver"], function (declare, Deferred, doh, Resolver) {
+	"doh/runner", "gform/util/Resolver", "gform/schema/Transformer"], function (declare, Deferred, doh, Resolver,Transformer) {
 
 	var schema =
 	{
@@ -86,18 +86,15 @@ define(['dojo/_base/declare',
 		},
 		function testByUrlTransform() {
 			var resolver = new LocalResolver();
-			resolver.transformations["transformed.json"] = {
-				url: "original.json",
-				execute: function (o) {
-					return {d: o};
-				}
-			};
-			var p = resolver.resolve(schemaWithTranform, "");
+			resolver.transformer = new Transformer();
+            resolver.transformer.replace("transformed.json","original.json");
+
+          	var p = resolver.resolve(schemaWithTranform, "");
 			doh.assertEqual(false, p.isResolved());
 			var original = {x: "test"};
 			resolver.p["original.json"].resolve(original);
 			doh.assertEqual(true, p.isResolved());
-			doh.assertEqual(original, schemaWithTranform.car.d);
+			doh.assertEqual("test", schemaWithTranform.car.x);
 
 
 		},
