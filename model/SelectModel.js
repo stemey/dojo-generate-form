@@ -7,10 +7,15 @@ define([
 
     return declare("gform.model.SelectModel", [PrimitiveModel], {
         options: [],
+        store: null,
         isValid: function (value) {
             if (this.parent == null) {
                 return true;
             }
+
+            if(this.store && this.options == 0) /* if store is provided, validate after */ 
+                return true;                    /* it's loaded */
+
             return this.options.some(function (e) {
                 return e.value === value;
             });

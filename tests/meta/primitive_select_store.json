@@ -1,0 +1,24 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"string",
+            "label":"Option",
+            "code":"option"
+        },
+        {
+            "type":"text",
+            "label":"Select",
+            "code":"select",
+            "required":true,
+            "array":false,
+            "emptyValueLabel":"-- Please select --",
+            "store": {
+                "url" : "../../dijit/tests/_data/{option}",
+                "sort" : false
+            }
+        }
+    ],
+    "type_property":"ext_type"
+}

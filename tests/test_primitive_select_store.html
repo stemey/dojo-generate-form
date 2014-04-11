@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<script type="text/javascript" src="dojoConfig.js"></script>
+    <script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+
+
+	<script type="text/javascript">
+
+		require([ 
+		"dojo/ready", 
+		"dojo/json", 
+		"gform/Editor", 
+		"dojo/Stateful", 
+		"doh/runner", 
+		"gform/createStandardEditorFactory",
+		"dojo/text!./meta/primitive_select_store.json", 
+		"dojo/text!./meta/primitive_select_values.json", 
+		"dojo/text!./entity/primitive_select_store_1.json",
+		"dojo/text!./entity/primitive_select_store_2.json"
+		], function(ready, json, Editor, Stateful, doh,
+			createStandardEditorFactory, meta_s, meta_v, entity_1, entity_2) {
+
+			editor1 = new Editor({
+					"plainValue": dojo.fromJson(entity_1),
+					"meta": dojo.fromJson(meta_v),editorFactory:createStandardEditorFactory()});
+			editor1.placeAt("container1");
+			editor1.startup();
+
+			editor2 = new Editor({
+					"plainValue": dojo.fromJson(entity_1),
+					"meta": dojo.fromJson(meta_s),editorFactory:createStandardEditorFactory()});
+			editor2.placeAt("container2");
+			editor2.startup();
+
+			editor3 = new Editor({
+					"plainValue": dojo.fromJson(entity_2),
+					"meta": dojo.fromJson(meta_s),editorFactory:createStandardEditorFactory()});
+			editor3.placeAt("container3");
+			editor3.startup();
+
+		});
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test (Standard)</h1>
+	<div id="container1"></div>
+	<hr/>
+	<h1 class="testTitle">Editor Test (with Store) : States</h1>
+	<div id="container2"></div>
+	<hr/>
+	<h1 class="testTitle">Editor Test (with Store) : Countries</h1>
+	<div id="container3"></div>
+
+</body>
+</html>	
