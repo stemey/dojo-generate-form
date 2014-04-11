@@ -102,7 +102,23 @@ define(['dojo/_base/lang',
 			so.required = true;
 			so.update(null);
 			t.assertNotEqual(null, so.getPlainValue());
-		}
+		},
+        function testModelValidation(t) {
+            so.resetMetaRecursively();
+            so.validators = [function(model, force) {
+                if (force && model.getModelByPath("stringP").getPlainValue()==="y") {
+                    return [{path:"",message:"stringP must not be y"}];
+                } else {
+                    return [];
+                }
+            }];
+            so.update({stringP:"y"});
+            t.assertEqual(0, so.get("errorCount"));
+            so.validateRecursively(true);
+            t.assertEqual(1, so.get("errorCount"));
+            so.resetMetaRecursively();
+            t.assertEqual(0, so.get("errorCount"));
+        }
 	]);
 
 

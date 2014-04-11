@@ -5,7 +5,7 @@ define([
     // module:
     //		gform/model/SingleObject
 
-    return declare("gform.model.SingleObject",[Model], {
+    return declare("gform.model.SingleObject", [Model], {
         // summary:
         //		Provides access to sibling attributes of modelHandle.
         attributes: null,
@@ -17,9 +17,6 @@ define([
                 attributes[key].set("parent", this);
                 attributes[key].code = key;
             }
-        },
-        _onIsNullChange: function (prop, old, nu) {
-            this.onChange(true);
         },
         isEmpty: function () {
             return this.isNull;
@@ -139,14 +136,18 @@ define([
         },
         visit: function (cb, parentIdx) {
             if (this.subgroup && typeof parentIdx === "undefined") {
-                for (var key in this.attributes) {
-                    this.attributes[key].visit(cb, key);
+                if (!this.isNull) {
+                    for (var key in this.attributes) {
+                        this.attributes[key].visit(cb, key);
+                    }
                 }
             } else {
                 var me = this;
                 cb(this, function () {
-                    for (var key in me.attributes) {
-                        me.attributes[key].visit(cb, key);
+                    if (!me.isNull) {
+                        for (var key in me.attributes) {
+                            me.attributes[key].visit(cb, key);
+                        }
                     }
                 }, parentIdx);
             }
