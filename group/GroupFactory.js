@@ -44,7 +44,8 @@ define([
 					attributes[attribute.code] = this.editorFactory.createAttributeModel(attribute, attributeValue);
 				}, this);
 			}
-			var model = new SingleObject({attributes: attributes, subgroup: true});
+            var validators = this.editorFactory.getModelValidators(schema);
+			var model = new SingleObject({attributes: attributes, subgroup: true, validators:validators});
 			model.update(plainValue);
 			model.typeCode = schema.code;
 			return model;
