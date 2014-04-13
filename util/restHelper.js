@@ -22,8 +22,13 @@ define([
 			//  id: any
 			//		the resoure's id
 			//  returns:
-			//		the url to the resource.	
-			return collectionUrl + "/" + id;
+			//		the url to the resource.
+            if (/\/$/.test(collectionUrl)) {
+                return collectionUrl + id;
+            } else {
+                return collectionUrl + "/" +id;
+            }
+
 		}
 	};
 
