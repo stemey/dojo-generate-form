@@ -27,7 +27,9 @@ define([ 'dijit/layout/_LayoutWidget',
 
                 this.ace = ace.edit(this.domNode);
 
-                this.ace.setOptions(this.options);
+                if (this.options) {
+                    this.ace.setOptions(this.options);
+                }
 
                 Object.keys(delegatedProps).forEach(function (key) {
                     this.set(key, conf[key]);
@@ -40,7 +42,7 @@ define([ 'dijit/layout/_LayoutWidget',
                 this.ace.on("changeAnnotation", lang.hitch(this, "onChangeAnnotation"));
             },
             onChangeAnnotation: function () {
-               // this.set("state", this.ace.getSession().getAnnotations().length > 0 ? "Error":"")   ;
+                // this.set("state", this.ace.getSession().getAnnotations().length > 0 ? "Error":"")   ;
 
             },
             _set: function (prop, value) {
