@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Editor Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+	<script type="text/javascript" src="dojoConfig.js"></script>
+    <script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+
+
+	<script type="text/javascript">
+
+		require([ "dojo/ready", "dojo/_base/query", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
+		"dojo/text!./meta/embedded.json", "dojo/text!./meta/embedded_group.json", "dojo/text!./entity/embedded.json"//
+		], function(ready, query, json, Editor, Stateful, doh,createStandardEditorFactory, meta, meta_group, entity) {
+
+            var schema = dojo.fromJson(meta);
+            schema.attributes[0].required=true;
+			editor = new Editor({
+					"plainValue": dojo.fromJson(entity),
+					"meta": schema,
+					"editorFactory":createStandardEditorFactory()});
+			var container = dojo.byId("container");
+			editor.placeAt(container);
+			editor.startup();
+			var nameText = dijit.byId("gform_ValidationTextBox_0");
+			var nullCheckbox = dijit.byId("dijit_form_CheckBox_0");
+			doh.register("standard", [
+				{
+					name : 'init',
+					runTest : function(t) {
+						t.assertEqual("moin", editor.get("plainValue").thing.name);
+						t.assertEqual("moin", nameText.get("value"));
+					}
+				}
+			]);
+			doh.run();
+		});
+	</script>
+</head>
+<body class="claro">
+	<h1 class="testTitle">Editor Test</h1>
+
+
+	<div id="container"></div>
+
+</body>
+</html>
