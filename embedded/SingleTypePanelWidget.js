@@ -41,8 +41,10 @@ define([
 					doLayout: false,
 					"modelHandle": modelHandle,
 					"meta": attribute.group,
-					editorFactory: this.editorFactory
+					editorFactory: this.editorFactory,
+                    "ctx": this.ctx
 				});
+
 			this.addChild(this.editor);
 			this.set("target", this.panelModel);
 		},
