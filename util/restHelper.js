@@ -8,11 +8,16 @@ define([
 			//  url: String
 			//		the url
 			//  returns:
-			//		an object containing the id and the url to the collection.	
+			//		an object containing the id and the url to the collection.
+            if (url){
 			var lastSlashIndex = url.lastIndexOf("/");
 			var id = url.substring(lastSlashIndex + 1, url.length);
 			var collectionUrl = url.substring(0, lastSlashIndex);
+            collectionUrl=collectionUrl.replace(/\/+$/,"")
 			return {id: id, url: collectionUrl};
+            } else {
+                return {id:null,url:null}
+            }
 		},
 		compose: function (collectionUrl, id) {
 			//  description:
@@ -23,11 +28,8 @@ define([
 			//		the resoure's id
 			//  returns:
 			//		the url to the resource.
-            if (/\/$/.test(collectionUrl)) {
-                return collectionUrl + id;
-            } else {
-                return collectionUrl + "/" +id;
-            }
+            collectionUrl=collectionUrl.replace(/\/+$/,"")
+            return collectionUrl + "/" +id;
 
 		}
 	};
