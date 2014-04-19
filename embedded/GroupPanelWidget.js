@@ -68,10 +68,8 @@ define([ "dojo/_base/array", //
             this.modelHandle.watch("currentTypeCode", lang.hitch(this, "modelTypeChanged"));
 
             this.panelModel.watch("type", lang.hitch(this, "onTypeSelectorChanged"));
-            //this.typeStack.selectChild(this.typeToGroup[currentType]);
             this.addChild(this.typeStack);
             this.set("target", this.panelModel);
-            //this.switchType(currentType);
         },
         startup: function () {
             this.inherited(arguments);
