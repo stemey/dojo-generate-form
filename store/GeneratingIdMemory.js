@@ -21,6 +21,8 @@ define(["dojo/_base/declare", "dojo/store/Memory" ],
                                 newQuery[key] ={test:function(value) {
                                     return criterion.$in.indexOf(value)>-1;
                                 }};
+                            }else {
+                                newQuery[key]=criterion;
                             }
                         } else {
                             newQuery[key]=criterion;
