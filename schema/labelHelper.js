@@ -18,15 +18,17 @@ define([ "dojo/_base/array", "dojo/_base/declare" ], function (array, declare) {
 						labelAttribute = a.code;
 					}
 				});
-				if (labelAttribute != null) {
-					var model = modelHandle.getModelByPath(labelAttribute);
-					return model ? model.getPlainValue() : "";
-				} else {
-					return null;
-				}
 			} else if (type.groups) {
 				return this.getTypeLabel(type.groups[0], modelHandle);
 			}
+			
+			if (labelAttribute != null) {
+				var model = modelHandle.getModelByPath(labelAttribute);
+				return model ? model.getPlainValue() : "";
+			} else {
+				return null;
+			}
+
 		}
 
 	});
