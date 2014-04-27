@@ -13,15 +13,34 @@ define([ "dojo/_base/array", //
         templateString: template,
         typeStack: null,
         typeToGroup: null,
-        ctx:null,
+        ctx: null,
         doLayout: false,
         nullable: true,
         shown: true,
         show: function () {
             if (!this.shown) {
                 this.shown = true;
+                this.initTypeEditor(this.get("modelHandle").currentTypeCode);
                 this.typeStack.selectedChildWidget.show();
             }
+        },
+        initTypeEditor: function (typeCode) {
+            var group = this.groups.filter(function(g) {
+                return g.code==typeCode;
+            })[0];
+            var editor = new Editor(
+                {
+                    "doLayout": false,
+                    "modelHandle": this.get("modelHandle").getGroup(typeCode),
+                    "meta": group,
+                    "editorFactory": this.editorFactory,
+                    "shown": this.shown,
+                    ctx: this.ctx
+                });
+            this.typeStack.addChild(editor);
+            editor.set("doLayout", this.doLayout);
+            this.typeToGroup[typeCode] = editor;
+            return editor;
         },
         postCreate: function () {
 
@@ -50,20 +69,10 @@ define([ "dojo/_base/array", //
 
             this.typeStack = new StackContainer({doLayout: false});
             this.typeToGroup = {};
-            array.forEach(this.groups, function (group) {
-                var editor = new Editor(
-                    {
-                        "doLayout": false,
-                        "modelHandle": modelHandle.getGroup(group.code),
-                        "meta": group,
-                        "editorFactory": this.editorFactory,
-                        "shown": group.code === currentType && this.shown,
-                        ctx: this.ctx
-                    });
-                this.typeStack.addChild(editor);
-                editor.set("doLayout", this.doLayout);
-                this.typeToGroup[group.code] = editor;
-            }, this);
+
+            if (this.shown) {
+                this.initTypeEditor(currentType);
+            }
 
             this.modelHandle.watch("currentTypeCode", lang.hitch(this, "modelTypeChanged"));
 
@@ -84,12 +93,18 @@ define([ "dojo/_base/array", //
             }
         },
         switchType: function (newType) {
+            if (!this.shown) {
+                return;
+            }
             if (newType === null) {
                 if (this.modelHandle.currentTypeCode !== null) {
                     domClass.replace(this.typeToGroup[this.modelHandle.currentTypeCode].domNode, "dijitHidden", "dijitVisible");
                 }
             } else {
                 var editor = this.typeToGroup[newType];
+                if (!editor) {
+                    editor = this.initTypeEditor(newType);
+                }
                 domClass.replace(editor.domNode, "dijitVisible", "dijitHidden");
                 editor.show();
                 this.typeStack.selectChild(editor);
