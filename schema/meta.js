@@ -91,9 +91,10 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
                 return this.collectAttributes(schema.group);
             } else if (schema.groups) {
                 var attributes = [];
-                schema.groups.forEach(schema.groups, function (group) {
-                    attributes.push(this.collectAttributes(group));
+                schema.groups.forEach(function (group) {
+                    attributes=attributes.concat(this.collectAttributes(group));
                 }, this);
+                return attributes;
             } else {
                 return [];
             }
