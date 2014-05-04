@@ -1,0 +1,25 @@
+{
+    "code": "boolean",
+    "editor": "listpane",
+    "attributes": [
+
+        {
+            "$ref": "properties/code.json"
+        },
+        {
+            "$ref": "properties/label.json"
+        },
+        {
+            "$ref": "properties/description.json"
+        },
+        {
+            "type":"string",
+            "code":"type",
+            "values":["boolean"],
+            "required":true
+        }
+
+    ]
+}
+
+
