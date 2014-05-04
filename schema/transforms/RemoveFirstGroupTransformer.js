@@ -10,7 +10,7 @@ define(['dojo/_base/lang', 'dojo/_base/declare'],
             execute: function (attributes) {
                 var newArray = [];
                 attributes.forEach(function (e) {
-                    if (e.code && !e.code.match(/(object|array|map)/)) {
+                    if (e.groups && e.code && !e.code.match(/(object|array|map)/)) {
                         var newE = {};
                         lang.mixin(newE, e);
                         var newGroups = [];
