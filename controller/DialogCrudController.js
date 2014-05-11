@@ -2,7 +2,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
-    "dojo/dom-class",
+    "dojo/dom-construct",
     "gform/createLayoutEditorFactory",
     "./_CrudMixin",
     "dijit/_WidgetBase",
@@ -21,7 +21,7 @@ define([
     "dijit/Dialog",
     "dijit/layout/BorderContainer",
     "dijit/layout/ContentPane"
-], function (declare, lang, array, domClass, createEditorFactory, _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, domGeometry, Save, Discard, Delete, createActions) {
+], function (declare, lang, array, domConstruct, createEditorFactory, _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, domGeometry, Save, Discard, Delete, createActions) {
     // module:
     //		gform/controller/DialogCrudController
 
@@ -30,6 +30,9 @@ define([
         // summary:
         //		manages the display of an editor. Also manages operations on the editor's value by using a store and a set of actions.
         baseClass: "gformEditorController",
+        // openerDialog:
+        //      the dialog this controller is embedded in
+        openerDialog:null,
         templateString: template,
         // actionContainer:
         //		the html element to append the action buttons to
@@ -49,9 +52,6 @@ define([
         },
         postCreate: function () {
             this.inherited(arguments);
-            array.forEach(createActions(this.actionClasses, this), function (button) {
-                this.actionContainer.appendChild(button.domNode);
-            }, this);
             this.watch("state", lang.hitch(this, "_onStateChange"));
             this.editor.on("value-changed", lang.hitch(this, "_onValueChange"));
         },
@@ -104,8 +104,12 @@ define([
             this.editor.dim = null;
             this.inherited(arguments);
         },
-        showProgressBar: function (message) {
-            this.progressBar.show(message);
+        _addAction: function (button) {
+            this.actionContainer.appendChild(button.domNode);
+        },
+        _removeActions: function () {
+            domConstruct.empty(this.actionContainer);
+
         },
         onCloseDialog: function (closeFn) {
             // summary:
@@ -122,10 +126,13 @@ define([
                 }
             });
             if (!openDialog) {
-                // if blur and changeevnt is fired after click, then the editor is changed at this oint. -> reset
+                // if blur and changevent is fired after click, then the editor is changed at this oint. -> reset
                 this.editor.reset();
                 closeFn();
             }
+        },
+        close: function() {
+            this.openerDialog.hide();
         }
     });
 

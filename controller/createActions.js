@@ -6,18 +6,27 @@ define([
 //		gform/	controller/createActions
 
 
-	var createActions = function (actionClasses, ctrl) {
+	var createActions = function (actionOptions, ctrl) {
 		// summary:
 		//		creates an array of buttons. Usually used to create a list of buttons below an editor.
 		// actionClasses: array
 		//		The array of action factories
 		// ctrl: gform/controller/_CrudMixin
 		//		the controller is set as a member of the actions
-		var buttons = array.map(actionClasses, function (ActionClass) {
-			var action = new ActionClass();
+
+		var buttons = [];
+        actionOptions.forEach( function (actionOption) {
+            var type = actionOption.type;
+            if(typeof type == "string") {
+                type=lang.getObject(type);
+            }
+			var action = new type(actionOption.props);
 			action.ctrl = ctrl;
 			action.setup();
-			return action.createButton();
+			var button = action.createButton();
+            if (button) {
+                buttons.push(button);
+            }
 		}, this);
 		return buttons;
 	}

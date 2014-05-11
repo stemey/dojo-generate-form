@@ -16,6 +16,8 @@ define({
 	"actions.save.serverError": "Fehler beim Speichern.",
 	"actions.delete.label": "löschen",
 	"actions.delete.iconClass": "dijitEditorIcon dijitEditorIconDelete",
+    "actions.close.label": "Schließen",
+    "actions.close.iconClass": "dijitEditorIcon dijitEditorIconCancel",
 	"actions.duplicate.label": "dupizieren",
 	"actions.duplicate.iconClass": "dijitEditorIcon dijitEditorIconCopy",
 	"actions.unsavedChanges": "Möchten Sie die Änderungen verwerfen?",

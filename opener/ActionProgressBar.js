@@ -16,7 +16,8 @@ define([
         progressBar: null,
         progressMessage: null,
         show: function (message) {
-            this.progressMessage.innerHTML = message;
+            // some attachpoint mystery. don't use nested attach-points
+            (this.progressMessage||this.progressBar.progressMessage).innerHTML = message;
             this.progressBar.show();
         },
         hide: function () {

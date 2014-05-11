@@ -1,7 +1,7 @@
 define([
-    "dojo/_base/lang",//
-	"./EditorFactory", //
+    "./EditorFactory", //
 	"./AttributeFactoryFinder",//
+    "./createActionFactory",//
 	"./group/GroupFactory",//
 	"./group/ListPaneGroupFactory",//
 	"./group/TabGroupFactory",//
@@ -34,9 +34,9 @@ define([
 	"./map_embedded/RepeatedEmbeddedAttributeFactory",//
 	"./map_primitive/PrimitiveMapAttributeFactory",//
 	"./list_table/RepeatedEmbeddedAttributeFactory",//
-	"./list_table/RepeatedSingleEmbeddedAttributeFactory"//
+	"./list_table/RepeatedSingleEmbeddedAttributeFactory"
 
-], function (lang, EditorFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
+], function (EditorFactory, AttributeFactoryFinder, createActionFactory, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
 			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
 			 TextareaAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
 			 ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
@@ -44,6 +44,8 @@ define([
 //		gform/createStandardEditorFactory
 
 	var editorFactory = new EditorFactory();
+    editorFactory.actionFactory = createActionFactory();
+
 	editorFactory.addGroupFactory("list", new GroupFactory({editorFactory: editorFactory}));
 	editorFactory.addGroupFactory("listpane", new ListPaneGroupFactory({editorFactory: editorFactory}));
 	editorFactory.addGroupFactory("listgroup", new ListGroupFactory({editorFactory: editorFactory}));

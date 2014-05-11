@@ -1,7 +1,8 @@
 define([
-    "dojo/_base/lang",//
+    //
 	"./EditorFactory", //
 	"./AttributeFactoryFinder",//
+    "./createActionFactory",
 	"./group/GroupFactory",//
 	"./group/ListPaneGroupFactory",//
 	"./group/TabGroupFactory",//
@@ -36,7 +37,7 @@ define([
 	"./list_table/RepeatedEmbeddedAttributeFactory",//
 	"./list_table/RepeatedSingleEmbeddedAttributeFactory"//
 
-], function (lang, EditorFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
+], function (EditorFactory, AttributeFactoryFinder, createActionFactory, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
 			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory,BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
 			 TextareaAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
 			 ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
@@ -51,6 +52,8 @@ define([
 	editorFactory.addGroupFactory("titlepane", new TitlePaneGroupFactory({editorFactory: editorFactory}));
 	editorFactory.addGroupFactory("columnsgroup", new ColumnsGroupFactory({editorFactory: editorFactory}));
 	editorFactory.set("defaultGroupFactory", new GroupFactory({editorFactory: editorFactory}));
+
+    editorFactory.actionFactory = createActionFactory();
 
 	var attributeFactoryFinder = new AttributeFactoryFinder({
 		editorFactory: editorFactory

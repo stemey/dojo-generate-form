@@ -52,9 +52,6 @@ define([
 		},
 		postCreate: function () {
 			this.inherited(arguments);
-			array.forEach(createActions(this.actionClasses, this), function (button) {
-				this.actionContainer.containerNode.appendChild(button.domNode);
-			}, this);
 			this.watch("state", lang.hitch(this, "_onStateChange"));
 			this.editor.set("editorFactory", this.editorFactory);
 			this.editor.set("meta", {attributes: []});
@@ -94,7 +91,10 @@ define([
 					this.borderContainer.resize();
 				}
 			}
-		}
+		},
+        close: function() {
+            this.getParent().removeChild(this);
+        }
 
 	});
 

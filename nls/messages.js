@@ -14,6 +14,8 @@ define({
 		"actions.save.noChanges": "No changes to save.",
 		"actions.discard.label": "discard",
 		"actions.discard.iconClass": "dijitEditorIcon dijitEditorIconUndo",
+        "actions.discard.close": "close",
+        "actions.discard.iconClose": "",
 		"actions.save.serverError": "Error while saving.",
 		"actions.delete.label": "delete",
 		"actions.delete.iconClass": "dijitEditorIcon dijitEditorIconDelete",

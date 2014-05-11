@@ -1,4 +1,5 @@
 define([
+    './createActions',
     'dijit/_WidgetBase',
     'dojo/aspect',
     'dojo/store/Memory',
@@ -10,7 +11,7 @@ define([
     "dojo/dom-class",
     "dojo/i18n!../nls/messages",
     "dijit/form/FilteringSelect"
-], function (WidgetBase, aspect, Memory, declare, lang, all, when, Stateful, domClass, messages) {
+], function (createActions, WidgetBase, aspect, Memory, declare, lang, all, when, Stateful, domClass, messages) {
 // module:
 //		gform/controller/_CrudMixin
 
@@ -27,6 +28,8 @@ define([
         // plainValueFactory: function
         //		creates an instance of plainValue. parameter is the schema.
         plainValueFactory: null,
+
+        actionFactory: null,
 
         // store:
         //		the store used to persist the entity.
@@ -144,6 +147,7 @@ define([
         _onLoadForEdit: function (entity) {
             this.set("state", "edit");
             this.editor.set("plainValue", entity);
+            this.onLoaded(this.editor.meta, entity);
         },
         _onLoadForEditFailed: function (error) {
             this.set("state", "edit");
@@ -151,7 +155,10 @@ define([
         },
         _onLoadForEditAndSchema: function (results) {
             this.set("state", "edit");
-            this.editor.setMetaAndPlainValue(results[1], results[0]);
+            var schema = results[1];
+            var plainValue = results[0];
+            this.editor.setMetaAndPlainValue(schema, plainValue);
+            this.onLoaded(schema, plainValue);
             this.emit("editor-changed");
         },
         _onLoadForEditAndSchemaFailed: function (error) {
@@ -165,11 +172,12 @@ define([
             } else {
                 this.editor.setMetaAndPlainValue(schema, entity);
             }
+            this.onLoaded(schema, entity);
             this.emit("editor-changed");
         },
         _onLoadForEntityAndSchemaFailed: function (error) {
             this.set("state", "edit");
-            alert("error while loading entity");
+            this.alert("error while loading entity");
         },
         startConfirmDialog: function (message, callback) {
             // summary:
@@ -217,6 +225,7 @@ define([
         },
         _onLoadMultiSchema: function (entity, schema) {
             this.set("state", "edit");
+            this.onLoaded(schema, entity);
             this.editor.setMetaAndPlainValue(schema, entity);
         },
         _onLoadMultiSchemaFailed: function (e) {
@@ -275,6 +284,7 @@ define([
             this.set("state", "create");
             var value = this.createPlainValue(this.editor.meta);
             this.editor.set("plainValue", value);
+            this.onCreated(schema, entity);
         },
         _createNewAndSchema: function (schemaUrl) {
             var schemaPromise = this.getSchema(schemaUrl);
@@ -296,6 +306,7 @@ define([
                 value[this.typeProperty] = schemaUrl;
             }
             this.editor.setMetaAndPlainValue(schema, value);
+            this.onCreated(schema, value);
             this.emit("editor-changed");
         },
         _onLoadForCreateAndSchemaFailed: function (error) {
@@ -309,7 +320,7 @@ define([
         hasChanged: function () {
             return this.editor.hasChanged() || this.oldType !== this.schemaSelector.get("value");
         },
-        onCreated: function (id) {
+        onCreate: function (id) {
             // summary:
             //		call when the entity is persisted. will notify the creator of the editor if interested.
             // id: String
@@ -331,10 +342,35 @@ define([
         },
         showProgressBar: function (message) {
             this.progressBar.show();
-            this.progressMessage.innerHTML = message;
+            // nested attach-points in dialg don't seem to work anymore
+            (this.progressMessage||this.progressBar.progressMessage).innerHTML = message;
         },
         hideProgressBar: function () {
             this.progressBar.hide();
+        },
+        onCreated: function (schema, entity) {
+            this.updateActions(schema, entity);
+        },
+        onLoaded: function (schema, entity) {
+            this.updateActions(schema, entity);
+        },
+        updateActions: function (schema, entity) {
+            var widgets = [];
+            var actionFactory = (this.editorFactory || this.editor.editorFactory).actionFactory;
+            var actions = actionFactory.getActions(schema, entity);
+            var buttons = createActions(actions, this);
+            this._removeActions();
+            buttons.forEach(function (button) {
+                this._addAction(button);
+            }, this);
+        },
+        _addAction: function (button) {
+            this.actionContainer.addChild(button);
+        },
+        _removeActions: function () {
+            this.actionContainer.getChildren().forEach(function (child) {
+                this.actionContainer.removeChild(child);
+            }, this);
         }
 
 

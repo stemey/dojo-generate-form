@@ -18,12 +18,13 @@ define([
 		messageModule: null,
 		// additional props mixed into the created button
 		buttonProps: {},
+        buttonType:Button,
 		// summary:
 		//		called once
 		setup: function () {
 		},
 		// summary:
-		//		creates a button based in the configuration
+		//		creates a button based on the configuration
 		// returns: dijit/form/Button
 		createButton: function () {
 			var props = {onClick: lang.hitch(this, "execute")};
@@ -40,7 +41,7 @@ define([
 					}
 				}
 			}
-			return new Button(props);
+			return new this.buttonType(props);
 		},
 		//
 		_execute: function (promise, command) {

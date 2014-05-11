@@ -21,9 +21,6 @@ define([
 	"dijit/layout/ContentPane",
 	"./ConfirmDialog"
 ], function (declare, lang, array, createEditorFactory, _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Save, Discard, Delete, createActions, _InvisibleMixin) {
-// module:
-//		gform/controller/CrudController
-
 
 	return declare([   _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _InvisibleMixin ], {
 		// summary:
@@ -41,10 +38,6 @@ define([
 		},
 		postCreate: function () {
 			this.inherited(arguments);
-			array.forEach(createActions(this.actionClasses, this), function (button) {
-				this.actionContainer.containerNode.appendChild(button.domNode);
-			}, this);
-
 			this.watch("state", lang.hitch(this, "_onStateChange"));
 			//this.editor.on("value-changed",lang.hitch(this,"_onValueChange"));
 			this._onStateChange();

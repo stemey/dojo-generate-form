@@ -12,7 +12,7 @@ define([
 
     return declare([_ActionMixin], {
         // summary:
-        //		Deletes the entity. Afterwards the editor is cleared and can be used to create a new entity.
+        //		Deletes the entity. Afterwards the editor is either closed or reused to create a new entity.
         messageModule: "actions.delete",
         execute: function () {
             if (this.state != "create") {
@@ -27,8 +27,14 @@ define([
             }
         },
         _onRemoved: function () {
-            this.ctrl.editor.setPlainValue({});
-            this.ctrl.set("state", "create");
+            if (this.ctrl.close) {
+                this.ctrl.close();
+            } else {
+                this.ctrl.editor.setPlainValue({});
+                this.ctrl.set("state", "create");
+            }
+
+
         },
         _onRemoveFailed: function () {
             this.ctrl.set("state", "edit");

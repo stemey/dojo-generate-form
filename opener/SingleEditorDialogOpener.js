@@ -45,6 +45,7 @@ define([
 			this.crudController.dialog = this.confirmDialog;
 			lang.mixin(this.crudController, this.controllerConfig);
 			this.crudController.setCtx(this.ctx);
+            this.crudController.openerDialog=this.dialog;
             this.crudController.progressBar = new ActionProgressBar({progressBar: this.progressBar, progressMessage: this.progressMessage});
 			aspect.around(this.dialog, "hide", function (originalFn) {
 				return lang.hitch(me, "onClose", originalFn);
