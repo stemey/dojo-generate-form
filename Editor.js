@@ -158,6 +158,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				// summary:
 				//		reset the data to its original value.
 				var oldValue = this.modelHandle.oldValue;
+                this.modelHandle.resetMetaRecursively();
 				this.modelHandle.update(oldValue);
 				this.inherited(arguments);
 			},

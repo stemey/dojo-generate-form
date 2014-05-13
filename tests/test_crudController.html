@@ -48,7 +48,16 @@
 					runTest : function(t) {
 						crudController.createNew( "/gform/tests/meta/refs.json");
 					}
-				}
+				},
+                {
+                    name : 'discard',
+                    runTest : function(t) {
+                        registry.byId("gform_NumberTextBox_3").set("state","Error");
+                        registry.byId("gform_NumberTextBox_3").set("message","Error");
+                        registry.byId("dijit_form_Button_3").onClick();
+                        doh.assertEqual(0, crudController.editor.get("errorCount"));
+                    }
+                }
 			]);
 			doh.run();
 		});
