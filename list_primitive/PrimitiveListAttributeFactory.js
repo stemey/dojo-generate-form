@@ -54,10 +54,9 @@ define([
 			});
 			if (attribute.reorderable !== false) {
 				var copy = function (original) {
+
 					var plainValue = original.getPlainValue();
-					var newMh = new PrimitiveModel();
-					newMh.update(plainValue);
-					newMh.oldValue = plainValue;
+					var newMh = modelHandle.elementFactory(plainValue);
 					return newMh;
 				};
 				aspect.after(widgetList, "startup", function () {
