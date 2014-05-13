@@ -111,35 +111,33 @@ define([
         }
     });
 
-    var createAttributes = function (schema, factory) {
-        var attributes = {};
-        schema.attributes.forEach(function (attribute) {
-            var model = factory(attribute);
-            model.code = attribute.code;
-            attributes[model.code] = model;
-        });
-        return attributes;
-    };
+
 
 
     MergedMultiObject.create = function (schema, factory) {
         var typeToAttributes = {};
+        var attributes={};
         schema.groups.forEach(function (group) {
-            typeToAttributes[group.code] = createAttributes(group, factory);
+            var modelAttributes = {};
+            group.attributes.forEach(function (attribute) {
+                var model=attributes[attribute.code];
+                if (!model) {
+                    model = factory(attribute);
+                    model.code = attribute.code;
+                    attributes[model.code]=model;
+                }
+                modelAttributes[model.code] = model;
+            });
+            typeToAttributes[group.code] = modelAttributes;
         });
-        var attributes = {};
-        for (var key in typeToAttributes) {
-            for (var code in typeToAttributes[key]) {
-                var attribute = typeToAttributes[key][code];
-                attributes[code] = attribute;
-            }
-        }
+
+
         var mo = new MergedMultiObject({currentTypeCode: null, attributes: attributes, typeToAttributes: typeToAttributes, typeProperty: schema.typeProperty, required: false});
         for (var key in attributes) {
             attributes[key].parent = mo;
         }
         return mo;
     };
+
     return MergedMultiObject;
-})
-;
+});

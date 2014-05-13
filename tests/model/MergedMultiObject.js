@@ -82,7 +82,13 @@ define(["./createVisitor",
 			mo.update(object2);
 			var pmodel = mo.getModelByPath("numberP");
 			doh.assertEqual(3, pmodel.getPlainValue());
-		}
+		},
+        function updateAttribute(t) {
+            mo.update({type: "type1",
+                stringP: "hallo"});
+            mo.attributes.booleanP.set("value",true);
+            t.assertEqual(true, mo.getPlainValue().booleanP);
+        }
 	]);
 
 
