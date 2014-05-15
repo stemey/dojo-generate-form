@@ -80,6 +80,10 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
         },
         startup: function () {
             this.inherited(arguments);
+            if (this.modelHandle) {
+                // set message that existed before widget was displayed
+                this.errorTooltip.label = this.modelHandle.message;
+            }
             //var children = this.getChildrenToValidate();
             //this.singleNonValidatingChild=children.length==1 && !children[0].validate;
         },
