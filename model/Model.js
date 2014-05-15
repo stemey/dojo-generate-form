@@ -3,9 +3,8 @@ define([
     "dojo/_base/declare",
     "dojo/Stateful",
     "dojo/i18n!dijit/form/nls/validate",
-    "dojo/i18n!../nls/validate",
     "./equals"
-], function (lang, declare, Stateful, dijitNls, nls, equals) {
+], function (lang, declare, Stateful, dijitNls, equals) {
     // module:
     //		gform/model/Model
 
@@ -151,20 +150,20 @@ define([
                     this.parent.onChange(validate);
                 }
             } else {
-                this.wouldHaveBubbled=true;
+                this.wouldHaveBubbled = true;
             }
         },
         _execute: function (cb, bubble) {
             var oldBubble = this.bubble;
-            this.wouldHaveBubbled=false
-            this.bubble  === true;
+            this.wouldHaveBubbled = false
+            this.bubble === true;
             try {
                 cb.call(this);
             } finally {
                 if (this.wouldHaveBubbled && this.parent) {
                     this.parent.onChange();
                 }
-                this.wouldHaveBubbled=false
+                this.wouldHaveBubbled = false
                 this.bubble = oldBubble;
             }
         },
@@ -251,7 +250,7 @@ define([
             return false;
         },
         validateRecursively: function (force) {
-            var me =this;
+            var me = this;
             this.visit(function (model, cascade) {
                 if (!me.isEmpty()) {
                     cascade();
@@ -324,22 +323,18 @@ define([
         watchPath: function (path, watcher) {
             return this.getModelByPath(path).watch(watcher);
         },
-        getMessage: function (keyOrMessage, internal) {
+        getMessage: function (message, internal) {
             // summary:
             //		get the human readable message. If the parameter is enclosed in curly braces then the message
             // 		will be served from this model's messages property or the message bundle.  Otherwise it will be returned as is.
-            if (!keyOrMessage) {
-                return this.getMessageForKey("invalidMessage");
-            } else if (internal && this.alwaysUseInvalidMessage) {
-                // TODO this is wrong if the message comes from a model validation.
+
+
+            if (internal && this.messages.invalidMessage) {
+                return this.messages.invalidMessage;
+            } else if (!message) {
                 return this.getMessageForKey("invalidMessage");
             } else {
-                var key = keyOrMessage.match(MESSAGE_PATTERN);
-                if (key !== null && key.length === 2) {
-                    return this.getMessageForKey(key[1]);
-                } else {
-                    return keyOrMessage;
-                }
+                return message;
             }
 
         },
@@ -348,7 +343,7 @@ define([
             //		get message for error key. either taken from the messages in schema or from the general message bundle.
             // key: string
             //		id of message
-            return this.messages[key] || nls[key] || dijitNls[key];
+            return this.messages[key] || dijitNls[key];
         },
         getMissingMessage: function () {
             // summary:
@@ -363,7 +358,7 @@ define([
             // message: string
             //		the message
             var model = this.getModelByPath(path);
-            model._addError(message, !path || path.length == 0);
+            model._addError(message, !path || path.length === 0);
         },
         _addError: function (message, internal) {
             this.set("state", "Error");

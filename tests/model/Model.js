@@ -50,23 +50,31 @@ define([
 			doh.assertEqual(1, changes.a.length);
 			doh.assertEqual(1, changes.r.length);
 		},
-		function testDefaultMissingMessage() {
-			m.addError("", "{missingMessage}");
-			doh.assertNotEqual("", m.message);
-			doh.assertNotEqual("{missingMessage}", m.message);
-		},
-		function testSpecialMissingMessage() {
-			m.messages.missingMessage = "missing";
-			m.addError("", "{missingMessage}");
-			doh.assertEqual("missing", m.message);
-		},
-		function testDefaultInvalidMessage() {
-			m.message = "";
-			m.addError("", "{invalidMessage}");
-			doh.assertNotEqual("", m.message);
-			doh.assertNotEqual("{invalidMessage}", m.message);
-		},
-		function testSpecialInvalidMessage() {
+		function testAlwayUseInvalidMessage() {
+            m.alwaysUseInvalidMessage=true;
+            m.messages.invalidMessage="expected";
+            var msg = m.getMessage("error", true);
+            doh.assertEqual("expected", msg);
+        },
+        function testAlwayUseInvalidMessageButNotSet() {
+            m.alwaysUseInvalidMessage=true;
+            delete m.messages.invalidMessage;
+            var msg = m.getMessage("error", true);
+            doh.assertEqual("error", msg);
+        },
+        function testMessage() {
+            m.alwaysUseInvalidMessage=false;
+            delete m.messages.invalidMessage;
+            var msg = m.getMessage("error1", true);
+            doh.assertEqual("error1", msg);
+        },
+        function testNoCustomMessage() {
+            m.alwaysUseInvalidMessage=false;
+            m.messages.invalidMessage="invalid";
+            var msg = m.getMessage("error4", true);
+            doh.assertEqual("invalid", msg);
+        },
+        function testSpecialInvalidMessage() {
 			m.message = "";
 			m.messages.invalidMessage = "invalid";
 			m.addError("", "{invalidMessage}");
