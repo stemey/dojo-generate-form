@@ -2,8 +2,6 @@ define([
 	"dojo/_base/lang",
 	"dojo/i18n!../nls/validate"
 ], function (lang, nls) {
-// module:
-//		gform/createStandardEditorFactory
 
 
 	return function (uniqueProperties) {
@@ -13,7 +11,6 @@ define([
 			var uniqueKeys = {};
 			var errors = [];
 			if (modelHandle.hasChildrenErrors()) {
-				console.log("no model validation");
 				return [];
 			}
 			modelHandle.forEach(function (el, idx) {
@@ -26,7 +23,6 @@ define([
 					errors.push({path: idx + "." + prop, message: msg});
 				}
 			}, this);
-			console.log("model validation resulted in " + errors.length);
 			return errors;
 		};
 	};

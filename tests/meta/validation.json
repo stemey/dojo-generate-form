@@ -1,40 +1,59 @@
 {
-    "code":"example",
-    "label":"example",
-    "attributes":[
+    "code": "example",
+    "label": "example",
+    "attributes": [
         {
-            "required":true,
-            "type":"string",
-            "code":"name",
-						"pattern":"[a-z]*",
-            "array":false,
-						"invalidMessage":"only small letters",
-						"missingMessage":"Please enter your name"
+            "required": true,
+            "type": "string",
+            "code": "name",
+            "pattern": "[a-z]*",
+            "array": false,
+            "invalidMessage": "only small letters",
+            "missingMessage": "Please enter your name"
         },
         {
-            "required":true,
-            "type":"string",
-            "code":"lastname",
-            "array":false,
-						
+            "code": "list",
+            "type": "array",
+            "uniqueProperties": ["name"],
+            "group": {
+                "attributes": [
+                    {
+                        "code": "name",
+                        "type": "string",
+                        "pattern": "^[a-zA-Z]+$",
+                        "invalidMessage": "No No"
+                    },
+                    {
+                        "code": "value",
+                        "type": "string"
+                    }
+                ]
+            }
         },
         {
-            "required":true,
-            "type":"number",
-            "code":"age",
-            "array":false
+            "required": true,
+            "type": "string",
+            "code": "lastname",
+            "array": false
+
         },
         {
-            "required":true,
-            "type":"date",
-            "code":"date",
-            "array":false
+            "required": true,
+            "type": "number",
+            "code": "age",
+            "array": false
         },
         {
-            "required":true,
-            "type":"time",
-            "code":"time",
-            "array":false
+            "required": true,
+            "type": "date",
+            "code": "date",
+            "array": false
+        },
+        {
+            "required": true,
+            "type": "time",
+            "code": "time",
+            "array": false
         }
-     ]
+    ]
 }

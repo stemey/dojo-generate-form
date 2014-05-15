@@ -7,6 +7,7 @@
 
 	<!-- required: a default dijit theme: -->
 	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet" href="../resources/gform.css"/>
 
 	<script type="text/javascript" src="dojoConfig.js"></script>
     <script type="text/javascript" src="../../dojo/dojo.js"></script>
@@ -22,15 +23,15 @@
 					"plainValue": dojo.fromJson(entity),
 					"meta": dojo.fromJson(meta),
 					"editorFactory":createStandardEditorFactory()});
-			var container = dojo.byId("container");
+            var container = dojo.byId("container");
 			editor.placeAt(container);
 			editor.startup();
-			doh.register("standard", [
+            doh.register("standard", [
 				{
 					name : 'incompleteCount',
 					runTest : function(t) {
 						t.assertEqual(4, editor.get("incompleteCount"));
-						t.assertEqual(0, editor.get("errorCount"));
+						t.assertEqual(1, editor.get("errorCount"));
 					}
 				},
 				{
@@ -38,18 +39,7 @@
 					runTest : function(t) {
 						editor.validate(true);
 						t.assertEqual(0, editor.get("incompleteCount"));
-						t.assertEqual(4, editor.get("errorCount"));
-					}
-				},
-				{
-					name : 'invalidValues',
-					runTest : function(t) {
-						editor.set("plainValue",{name:"123",age:"jj",lastname:"Meyer"});
-						dojo.byId("gform_DateTextBox_0").value="hhhh";
-						dojo.byId("gform_TimeTextBox_0").value="hhhh";
-						// we need to call validate because on blur was not called on the fields.
-						editor.validate(true);
-						t.assertEqual(4, editor.get("errorCount"));
+						t.assertEqual(5, editor.get("errorCount"));
 					}
 				}
 			]);

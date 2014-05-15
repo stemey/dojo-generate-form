@@ -1,7 +1,15 @@
 {
-	name: null,
-  lastname:"Meyer",
-  age:null,
-  date:null,
-  time:null,
+    "name": null,
+    "lastname": "Meyer",
+    "age": null,
+    "date": null,
+    "time": null,
+    "list": [
+        {
+            "name": "Hallo"
+        },
+        {
+            "name": "Hallo"
+        }
+    ]
 }
