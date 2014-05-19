@@ -283,9 +283,13 @@ define([
         _createNew: function () {
             this.set("state", "create");
             var value = this.createPlainValue(this.editor.meta);
-            this.editor.set("plainValue", value);
-            this.onCreated(schema, entity);
-        },
+            if (value!==null) {
+                this.editor.set("plainValue", value);
+            } else {
+                this.editor.initDefault();
+            }
+            this.onCreated(this.editor.meta, value);
+       },
         _createNewAndSchema: function (schemaUrl) {
             var schemaPromise = this.getSchema(schemaUrl);
             var me = this;
@@ -296,17 +300,25 @@ define([
             if (this.plainValueFactory) {
                 return this.plainValueFactory(schema);
             } else {
-                return {};
+                return null;
             }
         },
         _onLoadForCreateAndSchema: function (schemaUrl, schema) {
             this.set("state", "create");
             var value = this.createPlainValue(schema);
-            if (this.typeProperty && !(this.typeProperty in value)) {
-                value[this.typeProperty] = schemaUrl;
+            if (value!==null) {
+                if (this.typeProperty && !(this.typeProperty in value)) {
+                    value[this.typeProperty] = schemaUrl;
+                }
+                this.editor.setMetaAndPlainValue(schema, value);
+            } else {
+                this.editor.setMetaAndDefault(schema);
+                if (this.typeProperty) {
+                    this.editor.get("modelHandle").getModelByPath(this.typeProperty).update(schemaUrl);
+                    this.editor.get("modelHandle").set("oldValue",this.editor.getPlainValue());
+                }
             }
-            this.editor.setMetaAndPlainValue(schema, value);
-            this.onCreated(schema, value);
+            this.onCreated(schema, this.editor.getPlainValue());
             this.emit("editor-changed");
         },
         _onLoadForCreateAndSchemaFailed: function (error) {

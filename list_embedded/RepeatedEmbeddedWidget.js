@@ -52,7 +52,7 @@ define([ 'dojo/Stateful',
 			var title = this.modelHandle.index + 1 + ". ";
 			// todo fix this.group[0]
 			var label = labelHelper.getLabel(this.group || this.groups[0], this.modelHandle);
-			title += label == null ? "" : label;
+			title += label === null ? "" : label;
 			if (this.titlePane) {
 				this.titlePane.set("title", title);
 			}

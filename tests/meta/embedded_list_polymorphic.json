@@ -16,7 +16,7 @@
                             "type":"string",
                             "label":"name",
                             "code":"name",
-                            "array":false
+                            "defaultValue":"Hello"
                         },
                         {
                             "required":false,

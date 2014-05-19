@@ -1,5 +1,6 @@
 {
 	thing: {
-		name:"moin"
+		name:"moin",
+        count:6
 	}
 }

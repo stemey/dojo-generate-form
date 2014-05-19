@@ -8,7 +8,7 @@ define([
     return declare("gform.model.SelectModel", [PrimitiveModel], {
         options: [],
         isValid: function (value) {
-            if (this.parent == null) {
+            if (this.parent === null) {
                 return true;
             }
             return this.options.some(function (e) {
@@ -16,18 +16,18 @@ define([
             });
 
         },
-        getDefault: function () {
-            if (this.options.length > 0) {
-                return this.options[0].value;
-            } else {
-                return null;
+        getDefaultValue: function () {
+            var defaultValue = this.inherited(arguments);
+            if (defaultValue === null && this.options.length > 0) {
+                defaultValue = this.options[0].value;
             }
+            return defaultValue;
         },
         _valueSetter: function (value) {
             if (this.isValid(value)) {
                 this._changeAttrValue("value", value);
             } else if (this.required) {
-                this._changeAttrValue("value", this.getDefault());
+                this._changeAttrValue("value", this.getDefaultValue());
             } else {
                 this._changeAttrValue("value", null);
             }

@@ -1,9 +1,9 @@
 define([
-    "dojo/_base/array",
-    "dojo/_base/lang",
-    "dojo/_base/declare",
-    "./AttributeListWidget",
-    "../model/SingleObject"
+	"dojo/_base/array",
+	"dojo/_base/lang",
+	"dojo/_base/declare",
+	"./AttributeListWidget",
+	"../model/SingleObject"
 ], function (array, lang, declare, AttributeListWidget, SingleObject) {
 // module
 //		gform/group/GroupFactory
@@ -45,14 +45,24 @@ define([
                 }, this);
             }
             var validators = this.editorFactory.getModelValidators(schema);
+			var model = new SingleObject({schema:schema,attributes: attributes, subgroup: true, validators:validators});
+			model.update(plainValue);
+			model.typeCode = schema.code;
+			return model;
+		},
+		create: function (group, modelHandle, ctx) {
+			var listWidget = this.createWidget(group, modelHandle);
 
-            var model = new SingleObject({meta:schema,attributes: attributes, subgroup: true, validators: validators});
-            model.update(plainValue);
-            model.typeCode = schema.code;
-            return model;
-        },
-        create: function (group, modelHandle, ctx) {
-            var listWidget = this.createWidget(group, modelHandle);
+			array.forEach(group.attributes, function (attribute) {
+				var attributeModel = modelHandle.getModel(attribute.code);
+				var attributeEditor = this.createAttribute(attribute, attributeModel, ctx);
+				var widget = this.editorFactory.createDecorator(attribute, attributeModel);
+				if (attributeEditor !== null) {
+					widget.addChild(attributeEditor);
+					listWidget.addChild(widget);
+				}
+			}, this);
+			return listWidget;
 
             array.forEach(group.attributes, function (attribute) {
                 var attributeModel = modelHandle.getModel(attribute.code);

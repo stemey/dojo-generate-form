@@ -10,8 +10,8 @@ define(["./createVisitor",
 				code: "type1",
 				attributes: [
 					{code: "type", type: "string"},
-					{code: "stringP", type: "string"},
-					{code: "booleanP", type: "boolean"}
+					{code: "stringP", type: "string", defaultValue:"oops"},
+					{code: "booleanP", type: "boolean", defaultValue:true}
 				]
 			},
 			{
@@ -41,12 +41,12 @@ define(["./createVisitor",
 	};
 
 
-	var mo = MergedMultiObject.create(type, function () {
-		return new PrimitiveModel();
+	var mo = MergedMultiObject.create(type, function (attribute) {
+		return new PrimitiveModel({meta:attribute});
 	});
 
 
-	doh.register("MultiObject", [
+	doh.register("MergedMultiObject", [
 		function testValue() {
 			mo.update(object1);
 			var plainValue = mo.getPlainValue();
@@ -88,6 +88,12 @@ define(["./createVisitor",
                 stringP: "hallo"});
             mo.attributes.booleanP.set("value",true);
             t.assertEqual(true, mo.getPlainValue().booleanP);
+        },
+        function testInitDefault(t) {
+            mo.set("plainValue",null);
+            mo.initDefault();
+            t.assertEqual(true, mo.getPlainValue().booleanP);
+            t.assertEqual("oops", mo.getPlainValue().stringP);
         }
 	]);
 

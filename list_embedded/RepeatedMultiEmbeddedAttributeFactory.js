@@ -77,7 +77,7 @@ define([
 					model.update({});
 					groups.push(model);
 				}, this);
-				var model = MultiObject.create({groups: groups, meta: meta});
+				var model = MultiObject.create({groups: groups, schema: meta});
 				model.update(value);
 				return model;
 			};

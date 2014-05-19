@@ -31,6 +31,15 @@ define([ "dojo/_base/array",
         isEmpty: function () {
             return this.currentTypeCode === null;
         },
+        initDefault: function(setOldValue) {
+            var typeCode = this.groups[0].typeCode;
+            this.currentTypeCode=typeCode;
+            this.getGroup(typeCode).initDefault();
+            if (setOldValue !== false) {
+                this.set("oldValue", this.getPlainValue());
+            }
+            this.computeProperties();
+        },
         update: function (/*Object*/plainValue, setOldValue) {
             // summary:
             //		update the attribute with the given plainValue. Attribute has a single valid type.
@@ -166,17 +175,17 @@ define([ "dojo/_base/array",
     });
 
     Model.create = function (kwArgs) {
-        var meta = kwArgs.meta;
+        var schema = kwArgs.schema;
         var groups = kwArgs.groups;
         var typeCodeToGroup = {};
-        meta.groups.forEach(function (e, idx) {
+        schema.groups.forEach(function (e, idx) {
             typeCodeToGroup[e.code] = groups[idx];
         });
         return new Model({
             typeCodeToGroup: typeCodeToGroup,
             groups: groups,
-            typeProperty: meta.typeProperty,
-            required: meta.required === true
+            typeProperty: schema.typeProperty,
+            required: schema.required === true
         });
     };
 

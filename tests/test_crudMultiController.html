@@ -58,6 +58,7 @@
                     runTest: function (t) {
                         crudController._removeChangeIndicator();
                         crudController.createNewMulti(["country", "city"], "type");
+                        doh.assertEqual(false,crudController.hasChanged());
                         crudController.schemaSelector.set("value","city");
                         doh.assertEqual(true,crudController.hasChanged());
                         crudController.schemaSelector.set("value","country");

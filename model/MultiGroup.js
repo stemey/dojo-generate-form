@@ -30,6 +30,11 @@ define([
             }, this);
             this._changeAttrValue("groups", groups);
         },
+        initDefault: function() {
+            this.groups.forEach(function (group) {
+                group.initDefault();
+            }, this);
+        },
         update: function (/*Object*/plainValue, setOldValue) {
             // summary:
             //		update the attribute with the given plainValue. Attribute has a single valid type.

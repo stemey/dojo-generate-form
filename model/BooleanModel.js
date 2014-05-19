@@ -6,11 +6,14 @@ define([
 
 	return declare("gform.model.BooleanModel",[PrimitiveModel], {
 		_valueSetter: function (value) {
-			if (value == null) {
+			if (value === null) {
 				value = false;
 			}
 			this._changeAttrValue("value", value);
-		}
-	});
+		},
+        getDefaultValue: function() {
+            return this.schema.defaultValue || false;
+        }
+    });
 
 });

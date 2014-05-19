@@ -12,9 +12,9 @@ define([
             var plainValue = modelHandle.getModelByPath(attributeCode).getPlainValue();
             var errors = [];
                 if (plainValue) {
-                var attributes = metaHelper.collectAttributes(modelHandle.meta);
+                var attributes = metaHelper.collectAttributes(modelHandle.schema);
                 var wrongAttributes = attributes.filter(function (attribute) {
-                    return attribute.code in plainValue && attribute.code!=attributeCode;
+                    return attribute.code in plainValue && attribute.code!==attributeCode;
                 });
                 if (wrongAttributes.length > 0) {
                     var msg = lang.replace(nls.attributesNotAllowed, {attributeList: wrongAttributes.map(function (a) {

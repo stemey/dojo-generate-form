@@ -43,7 +43,7 @@ define([
 					}
 				});
 			}
-			var model = new MappedSelectModel({mappedValues: mappedValues, mappedAttribute: meta.mapped_attribute, validators: validators, required: meta.required === true});
+			var model = new MappedSelectModel({schema: meta, mappedValues: mappedValues, mappedAttribute: meta.mapped_attribute, validators: validators, required: meta.required === true});
 			model.update(plainValue);
 			return model;
 		}

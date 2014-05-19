@@ -68,6 +68,15 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 
 				this._buildContained();
 			},
+            setMetaAndDefault: function (meta) {
+                // summary:
+                //		Change the schema and the value simultaneously.
+                delete this.modelHandle;
+                this.meta = meta;
+                this.initDefault();
+
+                this._buildContained();
+            },
 			setPlainValue: function (/*Object*/ plainValue) {
 				// summary:
 				//		update the modelHandle bound to the editor
@@ -83,7 +92,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 				return this.get("plainValue");
 			},
 			_setPlainValueAttr: function (value) {
-				if (value == null) {
+				if (value === null) {
 					value = {};
 				}
 				if (!this.modelHandle) {
@@ -282,7 +291,14 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
 			},
 			onChange: function (cb) {
 				aspect.after(this.modelHandle, "onChange", cb);
-			}
+			},
+            initDefault: function() {
+                if (!this.modelHandle) {
+                    this.modelHandle = this.editorFactory.createGroupModel(this.meta, {});
+                }
+                this.modelHandle.initDefault();
+
+            }
 
 
 		});

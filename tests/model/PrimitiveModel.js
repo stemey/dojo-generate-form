@@ -31,14 +31,31 @@ define([
 			doh.assertEqual(false, m.hasChanged());
 			doh.assertEqual(null, m.getPlainValue());
 			doh.assertEqual("Incomplete", m.state);
-		}, function testTouch() {
+		},
+        function testTouch() {
 			m.update(null);
 			m.validate();
 			doh.assertEqual("Incomplete", m.state);
 			m.onTouch();
 			doh.assertEqual("Error", m.state);
 
-		}
+		},
+        function testInitDefault() {
+            m.value="old";
+            m.schema={defaultValue:"33"};
+            m.initDefault();
+            doh.assertEqual("33", m.getPlainValue());
+            doh.assertEqual("", m.state);
+            doh.assertEqual(false, m.hasChanged());
+        },
+        function testInitDefaultNoDefault() {
+            m.value="old";
+            m.schema={};
+            m.initDefault();
+            doh.assertEqual(null, m.getPlainValue());
+            doh.assertEqual("Incomplete", m.state);
+            doh.assertEqual(false, m.hasChanged());
+        }
 	]);
 
 

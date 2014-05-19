@@ -29,7 +29,7 @@ define([
 
 		},
 		createModel: function (meta, plainValue) {
-			var model = new BooleanModel();
+			var model = new BooleanModel({schema:meta});
 			model.update(plainValue);
 			return model;
 		}

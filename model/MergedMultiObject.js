@@ -41,6 +41,16 @@ define([
                 this.set("oldValue", this.getPlainValue());
             }
         },
+        initDefault: function(setOldValue) {
+             Object.keys(this.attributes).forEach(function (key) {
+                this.attributes[key].initDefault();
+            }, this);
+            if (setOldValue !== false) {
+                this.set("oldValue", this.getPlainValue());
+            }
+            this.computeProperties();
+
+        },
         getChildIndex: function (child) {
             var props = Object.keys(this.attributes).filter(function (key) {
                 return this.attributes[key] === child;

@@ -69,6 +69,7 @@
 								name: 'add',
 								runTest: function(t){
 									dijit.byId("dijit_form_Button_0").onClick();
+                                    t.assertEqual("Hello",editor.get("plainValue").things[1].name);
 									t.assertEqual(2,editor.get("plainValue").things.length);
 								}
 							},

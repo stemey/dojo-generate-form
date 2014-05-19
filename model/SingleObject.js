@@ -97,7 +97,7 @@ define([
                 if (value === true) {
                     this.updateGroup(null);
                 } else {
-                    this.updateGroup({});
+                    this.initDefault();
                 }
             }
         },
@@ -133,7 +133,7 @@ define([
             }
         },
         _getAdditionalAttributeCode: function() {
-            return this.meta && this.meta.additionalProperties ? this.meta.additionalProperties.code || "additionalProperties" : null;
+            return this.schema && this.schema.additionalProperties ? this.schema.additionalProperties.code || "additionalProperties" : null;
         },
         _getAttributeCodes: function() {
             return Object.keys(this.attributes);
@@ -197,6 +197,21 @@ define([
                 return null;
             }
             return model.getModelByPath(path);
+        },
+        initDefault: function (setOldValue) {
+            this.isNull=false;
+            Object.keys(this.attributes).forEach(function (key) {
+                var model = this.attributes[key];
+                if (!metaHelper.isComplex(model.schema) || model.isRequired()) {
+                    model.initDefault();
+                }
+
+            }, this);
+            if (setOldValue !== false) {
+                this.set("oldValue", this.getPlainValue());
+            }
+            this.resetMeta();
+            this.computeProperties();
         }
     });
 });

@@ -18,7 +18,7 @@ define([
 		},
 		createModel: function (meta, plainValue) {
 			var validators = this.editorFactory.getModelValidators(meta);
-			var model = new StringModel({validators: validators, required: meta.required === true, alwaysUseInvalidMessage: true, meta: meta});
+			var model = new StringModel({validators: validators, required: meta.required === true, alwaysUseInvalidMessage: true, schema: meta});
 			model.update(plainValue);
 			return model;
 		},

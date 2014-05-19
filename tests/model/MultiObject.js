@@ -11,8 +11,8 @@ define(["dojo/_base/lang",
 				code: "type1",
 				attributes: [
 					{code: "type", type: "string"},
-					{code: "stringP", type: "string"},
-					{code: "booleanP", type: "boolean"}
+					{code: "stringP", type: "string", defaultValue:"oops"},
+					{code: "booleanP", type: "boolean", defaultValue:true}
 				]
 			},
 			{
@@ -45,9 +45,9 @@ define(["dojo/_base/lang",
 	var createSo = function (schema) {
 		var attributes = {};
 		schema.attributes.forEach(function (attribute) {
-			attributes[attribute.code] = new PrimitiveModel();
+			attributes[attribute.code] = new PrimitiveModel({schema:attribute});
 		});
-		var so = new SingleObject({code: schema.code, attributes: attributes});
+		var so = new SingleObject({schema:schema,typeCode: schema.code, attributes: attributes});
 		so.update({});
 		return so;
 	};
@@ -56,7 +56,7 @@ define(["dojo/_base/lang",
 	var so1 = createSo(type.groups[0]);
 	var so2 = createSo(type.groups[1]);
 
-	var mo = new MultiObject.create({meta: type, groups: [so1, so2]});
+	var mo = new MultiObject.create({schema: type, groups: [so1, so2]});
 
 
 	doh.register("MultiObject", [
@@ -130,6 +130,12 @@ define(["dojo/_base/lang",
             t.assertEqual(1, mo.get("errorCount"));
             mo.resetMetaRecursively();
             t.assertEqual(0, mo.get("errorCount"));
+        },
+        function testInitDefault(t) {
+            mo.set("plainValue",null);
+            mo.initDefault();
+            t.assertEqual("oops", mo.getPlainValue().stringP);
+            t.assertEqual(true, mo.getPlainValue().booleanP);
         }
 	]);
 

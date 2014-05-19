@@ -14,18 +14,19 @@
                         "required":false,
                         "type":"boolean",
                         "label":"yes",
-                        "code":"yes",
+                        "code":"yes"
                     }
                     ,
                     {
                         "required":false,
+                        "defaultValue":"Moin",
                         "type":"string",
                         "label":"message",
-                        "code":"message",
+                        "code":"message"
                     }
-                ],
+                ]
             }
         }
-    ],
-    "type_property":"ext_type"
+    ]
+
 }

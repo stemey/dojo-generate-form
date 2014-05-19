@@ -9,12 +9,18 @@ define([
 
     return declare("gform.model.ArrayModel", [Model], {
         // summary:
-        //		rovides access to sibling attributes of modelHandle.
+        //		provides access to sibling attributes of modelHandle.
         value: null,
         elementFactory: null,
         constructor: function () {
             this.value = new StatefulArray([]);
             this._setupIndexes();
+        },
+        addNew: function (value) {
+            var model = this.elementFactory(value);
+            model.initDefault();
+            this.value.push(model);
+            return model;
         },
         push: function (value) {
             var model = this.elementFactory(value);
@@ -34,6 +40,9 @@ define([
         },
         getChildIndex: function (child) {
             return this.value.indexOf(child);
+        },
+        initDefault: function () {
+            // this.value is already initialized
         },
         update: function (/*Object*/plainValue, setOldValue) {
             // summary:
@@ -115,7 +124,7 @@ define([
         },
         _getModelByPath: function (idx, path) {
             var model = this.getModelByIndex(parseInt(idx));
-            if (model == null) {
+            if (model === null) {
                 return null;
             } else {
                 return model.getModelByPath(path);

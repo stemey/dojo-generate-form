@@ -12,28 +12,16 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		group: null,
 		typeProperty: null,
 		_addElement: function () {
-			//var model = this.target.createElement();	
-			//var type=this.attribute.validTypes[0].code;
 
 			var newValue = {};
-			if (this.typeProperty) {
+            if (this.typeProperty) {
 				newValue[this.typeProperty] = this.group.code;
 			}
-			//if (this.attribute.validTypes.length>1) {
-			//	updateModelHandle.updatePolyObject(this.attribute,newValue,newModelHandle, this.editorFactory);
-			//}else{
-			//	updateModelHandle.updateObject(this.attribute,newValue,newModelHandle, this.editorFactory);
-			//}
-			this.target.push(newValue);
-			//this.emit("state-changed");
-			//this.emit("value-changed");
+
+			this.target.addNew(newValue);
 		},
 		postCreate: function () {
 			this.addButton.set("onClick", lang.hitch(this, "_addElement"));
-			//var validators = this.editorFactory.getModelValidators(this.attribute);
-			//this.validator = new Validator({modelHandle:this.target, validators:validators});
-			//var validateFn = this.editorFactory.createValidateFunction(this.validator);
-			//this.on("value-changed", validateFn);	
 		}
 	});
 

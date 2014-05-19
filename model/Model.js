@@ -345,10 +345,16 @@ define([
             //		id of message
             return this.messages[key] || dijitNls[key];
         },
+        isRequired: function () {
+            return this.schema.required;
+        },
         getMissingMessage: function () {
             // summary:
             //		the missing message is either specially dfined in the schema or the default from resource bundle is used.
             return this.messages.missingMessage || dijitNls.missingMessage;
+        },
+        initDefault: function () {
+
         },
         addError: function (path, message) {
             // summary:

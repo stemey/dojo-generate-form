@@ -6,7 +6,7 @@ define([
     // module:
     //		gform/model/PrimitiveModel
 
-    var PrimitiveModel = declare("gform.model.PrimitiveModel",[Model], {
+    var PrimitiveModel = declare("gform.model.PrimitiveModel", [Model], {
         // summary:
         //		Provides access to sibling attributes of modelHandle.
         value: null,
@@ -51,6 +51,15 @@ define([
         },
         getPlainValue: function () {
             return this.value;
+        },
+        initDefault: function (setOldValue) {
+            this._execute(function () {
+                this.resetMeta();
+                this.update(this.getDefaultValue(), setOldValue);
+            });
+        },
+        getDefaultValue: function () {
+            return this.schema.defaultValue || null;
         }
 
 

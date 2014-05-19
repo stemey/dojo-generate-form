@@ -35,7 +35,7 @@ define([
 				model.update({});
 				groups.push(model);
 			}, this);
-			var model = MultiObject.create({groups: groups, meta: schema});
+			var model = MultiObject.create({groups: groups, schema: schema});
             model.validators=validators;
 			model.update(plainValue);
 			return model;

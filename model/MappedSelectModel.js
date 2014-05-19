@@ -30,7 +30,7 @@ define([
 			this._initOptions();
 			if (!this.isValid(this.value)) {
 				if (this.required) {
-					this._changeAttrValue("value", this.getDefault());
+					this._changeAttrValue("value", this.getDefaultValue());
 				} else {
 					this._changeAttrValue("value", null);
 				}

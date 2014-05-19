@@ -15,7 +15,7 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type === "array" && attribute.group;
+			return attribute !== null && attribute.type === "array" && attribute.group;
 		},
 		create: function (attribute, modelHandle, ctx) {
 

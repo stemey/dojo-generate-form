@@ -6,8 +6,8 @@ define([
 ], function (SingleObject, PrimitiveModel, doh, MappedSelectModel) {
 
 
-	var m1 = new PrimitiveModel({required: true});
-	var m2 = new MappedSelectModel({mappedAttribute: "first", mappedValues: {"x": [
+	var m1 = new PrimitiveModel({meta:{},required: true});
+	var m2 = new MappedSelectModel({meta:{},mappedAttribute: "first", mappedValues: {"x": [
 		{value: "1"},
 		{value: "2"}
 	], "y": [

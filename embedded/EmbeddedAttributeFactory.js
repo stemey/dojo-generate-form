@@ -27,7 +27,7 @@ define([
 
 		},
 		createModel: function (schema, plainValue) {
-			if (plainValue == null && schema.required) {
+			if (plainValue === null && schema.required) {
 				plainValue = {};
 			}
             var validators = this.editorFactory.getModelValidators(schema);
