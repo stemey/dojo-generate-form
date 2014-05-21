@@ -7,7 +7,9 @@ define({
 		"unique": "The value must be unique across all elements in the collection.",
 		"pattern": "The value must conform to the pattern '{pattern}'.",
 		"maxLength": "The text must be shorter than or equal to {maxLength}",
-		"minLength": "The text must be longer than or equal to {minLength}"
+		"minLength": "The text must be longer than or equal to {minLength}",
+        "invalidJson": "The json is not valid",
+        "attributesNotAllowed": "the attribute {attributeList} are not allowed."
 	})
 });
 

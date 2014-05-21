@@ -37,7 +37,7 @@ define(
 			doh.registerUrl("gform.tests.primitive_select", dojo.moduleUrl("gform", "tests/test_primitive_select.html"));
 			doh.registerUrl("gform.tests.primitive_ref", dojo.moduleUrl("gform", "tests/test_primitive_ref.html"));
 			doh.registerUrl("gform.tests.array_ref", dojo.moduleUrl("gform", "tests/test_array_ref.html"));
-
+            doh.registerUrl("gform.tests.additionalProperties", dojo.moduleUrl("gform", "tests/test_additionalProperties.html"));
 			doh.registerUrl("gform.tests.primitive_ref_in_tab", dojo.moduleUrl("gform", "tests/test_primitive_ref_in_tab.html"));
 			doh.registerUrl("gform.tests.primitive_ref_in_dialog", dojo.moduleUrl("gform", "tests/test_primitive_ref_in_dialog.html"));
             doh.registerUrl("gform.tests.primitive_multi_ref_in_dialog", dojo.moduleUrl("gform", "tests/test_primitive_multi_ref_in_dialog.html"));

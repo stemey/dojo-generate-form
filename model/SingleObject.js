@@ -1,7 +1,9 @@
 define([
     "dojo/_base/declare",
-    "./Model"
-], function (declare, Model) {
+    "./Model",
+    "../schema/meta",
+    "dojo/_base/lang"
+], function (declare, Model, metaHelper, lang) {
     // module:
     //		gform/model/SingleObject
 
@@ -33,10 +35,11 @@ define([
             if (this.required && (plainValue === null || typeof plainValue === "undefined")) {
                 plainValue = {};
             }
+            plainValue = this.transformIn(plainValue);
             this._execute(function () {
                 // set to undefined so that hasChanged returns false
-                //this.oldValue = undefined;
                 this.updateGroup(plainValue, setOldValue);
+
                 this.computeProperties();
                 if (setOldValue !== false) {
                     this.set("oldValue", this.getPlainValue());
@@ -45,6 +48,7 @@ define([
             if (this.parent && bubble !== false) {
                 this.parent.onChange();
             }
+
         },
         getValue: function (attributeCode) {
             if (this.isNull) {
@@ -97,13 +101,6 @@ define([
                 }
             }
         },
-        getAttributeCodes: function () {
-            var codes = [];
-            for (var key in this.attributes) {
-                codes.push(key);
-            }
-            return codes;
-        },
         getAttribute: function (code) {
             return this.attributes[code];
         },
@@ -118,6 +115,7 @@ define([
                 for (var key in this.attributes) {
                     plainValue[key] = this.attributes[key].getPlainValue();
                 }
+                plainValue = this.transformOut(plainValue);
                 return plainValue;
             }
         },
@@ -129,27 +127,65 @@ define([
         },
         iterateChildren: function (cb) {
             if (!this.isNull) {
-                for (var key in this.getAttributeCodes()) {
-                    cb.call(this, this.getAttribute(this.getAttributeCodes()[key]));
-                }
+                this._getAttributeCodes.forEach( function(key) {
+                    cb.call(this, this.getAttribute(key));
+                }, this);
             }
+        },
+        _getAdditionalAttributeCode: function() {
+            return this.meta && this.meta.additionalProperties ? this.meta.additionalProperties.code || "additionalProperties" : null;
+        },
+        _getAttributeCodes: function() {
+            return Object.keys(this.attributes);
         },
         visit: function (cb, parentIdx) {
             if (this.subgroup && typeof parentIdx === "undefined") {
                 if (!this.isNull) {
-                    for (var key in this.attributes) {
+                    this._getAttributeCodes().forEach(function(key) {
                         this.attributes[key].visit(cb, key);
-                    }
+                    },this);
                 }
             } else {
                 var me = this;
                 cb(this, function () {
                     if (!me.isNull) {
-                        for (var key in me.attributes) {
+                        me._getAttributeCodes().forEach(function(key) {
                             me.attributes[key].visit(cb, key);
-                        }
+                        });
+
                     }
                 }, parentIdx);
+            }
+        },
+        transformIn: function(value) {
+            var additionalAttribute = this._getAdditionalAttributeCode();
+            if (value && additionalAttribute) {
+                var newValue={};
+                lang.mixin(newValue,value);
+                var additionalProperties ={};
+                var attributeCodes= this._getAttributeCodes();
+                Object.keys(newValue).forEach( function(key) {
+                    if (attributeCodes.indexOf(key)<0) {
+                        additionalProperties[key]=newValue[key];
+                        delete newValue[key];
+                    }
+                }, this);
+                newValue[additionalAttribute]=additionalProperties;
+                return newValue;
+            } else {
+                return value;
+            }
+        },
+        transformOut: function(value) {
+            var additionalAttribute = this._getAdditionalAttributeCode();
+            if (additionalAttribute) {
+                var newValue={};
+                lang.mixin(newValue,value);
+                lang.mixin(newValue, value[additionalAttribute]);
+                delete newValue[additionalAttribute];
+                return newValue;
+            } else {
+                return value;
             }
         },
         _getModelByPath: function (idx, path) {

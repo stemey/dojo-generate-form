@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Editor Test</title>
+
+
+    <!-- required: a default dijit theme: -->
+    <link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+
+    <script type="text/javascript" src="dojoConfig.js"></script>
+    <script type="text/javascript" src="../../dojo/dojo.js"></script>
+    <script type="text/javascript" src="../../dojo/dojo.js"
+            data-dojo-config="async:true,parseOnLoad: false, isDebug: true"></script>
+
+
+    <script type="text/javascript">
+
+        require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
+            "dojo/text!./meta/additionalProperties.json", "dojo/text!./entity/additionalProperties.json", "dijit/registry"//
+        ], function (ready, json, Editor, Stateful, doh, createStandardEditorFactory, meta, entity, registry) {
+
+            editor = new Editor({
+                "plainValue": {},
+                "meta": dojo.fromJson(meta), editorFactory: createStandardEditorFactory()});
+            var container = dojo.byId("container");
+            editor.placeAt(container);
+            editor.startup();
+            var jsonArea = registry.byId("dijit_form_Textarea_0");
+            doh.register("test_additionalProperties", [
+                {
+                    name: "initEmpty",
+                    runTest: function (t) {
+                        t.assertEqual(0, Object.keys(editor.modelHandle.getModelByPath("addProp").getPlainValue()).length);
+
+                    }
+                },
+                {
+                    name: 'init',
+                    runTest: function (t) {
+                        editor.setPlainValue(dojo.fromJson(entity));
+                        t.assertEqual("Moin", editor.get("plainValue").extraString);
+                        t.assertEqual(4, Object.keys(editor.modelHandle.getModelByPath("addProp").getPlainValue()).length);
+                    }
+                },
+                {
+                    name: 'testInvalid',
+                    runTest: function (t) {
+                        jsonArea.set("value", '{"ddd":4}hhh');
+                        t.assertEqual(1, editor.get("errorCount"));
+                    }
+                },
+                {
+                    name: 'testInvalidAttributes',
+                    runTest: function (t) {
+                        jsonArea.set("value", '{"ddd":4,"stringP":4}');
+                        t.assertEqual(1, editor.get("errorCount"));
+                    }
+                }
+            ]);
+            doh.run();
+        });
+    </script>
+</head>
+<body class="claro">
+<h1 class="testTitle">Editor Test</h1>
+
+
+<div id="container"></div>
+
+</body>
+</html>	

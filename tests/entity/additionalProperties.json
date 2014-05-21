@@ -1,0 +1,7 @@
+{
+    "stringP": "Hallo",
+    "extraBoolean": true,
+    "extraNumber": 123,
+    "extraString": "Moin",
+    "extraArray": [1, 2, 3]
+}

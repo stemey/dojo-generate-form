@@ -2,8 +2,10 @@ define([  //
 	"dojo/_base/declare",//
 	"dojo/Stateful", //
 	"./converter/urlToIdConverter", //
+    "./converter/anyToTextConverter", //
 	"./group/DecoratorFactory", //
 	"./validate/UniqueProperties",//
+    "./validate/AdditionalProperties",//
 	"./validate/Min",//
 	"./validate/Max",//
 	"./validate/MinItems",//
@@ -11,7 +13,7 @@ define([  //
 	"./validate/MinLength",//
 	"./validate/MaxLength",//
 	"./validate/Pattern"//
-], function (declare, Stateful, urlToIdConverter, DecoratorFactory, UniqueProperties, Min, Max, MinItems, MaxItems, MinLength, MaxLength, Pattern) {
+], function (declare, Stateful, urlToIdConverter, anyToTextConverter, DecoratorFactory, UniqueProperties, AdditionalProperties, Min, Max, MinItems, MaxItems, MinLength, MaxLength, Pattern) {
 	// module: 
 	//		gform/EditorFactory
 
@@ -29,6 +31,7 @@ define([  //
 			this.decoratorFactory = new DecoratorFactory();
 			this.addConverterForType(urlToIdConverter, "ref");
             this.addConverterForType(urlToIdConverter, "multi-ref");
+            this.addConverterForType(anyToTextConverter, "any");
 		},
 		createGroupModel: function (schema, plainValue) {
 			var factory;
@@ -194,7 +197,8 @@ define([  //
 			min: Min,
 			max: Max,
 			minItems: MinItems,
-			maxItems: MaxItems
+			maxItems: MaxItems,
+            additionalProperties:AdditionalProperties
 		},
 		// summary:
 		//		get a converter for the given attribute.

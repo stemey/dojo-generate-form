@@ -297,7 +297,8 @@ define([
                     }, this);
                 }
                 var changes = this._getErrorChanges(errors, this.oldErrors);
-                changes.a.forEach(function (error) {
+                // we might have to readd the errors in subproperties, because the value was changed.
+                errors.forEach(function (error) {
                     this.addError(error.path, error.message);
                 }, this);
                 changes.r.forEach(function (error) {
@@ -385,6 +386,12 @@ define([
                 this.set("state", "");
                 this.set("message", "");
             }
+        },
+        transformIn: function(value) {
+            return value;
+        },
+        transformOut: function(value) {
+            return value;
         }
     });
 });

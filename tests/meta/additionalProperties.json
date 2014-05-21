@@ -1,0 +1,15 @@
+{
+    "additionalProperties":{
+        "code":"addProp"
+    },
+	"attributes": [
+		{
+			"type": "string",
+			"code": "stringP"
+		},
+        {
+            "type":"any",
+            "code":"addProp"
+        }
+	]
+}

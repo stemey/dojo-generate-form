@@ -1,10 +1,16 @@
 define(['dojo/_base/lang',
 	"./createVisitor",
-	"doh/runner", "gform/model/SingleObject", "gform/model/PrimitiveModel"], function (lang, createVisitor, doh, SingleObject, PrimitiveModel) {
+	"doh/runner",
+    "gform/model/SingleObject",
+    "gform/model/PrimitiveModel"
+], function (lang, createVisitor, doh, SingleObject, PrimitiveModel) {
 
 	var type =
 	{
 		type: "single-object",
+        additionalProperties:{
+            code:"addProp"
+        },
 		attributes: [
 			{code: "stringP", type: "string"},
 			{code: "booleanP", type: "boolean"},
@@ -24,9 +30,11 @@ define(['dojo/_base/lang',
 
 	var attributes = {};
 	type.attributes.forEach(function (attribute) {
-		attributes[attribute.code] = new PrimitiveModel(attribute);
+		attributes[attribute.code] = new PrimitiveModel({meta:attribute});
 	});
-	var so = new SingleObject({attributes: attributes});
+    attributes[type.additionalProperties.code]= new PrimitiveModel({meta:{}});
+	var so = new SingleObject({meta:type,attributes: attributes});
+
 
 	doh.register("SingleObject", [
 		function testParent() {
@@ -76,7 +84,7 @@ define(['dojo/_base/lang',
 		function testVisit() {
 			var visitor = createVisitor();
 			so.visit(lang.hitch(visitor, "fn"));
-			assertEqual(["noidx", "stringP", "booleanP", "numberP"], visitor.events);
+			assertEqual(["noidx", "stringP", "booleanP", "numberP", "addProp"], visitor.events);
 		},
 		function testState() {
 			assertEqual(0, so.errorCount);
@@ -118,6 +126,48 @@ define(['dojo/_base/lang',
             t.assertEqual(1, so.get("errorCount"));
             so.resetMetaRecursively();
             t.assertEqual(0, so.get("errorCount"));
+        },
+        function testModelValidation(t) {
+            so.resetMetaRecursively();
+            so.validators = [function(model, force) {
+                if (force && model.getModelByPath("stringP").getPlainValue()==="y") {
+                    return [{path:"",message:"stringP must not be y"}];
+                } else {
+                    return [];
+                }
+            }];
+            so.update({stringP:"y"});
+            t.assertEqual(0, so.get("errorCount"));
+            so.validateRecursively(true);
+            t.assertEqual(1, so.get("errorCount"));
+            so.resetMetaRecursively();
+            t.assertEqual(0, so.get("errorCount"));
+        },
+        function testAdditionalProperties(t) {
+            so.resetMetaRecursively();
+            var value = {stringP:"Hallo", extraProp1:"oops", extraProp2:3};
+            so.update(value);
+            t.assertTrue(so.getModelByPath("addProp")!==null);
+            t.assertEqual("oops",so.getPlainValue().extraProp1);
+        },
+        function testTransformIn(t) {
+            var transformed = so.transformIn({x:3,stringP:"hi"});
+            t.assertEqual("hi",transformed.stringP);
+            t.assertEqual(3,transformed.addProp.x);
+        },
+        function testTransformOut(t) {
+            var transformed = so.transformOut({addProp:{x:3},stringP:"hi"});
+            t.assertEqual("hi",transformed.stringP);
+            t.assertEqual(3,transformed.x);
+        },
+        function testGetAdditionalAttributeCode(t) {
+            var a = so._getAdditionalAttributeCode();
+            t.assertEqual("addProp",a);
+        },
+        function testGetAttributeCodes(t) {
+            var codes = so._getAttributeCodes();
+            t.assertEqual(4,codes.length);
+
         }
 	]);
 
