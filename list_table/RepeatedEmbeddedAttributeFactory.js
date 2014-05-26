@@ -83,7 +83,7 @@ define([ "dojo/_base/array", //
 		createModel: function (meta, value) {
 			var validators = this.editorFactory.getModelValidators(meta);
 			var me = this;
-			var model = new ArrayModel({validators: validators});
+			var model = new ArrayModel({schema: meta, validators: validators});
 			model.elementFactory = function (element) {
 				var elModel = MergedMultiObject.create(meta, me._createFactory());
 				elModel.update(element);

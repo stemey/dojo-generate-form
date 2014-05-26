@@ -5,7 +5,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 	"dojo/i18n!../nls/messages", "../layout/_LayoutMixin"
 ], function (lang, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, messages, _LayoutMixin) {
 
-	return declare("...EmbeddedListWidget", [ _WidgetBase, _Container,
+	return declare("gform.EmbeddedListWidget", [ _WidgetBase, _Container,
 		_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin ], {
 		templateString: template,
 		messages: messages,

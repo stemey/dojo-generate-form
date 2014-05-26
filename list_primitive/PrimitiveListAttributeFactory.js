@@ -20,7 +20,7 @@ define([
 		},
 		createModel: function (attribute, plainValue) {
 			var validators = this.editorFactory.getModelValidators(attribute);
-			var model = new ArrayModel({validators: validators});
+			var model = new ArrayModel({schema: meta, validators: validators});
 			var me = this;
 			var ef = function (value) {
 				var model = me.editorFactory.createAttributeModel(attribute.element);

@@ -68,16 +68,10 @@ define([
 		},
 		createModel: function (meta, plainValue) {
 			var validators = this.editorFactory.getModelValidators(meta);
-			var model = new ArrayModel({validators: validators});
+			var model = new ArrayModel({schema: meta, validators: validators});
 			var me = this;
 			var ef = function (value) {
-				var groups = [];
-				meta.groups.forEach(function (group) {
-					var model = me.editorFactory.createGroupModel(group);
-					model.update({});
-					groups.push(model);
-				}, this);
-				var model = MultiObject.create({groups: groups, schema: meta});
+				var model = MultiObject.create({editorFactory:me.editorFactory, schema: meta});
 				model.update(value);
 				return model;
 			};

@@ -58,7 +58,7 @@ define([
 		},
 		createModel: function (meta, plainValue) {
 			var validators = this.editorFactory.getModelValidators(meta);
-			var model = new ArrayModel({validators: validators});
+			var model = new ArrayModel({schema: meta, validators: validators});
 			var me = this;
 			var ef = function (value) {
 				var model = me.editorFactory.createGroupModel(meta.group);

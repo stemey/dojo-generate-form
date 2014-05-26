@@ -5,17 +5,33 @@ define([ "dojo/_base/array",
     // module:
     //		gform/model/MultiObject
 
-    var Model = declare("gform.model.MultiObject",[Model], {
+    var Model = declare("gform.model.MultiObject", [Model], {
         // summary:
         //		Provides access to sibling attributes of modelHandle.
 
         typeProperty: null,
-        groups: [],
         required: false,
         currentTypeCode: null,
         typeCodeToGroup: {},
+        editorFactory: null,
         getGroup: function (typeCode) {
-            return this.typeCodeToGroup[typeCode];
+            var group = this.typeCodeToGroup[typeCode];
+            if (!group) {
+                group = this.addGroup(typeCode);
+            }
+            return group;
+        },
+        addGroup: function (typeCode) {
+            if (typeCode===null) {
+                return null;
+            }
+            var schema = this.schema.groups.filter(function (group) {
+                return group.code === typeCode;
+            }, this)[0];
+            var group = this.editorFactory.createGroupModel(schema, null);
+            this.typeCodeToGroup[typeCode] = group;
+            group.parent = this;
+            return group;
         },
         getChildPath: function (child) {
             return this.parent ? this.parent.getChildPath(this) : "";
@@ -31,9 +47,9 @@ define([ "dojo/_base/array",
         isEmpty: function () {
             return this.currentTypeCode === null;
         },
-        initDefault: function(setOldValue) {
-            var typeCode = this.groups[0].typeCode;
-            this.currentTypeCode=typeCode;
+        initDefault: function (setOldValue) {
+            var typeCode = this.schema.groups[0].code;
+            this.currentTypeCode = typeCode;
             this.getGroup(typeCode).initDefault();
             if (setOldValue !== false) {
                 this.set("oldValue", this.getPlainValue());
@@ -52,7 +68,7 @@ define([ "dojo/_base/array",
             if (plainValue === null || typeof plainValue === "undefined") {
                 if (this.required) {
                     // TODO this updates the value of group. Will be done again at the end of this method.
-                    this.set("currentTypeCode", this.getTypeCode(this.groups[0]));
+                    this.set("currentTypeCode", this.schema.groups[0].code);
                     plainValue = {};
                     plainValue[this.typeProperty] = this.currentTypeCode;
                     //this.value= getGroup(this.currentTypeCode);
@@ -61,25 +77,24 @@ define([ "dojo/_base/array",
                     //this.value=null;
                 }
             } else {
-                var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.groups[0].code;
+                var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.getTypeCode(this.groups[0]);
                 this._changeAttrValue("currentTypeCode", typeCode);
             }
-            array.forEach(this.groups, function (group) {
-                if (this.getTypeCode(group) === this.currentTypeCode) {
-                    group.update(plainValue, setOldValue);
-                }
-            }, this);
+            if (this.currentTypeCode!==null) {
+                var currentGroup = this.getGroup(this.currentTypeCode);
+                currentGroup.update(plainValue, setOldValue);
+            }
             if (this.setOldValue !== false) {
                 this.set("oldValue", this.getPlainValue());
             }
         },
-        _groupsSetter: function (groups) {
-            groups.forEach(function (group) {
-                group.parent = this;
-            }, this);
-            this._changeAttrValue("groups", groups);
-
-        },
+//        _groupsSetter: function (groups) {
+//            groups.forEach(function (group) {
+//                group.parent = this;
+//            }, this);
+//            this._changeAttrValue("groups", groups);
+//
+//        },
         _currentTypeCodeSetter: function (typeCode) {
             if (this.currentTypeCode === typeCode) {
                 return;
@@ -88,7 +103,7 @@ define([ "dojo/_base/array",
             this._changeAttrValue("currentTypeCode", typeCode);
             var nextGroup = this.getGroup(this.currentTypeCode);
             var value;
-            if (typeof prevGroup === "undefined") {
+            if (typeof prevGroup === "undefined" || prevGroup === null) {
                 value = {};
             } else {
                 value = prevGroup.getPlainValue() || {};
@@ -118,8 +133,8 @@ define([ "dojo/_base/array",
         },
         visit: function (cb, parentIdx) {
             if (this.currentTypeCode !== null) {
-                var me =this;
-                cb(this, function() {
+                var me = this;
+                cb(this, function () {
                     me.getGroup(me.currentTypeCode).visit(cb, parentIdx);
                 }, parentIdx);
             } else {
@@ -157,7 +172,7 @@ define([ "dojo/_base/array",
             //		identifies the model
             // message: string
             //		the message
-            var model = path==="" ? this :this.getModelByPath(path);
+            var model = path === "" ? this : this.getModelByPath(path);
             model._addError(message, !path || path.length === 0);
         },
         removeError: function (path, message) {
@@ -167,7 +182,7 @@ define([ "dojo/_base/array",
             //		the path to the model
             // message: string
             //		to identify the message. If a different message is present then it won't be removed.
-            var model = path==="" ? this :this.getModelByPath(path);
+            var model = path === "" ? this : this.getModelByPath(path);
             if (model) {
                 model._removeError(message);
             }
@@ -176,16 +191,13 @@ define([ "dojo/_base/array",
 
     Model.create = function (kwArgs) {
         var schema = kwArgs.schema;
-        var groups = kwArgs.groups;
         var typeCodeToGroup = {};
-        schema.groups.forEach(function (e, idx) {
-            typeCodeToGroup[e.code] = groups[idx];
-        });
         return new Model({
             typeCodeToGroup: typeCodeToGroup,
-            groups: groups,
+            schema: schema,
             typeProperty: schema.typeProperty,
-            required: schema.required === true
+            required: schema.required === true,
+            editorFactory:kwArgs.editorFactory
         });
     };
 

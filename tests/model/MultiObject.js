@@ -53,17 +53,17 @@ define(["dojo/_base/lang",
 	};
 
 
-	var so1 = createSo(type.groups[0]);
-	var so2 = createSo(type.groups[1]);
 
-	var mo = new MultiObject.create({schema: type, groups: [so1, so2]});
+    var ef = {
+        createGroupModel: function(schema) {
+            return createSo(schema) ;
+        }
+    };
+
+	var mo = new MultiObject.create({schema: type, editorFactory: ef});
 
 
 	doh.register("MultiObject", [
-		function testParent() {
-			doh.assertEqual(mo, mo.groups[0].parent);
-			doh.assertEqual(mo, mo.groups[1].parent);
-		},
 		function testValue() {
 			mo.update(object1);
 			var plainValue = mo.getPlainValue();
