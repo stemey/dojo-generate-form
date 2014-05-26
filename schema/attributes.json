@@ -1,66 +1,72 @@
 [
-	{
-		"$ref": "attributes/object.json"
-	},
-	{
-		"$ref": "attributes/array.json"
-	},
-	{
-		"$ref": "attributes/multi-array.json"
-	},
-	{
-		"$ref": "attributes/multi-object.json"
-	},
-	{
-		"$ref": "attributes/primitive-array.json"
-	},
-	{
-		"$ref": "attributes/primitive-map.json"
-	},
-	{
-		"$ref": "attributes/map.json"
-	},
-	{
-		"$ref": "attributes/string.json"
-	},
-	{
-		"$ref": "attributes/number.json"
-	},
-	{
-		"$ref": "attributes/currencyamount.json"
-	},
-	{
-		"$ref": "attributes/date.json"
-	},
-	{
-		"$ref": "attributes/time.json"
-	},
-	{
-		"$ref": "attributes/textarea.json"
-	},
-	{
-		"$ref": "attributes/simpletextarea.json"
-	},
-	{
-		"$ref": "attributes/select.json"
-	},
-	{
-		"$ref": "attributes/checked-select.json"
-	},
-	{
-		"$ref": "attributes/multi-checked-select.json"
-	},
-	{
-		"$ref": "attributes/table.json"
-	},
-	{
-		"$ref": "attributes/multi-table.json"
-	},
-	{
-		"$ref": "attributes/ref.json"
-	},
+    {
+        "$ref": "attributes/object.json"
+    },
+    {
+        "$ref": "attributes/array.json"
+    },
+    {
+        "$ref": "attributes/multi-array.json"
+    },
+    {
+        "$ref": "attributes/multi-object.json"
+    },
+    {
+        "$ref": "attributes/primitive-array.json"
+    },
+    {
+        "$ref": "attributes/primitive-map.json"
+    },
+    {
+        "$ref": "attributes/map.json"
+    },
+    {
+        "$ref": "attributes/string.json"
+    },
+    {
+        "$ref": "attributes/number.json"
+    },
+    {
+        "$ref": "attributes/currencyamount.json"
+    },
+    {
+        "$ref": "attributes/date.json"
+    },
+    {
+        "$ref": "attributes/time.json"
+    },
+    {
+        "$ref": "attributes/textarea.json"
+    },
+    {
+        "$ref": "attributes/simpletextarea.json"
+    },
+    {
+        "$ref": "attributes/select.json"
+    },
+    {
+        "$ref": "attributes/checked-select.json"
+    },
+    {
+        "$ref": "attributes/multi-checked-select.json"
+    },
+    {
+        "$ref": "attributes/table.json"
+    },
+    {
+        "$ref": "attributes/multi-table.json"
+    },
+    {
+        "$ref": "attributes/ref.json"
+    },
     {
         "$ref": "attributes/multi-ref.json"
+    },
+    {
+        "$ref": "attributes/acetext.json"
+    },
+    {
+        "$ref": "attributes/richtext.json"
     }
 
 ]

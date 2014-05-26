@@ -27,6 +27,7 @@ define([
     "./primitive/AnyTextAreaAttributeFactory",
 //"./primitive/MappedContentPaneFactory",
 	"./primitive/TextareaAttributeFactory",
+    "./primitive/RichtextAttributeFactory",
 	"./primitive/SimpleTextareaAttributeFactory",
 //"./group/AttributeListWidget",
 	"./group/ColumnsGroupFactory",
@@ -39,7 +40,7 @@ define([
 
 ], function (EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
 			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory,BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, AnyTextAreaAttributeFactory, //MappedContentPaneFactory,
-			 TextareaAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
+			 TextareaAttributeFactory, RichtextAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
 			 ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
 // module:
 //		gform/createStandardEditorFactory
@@ -90,6 +91,7 @@ define([
 	attributeFactoryFinder.addAttributeFactory(new CurrencyAmountAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory(new CheckedSelectAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory(new TextareaAttributeFactory({editorFactory: editorFactory}));
+    attributeFactoryFinder.addAttributeFactory(new RichtextAttributeFactory({editorFactory: editorFactory}));
     //attributeFactoryFinder.addAttributeFactory(new AceTextAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory(new SimpleTextareaAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.set("attributeFactories", attributeFactories);

@@ -1,0 +1,18 @@
+{
+	"code": "richtext",
+    "description":"This is a a rich text attribute. It uses 'dijit.Editor'.",
+	"editor": "tab",
+	"groups": [
+        {
+            "$ref": "header.json"
+        },
+
+        {
+			"$ref": "string-constraints.json"
+		},
+		{
+			"$ref": "messages.json"
+		}
+	]
+}
+

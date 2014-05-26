@@ -1,0 +1,12 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"string",
+            "label":"description",
+            "code":"description",
+            "editor":"richtext"
+        }
+    ]
+}

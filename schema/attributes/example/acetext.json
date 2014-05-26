@@ -1,0 +1,7 @@
+{
+	"editor": "acetext",
+	"code": "sourcecode",
+	"type": "string",
+	"height": "200px",
+    "mode":"ace/mode/javascript"
+}

@@ -1,0 +1,48 @@
+{
+	"code": "acetext",
+	"editor": "tab",
+	"example": {
+		"$ref": "example/acetext.json"
+	},
+	"groups": [
+		{
+			"label": "general",
+			"attributes": [
+				{
+					"$ref":"properties/code.json"
+				},
+				{
+					"code": "mode",
+					"type": "string",
+					"description": "the language mode (e.g.: 'ace/mode/javascript')"
+				},
+                {
+                    "code": "autoComplete",
+                    "type": "boolean",
+                    "description": "some languages like 'javascript' support autoCompletion. Set to true to enable this feature."
+                },
+                {
+                    "code": "height",
+                    "type": "string",
+                    "description": "The height of the editor (e.g.: '200px'). Percentage is not supported.."
+                },
+                {
+					"$ref":"properties/label.json"
+				},
+				{
+					"$ref":"properties/description.json"
+				},
+				{
+					"$ref":"properties/required.json"
+				}
+			]
+		},
+		{
+			"$ref": "string-constraints.json"
+		},
+		{
+			"$ref": "messages.json"
+		}
+	]
+}
+
