@@ -50,7 +50,7 @@ define([  //
 		},
 		createAttributeModel: function (attribute, plainValue) {
 			var factory = this.getAttributeFactory(attribute);
-			if (factory == null) {
+			if (factory === null) {
 				throw new Error("cannot find attribute factory for type " + attribute.type);
 			}
 			return factory.createModel(attribute, plainValue);

@@ -7,7 +7,7 @@ define(['./createVisitor',
 			{
 				attributes: [
 					{code: "stringP", type: "string"},
-					{code: "booleanP", type: "boolean"},
+					{code: "booleanP", type: "boolean"}
 				]
 			},
 			{
@@ -23,22 +23,24 @@ define(['./createVisitor',
 		numberP: 23
 	};
 
+    var ef = {
+        createAttributeModel: function(schema) {
+            return new PrimitiveModel({schema:schema, editorFactory: ef});
+        },
+        createGroupModel: function(schema) {
+            var so = new SingleObject({schema:schema, editorFactory: ef, subgroup:true});
+            so.update({});
+            return so;
+        }
+    };
 
 	var assertEqual = function (expected, actual) {
 		doh.assertEqual(JSON.stringify(expected), JSON.stringify(actual));
 	};
 
-	var createSo = function (attributes) {
-		var as = {};
-		attributes.forEach(function (attribute) {
-			as[attribute.code] = new PrimitiveModel(attribute);
-		});
-		return new SingleObject({attributes: as, subgroup: true});
-	};
-
 	var groups = [];
-	groups[0] = createSo(type.groups[0].attributes);
-	groups[1] = createSo(type.groups[1].attributes);
+	groups[0] = ef.createGroupModel(type.groups[0]);
+	groups[1] = ef.createGroupModel(type.groups[1]);
 	var mg = new MultiGroup({groups: groups});
 
 	doh.register("MultiGroup", [
@@ -71,7 +73,8 @@ define(['./createVisitor',
 			mg.set("currentTypeCode", "type1");
 			mg.visit(lang.hitch(visitor, "fn"));
 			assertEqual([ "stringP", "booleanP", "numberP"], visitor.events);
-		}, function testGetModelByPath() {
+		},
+        function testGetModelByPath() {
 			mg.update(object);
 			var model = mg.getModelByPath("stringP");
 			doh.assertEqual(mg.groups[0].attributes.stringP, model);

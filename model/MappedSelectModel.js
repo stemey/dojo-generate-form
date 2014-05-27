@@ -17,7 +17,7 @@ define([
 			var mappedValue = this.parent.getModelByPath(this.mappedAttribute).getPlainValue();
 			if (mappedValue in this.mappedValues) {
 				this.set("options", this.mappedValues[mappedValue]);
-			} else if (this.required) {
+			} else if (this.isRequired()) {
 				return this.set("options", [
 					{label: "", value: null}
 				]);
@@ -29,7 +29,7 @@ define([
 		_onMappedAttributeChanged: function () {
 			this._initOptions();
 			if (!this.isValid(this.value)) {
-				if (this.required) {
+				if (this.isRequired()) {
 					this._changeAttrValue("value", this.getDefaultValue());
 				} else {
 					this._changeAttrValue("value", null);

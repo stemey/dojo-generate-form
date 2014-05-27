@@ -1,41 +1,53 @@
 define([
-	'gform/model/SingleObject',
-	'gform/model/PrimitiveModel',
-	"doh/runner",
-	"gform/model/MappedSelectModel"
+    'gform/model/SingleObject',
+    'gform/model/PrimitiveModel',
+    "doh/runner",
+    "gform/model/MappedSelectModel"
 ], function (SingleObject, PrimitiveModel, doh, MappedSelectModel) {
 
 
-	var m1 = new PrimitiveModel({meta:{},required: true});
-	var m2 = new MappedSelectModel({meta:{},mappedAttribute: "first", mappedValues: {"x": [
-		{value: "1"},
-		{value: "2"}
-	], "y": [
-		{value: "2"},
-		{value: "3"}
-	]}, required: true});
-	var attributes = {
-		"first": m1,
-		"second": m2
-	};
-	var o = new SingleObject({attributes: attributes});
+    var mappedValues = {"x": [
+        {value: "1"},
+        {value: "2"}
+    ], "y": [
+        {value: "2"},
+        {value: "3"}
+    ]};
 
-	doh.register("MappedSelectModel", [
-		function testDefault() {
-			o.update({"first": "x"});
-			doh.assertEqual("1", m2.getPlainValue());
-		}, function testNoMapping() {
-			o.update({"first": "z"});
-			doh.assertEqual(null, m2.getPlainValue());
-		}, function testCorrectMapping() {
-			o.update({"first": "x", "second": "2"});
-			doh.assertEqual("2", m2.getPlainValue());
-		}, function testCommonMapping() {
-			o.update({"first": "x", "second": "2"});
-			m1.set("value", "y");
-			doh.assertEqual("2", m2.getPlainValue());
-		}
-	]);
+    var ef = {
+        createAttributeModel: function (schema) {
+            if (schema.mappedAttribute) {
+                return MappedSelectModel({schema: schema, mappedAttribute: schema.mappedAttribute, mappedValues: schema.mappedValues});
+            } else {
+                return new PrimitiveModel({schema: schema});
+            }
+        }
+    };
+
+    var schema = {
+        attributes: [
+            {code: "first", type: "string"},
+            {code: "second", type: "string", mappedAttribute: "first", mappedValues: mappedValues, required:true}
+        ]
+    };
+    var o = new SingleObject({schema: schema, editorFactory:ef});
+
+    doh.register("MappedSelectModel", [
+        function testDefault() {
+            o.update({"first": "x"});
+            doh.assertEqual("1", o.getModelByPath("second").getPlainValue());
+        }, function testNoMapping() {
+            o.update({"first": "z"});
+            doh.assertEqual(null, o.getModelByPath("second").getPlainValue());
+        }, function testCorrectMapping() {
+            o.update({"first": "x", "second": "2"});
+            doh.assertEqual("2", o.getModelByPath("second").getPlainValue());
+        }, function testCommonMapping() {
+            o.update({"first": "x", "second": "2"});
+            o.getModelByPath("first").set("value", "y");
+            doh.assertEqual("2", o.getModelByPath("second").getPlainValue());
+        }
+    ]);
 
 
 });

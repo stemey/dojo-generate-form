@@ -26,7 +26,7 @@ define([
         _valueSetter: function (value) {
             if (this.isValid(value)) {
                 this._changeAttrValue("value", value);
-            } else if (this.required) {
+            } else if (this.isRequired()) {
                 this._changeAttrValue("value", this.getDefaultValue());
             } else {
                 this._changeAttrValue("value", null);

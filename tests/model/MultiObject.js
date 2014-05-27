@@ -42,23 +42,19 @@ define(["dojo/_base/lang",
 	};
 
 
-	var createSo = function (schema) {
-		var attributes = {};
-		schema.attributes.forEach(function (attribute) {
-			attributes[attribute.code] = new PrimitiveModel({schema:attribute});
-		});
-		var so = new SingleObject({schema:schema,typeCode: schema.code, attributes: attributes});
-		so.update({});
-		return so;
-	};
-
-
-
     var ef = {
+        createAttributeModel: function(schema) {
+            return new PrimitiveModel({schema:schema, editorFactory: ef});
+        },
         createGroupModel: function(schema) {
-            return createSo(schema) ;
+            var so = new SingleObject({schema:schema, editorFactory: ef});
+            so.update({});
+            return so;
         }
     };
+
+
+
 
 	var mo = new MultiObject.create({schema: type, editorFactory: ef});
 

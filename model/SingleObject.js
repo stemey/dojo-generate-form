@@ -12,14 +12,15 @@ define([
         //		Provides access to sibling attributes of modelHandle.
         attributes: null,
         isNull: true,
+        editorFactory: null,
         subgroup: false,
-        _attributesSetter: function (attributes) {
-            this._changeAttrValue("attributes", attributes);
-            for (var key in attributes) {
-                attributes[key].set("parent", this);
-                attributes[key].code = key;
-            }
-        },
+//        _attributesSetter: function (attributes) {
+//            this._changeAttrValue("attributes", attributes);
+//            for (var key in attributes) {
+//                attributes[key].set("parent", this);
+//                attributes[key].code = key;
+//            }
+//        },
         isEmpty: function () {
             return this.isNull;
         },
@@ -50,11 +51,15 @@ define([
             }
 
         },
+        _attributesGetter: function () {
+            this._createAttributes();
+            return this.attributes;
+        },
         getValue: function (attributeCode) {
             if (this.isNull) {
                 return null;
             } else {
-                return this.attributes[attributeCode].getPlainValue();
+                return this.get("attributes")[attributeCode].getPlainValue();
             }
         },
         setValue: function (attributeCode, value) {
@@ -63,7 +68,7 @@ define([
             }
         },
         getModel: function (attributeCode) {
-            return this.attributes[attributeCode];
+            return this.get("attributes")[attributeCode];
         },
         updateGroup: function (/*Object*/plainValue, setOldValue) {
             // summary:
@@ -83,14 +88,28 @@ define([
                 this.isNull = true;
             } else {
                 this.isNull = false;
-                for (var key in this.attributes) {
-                    this.attributes[key].update(plainValue[key], setOldValue, this.bubble);
-                }
+                this._getAttributeCodes().forEach(function (key) {
+                    this.get("attributes")[key].update(plainValue[key], setOldValue, this.bubble);
+                }, this);
             }
             if (this.isNull !== oldIsNull) {
                 this._changeAttrValue("isNull", this.isNull);
             }
             this.onChange(true);
+        },
+        _createAttributes: function () {
+            if (this.attributes === null) {
+                this.attributes = {};
+                if (this.schema.attributes) {
+                    this.schema.attributes.forEach(function (attribute) {
+                        var model = this.editorFactory.createAttributeModel(attribute);
+                        this.attributes[attribute.code] = model;
+                        model.set("parent", this);
+                    }, this);
+                } else {
+                    this.attributes = {};
+                }
+            }
         },
         _isNullSetter: function (value) {
             if (value !== this.isNull) {
@@ -102,54 +121,60 @@ define([
             }
         },
         getAttribute: function (code) {
-            return this.attributes[code];
+            return this.get("attributes")[code];
         },
         getModelByKey: function (code) {
-            return this.attributes[code];
+            return this.get("attributes")[code];
         },
         getPlainValue: function () {
             if (this.isNull) {
                 return null;
             } else {
                 var plainValue = {};
-                for (var key in this.attributes) {
-                    plainValue[key] = this.attributes[key].getPlainValue();
+                for (var key in this.get("attributes")) {
+                    plainValue[key] = this.get("attributes")[key].getPlainValue();
                 }
                 plainValue = this.transformOut(plainValue);
                 return plainValue;
             }
         },
         getChildIndex: function (child) {
-            var props = Object.keys(this.attributes).filter(function (key) {
-                return this.attributes[key] === child;
+            var props = Object.keys(this.get("attributes")).filter(function (key) {
+                return this.get("attributes")[key] === child;
             }, this);
             return props.length === 0 ? "" : props[0];
         },
         iterateChildren: function (cb) {
             if (!this.isNull) {
-                this._getAttributeCodes.forEach( function(key) {
+                this._getAttributeCodes.forEach(function (key) {
                     cb.call(this, this.getAttribute(key));
                 }, this);
             }
         },
-        _getAdditionalAttributeCode: function() {
+        _getAdditionalAttributeCode: function () {
             return this.schema && this.schema.additionalProperties ? this.schema.additionalProperties.code || "additionalProperties" : null;
         },
-        _getAttributeCodes: function() {
-            return Object.keys(this.attributes);
+        _getAttributeCodes: function () {
+            if (this.schema.attributes) {
+                return this.schema.attributes.map(function (a) {
+                    return a.code;
+                });
+            } else {
+                return [];
+            }
         },
         visit: function (cb, parentIdx) {
             if (this.subgroup && typeof parentIdx === "undefined") {
                 if (!this.isNull) {
-                    this._getAttributeCodes().forEach(function(key) {
-                        this.attributes[key].visit(cb, key);
-                    },this);
+                    this._getAttributeCodes().forEach(function (key) {
+                        this.get("attributes")[key].visit(cb, key);
+                    }, this);
                 }
             } else {
                 var me = this;
                 cb(this, function () {
                     if (!me.isNull) {
-                        me._getAttributeCodes().forEach(function(key) {
+                        me._getAttributeCodes().forEach(function (key) {
                             me.attributes[key].visit(cb, key);
                         });
 
@@ -157,30 +182,30 @@ define([
                 }, parentIdx);
             }
         },
-        transformIn: function(value) {
+        transformIn: function (value) {
             var additionalAttribute = this._getAdditionalAttributeCode();
             if (value && additionalAttribute) {
-                var newValue={};
-                lang.mixin(newValue,value);
-                var additionalProperties ={};
-                var attributeCodes= this._getAttributeCodes();
-                Object.keys(newValue).forEach( function(key) {
-                    if (attributeCodes.indexOf(key)<0) {
-                        additionalProperties[key]=newValue[key];
+                var newValue = {};
+                lang.mixin(newValue, value);
+                var additionalProperties = {};
+                var attributeCodes = this._getAttributeCodes();
+                Object.keys(newValue).forEach(function (key) {
+                    if (attributeCodes.indexOf(key) < 0) {
+                        additionalProperties[key] = newValue[key];
                         delete newValue[key];
                     }
                 }, this);
-                newValue[additionalAttribute]=additionalProperties;
+                newValue[additionalAttribute] = additionalProperties;
                 return newValue;
             } else {
                 return value;
             }
         },
-        transformOut: function(value) {
+        transformOut: function (value) {
             var additionalAttribute = this._getAdditionalAttributeCode();
             if (additionalAttribute) {
-                var newValue={};
-                lang.mixin(newValue,value);
+                var newValue = {};
+                lang.mixin(newValue, value);
                 lang.mixin(newValue, value[additionalAttribute]);
                 delete newValue[additionalAttribute];
                 return newValue;
@@ -199,9 +224,10 @@ define([
             return model.getModelByPath(path);
         },
         initDefault: function (setOldValue) {
-            this.isNull=false;
-            Object.keys(this.attributes).forEach(function (key) {
-                var model = this.attributes[key];
+            this.isNull = false;
+            this._createAttributes();
+            Object.keys(this.get("attributes")).forEach(function (key) {
+                var model = this.get("attributes")[key];
                 if (!metaHelper.isComplex(model.schema) || model.isRequired()) {
                     model.initDefault();
                 }

@@ -19,7 +19,7 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type === "array" && attribute.attributes;
+			return attribute !== null && attribute.type === "array" && attribute.attributes;
 		},
 
 		create: function (attribute, modelHandle, ctx) {
@@ -79,11 +79,7 @@ define([
 			var validators = this.editorFactory.getModelValidators(meta);
 			var model = new ArrayModel({schema: meta, validators: validators});
 			model.elementFactory = function (element) {
-				var aModels = {};
-				meta.attributes.forEach(function (attribute) {
-					aModels[attribute.code] = me.editorFactory.createAttributeModel(attribute);
-				});
-				var elModel = new SingleObject({attributes: aModels});
+				var elModel = new SingleObject({schema: meta, editorFactory: me.editorFactory});
 				elModel.update(element);
 				return elModel;
 			};

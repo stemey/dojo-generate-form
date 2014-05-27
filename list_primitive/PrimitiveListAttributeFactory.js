@@ -16,11 +16,11 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type === "array" && attribute.element;
+			return attribute !== null && attribute.type === "array" && attribute.element;
 		},
 		createModel: function (attribute, plainValue) {
 			var validators = this.editorFactory.getModelValidators(attribute);
-			var model = new ArrayModel({schema: meta, validators: validators});
+			var model = new ArrayModel({schema: attribute, validators: validators});
 			var me = this;
 			var ef = function (value) {
 				var model = me.editorFactory.createAttributeModel(attribute.element);

@@ -14,7 +14,8 @@ define(['dojo/_base/lang',
         attributes: [
             {code: "stringP", type: "string", "defaultValue": "default", required: true},
             {code: "booleanP", type: "boolean", defaultValue: true},
-            {code: "numberP", type: "number", defaultValue: 2}
+            {code: "numberP", type: "number", defaultValue: 2},
+            {code: "addProp", type: "any"}
         ]
     };
     var object = {
@@ -27,30 +28,39 @@ define(['dojo/_base/lang',
     var assertEqual = function (expected, actual) {
         doh.assertEqual(JSON.stringify(expected), JSON.stringify(actual));
     };
+    var ef = {
+        createAttributeModel: function(schema, plainValue) {
+            return new PrimitiveModel({schema: schema});
+        }
+    };
 
-    var attributes = {};
-    type.attributes.forEach(function (attribute) {
-        attributes[attribute.code] = new PrimitiveModel({schema: attribute});
-    });
-    attributes[type.additionalProperties.code] = new PrimitiveModel({schema: {}});
-    var so = new SingleObject({schema: type, attributes: attributes});
+    var so;
+
+    var createModel = function() {
+        so = new SingleObject({schema: type, editorFactory: ef});
+        so.update({});
+    };
 
 
     doh.register("SingleObject", [
         function testParent() {
+            createModel();
             doh.assertEqual(so, so.attributes.stringP.parent);
         },
         function testValue() {
+            createModel();
             so.update(object);
             var plainValue = so.getPlainValue(so);
             assertEqual(object, plainValue);
         },
         function testPath() {
+            createModel();
             so.update(object);
             var model = so.getModelByPath("booleanP");
             assertEqual("booleanP", model.getPath());
         },
         function testNull() {
+            createModel();
             so.update(null);
             var plainValue = so.getPlainValue(so);
             assertEqual(null, plainValue);
@@ -58,6 +68,7 @@ define(['dojo/_base/lang',
             doh.assertTrue(so.getPlainValue() != null);
         },
         function testSetIsNull() {
+            createModel();
             so.update({});
             so.set("isNull", true);
             assertEqual(null, so.getPlainValue());
@@ -65,11 +76,13 @@ define(['dojo/_base/lang',
             doh.assertTrue(so.getPlainValue() != null);
         },
         function testDefaults() {
+            createModel();
             so.update({});
             var plainValue = so.getPlainValue(so);
             assertEqual({stringP: null, booleanP: null, numberP: null}, plainValue);
         },
         function testResetMetaRecursively() {
+            createModel();
             so.getAttribute("stringP").set("value", "XXX");
             so.getAttribute("stringP").set("state", "Error");
             so.set("state", "Error");
@@ -82,36 +95,44 @@ define(['dojo/_base/lang',
             assertEqual(false, so.hasChanged());
         },
         function testVisit() {
+            createModel();
+            so.update({});
             var visitor = createVisitor();
             so.visit(lang.hitch(visitor, "fn"));
             assertEqual(["noidx", "stringP", "booleanP", "numberP", "addProp"], visitor.events);
         },
         function testState() {
+            createModel();
             assertEqual(0, so.errorCount);
             so.getAttribute("stringP").set("state", "Error");
             assertEqual(1, so.errorCount);
         },
         function testGetModelByPath() {
+            createModel();
             var pmodel = so.getAttribute("stringP");
             var pmodel2 = so.getModelByPath("stringP");
             doh.assertEqual(pmodel, pmodel2);
         },
         function testChanged() {
+            createModel();
             so.setValue("stringP", "x");
             assertEqual(1, so.changedCount);
         },
         function testError() {
+            createModel();
             so.addError("stringP", "x");
             assertEqual(1, so.errorCount);
             so.update(null);
             assertEqual(0, so.errorCount);
         },
         function testError(t) {
+            createModel();
             so.required = true;
             so.update(null);
             t.assertNotEqual(null, so.getPlainValue());
         },
         function testModelValidation(t) {
+            createModel();
             so.resetMetaRecursively();
             so.validators = [function (model, force) {
                 if (force && model.getModelByPath("stringP").getPlainValue() === "y") {
@@ -130,6 +151,7 @@ define(['dojo/_base/lang',
             t.assertEqual(0, so.get("errorCount"));
         },
         function testModelValidation(t) {
+            createModel();
             so.resetMetaRecursively();
             so.validators = [function (model, force) {
                 if (force && model.getModelByPath("stringP").getPlainValue() === "y") {
@@ -148,6 +170,7 @@ define(['dojo/_base/lang',
             t.assertEqual(0, so.get("errorCount"));
         },
         function testAdditionalProperties(t) {
+            createModel();
             so.resetMetaRecursively();
             var value = {stringP: "Hallo", extraProp1: "oops", extraProp2: 3};
             so.update(value);
@@ -155,25 +178,29 @@ define(['dojo/_base/lang',
             t.assertEqual("oops", so.getPlainValue().extraProp1);
         },
         function testTransformIn(t) {
+            createModel();
             var transformed = so.transformIn({x: 3, stringP: "hi"});
             t.assertEqual("hi", transformed.stringP);
             t.assertEqual(3, transformed.addProp.x);
         },
         function testTransformOut(t) {
+            createModel();
             var transformed = so.transformOut({addProp: {x: 3}, stringP: "hi"});
             t.assertEqual("hi", transformed.stringP);
             t.assertEqual(3, transformed.x);
         },
         function testGetAdditionalAttributeCode(t) {
+            createModel();
             var a = so._getAdditionalAttributeCode();
             t.assertEqual("addProp", a);
         },
         function testGetAttributeCodes(t) {
+            createModel();
             var codes = so._getAttributeCodes();
             t.assertEqual(4, codes.length);
         },
         function testInitDefault(t) {
-            so.resetMetaRecursively();
+            so = new SingleObject({schema: type, editorFactory: ef});
             so.initDefault();
             t.assertEqual("default", so.getPlainValue().stringP);
             t.assertEqual(2, so.getPlainValue().numberP);
