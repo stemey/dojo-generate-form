@@ -11,8 +11,10 @@ define(
 		"gform/tests/model/MappedSelectModel",//
 		"gform/tests/model/MergedMultiObject",//
 		"gform/tests/validate/MaxItems",//
-		"gform/tests/validate/MinItems",//
-		"gform/tests/restHelper"
+        "gform/tests/validate/MinItems",//
+        "gform/tests/schema/Transformer",
+        "gform/tests/schema/labelHelper",
+        "gform/tests/restHelper"
 	], function () {
 
 		try {
