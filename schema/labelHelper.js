@@ -14,11 +14,11 @@ define([ "dojo/_base/array", "dojo/_base/declare" ], function (array, declare) {
 				labelAttribute = type.labelAttribute;
 			} else if (type.attributes) {
 				array.forEach(type.attributes, function (a) {
-					if (labelAttribute == null && a.type === "string") {
+					if (labelAttribute === null && a.type === "string") {
 						labelAttribute = a.code;
 					}
 				});
-				if (labelAttribute != null) {
+				if (labelAttribute !== null) {
 					var model = modelHandle.getModelByPath(labelAttribute);
 					return model ? model.getPlainValue() : "";
 				} else {

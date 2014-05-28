@@ -34,12 +34,23 @@
 						editor.addError("name","error");
 						t.assertEqual(1,editor.get("errorCount"));
                         var errorCount=query(".errorTooltipNode")[0].innerHTML;
-						t.assertEqual(1,errorCount);
+						t.assertEqual("1",errorCount);
 					}
 				},
+                {
+                    name : 'changes',
+                    runTest : function(t) {
+                        editor.setPlainValue(dojo.fromJson(entity));
+                        editor.updateValue("company", "neu")
+                        t.assertEqual(1,editor.get("changedCount"));
+                        var changedCount=query(".changesTooltipNode")[0].innerHTML;
+                        t.assertEqual("1",changedCount);
+                    }
+                },
 				{
 					name : 'resetErrors',
-					runTest : function(t) {	
+					runTest : function(t) {
+                        editor.addError("name","error");
 						editor.resetErrors();
 						t.assertEqual(0,editor.get("errorCount"));
 					}

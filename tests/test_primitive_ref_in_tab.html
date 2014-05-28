@@ -51,7 +51,7 @@
 					name : 'changeLabel',
 					runTest : function(t) {
 						registry.byId("gform_ValidationTextBox_0").set("value", "changedLabel");
-						doh.assertEqual("changedLabel", container.selectedChildWidget.get("title"));
+						doh.assertTrue( container.selectedChildWidget.get("title").match("^changedLabel"));
 						registry.byId("dijit_form_Button_4").onClick();
 						doh.assertEqual("changedLabel",registry.byId("gform_FilteringSelect_0").item.label);
 					}
@@ -83,7 +83,7 @@
 						registry.byId("dijit_form_Button_3").onClick();
 						doh.assertEqual(2, container.getChildren().length)
 						registry.byId("gform_ValidationTextBox_1").set("value", "createdLabel");
-						doh.assertEqual("createdLabel", container.selectedChildWidget.get("title"));
+						doh.assertTrue( container.selectedChildWidget.get("title").match("createdLabel"));
 						registry.byId("dijit_form_Button_8").onClick();
 						doh.assertEqual("createdLabel",registry.byId("gform_FilteringSelect_0").item.label);
 					}

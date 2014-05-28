@@ -1,55 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>Editor Test</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Editor Test</title>
 
 
-	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
-	<link rel="stylesheet" href="../resources/gform.css"/>
+    <!-- required: a default dijit theme: -->
+    <link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet" href="../resources/gform.css"/>
 
-	<script type="text/javascript" src="dojoConfig.js"></script>
+    <script type="text/javascript" src="dojoConfig.js"></script>
     <script type="text/javascript" src="../../dojo/dojo.js"></script>
 
 
+    <script type="text/javascript">
+        require(["dojo/ready", "dojo/json", "dojo/query", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
+            "dojo/text!./meta/titlepanes.json", "dojo/text!./entity/titlepanes.json"//
+        ], function (ready, json, query, Editor, Stateful, doh, createStandardEditorFactory, meta, entity) {
 
-	<script type="text/javascript">
-		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner", "gform/createStandardEditorFactory",//
-			"dojo/text!./meta/titlepanes.json","dojo/text!./entity/titlepanes.json"//
-		], function(ready, json, Editor, Stateful, doh, createStandardEditorFactory, meta, entity) {
-			
-			editor = new Editor({
-				"plainValue": dojo.fromJson(entity),
-				"meta": dojo.fromJson(meta),
-				editorFactory: createStandardEditorFactory()
-			});
-			var container= dojo.byId("container");
-			editor.placeAt(container);
-			editor.startup();
-			var nameText = dijit.byId("gform_ValidationTextBox_0");
-			var companyText = dijit.byId("gform_ValidationTextBox_1");
-			
-			doh.register("standard", [{
-				name: 'init',
-				runTest: function(t){
-					t.assertEqual("Mr. X", editor.get("plainValue").name);
-					t.assertEqual("Mr. X", nameText.get("value"));
+            editor = new Editor({
+                "plainValue": dojo.fromJson(entity),
+                "meta": dojo.fromJson(meta),
+                editorFactory: createStandardEditorFactory()
+            });
+            var container = dojo.byId("container");
+            editor.placeAt(container);
+            editor.startup();
+            var nameText = dijit.byId("gform_ValidationTextBox_0");
+            var companyText = dijit.byId("gform_ValidationTextBox_1");
 
-					t.assertEqual("ACME", editor.get("plainValue").company);
-					t.assertEqual("ACME", companyText.get("value"));
-				}
-			}]);			
-			doh.run();
-		});
-		
-	</script>
+            doh.register("standard", [
+                {
+                    name: 'init',
+                    runTest: function (t) {
+                        t.assertEqual("Mr. X", editor.get("plainValue").name);
+                        t.assertEqual("Mr. X", nameText.get("value"));
+
+                        t.assertEqual("ACME", editor.get("plainValue").company);
+                        t.assertEqual("ACME", companyText.get("value"));
+                    }
+                },
+                {
+                    name: 'changes',
+                    runTest: function (t) {
+                        nameText.set("value", "changed");
+                        var el = query(".changesTooltipNode");
+                        t.assertEqual("1", el[0].innerHTML);
+                    }
+                },
+                {
+                    name: 'errors',
+                    runTest: function (t) {
+                        editor.addError("company", "oops");
+                        var el = query(".errorTooltipNode");
+                        t.assertEqual("1", el[0].innerHTML);
+                    }
+                }
+            ]);
+            doh.run();
+        });
+
+    </script>
 </head>
 <body class="claro">
-	<h1 class="testTitle">Editor Test</h1>
+<h1 class="testTitle">Editor Test</h1>
 
 
-	<div id="container"></div>
+<div id="container"></div>
 
 </body>
 </html>

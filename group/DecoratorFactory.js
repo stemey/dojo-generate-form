@@ -21,6 +21,15 @@ define([
 			// returns: dijit/_Container
 			//		The widget for the atribute will be added as only child.	
 			return new DecoratorWidget({meta: attribute, modelHandle: modelHandle});
-		}
+		},
+        createBadge: function (modelHandle) {
+            if (modelHandle.errorCount > 0) {
+                return "<span class='errorTooltipNode'>" + modelHandle.get("errorCount") + "</span>";
+            } else if (modelHandle.changedCount > 0) {
+                return "<span class='changesTooltipNode'>" + modelHandle.get("changedCount") + "</span>";
+            }else{
+                return "";
+            }
+        }
 	});
 });

@@ -28,7 +28,7 @@ define([
 		//		This crudController should be usd as a direct child of a TabContainer. The title of the tab is the label of the entity.
 		baseClass: "gformEditorController",
 		templateString: template,
-		// borderContainer: dijit/layout/BorderContainer
+        // borderContainer: dijit/layout/BorderContainer
 		//		direct child of this widget that supports layouting
 		borderContainer: null,
 		// container: dijit/layout/TabContainer
@@ -48,7 +48,8 @@ define([
 			this.inherited(arguments);
 		},
 		_onValueChange: function (e) {
-			this.set("title", this.editor.getLabel());
+
+			this.set("title", this.editor.getLabel()+this.editor.createBadge());
 		},
 		postCreate: function () {
 			this.inherited(arguments);

@@ -48,11 +48,8 @@ define([
 			return tc;
 		},
 		onValidChanged: function (tabWidget, model, label) {
-			if (model.get("errorCount") > 0) {
-				tabWidget.set("title", label + "<span class='errorTooltipNode'>" + model.get("errorCount") + "</span>");
-			} else {
-				tabWidget.set("title", label);
-			}
+            var badge = this.editorFactory.createBadge(model);
+			tabWidget.set("title", label + badge);
 		}
 
 	});

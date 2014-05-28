@@ -16,18 +16,13 @@ define([
 			});
 			//make pane content scrollable. important for usage in layout containers	
 			titlePane.containerNode.style.overflow = "auto";
-			aspect.after(model, "onChanged", lang.hitch(this, "onChanged", titlePane, model));
+			aspect.after(model, "onChange", lang.hitch(this, "onChanged", group.title, titlePane, model));
 			return titlePane;
 		},
 
-		onChanged: function (titlePane, model) {
-			var titlePaneWidget = e.source;
-			var titlePane = titlePaneWidget.get("meta");
-			if (model.get("errorCount") > 0) {
-				titlePaneWidget.set("title", titlePane.title + "<span class='errorTooltipNode'>" + titlePaneWidget.get("errorCount") + "</span>");
-			} else {
-				titlePaneWidget.set("title", titlePane.title);
-			}
+		onChanged: function (title, titlePane, model) {
+			var badge = this.editorFactory.createBadge(model);
+            titlePane.set("title", title +badge);
 		}
 	});
 });

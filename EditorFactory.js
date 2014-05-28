@@ -33,6 +33,9 @@ define([  //
             this.addConverterForType(urlToIdConverter, "multi-ref");
             this.addConverterForType(anyToTextConverter, "any");
 		},
+        createBadge: function(model) {
+            return this.decoratorFactory.createBadge(model);
+        },
 		createGroupModel: function (schema, plainValue) {
 			var factory;
             if (typeof plainValue === "undefined") {
