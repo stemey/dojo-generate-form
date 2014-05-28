@@ -7,6 +7,7 @@ define(
 		"gform/tests/model/ArrayModel",//
 		"gform/tests/model/MapModel",//
 		"gform/tests/model/SingleObject",//
+        "gform/tests/model/SelectModel",//
 		"gform/tests/model/MultiObject",//
 		"gform/tests/model/MappedSelectModel",//
 		"gform/tests/model/MergedMultiObject",//
