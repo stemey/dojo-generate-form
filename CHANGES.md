@@ -3,6 +3,9 @@
 
 - primitive attributes now support `defaultValue`. Model provides a initDefault method which initializes the model with the defaults.
 
+- added support for `any` attributes. Standard widget is textarea. Support for ace json editor is possible.
+
+
 - SingleObject supports additional dynamic properties. Add an attribute of type any and declare additionalProperties referencing that attribute in the schema.
 This feature was enabled by adding a transformIn and transformOut method to Model. It transforms the value before and after calling update and getPlainValue respectively.
 
