@@ -1,4 +1,4 @@
-0.22.0 (22.03.2014)
+0.22.0 (29.05.2014)
 -----------------
 
 - primitive attributes now support `defaultValue`. Model provides a initDefault method which initializes the model with the defaults.
