@@ -1,7 +1,7 @@
 0.22.0 (22.03.2014)
 -----------------
 
-- primitive attributes now support ´defaultValue´. Model provides a initDefault method which initializes the model with the defaults.
+- primitive attributes now support `defaultValue`. Model provides a initDefault method which initializes the model with the defaults.
 
 - SingleObject supports additional dynamic properties. Add an attribute of type any and declare additionalProperties referencing that attribute in the schema.
 This feature was enabled by adding a transformIn and transformOut method to Model. It transforms the value before and after calling update and getPlainValue respectively.
@@ -10,7 +10,7 @@ This feature was enabled by adding a transformIn and transformOut method to Mode
 
 - editor.onChange does not accept a callback anymore. You need to do `aspect.after(editor, "onChange");`
 
-- badges for group state are now created by DecoratorFactory.createBadge
+- badges for group state are now created by `DecoratorFactory.createBadge(model)`
 
 0.21.0 (22.03.2014)
 -----------------
