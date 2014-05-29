@@ -52,7 +52,7 @@ define([
                 });
             }
             if (this.setOldValue !== false) {
-                this.oldValue = this.getPlainValue();
+                this.set("oldValue", this.getPlainValue());
             }
 
         },

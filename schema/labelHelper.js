@@ -1,4 +1,4 @@
-define([ "dojo/_base/array", "dojo/_base/declare" ], function (array, declare) {
+define([  "dojo/_base/declare", "./meta" ], function (declare, metaHelper) {
     // module:
     //		gform/Meta
 
@@ -10,11 +10,15 @@ define([ "dojo/_base/array", "dojo/_base/declare" ], function (array, declare) {
         },
         getTypeLabel: function (type, modelHandle) {
             var attribute = this.getLabelAttribute(type);
-            var model = modelHandle.getModelByPath(attribute);
-            if (model) {
-                return model.getPlainValue();
-            } else {
+            if (!attribute) {
                 return "";
+            } else {
+                var model = modelHandle.getModelByPath(attribute);
+                if (model) {
+                    return model.getPlainValue();
+                } else {
+                    return "";
+                }
             }
 
         },
@@ -22,14 +26,13 @@ define([ "dojo/_base/array", "dojo/_base/declare" ], function (array, declare) {
             var labelAttribute = null;
             if (type.labelAttribute) {
                 labelAttribute = type.labelAttribute;
-            } else if (type.attributes) {
-                array.forEach(type.attributes, function (a) {
+            } else {
+                var candidates = metaHelper.collectAttributes(type).filter(function (a) {
                     if (labelAttribute === null && a.type === "string") {
-                        labelAttribute = a.code;
+                        return a.code;
                     }
                 });
-            } else if (type.groups) {
-                labelAttribute = this.getLabelAttribute(type.groups[0]);
+                labelAttribute = candidates.length>0 ? candidates[0].code : null;
             }
             return labelAttribute;
         }

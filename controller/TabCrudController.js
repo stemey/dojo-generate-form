@@ -3,22 +3,20 @@ define([
 	"./actions/Delete",
 	"./actions/Discard",
 	"./actions/Save",
-	"./createActions",
-	"dijit/_TemplatedMixin",
+    "dijit/_TemplatedMixin",
 	"dijit/_WidgetBase",
 	"dijit/_WidgetsInTemplateMixin",
-	"dojo/_base/array",
-	"dojo/_base/declare",
+    "dojo/_base/declare",
 	"dojo/_base/lang",
-	"dojo/dom-class",
-	"dojo/text!./tabCrudController.html",
+    "dojo/aspect",
+    "dojo/text!./tabCrudController.html",
 	"gform/Editor",
 	"dijit/layout/StackContainer",
 	"dijit/ProgressBar",
 	"dijit/Dialog",
 	"dijit/layout/BorderContainer",
 	"dijit/layout/ContentPane"
-], function (_CrudMixin, Delete, Discard, Save, createActions, _TemplatedMixin, _WidgetBase, _WidgetsInTemplateMixin, array, declare, lang, domClass, template) {
+], function (_CrudMixin, Delete, Discard, Save, _TemplatedMixin, _WidgetBase, _WidgetsInTemplateMixin, declare, lang, aspect, template) {
 // module:
 //		gform/controller/TabCrudController
 
@@ -56,12 +54,15 @@ define([
 			this.watch("state", lang.hitch(this, "_onStateChange"));
 			this.editor.set("editorFactory", this.editorFactory);
 			this.editor.set("meta", {attributes: []});
-			this.editor.on("value-changed", lang.hitch(this, "_onValueChange"));
-			this.on("editor-changed", lang.hitch(this, "_onEditorChange"));
+			this.own(aspect.after(this.editor, "onChange", lang.hitch(this, "_onValueChange")));
+            this.editor.on("state-changed", lang.hitch(this, "_onValueChange"));
+            this.on("editor-changed", lang.hitch(this, "_onEditorChange"));
 			this._onStateChange();
 		},
 		_onEditorChange: function () {
 			this.borderContainer.layout();
+            // TODO call editor onchange instead of the event
+            this._onValueChange();
 		},
 		onClose: function () {
 			// danger w. robinson: possibly endless recursion ahead

@@ -103,6 +103,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
                 }
                 if (!this.modelHandle) {
                     this.modelHandle = this.editorFactory.createGroupModel(this.meta, value);
+                    aspect.after(this.modelHandle, "onChange", lang.hitch(this, "onChange"));
                 } else {
                     this.modelHandle.update(value);
                 }
@@ -226,7 +227,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
                 this.resize();
             },
             _getPlainValueAttr: function () {
-                if (this.modelHandle == null) {
+                if (this.modelHandle === null) {
                     return null;
                 } else {
                     return this.modelHandle.getPlainValue();
@@ -298,12 +299,12 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
             getErrorCount: function () {
                 return this.get("errorCount");
             },
-            onChange: function (cb) {
-                this.own(aspect.after(this.modelHandle, "onChange", cb));
+            onChange: function () {
             },
             initDefault: function () {
                 if (!this.modelHandle) {
                     this.modelHandle = this.editorFactory.createGroupModel(this.meta, {});
+                    aspect.after(this.modelHandle, "onChange", lang.hitch(this, "onChange"));
                 }
                 this.modelHandle.initDefault();
 
