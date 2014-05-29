@@ -8,7 +8,7 @@ This feature was enabled by adding a transformIn and transformOut method to Mode
 
 - SingleObject now initializes its attributes lazily. This make tree-like structures possible.
 
-- editor.onChange does not accept a callback anymore. You need to do ´aspect.after(editor, "onChange");´
+- editor.onChange does not accept a callback anymore. You need to do `aspect.after(editor, "onChange");`
 
 - badges for group state are now created by DecoratorFactory.createBadge
 
