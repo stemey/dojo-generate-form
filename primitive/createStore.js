@@ -13,19 +13,28 @@ define([
         return lang.replace(url, value);
     }
 
-    return function (attribute,modelHandle) {
+    return function (attribute,modelHandle, select) {
+        // Create a store
+        // select: gform/Select optional
         var params = {};
         
         if(attribute.store){
             var model_value = modelHandle.get('value');  /* clone value (model's value changes 
                                                             after the store is loaded) */ 
-            var store = attribute.store;
+            var store = lang.clone(attribute.store);
                 store.url = _parseUrl(store.url, modelHandle.parent); 
-            params = {
-                store: new ItemFileReadStore(store),
-                onSetStore: function(){
-                modelHandle.options = this.options;    /* copy the options (clone?!) */
-                modelHandle.update(model_value);             /* update with copied value */
+
+            // If gform/Select is provided, and url has changed, reset the store
+            if(select != undefined && select.store && select.store.url != store.url){
+                select.setStore(new ItemFileReadStore(store));
+            } else {
+                // Otherwise, return the select params
+                params = {
+                    store: new ItemFileReadStore(store),
+                    onSetStore: function(){
+                        modelHandle.options = this.options;    /* copy the options (clone?!) */
+                        modelHandle.update(model_value);             /* update with copied value */
+                    }
                 }
             }
         } 

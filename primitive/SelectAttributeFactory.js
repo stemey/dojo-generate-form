@@ -1,5 +1,6 @@
 define([
 	"../model/SelectModel",
+  "dojo/aspect",
 	"dojo/_base/declare",
 	"dojox/mvc/at",
 	"dojo/_base/lang",
@@ -10,7 +11,8 @@ define([
 	"./dijitHelper",
 	"./PrimitiveAttributeFactory"
 
-], function (SelectModel, declare, at, lang, Select, createOptions, createStore, nullablePrimitiveConverter, dijitHelper, PrimitiveAttributeFactory) {
+], function (SelectModel, aspect, declare, at, lang, Select, createOptions, createUpdateStore, 
+						 nullablePrimitiveConverter, dijitHelper, PrimitiveAttributeFactory) {
 
 	return declare([PrimitiveAttributeFactory], {
 
@@ -29,7 +31,12 @@ define([
 				"value": valueBinding,
 				options: at(modelHandle, "options"),
 				maxHeight: -1
-			}, createStore(attribute, modelHandle)));
+			}, createUpdateStore(attribute, modelHandle)));
+
+			// Update the store if the url has changed!
+      aspect.after(modelHandle.parent, "onChange",  function() {
+      	createUpdateStore(attribute, modelHandle, select);
+      });
 
 			return select;
 		},

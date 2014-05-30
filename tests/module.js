@@ -52,6 +52,7 @@ define(
 			doh.registerUrl("gform.tests.group_tab", dojo.moduleUrl("gform", "tests/test_group_tab.html"));
 			doh.registerUrl("gform.tests.group_decorator", dojo.moduleUrl("gform", "tests/test_group_decorator.html"));
 			doh.registerUrl("gform.tests.validation", dojo.moduleUrl("gform", "tests/test_validation.html"));
+			doh.registerUrl("gform.tests.primitive_select_store", dojo.moduleUrl("gform", "tests/test_primitive_select_store.html"));
 
 			//doh.registerUrl("gform.mobile.primitive_date", dojo.moduleUrl("gform","tests/mobile/test_primitive_date.html"));
 			//doh.registerUrl("gform.mobile.primitive_boolean", dojo.moduleUrl("gform","tests/mobile/test_primitive_boolean.html"));
