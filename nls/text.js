@@ -7,7 +7,8 @@ define({
 		"oldValue.changed.description": "was {0}",
 		"oldValue.wasNull.description": "was empty",
 		"oldValue.wasEmpty.description": "was empty"
-	})
+	}),
+	ar: true
 });
 
 

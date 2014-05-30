@@ -22,6 +22,7 @@ define({
 		"actions.unsavedChanges": "Do you want to discard the pending changes?",
 		"actions.unsavedNewEntity": "Do you want to discard the new entity?"
 	}),
+	ar: true,
 	de: true
 });
 

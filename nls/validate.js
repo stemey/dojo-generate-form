@@ -8,7 +8,8 @@ define({
 		"pattern": "The value must conform to the pattern '{pattern}'.",
 		"maxLength": "The text must be shorter than or equal to {maxLength}",
 		"minLength": "The text must be longer than or equal to {minLength}"
-	})
+	}),
+	ar: true
 });
 
 
