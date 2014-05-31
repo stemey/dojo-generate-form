@@ -3,6 +3,9 @@ define(['./createVisitor',
 
 	var type =
 	{
+        additionalProperties: {
+            code: "addProp"
+        },
 		groups: [
 			{
 				attributes: [
@@ -12,7 +15,8 @@ define(['./createVisitor',
 			},
 			{
 				attributes: [
-					{code: "numberP", type: "number"}
+					{code: "numberP", type: "number"},
+                    {code: "addProp", type: "any"}
 				]
 			}
 		]
@@ -41,7 +45,7 @@ define(['./createVisitor',
 	var groups = [];
 	groups[0] = ef.createGroupModel(type.groups[0]);
 	groups[1] = ef.createGroupModel(type.groups[1]);
-	var mg = new MultiGroup({groups: groups});
+	var mg = new MultiGroup({schema:type,groups: groups});
 
 	doh.register("MultiGroup", [
 		function testParent() {
@@ -72,13 +76,19 @@ define(['./createVisitor',
 			var visitor = createVisitor();
 			mg.set("currentTypeCode", "type1");
 			mg.visit(lang.hitch(visitor, "fn"));
-			assertEqual([ "stringP", "booleanP", "numberP"], visitor.events);
+			assertEqual([ "stringP", "booleanP", "numberP", "addProp"], visitor.events);
 		},
         function testGetModelByPath() {
 			mg.update(object);
 			var model = mg.getModelByPath("stringP");
 			doh.assertEqual(mg.groups[0].attributes.stringP, model);
-		}
+		},
+        function testAdditionalProperties(t) {
+            var value = {type:"type1",stringP: "Hallo", extraProp1: "oops", extraProp2: 3};
+            mg.update(value);
+            t.assertTrue(mg.getModelByPath("addProp") !== null);
+            t.assertEqual("oops", mg.getPlainValue().extraProp1);
+        }
 	]);
 
 

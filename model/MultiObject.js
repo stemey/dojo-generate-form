@@ -1,11 +1,12 @@
-define([ "dojo/_base/array",
+define([
     "dojo/_base/declare",
-    "./Model"
-], function (array, declare, Model) {
+    "./Model",
+    "./AdditionalPropertiesMixin"
+], function (declare, Model, AdditionalPropertiesMixin) {
     // module:
     //		gform/model/MultiObject
 
-    var Model = declare("gform.model.MultiObject", [Model], {
+    var Model = declare("gform.model.MultiObject", [Model, AdditionalPropertiesMixin], {
         // summary:
         //		Provides access to sibling attributes of modelHandle.
 
@@ -64,6 +65,7 @@ define([ "dojo/_base/array",
 
 
             // set to undefined so that hasChanged returns false
+            plainValue = this.transformIn(plainValue);
             this.oldValue = undefined;
             if (plainValue === null || typeof plainValue === "undefined") {
                 if (this.required) {
@@ -162,6 +164,7 @@ define([ "dojo/_base/array",
                 var group = this.getGroup(this.currentTypeCode);
                 var value = group.getPlainValue();
                 value[this.typeProperty] = this.currentTypeCode;
+                value = this.transformOut(value);
                 return value;
             }
         },

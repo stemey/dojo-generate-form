@@ -1,12 +1,13 @@
 define([
     "dojo/_base/lang",
     "dojo/_base/declare",
-    "./Model"
-], function (lang, declare, Model) {
+    "./Model",
+    "./AdditionalPropertiesMixin"
+], function (lang, declare, Model, AdditionalPropertiesMixin) {
     // module:
     //		gform/model/SingleObject
 
-    return declare("gform.model.MultiGroup",[Model], {
+    return declare("gform.model.MultiGroup",[Model, AdditionalPropertiesMixin], {
         // summary:
         //		Provides access to sibling attributes of modelHandle.
         groups: null,
@@ -40,6 +41,7 @@ define([
             //		update the attribute with the given plainValue. Attribute has a single valid type.
             // plainValue:
             //		the new value of the attribute
+            plainValue=this.transformIn(plainValue);
             if (this.required && plainValue === null) {
                 plainValue = {};
             }
@@ -104,6 +106,7 @@ define([
                     var value = group.getPlainValue();
                     lang.mixin(plainValue, value);
                 });
+                plainValue = this.transformOut(plainValue);
                 return plainValue;
             }
         }

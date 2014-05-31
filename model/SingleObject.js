@@ -2,12 +2,12 @@ define([
     "dojo/_base/declare",
     "./Model",
     "../schema/meta",
-    "dojo/_base/lang"
-], function (declare, Model, metaHelper, lang) {
+    "./AdditionalPropertiesMixin"
+], function (declare, Model, metaHelper, AdditionalPropertiesMixin) {
     // module:
     //		gform/model/SingleObject
 
-    return declare("gform.model.SingleObject", [Model], {
+    return declare("gform.model.SingleObject", [Model, AdditionalPropertiesMixin], {
         // summary:
         //		Provides access to sibling attributes of modelHandle.
         attributes: null,
@@ -151,18 +151,6 @@ define([
                 }, this);
             }
         },
-        _getAdditionalAttributeCode: function () {
-            return this.schema && this.schema.additionalProperties ? this.schema.additionalProperties.code || "additionalProperties" : null;
-        },
-        _getAttributeCodes: function () {
-            if (this.schema.attributes) {
-                return this.schema.attributes.map(function (a) {
-                    return a.code;
-                });
-            } else {
-                return [];
-            }
-        },
         visit: function (cb, parentIdx) {
             if (this.subgroup && typeof parentIdx === "undefined") {
                 if (!this.isNull) {
@@ -180,37 +168,6 @@ define([
 
                     }
                 }, parentIdx);
-            }
-        },
-        transformIn: function (value) {
-            var additionalAttribute = this._getAdditionalAttributeCode();
-            if (value && additionalAttribute) {
-                var newValue = {};
-                lang.mixin(newValue, value);
-                var additionalProperties = {};
-                var attributeCodes = this._getAttributeCodes();
-                Object.keys(newValue).forEach(function (key) {
-                    if (attributeCodes.indexOf(key) < 0) {
-                        additionalProperties[key] = newValue[key];
-                        delete newValue[key];
-                    }
-                }, this);
-                newValue[additionalAttribute] = additionalProperties;
-                return newValue;
-            } else {
-                return value;
-            }
-        },
-        transformOut: function (value) {
-            var additionalAttribute = this._getAdditionalAttributeCode();
-            if (additionalAttribute) {
-                var newValue = {};
-                lang.mixin(newValue, value);
-                lang.mixin(newValue, value[additionalAttribute]);
-                delete newValue[additionalAttribute];
-                return newValue;
-            } else {
-                return value;
             }
         },
         _getModelByPath: function (idx, path) {

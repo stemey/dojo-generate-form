@@ -5,6 +5,9 @@ define(["dojo/_base/lang",
 	var type =
 	{
 		type: "multi-object",
+        additionalProperties: {
+            code: "addProp"
+        },
 		typeProperty: "type",
 		groups: [
 			{
@@ -12,7 +15,8 @@ define(["dojo/_base/lang",
 				attributes: [
 					{code: "type", type: "string"},
 					{code: "stringP", type: "string", defaultValue:"oops"},
-					{code: "booleanP", type: "boolean", defaultValue:true}
+					{code: "booleanP", type: "boolean", defaultValue:true},
+                    {code: "addProp", type: "any"}
 				]
 			},
 			{
@@ -20,7 +24,8 @@ define(["dojo/_base/lang",
 				attributes: [
 					{code: "type", type: "string"},
 					{code: "booleanP", type: "boolean"},
-					{code: "numberP", type: "number"}
+					{code: "numberP", type: "number"},
+                    {code: "addProp", type: "any"}
 				]
 			}
 		]
@@ -100,7 +105,7 @@ define(["dojo/_base/lang",
 			var visitor = createVisitor();
 			mo.set("currentTypeCode", "type1");
 			mo.visit(lang.hitch(visitor, "fn"));
-			assertEqual(["noidx","noidx", "type", "stringP", "booleanP"], visitor.events);
+			assertEqual(["noidx","noidx", "type", "stringP", "booleanP", "addProp"], visitor.events);
 		},
 		function testNullAndRequired() {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
@@ -124,6 +129,13 @@ define(["dojo/_base/lang",
             t.assertEqual(1, mo.get("errorCount"));
             mo.resetMetaRecursively();
             t.assertEqual(0, mo.get("errorCount"));
+        },
+        function testAdditionalProperties(t) {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
+            var value = {type:"type1",stringP: "Hallo", extraProp1: "oops", extraProp2: 3};
+            mo.update(value);
+            t.assertTrue(mo.getModelByPath("addProp") !== null);
+            t.assertEqual("oops", mo.getPlainValue().extraProp1);
         },
         function testInitDefault(t) {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
