@@ -12,7 +12,7 @@ define(["dojo/_base/lang",
             return new PrimitiveModel({schema: schema, editorFactory: ef});
         },
         createGroupModel: function (schema) {
-            var so = new SingleObject({schema: schema, editorFactory: ef, subgroup: true});
+            var so = new SingleObject({schema: schema, editorFactory: ef});
             so.update({});
             return so;
         }
@@ -28,7 +28,7 @@ define(["dojo/_base/lang",
         var element = new PrimitiveModel();
         var key = new PrimitiveModel();
         var attributes = {"x": element, "keyx": key};
-        var model = new SingleObject({editorFactory: ef, schema:type, subgroup: false});
+        var model = new SingleObject({editorFactory: ef, schema:type});
         model.update(value);
         return model;
     };

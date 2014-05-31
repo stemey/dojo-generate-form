@@ -45,7 +45,7 @@ define([
                 }, this);
             }
             var validators = this.editorFactory.getModelValidators(schema);
-			var model = new SingleObject({schema:schema, subgroup: true, validators:validators, editorFactory:this.editorFactory});
+			var model = new SingleObject({schema:schema, validators:validators, editorFactory:this.editorFactory});
 			model.update(plainValue);
 			model.typeCode = schema.code;
 			return model;

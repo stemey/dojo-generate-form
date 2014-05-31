@@ -32,7 +32,7 @@ define(['./createVisitor',
             return new PrimitiveModel({schema:schema, editorFactory: ef});
         },
         createGroupModel: function(schema) {
-            var so = new SingleObject({schema:schema, editorFactory: ef, subgroup:true});
+            var so = new SingleObject({schema:schema, editorFactory: ef});
             so.update({});
             return so;
         }
@@ -51,10 +51,11 @@ define(['./createVisitor',
 		function testParent() {
 			doh.assertEqual(mg, mg.groups[0].parent);
 		},
-		function testValue() {
+		function testValue(t) {
 			mg.update(object);
 			var plainValue = mg.getPlainValue();
 			assertEqual(object, plainValue);
+            // old value is always null
 		},
         function testPath() {
             mg.update(object);
@@ -76,7 +77,7 @@ define(['./createVisitor',
 			var visitor = createVisitor();
 			mg.set("currentTypeCode", "type1");
 			mg.visit(lang.hitch(visitor, "fn"));
-			assertEqual([ "stringP", "booleanP", "numberP", "addProp"], visitor.events);
+			assertEqual([ "noidx", "stringP", "booleanP", "noidx", "numberP", "addProp"], visitor.events);
 		},
         function testGetModelByPath() {
 			mg.update(object);

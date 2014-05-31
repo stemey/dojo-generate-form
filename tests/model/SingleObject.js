@@ -47,7 +47,7 @@ define(['dojo/_base/lang',
             createModel();
             doh.assertEqual(so, so.attributes.stringP.parent);
         },
-        function testValue() {
+        function testValue(t) {
             createModel();
             so.update(object);
             var plainValue = so.getPlainValue(so);

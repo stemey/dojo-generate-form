@@ -13,7 +13,6 @@ define([
         attributes: null,
         isNull: true,
         editorFactory: null,
-        subgroup: false,
         isEmpty: function () {
             return this.isNull;
         },
@@ -145,23 +144,17 @@ define([
             }
         },
         visit: function (cb, parentIdx) {
-            if (this.subgroup && typeof parentIdx === "undefined") {
-                if (!this.isNull) {
-                    this._getAttributeCodes().forEach(function (key) {
-                        this.get("attributes")[key].visit(cb, key);
-                    }, this);
-                }
-            } else {
-                var me = this;
-                cb(this, function () {
-                    if (!me.isNull) {
-                        me._getAttributeCodes().forEach(function (key) {
-                            me.attributes[key].visit(cb, key);
-                        });
 
-                    }
-                }, parentIdx);
-            }
+            var me = this;
+            cb(this, function () {
+                if (!me.isNull) {
+                    me._getAttributeCodes().forEach(function (key) {
+                        me.attributes[key].visit(cb, key);
+                    });
+
+                }
+            }, parentIdx);
+
         },
         _getModelByPath: function (idx, path) {
             if (this.isNull) {
