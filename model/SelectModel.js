@@ -8,9 +8,6 @@ define([
     return declare("gform.model.SelectModel", [PrimitiveModel], {
         options: [],
         isValid: function (value) {
-            if (this.parent === null) {
-                return true;
-            }
             return this.options.some(function (e) {
                 return e.value === value;
             });
