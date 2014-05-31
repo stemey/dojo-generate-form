@@ -79,7 +79,7 @@ define([
         },
         _getModelByPath: function (index, path) {
             var model = this.getModel(index);
-            if (model == null) {
+            if (!model) {
                 return null;
             } else {
                 return model.getModelByPath(path);
@@ -89,7 +89,7 @@ define([
             var model = null;
             this.groups.map(function (group) {
                 var m = group.getModel(attributeCode);
-                if (m != null) {
+                if (!!m) {
                     model = m;
                 }
             });
