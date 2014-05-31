@@ -16,7 +16,7 @@ define([
         },
         getConverter: function (attribute, ctx) {
             if (attribute.converter) {
-                return this.editorfactory(attribute, ctx);
+                return this.editorFactory(attribute, ctx);
             } else {
                 return null;
             }

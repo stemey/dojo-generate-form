@@ -13,6 +13,7 @@ define(
 		"gform/tests/model/MergedMultiObject",//
 		"gform/tests/validate/MaxItems",//
         "gform/tests/validate/MinItems",//
+        "gform/tests/validate/AdditionalProperties",//
         "gform/tests/schema/Transformer",
         "gform/tests/schema/labelHelper",
         "gform/tests/restHelper"

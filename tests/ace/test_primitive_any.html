@@ -25,14 +25,21 @@
 			var container = dojo.byId("container");
 			editor.placeAt(container);
 			editor.startup();
-			var intValidFrom = dijit.byId("gform_DateTextBox_0");
+			var field = dijit.byId("gform_ace_AceEditor_0");
 			doh.register("standard", [
 				{
 					name : 'init',
 					runTest : function(t) {
 						t.assertEqual(dojo.toJson(dojo.fromJson(entity).jsonValue, false), dojo.toJson(editor.get("plainValue").jsonValue));
 					}
-				}
+				},
+                {
+                    name : 'invalid',
+                    runTest : function(t) {
+                        field.set("value", "{invalid}")
+                        t.assertEqual(1,editor.get("errorCount"));
+                    }
+                }
 			]);
 			doh.run();
 		});

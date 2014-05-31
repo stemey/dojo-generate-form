@@ -14,7 +14,7 @@ define([ 'dijit/layout/_LayoutWidget',
     };
 
 
-    return declare([LayoutWidget],
+    return declare("gform.ace.AceEditor",[LayoutWidget],
         {
             postCreate: function () {
                 var conf = {};

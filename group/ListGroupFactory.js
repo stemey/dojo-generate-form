@@ -16,11 +16,12 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		createModel: function (meta, plainValue) {
+            var validators = this.editorFactory.getModelValidators(meta);
 			var groups = [];
 			meta.groups.forEach(function (group) {
 				groups.push(this.editorFactory.createGroupModel(group));
 			}, this);
-			var model = new MultiGroup({schema:meta, groups: groups, required: meta.required === true});
+			var model = new MultiGroup({validators:validators, schema:meta, groups: groups, required: meta.required === true});
 			model.update(plainValue);
 			return model;
 		},

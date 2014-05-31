@@ -14,13 +14,6 @@ define([
         isNull: true,
         editorFactory: null,
         subgroup: false,
-//        _attributesSetter: function (attributes) {
-//            this._changeAttrValue("attributes", attributes);
-//            for (var key in attributes) {
-//                attributes[key].set("parent", this);
-//                attributes[key].code = key;
-//            }
-//        },
         isEmpty: function () {
             return this.isNull;
         },

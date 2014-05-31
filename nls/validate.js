@@ -9,7 +9,8 @@ define({
 		"maxLength": "The text must be shorter than or equal to {maxLength}",
 		"minLength": "The text must be longer than or equal to {minLength}",
         "invalidJson": "The json is not valid",
-        "attributesNotAllowed": "the attribute {attributeList} are not allowed."
+        "attributesNotAllowed": "the attribute {attributeList} are not allowed.",
+        "additionalPropertiesMustBeAnObject":"the additional Properties must be an object."
 	})
 });
 
