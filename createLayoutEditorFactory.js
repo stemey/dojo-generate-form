@@ -19,6 +19,7 @@ define([
 	"./primitive/CheckedMultiSelectAttributeFactory",//
 	"./primitive/MappedSelectAttributeFactory",//
 	"./primitive/DateAttributeFactory",//
+    "./primitive/AnyTextAreaAttributeFactory",
 	"./primitive/TimeAttributeFactory",//
 	"./embedded/EmbeddedAttributeFactory",//
 	"./embedded/MultiEmbeddedAttributeFactory",//
@@ -26,6 +27,7 @@ define([
 	"./primitive/CurrencyAmountAttributeFactory",//
 //"./primitive/MappedContentPaneFactory",//
 	"./primitive/TextareaAttributeFactory",//
+    "./primitive/RichtextAttributeFactory",
 	"./primitive/SimpleTextareaAttributeFactory",//
 //"./group/AttributeListWidget",//
 	"./group/ColumnsGroupFactory",//
@@ -37,8 +39,9 @@ define([
 	"./list_table/RepeatedSingleEmbeddedAttributeFactory"
 
 ], function (EditorFactory, AttributeFactoryFinder, createActionFactory, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
-			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
-			 TextareaAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
+			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, AnyTextAreaAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
+			 TextareaAttributeFactory,     RichtextAttributeFactory,
+    SimpleTextareaAttributeFactory, //		AttributeListWidget,
 			 ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
 // module:
 //		gform/createStandardEditorFactory
@@ -77,7 +80,8 @@ define([
 		new NumberAttributeFactory({editorFactory: editorFactory}),//
 		new SelectAttributeFactory({editorFactory: editorFactory}), //
 		new BooleanAttributeFactory({editorFactory: editorFactory}), //
-		new StringAttributeFactory({editorFactory: editorFactory}), //
+        new AnyTextAreaAttributeFactory({editorFactory: editorFactory}), //
+        new StringAttributeFactory({editorFactory: editorFactory}), //
 		new DateAttributeFactory({editorFactory: editorFactory}), //
 		new TimeAttributeFactory({editorFactory: editorFactory}) //
 		//	       				new MappedContentPaneFactory({editorFactory:editorFactory}) //
@@ -89,6 +93,7 @@ define([
 	attributeFactoryFinder.addAttributeFactory(new CurrencyAmountAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory(new CheckedSelectAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory(new TextareaAttributeFactory({editorFactory: editorFactory}));
+    attributeFactoryFinder.addAttributeFactory(new RichtextAttributeFactory({editorFactory: editorFactory}));
     //attributeFactoryFinder.addAttributeFactory(new AceTextAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.addAttributeFactory(new SimpleTextareaAttributeFactory({editorFactory: editorFactory}));
 	attributeFactoryFinder.set("attributeFactories", attributeFactories);

@@ -1,13 +1,18 @@
 define([
     "dojo/_base/declare",
-    "../converter/anyToTextConverter",
-    "./TextareaAttributeFactory"
-], function (declare, anyToTextConverter, TextareaAttributeFactory) {
+    "./AceTextAttributeFactory",
+    "../../converter/anyToTextConverter"
+], function (declare, AceTextAttributeFactory, anyToTextConverter) {
 
-    return declare("AnyTextAreaAttributeFactory", [TextareaAttributeFactory], {
-        id: "anyTextArea",
+    return declare([AceTextAttributeFactory], {
+        id: "anyAce",
         handles: function (attribute) {
             return attribute.type === "any";
+        },
+        addProps: function (props) {
+            if (!props.mode) {
+                props.mode = "ace/mode/json";
+            }
         },
         getConverter: function (attribute, ctx) {
             if (attribute.converter) {
@@ -15,8 +20,8 @@ define([
             } else {
                 return anyToTextConverter;
             }
-
         }
+
     });
 
 });

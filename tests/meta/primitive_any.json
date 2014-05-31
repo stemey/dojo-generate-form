@@ -1,0 +1,10 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"any",
+			"code":"jsonValue"
+        }
+    ]
+}
