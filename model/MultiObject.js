@@ -28,7 +28,7 @@ define([ "dojo/_base/array",
             var schema = this.schema.groups.filter(function (group) {
                 return group.code === typeCode;
             }, this)[0];
-            var group = this.editorFactory.createGroupModel(schema, null);
+            var group = this.editorFactory.createGroupModel(schema, {});
             this.typeCodeToGroup[typeCode] = group;
             group.parent = this;
             return group;
@@ -77,7 +77,7 @@ define([ "dojo/_base/array",
                     //this.value=null;
                 }
             } else {
-                var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.getTypeCode(this.groups[0]);
+                var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.getTypeCode(this.schema.groups[0]);
                 this._changeAttrValue("currentTypeCode", typeCode);
             }
             if (this.currentTypeCode!==null) {

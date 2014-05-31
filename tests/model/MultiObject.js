@@ -60,17 +60,27 @@ define(["dojo/_base/lang",
 
 
 	doh.register("MultiObject", [
-		function testValue() {
+        function testAddGroup(t) {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
+            mo.update(object1);
+            mo.set("currentTypeCode", "type2");
+            var plainValue = mo.getPlainValue();
+            t.assertTrue(plainValue!==null);
+        },
+        function testValue() {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
 			mo.update(object1);
 			var plainValue = mo.getPlainValue();
 			assertEqual(object1, plainValue);
 		},
 		function testNull() {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
 			mo.update(null);
 			var plainValue = mo.getPlainValue();
 			assertEqual(null, plainValue);
 		},
 		function testSwitchType() {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
 			mo.update(object2);
 			mo.update(object1);
 			mo.set("currentTypeCode", "type2");
@@ -79,23 +89,27 @@ define(["dojo/_base/lang",
 			assertEqual("type2", plainValue.type);
 		},
 		function testGetModelByPath() {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
 			mo.set("currentTypeCode", "type1");
 			var pmodel = mo.getGroup("type1").getAttribute("stringP");
 			var pmodel2 = mo.getModelByPath("stringP");
 			doh.assertEqual(pmodel, pmodel2);
 		},
 		function testVisit() {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
 			var visitor = createVisitor();
 			mo.set("currentTypeCode", "type1");
 			mo.visit(lang.hitch(visitor, "fn"));
 			assertEqual(["noidx","noidx", "type", "stringP", "booleanP"], visitor.events);
 		},
 		function testNullAndRequired() {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
 			mo.required = true;
 			mo.update(null);
 			doh.assertFalse(mo.getPlainValue() === null);
 		},
         function testModelValidation(t) {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
             mo.resetMetaRecursively();
             mo.validators = [function(model, force) {
                 if (force && model.getModelByPath("stringP").getPlainValue()==="y") {
@@ -104,23 +118,7 @@ define(["dojo/_base/lang",
                     return [];
                 }
             }];
-            mo.update({stringP:"y"});
-            t.assertEqual(0, mo.get("errorCount"));
-            mo.validateRecursively(true);
-            t.assertEqual(1, mo.get("errorCount"));
-            mo.resetMetaRecursively();
-            t.assertEqual(0, mo.get("errorCount"));
-        },
-        function testModelValidationWithChildError(t) {
-            mo.resetMetaRecursively();
-            mo.validators = [function(model, force) {
-                if (force && model.getModelByPath("stringP").getPlainValue()==="y") {
-                    return [{path:"stringP",message:"stringP must not be y"}];
-                } else {
-                    return [];
-                }
-            }];
-            mo.update({stringP:"y"});
+            mo.update({type:"type1",stringP:"y"});
             t.assertEqual(0, mo.get("errorCount"));
             mo.validateRecursively(true);
             t.assertEqual(1, mo.get("errorCount"));
@@ -128,6 +126,7 @@ define(["dojo/_base/lang",
             t.assertEqual(0, mo.get("errorCount"));
         },
         function testInitDefault(t) {
+            var mo = new MultiObject.create({schema: type, editorFactory: ef});
             mo.set("plainValue",null);
             mo.initDefault();
             t.assertEqual("oops", mo.getPlainValue().stringP);
