@@ -1,8 +1,9 @@
 define([ 'dijit/layout/_LayoutWidget',
     "dojo/_base/lang",
     "dojo/_base/declare",
-    "ace/ace"
+    "./ace"
 ], function (LayoutWidget, lang, declare, ace) {
+
 
     var delegatedProps = {
         "value": {setter: "setValue", getter: "getValue"}

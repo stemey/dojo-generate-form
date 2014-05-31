@@ -4,10 +4,9 @@ define([
     './AceEditor',
     "dojo/_base/declare",
     "../../schema/meta",
-    "dojox/mvc/at",
-    "../PrimitiveAttributeFactory",
-    'ace/ext/language_tools'
-], function (lang, aspect, AceEditor, declare, meta, at, PrimitiveAttributeFactory) {
+    "dojox/mvc/sync",
+    "../PrimitiveAttributeFactory"
+], function (lang, aspect, AceEditor, declare, meta, sync, PrimitiveAttributeFactory) {
 
     return declare([PrimitiveAttributeFactory], {
         id: "acetext",
@@ -15,15 +14,26 @@ define([
             return meta.isType(attribute, "string") && !attribute.array;
         },
 
-        create: function (attribute, modelHandle) {
+        create: function (attribute, modelHandle, ctx) {
             var props = {};
-            props.value = at(modelHandle, "value");
             props.mode = attribute.mode;
-            props.options={};
-            props.options.enableBasicAutocompletion=!!attribute.autoComplete;
+            props.options = {};
+            props.options.enableBasicAutocompletion = !!attribute.autoComplete;
+            this.addProps(props);
             var widget = new AceEditor(props);
             aspect.after(widget, "startup", lang.hitch(this, "startup", widget, attribute));
+
+            var converter = this.getConverter(attribute, ctx);
+            if (converter) {
+                sync(modelHandle, "value", widget, "value", {converter: this.getConverter(attribute, ctx)});
+            }
+
             return widget;
+        },
+        addProps: function (props) {
+        },
+        getConverter: function (attribute, ctx) {
+            return null;
         },
         startup: function (widget, attribute) {
             var height = attribute.height || "100px";

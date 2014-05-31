@@ -18,7 +18,7 @@
 
     <script type="text/javascript">
         require(['dijit/registry',
-            "dojo/parser", "doh/runner", "gform/primitive/ace/AceEditor", "dijit/layout/BorderContainer","dojo/domReady!", "ace/mode/javascript"], function (registry, parser, doh) {
+            "dojo/parser", "doh/runner", "gform/primitive/ace/AceEditor", "dijit/layout/BorderContainer","dojo/domReady!"], function (registry, parser, doh) {
             parser.parse();
             editor = registry.byNode(ace);
             doh.register("standard", [
