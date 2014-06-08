@@ -26,6 +26,8 @@ define([
             var converter = this.getConverter(attribute, ctx);
             if (converter) {
                 sync(modelHandle, "value", widget, "value", {converter: this.getConverter(attribute, ctx)});
+            } else {
+                sync(modelHandle, "value", widget, "value", {});
             }
 
             return widget;
