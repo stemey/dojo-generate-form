@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Editor Test</title>
+
+
+    <!-- required: a default dijit theme: -->
+    <link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css"/>
+
+    <script type="text/javascript" src="../dojoConfig.js" data-dojo-config="baseUrl:'../../../'"></script>
+    <script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+
+    <script type="text/javascript">
+
+        require([ "dojo/ready", "dojo/_base/query", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
+            "dojo/text!../meta/primitive_binary.json", "dojo/text!../entity/primitive_binary.json"//
+        ], function (ready, query, json, Editor, Stateful, doh, createLayoutEditorFactory, meta, entity) {
+
+            editor = new Editor({
+                "plainValue": JSON.parse(entity),
+                "meta": dojo.fromJson(meta), editorFactory: createLayoutEditorFactory()});
+            var container = dojo.byId("container");
+            editor.placeAt(container);
+            editor.startup();
+            doh.register("standard", [
+                {
+                    name: "initEmpty",
+                    runTest: function (t) {
+                        editor.set("plainValue",{binary:{url:"lotsdonuts.jpeg",type:"image", size:1111}});
+                        var img = query("img")[0];
+                        var baseUrl=window.location.href;
+                        var path = img.src.substring(baseUrl.length-"test_primitive_binary.html".length);
+                        t.assertEqual("images/lotsdonuts.jpeg", path);
+                    }
+                }
+            ]);
+            doh.run();
+        });
+    </script>
+</head>
+<body class="claro">
+<h1 class="testTitle">Editor Test</h1>
+
+
+<div id="container"></div>
+
+</body>
+</html>	

@@ -1,0 +1,11 @@
+{
+    "attributes": [
+        {
+            "type": "binary",
+            "code": "binary",
+            "fileServerUrl": "http://localhost:4444/upload",
+            "baseUrl": "images"
+
+        }
+    ]
+}

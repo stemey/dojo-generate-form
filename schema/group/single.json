@@ -1,0 +1,21 @@
+{
+	"code": "single",
+	"description": "A single attribute. description is displayed on top and there is no indentation. Use this to display a single attribute in a tab. It will resize the widget's height as well.",
+	"attributes": [
+		{
+			"$ref":"properties/code.json"
+		},
+		{
+			"$ref":"properties/label.json"
+		},
+		{
+			"$ref":"properties/description.json"
+		},
+		{
+			"$ref":"properties/labelAttribute.json"
+		},
+		{
+			"$ref": "properties/attribute.json"
+		}
+	]
+}
