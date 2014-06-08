@@ -162,6 +162,12 @@ define([  //
 			// returns: Object
 			return this.attributeFactoryFinder.getAttributeFactoryMap();
 		},
+        getAttributeFactoryById: function (id) {
+            // summary:
+            //		the AttributeFactory
+            // returns: id
+            return this.attributeFactoryFinder.getAttributeFactoryMap()[id];
+        },
 		getModelValidators: function (attribute) {
 			// summary:
 			//		attach validation to modelHandle.

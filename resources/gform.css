@@ -53,6 +53,10 @@ body,html {
 	margin: 0 5px;
 }
 
+.singleDecorator {
+    margin: 0.8em
+}
+
 .editor.row {
 	margin-bottom: 0.8em;
 	//margin-right: 0.5em;

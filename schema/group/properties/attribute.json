@@ -1,0 +1,10 @@
+{
+
+	"code": "attribute",
+	"description":"A single attribute.",
+	"type": "object",
+	"typeProperty": "editor",
+	"groups": {
+		"$ref": "../../attributes.json"
+	}
+}

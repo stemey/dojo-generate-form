@@ -48,7 +48,7 @@ define([ "dojo/_base/array", //
 			//		the attribute to find a factory for 
 			// returns: gform/api/AttributeFactory
 			//		attributeFactory for attribute
-			var factory = this.attributeFactoryMap[attribute.editor];
+			var factory = this.attributeFactoryMap[attribute.editor] || null;
 			if (factory && factory.handles(attribute)) {
 				return factory;
 			}

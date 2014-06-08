@@ -2,6 +2,9 @@
 	{
 		"$ref": "./group/listpane.json"
 	},
+    {
+        "$ref": "./group/single.json"
+    },
 	{
 		"$ref": "./group/titlepane.json"
 	},

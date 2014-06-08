@@ -24,6 +24,9 @@
         "$ref": "attributes/string.json"
     },
     {
+        "$ref": "attributes/binary.json"
+    },
+    {
         "$ref": "attributes/number.json"
     },
     {

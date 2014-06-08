@@ -87,6 +87,8 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
         collectAttributes: function (schema) {
             if (schema.attributes) {
                 return schema.attributes;
+            } else if (schema.attribute) {
+                return [schema.attribute];
             } else if (schema.group) {
                 return this.collectAttributes(schema.group);
             } else if (schema.groups) {

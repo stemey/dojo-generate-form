@@ -21,7 +21,7 @@ define([
             // summary:
             //		creates a widget for an embedded attribute.
             var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute);
-            if (factory != null) {
+            if (factory !== null) {
                 return factory.create(attribute, modelHandle, ctx);
             } else {
                 return null;
@@ -37,13 +37,6 @@ define([
             return new AttributeListWidget({meta: group});
         },
         createModel: function (schema, plainValue) {
-            var attributes = {};
-            if (schema.attributes) {
-                schema.attributes.forEach(function (attribute) {
-                    var attributeValue = plainValue ? plainValue[attribute.code] : null;
-                    attributes[attribute.code] = this.editorFactory.createAttributeModel(attribute, attributeValue);
-                }, this);
-            }
             var validators = this.editorFactory.getModelValidators(schema);
 			var model = new SingleObject({schema:schema, validators:validators, editorFactory:this.editorFactory});
 			model.update(plainValue);
@@ -63,17 +56,6 @@ define([
 				}
 			}, this);
 			return listWidget;
-
-            array.forEach(group.attributes, function (attribute) {
-                var attributeModel = modelHandle.getModel(attribute.code);
-                var attributeEditor = this.createAttribute(attribute, attributeModel, ctx);
-                var widget = this.editorFactory.createDecorator(attribute, attributeModel);
-                if (attributeEditor != null) {
-                    widget.addChild(attributeEditor);
-                    listWidget.addChild(widget);
-                }
-            }, this);
-            return listWidget;
 
         }
     });

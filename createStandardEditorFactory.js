@@ -24,6 +24,7 @@ define([
 	"./embedded/MultiEmbeddedAttributeFactory",
 	"./primitive/NumberAttributeFactory",
 	"./primitive/CurrencyAmountAttributeFactory",
+    "./primitive/binary/BinaryAttributeFactory",
     "./primitive/AnyTextAreaAttributeFactory",
 //"./primitive/MappedContentPaneFactory",
 	"./primitive/TextareaAttributeFactory",
@@ -39,7 +40,7 @@ define([
 	"./list_table/RepeatedSingleEmbeddedAttributeFactory"//
 
 ], function (EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
-			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory,BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, AnyTextAreaAttributeFactory, //MappedContentPaneFactory,
+			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory,BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, BinaryAttributeFactory, AnyTextAreaAttributeFactory, //MappedContentPaneFactory,
 			 TextareaAttributeFactory, RichtextAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
 			 ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
 // module:
@@ -79,6 +80,7 @@ define([
 		new NumberAttributeFactory({editorFactory: editorFactory}),
 		new SelectAttributeFactory({editorFactory: editorFactory}),
 		new BooleanAttributeFactory({editorFactory: editorFactory}),
+        new BinaryAttributeFactory({editorFactory: editorFactory}),
 		new StringAttributeFactory({editorFactory: editorFactory}),
 		new DateAttributeFactory({editorFactory: editorFactory}),
 		new TimeAttributeFactory({editorFactory: editorFactory}),

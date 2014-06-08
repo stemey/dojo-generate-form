@@ -4,12 +4,14 @@ define([
     "./createActionFactory",//
 	"./group/GroupFactory",//
 	"./group/ListPaneGroupFactory",//
+    "./group/SingleAttributeGroupFactory",//
 	"./group/TabGroupFactory",//
 	"./group/TitlePaneGroupFactory",//
 	"./group/ListGroupFactory",//
 	"./list_primitive/PrimitiveListAttributeFactory",//
 	"./list_primitive/RefListAttributeFactory",//
 	"./primitive/StringAttributeFactory",//
+    "./primitive/binary/BinaryAttributeFactory",
 	"./primitive/ReferenceAttributeFactory",//
     "./primitive/MultiReferenceAttributeFactory",//
 	"./primitive/BooleanAttributeFactory",//
@@ -38,8 +40,9 @@ define([
 	"./list_table/RepeatedEmbeddedAttributeFactory",//
 	"./list_table/RepeatedSingleEmbeddedAttributeFactory"
 
-], function (EditorFactory, AttributeFactoryFinder, createActionFactory, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
-			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, AnyTextAreaAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
+], function (EditorFactory, AttributeFactoryFinder, createActionFactory, GroupFactory, ListPaneGroupFactory, SingleAttributeGroupFactory,  TabGroupFactory, //
+			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, BinaryAttributeFactory,
+    ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, AnyTextAreaAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
 			 TextareaAttributeFactory,     RichtextAttributeFactory,
     SimpleTextareaAttributeFactory, //		AttributeListWidget,
 			 ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
@@ -55,6 +58,7 @@ define([
 	editorFactory.addGroupFactory("tab", new TabGroupFactory({editorFactory: editorFactory}));
 	editorFactory.addGroupFactory("titlepane", new TitlePaneGroupFactory({editorFactory: editorFactory}));
 	editorFactory.addGroupFactory("columnsgroup", new ColumnsGroupFactory({editorFactory: editorFactory}));
+    editorFactory.addGroupFactory("single", new SingleAttributeGroupFactory({editorFactory: editorFactory}));
 	editorFactory.set("defaultGroupFactory", new ListPaneGroupFactory({editorFactory: editorFactory}));
 
 	var attributeFactoryFinder = new AttributeFactoryFinder({
@@ -82,6 +86,7 @@ define([
 		new BooleanAttributeFactory({editorFactory: editorFactory}), //
         new AnyTextAreaAttributeFactory({editorFactory: editorFactory}), //
         new StringAttributeFactory({editorFactory: editorFactory}), //
+        new BinaryAttributeFactory({editorFactory: editorFactory}), //
 		new DateAttributeFactory({editorFactory: editorFactory}), //
 		new TimeAttributeFactory({editorFactory: editorFactory}) //
 		//	       				new MappedContentPaneFactory({editorFactory:editorFactory}) //
