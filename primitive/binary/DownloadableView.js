@@ -11,7 +11,7 @@ define([
         _TemplatedMixin, _WidgetsInTemplateMixin, ViewMixin ], {
         templateString: template,
         supports: function (file) {
-            return (/^application/).test(file.type);
+            return file && (/^application/).test(file.type);
         },
         display: function (file) {
             this.sizeNode.innerHTML = this.calculateSize(file);

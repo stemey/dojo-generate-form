@@ -1,44 +1,46 @@
 {
-	"code": "binary",
-	"editor": "tab",
-	"groups": [
+    "code": "binary",
+    "editor": "tab",
+    "groups": [
 
-		{
-			"$ref": "header.json"
-		},
-		{
-			"label": "values",
-			"attributes": [
-				{
-					"code": "mimetypes",
-					"type": "array",
-                    "element":{
-                        "type":"string"
+        {
+            "$ref": "header.json"
+        },
+        {
+            "label": "values",
+            "attributes": [
+                {
+                    "code": "mimetypes",
+                    "type": "array",
+                    "element": {
+                        "type": "string"
                     }
-				},
-				{
-					"code": "fileServerUrl",
-					"type": "string"
-				},
+                },
+                {
+                    "code": "fileServerUrl",
+                    "type": "string"
+                },
                 {
                     "code": "baseUrl",
                     "type": "string"
                 },
                 {
-					"code": "maxSize",
-					"type": "number"
-				},
+                    "code": "maxSize",
+                    "type": "number"
+                },
                 {
                     "code": "type",
                     "type": "string",
-                    "defaultValue":"binary"
+                    "values": ["binary"],
+                    "required": true,
+                    "visible":false
 
                 }
-			]
-		},
-		{
-			"$ref": "messages.json"
-		}
-	]
+            ]
+        },
+        {
+            "$ref": "messages.json"
+        }
+    ]
 }
 
