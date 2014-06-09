@@ -118,12 +118,14 @@ define([
             this.set("state", "loading");
         },
         onSchemaChange: function () {
-            //console.log("new schema "+this.schemaSelector.get("value"));
             var schemaUrl = this.schemaSelector.get("value");
             var entity = this.editor.getPlainValue();
-            entity[this.typeProperty] = this.schemaSelector.get("value");
-            var promise = this.getSchema(schemaUrl);
-            this._execute(promise, "LoadForEntityAndSchema", entity);
+            var oldSchemaUrl = entity? entity[this.typeProperty] : null;
+            if (schemaUrl !== oldSchemaUrl) {
+                entity[this.typeProperty] = this.schemaSelector.get("value");
+                var promise = this.getSchema(schemaUrl);
+                this._execute(promise, "LoadForEntityAndSchema", entity);
+            }
         },
         getSchema: function (url) {
             return this.editor.ctx.getSchema(url);
@@ -197,7 +199,7 @@ define([
         createNewMulti: function (schemas, typeProperty, createCallback) {
             // initialize selector
             this.typeProperty = typeProperty;
-            this._initializeSchemaSelector(schemas);
+            this._initializeSchemaSelector(schemas, true);
             this.oldType = this.getSelectedSchemaUrl();
             //call createNew with first schemaUrls
             this._createNewInternal(this.getSelectedSchemaUrl(), createCallback);
@@ -205,7 +207,7 @@ define([
         editMulti: function (schemas, typeProperty, id) {
             // initialize selector
             this.typeProperty = typeProperty;
-            this._initializeSchemaSelector(schemas);
+            this._initializeSchemaSelector(schemas, false);
             //load entity, then retrieve schema by typeProeprt
             var promise = this.store.get(id);
             this._execute(promise, "LoadMulti");
@@ -213,10 +215,7 @@ define([
         },
         _onLoadMulti: function (entity) {
             var type = entity[this.typeProperty];
-            this.oldType = type;
-            this.oldValue = entity;
             var schema = this.getSchema(type);
-            this.schemaSelector.set("value", type);
             this._execute(schema, "LoadMultiSchema", entity);
         },
         _onLoadMultiFailed: function (e) {
@@ -225,8 +224,13 @@ define([
         },
         _onLoadMultiSchema: function (entity, schema) {
             this.set("state", "edit");
+            var type = entity[this.typeProperty];
+            this.oldType = type;
+            this.oldValue = entity;
+            this.schemaSelector.set("value", type);
             this.onLoaded(schema, entity);
             this.editor.setMetaAndPlainValue(schema, entity);
+            this.emit("editor-changed");
         },
         _onLoadMultiSchemaFailed: function (e) {
             this.set("state", "edit");
@@ -235,7 +239,7 @@ define([
         _hideSchemaSelector: function () {
             this.schemaSelector.domNode.style.visibility = "hidden";
         },
-        _initializeSchemaSelector: function (schemas) {
+        _initializeSchemaSelector: function (schemas, initializeValue) {
             if (schemas.length > 0) {
                 this.schemaSelector.domNode.style.visibility = "visible";
                 var options = [];
@@ -253,7 +257,9 @@ define([
                 var store = new Memory({idProperty: "id"});
                 store.setData(options);
                 this.schemaSelector.set("store", store);
-                this.schemaSelector.set("value", options[0].id);
+                if (initializeValue) {
+                    this.schemaSelector.set("value", options[0].id);
+                }
             } else {
                 this.schemaSelector.domNode.style.visibility = "hidden";
             }
@@ -283,13 +289,13 @@ define([
         _createNew: function () {
             this.set("state", "create");
             var value = this.createPlainValue(this.editor.meta);
-            if (value!==null) {
+            if (value !== null) {
                 this.editor.set("plainValue", value);
             } else {
                 this.editor.initDefault();
             }
             this.onCreated(this.editor.meta, value);
-       },
+        },
         _createNewAndSchema: function (schemaUrl) {
             var schemaPromise = this.getSchema(schemaUrl);
             var me = this;
@@ -306,7 +312,7 @@ define([
         _onLoadForCreateAndSchema: function (schemaUrl, schema) {
             this.set("state", "create");
             var value = this.createPlainValue(schema);
-            if (value!==null) {
+            if (value !== null) {
                 if (this.typeProperty && !(this.typeProperty in value)) {
                     value[this.typeProperty] = schemaUrl;
                 }
@@ -315,7 +321,7 @@ define([
                 this.editor.setMetaAndDefault(schema);
                 if (this.typeProperty) {
                     this.editor.get("modelHandle").getModelByPath(this.typeProperty).update(schemaUrl);
-                    this.editor.get("modelHandle").set("oldValue",this.editor.getPlainValue());
+                    this.editor.get("modelHandle").set("oldValue", this.editor.getPlainValue());
                 }
             }
             this.onCreated(schema, this.editor.getPlainValue());
@@ -355,7 +361,7 @@ define([
         showProgressBar: function (message) {
             this.progressBar.show();
             // nested attach-points in dialg don't seem to work anymore
-            (this.progressMessage||this.progressBar.progressMessage).innerHTML = message;
+            (this.progressMessage || this.progressBar.progressMessage).innerHTML = message;
         },
         hideProgressBar: function () {
             this.progressBar.hide();

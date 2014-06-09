@@ -57,7 +57,7 @@
 				{
 					name : 'changeLabel',
 					runTest : function(t) {
-						registry.byId("gform_ValidationTextBox_2").set("value", "changedLabel");
+						registry.byId("gform_ValidationTextBox_0").set("value", "changedLabel");
 						registry.byId("dijit_form_Button_4").onClick();
 						doh.assertEqual("changedLabel",registry.byId("gform_FilteringSelect_0").item.label);
 					}
@@ -65,7 +65,7 @@
 				{
 					name : 'changeCloseCancel',
 					runTest : function(t) {
-						registry.byId("gform_ValidationTextBox_2").set("value", "changedLabelAgain");
+						registry.byId("gform_ValidationTextBox_1").set("value", "changedLabelAgain");
 						opener.dialog.hide();
 						doh.assertEqual(true, opener.confirmDialog.dialog.open);
 						opener.confirmDialog.dialogNoButton.onClick();
@@ -88,7 +88,7 @@
 					runTest : function(t) {
 						registry.byId("dijit_form_Button_3").onClick();
 						doh.assertEqual(true, opener.dialog.open);
-						registry.byId("gform_ValidationTextBox_4").set("value", "createdLabel");
+						registry.byId("gform_ValidationTextBox_2").set("value", "createdLabel");
 						registry.byId("dijit_form_Button_4").onClick();
 						doh.assertEqual("createdLabel",registry.byId("gform_FilteringSelect_0").item.label);
 					}

@@ -90,13 +90,6 @@ define([
                 this.set("oldValue", this.getPlainValue());
             }
         },
-//        _groupsSetter: function (groups) {
-//            groups.forEach(function (group) {
-//                group.parent = this;
-//            }, this);
-//            this._changeAttrValue("groups", groups);
-//
-//        },
         _currentTypeCodeSetter: function (typeCode) {
             if (this.currentTypeCode === typeCode) {
                 return;
