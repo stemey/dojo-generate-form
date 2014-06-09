@@ -4,6 +4,7 @@
 	"description":"A single attribute.",
 	"type": "object",
 	"typeProperty": "editor",
+    "required":true,
 	"groups": {
 		"$ref": "../../attributes.json"
 	}
