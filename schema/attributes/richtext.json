@@ -1,18 +1,151 @@
 {
-	"code": "richtext",
-    "description":"This is a a rich text attribute. It uses 'dijit.Editor'.",
-	"editor": "tab",
-	"groups": [
+    "code": "richtext",
+    "description": "This is a a rich text attribute. It uses 'dijit.Editor'.",
+    "editor": "tab",
+    "groups": [
         {
             "$ref": "header.json"
         },
-
         {
-			"$ref": "string-constraints.json"
-		},
-		{
-			"$ref": "messages.json"
-		}
-	]
+            "label": "plugins",
+            "attributes": [
+                {
+                    "code": "height",
+                    "type": "string",
+                    "description":"set height in px.",
+                    "defaultValue":"500px"
+                },
+                {
+                    "code": "plugins",
+                    "type": "array",
+                    "label": "plugins",
+                    "typeProperty": "name",
+                    "defaultValue": [
+                        {
+                            "name": "undo"
+                        },
+                        {
+                            "name": "redo"
+                        },
+                        {
+                            "name": "bold"
+                        },
+                        {
+                            "name": "italic"
+                        },
+                        {
+                            "name": "underline"
+                        },
+                        {
+                            "name": "strikethrough"
+                        },
+                        {
+                            "name": "subscript"
+                        },
+                        {
+                            "name": "superscript"
+                        },
+                        {
+                            "name": "justifyLeft"
+                        },
+                        {
+                            "name": "justifyCenter"
+                        },
+                        {
+                            "name": "justifyRight"
+                        },
+                        {
+                            "name": "createLink"
+                        },
+                        {
+                            "name": "dijit/_editor/plugins/FullScreen"
+                        },
+                        {
+                            "name":"dijit/_editor/plugins/AlwaysShowToolbar",
+                            "description":""
+                        }
+                    ],
+                    "groups": [
+                        {
+                            "code": "undo"
+                        },
+                        {
+                            "code": "redo"
+                        },
+                        {
+                            "code": "bold"
+                        },
+                        {
+                            "code": "italic"
+                        },
+                        {
+                            "code": "underline"
+                        },
+                        {
+                            "code": "strikethrough"
+                        },
+                        {
+                            "code": "subscript"
+                        },
+                        {
+                            "code": "superscript"
+                        },
+                        {
+                            "code": "justifyLeft"
+                        },
+                        {
+                            "code": "justifyCenter"
+                        },
+                        {
+                            "code": "justifyRight"
+                        },
+                        {
+                            "code": "createLink"
+                        },
+                        {
+                            "code": "dijit._editor.plugins.FullScreen"
+                        },
+                        {
+                            "code": "dojox.editor.plugins.ShowBlockNodes"
+                        },
+                        {
+                            "code": "dojox.editor.plugins.FindReplace"
+                        },
+                        {
+                            "code":"dijit/_editor/plugins/AlwaysShowToolbar"
+                        },
+                        {
+                            "code": "dojox.editor.plugins.LocalImage",
+                            "attributes": [
+                                {
+                                    "code": "uploadable",
+                                    "type": "boolean"
+                                },
+                                {
+                                    "code": "uploadUrl",
+                                    "type": "string"
+                                },
+                                {
+                                    "code": "baseImageUrl",
+                                    "type": "string"
+                                },
+                                {
+                                    "code": "fileMask",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+
+                    ]
+                }
+            ]
+        },
+        {
+            "$ref": "string-constraints.json"
+        },
+        {
+            "$ref": "messages.json"
+        }
+    ]
 }
 

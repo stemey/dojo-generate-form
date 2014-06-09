@@ -17,7 +17,14 @@ define([
 
 		create: function (attribute, modelHandle) {
 			var props = {};
-			mixinTextboxBindings(modelHandle, props);
+            if (attribute.plugins) {
+                props.plugins=attribute.plugins;
+            }
+            if (attribute.extraPlugins) {
+                props.plugins=attribute.extraPlugins;
+            }
+            props.height=attribute.height;
+            mixinTextboxBindings(modelHandle, props);
 			dijitHelper.copyDijitProperties(attribute, props);
 			var widget = new Editor(props);
 			aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
