@@ -171,7 +171,8 @@ define([
             this._createAttributes();
             Object.keys(this.get("attributes")).forEach(function (key) {
                 var model = this.get("attributes")[key];
-                if (!metaHelper.isComplex(model.schema) || model.isRequired()) {
+                // don't init Default on complex attributes unless it is an array with defaults or it is required.
+                if (metaHelper.isArray(model.schema) || !metaHelper.isComplex(model.schema) || model.isRequired()) {
                     model.initDefault();
                 }
 

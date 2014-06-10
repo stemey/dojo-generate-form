@@ -30,6 +30,7 @@ define([
                 return group.code === typeCode;
             }, this)[0];
             var group = this.editorFactory.createGroupModel(schema, {});
+            group.initDefault();
             this.typeCodeToGroup[typeCode] = group;
             group.parent = this;
             return group;
@@ -103,23 +104,23 @@ define([
             } else {
                 value = prevGroup.getPlainValue() || {};
             }
+            if (typeCode !== null) {
+                value[this.typeProperty] = typeCode;
+                //this.update(value);
+            }
             if (prevGroup && nextGroup) {
                 prevGroup.visit(
                     function (model, cascade, idx) {
-                        if (typeof idx !== "undefined") {
+                        if (typeof idx === "undefined") {
+                            cascade();
+                        } else {
                             var nextAttribute = nextGroup.getModelByPath(idx);
                             if (nextAttribute) {
-                                value[idx] = model.getPlainValue();
+                                nextAttribute.update(model.getPlainValue());
                             }
-                        } else {
-                            cascade();
                         }
                     }
                 );
-            }
-            if (typeCode !== null) {
-                value[this.typeProperty] = typeCode;
-                this.update(value);
             }
             this.computeProperties();
             if (this.parent) {

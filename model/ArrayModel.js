@@ -41,8 +41,13 @@ define([
         getChildIndex: function (child) {
             return this.value.indexOf(child);
         },
-        initDefault: function () {
-            // this.value is already initialized
+        initDefault: function (setOldValue) {
+            if (this.schema.defaultValue) {
+                this._execute(function () {
+                    this.resetMeta();
+                    this.update(this.schema.defaultValue, setOldValue);
+                });
+            }
         },
         update: function (/*Object*/plainValue, setOldValue) {
             // summary:
