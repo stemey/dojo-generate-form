@@ -12,8 +12,8 @@
                 {
                     "code": "height",
                     "type": "string",
-                    "description":"set height in px.",
-                    "defaultValue":"500px"
+                    "description": "set height in px.",
+                    "defaultValue": "500px"
                 },
                 {
                     "code": "plugins",
@@ -46,6 +46,24 @@
                             "name": "superscript"
                         },
                         {
+                            "name": "removeFormat"
+                        },
+                        {
+                            "name": "insertOrderedList"
+                        },
+                        {
+                            "name": "insertUnorderedList"
+                        },
+                        {
+                            "name": "insertHorizontalRule"
+                        },
+                        {
+                            "name": "indent"
+                        },
+                        {
+                            "name": "outdent"
+                        },
+                        {
                             "name": "justifyLeft"
                         },
                         {
@@ -61,8 +79,8 @@
                             "name": "dijit/_editor/plugins/FullScreen"
                         },
                         {
-                            "name":"dijit/_editor/plugins/AlwaysShowToolbar",
-                            "description":""
+                            "name": "dijit/_editor/plugins/AlwaysShowToolbar",
+                            "description": ""
                         }
                     ],
                     "groups": [
@@ -91,6 +109,24 @@
                             "code": "superscript"
                         },
                         {
+                            "code": "removeFormat"
+                        },
+                        {
+                            "code": "insertOrderedList"
+                        },
+                        {
+                            "code": "insertUnorderedList"
+                        },
+                        {
+                            "code": "insertHorizontalRule"
+                        },
+                        {
+                            "code": "indent"
+                        },
+                        {
+                            "code": "outdent"
+                        },
+                        {
                             "code": "justifyLeft"
                         },
                         {
@@ -103,19 +139,19 @@
                             "code": "createLink"
                         },
                         {
-                            "code": "dijit._editor.plugins.FullScreen"
+                            "code": "dijit/_editor/plugins/FullScreen"
                         },
                         {
-                            "code": "dojox.editor.plugins.ShowBlockNodes"
+                            "code": "dojox/editor/plugins/ShowBlockNodes"
                         },
                         {
-                            "code": "dojox.editor.plugins.FindReplace"
+                            "code": "dojox/editor/plugins/FindReplace"
                         },
                         {
-                            "code":"dijit/_editor/plugins/AlwaysShowToolbar"
+                            "code": "dijit/_editor/plugins/AlwaysShowToolbar"
                         },
                         {
-                            "code": "dojox.editor.plugins.LocalImage",
+                            "code": "dojox/editor/plugins/LocalImage",
                             "attributes": [
                                 {
                                     "code": "uploadable",
@@ -134,6 +170,29 @@
                                     "type": "string"
                                 }
                             ]
+                        },
+                        {
+                            "code": "dijit._editor.plugins.LinkDialog "
+                        }
+                        ,
+                        {
+                            "code": "dijit._editor.plugins.ToggleDir"
+                        }
+                        ,
+                        {
+                            "code": "dijit._editor.plugins.FontChoice"
+                        }
+                        ,
+                        {
+                            "code": "dijit._editor.plugins.TextColor"
+                        }
+                        ,
+                        {
+                            "code": "dijit._editor.plugins.ViewSource"
+                        }
+                        ,
+                        {
+                            "code": "dijit._editor.plugins.Print "
                         }
 
                     ]
