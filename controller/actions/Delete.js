@@ -15,7 +15,7 @@ define([
         //		Deletes the entity. Afterwards the editor is either closed or reused to create a new entity.
         messageModule: "actions.delete",
         execute: function () {
-            if (this.state != "create") {
+            if (this.state !== "create") {
                 var entity = this.ctrl.editor.get("plainValue");
                 this.ctrl.editor.reset();
                 this.ctrl._removeChangeIndicator();
@@ -27,6 +27,7 @@ define([
             }
         },
         _onRemoved: function () {
+            this.ctrl.hideProgressBar();
             if (this.ctrl.close) {
                 this.ctrl.close();
             } else {
@@ -37,6 +38,7 @@ define([
 
         },
         _onRemoveFailed: function () {
+            this.ctrl.hideProgressBar();
             this.ctrl.set("state", "edit");
             this.ctrl.alert(messages["actions.delete.serverError"]);
         }
