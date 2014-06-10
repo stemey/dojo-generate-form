@@ -120,7 +120,7 @@ define([
         onSchemaChange: function () {
             var schemaUrl = this.schemaSelector.get("value");
             var entity = this.editor.getPlainValue();
-            var oldSchemaUrl = entity? entity[this.typeProperty] : null;
+            var oldSchemaUrl = entity ? entity[this.typeProperty] : null;
             if (schemaUrl !== oldSchemaUrl) {
                 entity[this.typeProperty] = this.schemaSelector.get("value");
                 var promise = this.getSchema(schemaUrl);
@@ -159,7 +159,12 @@ define([
             this.set("state", "edit");
             var schema = results[1];
             var plainValue = results[0];
+            try {
             this.editor.setMetaAndPlainValue(schema, plainValue);
+            } catch (e) {
+                console.log(e);
+                this.alert("cannot load data into form");
+            }
             this.onLoaded(schema, plainValue);
             this.emit("editor-changed");
         },
@@ -168,11 +173,16 @@ define([
             alert("error while loading entity");
         },
         _onLoadForEntityAndSchema: function (entity, schema) {
-            if (this.oldValue) {
-                this.editor.setMetaAndPlainValue(schema, this.oldValue);
-                this.editor.modelHandle.update(entity, false);
-            } else {
-                this.editor.setMetaAndPlainValue(schema, entity);
+            try {
+                if (this.oldValue) {
+                    this.editor.setMetaAndPlainValue(schema, this.oldValue);
+                    this.editor.modelHandle.update(entity, false);
+                } else {
+                    this.editor.setMetaAndPlainValue(schema, entity);
+                }
+            } catch (e) {
+                console.log(e);
+                this.alert("cannot load data into form");
             }
             this.onLoaded(schema, entity);
             this.emit("editor-changed");
@@ -229,7 +239,12 @@ define([
             this.oldValue = entity;
             this.schemaSelector.set("value", type);
             this.onLoaded(schema, entity);
-            this.editor.setMetaAndPlainValue(schema, entity);
+            try {
+                this.editor.setMetaAndPlainValue(schema, entity);
+            } catch (e) {
+                console.log(e);
+                this.alert("unable to load data into form");
+            }
             this.emit("editor-changed");
         },
         _onLoadMultiSchemaFailed: function (e) {
