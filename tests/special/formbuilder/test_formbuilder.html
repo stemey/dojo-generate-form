@@ -22,7 +22,7 @@
             var editorFactory = createStandardEditorFactory();
             editorFactory.addAttributeFactory(new FormAttributeFactory({editorFactory: editorFactory}));
             editorFactory.addAttributeFactory(new AttributeRefFactory({editorFactory: editorFactory}));
-            editorFactory.addValidator("form",FormValidator);
+            editorFactory.addCtrValidator("form",FormValidator);
             editor = new Editor({
                 "plainValue": dojo.fromJson(entity),
                 "meta": dojo.fromJson(meta),

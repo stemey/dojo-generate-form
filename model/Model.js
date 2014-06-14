@@ -294,7 +294,11 @@ define([
                 }
                 if (this.validators) {
                     this.validators.forEach(function (validator) {
-                        errors = errors.concat(validator(this, force));
+                        if (typeof validator === "function") {
+                            errors = errors.concat(validator(this, force));
+                        } else {
+                            errors = errors.concat(validator.validate(this, force));
+                        }
                     }, this);
                 }
                 var changes = this._getErrorChanges(errors, this.oldErrors);

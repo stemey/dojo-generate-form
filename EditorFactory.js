@@ -32,7 +32,20 @@ define([  //
 			this.addConverterForType(urlToIdConverter, "ref");
             this.addConverterForType(urlToIdConverter, "multi-ref");
             this.addConverterForType(anyToTextConverter, "any");
-		},
+
+            this.factoryValidators={
+                uniqueProperties: UniqueProperties,
+                    pattern: Pattern,
+                minLength: MinLength,
+                maxLength: MaxLength,
+                min: Min,
+                max: Max,
+                minItems: MinItems,
+                maxItems: MaxItems,
+                additionalProperties:AdditionalProperties
+            }
+            this.constructorValidators={};
+        },
         createBadge: function(model) {
             return this.decoratorFactory.createBadge(model);
         },
@@ -153,7 +166,7 @@ define([  //
 		getAttributeFactories: function () {
 			// summary:
 			//		get all attributeFactories
-			// returns: Array
+			// returns:
 			return this.attributeFactoryFinder.getAttributeFactories();
 		},
 		getAttributeFactoryMap: function () {
@@ -179,14 +192,24 @@ define([  //
 			//		attach validation to modelHandle.
 			//
 			var validators = [];
-			for (var key in  this.arrayValidators) {
+			for (var key in  this.factoryValidators) {
 				if (attribute[key]) {
-					var validate = this.arrayValidators[key];
-					if (validate) {
-						validators.push(validate(attribute[key]));
+					var validator = this.factoryValidators[key];
+					if (validator) {
+                        validators.push(validator(attribute[key]));
+
 					}
 				}
 			}
+            for (var key in  this.constructorValidators) {
+                if (attribute[key]) {
+                    var validator = this.constructorValidators[key];
+                    if (validator) {
+                        validators.push(new validator(attribute[key]));
+
+                    }
+                }
+            }
 			return validators;
 		},
 		createValidateFunction: function (validator) {
@@ -204,17 +227,8 @@ define([  //
 			}
 			return validateFn;
 		},
-		arrayValidators: {
-			uniqueProperties: UniqueProperties,
-			pattern: Pattern,
-			minLength: MinLength,
-			maxLength: MaxLength,
-			min: Min,
-			max: Max,
-			minItems: MinItems,
-			maxItems: MaxItems,
-            additionalProperties:AdditionalProperties
-		},
+		factoryValidators: null,
+        constructorValidators: null,
 		// summary:
 		//		get a converter for the given attribute.
 		// attribute: object
@@ -254,7 +268,10 @@ define([  //
 			this.convertersById[id] = converter;
 		},
         addValidator: function(id, validator) {
-            this.arrayValidators[id]=validator;
+            this.factoryValidators[id]=validator;
+        },
+        addCtrValidator: function(id, validator) {
+            this.constructorValidators[id]=validator;
         }
 
 	});
