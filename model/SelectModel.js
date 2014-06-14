@@ -6,9 +6,9 @@ define([
     //		gform/model/MappedSelectModel
 
     return declare("gform.model.SelectModel", [PrimitiveModel], {
-        options: [],
+        options: null,
         isValid: function (value) {
-            return this.options.some(function (e) {
+            return !this.options || this.options.some(function (e) {
                 return e.value === value;
             });
 

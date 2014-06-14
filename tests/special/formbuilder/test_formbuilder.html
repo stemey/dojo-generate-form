@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Editor Test</title>
+
+
+    <!-- required: a default dijit theme: -->
+    <link id="themeStyles" rel="stylesheet" href="../../../../dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet" href="../../../resources/gform.css"/>
+
+    <script type="text/javascript" src="../../dojoConfig.js" data-dojo-config="baseUrl:'../../../../'"></script>
+    <script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+
+    <script type="text/javascript">
+
+        require([ "dojo/ready", "dojo/_base/query", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
+            "dojo/text!./formbuilder_meta.json", "dojo/text!./formbuilder_entity.json", "gform/special/formbuilder/FormAttributeFactory", "gform/special/formbuilder/AttributeRefFactory", "gform/special/formbuilder/FormValidator"
+        ], function (ready, query, json, Editor, Stateful, doh, createStandardEditorFactory, meta, entity, FormAttributeFactory, AttributeRefFactory, FormValidator) {
+
+            var editorFactory = createStandardEditorFactory();
+            editorFactory.addAttributeFactory(new FormAttributeFactory({editorFactory: editorFactory}));
+            editorFactory.addAttributeFactory(new AttributeRefFactory({editorFactory: editorFactory}));
+            editorFactory.addValidator("form",FormValidator);
+            editor = new Editor({
+                "plainValue": dojo.fromJson(entity),
+                "meta": dojo.fromJson(meta),
+                "editorFactory": editorFactory});
+            var container = dojo.byId("container");
+            editor.placeAt(container);
+            editor.startup();
+            var nameText = dijit.byId("gform_ValidationTextBox_0");
+            var nullCheckbox = dijit.byId("dijit_form_CheckBox_0");
+            doh.register("standard", [
+                {
+                    name: 'init',
+                    runTest: function (t) {
+                        t.assertEqual(2, editor.get("plainValue").group.attributes.length);
+                        t.assertEqual("name", editor.get("plainValue").group.attributes[0].code);
+                    }
+                }
+            ]);
+            doh.run();
+        });
+    </script>
+</head>
+<body class="claro">
+<h1 class="testTitle">Editor Test</h1>
+
+
+<div id="container"></div>
+
+</body>
+</html>

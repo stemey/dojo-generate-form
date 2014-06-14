@@ -162,6 +162,12 @@ define([  //
 			// returns: Object
 			return this.attributeFactoryFinder.getAttributeFactoryMap();
 		},
+        addAttributeFactory: function (af) {
+            // summary:
+            //		the AttributeFactory
+            // returns: id
+            return this.attributeFactoryFinder.addAttributeFactory(af);
+        },
         getAttributeFactoryById: function (id) {
             // summary:
             //		the AttributeFactory

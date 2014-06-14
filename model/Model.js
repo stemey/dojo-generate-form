@@ -21,6 +21,8 @@ define([
         //		the schema of this model
         schema: null,
 
+        transformer: null,
+
         // emptyCacade: function
         //		a no-op function for not cascading visits.
         emptyCascade: emptyCascade,
@@ -388,11 +390,19 @@ define([
                 this.set("message", "");
             }
         },
-        transformIn: function(value) {
-            return value;
+        transformIn: function (value) {
+            if (this.transformer) {
+                return this.transformer.in(value);
+            } else {
+                return value;
+            }
         },
-        transformOut: function(value) {
-            return value;
+        transformOut: function (value) {
+            if (this.transformer) {
+                return this.transformer.out(value);
+            } else {
+                return value;
+            }
         }
     });
 });

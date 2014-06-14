@@ -100,7 +100,7 @@ define([
             var i = 0;
             this.value.forEach(function (model) {
                 model.set("index", i++);
-                model.parent = this;
+                model.set("parent", this);
             }, this);
             this.onChange();
         },

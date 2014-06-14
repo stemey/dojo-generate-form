@@ -33,9 +33,9 @@ define([
                     }
                 }, this);
                 newValue[additionalAttribute] = additionalProperties;
-                return newValue;
+                return this.inherited(arguments,[newValue]);
             } else {
-                return value;
+                return this.inherited(arguments);
             }
         },
         transformOut: function (value) {
@@ -45,9 +45,9 @@ define([
                 lang.mixin(newValue, value);
                 lang.mixin(newValue, value[additionalAttribute]);
                 delete newValue[additionalAttribute];
-                return newValue;
+                return this.inherited(arguments,[newValue]);
             } else {
-                return value;
+                return this.inherited(arguments);
             }
         }
     });

@@ -23,9 +23,9 @@ define([
 			var model = new ArrayModel({schema: attribute, validators: validators});
 			var me = this;
 			var ef = function (value) {
-				var model = me.editorFactory.createAttributeModel(attribute.element);
-				model.update(value);
-				return model;
+				var elementModel = me.editorFactory.createAttributeModel(attribute.element);
+                elementModel.update(value);
+                return elementModel;
 			};
 			model.elementFactory = ef;
 			model.update(plainValue);
@@ -56,7 +56,9 @@ define([
 				var copy = function (original) {
 
 					var plainValue = original.getPlainValue();
-					var newMh = modelHandle.elementFactory(plainValue);
+					var newMh = modelHandle.elementFactory(null);
+                    newMh.set("parent",modelHandle);
+                    newMh.update(plainValue);
 					return newMh;
 				};
 				aspect.after(widgetList, "startup", function () {

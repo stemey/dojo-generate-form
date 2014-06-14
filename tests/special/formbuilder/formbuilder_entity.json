@@ -1,0 +1,14 @@
+{
+	"group": {
+        "attributes":[
+            {
+                "code":"name",
+                "type":"string"
+            },
+            {
+                "code":"text",
+                "type":"string"
+            }
+        ]
+	}
+}

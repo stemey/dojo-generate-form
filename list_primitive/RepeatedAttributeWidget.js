@@ -17,7 +17,7 @@ define([
 		ctx: null,
 		messages: messages,
 		getOldValueMessage: function (old) {
-			if (typeof old === "undefined" || old == null) {
+			if (typeof old === "undefined" || old === null) {
 				return messages.newElement;
 			} else {
 				return this.inherited(arguments);
@@ -29,15 +29,9 @@ define([
 			var panelModel = new Stateful();
 			panelModel.set("title", "");
 
-			var singleAttribute = {};
-			lang.mixin(singleAttribute, attribute);
-			singleAttribute.array = false;
-			delete singleAttribute.editor;
-			if (attribute.elementEditor) {
-				singleAttribute.editor = attribute.elementEditor;
-			}
 
-			var factory = this.editorFactory.attributeFactoryFinder.getFactory(singleAttribute);
+
+			var factory = this.editorFactory.attributeFactoryFinder.getFactory(attribute);
 			var editor = factory.create(attribute, this.modelHandle, this.ctx);
 
 			this.addChild(editor);
