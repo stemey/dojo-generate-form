@@ -280,8 +280,9 @@ define([
                     return;
                 }
             } else {
-                if (this.state === "Incomplete") {
+                if (this.state === "Incomplete" || this.state === "Error") {
                     this.state = "";
+                    this.message = "";
                 }
             }
             this._execute(function () {
@@ -388,10 +389,10 @@ define([
                 this.set("message", "");
             }
         },
-        transformIn: function(value) {
+        transformIn: function (value) {
             return value;
         },
-        transformOut: function(value) {
+        transformOut: function (value) {
             return value;
         }
     });

@@ -11,7 +11,8 @@ define({
         "invalidJson": "The json is not valid",
         "attributesNotAllowed": "the attribute {attributeList} are not allowed.",
         "additionalPropertiesMustBeAnObject":"the additional Properties must be an object."
-	})
+	}),
+	ar: true
 });
 
 

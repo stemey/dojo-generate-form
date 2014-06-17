@@ -1,0 +1,23 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"string",
+            "label":"Option",
+            "code":"option",
+            "values":["countries.json","states.json"]
+        },
+        {
+            "type":"text",
+            "label":"Select",
+            "code":"select",
+            "required":true,
+            "emptyValueLabel":"-- Please select --",
+            "store": {
+                "url" : "../../dijit/tests/_data/{option}",
+                "sort" : false
+            }
+        }
+    ]
+}
