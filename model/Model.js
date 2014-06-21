@@ -282,8 +282,9 @@ define([
                     return;
                 }
             } else {
-                if (this.state === "Incomplete") {
+                if (this.state === "Incomplete" || this.state === "Error") {
                     this.state = "";
+                    this.message = "";
                 }
             }
             this._execute(function () {

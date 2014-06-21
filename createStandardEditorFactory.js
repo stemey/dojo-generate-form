@@ -14,6 +14,7 @@ define([
     "./primitive/MultiReferenceAttributeFactory",
 	"./primitive/BooleanAttributeFactory",
 	"./primitive/SelectAttributeFactory",
+    "./primitive/SelectStoreAttributeFactory",
 	"./primitive/CheckedSelectAttributeFactory",
 	"./primitive/MappedCheckedMultiSelectAttributeFactory",
 	"./primitive/CheckedMultiSelectAttributeFactory",
@@ -40,7 +41,7 @@ define([
 	"./list_table/RepeatedSingleEmbeddedAttributeFactory"//
 
 ], function (EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
-			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory,BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, BinaryAttributeFactory, AnyTextAreaAttributeFactory, //MappedContentPaneFactory,
+			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory,BooleanAttributeFactory, SelectAttributeFactory,SelectStoreAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, BinaryAttributeFactory, AnyTextAreaAttributeFactory, //MappedContentPaneFactory,
 			 TextareaAttributeFactory, RichtextAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
 			 ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
 // module:
@@ -79,7 +80,8 @@ define([
         new MultiReferenceAttributeFactory({editorFactory: editorFactory}),
 		new NumberAttributeFactory({editorFactory: editorFactory}),
 		new SelectAttributeFactory({editorFactory: editorFactory}),
-		new BooleanAttributeFactory({editorFactory: editorFactory}),
+        new SelectStoreAttributeFactory({editorFactory: editorFactory}),
+        new BooleanAttributeFactory({editorFactory: editorFactory}),
         new BinaryAttributeFactory({editorFactory: editorFactory}),
 		new StringAttributeFactory({editorFactory: editorFactory}),
 		new DateAttributeFactory({editorFactory: editorFactory}),

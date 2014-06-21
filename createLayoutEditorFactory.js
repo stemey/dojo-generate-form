@@ -16,6 +16,7 @@ define([
     "./primitive/MultiReferenceAttributeFactory",//
 	"./primitive/BooleanAttributeFactory",//
 	"./primitive/SelectAttributeFactory",//
+    "./primitive/SelectStoreAttributeFactory",//
 	"./primitive/CheckedSelectAttributeFactory",//
 	"./primitive/MappedCheckedMultiSelectAttributeFactory",//
 	"./primitive/CheckedMultiSelectAttributeFactory",//
@@ -42,7 +43,7 @@ define([
 
 ], function (EditorFactory, AttributeFactoryFinder, createActionFactory, GroupFactory, ListPaneGroupFactory, SingleAttributeGroupFactory,  TabGroupFactory, //
 			 TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, BinaryAttributeFactory,
-    ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, AnyTextAreaAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
+    ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, SelectStoreAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, AnyTextAreaAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, //MappedContentPaneFactory,
 			 TextareaAttributeFactory,     RichtextAttributeFactory,
     SimpleTextareaAttributeFactory, //		AttributeListWidget,
 			 ColumnsGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
@@ -83,6 +84,7 @@ define([
         new MultiReferenceAttributeFactory({editorFactory: editorFactory}),//
 		new NumberAttributeFactory({editorFactory: editorFactory}),//
 		new SelectAttributeFactory({editorFactory: editorFactory}), //
+        new SelectStoreAttributeFactory({editorFactory: editorFactory}), //
 		new BooleanAttributeFactory({editorFactory: editorFactory}), //
         new AnyTextAreaAttributeFactory({editorFactory: editorFactory}), //
         new StringAttributeFactory({editorFactory: editorFactory}), //

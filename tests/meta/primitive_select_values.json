@@ -1,0 +1,19 @@
+{
+    "code":"example",
+    "label":"example",
+    "attributes":[
+        {
+            "type":"text",
+            "label":"Select",
+            "code":"select",
+            "required":true,
+            "array":false,
+            "emptyValueLabel":"-- Please select --",
+            "values":[
+                {'label': "London", 'value': "london"},
+                {'label': "Toronto", 'value': "toronto"},
+                {'label': "Sevastopol", 'value': "sevastopol"}
+            ]
+        }
+    ]
+}
