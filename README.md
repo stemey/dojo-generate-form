@@ -15,7 +15,7 @@ Features
 - ideal to map to class-based languages like Java, because it supports the concept of type properties.
 - relations between resources (entities) is supported. A related resource can be opened in a dialog, a tab container or another custom opener.
 - Customization of UI by assiging attributes to groups. These can be TabContainer, Accordions or multi-column container.
-- Customization of attribute editor. For example for a string property you can choose between: textField, textarea, WYSIWYG editor or [Ace sourcecode editor](http://ace.c9.io).
+- Customization of attribute editor. For example a string property can be displayed as a textField, textarea, WYSIWYG editor or [Ace sourcecode editor](http://ace.c9.io).
 
 Links
 ---------------
