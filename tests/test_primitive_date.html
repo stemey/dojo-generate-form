@@ -16,12 +16,13 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
-		"dojo/text!./meta/primitive_date.json", "dojo/text!./entity/primitive_date.json"//
-		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
-
+		"dojo/text!./meta/primitive_date.json", "dojo/text!./entity/primitive_date.json","./noAllowedValidator"
+		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, noAllowedValidator) {
+            var ef = createStandardEditorFactory();
+            ef.addValidator("noAllowed",noAllowedValidator);
 			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
-					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
+					"meta": dojo.fromJson(meta),editorFactory:ef});
 			var container = dojo.byId("container");
 			editor.placeAt(container);
 			editor.startup();
@@ -40,7 +41,14 @@
 						editor.set("plainValue",{validFrom:"2011-01-01"});
 						t.assertEqual(new Date(2011, 0, 1), intValidFrom.get("value"));
 					}
-				}
+				},
+                {
+                    name : 'addError',
+                    runTest : function(t) {
+                        editor.addError("validFrom","Error");
+                        t.assertEqual("Error", intValidFrom.get("state"));
+                    }
+                }
 			]);
 			doh.run();
 		});

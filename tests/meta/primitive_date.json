@@ -8,7 +8,7 @@
             "description":"Date with format dd.MM.yyyy",
             "code":"validFrom",
             "required":true,
-            "array":false,
+            "noAllowed":"2014-01-01",
             "constraints":{
             	"datePattern":"dd.MM.yyyy"
             }

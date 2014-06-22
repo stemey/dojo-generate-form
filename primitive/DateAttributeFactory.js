@@ -24,6 +24,8 @@ define([
 				"message": at(modelHandle, "message")
 			};
 
+
+
 			dijitHelper.copyDijitProperties(attribute, props);
 			dijitHelper.copyProperty("readOnly", attribute, props);
 
@@ -31,7 +33,11 @@ define([
 				props.constraints = attribute.constraints;
 			}
 
-			return new DateTextBox(props);
+			var widget= new DateTextBox(props);
+            widget.own(widget.on("blur", function(){
+                modelHandle.validate();
+            }));
+            return widget;
 		},
 		createValueConverter: function () {
 			return {
