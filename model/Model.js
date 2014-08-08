@@ -261,7 +261,18 @@ define([
             });
         },
         onTouch: function () {
-            this.set("touched", true);
+            this.set("to    uched", true);
+        },
+        watchPath: function (jsonPath, cb) {
+            var path = new Path(jsonPath);
+            var oldValue = path.get(modelHandle);
+            return aspect.after(this, "onChange", function () {
+                var value = path.get(modelHandle);
+                if (value !== oldValue) {
+                    cb(oldValue, value);
+                }
+                oldValue=value;
+            });
         },
         validate: function (force) {
             if (this.isEmpty()) {
