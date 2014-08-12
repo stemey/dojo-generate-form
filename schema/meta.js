@@ -38,21 +38,21 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
             // returns: boolean
             return typeCode == this.getType(attribute);
         },
-        getComplexType: function (attribute, modelHandle) {
-            if (!attribute.validTypes) {
+        getComplexType: function (attribute, model) {
+            if (!attribute.groups) {
                 throw new Error("not a complex attribute");
             }
-            if (attribute.validTypes.length == 1) {
+            if (attribute.groups.length == 1) {
                 return attribute.validTypes[0];
             }
-            if (modelHandle.value == null) {
-                if (attribute.validTypes.length == 1) {
-                    return attribute.validTypes[0];
+            if (model == null) {
+                if (attribute.groups.length == 1) {
+                    return attribute.groups[0];
                 } else {
                     return null;
                 }
             }
-            return this.getFromValidTypes(attribute.validTypes, modelHandle.value[attribute.type_property].value);
+            return this.getFromValidTypes(attribute.groups, model[attribute.typeProperty]);
         },
         isSingleComplex: function (meta) {
             return this.isSingle(meta) && this.isComplex(meta);
