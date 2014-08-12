@@ -25,16 +25,20 @@ define(
                 //      the attribute is like this:
                 //      | types:[{code:"typeA","typeB"], searchUrl
                 create: function (attribute, modelHandle, ctx) {
+                    var schemaUrlPrefix=attribute.schemaUrlPrefix;
+                    if (!schemaUrlPrefix) {
+                        schemaUrlPrefix=""
+                    }
                     var options = [];
                     var typeArray = [];
                     attribute.schemas.forEach(function (type) {
                         var option = {};
                         if (typeof type === "string") {
-                            option.code = type;
+                            option.code = schemaUrlPrefix+type;
                             option.label = type;
                             typeArray.push(type);
                         } else {
-                            option.code = type.code;
+                            option.code = schemaUrlPrefix+type.code;
                             option.label = type.label || type.code;
                             typeArray.push(type.code);
                         }
@@ -74,8 +78,12 @@ define(
 
                     var query = {};
 
-                    var schemas = options.map(function (option) {
-                        return option.code;
+                    var schemas = attribute.schemas.map(function (option) {
+                        if (typeof option === "string") {
+                            return option;
+                        }else {
+                            return option.code;
+                        }
                     });
                     var typeProperty = attribute.typeProperty;
                     props.query={};
