@@ -29,6 +29,9 @@ define([
             var schema = this.schema.groups.filter(function (group) {
                 return group.code === typeCode;
             }, this)[0];
+            if (schema==null) {
+                return null;
+            }
             var group = this.editorFactory.createGroupModel(schema, {});
             group.initDefault();
             this.typeCodeToGroup[typeCode] = group;
@@ -81,7 +84,9 @@ define([
                 }
             } else {
                 var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.getTypeCode(this.schema.groups[0]);
-                this._changeAttrValue("currentTypeCode", typeCode);
+                if (this.getGroup(typeCode)!=null) {
+                    this._changeAttrValue("currentTypeCode", typeCode);
+                }
             }
             if (this.currentTypeCode!==null) {
                 var currentGroup = this.getGroup(this.currentTypeCode);
