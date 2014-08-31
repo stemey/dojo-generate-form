@@ -46,7 +46,7 @@
 					name : 'init',
 					runTest : function(t) {
 						t.assertEqual(model.state[0].$ref, editor.get("plainValue").state[0].$ref);
-						t.assertEqual(restHelper.decompose(model.state[0].$ref).id, select.get("value"));
+						t.assertEqual(model.state[0].$ref, "/gform/tests/entity/state/"+select.get("value"));
 					}
 				},
 				{

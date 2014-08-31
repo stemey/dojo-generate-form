@@ -55,7 +55,8 @@
 						var param = editor.ctx.opener.openSingleParams;
 						t.assertEqual(editor.editorFactory, param.editorFactory);
 						t.assertEqual("/gform/tests/meta/refs.json", param.schemaUrl);
-						t.assertEqual("/gform/tests/entity/state/2", param.url);
+						t.assertEqual("/gform/tests/entity/state", param.url);
+                        t.assertEqual("2", param.id);
 					}
 				},
 				{
@@ -68,14 +69,14 @@
 						t.assertEqual("/gform/tests/entity/state", param.url);
 						var id=store.add({label:"created", size:34});
 						param.callback(id);
-						t.assertEqual(id, restHelper.decompose(editor.getPlainValue().state.$ref).id);
+						t.assertEqual("/gform/tests/entity/state/"+id, editor.getPlainValue().state.$ref);
 					
 					}
 				},
 				{
 					name : 'update',
 					runTest : function(t) {
-						var id = restHelper.decompose(editor.getPlainValue().state.$ref).id;
+						var id = editor.getPlainValue().state.$ref.substring("/gform/tests/entity/state/".length);
 						var entity = store.get(id);
 						var updated = {};
 						lang.mixin(updated, entity);

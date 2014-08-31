@@ -85,10 +85,11 @@ define([ "dojo/_base/lang",
 			//  description:
 			//		open the selected reference in a separate editor.
 			var ref = this.filteringSelect.get("value");
-			var url = (this.meta.url || "") + "/" + ref;
+			//var url = (this.meta.url || "") + "/" + ref;
             var params = {};
             lang.mixin(params, this.openerParams);
-            params.url=url;
+            params.url=this.meta.url;
+            params.id=ref;
 
 			this.opener.openSingle(params);
 		},

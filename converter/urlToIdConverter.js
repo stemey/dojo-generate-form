@@ -22,7 +22,13 @@ define([
 			if (value == null) {
 				return "";
 			} else {
-				return restHelper.decompose(value.$ref).id;
+                var baseUrl;
+                if (this.ctx != null) {
+                     baseUrl = this.ctx.getUrl(this.attribute.url);
+                } else {
+                     baseUrl = this.attribute.url;
+                }
+                return value.$ref.substr(baseUrl.length+1);
 			}
 		},
 		parse: function (value) {

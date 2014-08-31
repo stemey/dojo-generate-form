@@ -1,4 +1,4 @@
-define([ ], function () {
+define([ "dojo/_base/lang"], function (lang) {
 // module:
 //		gform/primitive/makeConverterDijitAware
 
@@ -17,7 +17,7 @@ define([ ], function () {
 				return converter.parse(value);
 			}
 		};
-		wrapper.format = converter.format;
+		wrapper.format = lang.hitch(converter,converter.format);
 		wrapper.parse = parse;
 		return wrapper;
 	};

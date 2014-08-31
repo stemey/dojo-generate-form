@@ -35,6 +35,10 @@ define([
 		getStore: function (id, props) {
 			return this.storeRegistry.get(id, props);
 		},
+        getBaseUrl: function(url) {
+            return this.storeRegistry.getBaseUrl(url);
+
+        },
 		getUrl: function (id) {
 			var actualUrl = this.getStore(id).target;
 			if (actualUrl) {

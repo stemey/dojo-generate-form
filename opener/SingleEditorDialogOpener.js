@@ -69,9 +69,8 @@ define([
 			//		must provide the schemaUrl to load the gform schema from. 
 			//		Must also provide the url to the resource edited. 
 
-			var restUrl = restHelper.decompose(options.url);
-			var url = restUrl.url;
-			var id = restUrl.id;
+			var url = options.url;
+			var id = options.id;
 
 			var store = this.ctx.getStore(url, {target: url, idProperty: options.idProperty || "id"});
 			this.crudController.setEditorFactory(this.editorFactory || options.editorFactory || createLayoutEditorFactory());

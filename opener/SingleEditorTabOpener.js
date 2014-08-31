@@ -91,9 +91,8 @@ define([
 				this.tabContainer.selectChild(this.url2widget[options.url]);
 			} else {
 				var props = {};
-				var restUrl = restHelper.decompose(options.url);
-				var url = restUrl.url;
-				var id = restUrl.id;
+				var url = options.url;
+				var id = options.id;
 				var store = this.ctx.getStore(url, {target: url, idProperty: options.idProperty || "id"});
 				props.id = wid;
 				props.closable = true;
