@@ -83,12 +83,15 @@ define([
 			//  options:
 			//		must provide the schemaUrl to load the gform schema from. 
 			//		Must also provide the url to the resource edited. Options may provide EditorFactory.
-			var wid = "tab_editor_" + options.url;
+			var wid = "tab_editor_" + options.url+":"+options.id;
 			var controller = registry.byId(wid);
+
+            var singleUrl = restHelper.compose(options.url, options.id);
+
 			if (controller) {
 				this.tabContainer.selectChild(controller);
-			} else if (this.url2widget[options.url]) {
-				this.tabContainer.selectChild(this.url2widget[options.url]);
+			} else if (this.url2widget[singleUrl]) {
+				this.tabContainer.selectChild(this.url2widget[singleUrl]);
 			} else {
 				var props = {};
 				var url = options.url;
