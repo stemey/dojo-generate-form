@@ -26,6 +26,7 @@ define([
 		//		This crudController should be usd as a direct child of a TabContainer. The title of the tab is the label of the entity.
 		baseClass: "gformEditorController",
 		templateString: template,
+        showTitle:true,
         // borderContainer: dijit/layout/BorderContainer
 		//		direct child of this widget that supports layouting
 		borderContainer: null,
