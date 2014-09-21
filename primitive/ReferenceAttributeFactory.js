@@ -24,10 +24,10 @@ define(
 						&& !attribute.array;
 				},
 				create: function (attribute, modelHandle, ctx) {
-					var targetCreatable = true;
-					if (typeof attribute.targetCreatable !== "undefined") {
-						targetCreatable = attribute.targetCreatable;
-					}
+                    var targetCreatable = attribute.disabled!==true;
+                    if (typeof attribute.targetCreatable !== "undefined") {
+                        targetCreatable = attribute.targetCreatable;
+                    }
 
 					var refConverter = this.editorFactory.getConverter(attribute, ctx);
 
