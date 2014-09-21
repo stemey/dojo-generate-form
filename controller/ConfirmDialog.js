@@ -4,7 +4,9 @@ define([
 	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
-	"dojo/text!./confirmDialog.html"
+	"dojo/text!./confirmDialog.html",
+    "dijit/form/Button",
+    "dijit/Dialog"
 ], function (declare, lang, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template) {
 // module:
 //		gform/controller/ConfirmDialog
