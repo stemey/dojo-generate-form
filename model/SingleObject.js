@@ -182,6 +182,12 @@ define([
             }
             this.resetMeta();
             this.computeProperties();
+        },
+        init: function () {
+            Object.keys(this.get("attributes")).forEach(function (key) {
+                var model = this.get("attributes")[key];
+                model.init();
+            }, this);
         }
     });
 });

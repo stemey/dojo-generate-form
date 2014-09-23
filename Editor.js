@@ -103,6 +103,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
                 }
                 if (!this.modelHandle) {
                     this.modelHandle = this.editorFactory.createGroupModel(this.meta, value);
+                    this.modelHandle.init();
                     aspect.after(this.modelHandle, "onChange", lang.hitch(this, "onChange"));
                 } else {
                     this.modelHandle.update(value);

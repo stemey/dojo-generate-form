@@ -109,6 +109,11 @@ define([
                 plainValue = this.transformOut(plainValue);
                 return plainValue;
             }
+        },
+        init: function () {
+            this.groups.forEach(function (group) {
+                group.init();
+            });
         }
     });
 })

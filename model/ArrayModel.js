@@ -12,6 +12,7 @@ define([
         //		provides access to sibling attributes of modelHandle.
         value: null,
         elementFactory: null,
+        initialized:false,
         constructor: function () {
             this.value = new StatefulArray([]);
             this._setupIndexes();
@@ -20,11 +21,13 @@ define([
             var model = this.elementFactory(value);
             model.initDefault();
             this.value.push(model);
+            if (this.initialized) model.init();
             return model;
         },
         push: function (value) {
             var model = this.elementFactory(value);
             this.value.push(model);
+            if (this.initialized) model.init();
             return model;
         },
         length: function () {
@@ -75,6 +78,7 @@ define([
                     if (!model) {
                         model = this.elementFactory(element);
                         this.value.push(model);
+                        if (this.initialized) model.init();
                     } else {
                         model.resetMeta();
                         model.update(element, setOldValue);
@@ -134,7 +138,13 @@ define([
             } else {
                 return model.getModelByPath(path);
             }
+        },
+        init: function () {
+            this.initialized=true;
+            this.iterateChildren(function (child) {
+                child.set("parent", this);
+                child.init();
+            });
         }
     });
-})
-;
+});

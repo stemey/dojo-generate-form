@@ -5,7 +5,7 @@ define([
     // module:
     //		gform/model/MultiObject
 
-    var MergedMultiObject = declare("gform.model.MergedMultiObject",[Model], {
+    var MergedMultiObject = declare("gform.model.MergedMultiObject", [Model], {
         // summary:
         //		Provides access to sibling attributes of modelHandle.
 
@@ -41,8 +41,8 @@ define([
                 this.set("oldValue", this.getPlainValue());
             }
         },
-        initDefault: function(setOldValue) {
-             Object.keys(this.attributes).forEach(function (key) {
+        initDefault: function (setOldValue) {
+            Object.keys(this.attributes).forEach(function (key) {
                 this.attributes[key].initDefault();
             }, this);
             if (setOldValue !== false) {
@@ -118,23 +118,27 @@ define([
                 plainValue[this.typeProperty] = this.currentTypeCode;
                 return plainValue;
             }
+        },
+        init: function () {
+            Object.keys(this.attributes).forEach(function (key) {
+                var model = this.attributes[key];
+                model.init();
+            }, this);
         }
     });
 
 
-
-
     MergedMultiObject.create = function (schema, factory) {
         var typeToAttributes = {};
-        var attributes={};
+        var attributes = {};
         schema.groups.forEach(function (group) {
             var modelAttributes = {};
             group.attributes.forEach(function (attribute) {
-                var model=attributes[attribute.code];
+                var model = attributes[attribute.code];
                 if (!model) {
                     model = factory(attribute);
                     model.code = attribute.code;
-                    attributes[model.code]=model;
+                    attributes[model.code] = model;
                 }
                 modelAttributes[model.code] = model;
             });

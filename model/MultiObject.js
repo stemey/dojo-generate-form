@@ -35,7 +35,8 @@ define([
             var group = this.editorFactory.createGroupModel(schema, {});
             group.initDefault();
             this.typeCodeToGroup[typeCode] = group;
-            group.parent = this;
+            group.set("parent", this);
+            group.init();
             return group;
         },
         getChildPath: function (child) {
@@ -188,6 +189,12 @@ define([
             if (model) {
                 model._removeError(message);
             }
+        },
+        init: function () {
+            Object.keys(this.typeCodeToGroup).forEach(function (key) {
+                var model = this.typeCodeToGroup[key];
+                model.init();
+            }, this);
         }
     });
 

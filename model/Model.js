@@ -261,7 +261,7 @@ define([
             });
         },
         onTouch: function () {
-            this.set("to    uched", true);
+            this.set("touched", true);
         },
         watchPath: function (jsonPath, cb) {
             var path = new Path(jsonPath);
@@ -419,6 +419,8 @@ define([
             } else {
                 return value;
             }
+        },
+        init: function() {
         }
     });
 });

@@ -15,7 +15,7 @@ define([
 
 		create: function (attribute, modelHandle) {
 			var options = this._createMappedOptions(modelHandle, attribute);
-
+            modelHandle.options=options;
 			var select = new Select({
 				value: at(modelHandle, "value"),
 				options: modelHandle.options,

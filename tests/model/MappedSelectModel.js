@@ -31,6 +31,7 @@ define([
         ]
     };
     var o = new SingleObject({schema: schema, editorFactory:ef});
+    o.init();
 
     doh.register("MappedSelectModel", [
         function testDefault() {

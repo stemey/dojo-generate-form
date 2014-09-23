@@ -13,7 +13,8 @@ define([
             this.transformer = new GroupTransformer();
         },
         startListening: function (parent, cb) {
-            while (parent && !parent.form) {
+            // make sure it is not the window
+            while (parent && !parent.form && !parent.location) {
                 parent = parent.parent;
             }
             this.attributesModel = parent.getModelByPath("attributes");

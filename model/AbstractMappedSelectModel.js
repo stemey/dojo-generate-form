@@ -9,8 +9,10 @@ define([
     return declare("gform.model.MappedSelectModel", [SelectModel], {
         _parentSetter: function (parent) {
             this._changeAttrValue("parent", parent);
+        },
+        init: function() {
             var cb = lang.hitch(this, "_onMappedAttributeChanged");
-            this.startListening(parent, cb);
+            this.startListening(this.parent, cb);
         },
         _initOptions: function () {
             var newValues = this.getMappedValues();
