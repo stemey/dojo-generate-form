@@ -55,11 +55,8 @@ define([
 			if (attribute.reorderable !== false) {
 				var copy = function (original) {
 
-					var plainValue = original.getPlainValue();
 					var newMh = modelHandle.elementFactory(null);
-                    newMh.set("parent",modelHandle);
-                    newMh.update(plainValue);
-					return newMh;
+                    return newMh;
 				};
 				aspect.after(widgetList, "startup", function () {
 					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});

@@ -61,11 +61,11 @@ define([
 			var model = new ArrayModel({schema: meta, validators: validators});
 			var me = this;
 			var ef = function (value) {
-				var model = me.editorFactory.createGroupModel(meta.group);
-				if (value) {
-					model.update(value);
-				}
-				return model;
+				var newElement = me.editorFactory.createGroupModel(meta.group);
+                if (value) {
+                    newElement.update(value);
+                }
+				return newElement;
 			};
 			model.elementFactory = ef;
 			model.update(plainValue);
