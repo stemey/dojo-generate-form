@@ -35,7 +35,9 @@ define(['dojo/_base/declare',
             }
         },
         visitIn: function (attributes, value) {
-            if ("attribute" in value) {
+            if (!value) {
+               // console.log("nix");
+            }else if ("attribute" in value) {
                 attributes.push(value.attribute);
                 value.attribute = value.attribute.code;
             } else if ("attributes" in value) {

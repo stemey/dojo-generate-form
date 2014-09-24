@@ -12,7 +12,6 @@ define([
         //		provides access to sibling attributes of modelHandle.
         value: null,
         elementFactory: null,
-        initialized:false,
         constructor: function () {
             this.value = new StatefulArray([]);
             this._setupIndexes();
@@ -140,7 +139,7 @@ define([
             }
         },
         init: function () {
-            this.initialized=true;
+            this.inherited(arguments);
             this.iterateChildren(function (child) {
                 child.set("parent", this);
                 child.init();

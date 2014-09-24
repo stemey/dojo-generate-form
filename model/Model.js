@@ -17,6 +17,11 @@ define([
         // summary:
         //		Provides access to sibling attributes of modelHandle.
 
+        /**
+         * init alredy called?
+         */
+        initialized:false,
+
         // schema:,
         //		the schema of this model
         schema: null,
@@ -421,6 +426,7 @@ define([
             }
         },
         init: function() {
+            this.initialized=true;
         }
     });
 });

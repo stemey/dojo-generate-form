@@ -36,7 +36,7 @@ define([
             group.initDefault();
             this.typeCodeToGroup[typeCode] = group;
             group.set("parent", this);
-            group.init();
+            if (this.initialized) group.init();
             return group;
         },
         getChildPath: function (child) {
@@ -191,6 +191,7 @@ define([
             }
         },
         init: function () {
+            this.inherited(arguments);
             Object.keys(this.typeCodeToGroup).forEach(function (key) {
                 var model = this.typeCodeToGroup[key];
                 model.init();
