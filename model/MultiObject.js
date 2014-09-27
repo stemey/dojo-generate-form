@@ -29,14 +29,14 @@ define([
             var schema = this.schema.groups.filter(function (group) {
                 return group.code === typeCode;
             }, this)[0];
-            if (schema==null) {
+            if (schema===null) {
                 return null;
             }
             var group = this.editorFactory.createGroupModel(schema, {});
-            group.initDefault();
             this.typeCodeToGroup[typeCode] = group;
             group.set("parent", this);
             if (this.initialized) group.init();
+            group.initDefault();
             return group;
         },
         getChildPath: function (child) {
