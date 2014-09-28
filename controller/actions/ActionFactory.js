@@ -4,8 +4,12 @@ define([
 
 
     return declare([], {
-        defaultActions: [],
-        typeActions: {},
+        defaultActions: null,
+        typeActions: null,
+        constructor: function () {
+            this.defaultActions = [];
+            this.typeActions = {};
+        },
         getActions: function (schema) {
             // summary:
             //      create actions
@@ -19,7 +23,7 @@ define([
             }
             return actions;
         },
-        add: function(Action) {
+        add: function (Action) {
             this.defaultActions.push(Action);
         }
 
