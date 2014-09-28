@@ -64,7 +64,7 @@ define([
 			this.tabContainer.addChild(controller);
 			this.tabContainer.selectChild(controller);
 			var me = this;
-			aspect.after(controller, "onCreated", function (result, args) {
+			aspect.after(controller, "onCreate", function (result, args) {
 				var singleUrl = restHelper.compose(url, args[0]);
 				me.url2widget[singleUrl] = controller;
                 aspect.after(controller, "destroy", function(){
