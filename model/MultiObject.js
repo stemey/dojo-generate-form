@@ -35,8 +35,10 @@ define([
             var group = this.editorFactory.createGroupModel(schema, {});
             this.typeCodeToGroup[typeCode] = group;
             group.set("parent", this);
-            if (this.initialized) group.init();
-            group.initDefault();
+            if (this.initialized) {
+                group.init();
+                group.initDefault();
+            }
             return group;
         },
         getChildPath: function (child) {
