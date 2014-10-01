@@ -1,11 +1,11 @@
 define([
+    './SinglePane',
     "dojo/_base/declare",
     "./SingleDecoratorWidget",
-    "dijit/layout/BorderContainer",
     "dojo/_base/lang",
     "../model/SingleObject"
 
-], function (declare, SingleDecoratorWidget, BorderContainer, lang, SingleObject) {
+], function (SinglePane, declare, SingleDecoratorWidget, lang, SingleObject) {
 
     return declare("gform.group.SingleAttributeGroupFactory", [], {
         id: "single",
@@ -23,18 +23,18 @@ define([
             return model;
         },
         create: function (group, modelHandle, ctx) {
-                var attribute = group.attribute;
-                var attributeModel = modelHandle.getModel(attribute.code);
-                var attributeFactory = this.editorFactory.getAttributeFactory(attribute, attributeModel, ctx);
-                var attributeEditor = attributeFactory.create(attribute, attributeModel, ctx);
-                var widget = new BorderContainer({class: "singleDecorator", gutters: false});
-                var decorator = new SingleDecoratorWidget({region: 'top', meta: attribute, modelHandle: modelHandle});
-                widget.addChild(decorator);
-                if (attributeEditor !== null) {
-                    attributeEditor.region = "center";
-                    widget.addChild(attributeEditor);
-                }
-                return widget;
+            var attribute = group.attribute;
+            var attributeModel = modelHandle.getModel(attribute.code);
+            var attributeFactory = this.editorFactory.getAttributeFactory(attribute, attributeModel, ctx);
+            var attributeEditor = attributeFactory.create(attribute, attributeModel, ctx);
+            var widget = new SinglePane({class: "singleDecorator", gutters: false});
+            var decorator = new SingleDecoratorWidget({region: 'top', meta: attribute, modelHandle: modelHandle});
+            //widget.addChild(decorator);
+            if (attributeEditor !== null) {
+                attributeEditor.region = "center";
+                widget.addChild(attributeEditor);
+            }
+            return widget;
 
         }
     });
