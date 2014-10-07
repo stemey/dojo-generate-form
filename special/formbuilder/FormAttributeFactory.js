@@ -16,10 +16,14 @@ define(
                     }
                     var validators = this.editorFactory.getModelValidators(schema);
                     var model = this.editorFactory.createGroupModel(schema.group, plainValue);
-                    model.form=true;
+                    // marker to find the parent form
+                    model.form = true;
                     model.transformer = new GroupTransformer();
-                    model.validators=validators;
+                    model.validators = validators;
                     model.required = schema.required === true;
+                    if ("visitThis" in model) {
+                        model.visitThis = true;
+                    }
                     return model;
                 }
             });

@@ -28,6 +28,9 @@ define([
 
         },
         validate: function (modelHandle, force) {
+            if (!force) {
+                return [];
+            }
             var attributesModel = modelHandle.getModelByPath("attributes");
             var group = modelHandle.getModelByPath("group").getPlainValue();
             if (group === null) {

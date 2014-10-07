@@ -5,7 +5,7 @@ define(['dojo/_base/declare',
         in: function (value) {
             var attributes = [];
             this.visitIn(attributes, value);
-            return{group: value, attributes: attributes};
+            return {group: value, attributes: attributes};
         },
         out: function (value) {
             var form = value.group;
@@ -23,9 +23,11 @@ define(['dojo/_base/declare',
             } else if ("attributes" in group) {
                 var codes = group.attributes;
                 var newAttributes = codes.map(function (code) {
-                    return attributes.filter(function(a) {return a.code===code;})[0];
+                    return attributes.filter(function (a) {
+                        return a.code === code;
+                    })[0];
                 });
-                group.attributes=newAttributes;
+                group.attributes = newAttributes;
             } else if ("group" in group) {
                 this.visitOut(attributes, group.group);
             } else if ("groups" in group) {
@@ -36,8 +38,8 @@ define(['dojo/_base/declare',
         },
         visitIn: function (attributes, value) {
             if (!value) {
-               // console.log("nix");
-            }else if ("attribute" in value) {
+                // console.log("nix");
+            } else if ("attribute" in value) {
                 attributes.push(value.attribute);
                 value.attribute = value.attribute.code;
             } else if ("attributes" in value) {
