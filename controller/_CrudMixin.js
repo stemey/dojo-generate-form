@@ -275,6 +275,9 @@ define([
                 if (initializeValue) {
                     this.schemaSelector.set("value", options[0].id);
                 }
+                if (schemas.length===1) {
+                    this._hideSchemaSelector();
+                }
             } else {
                 this.schemaSelector.domNode.style.visibility = "hidden";
             }
