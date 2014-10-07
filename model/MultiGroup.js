@@ -7,12 +7,14 @@ define([
     // module:
     //		gform/model/SingleObject
 
-    return declare("gform.model.MultiGroup",[Model, AdditionalPropertiesMixin], {
+    return declare("gform.model.MultiGroup", [Model, AdditionalPropertiesMixin], {
         // summary:
         //		Provides access to sibling attributes of modelHandle.
         groups: null,
         isNull: true,
         required: false,
+        // group usually does not represent a model and thus is not visited. set this to true to change that beahvior
+        visitThis:false,
         getTypeCode: function () {
             return null;
         },
@@ -31,7 +33,7 @@ define([
             }, this);
             this._changeAttrValue("groups", groups);
         },
-        initDefault: function() {
+        initDefault: function () {
             this.groups.forEach(function (group) {
                 group.initDefault();
             }, this);
@@ -41,7 +43,7 @@ define([
             //		update the attribute with the given plainValue. Attribute has a single valid type.
             // plainValue:
             //		the new value of the attribute
-            plainValue=this.transformIn(plainValue);
+            plainValue = this.transformIn(plainValue);
             if (this.required && plainValue === null) {
                 plainValue = {};
             }
@@ -66,9 +68,17 @@ define([
             }
         },
         visit: function (cb, parentIdx) {
-            for (var index = 0; index < this.groups.length; index++) {
-                this.getModelByIndex(index).visit(cb, parentIdx);
-
+            if (this.visitThis) {
+                var me = this;
+                cb(this, function () {
+                    for (var index = 0; index < me.groups.length; index++) {
+                        me.getModelByIndex(index).visit(cb, parentIdx);
+                    }
+                }, parentIdx);
+            } else {
+                for (var index = 0; index < this.groups.length; index++) {
+                    this.getModelByIndex(index).visit(cb, parentIdx);
+                }
             }
         },
         iterateChildren: function (cb) {
@@ -116,5 +126,4 @@ define([
             });
         }
     });
-})
-;
+});
