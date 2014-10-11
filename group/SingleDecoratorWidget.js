@@ -1,9 +1,10 @@
-define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/dom-geometry", "dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
+define([
+    "dojo/_base/declare", "dojo/_base/lang", "dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin", "dojo/text!./singledecorator.html",
-    "dijit/Tooltip", "./_DecoratorMixin", "../layout/_LayoutMixin"
-], function (declare, lang, domGeometry, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, Tooltip, _DecoratorMixin, _LayoutMixin) {
+    "./_DecoratorMixin"
+], function (declare, lang, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, _DecoratorMixin) {
 // module:
-//		gform/group/DecoratorWidget
+//		gform/group/SingleDecoratorWidget
 
     return declare("gform.group.SingleDecoratorWidget", [ _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, _DecoratorMixin ], {
         // summary:
