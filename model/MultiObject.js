@@ -23,13 +23,13 @@ define([
             return group;
         },
         addGroup: function (typeCode) {
-            if (typeCode===null) {
+            if (typeCode === null) {
                 return null;
             }
             var schema = this.schema.groups.filter(function (group) {
                 return group.code === typeCode;
             }, this)[0];
-            if (schema===null) {
+            if (schema == null) {
                 return null;
             }
             var group = this.editorFactory.createGroupModel(schema, {});
@@ -87,11 +87,11 @@ define([
                 }
             } else {
                 var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.getTypeCode(this.schema.groups[0]);
-                if (this.getGroup(typeCode)!=null) {
+                if (this.getGroup(typeCode) != null) {
                     this._changeAttrValue("currentTypeCode", typeCode);
                 }
             }
-            if (this.currentTypeCode!==null) {
+            if (this.currentTypeCode !== null) {
                 var currentGroup = this.getGroup(this.currentTypeCode);
                 currentGroup.update(plainValue, setOldValue);
             }
@@ -209,7 +209,7 @@ define([
             schema: schema,
             typeProperty: schema.typeProperty,
             required: schema.required === true,
-            editorFactory:kwArgs.editorFactory
+            editorFactory: kwArgs.editorFactory
         });
     };
 
