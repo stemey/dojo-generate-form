@@ -275,7 +275,7 @@ define([
                 if (initializeValue) {
                     this.schemaSelector.set("value", options[0].id);
                 }
-                if (schemas.length===1) {
+                if (schemas.length==1) {
                     this._hideSchemaSelector();
                 }
             } else {
