@@ -10,6 +10,13 @@
             "label": "plugins",
             "attributes": [
                 {
+                    "code": "updateInterval",
+                    "label":"update interval",
+                    "type": "number",
+                    "description": "if greater than 0 changes in the editor will lead to model updates after the given interval.",
+                    "defaultValue": "100"
+                },
+                {
                     "code": "height",
                     "type": "string",
                     "description": "set height in px.",
