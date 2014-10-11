@@ -91,7 +91,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
                 //		the plainValue.
                 return this.get("plainValue");
             },
-            createBadge: function() {
+            createBadge: function () {
                 return this.editorFactory.createBadge(this.modelHandle);
             },
             _setPlainValueAttr: function (value) {
@@ -124,6 +124,9 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
                     var dijit = registry.getEnclosingWidget(focused[0]);
                     dijit._onBlur();
                 }
+            },
+            getOldValue: function () {
+                return this.modelHandle.get("oldValue");
             },
             hasChanged: function () {
                 // summary:
