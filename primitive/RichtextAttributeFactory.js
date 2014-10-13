@@ -21,7 +21,7 @@ define([
                 props.plugins=attribute.plugins;
             }
             if (attribute.extraPlugins) {
-                props.plugins=attribute.extraPlugins;
+                props.extraPlugins=attribute.extraPlugins;
             }
             props.height=attribute.height;
             mixinTextboxBindings(modelHandle, props);
