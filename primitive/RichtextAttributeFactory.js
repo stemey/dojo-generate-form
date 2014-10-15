@@ -50,10 +50,8 @@ define([
             if (liveChanges) {
                 aspect.after(widget, "onNormalizedDisplayChanged", function () {
                     modelHandle.set("value", widget.get("value"));
-                    //console.log("changed "+widget.get("value"))
                 });
             }
-            // TODO do we need to remove the aspects on destroy?
             aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
             return widget;
         }
