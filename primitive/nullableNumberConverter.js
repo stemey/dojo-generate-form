@@ -2,6 +2,9 @@ define([], function () {
 
 	return {
 		format: function (value) {
+            if (this.target.get("focused")) {
+                throw new "don't update when focus is set";
+            }
             if (typeof value === "string") {
                 // sometimes number gets turned into string (e.g. LocalStorage)
                 return parseFloat(value);

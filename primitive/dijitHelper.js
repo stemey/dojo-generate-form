@@ -23,6 +23,7 @@ define([
 	extraProps.invalidMessage = { type: "string", description: "the error message for invalid values"};
 	extraProps.pattern = { type: "string", description: "the regular expression to validate text values"};
 	extraProps.properCase = { type: "boolean"};
+    extraProps.intermediateChanges = { type: "boolean"};
 	extraProps.upperCase = { type: "boolean"};
 	extraProps.maxLength = { type: "number", description: "the maximum length of a text value"};
 	extraProps.required = { type: "boolean", description: "an empty value is invalid "};

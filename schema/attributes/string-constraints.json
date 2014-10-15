@@ -9,7 +9,12 @@
 			"code": "maxLength",
 			"type": "number"
 		},
-		{
+        {
+            "code":"intermediateChanges",
+            "type":"boolean",
+            "defaultValue":true
+        },
+        {
 			"code": "minLength",
 			"type": "number"
 		},
