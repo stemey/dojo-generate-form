@@ -119,12 +119,15 @@ define([
         },
         onSchemaChange: function () {
             var schemaUrl = this.schemaSelector.get("value");
-            var entity = this.editor.getPlainValue();
-            var oldSchemaUrl = entity ? entity[this.typeProperty] : null;
-            if (schemaUrl !== oldSchemaUrl) {
-                entity[this.typeProperty] = this.schemaSelector.get("value");
-                var promise = this.getSchema(schemaUrl);
-                this._execute(promise, "LoadForEntityAndSchema", entity);
+            if (schemaUrl && schemaUrl !== "") {
+                // if entity with typeProperty but type is not changeable
+                var entity = this.editor.getPlainValue();
+                var oldSchemaUrl = entity ? entity[this.typeProperty] : null;
+                if (schemaUrl !== oldSchemaUrl) {
+                    entity[this.typeProperty] = this.schemaSelector.get("value");
+                    var promise = this.getSchema(schemaUrl);
+                    this._execute(promise, "LoadForEntityAndSchema", entity);
+                }
             }
         },
         getSchema: function (url) {
@@ -160,7 +163,7 @@ define([
             var schema = results[1];
             var plainValue = results[0];
             try {
-            this.editor.setMetaAndPlainValue(schema, plainValue);
+                this.editor.setMetaAndPlainValue(schema, plainValue);
             } catch (e) {
                 console.log(e);
                 this.alert("cannot load data into form");
@@ -172,7 +175,7 @@ define([
             this.set("state", "edit");
             alert("error while loading entity");
         },
-        _onLoadForEntityAndSchema: function (entity, schema) {
+        _onLoadForEntityAndSchema: function (schema, entity) {
             try {
                 if (this.oldValue) {
                     this.editor.setMetaAndPlainValue(schema, this.oldValue);
@@ -196,23 +199,35 @@ define([
             //		is called to signal pending changes to user.
             this.dialog.show({message: message, callback: callback});
         },
-        _execute: function (promise, command, param) {
-            if (param) {
-                when(promise, lang.hitch(this, "_on" + command, param), lang.hitch(this, "_on" + command + "Failed", param));
-            } else {
-                when(promise, lang.hitch(this, "_on" + command), lang.hitch(this, "_on" + command + "Failed"));
+        _execute: function (promise, command) {
+            var me = this;
+            var args = [];
+            for (var i = 2; i < arguments.length; i++) {
+                args.push(arguments[i]);
             }
+            var s = this["_on" + command];
+            var success = function (result) {
+                args.splice(0, 0, result);
+                s.apply(me, args);
+            }
+            var f = this["_on" + command];
+            var fail = function (result) {
+                args.splice(0, 0, result);
+                f.apply(me, args);
+            }
+
+            when(promise, success, fail);
         },
         getSelectedSchemaUrl: function () {
             return this.schemaSelector.get("value");
         },
-        createNewMulti: function (schemas, typeProperty, createCallback) {
+        createNewMulti: function (schemas, typeProperty, createCallback, value) {
             // initialize selector
             this.typeProperty = typeProperty;
             this._initializeSchemaSelector(schemas, true);
             this.oldType = this.getSelectedSchemaUrl();
             //call createNew with first schemaUrls
-            this._createNewInternal(this.getSelectedSchemaUrl(), createCallback);
+            this._createNewInternal(this.getSelectedSchemaUrl(), createCallback, value);
         },
         editMulti: function (schemas, typeProperty, id) {
             // initialize selector
@@ -232,7 +247,7 @@ define([
             this.set("state", "edit");
             this.alert("cannot load entity ", e);
         },
-        _onLoadMultiSchema: function (entity, schema) {
+        _onLoadMultiSchema: function (schema, entity) {
             this.set("state", "edit");
             var type = entity[this.typeProperty];
             this.oldType = type;
@@ -275,7 +290,7 @@ define([
                 if (initializeValue) {
                     this.schemaSelector.set("value", options[0].id);
                 }
-                if (schemas.length==1) {
+                if (schemas.length == 1) {
                     this._hideSchemaSelector();
                 }
             } else {
@@ -292,21 +307,23 @@ define([
             this._hideSchemaSelector();
             this._createNewInternal(schemaUrl, createCallback);
         },
-        _createNewInternal: function (schemaUrl, createCallback) {
+        _createNewInternal: function (schemaUrl, createCallback, value) {
             this.createCallback = createCallback;
             if (schemaUrl) {
-                this.invokeIfOk(lang.hitch(this, "_createNewAndSchema", schemaUrl));
+                this.invokeIfOk(lang.hitch(this, "_createNewAndSchema", schemaUrl, value));
             } else {
                 if (this.state === "create") {
                     this.editor.reset();
                 } else {
-                    this.invokeIfOk(lang.hitch(this, "_createNew"));
+                    this.invokeIfOk(lang.hitch(this, "_createNew", value));
                 }
             }
         },
-        _createNew: function () {
+        _createNew: function (value) {
             this.set("state", "create");
-            var value = this.createPlainValue(this.editor.meta);
+            if (typeof value == "undefined") {
+                value = this.createPlainValue(this.editor.meta);
+            }
             if (value !== null) {
                 this.editor.set("plainValue", value);
             } else {
@@ -314,11 +331,11 @@ define([
             }
             this.onCreated(this.editor.meta, value);
         },
-        _createNewAndSchema: function (schemaUrl) {
+        _createNewAndSchema: function (schemaUrl, value) {
             var schemaPromise = this.getSchema(schemaUrl);
             var me = this;
             this._showLoading();
-            this._execute(schemaPromise, "LoadForCreateAndSchema", schemaUrl);
+            this._execute(schemaPromise, "LoadForCreateAndSchema", schemaUrl, value);
         },
         createPlainValue: function (schema) {
             if (this.plainValueFactory) {
@@ -327,9 +344,9 @@ define([
                 return null;
             }
         },
-        _onLoadForCreateAndSchema: function (schemaUrl, schema) {
+        _onLoadForCreateAndSchema: function (schema, schemaUrl, value) {
             this.set("state", "create");
-            var value = this.createPlainValue(schema);
+            var value = value || this.createPlainValue(schema);
             if (value !== null) {
                 if (this.typeProperty && !(this.typeProperty in value)) {
                     value[this.typeProperty] = schemaUrl;
