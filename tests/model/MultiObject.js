@@ -66,6 +66,7 @@ define(["dojo/_base/lang",
         function testAddGroup(t) {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
             mo.update(object1);
+            mo.init();
             mo.set("currentTypeCode", "type2");
             var plainValue = mo.getPlainValue();
             t.assertTrue(plainValue !== null);
