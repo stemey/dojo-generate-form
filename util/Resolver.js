@@ -132,7 +132,7 @@ define([
             });
         },
         callSetter: function (ref, value) {
-            console.log("call setter " + ref.id);
+            //console.log("call setter " + ref.id);
             if (this.transformer) {
                 value = this.transformer.transformObject(ref.id, value);
             }
@@ -188,7 +188,7 @@ define([
 
             var deferred = new Deferred();
             var request = this._load(url);
-            console.debug("loading " + originalUrl);
+            //console.debug("loading " + originalUrl);
             request.then(lang.hitch(this, "onLoaded", newBaseUrl, deferred)).otherwise(lang.hitch(this, "onLoadFailed", url, newBaseUrl, deferred));
 
 
@@ -199,7 +199,7 @@ define([
             return xhr(url, {handleAs: "json", method: "GET"});
         },
         onLoadFailed: function (url, newBaseUrl, deferred, e) {
-            console.debug("reject " + url, e);
+            //console.debug("reject " + url, e);
             if (this.returnNullForFailed) {
                 deferred.resolve(null);
             } else {
@@ -213,7 +213,7 @@ define([
             when(dependentPromise).then(function () {
                 deferred.resolve(resolvedRef);
             }).otherwise(function (e) {
-                    console.debug("rejected dependent ", e);
+                    //console.debug("rejected dependent ", e);
                     deferred.reject();
                 }
             );
