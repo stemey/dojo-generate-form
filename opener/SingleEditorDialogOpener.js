@@ -102,9 +102,9 @@ define([
 			this.crudController.setEditorFactory(this.editorFactory || options.editorFactory || createLayoutEditorFactory());
 
             if (options.typeProperty) {
-                this.crudController.createNewMulti(options.schemaUrls, options.typeProperty, options.callback);
+                this.crudController.createNewMulti(options.schemaUrls, options.typeProperty, options.callback, options.value);
             } else {
-                this.crudController.createNew(options.schemaUrl, options.callback);
+                this.crudController.createNew(options.schemaUrl, options.callback, options.value);
             }
 
 			var me = this;

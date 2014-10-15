@@ -72,9 +72,9 @@ define([
                 });
 			});
             if (options.typeProperty) {
-                controller.createNewMulti(options.schemaUrls, options.typeProperty, options.callback);
+                controller.createNewMulti(options.schemaUrls, options.typeProperty, options.callback, options.value);
             } else {
-                controller.createNew(options.schemaUrl, options.callback);
+                controller.createNew(options.schemaUrl, options.callback, options.value);
             }
 		},
 		openSingle: function (options) {
