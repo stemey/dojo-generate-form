@@ -20,7 +20,7 @@ define([
         /**
          * init alredy called?
          */
-        initialized:false,
+        initialized: false,
 
         // schema:,
         //		the schema of this model
@@ -162,15 +162,15 @@ define([
         },
         _execute: function (cb, bubble) {
             var oldBubble = this.bubble;
-            this.wouldHaveBubbled = false
-            this.bubble === true;
+            this.wouldHaveBubbled = false;
+            this.bubble = false;
             try {
                 cb.call(this);
             } finally {
-                if (this.wouldHaveBubbled && this.parent) {
+                if (this.wouldHaveBubbled && this.parent && bubble) {
                     this.parent.onChange();
                 }
-                this.wouldHaveBubbled = false
+                this.wouldHaveBubbled = false;
                 this.bubble = oldBubble;
             }
         },
@@ -214,17 +214,20 @@ define([
         resetMetaRecursively: function () {
             this.visit(function (model, cascade) {
                 cascade();
-                model.resetMeta();
+                model.resetMeta(false);
             });
-            this.resetMeta();
+            this.resetMeta(false);
+            this.onChange(false);
         },
         reset: function () {
             // summary:
             //		reset value and state.
-            this.visit(function (model, cascade, idx) {
-                model.resetMeta();
-                cascade();
-            });
+            this._execute(function () {
+                this.visit(function (model, cascade, idx) {
+                    model.resetMeta();
+                    cascade();
+                });
+            }, false);
             this.update(this.oldValue, true, false);
         },
         getModelByPath: function (path) {
@@ -241,14 +244,16 @@ define([
             }
 
         },
-        resetMeta: function () {
+        resetMeta: function (bubble) {
             // summary:
             //		reset meta data. does not cascade.
-            this.set("state", "");
-            this.set("message", "");
-            this.set("touched", false);
-            this.set("oldValue", this.getPlainValue());
-            this.computeProperties();
+            this._execute(function () {
+                this.set("state", "");
+                this.set("message", "");
+                this.set("touched", false);
+                this.set("oldValue", this.getPlainValue());
+                this.computeProperties();
+            }, bubble !== false);
         },
         hasChildrenErrors: function () {
             return this.errorCount > this.ownErrorCount;
@@ -259,9 +264,11 @@ define([
         validateRecursively: function (force) {
             var me = this;
             this.visit(function (model, cascade) {
-                if (!me.isEmpty()) {
+                if (!model.isEmpty()) {
                     cascade();
                 }
+                // call on change because children may have changed
+                model.onChange(false);
                 model.validate(force);
             });
         },
@@ -276,7 +283,7 @@ define([
                 if (value !== oldValue) {
                     cb(oldValue, value);
                 }
-                oldValue=value;
+                oldValue = value;
             });
         },
         validate: function (force) {
@@ -425,8 +432,8 @@ define([
                 return value;
             }
         },
-        init: function() {
-            this.initialized=true;
+        init: function () {
+            this.initialized = true;
         }
     });
 });
