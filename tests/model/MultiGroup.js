@@ -77,7 +77,7 @@ define(['./createVisitor',
 			var visitor = createVisitor();
 			mg.set("currentTypeCode", "type1");
 			mg.visit(lang.hitch(visitor, "fn"));
-			assertEqual([ "noidx", "stringP", "booleanP", "noidx", "numberP", "addProp"], visitor.events);
+			assertEqual([ "noidx", "noidx", "stringP", "booleanP", "noidx", "numberP", "addProp"], visitor.events);
 		},
         function testGetModelByPath() {
 			mg.update(object);

@@ -14,7 +14,7 @@ define([
         isNull: true,
         required: false,
         // group usually does not represent a model and thus is not visited. set this to true to change that beahvior
-        visitThis:false,
+        visitThis:true,
         getTypeCode: function () {
             return null;
         },
