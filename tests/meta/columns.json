@@ -1,14 +1,31 @@
 {
-	groupType : "columnsgroup",
-  attributes : [{
-      type : "string",
-      label : "name",
-      code : "name",
-      required : true,
-  },{
-      type : "boolean",
-      label : "do",
-      code : "do",
-      required : true,
-  }]
+    "editor": "columnsgroup",
+    "attributes": [
+        {
+            "type": "string",
+            "code": "name1",
+            "required": true
+        },
+        {
+            "type": "string",
+            "code": "name2",
+            "required": true
+        },
+        {
+            "type": "string",
+            "code": "name3",
+            "required": true
+        },
+        {
+            "type": "string",
+            "code": "name4",
+            "required": true
+        },
+        {
+            "type": "boolean",
+            "label": "do",
+            "code": "do",
+            "required": true
+        }
+    ]
 }

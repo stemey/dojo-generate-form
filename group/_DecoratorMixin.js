@@ -49,7 +49,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
                 // cascadig changes observed instead of computedProperties
                 aspect.after(this.modelHandle, "onChange", lang.hitch(this, "updateState"));
             } else {
-                console.log("modelHandle is null " + this.label);
+                //console.log("modelHandle is null " + this.label);
             }
             if (this.descriptionTooltipNode) {
                 if (this.meta.description) {
@@ -126,7 +126,8 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
         onOldValueChange: function (propName, old, nu) {
             this.changesTooltip.label = this.getOldValueMessage(nu);
             this.updateState();
-        }, updateState: function () {
+        },
+        updateState: function () {
             if (!this.modelHandle) {
                 return;
             }
