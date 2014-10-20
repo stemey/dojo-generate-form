@@ -49,7 +49,17 @@
 						editor.set("plainValue",{int:null});
 						t.assertEqual(NaN, intText.get("value"));
 					}
-				}  
+				},
+                {
+                    name : 'validate',
+                    runTest : function(t) {
+                        intText.set("displayedValue","gggg");
+                        intText.validate(true);
+                        t.assertEqual(1,editor.get("errorCount"));
+                        var valid = editor.validate(true);
+                        t.assertEqual(false, valid);
+                    }
+                }
 			]);
 			doh.run();
 		});

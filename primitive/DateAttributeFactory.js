@@ -37,6 +37,7 @@ define([
             widget.own(widget.on("blur", function(){
                 modelHandle.validate();
             }));
+            this.addDijitValidation(modelHandle,widget);
             return widget;
 		},
 		createValueConverter: function () {

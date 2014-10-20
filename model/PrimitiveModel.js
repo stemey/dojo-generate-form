@@ -1,8 +1,7 @@
 define([
-    '../schema/meta',
     "dojo/_base/declare",
     "./Model"
-], function (meta, declare, Model) {
+], function (declare, Model) {
     // module:
     //		gform/model/PrimitiveModel
 
