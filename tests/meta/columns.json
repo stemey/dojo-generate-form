@@ -8,24 +8,27 @@
         },
         {
             "type": "string",
-            "code": "name2",
-            "required": true
+            "code": "name2long",
+            "required": false
         },
         {
-            "type": "string",
-            "code": "name3",
-            "required": true
+            "type": "boolean",
+            "code": "name3longlong"
         },
         {
             "type": "string",
             "code": "name4",
-            "required": true
+            "required": false
         },
         {
             "type": "boolean",
             "label": "do",
-            "code": "do",
-            "required": true
+            "code": "do"
+        },
+        {
+            "type": "string",
+            "code": "extralongandwide",
+            "required": false
         }
     ]
 }

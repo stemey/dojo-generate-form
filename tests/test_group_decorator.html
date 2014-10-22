@@ -9,6 +9,12 @@
 	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
 	<link id="themeStyles2" rel="stylesheet" href="../../gform/resources/gform.css"/>
 
+    <style>
+        .deco {
+            color:red;
+        }
+    </style>
+
 	<script type="text/javascript" src="dojoConfig.js"></script>
     <script type="text/javascript" src="../../dojo/dojo.js"></script>
 
@@ -17,7 +23,7 @@
 	<script type="text/javascript">
 
 		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
-		"dojo/text!./meta/primitive_string.json", "dojo/text!./entity/primitive_string.json"//
+		"dojo/text!./meta/decorator.json", "dojo/text!./entity/decorator.json"//
 		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity) {
 
 			var editor = new Editor({
@@ -31,13 +37,13 @@
 				{
 					name : 'showError',
 					runTest : function(t) {
-						intText.set("value","123");
+						editor.updateValue("default","123");
 					}
 				},
 				{
 					name : 'showChanges',
 					runTest : function(t) {
-						intText.set("value","changedvalue");
+                        editor.updateValue("inline","changedvalue");
 					}
 				}
 			]);

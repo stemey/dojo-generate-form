@@ -1,6 +1,6 @@
 define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
-    "dijit/Tooltip", "dojo/i18n!../nls/messages"
-], function (declare, lang, aspect, Tooltip, messages) {
+    "dijit/Tooltip", "dojo/i18n!../nls/messages", "dojo/dom-class"
+], function (declare, lang, aspect, Tooltip, messages, domClass) {
 // module:
 //		gform/group/_DecoratorMixin	
     return declare([  ], {
@@ -50,6 +50,9 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
                 aspect.after(this.modelHandle, "onChange", lang.hitch(this, "updateState"));
             } else {
                 //console.log("modelHandle is null " + this.label);
+            }
+            if (this.meta.decoratorClasses) {
+                domClass.add(this.domNode, this.meta.decoratorClasses);
             }
             if (this.descriptionTooltipNode) {
                 if (this.meta.description) {

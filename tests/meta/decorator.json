@@ -1,0 +1,23 @@
+{
+    "attributes": [
+        {
+            "type": "string",
+            "code": "default",
+            "pattern":"[a-zA-Z]+"
+        },
+        {
+            "type": "string",
+            "code": "inline",
+            "decorator": "inline"
+        },
+        {
+            "type": "boolean",
+            "code": "boolean"
+        },
+        {
+            "type": "string",
+            "code": "withSpecialClass",
+            "decoratorClasses": "deco"
+        }
+    ]
+}
