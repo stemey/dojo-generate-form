@@ -56,8 +56,8 @@
                         intText.set("displayedValue","gggg");
                         intText.validate(true);
                         t.assertEqual(1,editor.get("errorCount"));
-                        var valid = editor.validate(true);
-                        t.assertEqual(false, valid);
+                        var errorCount = editor.validate(true);
+                        t.assertEqual(1, errorCount);
                     }
                 }
 			]);
