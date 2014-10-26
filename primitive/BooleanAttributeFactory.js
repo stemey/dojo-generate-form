@@ -10,6 +10,7 @@ define([
 
     return declare([], {
         id: "boolean",
+        preferredDecorator:null,
         handles: function (attribute) {
             return meta.isType(attribute, "boolean") && !attribute.array;
         },
@@ -28,6 +29,9 @@ define([
             });
             return box;
 
+        },
+        getPreferredDecorator: function() {
+            return this.preferredDecorator;
         },
         createModel: function (meta, plainValue) {
             var model = new BooleanModel({schema: meta});

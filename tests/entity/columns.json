@@ -1,4 +1,4 @@
 {
-		name:"moin",
-		do:true
+		"name1":"moin",
+		"do":true
 }

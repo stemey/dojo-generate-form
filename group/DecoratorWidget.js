@@ -9,7 +9,6 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dijit/_WidgetBase", "dijit/_C
 		// summary:
 		//		this widget container has a single child, which represents an attribute. This widget attaches provides the label and the state indicators for the attribute. 
 		constructor: function (config) {
-			this.inherited(arguments);
 			lang.mixin(this, config);
 			this.label = this.meta && (this.meta.label || this.meta.code) || "";
 		},

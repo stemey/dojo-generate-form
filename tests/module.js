@@ -28,7 +28,8 @@ define(
 			doh.registerUrl("gform.tests.tab_list", dojo.moduleUrl("gform", "tests/test_tab_list.html"));
 			doh.registerUrl("gform.tests.titlepanes", dojo.moduleUrl("gform", "tests/test_titlepanes.html"));
 			doh.registerUrl("gform.tests.embedded", dojo.moduleUrl("gform", "tests/test_embedded.html"));
-			doh.registerUrl("gform.tests.embedded_polymorphic", dojo.moduleUrl("gform", "tests/test_embedded_polymorphic.html"));
+            doh.registerUrl("gform.tests.embedded.required", dojo.moduleUrl("gform", "tests/test_embedded_required.html"));
+            doh.registerUrl("gform.tests.embedded_polymorphic", dojo.moduleUrl("gform", "tests/test_embedded_polymorphic.html"));
 			doh.registerUrl("gform.tests.primitive_int", dojo.moduleUrl("gform", "tests/test_primitive_number.html"));
             doh.registerUrl("gform.tests.primitive_any", dojo.moduleUrl("gform", "tests/test_primitive_any.html"));
             doh.registerUrl("gform.tests.primitive_any_ace", dojo.moduleUrl("gform", "tests/ace/test_primitive_any.html"));
@@ -58,6 +59,7 @@ define(
 			doh.registerUrl("gform.tests.primitive_list_select", dojo.moduleUrl("gform", "tests/test_primitive_list_select.html"));
 			doh.registerUrl("gform.tests.group_tab", dojo.moduleUrl("gform", "tests/test_group_tab.html"));
             doh.registerUrl("gform.tests.group_listpane", dojo.moduleUrl("gform", "tests/test_listpane.html"));
+            doh.registerUrl("gform.tests.group_columns", dojo.moduleUrl("gform", "tests/test_group_columns.html"));
             doh.registerUrl("gform.tests.group_singleattribute", dojo.moduleUrl("gform", "tests/test_singleattribute.html"));
 			doh.registerUrl("gform.tests.group_decorator", dojo.moduleUrl("gform", "tests/test_group_decorator.html"));
 			doh.registerUrl("gform.tests.validation", dojo.moduleUrl("gform", "tests/test_validation.html"));

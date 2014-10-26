@@ -7,6 +7,7 @@
 
     <!-- required: a default dijit theme: -->
     <link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet" href="../../gform/resources/gform.css"/>
 
     <script type="text/javascript" src="dojoConfig.js"></script>
     <script type="text/javascript" src="../../dojo/dojo.js"></script>
@@ -38,14 +39,14 @@
                 {
                     name: 'switchToNull',
                     runTest: function (t) {
-                        nullCheckbox.set("value", true);
+                        nullCheckbox.set("value", false);
                         t.assertEqual(null, editor.get("plainValue").thing);
                     }
                 },
                 {
                     name: 'switchFromNull',
                     runTest: function (t) {
-                        nullCheckbox.set("value", false);
+                        nullCheckbox.set("value", true);
                         t.assertNotEqual(null, editor.get("plainValue").thing);
                     }
                 },
@@ -67,14 +68,14 @@
                     name: 'setToNullandRevalidate',
                     runTest: function (t) {
                         editor.addError("thing.name", "impossible");
-                        nullCheckbox.set("value", true);
+                        nullCheckbox.set("value", false);
                         t.assertEqual(0, editor.get("errorCount"));
                     }
                 },
                 {
                     name: 'setFromNullandRevalidate',
                     runTest: function (t) {
-                        nullCheckbox.set("value", false);
+                        nullCheckbox.set("value", true);
                         t.assertEqual(0, editor.get("errorCount"));
                     }
                 },
@@ -89,7 +90,7 @@
                     name: 'setPlainNull',
                     runTest: function (t) {
                         editor.set("plainValue", {thing: null});
-                        t.assertEqual(true, query("input[type='checkbox']")[0].checked);
+                        t.assertEqual(false, query("input[type='checkbox']")[0].checked);
                     }
 
                 }

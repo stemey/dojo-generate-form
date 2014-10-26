@@ -99,7 +99,7 @@ define([  //
 		// attributeFactoryFinder:
 		//		manages the attributeFactories.
 		attributeFactoryFinder: null,
-		createDecorator: function (/*Object*/attribute, /*dojo.Stateful*/modelHandle) {
+		createDecorator: function (/*Object*/attribute, /*dojo.Stateful*/modelHandle, decorator) {
 			// summary:
 			//		creates a Decorator Widget for the given attribute. The Decorator displays the label, description and state of the attribute. The actual widget for editing the attribute's value is added as a child.
 			// attribute: Object			
@@ -108,7 +108,7 @@ define([  //
 			//		The modelHandle. The Decorator watches the state and value of the attribute via its modelHandle meta data.
 			// returns: dijit/Widget
 			//		The Widget ich contains all widgets for the attributes and groups contained in the given attribute schema.	
-			return this.decoratorFactory.create(/*Object*/attribute, /*dojo/stateful*/modelHandle);
+			return this.decoratorFactory.create(/*Object*/attribute, /*dojo/stateful*/modelHandle, decorator);
 		},
 		create: function (group, modelHandle, ctx) {
 			// summary:

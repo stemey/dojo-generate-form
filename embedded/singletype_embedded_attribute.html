@@ -1,5 +1,15 @@
-<div data-dojo-type="dojox/mvc/Group">
-		<label><input data-dojo-type="dijit/form/CheckBox"
-			data-dojo-props="checked:at('rel:', 'empty')" /> Null</label>
-		<div data-dojo-attach-point="containerNode"></div>
+<div class="editor row">
+    <div class="label">
+        <span class="indicator description" data-dojo-attach-point="descriptionTooltipNode">?</span>
+        <label data-dojo-attach-point="labelNode" class="generate-label-cell">${label}</label>
+        <label><input data-dojo-type="dijit/form/CheckBox"
+                      data-dojo-props="checked:at('rel:', 'hasValue')" /></label>
+        <span class="indicator error" data-dojo-attach-point="errorTooltipNode">!</span>
+        <span class="indicator changes" data-dojo-attach-point="changesTooltipNode">C</span>
+    </div>
+    <br/>
+    <div class="body" style="margin-bottom:0.5em">
+        <span data-dojo-attach-point="containerNode" ></span>
+    </div>
 </div>
+

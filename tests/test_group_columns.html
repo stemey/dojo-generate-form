@@ -7,7 +7,7 @@
 
 	<!-- required: a default dijit theme: -->
 	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
-	<link id="themeStyles" rel="stylesheet" href="../resources/gform.css"/>
+	<link rel="stylesheet" href="../resources/gform.css"/>
 
 	<script type="text/javascript" src="dojoConfig.js"></script>
     <script type="text/javascript" src="../../dojo/dojo.js"></script>
@@ -16,24 +16,35 @@
 
 	<script type="text/javascript">
 
-		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createStandardEditorFactory",//
+		require([ "dojo/ready", "dojo/json", "gform/Editor", "dojo/Stateful", "doh/runner", "gform/createLayoutEditorFactory",//
 		"dojo/text!./meta/columns.json", "dojo/text!./entity/columns.json","dijit/registry","dijit/layout/BorderContainer","dojo/parser"//
-		], function(ready, json, Editor, Stateful, doh,createStandardEditorFactory, meta, entity, registry,BorderContainer,parser) {
+		], function(ready, json, Editor, Stateful, doh,createLayoutEditorFactory, meta, entity, registry,BorderContainer,parser) {
 			parser.parse();
+            var ef1 =createLayoutEditorFactory();
+            ef1.groupFactories.columnsgroup.preferredDecorator="inline";
 			editor = new Editor({
 					"plainValue": dojo.fromJson(entity),
-					"meta": dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
-			var container = registry.byId("container");
+					"meta": dojo.fromJson(meta),editorFactory:ef1});
+			var container = registry.byId("center");
 			editor.set("region","center");
-			container.addChild(editor);
+            container.addChild(editor);
+
+            var ef2 =createLayoutEditorFactory();
+            ef2.groupFactories.columnsgroup.preferredDecorator="default";
+
+            editor2 = new Editor({
+                "plainValue": dojo.fromJson(entity),
+                "meta": dojo.fromJson(meta),editorFactory:ef2});
+            var container = registry.byId("container");
+            editor2.set("region","right");
+            editor2.set("splitter","true");
+            registry.byId("right").addChild(editor2);
+
 			doh.register("standard", [
 				{
 					name : 'init',
 					runTest : function(t) {	
-						editor.addError("name","error");
-						t.assertEqual(1,editor.get("errorCount"));
-						var errors = dijit.byId("gform_ListPane_0").get("errorCount");
-						t.assertEqual(1,errors);	
+						t.assertEqual("moin",editor.getPlainValue().name1);
 					}
 				},
 				{
@@ -58,9 +69,10 @@
 <body class="claro" style="width:100%;height:100%">
 	
 
-	<div id="container" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="id:'container'" style="width:100%;height:100%">
-		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'" >Hallo</div>
-		
+	<div id="container" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="id:'container'" style="width:1400px;height:100%">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'" >Different decorators in responsive columns group</div>
+        <div id="center" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center'" ></div>
+        <div id="right" data-dojo-type="dijit.layout.ContentPane" style="width:40%;" data-dojo-props="region:'right', splitter:true" ></div>
 	</div>
 
 </body>
