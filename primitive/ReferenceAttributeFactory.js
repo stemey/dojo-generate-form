@@ -28,6 +28,9 @@ define(
                     if (typeof attribute.targetCreatable !== "undefined") {
                         targetCreatable = attribute.targetCreatable;
                     }
+                    if (!attribute.schemaUrl) {
+                        targetCreatable=false;
+                    }
 
 					var refConverter = this.editorFactory.getConverter(attribute, ctx);
 
