@@ -42,12 +42,17 @@ define([
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
+		createController: function(props) {
+			var controller = new TabCrudController(props);
+			lang.mixin(controller, this.controllerConfig);
+			return controller;
+		},
 		createSingle: function (options) {
 			// summary:
 			//		open the dialog to create a new resource.
 			//  options:
-			//		must provide the schemaUrl to load the gform schema from. 
-			//		Must also provide the url to the resource's collection. 
+			//		must provide the schemaUrl to load the gform schema from.
+			//		Must also provide the url to the resource's collection.
 			//		A callback which gets passed the new id may also be specified.  Options may provide EditorFactory.
 			var props = {};
 			var url = options.url;
@@ -58,8 +63,7 @@ define([
 			props.container = this.tabContainer;
 			props.dialog = this.confirmDialog;
 			//props.ctx = this.ctx;
-			var controller = new TabCrudController(props);
-			lang.mixin(controller, this.controllerConfig);
+			var controller = this.createController(props);
 			controller.setCtx(this.ctx);
 			this.tabContainer.addChild(controller);
 			this.tabContainer.selectChild(controller);
@@ -81,7 +85,7 @@ define([
 			// summary:
 			//		open the dialog to edit an existing resource.
 			//  options:
-			//		must provide the schemaUrl to load the gform schema from. 
+			//		must provide the schemaUrl to load the gform schema from.
 			//		Must also provide the url to the resource edited. Options may provide EditorFactory.
 			var wid = "tab_editor_" + options.url+":"+options.id;
 			var controller = registry.byId(wid);
@@ -104,8 +108,7 @@ define([
 				props.container = this.tabContainer;
 				props.dialog = this.confirmDialog;
 				//props.ctx = this.ctx;
-				controller = new TabCrudController(props);
-				lang.mixin(controller, this.controllerConfig);
+				controller = this.createController(props);
 				controller.setCtx(this.ctx);
 
 				this.tabContainer.addChild(controller);

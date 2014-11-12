@@ -44,7 +44,6 @@ define([
 		actionClasses: [Save, Discard, Delete],
 		constructor: function (props) {
 			lang.mixin(this, props);
-			this.inherited(arguments);
 		},
 		_onValueChange: function (e) {
 
@@ -78,7 +77,7 @@ define([
 					if (close && openDialog) {
 						me.container.closeChild(me);
 					} else {
-						// closing was cancelled 
+						// closing was cancelled
 						me.closing = false;
 					}
 				}
