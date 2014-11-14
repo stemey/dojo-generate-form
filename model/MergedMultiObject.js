@@ -120,6 +120,7 @@ define([
             }
         },
         init: function () {
+			this.inherited(arguments);
             Object.keys(this.attributes).forEach(function (key) {
                 var model = this.attributes[key];
                 model.init();
