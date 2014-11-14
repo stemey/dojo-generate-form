@@ -26,6 +26,7 @@
             var schemaRegistry = new SchemaRegistry();
 
             var ctx = new Context();
+			schemaRegistry.onlyStatic=true;
             ctx.schemaRegistry = schemaRegistry;
             schemaRegistry.register("country", JSON.parse(schema1));
             schemaRegistry.register("city", JSON.parse(schema2));
@@ -33,6 +34,15 @@
             crudController.set("store", store);
             crudController.setCtx(ctx);
             crudController.setEditorFactory(createEditorFactory());
+			crudController.fallbackSchema = {
+				additionalProperties: {code: "any"},
+				attributes: [
+					{
+						code: "any",
+						type: "any"
+					}
+				]
+			};
 
 
             var select = dijit.byId("gform_FilteringSelect_0");
@@ -97,7 +107,14 @@
                         doh.assertEqual(false,crudController.hasChanged());
 
                     }
-                }
+                },
+				{
+					name: 'editMultiNoSchema',
+					runTest: function (t) {
+						crudController.editMulti(["country", "city"], "type", 3);
+						doh.assertEqual("New York",crudController.editor.getPlainValue().label);
+					}
+				}
             ]);
             doh.run();
         });
@@ -115,4 +132,4 @@
 
 
 </body>
-</html>	
+</html>

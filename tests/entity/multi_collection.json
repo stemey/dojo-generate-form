@@ -12,7 +12,6 @@
 		"size":1300
 	},
 	{
-        "type":"city",
         "id":3,
 		"label":"New York",
 		"inhabitants":20000

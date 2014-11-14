@@ -1,7 +1,8 @@
 define([
 	"dojo/_base/declare",
-	"dojo/request"
-], function (declare, request) {
+	"dojo/request",
+	"dojo/_base/Deferred"
+], function (declare, request, Deferred) {
 // module:
 //		gform/controller/SchemaRegistry
 
@@ -13,6 +14,7 @@ define([
 		// id2store: object
 		//		id (probably url) to store mapping
 		url2schema: {},
+		onlyStatic: false,
 
 		get: function (url) {
 			// summary:
@@ -24,7 +26,13 @@ define([
 			if (cached) {
 				return cached;
 			} else {
-				return request.get(url, {handleAs: "json"});
+				if (this.onlyStatic) {
+					var d = new Deferred();
+					d.reject(new Error("does not exist"));
+					return d;
+				} else {
+					return request.get(url, {handleAs: "json"});
+				}
 			}
 		},
 		register: function (url, schema) {

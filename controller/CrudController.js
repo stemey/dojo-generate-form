@@ -1,8 +1,6 @@
 define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
-	"dojo/_base/array",
-    "gform/createLayoutEditorFactory",
 	"./_CrudMixin",
 	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
@@ -11,7 +9,6 @@ define([
 	"./actions/Save",
 	"./actions/Discard",
 	"./actions/Delete",
-	"./createActions",
 	"../layout/_InvisibleMixin",
 	"dijit/form/Button",
 	"dijit/layout/StackContainer",
@@ -20,7 +17,7 @@ define([
 	"dijit/layout/BorderContainer",
 	"dijit/layout/ContentPane",
 	"./ConfirmDialog"
-], function (declare, lang, array, createEditorFactory, _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Save, Discard, Delete, createActions, _InvisibleMixin) {
+], function (declare, lang, _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Save, Discard, Delete, _InvisibleMixin) {
 
 	return declare([   _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _InvisibleMixin ], {
 		// summary:

@@ -23,6 +23,10 @@ define([
         //		maybe "loading", "edit", "create".
         state: "loading",
 
+		// fallbackSchema:
+		//		if loading the schema fails, then use this general schema
+		fallbackSchema:null,
+
         schemaSelector: null,
 
         // plainValueFactory: function
@@ -134,22 +138,33 @@ define([
             return this.editor.ctx.getSchema(url);
         },
         _edit: function (id, schemaUrl) {
-            var instancePromise = this.store.get(id);
-            var promise;
             if (schemaUrl) {
                 // remove form
                 this.editor.set("meta", {});
                 var schemaPromise = this.getSchema(schemaUrl);
-                promise = all([instancePromise, schemaPromise]);
+                //promise = all([instancePromise, schemaPromise]);
                 this._showLoading();
-                this._execute(promise, "LoadForEditAndSchema");
+                this._execute(schemaPromise, "LoadSchemaForEdit", id);
             } else {
-                promise = instancePromise;
+				var instancePromise = this.store.get(id);
                 this._showLoading();
-                this._execute(promise, "LoadForEdit");
+                this._execute(instancePromise, "LoadForEdit");
             }
         },
-        _onLoadForEdit: function (entity) {
+		_onLoadSchemaForEdit: function (schema, id) {
+			var instancePromise = this.store.get(id);
+			this._execute(instancePromise, "LoadForEditAndSchema", schema);
+		},
+		_onLoadSchemaForEditFailed: function (error, id) {
+			var instancePromise = this.store.get(id);
+			if (this.fallbackSchema) {
+				console.log("was not able to load schema");
+				this._execute(instancePromise, "LoadForEditAndSchema", this.fallbackSchema);
+			}else{
+				this.alert("was not able to load schema");
+			}
+		},
+		_onLoadForEdit: function (entity) {
             this.set("state", "edit");
             this.editor.set("plainValue", entity);
             this.onLoaded(this.editor.meta, entity);
@@ -158,17 +173,15 @@ define([
             this.set("state", "edit");
             alert("error while loading entity");
         },
-        _onLoadForEditAndSchema: function (results) {
+        _onLoadForEditAndSchema: function (entity, schema) {
             this.set("state", "edit");
-            var schema = results[1];
-            var plainValue = results[0];
             try {
-                this.editor.setMetaAndPlainValue(schema, plainValue);
+                this.editor.setMetaAndPlainValue(schema, entity);
             } catch (e) {
                 console.log(e);
                 this.alert("cannot load data into form");
             }
-            this.onLoaded(schema, plainValue);
+            this.onLoaded(schema, entity);
             this.emit("editor-changed");
         },
         _onLoadForEditAndSchemaFailed: function (error) {
@@ -210,7 +223,7 @@ define([
                 args.splice(0, 0, result);
                 s.apply(me, args);
             }
-            var f = this["_on" + command];
+            var f = this["_on" + command + "Failed"];
             var fail = function (result) {
                 args.splice(0, 0, result);
                 f.apply(me, args);
@@ -262,9 +275,25 @@ define([
             }
             this.emit("editor-changed");
         },
-        _onLoadMultiSchemaFailed: function (e) {
+        _onLoadMultiSchemaFailed: function (e, entity) {
             this.set("state", "edit");
-            this.alert("cannot load schema ", e);
+			if (this.fallbackSchema) {
+				this.typeProperty=null;
+				this.set("state", "edit");
+				this.oldType = null;
+				this.oldValue = entity;
+				this._initializeSchemaSelector([],null);
+				this.onLoaded(this.fallbackSchema, entity);
+				try {
+					this.editor.setMetaAndPlainValue(this.fallbackSchema, entity);
+				} catch (e2) {
+					console.log(e2);
+					this.alert("unable to load data into form");
+				}
+				this.emit("editor-changed");
+			}else {
+				this.alert("cannot load schema ", e);
+			}
         },
         _hideSchemaSelector: function () {
             this.schemaSelector.domNode.style.visibility = "hidden";
