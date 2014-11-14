@@ -310,6 +310,7 @@ define([ "dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/decla
                     this.modelHandle = this.editorFactory.createGroupModel(this.meta, {});
                     aspect.after(this.modelHandle, "onChange", lang.hitch(this, "onChange"));
                 }
+				this.modelHandle.init();
                 this.modelHandle.initDefault();
 
             }
