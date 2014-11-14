@@ -36,8 +36,10 @@
                 {
                     name: 'init',
                     runTest: function (t) {
-                        t.assertEqual(2, editor.get("plainValue").group.attributes.length);
-                        t.assertEqual("name", editor.get("plainValue").group.attributes[0].code);
+						var schema = editor.get("plainValue");
+                        t.assertEqual(3, schema.group.attributes.length);
+                        t.assertEqual("name", schema.group.attributes[0].code);
+						t.assertEqual("add", schema.group.additionalProperties.code);
                     }
                 }
             ]);

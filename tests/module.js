@@ -16,6 +16,7 @@ define(
         "gform/tests/validate/AdditionalProperties",//
         "gform/tests/schema/Transformer",
         "gform/tests/schema/labelHelper",
+		"gform/tests/special/formbuilder/GroupTransformer",
         "gform/tests/restHelper"
 	], function () {
 

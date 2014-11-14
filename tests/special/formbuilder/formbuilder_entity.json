@@ -1,5 +1,8 @@
-{
+	{
 	"group": {
+		"additionalProperties":{
+			"code":"add"
+		},
         "attributes":[
             {
                 "code":"name",
@@ -8,7 +11,11 @@
             {
                 "code":"text",
                 "type":"string"
-            }
+            },
+			{
+				"code":"add",
+				"type":"any"
+			}
         ]
 	}
 }

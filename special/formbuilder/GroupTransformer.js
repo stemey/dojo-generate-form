@@ -1,16 +1,26 @@
-define(['dojo/_base/declare',
-], function (declare) {
+define(['dojo/_base/lang',
+	'dojo/_base/declare',
+], function (lang, declare) {
 
     return declare([], {
         in: function (value) {
             var attributes = [];
             this.visitIn(attributes, value);
-            return{group: value, attributes: attributes};
+			var inValue = {};
+            inValue.group = value;
+			inValue.attributes = attributes;
+			if (value && value.additionalProperties) {
+				inValue.additionalProperties = value.additionalProperties;
+			}
+			return inValue;
         },
         out: function (value) {
             var form = value.group;
             this.visitOut(value.attributes, form);
-            return form;
+			if (value && value.additionalProperties) {
+				form.additionalProperties = value.additionalProperties;
+			}
+			return form;
         },
         visitOut: function (attributes, group) {
             if (!group) {
