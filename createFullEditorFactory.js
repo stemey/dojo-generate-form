@@ -8,21 +8,17 @@ define([
 // module:
 //		gform/createStandardEditorFactory
 
-    var editorFactory = new createLayoutEditorFactory();
+	return function () {
+		var editorFactory = new createLayoutEditorFactory();
 
-    var attributeFactoryFinder = editorFactory.get("attributeFactoryFinder");
-
-
-    var anyAF = new AnyAceAttributeFactory({editorFactory: editorFactory});
-    attributeFactoryFinder.attributeFactories.splice(0,0,anyAF);
+		var attributeFactoryFinder = editorFactory.get("attributeFactoryFinder");
 
 
-    attributeFactoryFinder.addAttributeFactory(new AceTextAttributeFactory({editorFactory: editorFactory}));
-    return function () {
-        // summary:
-        //		StandardEditorFactory will created simple list as default group.
-        // returns: gform/EditorFactory
-        //		return the cached editorFactory instance.
+		var anyAF = new AnyAceAttributeFactory({editorFactory: editorFactory});
+		attributeFactoryFinder.attributeFactories.splice(0,0,anyAF);
+
+
+		attributeFactoryFinder.addAttributeFactory(new AceTextAttributeFactory({editorFactory: editorFactory}));
         return editorFactory;
     };
 
