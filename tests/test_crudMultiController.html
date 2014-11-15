@@ -114,6 +114,13 @@
 						crudController.editMulti(["country", "city"], "type", 3);
 						doh.assertEqual("New York",crudController.editor.getPlainValue().label);
 					}
+				},
+				{
+					name: 'editMultiInvalidSchema',
+					runTest: function (t) {
+						crudController.editMulti(["country", "city"], "type", 2);
+						doh.assertEqual("USA",crudController.editor.getPlainValue().label);
+					}
 				}
             ]);
             doh.run();

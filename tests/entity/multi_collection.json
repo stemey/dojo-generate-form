@@ -6,7 +6,7 @@
 		"size":300
 	},
 	{
-        "type":"country",
+        "type":"unknown",
         "id":2,
 		"label":"USA",
 		"size":1300

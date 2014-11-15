@@ -17,10 +17,10 @@
 	<script type="text/javascript">
 
 		require(["dojo/parser", "dojo/ready", "doh/runner", "gform/createLayoutEditorFactory",//
-			"dojo/text!gform/tests/meta/refs.json", "dijit/registry", "gform/Context", "dojo/text!./entity/state_collection.json",
+			"dojo/text!gform/tests/meta/refs.json", "dojo/text!gform/tests/meta/empty.json","dijit/registry", "gform/Context", "dojo/text!./entity/state_collection.json",
 			"dojo/store/Memory", "gform/controller/SchemaRegistry", "dojo/text!gform/tests/meta/city.json", "dojo/text!gform/tests/meta/country.json", "gform/controller/ConfirmDialog", "dijit/layout/BorderContainer",
 			"gform/controller/CrudController"
-		], function (parser, ready, doh, createEditorFactory, schema, registry, Context, stateCollection, Store, SchemaRegistry, schema1, schema2) {
+		], function (parser, ready, doh, createEditorFactory, schema, emptySchema, registry, Context, stateCollection, Store, SchemaRegistry, schema1, schema2) {
 			parser.parse();
 			var store = new Store({data: JSON.parse(stateCollection), idProperty: "id"});
 			var schemaRegistry = new SchemaRegistry();
@@ -30,6 +30,7 @@
 			ctx.schemaRegistry = schemaRegistry;
 			schemaRegistry.onlyStatic = true;
 			schemaRegistry.register("/gform/tests/meta/refs.json", JSON.parse(schema));
+			schemaRegistry.register("/gform/tests/meta/empty.json", JSON.parse(emptySchema));
 			crudController = registry.byId("crudController");
 			crudController.set("store", store);
 			crudController.setCtx(ctx);
@@ -77,6 +78,14 @@
 						crudController.edit("2", "/gform/tests/meta/lost.json");
 						doh.assertEqual('edit', crudController.state);
 						doh.assertEqual(2, crudController.editor.getPlainValue().id);
+					}
+				},
+				{
+					name: 'editInvalidSchema',
+					runTest: function (t) {
+						crudController.edit("3", "/gform/tests/meta/empty.json");
+						doh.assertEqual('edit', crudController.state);
+						doh.assertEqual(3, crudController.editor.getPlainValue().id);
 					}
 				}
 			]);
