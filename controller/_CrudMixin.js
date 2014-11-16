@@ -149,7 +149,7 @@ define([
 				} else {
 					deferred.resolve(schema);
 				}
-			}).otherwise(function () {
+			},function () {
 				deferred.reject("schema not found");
 			});
 			return deferred;
