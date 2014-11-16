@@ -91,6 +91,9 @@
                     runTest: function (t) {
                         editor.set("plainValue", {thing: null});
                         t.assertEqual(false, query("input[type='checkbox']")[0].checked);
+						nullCheckbox.set("value",true);
+						nullCheckbox.set("value",false);
+						t.assertEqual(0,editor.modelHandle.get("changedCount"));
                     }
 
                 }

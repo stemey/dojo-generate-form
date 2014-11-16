@@ -72,9 +72,23 @@ define(['dojo/_base/lang',
             so.update({});
             so.set("isNull", true);
             assertEqual(null, so.getPlainValue());
+			doh.assertEqual(1,so.get("changedCount"));
             so.set("isNull", false);
-            doh.assertTrue(so.getPlainValue() != null);
+            doh.assertTrue(so.getPlainValue() !== null);
+			// its now the default value
+			doh.assertEqual(1,so.get("changedCount"));
         },
+		function testToggleNull() {
+			createModel();
+			so.update(null);
+			assertEqual(null, so.getPlainValue());
+			doh.assertEqual(0,so.get("changedCount"));
+			so.set("isNull", false);
+			doh.assertTrue(so.getPlainValue() !== null);
+			doh.assertEqual(1,so.get("changedCount"));
+			so.set("isNull", true);
+			doh.assertEqual(0,so.get("changedCount"));
+		},
         function testDefaults() {
             createModel();
             so.update({});

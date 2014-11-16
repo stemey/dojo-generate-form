@@ -108,7 +108,7 @@ define([
                 if (value === true) {
                     this.updateGroup(null);
                 } else {
-                    this.initDefault();
+                    this.initDefault(false);
                 }
             }
         },
@@ -167,6 +167,7 @@ define([
             return model.getModelByPath(path);
         },
         initDefault: function (setOldValue) {
+			var oldValue = this.get("oldValue");
             this.isNull = false;
             this._createAttributes();
             Object.keys(this.get("attributes")).forEach(function (key) {
@@ -177,10 +178,13 @@ define([
                 }
 
             }, this);
-            if (setOldValue !== false) {
-                this.set("oldValue", this.getPlainValue());
-            }
             this.resetMeta();
+			if (setOldValue === false) {
+				// restMeta sets oldValue to current value
+				// TODO should reset Meta really reset oldValue?
+				this.set("oldValue", oldValue);
+			}
+
             this.computeProperties();
         },
         init: function () {
