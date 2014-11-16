@@ -28,12 +28,12 @@ define(['dojo/_base/lang',
             } else if ("attribute" in group) {
                 var code = group.attribute;
                 group.attribute = attributes.filter(function (attribute) {
-                    return attribute.code === code;
+                    return attribute && attribute.code === code;
                 })[0];
             } else if ("attributes" in group) {
                 var codes = group.attributes;
                 var newAttributes = codes.map(function (code) {
-                    return attributes.filter(function(a) {return a.code===code;})[0];
+                    return attributes.filter(function(a) {return a && a.code===code;})[0];
                 });
                 group.attributes=newAttributes;
             } else if ("group" in group) {
