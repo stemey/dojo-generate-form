@@ -4,7 +4,7 @@ define([
     "./SingleTypePanelWidget",
     "./OptionalSingleTypePanelWidget"
 ], function (lang, declare, SingleTypePanelWidget, OptionalSingleTypePanelWidget) {
-// module: 
+// module:
 //		gform/embedded/EmbeddedAttributeFactory
     return declare([], {
         id: "object",
@@ -42,7 +42,7 @@ define([
             return !attribute.required ? "none" : null;
         },
         createModel: function (schema, plainValue) {
-            if (plainValue === null && schema.required) {
+            if (!plainValue && schema.required) {
                 plainValue = {};
             }
             var validators = this.editorFactory.getModelValidators(schema);
