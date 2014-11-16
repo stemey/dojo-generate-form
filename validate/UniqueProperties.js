@@ -14,13 +14,16 @@ define([
 				return [];
 			}
 			modelHandle.forEach(function (el, idx) {
-				var value = el.getModelByPath(prop).getPlainValue();
-				var unique = uniqueKeys[value] == null;
-				if (unique) {
-					uniqueKeys[value] = value;
-				} else {
-					var msg = lang.replace(nls.unique, {unique: unique});
-					errors.push({path: idx + "." + prop, message: msg});
+				var elementValue =  el.getModelByPath(prop);
+				if (elementValue!=null) {
+					var value = elementValue.getPlainValue();
+					var unique = uniqueKeys[value] == null;
+					if (unique) {
+						uniqueKeys[value] = value;
+					} else {
+						var msg = lang.replace(nls.unique, {unique: unique});
+						errors.push({path: idx + "." + prop, message: msg});
+					}
 				}
 			}, this);
 			return errors;
