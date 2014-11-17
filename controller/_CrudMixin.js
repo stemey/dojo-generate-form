@@ -55,7 +55,7 @@ define([
 		progressBar: null,
 		progressMessage: null,
 
-		getFallbackSchema: function() {
+		getFallbackSchema: function () {
 			return this.fallbackSchema;
 		},
 
@@ -103,6 +103,9 @@ define([
 			// message: String
 			alert(message);
 		},
+		displayError: function (message) {
+			alert(message);
+		},
 		_onStateChange: function () {
 			this.progressBar.hide();
 			["create", "edit", "loading"].forEach(function (e) {
@@ -127,6 +130,9 @@ define([
 			this.set("state", "loading");
 		},
 		onSchemaChange: function () {
+			if (this.state === "loading") {
+				return;
+			}
 			var schemaUrl = this.schemaSelector.get("value");
 			if (schemaUrl && schemaUrl !== "") {
 				// if entity with typeProperty but type is not changeable
@@ -142,28 +148,38 @@ define([
 		getSchema: function (url) {
 			var deferred = new Deferred();
 			var p = this.editor.ctx.getSchema(url);
-			var me =this;
+			var me = this;
 			when(p).then(function (schema) {
-				if (!me.isValidSchema(schema)) {
-					deferred.reject("invalid schema");
+				var error = me.validateSchema(schema);
+				if (error) {
+					deferred.reject({message: error});
 				} else {
 					deferred.resolve(schema);
 				}
-			},function () {
-				deferred.reject("schema not found");
+			}, function () {
+				deferred.reject("schema " + url + " was not found.");
 			});
 			return deferred;
 		},
-		isValidSchema: function (schema) {
+		validateSchema: function (schema) {
 			var attributes = metaHelper.collectAttributes(schema);
 			var requiredAttributes = [this.store.idProperty];
 			if (this.typeProperty) {
 				requiredAttributes.push(this.typeProperty);
 			}
-			var found = attributes.filter(function (attribute) {
-				return requiredAttributes.indexOf(attribute.code) >= 0;
-			}).length;
-			return found === requiredAttributes.length;
+
+			attributes.forEach(function (attribute) {
+				var i = requiredAttributes.indexOf(attribute.code);
+				if (i >= 0) {
+					requiredAttributes.splice(i, 1);
+				}
+			});
+			if (requiredAttributes.length === 0) {
+				return null;
+			} else {
+				var error = "'" + requiredAttributes.join("', '") + "'";
+				return lang.replace(messages['validation.missingAttributes'], {attributes: error});
+			}
 		},
 		_edit: function (id, schemaUrl) {
 			if (schemaUrl) {
@@ -189,7 +205,7 @@ define([
 			if (fallbackSchema) {
 				this._execute(instancePromise, "LoadForEditAndSchema", fallbackSchema);
 			} else {
-				this.alert("was not able to load schema");
+				this.displayError(error.message || "was not able to load schema");
 			}
 		},
 		_onLoadForEdit: function (entity) {
@@ -199,22 +215,21 @@ define([
 		},
 		_onLoadForEditFailed: function (error) {
 			this.set("state", "edit");
-			alert("error while loading entity");
+			this.displayError("error while loading entity");
 		},
 		_onLoadForEditAndSchema: function (entity, schema) {
 			this.set("state", "edit");
 			try {
 				this.editor.setMetaAndPlainValue(schema, entity);
 			} catch (e) {
-				console.log(e);
-				this.alert("cannot load data into form");
+				this.displayError("cannot load data into form");
 			}
 			this.onLoaded(schema, entity);
 			this.emit("editor-changed");
 		},
 		_onLoadForEditAndSchemaFailed: function (error) {
 			this.set("state", "edit");
-			alert("error while loading entity");
+			this.displayError("error while loading entity");
 		},
 		_onLoadForEntityAndSchema: function (schema, entity) {
 			try {
@@ -225,15 +240,14 @@ define([
 					this.editor.setMetaAndPlainValue(schema, entity);
 				}
 			} catch (e) {
-				console.log(e);
-				this.alert("cannot load data into form");
+				this.displayError("cannot load data into form");
 			}
 			this.onLoaded(schema, entity);
 			this.emit("editor-changed");
 		},
 		_onLoadForEntityAndSchemaFailed: function (error) {
 			this.set("state", "edit");
-			this.alert("error while loading entity");
+			this.displayError("error while loading entity");
 		},
 		startConfirmDialog: function (message, callback) {
 			// summary:
@@ -286,7 +300,7 @@ define([
 		},
 		_onLoadMultiFailed: function (e) {
 			this.set("state", "edit");
-			this.alert("cannot load entity ", e);
+			this.displayError("cannot load entity ", e);
 		},
 		_onLoadMultiSchema: function (schema, entity) {
 			this.set("state", "edit");
@@ -298,8 +312,7 @@ define([
 			try {
 				this.editor.setMetaAndPlainValue(schema, entity);
 			} catch (e) {
-				console.log(e);
-				this.alert("unable to load data into form");
+				this.displayError("unable to load data into form");
 			}
 			this.emit("editor-changed");
 		},
@@ -313,18 +326,17 @@ define([
 				this.editor.setMetaAndPlainValue(fallbackSchema, entity);
 				this.onLoaded(fallbackSchema, entity);
 			} catch (e2) {
-				console.log(e2);
-				this.alert("unable to load data into form");
+				this.displayError("unable to load data into form");
 			}
 			this.emit("editor-changed");
 		},
-		_onLoadMultiSchemaFailed: function (e, entity) {
+		_onLoadMultiSchemaFailed: function (error, entity) {
 			this.set("state", "edit");
 			var fallbackSchema = this.getFallbackSchema();
 			if (fallbackSchema) {
 				this.onLoadMultiWithFallback(fallbackSchema, entity);
 			} else {
-				this.alert("cannot load schema ", e);
+				this.displayError(error.message || "cannot load schema ");
 			}
 		},
 		_hideSchemaSelector: function () {
@@ -425,7 +437,7 @@ define([
 		},
 		_onLoadForCreateAndSchemaFailed: function (error) {
 			this.set("state", "create");
-			alert("error while loading schema");
+			this.displayError(error.message || "error while loading schema");
 		},
 		_removeChangeIndicator: function () {
 			var entity = this.editor.get("plainValue");

@@ -101,8 +101,8 @@ div.label {
 
 th.tableHeader {
 	padding: 5px;
-	border-bottom-width : 2px;	
-	border-bottom-color : #333;	
+	border-bottom-width : 2px;
+	border-bottom-color : #333;
 }
 
 .gformTableList td {
@@ -144,14 +144,14 @@ span.description.indicator {
 
  span.indicator{
 	font-weight: bold;
-	font-size: 5pt;	
+	font-size: 5pt;
 	border: 1px solid;
 	border-radius: 7px;
 	padding: 1px 3px;
 	background-color:#fff;
 	margin-left:3px;
 	position:relative;
-	vertical-align: top;	
+	vertical-align: top;
 	top:4px;
 
 }
@@ -162,14 +162,14 @@ span.description.indicator {
 
 span.errorTooltipNode{
 	font-weight: bold;
-	font-size: 6pt;	
+	font-size: 6pt;
 	border: 1px solid;
 	border-radius: 7px;
 	padding: 2px 4px;
 	background-color: #fff;
 	margin-left:7px;
 	position:relative;
-	vertical-align: top;	
+	vertical-align: top;
 	top:4px;
 	color: red;
 }
@@ -200,9 +200,9 @@ span.changesTooltipNode{
 .gformColumnContainer .Decorator {
 	/* inline-block so that ColumnContainer computes proper column size. But this makes following decorators float*/
   display:block;
-		 
+
 	//float: left;
-	//clear: both;	
+	//clear: both;
 }
 
 .dijitReset.dijitValidationContainer {
@@ -244,36 +244,36 @@ span.changesTooltipNode{
 /*
 TODO: state of dialog editor interfers with display of attribute errors
 .gformSingleEditor.error .error {
-	display: block;	
+	display: block;
 }
 .gformSingleEditor .error {
-	display: none;	
+	display: none;
 }
 .gformSingleEditor.loading .loading {
-	display: block;	
+	display: block;
 }
 .gformSingleEditor .loading {
-	display: none;	
+	display: none;
 }
 .gformSingleEditor .editor {
-	display: block;	
+	display: block;
 }
 .gformSingleEditor.error .editor {
-	display: none;	
+	display: none;
 }
 .gformSingleEditor.loading .editor {
-	display: none;	
+	display: none;
 }
 */
 
 div.gformEditorController .new {
-	display:none;	
+	display:none;
 }
 div.gformEditorController.create .new {
 	display:initial;
 }
 div.gformEditorController .edit {
-	display:none;	
+	display:none;
 }
 div.gformEditorController.edit .edit {
 	display:initial;
@@ -283,20 +283,20 @@ div.gformEditorController .loading {
 	display:initial;
 }
 div.gformEditorController.loading .loading {
-	display:block;	
+	display:block;
 	padding: 20px;
 }
 div.gformEditorController.loading .editor {
-	display:none;	
+	display:none;
 }
 div.gformEditorController.loading .actions {
-	display:none;	
+	display:none;
 }
 
 /* the message above the progress bar in crudController  */
 /* TODO: not working  */
 .progressMessage {
-	margin: 15px;	
+	margin: 15px;
 }
 
 /* DND */
@@ -311,12 +311,18 @@ div.gformEditorController.loading .actions {
 	visibility: visible;
 }*/
 .bars{
-	height:3px; 
+	height:3px;
 	margin-top:3px;
 	-webkit-box-shadow:0 2px 0 rgba(255,255,255,0.8);
-	background-color:rgba(55,55,55,0.2); 
+	background-color:rgba(55,55,55,0.2);
 	width:100% ;
 	display:block;
+}
+
+.controllerMessage {
+	text-align:center;
+	color:red;
+	margin-top:30%;
 }
 
 

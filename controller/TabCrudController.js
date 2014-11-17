@@ -3,31 +3,32 @@ define([
 	"./actions/Delete",
 	"./actions/Discard",
 	"./actions/Save",
-    "dijit/_TemplatedMixin",
+	"dijit/_TemplatedMixin",
 	"dijit/_WidgetBase",
 	"dijit/_WidgetsInTemplateMixin",
-    "dojo/_base/declare",
+	"dojo/_base/declare",
+	"dojo/dom-class",
 	"dojo/_base/lang",
-    "dojo/aspect",
-    "dojo/text!./tabCrudController.html",
+	"dojo/aspect",
+	"dojo/text!./tabCrudController.html",
 	"gform/Editor",
 	"dijit/layout/StackContainer",
 	"dijit/ProgressBar",
 	"dijit/Dialog",
 	"dijit/layout/BorderContainer",
 	"dijit/layout/ContentPane"
-], function (_CrudMixin, Delete, Discard, Save, _TemplatedMixin, _WidgetBase, _WidgetsInTemplateMixin, declare, lang, aspect, template) {
+], function (_CrudMixin, Delete, Discard, Save, _TemplatedMixin, _WidgetBase, _WidgetsInTemplateMixin, declare, domClass, lang, aspect, template) {
 // module:
 //		gform/controller/TabCrudController
 
 
-	return declare([  _CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin ], {
+	return declare([_CrudMixin, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		// summary:
 		//		This crudController should be usd as a direct child of a TabContainer. The title of the tab is the label of the entity.
 		baseClass: "gformEditorController",
 		templateString: template,
-        showTitle:true,
-        // borderContainer: dijit/layout/BorderContainer
+		showTitle: true,
+		// borderContainer: dijit/layout/BorderContainer
 		//		direct child of this widget that supports layouting
 		borderContainer: null,
 		// container: dijit/layout/TabContainer
@@ -47,7 +48,7 @@ define([
 		},
 		_onValueChange: function (e) {
 
-			this.set("title", this.editor.getLabel()+this.editor.createBadge());
+			this.set("title", this.editor.getLabel() + this.editor.createBadge());
 		},
 		postCreate: function () {
 			this.inherited(arguments);
@@ -55,14 +56,20 @@ define([
 			this.editor.set("editorFactory", this.editorFactory);
 			this.editor.set("meta", {attributes: []});
 			this.own(aspect.after(this.editor, "onChange", lang.hitch(this, "_onValueChange")));
-            this.editor.on("state-changed", lang.hitch(this, "_onValueChange"));
-            this.on("editor-changed", lang.hitch(this, "_onEditorChange"));
+			this.editor.on("state-changed", lang.hitch(this, "_onValueChange"));
+			this.on("editor-changed", lang.hitch(this, "_onEditorChange"));
 			this._onStateChange();
+		},
+		displayError: function (message) {
+			domClass.add(this.borderContainer.domNode, "dijitHidden");
+			domClass.remove(this.message, "dijitHidden");
+			this.message.innerHTML = "<strong>" + message + "</strong>";
+
 		},
 		_onEditorChange: function () {
 			this.borderContainer.layout();
-            // TODO call editor onchange instead of the event
-            this._onValueChange();
+			// TODO call editor onchange instead of the event
+			this._onValueChange();
 		},
 		onClose: function () {
 			// danger w. robinson: possibly endless recursion ahead
@@ -94,9 +101,9 @@ define([
 				}
 			}
 		},
-        close: function() {
-            this.getParent().removeChild(this);
-        }
+		close: function () {
+			this.getParent().removeChild(this);
+		}
 
 	});
 

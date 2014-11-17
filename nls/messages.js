@@ -22,7 +22,8 @@ define({
 		"actions.duplicate.label": "duplicate",
 		"actions.duplicate.iconClass": "dijitEditorIcon dijitEditorIconCopy",
 		"actions.unsavedChanges": "Do you want to discard the pending changes?",
-		"actions.unsavedNewEntity": "Do you want to discard the new entity?"
+		"actions.unsavedNewEntity": "Do you want to discard the new entity?",
+		"validation.missingAttributes": "the schema is missing the required attributes {attributes}."
 	}),
 	ar: true,
 	de: true
