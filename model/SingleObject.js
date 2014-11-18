@@ -108,7 +108,12 @@ define([
                 if (value === true) {
                     this.updateGroup(null);
                 } else {
-                    this.initDefault(false);
+					if (this.oldValue) {
+						this.updateGroup(this.oldValue);
+					} else {
+						this.initDefault(false);
+					}
+
                 }
             }
         },
