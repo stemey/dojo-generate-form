@@ -14,10 +14,10 @@ define([ "dojo/_base/array", //
 		// tags:
 		//		deprecated
 		constructor: function (kwArgs) {
+			this.attributeFactoryMap={};
 			lang.mixin(this, kwArgs);
 		},
-		attributeFactoryMap: {
-		},
+		attributeFactoryMap:null,
 		addAttributeFactory: function (/*gform/api/AttributeFactory*/factory) {
 			// summary:
 			//		Add attributeFactory.
@@ -36,7 +36,7 @@ define([ "dojo/_base/array", //
 		},
 		getAttributeFactoryMap: function () {
 			// summary:
-			//		get the mapping of id to factoriy. 
+			//		get the mapping of id to factoriy.
 			// returns: Object
 			//		map of id to attributeFactory
 			return this.attributeFactoryMap;
@@ -45,7 +45,7 @@ define([ "dojo/_base/array", //
 			// summary:
 			//		get factory for attribute.
 			// attribute:
-			//		the attribute to find a factory for 
+			//		the attribute to find a factory for
 			// returns: gform/api/AttributeFactory
 			//		attributeFactory for attribute
 			var factory = this.attributeFactoryMap[attribute.editor] || null;
