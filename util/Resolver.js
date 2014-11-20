@@ -18,6 +18,7 @@ define([
         //		Resolver helps resolving references.
         returnNullForFailed: false,
         transformer: null,
+		refProperties: ["$ref","#ref"],
         constructor: function (kwArgs) {
             this.references = [];
             this.values = {};
@@ -88,8 +89,9 @@ define([
             if (lang.isObject(obj) || lang.isArray(obj)) {
                 for (var name in obj) {
                     if (obj.hasOwnProperty(name)) {
-                        if (name === "$ref") {
-                            var url = this.getUrlForRef(obj.$ref, baseUrl);
+						var rpIdx = this.refProperties.indexOf(name);
+                        if (rpIdx>=0) {
+                            var url = this.getUrlForRef(obj[this.refProperties[rpIdx]], baseUrl);
                             references.push(this.createReference(url, setter));
                             break;
                         } else if (name === "id") {
