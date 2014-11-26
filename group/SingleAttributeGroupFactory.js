@@ -1,12 +1,11 @@
 define([
-    './SinglePane',
-    "dojo/_base/declare",
+	"dojo/_base/declare",
     "./SingleDecoratorWidget",
     "dijit/layout/BorderContainer",
     "dojo/_base/lang",
     "../model/SingleObject"
 
-], function (SinglePane, declare, SingleDecoratorWidget, BorderContainer, lang, SingleObject) {
+], function (declare, SingleDecoratorWidget, BorderContainer, lang, SingleObject) {
 
     return declare("gform.group.SingleAttributeGroupFactory", [], {
         id: "single",
@@ -28,9 +27,9 @@ define([
                 var attributeModel = modelHandle.getModel(attribute.code);
                 var attributeFactory = this.editorFactory.getAttributeFactory(attribute, attributeModel, ctx);
                 var attributeEditor = attributeFactory.create(attribute, attributeModel, ctx);
-                var widget = new SinglePane({class: "singleDecorator", gutters: false});
-                var decorator = new SingleDecoratorWidget({region: 'top', meta: attribute, modelHandle: modelHandle});
-                //widget.addChild(decorator);
+				var widget=new BorderContainer({gutters:false, class:"singleDecorator"});
+                var decorator = new SingleDecoratorWidget({meta: attribute, modelHandle: modelHandle, region:'top'});
+				widget.addChild(decorator);
                 if (attributeEditor !== null) {
                     attributeEditor.region = "center";
                     widget.addChild(attributeEditor);
