@@ -39,6 +39,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
             return typeCode == this.getType(attribute);
         },
         getComplexType: function (attribute, model) {
+			if (attribute.group) {
+				return attribute.group;
+			}
             if (!attribute.groups) {
                 throw new Error("not a complex attribute");
             }
@@ -58,19 +61,19 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
             return this.isSingle(meta) && this.isComplex(meta);
         },
         isSingle: function (meta) {
-            return !meta.array && !meta.map;
+            return !this.isMap(meta) && !this.isArray(meta);
         },
         isPrimitive: function (meta) {
-            return !meta.validTypes;
+            return !meta.groups && !meta.group;
         },
         isArray: function (meta) {
-            return meta.type == "array";
+            return meta.type === "array";
         },
         isMap: function (meta) {
-            return meta.type = "map";
+            return meta.type === "map";
         },
         isSingleObject: function (meta) {
-            return meta.attributes;
+            return meta.attributes || meta.group;
         },
         isMultiObject: function (meta) {
             return  meta.type == "multi-object" || meta.groups;
@@ -84,17 +87,31 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
             delete element.array;
             return element;
         },
-        collectAttributes: function (schema) {
+		collectAttributesWithoutAdditional: function (schema, excludedProperties) {
+			if (!excludedProperties) {
+				excludedProperties=[];
+			}
+			if (schema.additionalProperties) {
+				excludedProperties.push(schema.additionalProperties.code);
+			}
+			return this.collectAttributes(schema,excludedProperties);
+		},
+        collectAttributes: function (schema, excludedProperties) {
+			if (!excludedProperties) {
+				excludedProperties=[];
+			}
             if (schema.attributes) {
-                return schema.attributes;
-            } else if (schema.attribute) {
+                return schema.attributes.filter(function(attribute) {
+					return excludedProperties.indexOf(attribute.code)<0;
+				});
+            } else if (schema.attribute && excludedProperties.indexOf(schema.attribute.code)<0) {
                 return [schema.attribute];
             } else if (schema.group) {
-                return this.collectAttributes(schema.group);
+                return this.collectAttributes(schema.group, excludedProperties);
             } else if (schema.groups) {
                 var attributes = [];
                 schema.groups.forEach(function (group) {
-                    attributes=attributes.concat(this.collectAttributes(group));
+                    attributes=attributes.concat(this.collectAttributes(group, excludedProperties));
                 }, this);
                 return attributes;
             } else {
