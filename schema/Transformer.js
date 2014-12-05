@@ -4,8 +4,12 @@ define(['dojo/_base/lang', 'dojo/_base/url', 'dojo/io-query', 'dojo/_base/declar
 //		gform/schema/Transformer
 
         return declare('Transformer', [], {
-            replacements: {},
-            transforms: {},
+            replacements: null,
+            transforms: null,
+			constructor: function() {
+				this.replacements= {};
+				this.transforms= {};
+			},
             add: function (transformer) {
                 this.transforms[transformer.id] = transformer;
             },
