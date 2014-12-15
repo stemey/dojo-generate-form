@@ -240,7 +240,16 @@ define([
             if (path.length === 0) {
                 return this;
             } else {
-                return this._getModelByPath(path[0], path.slice(1));
+				var idx =0;
+				var model =this;
+				while(path[idx++]==="") {
+					model=model.parent;
+				}
+				if (model===this) {
+					return this._getModelByPath(path[0], path.slice(1));
+				}else{
+					return model.getModelByPath(path.slice(idx-1));
+				}
             }
 
         },
@@ -274,17 +283,6 @@ define([
         },
         onTouch: function () {
             this.set("touched", true);
-        },
-        watchPath: function (jsonPath, cb) {
-            var path = new Path(jsonPath);
-            var oldValue = path.get(modelHandle);
-            return aspect.after(this, "onChange", function () {
-                var value = path.get(modelHandle);
-                if (value !== oldValue) {
-                    cb(oldValue, value);
-                }
-                oldValue = value;
-            });
         },
         validate: function (force) {
             if (this.isEmpty()) {
@@ -350,8 +348,12 @@ define([
             }, this);
             return {a: errorsToAdd, r: errorsToRemove};
         },
-        watchPath: function (path, watcher) {
-            return this.getModelByPath(path).watch(watcher);
+        watchPath: function (path, watcher, name) {
+			if (name) {
+				return this.getModelByPath(path).watch(name, watcher);
+			}else{
+				return this.getModelByPath(path).watch(watcher);
+			}
         },
         getMessage: function (message, internal) {
             // summary:

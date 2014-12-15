@@ -59,7 +59,17 @@ define(['dojo/_base/lang',
             var model = so.getModelByPath("booleanP");
             assertEqual("booleanP", model.getPath());
         },
-        function testNull() {
+		function testWatchPath() {
+			createModel();
+			so.update(object);
+			var called=false;
+			var model = so.watchPath("numberP", function() {
+				called=true;
+			});
+			so.getModelByPath("numberP").set("value",123)
+			assertEqual(true,called);
+		},
+		function testNull() {
             createModel();
             so.update(null);
             var plainValue = so.getPlainValue(so);

@@ -1,8 +1,9 @@
-define([ "dojo/_base/array",
+define(['dojo/when',
+	"dojo/_base/array",
 	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"dojo/i18n!../nls/messages"
-], function (array, lang, declare, messages) {
+], function (when, array, lang, declare, messages) {
 
 	return declare([], {
 
@@ -11,12 +12,14 @@ define([ "dojo/_base/array",
 		},
 
 		_onMappedAttributeChanged: function (modelHandle, select, attribute) {
-			var newOptions = this._createMappedOptions(modelHandle, attribute);
-			//var value = 
-			var value = select.get("value");
-			select.removeOption(select.get("options"));
-			select.addOption(newOptions);
-			select.set("value", value);
+			var value = this._createMappedOptions(modelHandle, attribute);
+			when(value).then(function(newOptions){
+				//var value =
+				var value = select.get("value");
+				select.removeOption(select.get("options"));
+				select.addOption(newOptions);
+				select.set("value", value);
+			})
 		},
 
 		_watchMappedAttribute: function (modelHandle, attribute, select) {

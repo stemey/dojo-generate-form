@@ -16,7 +16,7 @@ define([
         isEmpty: function () {
             return this.isNull;
         },
-        watchPath: function (path, watcher) {
+        watchPathXX: function (path, watcher) {
             // TODO only works for path being a simple attribute
             return this.getModel(path).watch(watcher);
         },
@@ -162,9 +162,10 @@ define([
 
         },
         _getModelByPath: function (idx, path) {
-            if (this.isNull) {
-                return null;
-            }
+
+            //if (this.isNull) {
+			//    return null;
+			//}
             var model = this.getModel(idx);
             if (!model) {
                 return null;

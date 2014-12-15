@@ -25,6 +25,7 @@ define([
         },
         push: function (value) {
             var model = this.elementFactory(value);
+			model.parent = this;
             this.value.push(model);
             if (this.initialized) model.init();
             return model;

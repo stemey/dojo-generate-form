@@ -1,10 +1,11 @@
 define([
+	'dojo/when',
 	"../model/MappedSelectModel",
 	"dojo/_base/declare",
 	"dojox/mvc/at",
 	"dijit/form/Select",
 	"./_MappedSelectAttributeFactoryBase"
-], function (MappedSelectModel, declare, at, Select, _MappedSelectAttributeFactoryBase) {
+], function (when, MappedSelectModel, declare, at, Select, _MappedSelectAttributeFactoryBase) {
 
 	return declare([ _MappedSelectAttributeFactoryBase ], {
 		id: "mapped-select",
@@ -13,14 +14,19 @@ define([
 			return attribute.type === "string" && attribute.mapped_attribute && attribute.mapped_values;
 		},
 
-		create: function (attribute, modelHandle) {
-			var options = this._createMappedOptions(modelHandle, attribute);
-            modelHandle.options=options;
+		create: function (attribute, modelHandle, ctx) {
+			var initialValue = modelHandle.getPlainValue();
 			var select = new Select({
 				value: at(modelHandle, "value"),
-				options: modelHandle.options,
+				options:[],
 				maxHeight: -1
 			});
+			var options = this._createMappedOptions(modelHandle, attribute);
+			when(options).then(function(newOptions) {
+				modelHandle.options=newOptions;
+				select.set("options", modelHandle.options);
+				select.set("value",initialValue);
+			})
 
 			modelHandle.watch("options", function () {
 				select.set("options", modelHandle.options);
