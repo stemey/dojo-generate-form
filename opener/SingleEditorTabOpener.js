@@ -42,7 +42,13 @@ define([
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		createController: function(props) {
+		/**
+		 *
+		 * @param props the general props for _CrudMixin
+		 * @param options params of editSingle,createSingle,..
+		 * @returns {TabCrudController}
+		 */
+		createController: function(props, options) {
 			var controller = new TabCrudController(props);
 			lang.mixin(controller, this.controllerConfig);
 			return controller;
@@ -63,7 +69,7 @@ define([
 			props.container = this.tabContainer;
 			props.dialog = this.confirmDialog;
 			//props.ctx = this.ctx;
-			var controller = this.createController(props);
+			var controller = this.createController(props, options);
 			controller.setCtx(this.ctx);
 			this.tabContainer.addChild(controller);
 			this.tabContainer.selectChild(controller);
@@ -88,6 +94,9 @@ define([
 			//		must provide the schemaUrl to load the gform schema from.
 			//		Must also provide the url to the resource edited. Options may provide EditorFactory.
 			var wid = "tab_editor_" + options.url+":"+options.id;
+			if (options.schemaUrl) {
+				wid+=":"+options.schemaUrl;
+			}
 			var controller = registry.byId(wid);
 
             var singleUrl = restHelper.compose(options.url, options.id);
@@ -108,7 +117,7 @@ define([
 				props.container = this.tabContainer;
 				props.dialog = this.confirmDialog;
 				//props.ctx = this.ctx;
-				controller = this.createController(props);
+				controller = this.createController(props, options);
 				controller.setCtx(this.ctx);
 
 				this.tabContainer.addChild(controller);
