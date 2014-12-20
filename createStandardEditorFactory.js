@@ -34,6 +34,7 @@ define([
 //"./group/AttributeListWidget",
     "./group/ColumnsGroupFactory",
     "./group/SingleAttributeGroupFactory",
+	"./group/VerticalGroupFactory",
     "./list_embedded/RepeatedEmbeddedAttributeFactory",
     "./list_embedded/RepeatedMultiEmbeddedAttributeFactory",
     "./map_embedded/RepeatedEmbeddedAttributeFactory",
@@ -44,7 +45,7 @@ define([
 ], function (EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
              TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, SelectStoreAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, BinaryAttributeFactory, AnyTextAreaAttributeFactory, //MappedContentPaneFactory,
              TextareaAttributeFactory, RichtextAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
-             ColumnsGroupFactory, SingleAttributeGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
+             ColumnsGroupFactory, SingleAttributeGroupFactory, VerticalGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
 // module:
 //		gform/createStandardEditorFactory
 
@@ -61,6 +62,7 @@ define([
         editorFactory.addGroupFactory("titlepane", new TitlePaneGroupFactory({editorFactory: editorFactory}));
         editorFactory.addGroupFactory("columnsgroup", new ColumnsGroupFactory({editorFactory: editorFactory}));
         editorFactory.addGroupFactory("single", new SingleAttributeGroupFactory({editorFactory: editorFactory}));
+		editorFactory.addGroupFactory("verticalgroup", new VerticalGroupFactory({editorFactory: editorFactory}));
 
         editorFactory.set("defaultGroupFactory", new GroupFactory({editorFactory: editorFactory}));
 

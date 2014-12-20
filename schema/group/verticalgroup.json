@@ -1,0 +1,25 @@
+{
+	"code": "verticalgroup",
+	"attributes": [
+		{
+			"$ref":"properties/code.json"
+		},
+		{
+			"$ref":"properties/label.json"
+		},
+		{
+			"$ref":"properties/labelAttribute.json"
+		},
+		{
+			"code": "groups",
+			"type": "array",
+			"description": "The groups are displayed in a list. A list of Titlepanes constitutes an accordion.",
+			"typeProperty": "editor",
+			"groups": {
+				"$ref": "../groups.json?transforms=nocode&transforms=nolabel&transforms=add-region"
+			}
+
+		}
+	]
+}
+

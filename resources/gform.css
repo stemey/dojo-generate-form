@@ -54,7 +54,7 @@ body,html {
 }
 
 .singleDecorator {
-    margin: 0.8em
+    padding: 5px;
 }
 
 .editor.row {

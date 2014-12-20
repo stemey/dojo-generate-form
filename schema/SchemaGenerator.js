@@ -1,5 +1,6 @@
 define([
-    'dojo/_base/json',
+	'./transforms/AddRegionTransformer',
+	'dojo/_base/json',
     '../util/Resolver',
     './Transformer',
     "dojo/_base/declare",
@@ -8,7 +9,7 @@ define([
     './transforms/RemoveFirstGroupTransformer',
     './transforms/RemovePropertyFromGroupTransformer',
     './transforms/RemovePropertyFromGroupsTransformer'
-], function (json, Resolver, Transformer, declare, group, FilterAttributesTransformer, RemoveFirstGroupTransformer, RemovePropertyFromGroupTransformer, RemovePropertyFromGroupsTransformer) {
+], function (AddRegionTransformer, json, Resolver, Transformer, declare, group, FilterAttributesTransformer, RemoveFirstGroupTransformer, RemovePropertyFromGroupTransformer, RemovePropertyFromGroupsTransformer) {
 
 
     return declare("SchemaGenerator", [], {
@@ -35,6 +36,8 @@ define([
             //t["./group/listpane-nocode.json"] = {url: "./group/listpane.json", execute: removeCodeFromSingle};
             t.add(new RemovePropertyFromGroupTransformer({id: "nocode-group", deleteCodes: ["code"]}));
             //t["./groups-nocode-nolabel.json"] = {url: "./groups.json", execute: removeCodeAndLabel};
+			t.add(new RemovePropertyFromGroupTransformer({id: "nocode-group", deleteCodes: ["code"]}));
+			t.add(new AddRegionTransformer({id: "add-region"}));
             return t;
         }
 

@@ -61,7 +61,9 @@ define([
 
 		postCreate: function () {
 			this.own(aspect.after(this.schemaSelector, "onChange", lang.hitch(this, this.onSchemaChange)));
-			this.progressBar.set("duration",0);
+			if (this.progressBar) {
+				this.progressBar.set("duration",0);
+			}
 		},
 
 		invokeIfOk: function (callback) {

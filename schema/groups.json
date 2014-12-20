@@ -18,6 +18,9 @@
 		"$ref": "./group/listgroup.json"
 	},
 	{
+		"$ref": "./group/verticalgroup.json"
+	},
+	{
 		"$ref": "./group/list.json"
 	}
 
