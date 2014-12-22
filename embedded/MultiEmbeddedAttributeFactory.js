@@ -4,7 +4,7 @@ define([
 	"./GroupPanelWidget",
 	"../model/MultiObject"
 ], function (lang, declare, GroupPanelWidget, MultiObject) {
-// module: 
+// module:
 //		gform/embedded/MultiEmbeddedAttributeFactory
 	return declare([], {
 		id: "multi-object",
@@ -19,6 +19,7 @@ define([
 		create: function (attribute, modelHandle,ctx) {
 			var panelWidget = new GroupPanelWidget({
 				"modelHandle": modelHandle,
+				"nullLabel":attribute.nullLabel,
 				"groups": attribute.groups,
 				nullable: attribute.required !== true,
 				editorFactory: this.editorFactory,
