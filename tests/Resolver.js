@@ -77,7 +77,7 @@ define(['dojo/_base/declare',
 			doh.assertEqual(2, refs.length);
 			//doh.assertEqual(0, resolver.values);
 			var p = resolver.finish(refs, "");
-			resolver.p["meta/externalSchema.json"].resolve("test");
+			resolver.p["meta/externalSchema.json"].resolve('"test"');
 			doh.assertEqual(true, p.isResolved());
 			resolver.callSetters();
 			doh.assertEqual("test", schemaWithExternalRef.car);
@@ -92,7 +92,7 @@ define(['dojo/_base/declare',
           	var p = resolver.resolve(schemaWithTranform, "");
 			doh.assertEqual(false, p.isResolved());
 			var original = {x: "test"};
-			resolver.p["original.json"].resolve(original);
+			resolver.p["original.json"].resolve(JSON.stringify(original));
 			doh.assertEqual(true, p.isResolved());
 			doh.assertEqual("test", schemaWithTranform.car.x);
 
@@ -102,9 +102,9 @@ define(['dojo/_base/declare',
 			var resolver = new LocalResolver();
 			var p = resolver.resolve(man, "man.json");
 			doh.assertEqual(false, p.isResolved());
-			resolver.p["meta/car.json"].resolve(car);
+			resolver.p["meta/car.json"].resolve(JSON.stringify(car));
 			doh.assertEqual(false, p.isResolved());
-			resolver.p["meta/engine.json"].resolve(engine);
+			resolver.p["meta/engine.json"].resolve(JSON.stringify(engine));
 			doh.assertEqual(true, p.isResolved());
 			doh.assertEqual(3, resolver.references.length);
 			doh.assertEqual(man, man.car.engine.creator);
