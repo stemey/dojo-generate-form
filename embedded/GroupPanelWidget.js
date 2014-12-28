@@ -64,7 +64,7 @@ define(["dojo/_base/array", //
 			this.panelModel = new Stateful({
 				title: "",
 				validTypes: this.validTypeOptions,
-				type: currentType
+				type: currentType || "null"
 			});
 
 			this.typeStack = new StackContainer({doLayout: false});
