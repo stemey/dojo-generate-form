@@ -62,7 +62,7 @@ define([
 		postCreate: function () {
 			this.own(aspect.after(this.schemaSelector, "onChange", lang.hitch(this, this.onSchemaChange)));
 			if (this.progressBar) {
-				this.progressBar.set("duration",0);
+				this.progressBar.set("duration", 0);
 			}
 		},
 
@@ -252,10 +252,10 @@ define([
 			this.set("state", "edit");
 			this.displayError("error while loading entity");
 		},
-		startConfirmDialog: function (message, callback) {
+		startConfirmDialog: function (message, callback, title) {
 			// summary:
 			//		is called to signal pending changes to user.
-			this.dialog.show({message: message, callback: callback});
+			this.dialog.show({title: title, message: message, callback: callback});
 		},
 		_execute: function (promise, command) {
 			var me = this;

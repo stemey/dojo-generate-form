@@ -23,6 +23,7 @@ define({
 		"actions.duplicate.iconClass": "dijitEditorIcon dijitEditorIconCopy",
 		"actions.unsavedChanges": "Do you want to discard the pending changes?",
 		"actions.unsavedNewEntity": "Do you want to discard the new entity?",
+		"actions.deleteDialog": "Do you want to delete the entity?",
 		"validation.missingAttributes": "the schema is missing the required attributes {attributes}."
 	}),
 	ar: true,

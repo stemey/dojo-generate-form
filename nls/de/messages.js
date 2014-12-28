@@ -20,6 +20,7 @@ define({
     "actions.close.iconClass": "dijitEditorIcon dijitEditorIconCancel",
 	"actions.duplicate.label": "dupizieren",
 	"actions.duplicate.iconClass": "dijitEditorIcon dijitEditorIconCopy",
+	"actions.deleteDialog": "Möchten Sie die Entität wirklich löschen?",
 	"actions.unsavedChanges": "Möchten Sie die Änderungen verwerfen?",
 	"actions.unsavedNewEntity": "Möchten Sie die Änderungen verwerfen?"
 });

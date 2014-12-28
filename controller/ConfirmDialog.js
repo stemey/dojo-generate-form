@@ -1,4 +1,5 @@
 define([
+	'dojo/i18n!dijit/nls/common',
 	"dojo/_base/declare",
 	"dojo/_base/lang",
 	"dijit/_WidgetBase",
@@ -7,7 +8,7 @@ define([
 	"dojo/text!./confirmDialog.html",
     "dijit/form/Button",
     "dijit/Dialog"
-], function (declare, lang, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template) {
+], function (common, declare, lang, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template) {
 // module:
 //		gform/controller/ConfirmDialog
 
@@ -19,7 +20,7 @@ define([
 		// callback: function
 		//		a function with a boolean parameter indicating the user's decision.
 		callback: null,
-		// dialogMessage: 
+		// dialogMessage:
 		//		an html element whose innerHTML displays the question to the user.
 		dialogMessage: null,
 		// dialogYesButton:
@@ -31,6 +32,10 @@ define([
 		// dialog: dijit/Dialog
 		//		the dialog
 		dialog: null,
+		postMixInProperties: function() {
+			this.yesLabel=common["buttonOk"];
+			this.noLabel=common["buttonCancel"];
+		},
 		postCreate: function () {
 			this.dialogYesButton.on("click", lang.hitch(this, "confirm"));
 			this.dialogNoButton.on("click", lang.hitch(this, "cancel"));
@@ -44,6 +49,7 @@ define([
 			//		- callback
 			this.callback = options.callback;
 			this.dialogMessage.innerHTML = options.message;
+			this.dialog.set("title", options.title || "")
 			this.dialog.show();
 		},
 		onClose: function () {
