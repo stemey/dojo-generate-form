@@ -57,7 +57,7 @@ define([
         },
         initDefault: function (setOldValue) {
             var typeCode = this.schema.groups[0].code;
-            this.currentTypeCode = typeCode;
+            this.set("currentTypeCode", typeCode)	;
             this.getGroup(typeCode).initDefault();
             if (setOldValue !== false) {
                 this.set("oldValue", this.getPlainValue());
