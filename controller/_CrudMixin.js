@@ -373,7 +373,7 @@ define([
 				this.schemaSelector.domNode.style.visibility = "hidden";
 			}
 		},
-		createNew: function (schemaUrl, createCallback) {
+		createNew: function (schemaUrl, createCallback, value) {
 			// summary:
 			//		display empty editor
 			// schemaUrl: String
@@ -381,7 +381,7 @@ define([
 			// callback: function
 			//		callback will be called once the entity is saved. id will be passed as single parameter.
 			this._hideSchemaSelector();
-			this._createNewInternal(schemaUrl, createCallback);
+			this._createNewInternal(schemaUrl, createCallback, value);
 		},
 		_createNewInternal: function (schemaUrl, createCallback, value) {
 			this.createCallback = createCallback;
