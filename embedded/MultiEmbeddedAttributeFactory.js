@@ -31,11 +31,6 @@ define([
 		createModel: function (schema, plainValue) {
 			//var groups = [];
             var validators = this.editorFactory.getModelValidators(schema);
-//			schema.groups.forEach(function (group) {
-//				var model = this.editorFactory.createGroupModel(group);
-//				model.update({});
-//				groups.push(model);
-//			}, this);
 			var model = MultiObject.create({schema: schema, editorFactory:this.editorFactory});
             model.validators=validators;
 			model.update(plainValue);
