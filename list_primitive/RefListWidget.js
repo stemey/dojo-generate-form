@@ -15,7 +15,8 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "./EmbeddedListWidget",
 				url: this.attribute.element.url,
 				schemaUrl: this.attribute.element.schemaUrl,
 				editorFactory: this.editorFactory,
-				callback: lang.hitch(this, "onCreated")
+				callback: lang.hitch(this, "onCreated"),
+				value:this.createValue ? this.createValue() : undefined
 			});
 		},
 		onCreated: function (id) {

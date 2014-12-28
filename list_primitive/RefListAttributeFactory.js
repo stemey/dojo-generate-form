@@ -9,7 +9,7 @@ define([
 	"./RepeatedAttributeWidget",
 	"../widget/MvcDndSource"
 ], function (PrimitiveModel, lang, aspect, declare, EmbeddedListWidget, PrimitiveListAttributeFactory, RefListWidget, RepeatedAttributeWidget, DndSource) {
-// module: 
+// module:
 //		gform/list_primitive/RefListAttributeFactory
 
 	return declare([PrimitiveListAttributeFactory], {
@@ -25,9 +25,29 @@ define([
 			if (modelHandle.value == null) {
 				throw new "provide a default value";
 			}
-			var childAttribute = attribute.element;
 
-            var refConverter = this.editorFactory.getConverter(attribute.element, ctx);
+			// TODO rather move to model
+			var childAttribute = attribute.element;
+			var createValue;
+			if (attribute.initialValue) {
+				if (!childAttribute.initialValue) {
+					childAttribute.initialValue = attribute.initialValue;
+				}
+				createValue = function () {
+					return attribute.initialValue;
+				};
+			} else if (attribute.initialValueFactory) {
+				if (!childAttribute.initialValueFactory) {
+					childAttribute.initialValueFactory = attribute.initialValueFactory;
+				}
+				createValue = function () {
+					return this.editorFactory.getFunction(attribute.initialValueFactory)(modelHandle, ctx);
+				}
+			}
+
+
+			var refConverter = this.editorFactory.getConverter(attribute.element, ctx);
+
 
 			var select = new EmbeddedListWidget({
 				target: modelHandle,
@@ -35,12 +55,13 @@ define([
 				childAttribute: childAttribute,
 				editorFactory: this.editorFactory,
 				opener: ctx.opener,
-                converter: refConverter
+				converter: refConverter,
+				createValue:createValue
 			});
 
 
-
-            var widgetList = new RefListWidget();
+			// TODO names of the two widgets are mixed up
+			var widgetList = new RefListWidget();
 			widgetList.set("partialRebuild", true);
 			widgetList.set("children", modelHandle.value);
 			widgetList.set("childClz", RepeatedAttributeWidget);
@@ -49,7 +70,7 @@ define([
 				_relTargetProp: "modelHandle",
 				editorFactory: this.editorFactory,
 				ctx: ctx,
-                converter: refConverter
+				converter: refConverter
 			});
 			if (attribute.reorderable !== false) {
 				var copy = function (original) {
@@ -60,11 +81,16 @@ define([
 					return newMh;
 				};
 				aspect.after(widgetList, "startup", function () {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});
+					new DndSource(widgetList.domNode, {
+						copyFn: copy,
+						copyOnly: false,
+						singular: true,
+						withHandles: true
+					});
 				});
 			}
 			select.addChild(widgetList);
-            return select;
+			return select;
 
 		}
 	});

@@ -1,4 +1,4 @@
-define([ "dojo/_base/lang",
+define(["dojo/_base/lang",
 	"dojo/_base/declare",
 	"dojo/aspect",
 	"dojo/when",
@@ -11,12 +11,12 @@ define([ "dojo/_base/lang",
 //  module:
 //		gform/primitive/RefSelect
 
-	return declare([ _WidgetBase,
-		_TemplatedMixin, _WidgetsInTemplateMixin ], {
+	return declare([_WidgetBase,
+		_TemplatedMixin, _WidgetsInTemplateMixin], {
 		//  description:
 		//		RefSelect displays a reference in a dijit/FilteringSelect. Editing the selected reference in
 		//		another editor is supported via its opener. Creating a new entity and associating it
-		//		with the current attribute is supported in the same way. 
+		//		with the current attribute is supported in the same way.
 		constructor: function (kwargs) {
 			lang.mixin(this, kwargs);
 		},
@@ -25,10 +25,10 @@ define([ "dojo/_base/lang",
 		//		the opener manages the opening of another editor.
 		opener: null,
 
-        // openerParams:
-        //      single typed: schemaUrl and editorFactory
-        //      multi typed: schemaUrls, typeProperty and editorFactory
-        openerParams:null,
+		// openerParams:
+		//      single typed: schemaUrl and editorFactory
+		//      multi typed: schemaUrls, typeProperty and editorFactory
+		openerParams: null,
 		// filteringSelect:
 		//		the FilteringSelect.
 		filteringSelect: null,
@@ -62,7 +62,7 @@ define([ "dojo/_base/lang",
 			this.storeListener = aspect.after(select.store, "put", function (result, args) {
 				when(result).then(function (id) {
 					var entity = args[0];
-					if (id+"" === "" + select.get("value")) {
+					if (id + "" === "" + select.get("value")) {
 						select.set("item", entity);
 					}
 				});
@@ -86,10 +86,10 @@ define([ "dojo/_base/lang",
 			//		open the selected reference in a separate editor.
 			var ref = this.filteringSelect.get("value");
 			//var url = (this.meta.url || "") + "/" + ref;
-            var params = {};
-            lang.mixin(params, this.openerParams);
-            params.url=this.meta.url;
-            params.id=ref;
+			var params = {};
+			lang.mixin(params, this.openerParams);
+			params.url = this.meta.url;
+			params.id = ref;
 
 			this.opener.openSingle(params);
 		},
@@ -97,10 +97,12 @@ define([ "dojo/_base/lang",
 			//  description:
 			//		open a new reference in a separate editor.
 
-            var params = {};
-            lang.mixin(params, this.openerParams);
-            params.url= this.meta.url;
-            params.callback= lang.hitch(this, "onCreated");
+
+			var params = {};
+			lang.mixin(params, this.openerParams);
+			params.url = this.meta.url;
+			params.callback = lang.hitch(this, "onCreated");
+			params.value = this.openerParams.createValue ? this.openerParams.createValue() : undefined
 			this.opener.createSingle(params);
 		},
 		onCreated: function (id) {
