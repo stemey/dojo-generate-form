@@ -6,9 +6,8 @@ define([
 	"dojox/mvc/WidgetList",
 	"./RepeatedAttributeWidget",
 	"../widget/MvcDndSource",
-	"../model/ArrayModel",
-	"../model/PrimitiveModel"
-], function (lang, aspect, declare, EmbeddedListWidget, WidgetList, RepeatedAttributeWidget, DndSource, ArrayModel, PrimitiveModel) {
+	"../model/ArrayModel"
+], function (lang, aspect, declare, EmbeddedListWidget, WidgetList, RepeatedAttributeWidget, DndSource, ArrayModel) {
 
 	return declare([], {
 		id: "primitive-array",
