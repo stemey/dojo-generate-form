@@ -16,13 +16,15 @@ define([
     return declare("gform.util.Resolver", [], {
         // summary:
         //		Resolver helps resolving references.
+		plainPattern:null,
         returnNullForFailed: false,
         transformer: null,
 		refProperties: ["$ref","#ref"],
         constructor: function (kwArgs) {
-            this.references = [];
+            this.plainPattern=/html$/;
+			this.references = [];
             this.values = {};
-            lang.mixin(this, kwArgs);
+			lang.mixin(this, kwArgs);
 
         },
         baseUrl: "",
@@ -191,14 +193,14 @@ define([
             var deferred = new Deferred();
             var request = this._load(url);
             //console.debug("loading " + originalUrl);
-            request.then(lang.hitch(this, "onLoaded", newBaseUrl, deferred)).otherwise(lang.hitch(this, "onLoadFailed", url, newBaseUrl, deferred));
+            request.then(lang.hitch(this, "onLoaded", newBaseUrl, deferred, url)).otherwise(lang.hitch(this, "onLoadFailed", url, newBaseUrl, deferred));
 
 
             this.values[originalUrl] = deferred.promise;
             return deferred.promise;
         },
         _load: function (url) {
-            return xhr(url, {handleAs: "json", method: "GET"});
+			return xhr(url, {method: "GET"});
         },
         onLoadFailed: function (url, newBaseUrl, deferred, e) {
             //console.debug("reject " + url, e);
@@ -209,16 +211,22 @@ define([
             }
 
         },
-        onLoaded: function (newBaseUrl, deferred, resolvedRef) {
+        onLoaded: function (newBaseUrl, deferred, url, response) {
+			var data;
+			if (url.match(this.plainPattern)) {
+				deferred.resolve(response);
+			} else{
+				var resolvedRef=JSON.parse(response);
+				var dependentPromise = this.resolveMore(resolvedRef, newBaseUrl);
+				when(dependentPromise).then(function () {
+					deferred.resolve(resolvedRef);
+				}).otherwise(function (e) {
+						//console.debug("rejected dependent ", e);
+						deferred.reject();
+					}
+				);
+			}
 
-            var dependentPromise = this.resolveMore(resolvedRef, newBaseUrl);
-            when(dependentPromise).then(function () {
-                deferred.resolve(resolvedRef);
-            }).otherwise(function (e) {
-                    //console.debug("rejected dependent ", e);
-                    deferred.reject();
-                }
-            );
 
         }
 
