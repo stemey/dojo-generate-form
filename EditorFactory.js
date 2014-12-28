@@ -26,10 +26,12 @@ define([  //
 		//		to value change events.
 		convertersById: null,
 		convertersByType: null,
+		functions:null,
 		constructor: function () {
 			this.groupFactories = {};
 			this.convertersById = {};
 			this.convertersByType = {};
+			this.functions={};
 			this.decoratorFactory = new DecoratorFactory();
 			this.addConverterForType(urlToIdConverter, "ref");
 			this.addConverterForType(urlToIdConverter, "multi-ref");
@@ -274,6 +276,12 @@ define([  //
 		},
 		addCtrValidator: function (id, validator) {
 			this.constructorValidators[id] = validator;
+		},
+		putFunction: function(id,fn) {
+			this.functions[id]=fn;
+		},
+		getFunction: function(id) {
+			return this.functions[id];
 		}
 
 	});
