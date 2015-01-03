@@ -1,0 +1,28 @@
+{
+	"code": "anyAce",
+	"attributes": [
+		{
+			"$ref": "properties/code.json"
+		},
+		{
+			"$ref": "properties/label.json"
+		},
+		{
+			"$ref": "properties/description.json"
+		},
+		{
+			"$ref": "properties/required.json"
+		},
+		{
+			"$ref": "properties/converter.json"
+		},
+		{
+			"code": "type",
+			"type": "string",
+			"visible": true,
+			"required": true,
+			"values": ["any"]
+		}
+	]
+}
+

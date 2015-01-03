@@ -28,7 +28,7 @@ define([
             if (converter) {
                 props.value.transform(converter);
             }
-            props.state = at(modelHandle, "state");
+			props.state = at(modelHandle, "state");
             props.message = at(modelHandle, "message");
             dijitHelper.copyDijitProperties(attribute, props);
             dijitHelper.copyProperty("cols", attribute, props);

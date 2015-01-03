@@ -87,9 +87,9 @@ define(['dojo/_base/declare',
 		function testByUrlTransform() {
 			var resolver = new LocalResolver();
 			resolver.transformer = new Transformer();
-            resolver.transformer.replace("transformed.json","original.json");
+			resolver.transformer.replace("transformed.json","original.json");
 
-          	var p = resolver.resolve(schemaWithTranform, "");
+			var p = resolver.resolve(schemaWithTranform, "");
 			doh.assertEqual(false, p.isResolved());
 			var original = {x: "test"};
 			resolver.p["original.json"].resolve(JSON.stringify(original));
