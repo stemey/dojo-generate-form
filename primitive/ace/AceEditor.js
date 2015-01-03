@@ -62,6 +62,13 @@ define([ 'dijit/layout/_LayoutWidget',
                     return this.inherited(arguments);
                 }
             },
+			resize: function() {
+				var ret = this.inherited(arguments);
+				if (this.ace && this.ace.renderer) {
+					this.ace.renderer.onResize();
+				}
+				return ret;
+			},
             onBlur: function () {
                 this.set("value", this.ace.getValue());
                 // this is done aysnchronuously
