@@ -18,19 +18,32 @@ define([
 		},
 		createModel: function (meta, plainValue) {
 			var validators = this.editorFactory.getModelValidators(meta);
-			var model = new StringModel({validators: validators, required: meta.required === true, alwaysUseInvalidMessage: true, schema: meta});
+			var model = new StringModel({
+				validators: validators,
+				required: meta.required === true,
+				alwaysUseInvalidMessage: true,
+				schema: meta
+			});
 			model.update(plainValue);
 			return model;
 		},
 		create: function (attribute, modelHandle) {
 
-			var props = {
-			};
+			var props = {};
+			var width = null;
+			if (attribute.width) {
+				width = attribute.width + "px";
+			} else if (attribute.maxLength) {
+				width = attribute.maxLength + "em";
+			}
+			if (width) {
+				props.style = {width: width};
+			}
 			mixinTextboxBindings(modelHandle, props);
 			dijitHelper.copyProperty("pattern", attribute, props);
 			dijitHelper.copyDijitProperties(attribute, props);
 			var widget = new TextBox(props);
-			aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
+			widget.own(aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch")));
 			return widget;
 
 		}
