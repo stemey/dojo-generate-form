@@ -12,7 +12,6 @@ define([
 		id: "verticalgroup",
 		create: function (group, modelHandle, ctx) {
 			var listWidget = new BorderContainer({gutters:false});
-			listWidget.gutters=false;
 			for (var index = 0; index < group.groups.length; index++) {
 				var childGroup = group.groups[index];
 				var childModel = modelHandle.getModelByIndex(index);
