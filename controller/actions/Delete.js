@@ -19,6 +19,20 @@ define([
 				this.ctrl.startConfirmDialog(messages["actions.deleteDialog"], lang.hitch(this, "_onDelete"));
 			}
 		},
+		createButton: function () {
+			var button = this.inherited(arguments);
+			var ctrl=this.ctrl;
+			var stateChange = function () {
+				if (ctrl.get("state") === "create") {
+					button.set("disabled", true);
+				} else {
+					button.set("disabled", false);
+				}
+			};
+			stateChange();
+			ctrl.watch("state", stateChange);
+			return button;
+		},
 		_onDelete: function (ok) {
 			if (ok) {
 				var entity = this.ctrl.editor.get("plainValue");
