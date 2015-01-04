@@ -461,10 +461,12 @@ define([
 		},
 		reset: function () {
 			if (this.typeProperty) {
-				this.schemaSelector.set("value", this.oldType);
-				// is also triggered asynchronuosly from change event
-				this.onSchemaChange();
-				this.editor.set("plainValue", this.oldValue || this.createPlainValue(this.editor.meta));
+				this.editor.bufferChange(function () {
+					this.schemaSelector.set("value", this.oldType);
+					// is also triggered asynchronuosly from change event
+					this.onSchemaChange();
+					this.editor.set("plainValue", this.oldValue || this.createPlainValue(this.editor.meta));
+				}.bind(this));
 			} else {
 				this.editor.reset();
 			}
