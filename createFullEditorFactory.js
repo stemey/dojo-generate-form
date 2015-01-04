@@ -1,6 +1,4 @@
 define([
-
-
     './primitive/ace/AceTextAttributeFactory',
     './primitive/ace/AnyAceAttributeFactory',
     './createLayoutEditorFactory'
