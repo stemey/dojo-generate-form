@@ -24,13 +24,13 @@ define(
 						&& !attribute.array;
 				},
 				create: function (attribute, modelHandle, ctx) {
-                    var targetCreatable = attribute.disabled!==true;
-                    if (typeof attribute.targetCreatable !== "undefined") {
-                        targetCreatable = attribute.targetCreatable;
-                    }
-                    if (!attribute.schemaUrl) {
-                        targetCreatable=false;
-                    }
+					var targetCreatable = attribute.disabled !== true;
+					if (typeof attribute.targetCreatable !== "undefined") {
+						targetCreatable = attribute.targetCreatable;
+					}
+					if (!attribute.schemaUrl) {
+						targetCreatable = false;
+					}
 
 					var refConverter = this.editorFactory.getConverter(attribute, ctx);
 
@@ -38,14 +38,18 @@ define(
 					var searchProperty = attribute.searchProperty || "name";
 					var props = {};
 					dijitHelper.copyDijitProperties(attribute, props);
-					var dijitAwareConverter = makeConverterDijitAware(refConverter);
-					props.value = at(modelHandle, "value").transform(dijitAwareConverter);
+					props.value = at(modelHandle, "value");
+					var dijitAwareConverter;
+					if (refConverter) {
+						dijitAwareConverter = makeConverterDijitAware(refConverter);
+						props.value.transform(dijitAwareConverter);
+					}
 					props.message = at(modelHandle, "message");
 					props.state = at(modelHandle, "state");
 					var store;
 					if (attribute.url) {
 						store = ctx.getStore(attribute.url,
-							{target: attribute.url, idProperty: idProperty    });
+							{target: attribute.url, idProperty: idProperty});
 					} else if (attribute.values) {
 						store = new Memory({
 							data: attribute.values,
@@ -60,7 +64,9 @@ define(
 
 					dijitHelper.copyDijitProperties(attribute, props);
 					var f = new FilteringSelect(props);
-					dijitAwareConverter.dijit = f;
+					if (dijitAwareConverter) {
+						dijitAwareConverter.dijit = f;
+					}
 
 					var createValue;
 					if (attribute.initialValue) {
@@ -68,19 +74,26 @@ define(
 							return attribute.initialValue;
 						};
 					} else if (attribute.initialValueFactory) {
-						createValue = function() {
-							return this.editorFactory.getFunction(attribute.initialValueFactory)(modelHandle,ctx);
+						createValue = function () {
+							return this.editorFactory.getFunction(attribute.initialValueFactory)(modelHandle, ctx);
 						}
 					}
 
 
-					var openerParams={
-                        editorFactory: this.editorFactory,
-                        schemaUrl: attribute.schemaUrl,
-						createValue:createValue
-                    };
+					var openerParams = {
+						editorFactory: this.editorFactory,
+						schemaUrl: attribute.schemaUrl,
+						createValue: createValue
+					};
 
-					var refSelect = new RefSelect({openerParams:openerParams,targetCreatable: targetCreatable, meta: attribute, opener: ctx.opener, filteringSelect: f, editorFactory: this.editorFactory});
+					var refSelect = new RefSelect({
+						openerParams: openerParams,
+						targetCreatable: targetCreatable,
+						meta: attribute,
+						opener: ctx.opener,
+						filteringSelect: f,
+						editorFactory: this.editorFactory
+					});
 					return refSelect;
 				}
 			});
