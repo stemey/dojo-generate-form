@@ -68,7 +68,8 @@
 					runTest: function (t) {
 						registry.byId("gform_NumberTextBox_3").set("state", "Error");
 						registry.byId("gform_NumberTextBox_3").set("message", "Error");
-						registry.byId("dijit_form_Button_3").onClick();
+						var button = registry.byId("dijit_form_Button_4");
+						button.onClick();
 						doh.assertEqual(0, crudController.editor.get("errorCount"));
 					}
 				},
