@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Test</title>
+
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+	<link rel="stylesheet" href="../resources/gform.css"/>
+	<link rel="stylesheet" href="../resources/gform_layout.css"/>
+
+	<script type="text/javascript" src="dojoConfig.js"></script>
+	<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+
+	<script type="text/javascript">
+
+		require(["dojo/parser", "dojo/domReady!", "doh/runner", "gform/widget/GroupSelect", "dijit/registry"
+		], function (parser, domReady, doh, GroupSelect, registry) {
+
+			var select = new GroupSelect({options:[{group:"thegroup",label:"hallo",value:"hallo"},{label:"ll",value:"ll"},{group:"thegroup",label:"bye",value:"bye",selected:true}]});
+			select.placeAt(document.body);
+
+			doh.register("GroupSelect", [
+				{
+					name : 'select',
+					runTest : function(t) {
+
+					}
+				}
+			]);
+			doh.run();
+		});
+	</script>
+</head>
+<body class="claro">
+
+</body>
+</html>

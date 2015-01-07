@@ -58,6 +58,7 @@ define(
 			doh.registerUrl("gform.tests.primitive_mapped_checkedmultiselect", dojo.moduleUrl("gform", "tests/test_primitive_mapped_checkedmultiselect.html"));
 			doh.registerUrl("gform.tests.primitive_list", dojo.moduleUrl("gform", "tests/test_primitive_list.html"));
 			doh.registerUrl("gform.tests.primitive_list_select", dojo.moduleUrl("gform", "tests/test_primitive_list_select.html"));
+			doh.registerUrl("gform.tests.widget.groupselect", dojo.moduleUrl("gform", "tests/test_groupselect.html"));
 			doh.registerUrl("gform.tests.group_tab", dojo.moduleUrl("gform", "tests/test_group_tab.html"));
             doh.registerUrl("gform.tests.group_listpane", dojo.moduleUrl("gform", "tests/test_listpane.html"));
             doh.registerUrl("gform.tests.group_columns", dojo.moduleUrl("gform", "tests/test_group_columns.html"));

@@ -5,7 +5,9 @@ define(["dojo/_base/array", //
 	"dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
 	"dojo/text!./polymorphic_embedded_attribute.html",
 	"dijit/layout/StackContainer", "dojo/Stateful",
-	"gform/Editor", "../layout/_LayoutMixin"//
+	"../Editor",
+	"../layout/_LayoutMixin",
+	"../widget/GroupSelect"
 ], function (array, lang, domClass, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, StackContainer, Stateful, Editor, _LayoutMixin) {
 
 	return declare([_WidgetBase, _Container,
