@@ -1,6 +1,9 @@
 {
 	"code": "currencyamount",
+	"label":"currency amount",
+	"editorDescription":"Editor for currency values in a certain currency.",
 	"editor": "tab",
+	"groupLabel":"misc",
 	"example": {
 		"$ref": "example/currencyamount.json"
 	},

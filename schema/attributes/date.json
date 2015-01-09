@@ -1,6 +1,7 @@
 {
 	"code": "date",
 	"editor": "tab",
+	"groupLabel":"general",
 	"groups": [
 		{
 			"$ref": "header.json"

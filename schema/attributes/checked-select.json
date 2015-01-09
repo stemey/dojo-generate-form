@@ -1,6 +1,7 @@
 {
 	"code": "checked-select",
 	"editor": "tab",
+	"groupLabel":"general",
 	"example": {
 		"$ref": "./example/checked-select.json"
 	},

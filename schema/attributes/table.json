@@ -1,6 +1,7 @@
 {
 	"code": "table",
 	"editor": "tab",
+	"groupLabel": "collection",
 	"example": {
 		"$ref": "example/table.json"
 	},

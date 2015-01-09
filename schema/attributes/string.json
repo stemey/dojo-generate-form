@@ -1,7 +1,8 @@
 {
 	"code": "string",
 	"editor": "tab",
-	"description": "This is a textfield based on 'dijit.form.ValidationTextBox'",
+	"groupLabel":"text",
+	"groupDescription": "This is a textfield based on 'dijit.form.ValidationTextBox'",
 	"example": {
 		"$ref": "example/string.json"
 	},

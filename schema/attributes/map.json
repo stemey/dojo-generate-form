@@ -1,6 +1,7 @@
 {
 	"code": "map",
 	"editor": "tab",
+	"groupLabel": "collection",
 	"groups": [
 		{
 			"$ref": "header.json"

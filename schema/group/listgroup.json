@@ -1,5 +1,6 @@
 {
 	"code": "listgroup",
+	"editorDescription":"A vertical list of groups.",
 	"attributes": [
 		{
 			"$ref":"properties/code.json"

@@ -1,6 +1,8 @@
 {
     "code": "binary",
     "editor": "tab",
+	"editorDescription":"Upload binary data to a fileserver and store reference in this field. ",
+	"groupLabel":"misc",
     "groups": [
 
         {

@@ -1,6 +1,8 @@
 {
 	"code": "array",
 	"editor": "tab",
+	"groupLabel":"collection",
+	"editorDescription":"",
 	"example": {
 		"$ref": "example/array.json"
 	},

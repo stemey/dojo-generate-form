@@ -1,5 +1,7 @@
 {
 	"code": "primitive-map",
+	"label":"map of primitives",
+	"groupLabel": "collection",
 	"editor": "tab",
 	"groups": [
 		{

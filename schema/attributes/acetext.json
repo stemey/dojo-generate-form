@@ -1,6 +1,9 @@
 {
 	"code": "acetext",
 	"editor": "tab",
+	"label":"source code",
+	"editorDescription":"An editor for source code.",
+	"groupLabel":"text",
 	"example": {
 		"$ref": "example/acetext.json"
 	},

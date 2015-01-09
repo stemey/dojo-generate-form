@@ -1,6 +1,8 @@
 {
 	"code": "multi-table",
 	"editor": "tab",
+	"label":"multi-typed table",
+	"groupLabel": "collection",
 	"example": {
 		"$ref": "example/multi-table.json"
 	},

@@ -1,6 +1,7 @@
 {
     "code": "richtext",
-    "description": "This is a a rich text attribute. It uses 'dijit.Editor'.",
+    "editorDescription": "This is a a rich text attribute. It uses 'dijit.Editor'.",
+	"groupLabel": "text",
     "editor": "tab",
     "groups": [
         {

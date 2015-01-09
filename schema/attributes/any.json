@@ -1,5 +1,8 @@
 {
 	"code": "anyAce",
+	"label":"json",
+	"groupLabel":"misc",
+	"editorDescription":"An editor for json objects.",
 	"attributes": [
 		{
 			"$ref": "properties/code.json"

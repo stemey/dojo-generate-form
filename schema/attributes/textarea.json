@@ -1,5 +1,7 @@
 {
 	"code": "textarea",
+	"editorDescription":"A textarea that automatically expands vertically",
+	"groupLabel": "text",
 	"editor": "tab",
 	"example": {
 		"$ref": "example/string.json"

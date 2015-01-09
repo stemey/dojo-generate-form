@@ -1,6 +1,6 @@
 {
 	"code": "tab",
-	"description": "The tabgroup displays an array of groups in a 'dijit.layout.TabContainer'.",
+	"editorDescription": "The tabgroup displays an array of groups in a 'dijit.layout.TabContainer'.",
 	"attributes": [
 		{
 			"$ref": "properties/code.json"

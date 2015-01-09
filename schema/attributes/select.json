@@ -1,5 +1,6 @@
 {
 	"code": "select",
+	"groupLabel": "general",
 	"editor": "tab",
 	"example": {
 		"$ref": "./example/select.json"

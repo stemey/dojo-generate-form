@@ -1,6 +1,6 @@
 {
 	"code": "list",
-	"description": "Attributes displayed in a list.",
+	"editorDescription": "Attributes displayed in a list.",
 	"attributes": [
 		{
 			"$ref":"properties/code.json"

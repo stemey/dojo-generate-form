@@ -1,5 +1,7 @@
 {
 	"code": "multi-array",
+	"label":"multi-type array",
+	"groupLabel": "collection",
 	"editor": "tab",
 	"example": {
 		"$ref": "example/multi-array.json"

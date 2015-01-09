@@ -1,6 +1,6 @@
 {
 	"code": "titlepane",
-	"description": "The titlepane displays an array of attributes in a 'dijit.TitlePane'.",
+	"editorDescription": "The titlepane displays an array of attributes in a 'dijit.TitlePane'.",
 	"attributes": [
 		{
 			"$ref": "properties/code.json"

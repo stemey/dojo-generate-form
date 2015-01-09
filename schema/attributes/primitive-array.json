@@ -1,5 +1,7 @@
 {
+	"label": "array of primitives",
 	"code": "primitive-array",
+	"groupLabel": "collection",
 	"editor": "tab",
 	"example": {
 		"$ref": "example/primitive-array.json"

@@ -1,5 +1,7 @@
 {
 	"code": "multi-object",
+	"label":"multi-typed object",
+	"groupLabel": "embedded",
 	"editor": "tab",
 	"example": {
 		"$ref": "example/multi-object.json"

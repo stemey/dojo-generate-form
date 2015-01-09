@@ -1,6 +1,8 @@
 {
     "code": "boolean",
+	"label":"checkbox",
     "editor": "listpane",
+	"groupLabel":"general",
     "attributes": [
 
         {

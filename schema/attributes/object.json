@@ -1,5 +1,6 @@
 {
 	"code": "object",
+	"groupLabel": "embedded",
 	"editor": "tab",
 	"example": {
 		"$ref": "example/object.json"

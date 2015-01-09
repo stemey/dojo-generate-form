@@ -1,6 +1,6 @@
 {
 	"code": "listpane",
-	"description": "The listpane displays an array of attributes in a list. It is useful inside dijit layout containers because it wraps its content in a 'dijit.layout.ContentPane'.",
+	"editorDescription": "The listpane displays an array of attributes in a list. It is useful inside dijit layout containers because it wraps its content in a 'dijit.layout.ContentPane'.",
 	"attributes": [
 		{
 			"$ref":"properties/code.json"

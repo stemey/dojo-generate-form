@@ -1,5 +1,8 @@
 {
 	"code": "multi-checked-select",
+	"groupLabel": "collection",
+	"label":"select many",
+	"editorDescription":"a list of checkboxes",
 	"editor": "tab",
 	"example": {
 		"$ref": "./example/multi-checked-select.json"

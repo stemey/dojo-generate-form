@@ -1,5 +1,8 @@
 {
 	"code": "simpletextarea",
+	"label":"simple textarea",
+	"editorDescription":"a textarea with fixed columns and rows",
+	"groupLabel": "text",
 	"editor": "tab",
 	"example": {
 		"$ref": "example/simpletextarea.json"

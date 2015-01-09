@@ -1,5 +1,7 @@
 {
 	"code": "multi-ref",
+	"groupLabel": "references",
+	"label":"multi-typed",
 	"editor": "tab",
 	"description": "This is a select displaying the labels of referenced entities. The autocomplete functionality allows searching through possible entities to associate. It is based on 'dijit.form.FilteringSelect'. There are also buttons to edit the referenced entity or create a new entity in a separate editor. The location of the editor is defined by the opener in the parent editor's context. There are multiple schemata for the referenced resource. The schema is encoded in the resource's typeProperty.",
 	"example": {
