@@ -156,6 +156,10 @@ span.description.indicator {
 
 }
 
+span.indicator.groupPanel{
+	margin-left:7px;
+}
+
 /* from admin */
 .dijitContentPane div span.pageName{font-size: 16px;padding: 10px 0 10px 10px;display: block;background-color: #08298A;color: #fff;width:700px;}
 .dijitContentPane div ul li.moduleContainer{list-style-type:none;padding-top:10px;}
@@ -325,6 +329,13 @@ div.gformEditorController.loading .actions {
 	margin-top:30%;
 }
 
+/*
+override style in Select.css
+TODO make selector more specific.
+*/
+.claro .dijitSelectMenu td.dijitMenuArrowCell {
+	 display: block;
+ }
 
 
 
