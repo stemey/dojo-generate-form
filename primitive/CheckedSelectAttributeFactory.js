@@ -7,7 +7,7 @@ define([
 	"../model/PrimitiveModel"//
 ], function (at, declare, CheckedMultiSelect, createOptions, nullablePrimitiveConverter, PrimitiveModel) {
 
-	return declare([ ], {
+	return declare([], {
 		id: "checked-select",
 		handles: function (attribute) {
 			var values = attribute.values;
@@ -32,7 +32,7 @@ define([
 			return select;
 		},
 		createModel: function (meta, plainValue) {
-			var model = new PrimitiveModel();
+			var model = new PrimitiveModel({schema: meta});
 			model.update(plainValue);
 			return model;
 		}
