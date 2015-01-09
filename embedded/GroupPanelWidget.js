@@ -1,4 +1,5 @@
-define(["dojo/_base/array", //
+define(['dijit/Tooltip',
+	"dojo/_base/array", //
 	"dojo/_base/lang",//
 	"dojo/dom-class",
 	"dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
@@ -8,7 +9,7 @@ define(["dojo/_base/array", //
 	"../Editor",
 	"../layout/_LayoutMixin",
 	"../widget/GroupSelect"
-], function (array, lang, domClass, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, StackContainer, Stateful, Editor, _LayoutMixin) {
+], function (Tooltip, array, lang, domClass, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, StackContainer, Stateful, Editor, _LayoutMixin) {
 
 	return declare([_WidgetBase, _Container,
 		_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin], {
@@ -19,6 +20,7 @@ define(["dojo/_base/array", //
 		doLayout: false,
 		nullable: true,
 		shown: true,
+		tooltip: null,
 		show: function () {
 			if (!this.shown) {
 				this.shown = true;
@@ -37,23 +39,37 @@ define(["dojo/_base/array", //
 					"meta": group,
 					"editorFactory": this.editorFactory,
 					"shown": this.shown,
-					ctx: this.ctx
+					"ctx": this.ctx
 				});
 			this.typeStack.addChild(editor);
 			editor.set("doLayout", this.doLayout);
 			this.typeToGroup[typeCode] = editor;
+			this._updateDescription(this.descriptions[typeCode]);
 			return editor;
 		},
 		postCreate: function () {
-
+			this.tooltip = new Tooltip({
+				connectId: [this.descriptionNode],
+				label: ""
+			});
 			var modelHandle = this.get("modelHandle");
+			this.descriptions = {};
+			this.descriptions = {};
+			this.groups.forEach(function (group) {
+				this.descriptions[group.code] = group.editorDescription;
+			}, this);
 			this.validTypeOptions = array.map(this.groups,
 				function (validType) {
-					return {
+					var option = {
 						value: validType.code,
 						label: validType.label || validType.code
+
 					};
-				});
+					if (validType.groupLabel) {
+						option.group = validType.groupLabel;
+					}
+					return option;
+				}, this);
 			if (this.nullable) {
 				this.validTypeOptions.push({
 					label: this.nullLabel || "",
@@ -99,10 +115,12 @@ define(["dojo/_base/array", //
 				return;
 			}
 			if (newType === null) {
+				this._updateDescription(null);
 				if (this.modelHandle.currentTypeCode !== null) {
 					domClass.replace(this.typeToGroup[this.modelHandle.currentTypeCode].domNode, "dijitHidden", "dijitVisible");
 				}
 			} else {
+				this._updateDescription(this.descriptions[newType]);
 				var editor = this.typeToGroup[newType];
 				if (!editor) {
 					editor = this.initTypeEditor(newType);
@@ -110,6 +128,14 @@ define(["dojo/_base/array", //
 				domClass.replace(editor.domNode, "dijitVisible", "dijitHidden");
 				editor.show();
 				this.typeStack.selectChild(editor);
+			}
+		},
+		_updateDescription: function (description) {
+			if (description) {
+				this.descriptionNode.style.display = "initial";
+				this.tooltip.set("label", description);
+			} else {
+				this.descriptionNode.style.display = "none";
 			}
 		},
 		onTypeSelectorChanged: function (propName, oldValue, newValue) {
