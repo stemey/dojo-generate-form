@@ -7,6 +7,8 @@
 			"editor":"acetext",
             "code":"source",
             "required":true,
+			"height":"400px",
+			"width":"400px",
             "mode":"ace/mode/javascript"
         }
     ]

@@ -20,6 +20,11 @@
 			"$ref": "properties/converter.json"
 		},
 		{
+			"code": "height",
+			"type": "string",
+			"description": "The height of the editor (e.g.: '200px'). Percentage is not supported.."
+		},
+		{
 			"code": "type",
 			"type": "string",
 			"visible": true,
