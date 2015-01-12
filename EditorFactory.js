@@ -114,13 +114,17 @@ define([  //
 			//		The Widget ich contains all widgets for the attributes and groups contained in the given attribute schema.
 			return this.decoratorFactory.create(/*Object*/attribute, /*dojo/stateful*/modelHandle, decorator);
 		},
-		create: function (group, modelHandle, ctx) {
+		create: function (group, modelHandle, ctx, options) {
 			// summary:
 			//		creates a group widget.
 			// group: Object
 			//		The group schema. If no groupType property is present then the defaultGroupFactory creates the widget.
 			// modelHandle: dojo/Stateful
 			//		the modelHandle
+			// ctx: gform/Context
+			//		access to store and schema
+			// options: Object
+			//		hidden: don't load content of widget. Wait for show to be called on returned widget.
 			// return: dijit/Widget
 			//		Widget
 			if (!group) {
@@ -131,10 +135,10 @@ define([  //
 				if (groupFactory == null) {
 					throw new Error("cannot find group factory " + group.editor);
 				}
-				return groupFactory.create(group, modelHandle, ctx);
+				return groupFactory.create(group, modelHandle, ctx, options);
 			}
 			else {
-				return this.defaultGroupFactory.create(group, modelHandle, ctx);
+				return this.defaultGroupFactory.create(group, modelHandle, ctx, options);
 			}
 		},
 		getGroupFactory: function (group) {
