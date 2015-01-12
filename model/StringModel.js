@@ -1,6 +1,6 @@
 define([
-    "./PrimitiveModel",
-    "dojo/_base/declare"
+	"./PrimitiveModel",
+	"dojo/_base/declare"
 
 ], function (PrimitiveModel, declare) {
 
