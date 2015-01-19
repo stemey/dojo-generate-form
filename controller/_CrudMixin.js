@@ -64,6 +64,7 @@ define([
 			if (this.progressBar) {
 				this.progressBar.set("duration", 0);
 			}
+			this.own(this.watch("state", this.onLoadOrSave.bind(this)));
 		},
 
 		invokeIfOk: function (callback) {
@@ -114,6 +115,18 @@ define([
 			["create", "edit", "loading"].forEach(function (e) {
 				domClass.toggle(this.domNode, e, this.state === e);
 			}, this);
+		},
+		onLoadOrSave: function() {
+			if (this.store.assignableId) {
+				var idModel = this.editor.modelHandle.getModelByPath(this.store.idProperty);
+				if (idModel) {
+					if (this.state == "create") {
+						idModel.set("disabled", false);
+					} else {
+						idModel.set("disabled", true);
+					}
+				}
+			}
 		},
 		setCtx: function (ctx) {
 			this.editor.set("ctx", ctx);
@@ -484,6 +497,7 @@ define([
 		},
 		onLoaded: function (schema, entity) {
 			this.updateActions(schema, entity);
+			this.onLoadOrSave();
 		},
 		updateActions: function (schema, entity) {
 			var widgets = [];

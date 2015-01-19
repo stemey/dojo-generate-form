@@ -23,7 +23,7 @@ define([
                 if (errorCount === 0) {
                     this.ctrl.showProgressBar(message);
                     var idProperty = this.ctrl.store.idProperty;
-                    delete entity[idProperty];
+                    //delete entity[idProperty];
                     var promise = this.ctrl.store.add(entity);
                     this._execute(promise, "Add");
                 }
