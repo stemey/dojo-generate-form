@@ -22,6 +22,8 @@ define([
          */
         initialized: false,
 
+		disabled:false,
+
         // schema:,
         //		the schema of this model
         schema: null,
@@ -87,6 +89,12 @@ define([
             this.watch("value", lang.hitch(this, "_onChangeState"));
             this.watch("touched", lang.hitch(this, "_onChangeState"));
             this.watch("oldValue", lang.hitch(this, "_onChangeState"));
+			if (this.schema) {
+				this.set("disabled", this.schema.disabled);
+			}
+			this.watch("schema", function() {
+				this.set("disabled", this.schema.disabled);
+			})
         },
         getPath: function () {
             // summary:

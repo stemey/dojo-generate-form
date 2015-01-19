@@ -1,4 +1,5 @@
 define([
+	'dojox/mvc/sync',
 	"dojo/_base/lang",
 	"dojo/aspect",
 	"../model/StringModel",
@@ -8,7 +9,7 @@ define([
 	"../schema/meta",
 	"./mixinTextboxBindings",
 	"./dijitHelper"
-], function (lang, aspect, StringModel, PrimitiveAttributeFactory, declare, TextBox, meta, mixinTextboxBindings, dijitHelper) {
+], function (sync, lang, aspect, StringModel, PrimitiveAttributeFactory, declare, TextBox, meta, mixinTextboxBindings, dijitHelper) {
 
 	return declare([PrimitiveAttributeFactory], {
 		id: "string",
@@ -44,6 +45,7 @@ define([
 			dijitHelper.copyDijitProperties(attribute, props);
 			var widget = new TextBox(props);
 			widget.own(aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch")));
+			sync(modelHandle, "disabled", widget, "disabled",{});
 			return widget;
 
 		}
