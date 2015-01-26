@@ -39,16 +39,6 @@ body,html {
 
 
 
-.claro .dijitStackContainer {
-	border: none;
-}
-
-.claro .dijitBorderContainer-child[region=top] {
-	border: none;
-	padding: 0;
-	margin: 0 0 10px 0;
-}
-
 .editor .buttonline {
 	margin: 0 5px;
 }
