@@ -19,11 +19,17 @@ define([
             var entity = this.ctrl.editor.get("plainValue");
             var message = "saving " + this.ctrl.editor.getLabel();
             if (this.ctrl.state === "create") {
-                var errorCount = this.ctrl.editor.validate(true);
+				var errorCount=0;
+				this.ctrl.editor.bufferChange(function() {
+					errorCount = this.ctrl.editor.validate(true);
+				}.bind(this));
                 if (errorCount === 0) {
                     this.ctrl.showProgressBar(message);
                     var idProperty = this.ctrl.store.idProperty;
-                    //delete entity[idProperty];
+					var id = entity[idProperty];
+					if (!id) {
+						delete entity[idProperty];
+					}
                     var promise = this.ctrl.store.add(entity);
                     this._execute(promise, "Add");
                 }
