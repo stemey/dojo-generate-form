@@ -116,15 +116,13 @@ define([
 				domClass.toggle(this.domNode, e, this.state === e);
 			}, this);
 		},
-		onLoadOrSave: function() {
-			if (this.store.assignableId) {
-				var idModel = this.editor.modelHandle.getModelByPath(this.store.idProperty);
-				if (idModel) {
-					if (this.state == "create") {
-						idModel.set("disabled", false);
-					} else {
-						idModel.set("disabled", true);
-					}
+		onLoadOrSave: function () {
+			var idModel = this.editor.modelHandle.getModelByPath(this.store.idProperty);
+			if (idModel) {
+				if (this.store.assignableId && this.state == "create") {
+					idModel.set("disabled", false);
+				} else {
+					idModel.set("disabled", true);
 				}
 			}
 		},
