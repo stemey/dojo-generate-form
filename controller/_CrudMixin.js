@@ -117,12 +117,14 @@ define([
 			}, this);
 		},
 		onLoadOrSave: function () {
-			var idModel = this.editor.modelHandle.getModelByPath(this.store.idProperty);
-			if (idModel) {
-				if (this.store.assignableId && this.state == "create") {
-					idModel.set("disabled", false);
-				} else {
-					idModel.set("disabled", true);
+			if (this.editor.modelHandle) {
+				var idModel = this.editor.modelHandle.getModelByPath(this.store.idProperty);
+				if (idModel) {
+					if (this.store.assignableId && this.state == "create") {
+						idModel.set("disabled", false);
+					} else {
+						idModel.set("disabled", true);
+					}
 				}
 			}
 		},
