@@ -418,6 +418,7 @@ define([
 			} else {
 				this.editor.initDefault();
 			}
+			this.oldValue=this.editor.getPlainValue();
 			this.onCreated(this.editor.meta, value);
 		},
 		_createNewAndSchema: function (schemaUrl, value) {
@@ -448,6 +449,7 @@ define([
 					this.editor.get("modelHandle").set("oldValue", this.editor.getPlainValue());
 				}
 			}
+			this.oldValue=this.editor.getPlainValue();
 			this.onCreated(schema, this.editor.getPlainValue());
 			this.emit("editor-changed");
 		},
