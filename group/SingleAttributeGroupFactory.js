@@ -28,7 +28,7 @@ define([
                 var attributeFactory = this.editorFactory.getAttributeFactory(attribute, attributeModel, ctx);
                 var attributeEditor = attributeFactory.create(attribute, attributeModel, ctx);
 				var widget=new BorderContainer({gutters:false, class:"singleDecorator"});
-                var decorator = new SingleDecoratorWidget({meta: attribute, modelHandle: modelHandle, region:'top'});
+                var decorator = new SingleDecoratorWidget({meta: attribute, modelHandle: attributeModel, region:'top'});
 				widget.addChild(decorator);
                 if (attributeEditor !== null) {
                     attributeEditor.region = "center";
