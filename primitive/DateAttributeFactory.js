@@ -1,11 +1,10 @@
 define([
 	"dojo/_base/declare",
 	"dojox/mvc/at",
-	"dojo/date/stamp",
 	"./DateTextBox",
 	"./dijitHelper",
 	"./PrimitiveAttributeFactory"
-], function (declare, at, dateStamp, DateTextBox, dijitHelper, PrimitiveAttributeFactory) {
+], function (declare, at, DateTextBox, dijitHelper, PrimitiveAttributeFactory) {
 
 	return declare([PrimitiveAttributeFactory], {
 		id: "date",
@@ -14,8 +13,8 @@ define([
 			return attribute.type === "date";
 		},
 
-		create: function (attribute, modelHandle) {
-			var valueConverter = this.createValueConverter();
+		create: function (attribute, modelHandle, ctx) {
+			var valueConverter = this.editorFactory.getConverter(attribute, ctx);
 			var valueAt = at(modelHandle, "value").transform(valueConverter);
 
 			var props = {
@@ -39,19 +38,6 @@ define([
             }));
             this.addDijitValidation(modelHandle,widget);
             return widget;
-		},
-		createValueConverter: function () {
-			return {
-				parse: function (date) {
-					var isoDateString = date;
-					if (typeof date !== "string") {
-						isoDateString = dateStamp.toISOString(date, {
-							selector: "date"
-						});
-					}
-					return isoDateString;
-				}
-			};
 		}
 	});
 });

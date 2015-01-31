@@ -1,5 +1,6 @@
 define([
-    "./EditorFactory",
+	'./converter/isoDateConverter',
+	"./EditorFactory",
     "./createActionFactory",
     "./AttributeFactoryFinder",
     "./group/GroupFactory",
@@ -42,7 +43,7 @@ define([
     "./list_table/RepeatedEmbeddedAttributeFactory",
     "./list_table/RepeatedSingleEmbeddedAttributeFactory"//
 
-], function (EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
+], function (isoDateConverter, EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
              TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, SelectStoreAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, BinaryAttributeFactory, AnyTextAreaAttributeFactory, //MappedContentPaneFactory,
              TextareaAttributeFactory, RichtextAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
              ColumnsGroupFactory, SingleAttributeGroupFactory, VerticalGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
@@ -111,6 +112,8 @@ define([
         attributeFactoryFinder.set("attributeFactories", attributeFactories);
 
         editorFactory.set("attributeFactoryFinder", attributeFactoryFinder);
+
+		editorFactory.addConverterForType(isoDateConverter,"date");
 
         return editorFactory;
     };
