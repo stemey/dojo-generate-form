@@ -2,7 +2,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
     "dijit/Tooltip", "dojo/i18n!../nls/messages", "dojo/dom-class"
 ], function (declare, lang, aspect, Tooltip, messages, domClass) {
 // module:
-//		gform/group/_DecoratorMixin	
+//		gform/group/_DecoratorMixin
     return declare([  ], {
         // summary:
         //		Displays and manages an attribute's static and dynamic meta data. Should be mixed into Decorators.
@@ -76,6 +76,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
             this.changesTooltip.label = this.getOldValueMessage(this.modelHandle.oldValue);
             if (this.labelNode && this.meta.required && !this.meta.array) {
                 var sup = document.createElement("sup");
+				sup.setAttribute("class","required-asterisk");
                 sup.innerHTML = "*";
                 // TODO insert after label and not before errorTooltipNode
                 this.labelNode.parentNode.insertBefore(sup, this.errorTooltipNode);

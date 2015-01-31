@@ -327,6 +327,11 @@ TODO make selector more specific.
 	 display: block;
  }
 
+.required-asterisk {
+	font-size: 16px;
+	top: 0px;
+}
+
 
 
 
