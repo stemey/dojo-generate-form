@@ -41,13 +41,13 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
         postCreate: function () {
             this.inherited(arguments);
             if (this.modelHandle && typeof this.modelHandle.watch === "function") {
-                this.messageWatch = this.modelHandle.watch("message", lang.hitch(this, "onMessageChange"));
-                this.oldValueWatch = this.modelHandle.watch("oldValue", lang.hitch(this, "onOldValueChange"));
-                this.valueWatch = this.modelHandle.watch("value", lang.hitch(this, "onModelValueChange"));
-                this.stateWatch = this.modelHandle.watch("state", lang.hitch(this, "onStateChange"));
+				this.own(this.modelHandle.watch("message", lang.hitch(this, "onMessageChange")));
+				this.own(this.modelHandle.watch("oldValue", lang.hitch(this, "onOldValueChange")));
+                this.own(this.modelHandle.watch("value", lang.hitch(this, "onModelValueChange")));
+				this.own(this.modelHandle.watch("state", lang.hitch(this, "onStateChange")));
 
                 // cascadig changes observed instead of computedProperties
-                aspect.after(this.modelHandle, "onChange", lang.hitch(this, "updateState"));
+                this.own(aspect.after(this.modelHandle, "onChange", lang.hitch(this, "updateState")));
             } else {
                 //console.log("modelHandle is null " + this.label);
             }
@@ -90,15 +90,6 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
             }
             //var children = this.getChildrenToValidate();
             //this.singleNonValidatingChild=children.length==1 && !children[0].validate;
-        },
-        destroy: function () {
-            this.inherited(arguments);
-            if (this.modelHandle) {
-                this.oldValueWatch.remove();
-                this.messageWatch.remove();
-                this.valueWatch.remove();
-                this.stateWatch.remove();
-            }
         },
         onValueChange: function (e) {
             if (e.src !== this) {
