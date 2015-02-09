@@ -304,6 +304,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 			},
 			validate: function (force) {
 				this.modelHandle.validateRecursively(force);
+				this.modelHandle.forceChangeNotification();
 				return this.modelHandle.get("errorCount");
 			},
 			getErrorCount: function () {
