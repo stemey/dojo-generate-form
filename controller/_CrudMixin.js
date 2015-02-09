@@ -217,9 +217,11 @@ define([
 		},
 		_onLoadSchemaForEditFailed: function (error, id) {
 			var instancePromise = this.store.get(id);
-			var fallbackSchema = this.getFallbackSchema();
-			if (fallbackSchema) {
-				this._execute(instancePromise, "LoadForEditAndSchema", fallbackSchema);
+			var fallbackSchemaP = this.getFallbackSchema();
+			if (fallbackSchemaP) {
+				when(fallbackSchemaP).then(function(fallbackSchema) {
+					this._execute(instancePromise, "LoadForEditAndSchema", fallbackSchema);
+				}.bind(this));
 			} else {
 				this.displayError(error.message || "was not able to load schema");
 			}
@@ -348,9 +350,11 @@ define([
 		},
 		_onLoadMultiSchemaFailed: function (error, entity) {
 			this.set("state", "edit");
-			var fallbackSchema = this.getFallbackSchema();
-			if (fallbackSchema) {
-				this.onLoadMultiWithFallback(fallbackSchema, entity);
+			var fallbackSchemaP = this.getFallbackSchema();
+			if (fallbackSchemaP) {
+				when(fallbackSchemaP).then(function(fallbackSchema) {
+					this.onLoadMultiWithFallback(fallbackSchema, entity);
+				}.bind(this));
 			} else {
 				this.displayError(error.message || "cannot load schema ");
 			}
