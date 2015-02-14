@@ -1,17 +1,17 @@
-define([ 'dojo/Stateful',
-	"dojo/_base/lang","dojo/aspect", "dojo/dom-class", "dojo/_base/array", "dojo/_base/declare",
+define(['dojo/Stateful',
+	"dojo/_base/lang", "dojo/aspect", "dojo/dom-class", "dojo/_base/array", "dojo/_base/declare",
 	"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin", "./PolymorphicMemberWidget", "../Editor",
 	"dojo/text!./repeated_embedded_attribute.html", "dijit/TitlePane", "dojo/i18n!../nls/messages",
 	"../layout/_LayoutMixin", "../schema/labelHelper"
 ], function (Stateful, lang, aspect, domClass, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, PolymorphicMemberWidget, Editor, template, TitlePane, messages, _LayoutMixin, labelHelper) {
 
-	return declare("app.RepeatedEmbeddedWidget", [ _WidgetBase, _Container,
-		_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin ], {
+	return declare("app.RepeatedEmbeddedWidget", [_WidgetBase, _Container,
+		_TemplatedMixin, _WidgetsInTemplateMixin, _LayoutMixin], {
 		templateString: template,
 		messages: messages,
-        editorFactory: null,
-        ctx: null,
+		editorFactory: null,
+		ctx: null,
 		_setModelHandleAttr: function (value) {
 			this._set("modelHandle", value);
 		},
@@ -20,9 +20,23 @@ define([ 'dojo/Stateful',
 			panelModel.set("title", "");
 			var modelHandle = this.get("modelHandle");
 			if (this.groups) {
-				this.editor = new PolymorphicMemberWidget({"shown": false, "modelHandle": modelHandle, "groups": this.groups, nullable: false, editorFactory: this.editorFactory, ctx:this.ctx});
+				this.editor = new PolymorphicMemberWidget({
+					"shown": false,
+					"modelHandle": modelHandle,
+					"groups": this.groups,
+					nullable: false,
+					editorFactory: this.editorFactory,
+					ctx: this.ctx
+				});
 			} else {
-				this.editor = new Editor({doLayout: false, "shown": false, "modelHandle": modelHandle, "meta": this.group, editorFactory: this.editorFactory, ctx:this.ctx});
+				this.editor = new Editor({
+					doLayout: false,
+					"shown": false,
+					"modelHandle": modelHandle,
+					"meta": this.group,
+					editorFactory: this.editorFactory,
+					ctx: this.ctx
+				});
 			}
 			//var titlePane = new TitlePane({title:at(modelHandle,"index")});
 			//titlePane.addChild(editor);
@@ -31,7 +45,7 @@ define([ 'dojo/Stateful',
 			domClass.add(this.titlePane.titleBarNode, "dojoDndHandle");
 
 			modelHandle.watch("index", lang.hitch(this, "indexChanged"));
-            aspect.after(modelHandle, "onChange", lang.hitch(this, "titleChanged"));
+			aspect.after(modelHandle, "onChange", lang.hitch(this, "titleChanged"));
 			this.on("value-changed", lang.hitch(this, "titleChanged"));
 			this.titlePane.watch("open", lang.hitch(this, "titlePaneToggled"));
 			this.titlePane.set("open", false);
@@ -41,9 +55,9 @@ define([ 'dojo/Stateful',
 		},
 		titlePaneToggled: function () {
 			if (this.titlePane.open) {
-                var child = this.getChildren()[0];
-                child.show();
-                child.resize();
+				var child = this.getChildren()[0];
+				child.show();
+				child.resize();
 			}
 		},
 		indexChanged: function (propName, old, nu) {
@@ -56,8 +70,8 @@ define([ 'dojo/Stateful',
 			var label = labelHelper.getLabel(this.group || this.groups[0], this.modelHandle);
 			title += label === null ? "" : label;
 			if (this.titlePane) {
-                var badge = this.editorFactory.createBadge(this.modelHandle);
-				this.titlePane.set("title", title+ badge);
+				var badge = this.editorFactory.createBadge(this.modelHandle);
+				this.titlePane.set("title", title + badge);
 			}
 		},
 		_delete: function (e) {

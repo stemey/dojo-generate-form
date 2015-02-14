@@ -67,6 +67,7 @@ define(
 			doh.registerUrl("gform.tests.group_vertical", dojo.moduleUrl("gform", "tests/test_group_vertical.html"));
 			doh.registerUrl("gform.tests.validation", dojo.moduleUrl("gform", "tests/test_validation.html"));
             doh.registerUrl("gform.tests.formbuilder", dojo.moduleUrl("gform", "tests/special/formbuilder/test_formbuilder.html"));
+			doh.registerUrl("gform.tests.formbuilder.array", dojo.moduleUrl("gform", "tests/special/formbuilder/test_formbuilder.html"));
 
 
 		} catch (e) {

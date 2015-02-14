@@ -23,7 +23,7 @@ define([
 			lang.mixin(this, kwArgs);
 		},
 		handles: function (attribute) {
-			return attribute != null && attribute.type === "array" && attribute.groups;
+			return attribute !== null && attribute.type === "array" && attribute.groups;
 		},
 		create: function (attribute, modelHandle, ctx) {
 
@@ -56,7 +56,6 @@ define([
 					var plainValue = original.getPlainValue();
 					return modelHandle.elementFactory(plainValue);
 				};
-				//var copyFn=lang.hitch(this,copy);
 				aspect.after(widgetList, "startup", function () {
 					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});
 				});

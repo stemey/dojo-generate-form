@@ -2,12 +2,11 @@ define([
     "../../model/AbstractMappedSelectModel",
     "dojo/_base/declare",
     "./GroupTransformer",
-    "dojo/aspect"
-], function (AbstractMappedSelectModel, declare, GroupTransformer, aspect) {
+    "dojo/_base/lang"
+], function (AbstractMappedSelectModel, declare, GroupTransformer, lang) {
 
     return declare("gform.model.AttributeSelectModel", [AbstractMappedSelectModel], {
-        attributesModel: null,
-        mappedAttribute: null,
+        form: null,
         transformer: null,
         constructor: function () {
             this.transformer = new GroupTransformer();
@@ -17,19 +16,13 @@ define([
             while (parent && !parent.form && !parent.location) {
                 parent = parent.parent;
             }
-            this.attributesModel = parent.getModelByPath("attributes");
+            this.form = parent;
 
-            aspect.after(this.attributesModel, "onChange", cb);
+            parent.watch("attributesSelectModel", lang.hitch(this,"_onMappedAttributeChanged"));
             this._onMappedAttributeChanged();
         },
         getMappedValues: function () {
-            return this.attributesModel.getPlainValue().map(function (attribute) {
-                if (!attribute) {
-                    return {value: null, label: "null"};
-                } else {
-                    return {value: attribute.code, label: attribute.label || attribute.code};
-                }
-            });
+            return this.form.get("attributesSelectModel");
         }
     });
 });

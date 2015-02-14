@@ -26,8 +26,15 @@ Links
 or simply to checkout gform features online.
 
 
+TRY IT OUT
+----------
+
+check out the simple [example](https://github.com/stemey/gform-playground).
+
+
 INSTALLATION
 ------------
+
 
 this project is organized like most dojo libraries. If your project is based on the dojo boilerplate layout you can integrate
 it by adding it as a git submodule named "gform" (not dojo-generate-form) parallel to dojo, dijit, dojox and util.

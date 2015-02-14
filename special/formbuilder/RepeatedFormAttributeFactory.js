@@ -1,0 +1,59 @@
+define(
+	[
+		"dojo/_base/declare",
+		"dojo/aspect",
+		"./GroupTransformer",
+		"../../list_embedded/RepeatedEmbeddedAttributeFactory",
+		"../../model/ArrayModel"
+	],
+	function (declare, aspect, GroupTransformer, RepeatedEmbeddedAttributeFactory, ArrayModel) {
+
+		return declare([RepeatedEmbeddedAttributeFactory],
+			{
+				id: "form-array",
+				createModel: function (meta, plainValue) {
+					var validators = this.editorFactory.getModelValidators(meta);
+					var model = new ArrayModel({schema: meta, validators: validators});
+					var me = this;
+					var ef = function (value) {
+						var newElement = me.editorFactory.createGroupModel(meta.group);
+						newElement.form = true;
+						newElement.transformer = new GroupTransformer();
+
+						newElement.attributesSelectModel = null;
+						function update() {
+							if (newElement.initialized) {
+								var attributesSelectModel = newElement.getModelByPath("attributes").getPlainValue().map(function (attribute) {
+									var option = {};
+									option.value = attribute.code;
+									option.label = (attribute.label || attribute.code);
+									return option;
+								});
+								newElement.set("attributesSelectModel", attributesSelectModel);
+							}
+						}
+						function initialize() {
+								var attributesSelectModel = newElement.getModelByPath("attributes").getPlainValue().map(function (attribute) {
+									var option = {};
+									option.value = attribute.code;
+									option.label = (attribute.label || attribute.code);
+									return option;
+								});
+								newElement.set("attributesSelectModel", attributesSelectModel);
+						}
+
+						// initialize select model when the main model is initialized
+						aspect.before(model, "init", initialize);
+						aspect.after(newElement.getModelByPath("attributes"), "onChange", update);
+
+						if (value) {
+							newElement.update(value);
+						}
+						return newElement;
+					};
+					model.elementFactory = ef;
+					model.update(plainValue);
+					return model;
+				}
+			});
+	});

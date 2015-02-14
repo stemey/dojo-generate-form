@@ -1,0 +1,33 @@
+{
+	"forms": [
+		{
+			"editor": "t1",
+			"additionalProperties": {
+				"code": "add"
+			},
+			"attributes": [
+				{
+					"code": "name",
+					"type": "string"
+				},
+				{
+					"code": "text",
+					"type": "string"
+				},
+				{
+					"code": "add",
+					"type": "any"
+				}
+			]
+		},
+		{
+			"editor": "t2",
+			"attributes": [
+				{
+					"code": "name",
+					"type": "string"
+				}
+			]
+		}
+	]
+}

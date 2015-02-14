@@ -194,6 +194,7 @@ define([
             this.computeProperties();
         },
         init: function () {
+			this.inherited(arguments);
             Object.keys(this.get("attributes")).forEach(function (key) {
                 var model = this.get("attributes")[key];
                 model.init();
