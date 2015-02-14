@@ -44,8 +44,12 @@ define([
 			}
 		},
 		copyGroupProperties: function (from, to) {
+			if (!to || !from) {
+				// TODO this situation exists during first update. Need to remove the bubbling during first update.
+				return;
+			}
 			Object.keys(from).forEach(function (key) {
-				if (["additionalProperties","label", "code", "description"].indexOf(key) >= 0) {
+				if (from[key] && ["additionalProperties","label", "code", "description"].indexOf(key) >= 0) {
 					to[key] = from[key];
 				}
 			});
