@@ -70,8 +70,10 @@ define(['dojo/Stateful',
 			var label = labelHelper.getLabel(this.group || this.groups[0], this.modelHandle);
 			title += label === null ? "" : label;
 			if (this.titlePane) {
-				var badge = this.editorFactory.createBadge(this.modelHandle);
-				this.titlePane.set("title", title + badge);
+				var completeTitle = title + this.editorFactory.createBadge(this.modelHandle);
+				if (completeTitle !== this.titlePane.get("title")) {
+					this.titlePane.set("title", completeTitle);
+				}
 			}
 		},
 		_delete: function (e) {

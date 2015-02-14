@@ -64,7 +64,7 @@ define([
             }
             this.computeProperties();
         },
-        update: function (/*Object*/plainValue, setOldValue) {
+        update: function (/*Object*/plainValue, setOldValue,bubble) {
             // summary:
             //		update the attribute with the given plainValue. Attribute has a single valid type.
             // plainValue:
@@ -93,7 +93,7 @@ define([
             }
             if (this.currentTypeCode !== null) {
                 var currentGroup = this.getGroup(this.currentTypeCode);
-                currentGroup.update(plainValue, setOldValue);
+                currentGroup.update(plainValue, setOldValue,bubble);
             }
             if (this.setOldValue !== false) {
                 this.set("oldValue", this.getPlainValue());
@@ -194,10 +194,13 @@ define([
         },
         init: function () {
             this.inherited(arguments);
-            Object.keys(this.typeCodeToGroup).forEach(function (key) {
-                var model = this.typeCodeToGroup[key];
-                model.init();
-            }, this);
+			if (this.currentTypeCode) {
+				var currentGroup=this.typeCodeToGroup[this.currentTypeCode];
+				if (currentGroup) {
+					currentGroup.init();
+				}
+			}
+
         }
     });
 

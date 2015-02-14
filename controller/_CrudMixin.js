@@ -239,11 +239,12 @@ define([
 			this.set("state", "edit");
 			try {
 				this.editor.setMetaAndPlainValue(schema, entity);
+				this.onLoaded(schema, entity);
+				this.emit("editor-changed");
 			} catch (e) {
 				this.displayError("cannot load data into form");
+				console.log(e.message, e.stack);
 			}
-			this.onLoaded(schema, entity);
-			this.emit("editor-changed");
 		},
 		_onLoadForEditAndSchemaFailed: function (error) {
 			this.set("state", "edit");
