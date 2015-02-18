@@ -23,6 +23,10 @@ define([
         },
         getMappedValues: function () {
             return this.form.get("attributesSelectModel");
-        }
+        },
+		_onMappedAttributeChanged: function () {
+			// TODO because of performance at initialization time we don't validate here. Need to distinguish initial update and changes?
+			this._initOptions();
+		}
     });
 });

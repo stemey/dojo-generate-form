@@ -25,7 +25,7 @@ define([
 				groups: groups,
 				required: meta.required === true
 			});
-			model.update(plainValue);
+			model.update(plainValue,true,false);
 			return model;
 		},
 		createAttribute: function (attribute, modelHandle) {

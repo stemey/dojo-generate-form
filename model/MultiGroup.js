@@ -121,6 +121,7 @@ define([
 			}
 		},
 		init: function () {
+			this.inherited(arguments);
 			this.groups.forEach(function (group) {
 				group.init();
 			});

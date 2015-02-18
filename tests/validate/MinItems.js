@@ -12,6 +12,7 @@ define([
 		return model;
 	};
 	var model = new ArrayModel({elementFactory: ef, validators: [maxItems]});
+	model.init();
 
 
 	doh.register("MinItems", [

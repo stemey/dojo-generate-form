@@ -12,9 +12,11 @@ define(['dojo/_base/lang',
 	var elementFactory = function (value) {
 		var model = new PrimitiveModel(type);
 		model.update(value);
+		model.init();
 		return model;
 	};
 	var am = new ArrayModel({elementFactory: elementFactory});
+	am.init();
 
 	doh.register("ArrayModel", [
 		function testParent() {

@@ -50,7 +50,7 @@ define([
                 var aModels = {};
                 var tableSchema = me.createTableMeta(schema);
                 var model = new SingleObject({schema: tableSchema, editorFactory: me.editorFactory});
-                model.update(value);
+                model.update(value,true,map.initialized);
                 return model;
             };
             return map;

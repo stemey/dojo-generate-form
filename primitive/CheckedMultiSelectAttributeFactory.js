@@ -36,7 +36,7 @@ define([ "dojo/_base/array",
 				plainValue = [];
 			}
 			var model = new PrimitiveModel({schema:meta});
-			model.update(plainValue);
+			model.update(plainValue,true,false);
 			return model;
 		}
 	});

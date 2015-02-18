@@ -110,7 +110,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 					aspect.after(this.modelHandle, "onChange", lang.hitch(this, "onChangeInternally"));
 				} else {
 					this.modelHandle.update(value,true,false);
-					this.modelHandle.forceChangeNotifcation();
+					this.modelHandle.forceChangeNotification();
 				}
 				if (!this.meta) {
 					throw new Error("cannot set plainValue before setting meta");

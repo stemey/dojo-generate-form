@@ -69,7 +69,7 @@ define([
 				validators: validators,
 				required: meta.required === true
 			});
-			model.update(plainValue);
+			model.update(plainValue,true,false);
 			return model;
 		}
 	});

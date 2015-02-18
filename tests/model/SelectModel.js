@@ -14,14 +14,17 @@ define([
 
     var ef = {
         createAttributeModel: function (meta) {
-            return new SelectModel({schema:meta,options: [
+            var m = new SelectModel({schema:meta,options: [
                 {value: "1"},
                 {value: "2"}
             ]});
+			m.init();
+			return m;
         }
     };
 
     var o = new SingleObject({schema: schema, editorFactory: ef});
+	o.init();
 
     doh.register("SelectModel", [
         function testInvalid() {

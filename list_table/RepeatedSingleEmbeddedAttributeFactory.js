@@ -80,10 +80,10 @@ define([
 			var model = new ArrayModel({schema: meta, validators: validators});
 			model.elementFactory = function (element) {
 				var elModel = new SingleObject({schema: meta, editorFactory: me.editorFactory});
-				elModel.update(element);
+				elModel.update(element,true,model.initialized);
 				return elModel;
 			};
-			model.update(value);
+			model.update(value,true,false);
 			return model;
 
 		}

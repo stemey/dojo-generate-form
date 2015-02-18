@@ -32,7 +32,7 @@ define([
         },
         _onMappedAttributeChanged: function () {
 			this._initOptions();
-            if (!this.isValid(this.value)) {
+           if (!this.isValid(this.value)) {
                 if (this.isRequired()) {
                     this._changeAttrValue("value", this.getDefaultValue());
                 } else {

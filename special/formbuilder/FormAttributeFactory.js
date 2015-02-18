@@ -20,7 +20,7 @@ define(
 					model.form = true;
 					model.transformer = new GroupTransformer();
 					model.attributesSelectModel = [];
-					function update() {
+					function initialize() {
 						model.set("attributesSelectModel", model.getModelByPath("attributes").getPlainValue().map(function (attribute) {
 							var option = {};
 							option.value = attribute.code;
@@ -28,8 +28,13 @@ define(
 							return option;
 						}));
 					}
+					function update() {
+						if (model.initialized) {
+							initialize();
+						}
+					}
 
-					aspect.after(model, "init", update);
+					aspect.after(model, "init", initialize);
 					aspect.after(model.getModelByPath("attributes"), "onChange", update);
 					model.validators = validators;
 					model.required = schema.required === true;

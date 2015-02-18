@@ -16,11 +16,13 @@ define([
 
     var ef = {
         createAttributeModel: function (schema) {
+			var m;
             if (schema.mappedAttribute) {
-                return MappedSelectModel({schema: schema, mappedAttribute: schema.mappedAttribute, mappedValues: schema.mappedValues});
+                m= MappedSelectModel({schema: schema, mappedAttribute: schema.mappedAttribute, mappedValues: schema.mappedValues});
             } else {
-                return new PrimitiveModel({schema: schema});
+                m= new PrimitiveModel({schema: schema});
             }
+			return m;
         }
     };
 

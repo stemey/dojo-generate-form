@@ -36,8 +36,8 @@ define([
             this.typeCodeToGroup[typeCode] = group;
             group.set("parent", this);
             if (this.initialized) {
-                group.init();
                 group.initDefault();
+				group.init();
             }
             return group;
         },

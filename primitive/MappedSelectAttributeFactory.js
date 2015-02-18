@@ -50,7 +50,7 @@ define([
 				});
 			}
 			var model = new MappedSelectModel({schema: meta, mappedValues: mappedValues, mappedAttribute: meta.mapped_attribute, validators: validators, required: meta.required === true});
-			model.update(plainValue);
+			model.update(plainValue,true,false);
 			return model;
 		}
 

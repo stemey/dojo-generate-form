@@ -25,14 +25,13 @@ define(["dojo/_base/lang",
     };
 
     var elementFactory = function (value) {
-        var element = new PrimitiveModel();
-        var key = new PrimitiveModel();
-        var attributes = {"x": element, "keyx": key};
         var model = new SingleObject({editorFactory: ef, schema:type});
         model.update(value);
+		model.init();
         return model;
     };
     var am = new MapModel({keyProperty: "keyx", elementFactory: elementFactory});
+	am.init();
 
     doh.register("MapModel", [
         function testParent() {

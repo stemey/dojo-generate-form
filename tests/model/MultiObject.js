@@ -49,11 +49,14 @@ define(["dojo/_base/lang",
 
     var ef = {
         createAttributeModel: function (schema) {
-            return new PrimitiveModel({schema: schema, editorFactory: ef});
+            var m = new PrimitiveModel({schema: schema, editorFactory: ef});
+			m.init();
+			return m;
         },
         createGroupModel: function (schema) {
             var so = new SingleObject({schema: schema, editorFactory: ef});
             so.update({});
+			so.init();
             return so;
         }
     };
@@ -116,6 +119,7 @@ define(["dojo/_base/lang",
         },
         function testModelValidation(t) {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
+			mo.init();
             mo.resetMetaRecursively();
             mo.validators = [function (model, force) {
                 if (force && model.getModelByPath("stringP").getPlainValue() === "y") {

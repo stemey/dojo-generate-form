@@ -46,7 +46,7 @@ define([
 				typeProperty: attribute.typeProperty,
 				_relTargetProp: "modelHandle",
 				editorFactory: this.editorFactory,
-                ctx: ctx
+				ctx: ctx
 			});
 			select.addChild(widgetList);
 
@@ -57,7 +57,12 @@ define([
 					return modelHandle.elementFactory(plainValue);
 				};
 				aspect.after(widgetList, "startup", function () {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});
+					new DndSource(widgetList.domNode, {
+						copyFn: copy,
+						copyOnly: false,
+						singular: true,
+						withHandles: true
+					});
 				});
 			}
 
@@ -70,12 +75,12 @@ define([
 			var model = new ArrayModel({schema: meta, validators: validators});
 			var me = this;
 			var ef = function (value) {
-				var model = MultiObject.create({editorFactory:me.editorFactory, schema: meta});
-				model.update(value);
+				var model = MultiObject.create({editorFactory: me.editorFactory, schema: meta});
+				model.update(value, true, model.initialized);
 				return model;
 			};
 			model.elementFactory = ef;
-			model.update(plainValue);
+			model.update(plainValue), true, false;
 			return model;
 		}
 		/* getSchema() is implemented in gform/embedded/EmbeddedAttributeFactory */

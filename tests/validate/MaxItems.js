@@ -12,6 +12,7 @@ define([
 	};
 	var model = new ArrayModel({elementFactory: ef, validators: [maxItems]});
 	model.update(["1", "2", "3"]);
+	model.init();
 
 
 	doh.register("MaxItems", [

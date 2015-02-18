@@ -95,7 +95,7 @@ define([
             var validators = this.editorFactory.getModelValidators(meta);
             var options = createOptions(meta, true);
             var model = new SelectModel({meta: meta, options: options, validators: validators, required: meta.required === true});
-            model.update(plainValue);
+            model.update(plainValue,true,false);
             return model;
         }
     });

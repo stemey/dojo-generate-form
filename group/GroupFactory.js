@@ -40,7 +40,7 @@ define([
         createModel: function (schema, plainValue) {
             var validators = this.editorFactory.getModelValidators(schema);
             var model = new SingleObject({schema: schema, validators: validators, editorFactory: this.editorFactory});
-            model.update(plainValue);
+            model.update(plainValue,true,false);
             model.typeCode = schema.code;
             return model;
         },

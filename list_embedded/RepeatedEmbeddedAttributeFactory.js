@@ -63,12 +63,12 @@ define([
 			var ef = function (value) {
 				var newElement = me.editorFactory.createGroupModel(meta.group);
                 if (value) {
-                    newElement.update(value);
+                    newElement.update(value,true,model.initialized);
                 }
 				return newElement;
 			};
 			model.elementFactory = ef;
-			model.update(plainValue);
+			model.update(plainValue,true,false);
 			return model;
 		}
 	});

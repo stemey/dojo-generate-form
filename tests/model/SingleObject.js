@@ -39,6 +39,7 @@ define(['dojo/_base/lang',
     var createModel = function() {
         so = new SingleObject({schema: type, editorFactory: ef});
         so.update({});
+		so.init();
     };
 
 

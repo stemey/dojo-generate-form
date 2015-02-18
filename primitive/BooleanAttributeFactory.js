@@ -35,7 +35,7 @@ define([
         },
         createModel: function (meta, plainValue) {
             var model = new BooleanModel({schema: meta});
-            model.update(plainValue);
+            model.update(plainValue,true,false);
             return model;
         }
     });

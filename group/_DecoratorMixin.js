@@ -46,7 +46,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
                 this.own(this.modelHandle.watch("value", lang.hitch(this, "onModelValueChange")));
 				this.own(this.modelHandle.watch("state", lang.hitch(this, "onStateChange")));
 
-                // cascadig changes observed instead of computedProperties
+                // cascading changes observed instead of computedProperties
                 this.own(aspect.after(this.modelHandle, "onChange", lang.hitch(this, "updateState")));
             } else {
                 //console.log("modelHandle is null " + this.label);
@@ -102,7 +102,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
             }
         },
         onModelValueChange: function (propName, old, nu) {
-            if (this.singleNonValidatingChild && this.modelHandle.state !== "") {
+			if (this.singleNonValidatingChild && this.modelHandle.state !== "") {
                 // value changes set state back to unvalidated
                 this.modelHandle.set("state", "");
             }
@@ -110,11 +110,11 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
             this.emit("value-changed", {src: this, oldValue: old, newValue: nu});
         },
         getOldValueMessage: function (old) {
-            var message;
+            var message="old";
             if (old === null || typeof old === "undefined") {
-                message = messages.oldValueWasNull;
+               // message = messages.oldValueWasNull;
             } else {
-                message = lang.replace(messages.oldValueChanged, {oldValue: JSON.stringify(old, true)});
+                //message = lang.replace(messages.oldValueChanged, {oldValue: JSON.stringify(old, true)});
             }
             return message;
         },

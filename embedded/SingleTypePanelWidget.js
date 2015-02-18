@@ -22,7 +22,7 @@ define([
             this.inherited(arguments);
             var modelHandle = this.get("modelHandle");
             if (this.required && modelHandle.isEmpty()) {
-                modelHandle.update({});
+                modelHandle.update({},true,false);
             }
             var attribute = this.get("meta");
             this.panelModel = new Stateful();

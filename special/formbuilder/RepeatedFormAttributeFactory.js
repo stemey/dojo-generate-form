@@ -21,25 +21,19 @@ define(
 						newElement.transformer = new GroupTransformer();
 
 						newElement.attributesSelectModel = null;
+						function initialize() {
+							var attributesSelectModel = newElement.getModelByPath("attributes").getPlainValue().map(function (attribute) {
+								var option = {};
+								option.value = attribute.code;
+								option.label = (attribute.label || attribute.code);
+								return option;
+							});
+							newElement.set("attributesSelectModel", attributesSelectModel);
+						}
 						function update() {
 							if (newElement.initialized) {
-								var attributesSelectModel = newElement.getModelByPath("attributes").getPlainValue().map(function (attribute) {
-									var option = {};
-									option.value = attribute.code;
-									option.label = (attribute.label || attribute.code);
-									return option;
-								});
-								newElement.set("attributesSelectModel", attributesSelectModel);
+								initialize();
 							}
-						}
-						function initialize() {
-								var attributesSelectModel = newElement.getModelByPath("attributes").getPlainValue().map(function (attribute) {
-									var option = {};
-									option.value = attribute.code;
-									option.label = (attribute.label || attribute.code);
-									return option;
-								});
-								newElement.set("attributesSelectModel", attributesSelectModel);
 						}
 
 						// initialize select model when the main model is initialized
@@ -47,12 +41,12 @@ define(
 						aspect.after(newElement.getModelByPath("attributes"), "onChange", update);
 
 						if (value) {
-							newElement.update(value);
+							newElement.update(value,true,model.initialized);
 						}
 						return newElement;
 					};
 					model.elementFactory = ef;
-					model.update(plainValue);
+					model.update(plainValue,true,false);
 					return model;
 				}
 			});

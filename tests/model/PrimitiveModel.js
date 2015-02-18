@@ -5,6 +5,7 @@ define([
 
 
 	var m = new PrimitiveModel({required: true});
+	m.init();
 
 	doh.register("PrimitiveModel", [
 		function testChanged() {

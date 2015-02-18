@@ -18,7 +18,7 @@ define([
             normalizedSchema.attributes=[schema.attribute];
             var validators = this.editorFactory.getModelValidators(normalizedSchema);
             var model = new SingleObject({schema:normalizedSchema, validators:validators, editorFactory:this.editorFactory});
-            model.update(plainValue);
+            model.update(plainValue,true,false);
             model.typeCode = schema.code;
             return model;
         },

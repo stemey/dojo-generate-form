@@ -42,8 +42,11 @@ define(["./createVisitor",
 
 
 	var mo = MergedMultiObject.create(type, function (attribute) {
-		return new PrimitiveModel({meta:attribute});
+		var m= new PrimitiveModel({meta:attribute});
+		m.init();
+		return m;
 	});
+	mo.init();
 
 
 	doh.register("MergedMultiObject", [

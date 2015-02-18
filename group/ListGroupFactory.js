@@ -22,7 +22,7 @@ define([
 				groups.push(this.editorFactory.createGroupModel(group));
 			}, this);
 			var model = new MultiGroup({validators:validators, schema:meta, groups: groups, required: meta.required === true});
-			model.update(plainValue);
+			model.update(plainValue,true,false);
 			return model;
 		},
 		create: function (group, modelHandle, ctx) {

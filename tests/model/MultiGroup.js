@@ -29,11 +29,14 @@ define(['./createVisitor',
 
     var ef = {
         createAttributeModel: function(schema) {
-            return new PrimitiveModel({schema:schema, editorFactory: ef});
+            var m = new PrimitiveModel({schema:schema, editorFactory: ef});
+			m.init();
+			return m;
         },
         createGroupModel: function(schema) {
             var so = new SingleObject({schema:schema, editorFactory: ef});
             so.update({});
+			so.init();
             return so;
         }
     };
@@ -46,6 +49,7 @@ define(['./createVisitor',
 	groups[0] = ef.createGroupModel(type.groups[0]);
 	groups[1] = ef.createGroupModel(type.groups[1]);
 	var mg = new MultiGroup({schema:type,groups: groups});
+	mg.init89,
 
 	doh.register("MultiGroup", [
 		function testParent() {

@@ -43,10 +43,12 @@ define([
         getPlainValue: function () {
             var plainValue = {};
             this.value.forEach(function (model) {
-                var value = model.getPlainValue();
-                var key = value[this.keyProperty];
-                delete value[this.keyProperty];
-                plainValue[key] = value;
+                var val = model.getPlainValue();
+                var key = val[this.keyProperty];
+                var value ={};
+				lang.mixin(value,val);
+				delete value[this.keyProperty];
+				plainValue[key] = value;
             }, this);
             return plainValue;
         },
@@ -68,7 +70,7 @@ define([
         _getModelByPath: function (idx, path) {
             var model = this.getModelByKey(idx);
             if (model === null) {
-                model = this.getModelByIndex(idx)
+                model = this.getModelByIndex(idx);
             }
             if (model !== null) {
                 return model.getModelByPath(path);

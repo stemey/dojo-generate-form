@@ -25,7 +25,7 @@ define([
 				alwaysUseInvalidMessage: true,
 				schema: meta
 			});
-			model.update(plainValue);
+			model.update(plainValue,true,false);
 			return model;
 		},
 		create: function (attribute, modelHandle) {

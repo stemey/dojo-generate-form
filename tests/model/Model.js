@@ -3,6 +3,7 @@ define([
 
 
 	var m = new Model();
+	m.init();
 	m.getPlainValue = function () {
 		return 0;
 	};

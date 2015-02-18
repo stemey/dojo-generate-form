@@ -26,15 +26,13 @@ define(
                     sync(modelHandle, "options", select, "options");
                     sync(modelHandle, "value", select, "value", {converter: nullablePrimitiveConverter});
 
-
-
                     return select;
 
                 },
                 createModel: function (meta, plainValue) {
                     var validators = this.editorFactory.getModelValidators(meta);
                     var model = new AttributeSelectModel({meta: meta, validators: validators, required: meta.required === true});
-                    model.update(plainValue);
+                    model.update(plainValue,true,false);
                     return model;
                 }
             });

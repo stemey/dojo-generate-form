@@ -33,7 +33,7 @@ define([
             var validators = this.editorFactory.getModelValidators(schema);
 			var model = MultiObject.create({schema: schema, editorFactory:this.editorFactory});
             model.validators=validators;
-			model.update(plainValue);
+			model.update(plainValue,true,false);
 			return model;
 		}
 

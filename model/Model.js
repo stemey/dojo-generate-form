@@ -94,7 +94,7 @@ define([
 			}
 			this.watch("schema", function () {
 				this.set("disabled", this.schema.disabled);
-			})
+			});
 		},
 		getPath: function () {
 			// summary:
@@ -153,9 +153,10 @@ define([
 			}
 		},
 		hasChanged: function () {
-			return typeof this.oldValue !== "undefined" && this.getPlainValue() !== this.oldValue && !equals(this.getPlainValue(), this.oldValue);
+			return this.changedCount > 0;//typeof this.oldValue !== "undefined" && this.getPlainValue() !== this.oldValue && !equals(this.getPlainValue(), this.oldValue);
 		},
 		onChange: function (validate) {
+			if (!this.initialized) return;
 			if (validate !== false && this.validateOnChange) {
 				this.validate();
 			}
@@ -203,7 +204,7 @@ define([
 			if (this.state === "Error") errorCount++;
 			if (this.state === "Incomplete") incompleteCount++;
 			if (this.oldErrors.length > 0) ownErrorCount++;
-			if (this.hasChanged() && changedCount === 0) {
+			if (changedCount === 0 && typeof this.oldValue !== "undefined" && this.getPlainValue() !== this.oldValue && !equals(this.getPlainValue(), this.oldValue)) {
 				changedCount = 1;
 			}
 			this.set("incompleteCount", incompleteCount);
