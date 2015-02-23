@@ -54,7 +54,7 @@ define([
 		},
 		setValue: function (attributeCode, value) {
 			if (!this.isNull) {
-				this.getModel(attributeCode).update(value);
+				this.getModel(attributeCode).update(value, false, true);
 			}
 		},
 		getModel: function (attributeCode) {
@@ -180,25 +180,27 @@ define([
 			return model.getModelByPath(path);
 		},
 		initDefault: function (setOldValue) {
-			var oldValue = this.get("oldValue");
-			this.isNull = false;
-			this._createAttributes();
-			Object.keys(this.get("attributes")).forEach(function (key) {
-				var model = this.get("attributes")[key];
-				// don't init Default on complex attributes unless it is an array with defaults or it is required.
-				if (metaHelper.isArray(model.schema) || !metaHelper.isComplex(model.schema) || model.isRequired()) {
-					model.initDefault();
+			this._execute(function () {
+				var oldValue = this.get("oldValue");
+				this.isNull = false;
+				this._createAttributes();
+				Object.keys(this.get("attributes")).forEach(function (key) {
+					var model = this.get("attributes")[key];
+					// don't init Default on complex attributes unless it is an array with defaults or it is required.
+					if (metaHelper.isArray(model.schema) || !metaHelper.isComplex(model.schema) || model.isRequired()) {
+						model.initDefault();
+					}
+
+				}, this);
+				this.resetMeta();
+				if (setOldValue === false) {
+					// restMeta sets oldValue to current value
+					// TODO should reset Meta really reset oldValue?
+					this.set("oldValue", oldValue);
 				}
 
-			}, this);
-			this.resetMeta();
-			if (setOldValue === false) {
-				// restMeta sets oldValue to current value
-				// TODO should reset Meta really reset oldValue?
-				this.set("oldValue", oldValue);
-			}
-
-			this.computeProperties();
+				this.onChange();
+			}, false);
 		},
 		init: function () {
 			this.inherited(arguments);

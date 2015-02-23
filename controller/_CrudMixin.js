@@ -448,10 +448,12 @@ define([
 				}
 				this.editor.setMetaAndPlainValue(schema, value);
 			} else {
-				this.editor.setMetaAndDefault(schema);
 				if (this.typeProperty) {
-					this.editor.get("modelHandle").getModelByPath(this.typeProperty).update(schemaUrl);
-					this.editor.get("modelHandle").set("oldValue", this.editor.getPlainValue());
+					var init = {};
+					init[this.typeProperty] = schemaUrl;
+					this.editor.setMetaAndPlainValue(schema, init);
+				} else {
+					this.editor.setMetaAndDefault(schema);
 				}
 			}
 			this.oldValue=this.editor.getPlainValue();

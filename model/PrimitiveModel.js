@@ -30,12 +30,9 @@ define([
 					this.set("oldValue", this.getPlainValue());
 				}
 				this.validate();
-				this.computeProperties();
+				this.onChange();
 			}, bubble);
 
-			if (this.parent && bubble !== false) {
-				this.parent.onChange();
-			}
 
 		},
 		isEmpty: function () {
