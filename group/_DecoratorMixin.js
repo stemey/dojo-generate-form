@@ -110,11 +110,11 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
             this.emit("value-changed", {src: this, oldValue: old, newValue: nu});
         },
         getOldValueMessage: function (old) {
-            var message="old";
+            var message;
             if (old === null || typeof old === "undefined") {
-               // message = messages.oldValueWasNull;
+                message = messages.oldValueWasNull;
             } else {
-                //message = lang.replace(messages.oldValueChanged, {oldValue: JSON.stringify(old, true)});
+                message = lang.replace(messages.oldValueChanged, {oldValue: JSON.stringify(old, true)});
             }
             return message;
         },

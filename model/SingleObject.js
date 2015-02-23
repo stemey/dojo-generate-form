@@ -32,14 +32,13 @@ define([
 				// set to undefined so that hasChanged returns false
 				this.updateGroup(plainValue, setOldValue);
 
-				this.computeProperties();
+				//this.computeProperties();
 				if (setOldValue !== false) {
+					this.cachedValue = null;
 					this.set("oldValue", this.getPlainValue());
 				}
+				this.onChange(bubble);
 			}, false);
-			if (this.parent && bubble !== false) {
-				this.parent.onChange();
-			}
 
 		},
 		_attributesGetter: function () {
@@ -86,10 +85,9 @@ define([
 			if (this.isNull !== oldIsNull) {
 				this._changeAttrValue("isNull", this.isNull);
 			}
-			this.onChange(true);
 		},
-		onChange: function() {
-			this.cachedValue=null;
+		onChange: function () {
+			this.cachedValue = null;
 			this.inherited(arguments);
 		},
 		_createAttributes: function () {
@@ -118,6 +116,7 @@ define([
 					}
 
 				}
+				this.onChange();
 			}
 		},
 		getAttribute: function (code) {
@@ -137,9 +136,9 @@ define([
 					for (var key in this.get("attributes")) {
 						plainValue[key] = this.get("attributes")[key].getPlainValue();
 					}
-					plainValue = this.transformOut(plainValue);
-					this.cachedValue = plainValue;
-					return plainValue;
+					var value = this.transformOut(plainValue);
+					this.cachedValue = value;
+					return value;
 				}
 			}
 		},

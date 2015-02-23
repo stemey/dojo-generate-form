@@ -23,7 +23,8 @@ define([
             doh.assertEqual(0, m.errorCount);
             doh.assertEqual(0, m.incompleteCount);
             doh.assertEqual(1, m.changedCount);
-            m.resetMeta();
+            m.resetMeta(true);
+			m.computeProperties();
             doh.assertEqual(0, m.changedCount);
         },
 		function testIncomplete() {

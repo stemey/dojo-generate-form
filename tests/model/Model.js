@@ -15,7 +15,8 @@ define([
 		},
 		function testResetMeta() {
             m.set("state", "Error");
-			m.resetMeta();
+			m.resetMetaRecursively();
+			m.forceChangeNotification();
 			doh.assertEqual(0, m.errorCount);
 		},
 		function testGetModelByEmptyPath() {

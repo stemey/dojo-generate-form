@@ -109,8 +109,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 					var me = this;
 					aspect.after(this.modelHandle, "onChange", lang.hitch(this, "onChangeInternally"));
 				} else {
-					this.modelHandle.update(value,true,false);
-					this.modelHandle.forceChangeNotification();
+					this.modelHandle.update(value,true);
 				}
 				if (!this.meta) {
 					throw new Error("cannot set plainValue before setting meta");
@@ -155,7 +154,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 				//		reset all field errors that were added via addError().
 				array.forEach(this._explicitErrorPaths, function (path) {
 					var model = this.modelHandle.getModelByPath(path);
-					model.resetMeta();
+					model.resetErrors();
 				}, this);
 				this._explicitErrorPaths = [];
 			},
@@ -305,7 +304,6 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 			},
 			validate: function (force) {
 				this.modelHandle.validateRecursively(force);
-				this.modelHandle.forceChangeNotification();
 				return this.modelHandle.get("errorCount");
 			},
 			getErrorCount: function () {

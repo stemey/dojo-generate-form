@@ -148,7 +148,7 @@ define([
 			return this.parent.watchPath(attributeCode, watchCallback);
 		},
 		_onChangeState: function (prop, old, nu) {
-			if (old !== nu) {
+			if (this.bubble && old !== nu) {
 				this.onChange(prop !== "state" && prop !== "oldValue");
 			}
 		},
@@ -156,7 +156,6 @@ define([
 			return this.changedCount > 0;//typeof this.oldValue !== "undefined" && this.getPlainValue() !== this.oldValue && !equals(this.getPlainValue(), this.oldValue);
 		},
 		onChange: function (validate) {
-			if (!this.initialized) return;
 			if (validate !== false && this.validateOnChange) {
 				this.validate();
 			}
@@ -168,6 +167,7 @@ define([
 			} else {
 				this.wouldHaveBubbled = true;
 			}
+
 		},
 		_execute: function (cb, bubble) {
 			var oldBubble = this.bubble;
@@ -189,6 +189,7 @@ define([
 			var changedCount = 0;
 			var ownErrorCount = 0;
 			var me = this;
+			// only visiting the immediate children
 			this.visit(function (model, cascade) {
 				if (model === me) {
 					if (cascade) {
@@ -222,11 +223,11 @@ define([
 		},
 		resetMetaRecursively: function () {
 			this.visit(function (model, cascade) {
-				cascade();
+				if (cascade) cascade();
 				model.resetMeta(false);
 			});
 			this.resetMeta(false);
-			this.onChange(false);
+
 		},
 		reset: function () {
 			// summary:
@@ -237,7 +238,7 @@ define([
 					cascade();
 				});
 			}, false);
-			this.update(this.oldValue, true, false);
+			this.update(this.oldValue);
 		},
 		getModelByPath: function (path) {
 			if (path === "") {
@@ -262,6 +263,15 @@ define([
 			}
 
 		},
+		resetErrors: function () {
+			// summary:
+			//		reset meta data. does not cascade.
+			this._execute(function () {
+				this.set("state", "");
+				this.computeProperties();
+			},false);
+			this.onChange(false);
+		},
 		resetMeta: function (bubble) {
 			// summary:
 			//		reset meta data. does not cascade.
@@ -270,7 +280,6 @@ define([
 				this.set("message", "");
 				this.set("touched", false);
 				this.set("oldValue", this.getPlainValue());
-				this.computeProperties();
 			}, bubble !== false);
 		},
 		hasChildrenErrors: function () {
@@ -282,29 +291,27 @@ define([
 		validateRecursively: function (force) {
 			var me = this;
 			this.visit(function (model, cascade) {
-				if (!model.isEmpty()) {
-					cascade();
-				}
-				// call on change because children may have changed
-				//model.onChange(false);
-				model.validate(force);
+				model._execute(function () {
+					if (!model.isEmpty()) {
+						cascade();
+					}
+					// call on change because children may have changed
+					//model.onChange(false);
+					model.validate(force);
+				}, false);
+				model.onChange(false);
 			});
 		},
 		forceChangeNotification: function () {
 			var me = this;
 			this.visit(function (model, cascade) {
 				if (!model.isEmpty()) {
-					cascade();
+					if (cascade) cascade();
 				}
-				// call on change because children may have changed
-				//model.onChange(false);
 				var oldBubble = model.bubble;
-				model.bubble = false;
-				try {
+				model._execute(function () {
 					model.onChange(false);
-				} finally {
-					model.bubble = oldBubble;
-				}
+				}, false);
 			});
 		},
 		onTouch: function () {

@@ -1,6 +1,7 @@
 define([
-	'dojo/_base/declare'
-], function (declare) {
+	'dojo/_base/declare',
+	'dojo/_base/lang'
+], function (declare, lang) {
 
 	return declare([], {
 		in: function (value) {
@@ -10,21 +11,22 @@ define([
 			var inValue = {};
 			inValue.group = group;
 			inValue.attributes = attributes;
-			this.copyGroupProperties(value,inValue);
+			this.copyGroupProperties(value, inValue);
 			return inValue;
 		},
 		out: function (value) {
-			var form = value.group;
-			this.visitOut(value.attributes, form);
-			this.copyGroupProperties(value,form);
+			var form = this.visitOut(value.group, value.attributes);
+			this.copyGroupProperties(value, form);
 			return form;
 		},
-		visitOut: function (attributes, group) {
+		visitOut: function (group, attributes) {
+			var form = {};
+			lang.mixin(form, group);
 			if (!group) {
 				return null;
 			} else if ("attribute" in group) {
 				var code = group.attribute;
-				group.attribute = attributes.filter(function (attribute) {
+				form.attribute = attributes.filter(function (attribute) {
 					return attribute && attribute.code === code;
 				})[0];
 			} else if ("attributes" in group) {
@@ -34,14 +36,17 @@ define([
 						return a && a.code === code;
 					})[0];
 				});
-				group.attributes = newAttributes;
+				form.attributes = newAttributes;
 			} else if ("group" in group) {
-				this.visitOut(attributes, group.group);
+				form.group = this.visitOut(group.group, attributes);
 			} else if ("groups" in group) {
+				form.groups=[];
 				group.groups.forEach(function (group) {
-					this.visitOut(attributes, group);
+					var newGroup=this.visitOut(group, attributes);
+					form.groups.push(newGroup);
 				}, this);
 			}
+			return form;
 		},
 		copyGroupProperties: function (from, to) {
 			if (!to || !from) {
@@ -49,7 +54,7 @@ define([
 				return;
 			}
 			Object.keys(from).forEach(function (key) {
-				if (from[key] && ["additionalProperties","label", "code", "description"].indexOf(key) >= 0) {
+				if (from[key] && ["additionalProperties", "label", "code", "description"].indexOf(key) >= 0) {
 					to[key] = from[key];
 				}
 			});

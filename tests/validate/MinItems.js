@@ -18,12 +18,12 @@ define([
 	doh.register("MinItems", [
 		function testValid() {
 			model.update(["1", "2"]);
-            model.validate(true);
+            model.validateRecursively(true);
 			doh.assertEqual(0, model.errorCount);
 		},
 		function testInvalid() {
 			model.update(["1"]);
-            model.validate(true);
+            model.validateRecursively(true);
 			doh.assertEqual(1, model.errorCount);
 			doh.assertTrue(model.message!="");
 		}

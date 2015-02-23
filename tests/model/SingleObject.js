@@ -114,6 +114,7 @@ define(['dojo/_base/lang',
             assertEqual(1, so.changedCount);
             assertEqual(true, so.hasChanged());
             so.resetMetaRecursively();
+			so.forceChangeNotification();
             assertEqual(0, so.errorCount);
             assertEqual(0, so.changedCount);
             assertEqual(false, so.hasChanged());
@@ -172,26 +173,8 @@ define(['dojo/_base/lang',
             so.validateRecursively(true);
             t.assertEqual(1, so.get("errorCount"));
             so.resetMetaRecursively();
-            t.assertEqual(0, so.get("errorCount"));
-        },
-        function testModelValidation(t) {
-            createModel();
-            so.resetMetaRecursively();
-            so.validators = [function (model, force) {
-                if (force && model.getModelByPath("stringP").getPlainValue() === "y") {
-                    return [
-                        {path: "", message: "stringP must not be y"}
-                    ];
-                } else {
-                    return [];
-                }
-            }];
-            so.update({stringP: "y"});
-            t.assertEqual(0, so.get("errorCount"));
-            so.validateRecursively(true);
-            t.assertEqual(1, so.get("errorCount"));
-            so.resetMetaRecursively();
-            t.assertEqual(0, so.get("errorCount"));
+			so.forceChangeNotification();
+			t.assertEqual(0, so.get("errorCount"));
         },
         function testAdditionalProperties(t) {
             createModel();

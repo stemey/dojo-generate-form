@@ -82,6 +82,7 @@ define(["dojo/_base/lang",
         },
         function testUniqueProperties2() {
             am.resetMetaRecursively();
+			am.forceChangeNotification();
             assertEqual(0, am.errorCount);
             am.update({"j": {x: "jjj"}});
             am.push({"keyx": "j", x: "ll"});

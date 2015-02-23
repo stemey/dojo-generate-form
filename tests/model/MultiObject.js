@@ -121,7 +121,8 @@ define(["dojo/_base/lang",
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
 			mo.init();
             mo.resetMetaRecursively();
-            mo.validators = [function (model, force) {
+			mo.forceChangeNotification();
+			mo.validators = [function (model, force) {
                 if (force && model.getModelByPath("stringP").getPlainValue() === "y") {
                     return [
                         {path: "", message: "stringP must not be y"}
@@ -135,6 +136,7 @@ define(["dojo/_base/lang",
             mo.validateRecursively(true);
             t.assertEqual(1, mo.get("errorCount"));
             mo.resetMetaRecursively();
+			mo.forceChangeNotification();
             t.assertEqual(0, mo.get("errorCount"));
         },
         function testAdditionalProperties(t) {

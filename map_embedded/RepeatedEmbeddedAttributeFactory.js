@@ -48,12 +48,12 @@ define([
 			var ef = function (value) {
 				var model = me.editorFactory.createGroupModel(attribute.group);
 				if (value) {
-					model.update(value,true,initialized);
+					model.update(value, true);
 				}
 				return model;
 			};
 			model.elementFactory = ef;
-			model.update(plainValue,true,false);
+			model.update(plainValue, true, false);
 			return model;
 		}
 	});
