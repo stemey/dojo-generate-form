@@ -15,7 +15,7 @@ define([
         },
         getDefaultValue: function () {
             var defaultValue = this.inherited(arguments);
-            if (defaultValue === null && this.options.length > 0) {
+            if (defaultValue === null && this.options && this.options.length > 0) {
                 defaultValue = this.options[0].value;
             }
             return defaultValue;

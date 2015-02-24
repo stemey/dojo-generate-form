@@ -19,19 +19,19 @@ define([
 		addNew: function (value) {
 			var model = this.elementFactory(value);
 			model.initDefault();
-			this.value.push(model);
+			this._push(model);
+			return model;
+		},
+		_push: function(model) {
+			model.set("parent",this);
 			if (this.initialized) {
 				model.init();
 			}
-			return model;
+			this.value.push(model);
 		},
 		push: function (value) {
 			var model = this.elementFactory(value);
-			model.parent = this;
-			this.value.push(model);
-			if (this.initialized) {
-				model.init();
-			}
+			this._push(model);
 			return model;
 		},
 		length: function () {
@@ -81,10 +81,7 @@ define([
 						var model = this.value[i];
 						if (!model) {
 							model = this.elementFactory(element);
-							this.value.push(model);
-							if (this.initialized) {
-								model.init();
-							}
+							this._push(model);
 						} else {
 							model.resetMeta();
 							model.update(element, setOldValue,false);
