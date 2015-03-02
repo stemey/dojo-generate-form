@@ -26,7 +26,7 @@ define([
 			}
 			props.height = attribute.height;
 
-			props.value = at(modelHandle, "message");
+			props.message = at(modelHandle, "message");
 			props.state = at(modelHandle, "state");
 
 			var converter = {
