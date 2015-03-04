@@ -1,9 +1,9 @@
 define([
-	'dojo/_base/declare',
-	'dojo/_base/lang'
-], function (declare, lang) {
+	'dojo/_base/declare'
+], function (declare) {
 
 	return declare([], {
+		props: ["label", "code", "editorDescription", "additionalProperties"],
 		in: function (value) {
 			var attributes = [];
 			var group = {};
@@ -11,17 +11,23 @@ define([
 			var inValue = {};
 			inValue.group = group;
 			inValue.attributes = attributes;
-			this.copyGroupProperties(value, inValue);
+			this.props.forEach(function (prop) {
+				inValue[prop] = inValue.group[prop];
+				delete inValue.group[prop];
+			});
 			return inValue;
 		},
 		out: function (value) {
 			var form = this.visitOut(value.group, value.attributes);
-			this.copyGroupProperties(value, form);
+			this.props.forEach(function (prop) {
+				form[prop] = value[prop];
+				delete value[prop];
+			});
 			return form;
 		},
 		visitOut: function (group, attributes) {
 			var form = {};
-			lang.mixin(form, group);
+			//lang.mixin(form, group);
 			if (!group) {
 				return null;
 			} else if ("attribute" in group) {
@@ -29,6 +35,7 @@ define([
 				form.attribute = attributes.filter(function (attribute) {
 					return attribute && attribute.code === code;
 				})[0];
+				this.copyGroupProperties(group, form, "attribute");
 			} else if ("attributes" in group) {
 				var codes = group.attributes;
 				var newAttributes = codes.map(function (code) {
@@ -37,24 +44,27 @@ define([
 					})[0];
 				});
 				form.attributes = newAttributes;
+				this.copyGroupProperties(group, form, "attributes");
 			} else if ("group" in group) {
 				form.group = this.visitOut(group.group, attributes);
+				this.copyGroupProperties(group, form, "group");
 			} else if ("groups" in group) {
-				form.groups=[];
+				form.groups = [];
 				group.groups.forEach(function (group) {
-					var newGroup=this.visitOut(group, attributes);
+					var newGroup = this.visitOut(group, attributes);
 					form.groups.push(newGroup);
 				}, this);
+				this.copyGroupProperties(group, form, "groups");
 			}
 			return form;
 		},
-		copyGroupProperties: function (from, to) {
+		copyGroupProperties: function (from, to, exclude) {
 			if (!to || !from) {
 				// TODO this situation exists during first update. Need to remove the bubbling during first update.
 				return;
 			}
 			Object.keys(from).forEach(function (key) {
-				if (from[key] && ["additionalProperties", "label", "code", "description"].indexOf(key) >= 0) {
+				if (from[key] &&  key!==exclude) {
 					to[key] = from[key];
 				}
 			});
@@ -65,6 +75,7 @@ define([
 			} else if ("attribute" in value) {
 				attributes.push(value.attribute);
 				group.attribute = value.attribute.code;
+				this.copyGroupProperties(value, group, "attribute");
 			} else if ("attributes" in value) {
 				value.attributes.forEach(function (attribute) {
 					attributes.push(attribute);
@@ -73,11 +84,14 @@ define([
 					return attribute.code;
 				}, this);
 				group.attributes = aCodes;
+				this.copyGroupProperties(value, group, "attributes");
 			} else if ("group" in value) {
 				group.group = {};
+				this.copyGroupProperties(value, group, "group");
 				this.visitIn(value.group, attributes, group.group);
 			} else if ("groups" in value) {
 				group.groups = [];
+				this.copyGroupProperties(value, group, "groups");
 				value.groups.forEach(function (element) {
 					var newGroup = {};
 					group.groups.push(newGroup);
