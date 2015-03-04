@@ -3,8 +3,9 @@ define([
     "dojo/_base/lang",
     "dojo/_base/declare",
     "./AttributeListWidget",
-    "../model/SingleObject"
-], function (array, lang, declare, AttributeListWidget, SingleObject) {
+    "../model/SingleObject",
+	"../model/transformer/GeneralTransformer"
+], function (array, lang, declare, AttributeListWidget, SingleObject, GeneralTransformer) {
 // module
 //		gform/group/GroupFactory
 
@@ -40,6 +41,7 @@ define([
         createModel: function (schema, plainValue) {
             var validators = this.editorFactory.getModelValidators(schema);
             var model = new SingleObject({schema: schema, validators: validators, editorFactory: this.editorFactory});
+			model.transformer = new GeneralTransformer();
             model.update(plainValue,true,false);
             model.typeCode = schema.code;
             return model;
