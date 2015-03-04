@@ -18,7 +18,7 @@ define([
         },
         create: function (attribute, modelHandle, ctx) {
             var panelWidget;
-            if (attribute.required) {
+			if (attribute.required) {
                 panelWidget = new SingleTypePanelWidget({
                     "modelHandle": modelHandle,
                     "meta": attribute,

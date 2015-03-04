@@ -1,0 +1,69 @@
+{
+	"code": "example",
+	"label": "example",
+	"editor": "single",
+	"attribute": {
+		"required": false,
+		"type": "object",
+		"typeProperty": "ext_type",
+		"label": "thing",
+		"code": "thing",
+		"groups": [
+			{
+				"editor": "verticalgroup",
+				"code": "thing1",
+				"label": "thing1",
+				"groups": [
+					{
+						"label": "one",
+						"region": "top",
+						"attributes": [
+							{
+								"type": "string",
+								"label": "name",
+								"code": "name"
+							}
+						]
+					},
+					{
+						"region": "center",
+						"label": "two",
+						"editor":"single",
+						"attribute":
+							{
+								"type": "string",
+								"editor":"richtext",
+								"label": "address",
+								"code": "address"
+							}
+
+					},{
+						"label": "one",
+						"region": "bottom",
+						"attributes": [
+							{
+								"type": "string",
+								"label": "xx",
+								"code": "xx"
+							}
+						]
+					}
+				]
+			},
+			{
+				"code": "thing2",
+				"label": "thing2",
+				"attributes": [
+					{
+						"required": true,
+						"type": "string",
+						"label": "firstName",
+						"code": "firstName",
+						"array": false
+					}
+				]
+			}
+		]
+	}
+
+}
