@@ -221,12 +221,17 @@ define([
 		visit: function (cb, idx) {
 			cb(this, idx);
 		},
-		resetMetaRecursively: function () {
+		resetMetaRecursively: function (bubble) {
 			this.visit(function (model, cascade) {
 				if (cascade) cascade();
 				model.resetMeta(false);
+				if (bubble) {
+					model._execute(function() {
+						model.onChange(false);
+					},false);
+				}
 			});
-			this.resetMeta(false);
+			//this.resetMeta(false);
 
 		},
 		reset: function () {

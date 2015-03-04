@@ -120,8 +120,7 @@ define(["dojo/_base/lang",
         function testModelValidation(t) {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
 			mo.init();
-            mo.resetMetaRecursively();
-			mo.forceChangeNotification();
+            mo.resetMetaRecursively(true);
 			mo.validators = [function (model, force) {
                 if (force && model.getModelByPath("stringP").getPlainValue() === "y") {
                     return [
@@ -135,9 +134,8 @@ define(["dojo/_base/lang",
             t.assertEqual(0, mo.get("errorCount"));
             mo.validateRecursively(true);
             t.assertEqual(1, mo.get("errorCount"));
-            mo.resetMetaRecursively();
-			mo.forceChangeNotification();
-            t.assertEqual(0, mo.get("errorCount"));
+            mo.resetMetaRecursively(true);
+			t.assertEqual(0, mo.get("errorCount"));
         },
         function testAdditionalProperties(t) {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});

@@ -81,9 +81,8 @@ define(["dojo/_base/lang",
             assertEqual("Error", am.getModelByIndex(1).getModelByPath("keyx").state);
         },
         function testUniqueProperties2() {
-            am.resetMetaRecursively();
-			am.forceChangeNotification();
-            assertEqual(0, am.errorCount);
+            am.resetMetaRecursively(true);
+			assertEqual(0, am.errorCount);
             am.update({"j": {x: "jjj"}});
             am.push({"keyx": "j", x: "ll"});
             assertEqual("Error", am.getModelByIndex(1).getModelByPath("keyx").state);

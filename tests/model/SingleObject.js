@@ -113,9 +113,8 @@ define(['dojo/_base/lang',
             assertEqual(2, so.errorCount);
             assertEqual(1, so.changedCount);
             assertEqual(true, so.hasChanged());
-            so.resetMetaRecursively();
-			so.forceChangeNotification();
-            assertEqual(0, so.errorCount);
+            so.resetMetaRecursively(true);
+			assertEqual(0, so.errorCount);
             assertEqual(0, so.changedCount);
             assertEqual(false, so.hasChanged());
         },
@@ -172,8 +171,7 @@ define(['dojo/_base/lang',
             t.assertEqual(0, so.get("errorCount"));
             so.validateRecursively(true);
             t.assertEqual(1, so.get("errorCount"));
-            so.resetMetaRecursively();
-			so.forceChangeNotification();
+            so.resetMetaRecursively(true);
 			t.assertEqual(0, so.get("errorCount"));
         },
         function testAdditionalProperties(t) {
