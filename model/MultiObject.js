@@ -1,8 +1,9 @@
 define([
 	"dojo/_base/declare",
+	"dojo/_base/lang",
 	"./Model",
 	"./AdditionalPropertiesMixin"
-], function (declare, Model, AdditionalPropertiesMixin) {
+], function (declare, lang, Model, AdditionalPropertiesMixin) {
 	// module:
 	//		gform/model/MultiObject
 
@@ -127,7 +128,7 @@ define([
 						} else {
 							var nextAttribute = nextGroup.getModelByPath(idx);
 							if (nextAttribute) {
-								nuValue[idx]=model.getPlainValue();
+								nuValue[idx] = model.getPlainValue();
 							}
 						}
 					}
@@ -167,9 +168,11 @@ define([
 			} else {
 				var group = this.getGroup(this.currentTypeCode);
 				var value = group.getPlainValue();
-				value[this.typeProperty] = this.currentTypeCode;
-				value = this.transformOut(value);
-				return value;
+				var plainValue = {};
+				lang.mixin(plainValue, value);
+				plainValue[this.typeProperty] = this.currentTypeCode;
+				plainValue = this.transformOut(plainValue);
+				return plainValue;
 			}
 		},
 		addError: function (path, message) {

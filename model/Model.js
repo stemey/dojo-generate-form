@@ -223,7 +223,9 @@ define([
 		},
 		resetMetaRecursively: function (bubble) {
 			this.visit(function (model, cascade) {
-				if (cascade) cascade();
+				if (cascade) {
+					cascade();
+				}
 				model.resetMeta(false);
 				if (bubble) {
 					model._execute(function() {
