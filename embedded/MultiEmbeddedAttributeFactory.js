@@ -20,9 +20,9 @@ define([
 		create: function (attribute, modelHandle, ctx) {
 			var Widget;
 			if (attribute.layout) {
-				Widget = GroupPanelWidget;
-			} else {
 				Widget = LayoutGroupPanelWidget;
+			} else {
+				Widget = GroupPanelWidget;
 			}
 			var panelWidget = new Widget({
 				"modelHandle": modelHandle,
