@@ -26,7 +26,7 @@ define([
 				modelHandle.options=newOptions;
 				select.set("options", modelHandle.options);
 				select.set("value",initialValue);
-			})
+			});
 
 			modelHandle.watch("options", function () {
 				select.set("options", modelHandle.options);

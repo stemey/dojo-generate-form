@@ -62,8 +62,8 @@ define([
 			var me = this;
 			var ef = function (value) {
 				var newElement = me.editorFactory.createGroupModel(meta.group);
-                if (value) {
-                    newElement.update(value,true,model.initialized);
+				if (value) {
+                    newElement.update(value,false,model.initialized);
                 }
 				return newElement;
 			};

@@ -9,7 +9,7 @@ define([
 		// summary:
 		//		Provides access to sibling attributes of modelHandle.
 		value: null,
-		oldValue: null,
+		oldValue: undefined,
 		required: false,
 		update: function (/*Object*/plainValue, setOldValue, bubble) {
 			// summary:
@@ -51,12 +51,13 @@ define([
 		initDefault: function (setOldValue) {
 			this._execute(function () {
 				this.resetMeta();
+				this.set("oldValue", undefined);
 				this.update(this.getDefaultValue(), setOldValue);
 			});
 		},
 		getDefaultValue: function () {
 			var defaultValue = this.schema.defaultValue;
-			if (defaultValue == null || typeof defaultValue === "undefined") {
+			if (defaultValue === null || typeof defaultValue === "undefined") {
 				return null;
 			} else {
 				return this.schema.defaultValue;

@@ -37,7 +37,7 @@ define([
 			this.typeCodeToGroup[typeCode] = group;
 			group.set("parent", this);
 			if (this.initialized) {
-				group.initDefault();
+				group.initDefault(false);
 				group.init();
 			}
 			return group;
@@ -60,7 +60,7 @@ define([
 			this._execute(function () {
 				var typeCode = this.schema.groups[0].code;
 				this.set("currentTypeCode", typeCode);
-				this.getGroup(typeCode).initDefault();
+				this.getGroup(typeCode).initDefault(setOldValue);
 				if (setOldValue !== false) {
 					this.set("oldValue", this.getPlainValue());
 				}
@@ -98,7 +98,7 @@ define([
 				var currentGroup = this.getGroup(this.currentTypeCode);
 				currentGroup.update(plainValue, setOldValue, bubble);
 			}
-			if (this.setOldValue !== false) {
+			if (setOldValue !== false) {
 				this.set("oldValue", this.getPlainValue());
 			}
 		},
@@ -109,18 +109,8 @@ define([
 			var prevGroup = this.getGroup(this.currentTypeCode);
 			this._changeAttrValue("currentTypeCode", typeCode);
 			var nextGroup = this.getGroup(this.currentTypeCode);
-			var value;
-			if (typeof prevGroup === "undefined" || prevGroup === null) {
-				value = {};
-			} else {
-				value = prevGroup.getPlainValue() || {};
-			}
-			if (typeCode !== null) {
-				value[this.typeProperty] = typeCode;
-				//this.update(value);
-			}
 			if (prevGroup && nextGroup) {
-				var nuValue = nextGroup.getPlainValue();
+				var value=nextGroup.getPlainValue();
 				prevGroup.visit(
 					function (model, cascade, idx) {
 						if (typeof idx === "undefined") {
@@ -128,13 +118,15 @@ define([
 						} else {
 							var nextAttribute = nextGroup.getModelByPath(idx);
 							if (nextAttribute) {
-								nuValue[idx] = model.getPlainValue();
+								value[idx] = model.getPlainValue();
 							}
 						}
 					}
 				);
 				// break
-				nextGroup.update(nuValue, false, false);
+				nextGroup.update(value, false, false);
+			} else if (nextGroup !== null) {
+				nextGroup.initDefault(false);
 			}
 			this.onChange(false);
 		},
@@ -174,6 +166,13 @@ define([
 				plainValue = this.transformOut(plainValue);
 				return plainValue;
 			}
+		},
+		calculateChanged: function () {
+			if (typeof this.oldValue === "undefined") {
+				return false;
+			}
+			var oldType = !this.oldValue ? null : this.oldValue[this.typeProperty];
+			return this.currentTypeCode !== oldType;
 		},
 		addError: function (path, message) {
 			// summary:

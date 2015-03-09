@@ -22,7 +22,7 @@ define([
 				validators: validators,
 				editorFactory: this.editorFactory
 			});
-			model.update(plainValue, true, false);
+			//model.update(plainValue, true, false);
 			model.typeCode = schema.code;
 			return model;
 		},

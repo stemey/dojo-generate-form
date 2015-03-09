@@ -80,7 +80,8 @@ define(['dojo/_base/lang',
         },
         function testSetIsNull() {
             createModel();
-            so.update({});
+            so.initDefault(true);
+			assertEqual("default",so.oldValue.stringP);
             so.set("isNull", true);
             assertEqual(null, so.getPlainValue());
 			doh.assertEqual(1,so.get("changedCount"));
@@ -90,7 +91,7 @@ define(['dojo/_base/lang',
         },
 		function testToggleNull() {
 			createModel();
-			so.update(null);
+			so.update(null, true);
 			assertEqual(null, so.getPlainValue());
 			doh.assertEqual(0,so.get("changedCount"));
 			so.set("isNull", false);
@@ -142,7 +143,14 @@ define(['dojo/_base/lang',
             so.setValue("stringP", "x");
             assertEqual(1, so.changedCount);
         },
-        function testError() {
+		function testChangedFromNull() {
+			so = new SingleObject({schema: type, editorFactory: ef});
+			so.update(null);
+			so.init();
+			so.update({numberP:5},false);
+			assertEqual(1, so.changedCount);
+		},
+		function testError() {
             createModel();
             so.addError("stringP", "x");
             assertEqual(1, so.errorCount);

@@ -11,7 +11,7 @@ define(['dojo/_base/lang',
 
 	var elementFactory = function (value) {
 		var model = new PrimitiveModel(type);
-		model.update(value);
+		model.update(value, false);
 		model.init();
 		return model;
 	};
@@ -29,22 +29,22 @@ define(['dojo/_base/lang',
 			doh.assertEqual(0, am.value[0].index);
 			doh.assertEqual(1, am.value[1].index);
 		},
-        function testPath() {
-            am.update(["a", "b"]);
-            doh.assertEqual("0", am.getModelByPath("0").getPath());
-        },
+		function testPath() {
+			am.update(["a", "b"]);
+			doh.assertEqual("0", am.getModelByPath("0").getPath());
+		},
 		function testValue() {
 			am.update(["a", "b"]);
 			var plainValue = am.getPlainValue();
 			assertEqual(["a", "b"], plainValue);
 		},
 		function testNull() {
-			am.update(null);
+			am.update(null, true);
 			var plainValue = am.getPlainValue();
 			assertEqual([], plainValue);
 		},
 		function testDefaults() {
-			am.update(["a", "b"]);
+			am.update(["a", "b"], true);
 			am.push("x");
 			var plainValue = am.getPlainValue();
 			assertEqual(["a", "b", "x"], plainValue);
@@ -54,12 +54,24 @@ define(['dojo/_base/lang',
 			am.getModelByIndex(1).set("state", "Error");
 			assertEqual(1, am.errorCount);
 		},
-		function testChanged() {
-			am.getModelByIndex(1).update("v");
+		function testChangedState() {
+			am.update(["a", "b"], true);
+			am.getModelByIndex(1).update("v", false, true);
+			assertEqual(1, am.changedCount);
+		},
+		function testAddedState() {
+			am.update(["a"], true);
+			am.push("b");
+			assertEqual(1, am.changedCount);
+			assertEqual(0, am.getModelByIndex(1).changedCount);
+		},
+		function testRemovedState() {
+			am.update(["a", "b"], true);
+			am.pop();
 			assertEqual(1, am.changedCount);
 		},
 		function testGetModelByPath() {
-			am.update(["a", "b"]);
+			am.update(["a", "b"], true);
 			assertEqual("b", am.getModelByPath("1").getPlainValue());
 		},
 		function testVisit() {

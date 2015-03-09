@@ -55,7 +55,7 @@ define(["dojo/_base/lang",
         },
         createGroupModel: function (schema) {
             var so = new SingleObject({schema: schema, editorFactory: ef});
-            so.update({});
+            so.update({},false);
 			so.init();
             return so;
         }
@@ -68,36 +68,53 @@ define(["dojo/_base/lang",
     doh.register("MultiObject", [
         function testAddGroup(t) {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
-            mo.update(object1);
+            mo.update(object1, false);
             mo.init();
             mo.set("currentTypeCode", "type2");
-            var plainValue = mo.getPlainValue();
-            t.assertTrue(plainValue !== null);
+			var plainValue = mo.getPlainValue();
+			t.assertEqual(0,mo.changedCount);
+			t.assertTrue(plainValue !== null);
             t.assertTrue(plainValue.booleanP);
             t.assertEqual(3, plainValue.numberP);
         },
         function testValue() {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
             mo.update(object1);
-            var plainValue = mo.getPlainValue();
+			mo.init();
+			var plainValue = mo.getPlainValue();
             assertEqual(object1, plainValue);
         },
         function testNull() {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
             mo.update(null);
+			mo.init();
             var plainValue = mo.getPlainValue();
             assertEqual(null, plainValue);
         },
         function testSwitchType() {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
             mo.update(object2);
+			mo.init();
             mo.update(object1);
             mo.set("currentTypeCode", "type2");
             var plainValue = mo.getPlainValue(mo);
             assertEqual(true, plainValue.booleanP);
             assertEqual("type2", plainValue.type);
         },
-        function testGetModelByPath() {
+		function testChanged() {
+			var mo = new MultiObject.create({schema: type, editorFactory: ef});
+			mo.update(object2,true);
+			mo.getModelByPath("numberP").update(121212,false,true);
+			assertEqual(1, mo.changedCount);
+		},
+		function testTypeChanged() {
+			var mo = new MultiObject.create({schema: type, editorFactory: ef});
+			mo.init();
+			mo.update({type:"type2"},true);
+			mo.set("currentTypeCode","type1");
+			assertEqual(1, mo.changedCount);
+		},
+		function testGetModelByPath() {
             var mo = new MultiObject.create({schema: type, editorFactory: ef});
             mo.set("currentTypeCode", "type1");
             var pmodel = mo.getGroup("type1").getAttribute("stringP");

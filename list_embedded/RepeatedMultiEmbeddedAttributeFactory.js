@@ -76,7 +76,11 @@ define([
 			var me = this;
 			var ef = function (value) {
 				var model = MultiObject.create({editorFactory: me.editorFactory, schema: meta});
-				model.update(value, true, model.initialized);
+				if (typeof value === "undefined") {
+					model.initDefault(false);
+				}else{
+					model.update(value, false, model.initialized);
+				}
 				return model;
 			};
 			model.elementFactory = ef;

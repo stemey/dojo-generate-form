@@ -105,11 +105,12 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 				}
 				if (!this.modelHandle) {
 					this.modelHandle = this.editorFactory.createGroupModel(this.meta, value);
+					this.modelHandle.update(value, true);
 					this.modelHandle.init();
 					var me = this;
 					aspect.after(this.modelHandle, "onChange", lang.hitch(this, "onChangeInternally"));
 				} else {
-					this.modelHandle.update(value,true);
+					this.modelHandle.update(value, true);
 				}
 				if (!this.meta) {
 					throw new Error("cannot set plainValue before setting meta");

@@ -12,13 +12,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		group: null,
 		typeProperty: null,
 		_addElement: function () {
-
-			var newValue = {};
-            if (this.typeProperty) {
-				newValue[this.typeProperty] = this.group.code;
-			}
-
-			this.target.addNew(newValue);
+			this.target.addNew();
 		},
 		postCreate: function () {
 			this.addButton.set("onClick", lang.hitch(this, "_addElement"));

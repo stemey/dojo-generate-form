@@ -1,4 +1,4 @@
-define([ "dojo/_base/array", //
+define(["dojo/_base/array", //
 	"dojo/_base/lang",//
 	"dojo/aspect",//
 	"dojo/_base/declare",//
@@ -44,7 +44,10 @@ define([ "dojo/_base/array", //
 
 
 			array.forEach(attributes, function (attribute) {
-				tableHeader.addChild(new TableElementHeader({label: attribute.label || attribute.code, description: attribute.description}));
+				tableHeader.addChild(new TableElementHeader({
+					label: attribute.label || attribute.code,
+					description: attribute.description
+				}));
 			}, this);
 			select.addChild(tableHeader);
 
@@ -65,7 +68,12 @@ define([ "dojo/_base/array", //
 					return modelHandle.elementFactory(original.getPlainValue());
 				};
 				aspect.after(widgetList, "startup", function () {
-					new DndSource(widgetList.domNode, {copyFn: copy, copyOnly: false, singular: true, withHandles: true});
+					new DndSource(widgetList.domNode, {
+						copyFn: copy,
+						copyOnly: false,
+						singular: true,
+						withHandles: true
+					});
 				});
 			}
 
@@ -86,10 +94,10 @@ define([ "dojo/_base/array", //
 			var model = new ArrayModel({schema: meta, validators: validators});
 			model.elementFactory = function (element) {
 				var elModel = MergedMultiObject.create(meta, me._createFactory());
-				elModel.update(element,true,model.initialized);
+				elModel.update(element, false, model.initialized);
 				return elModel;
 			};
-			model.update(value,true,false);
+			model.update(value, true, false);
 			return model;
 
 		},

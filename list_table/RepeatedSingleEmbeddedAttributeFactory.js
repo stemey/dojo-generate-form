@@ -32,7 +32,7 @@ define([
 				target: modelHandle,
 				attribute: attribute,
 				editorFactory: this.editorFactory,
-                ctx:ctx
+				ctx: ctx
 			});
 
 
@@ -42,7 +42,10 @@ define([
 
 
 			array.forEach(attributes, function (attribute) {
-				tableHeader.addChild(new TableElementHeader({label: attribute.label || attribute.code, description: attribute.description}));
+				tableHeader.addChild(new TableElementHeader({
+					label: attribute.label || attribute.code,
+					description: attribute.description
+				}));
 			}, this);
 			select.addChild(tableHeader);
 
@@ -55,7 +58,7 @@ define([
 				combinedAttributes: attributes,
 				_relTargetProp: "modelHandle",
 				editorFactory: this.editorFactory,
-                ctx:ctx
+				ctx: ctx
 			});
 			select.addChild(widgetList);
 
@@ -80,10 +83,10 @@ define([
 			var model = new ArrayModel({schema: meta, validators: validators});
 			model.elementFactory = function (element) {
 				var elModel = new SingleObject({schema: meta, editorFactory: me.editorFactory});
-				elModel.update(element,true,model.initialized);
+				elModel.update(element, false, model.initialized);
 				return elModel;
 			};
-			model.update(value,true,false);
+			model.update(value, true, false);
 			return model;
 
 		}

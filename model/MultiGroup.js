@@ -33,9 +33,12 @@ define([
 			}, this);
 			this._changeAttrValue("groups", groups);
 		},
-		initDefault: function () {
+		calculateChanged: function() {
+			return false;
+		},
+		initDefault: function (setOldValue) {
 			this.groups.forEach(function (group) {
-				group.initDefault();
+				group.initDefault(setOldValue);
 			}, this);
 		},
 		update: function (/*Object*/plainValue, setOldValue, bubble) {

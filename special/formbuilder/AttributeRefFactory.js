@@ -35,7 +35,7 @@ define(
                 createModel: function (meta, plainValue) {
                     var validators = this.editorFactory.getModelValidators(meta);
                     var model = new AttributeSelectModel({meta: meta, validators: validators, required: meta.required === true});
-                    model.update(plainValue,true,false);
+                    //model.update(plainValue,true,false);
                     return model;
                 }
             });

@@ -23,11 +23,11 @@ define([
 			var me = this;
 			var ef = function (value) {
 				var elementModel = me.editorFactory.createAttributeModel(attribute.element);
-                elementModel.update(value,true,model.initialized);
+                elementModel.update(value,false,model.initialized);
                 return elementModel;
 			};
 			model.elementFactory = ef;
-			model.update(plainValue,true,false);
+			//model.update(plainValue,false,false);
 			return model;
 
 		},

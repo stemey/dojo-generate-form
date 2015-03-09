@@ -43,7 +43,7 @@ define([
         },
         initDefault: function (setOldValue) {
             Object.keys(this.attributes).forEach(function (key) {
-                this.attributes[key].initDefault();
+                this.attributes[key].initDefault(setOldValue);
             }, this);
             if (setOldValue !== false) {
                 this.set("oldValue", this.getPlainValue());

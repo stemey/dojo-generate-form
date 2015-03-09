@@ -2,8 +2,9 @@ define([
 	"dojo/_base/lang",
 	"dojo/_base/declare",
 	"../patch/StatefulArray",
-	"./Model"
-], function (lang, declare, StatefulArray, Model) {
+	"./Model",
+	"./equals"
+], function (lang, declare, StatefulArray, Model, equals) {
 	// module:
 	//		gform/model/SingleObject
 
@@ -16,14 +17,14 @@ define([
 			this.value = new StatefulArray([]);
 			this._setupIndexes();
 		},
-		addNew: function (value) {
-			var model = this.elementFactory(value);
-			model.initDefault();
+		addNew: function () {
+			var model = this.elementFactory();
+			model.initDefault(false);
 			this._push(model);
 			return model;
 		},
-		_push: function(model) {
-			model.set("parent",this);
+		_push: function (model) {
+			model.set("parent", this);
 			if (this.initialized) {
 				model.init();
 			}
@@ -31,8 +32,12 @@ define([
 		},
 		push: function (value) {
 			var model = this.elementFactory(value);
+			//model.update(value, false, true);
 			this._push(model);
 			return model;
+		},
+		pop: function () {
+			return this.value.pop();
 		},
 		length: function () {
 			return this.value.length;
@@ -54,6 +59,15 @@ define([
 					this.resetMeta();
 					this.update(this.schema.defaultValue, setOldValue);
 				});
+			}
+		},
+		calculateChanged: function () {
+			if (!this.oldValue || this.oldValue.length !== this.value.length) {
+				return true;
+			} else {
+				return this.oldValue.some(function (el, idx) {
+					return !equals(el, this.getModelByIndex(idx).getPlainValue());
+				}, this);
 			}
 		},
 		update: function (/*Object*/plainValue, setOldValue, bubble) {
@@ -81,18 +95,19 @@ define([
 						var model = this.value[i];
 						if (!model) {
 							model = this.elementFactory(element);
+							model.update(element, true, false);
 							this._push(model);
 						} else {
 							model.resetMeta();
-							model.update(element, setOldValue,false);
+							model.update(element, setOldValue, false);
 						}
 					}, this);
 					if (setOldValue !== false) {
 						this.set("oldValue", this.getPlainValue());
 					}
 				}
-			this.onChange();
-			}, bubble);
+				this.onChange();
+			}, false);
 		},
 		iterateChildren: function (cb) {
 			if (!this.value) {

@@ -45,6 +45,7 @@ define([
                 lang.mixin(newValue, value);
                 lang.mixin(newValue, value[additionalAttribute]);
                 delete newValue[additionalAttribute];
+
                 return this.inherited(arguments,[newValue]);
             } else {
                 return this.inherited(arguments);

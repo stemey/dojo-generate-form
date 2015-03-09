@@ -153,7 +153,7 @@ define([
 			}
 		},
 		hasChanged: function () {
-			return this.changedCount > 0;//typeof this.oldValue !== "undefined" && this.getPlainValue() !== this.oldValue && !equals(this.getPlainValue(), this.oldValue);
+			return this.changedCount > 0;
 		},
 		onChange: function (validate) {
 			if (validate !== false && this.validateOnChange) {
@@ -205,7 +205,7 @@ define([
 			if (this.state === "Error") errorCount++;
 			if (this.state === "Incomplete") incompleteCount++;
 			if (this.oldErrors.length > 0) ownErrorCount++;
-			if (changedCount === 0 && typeof this.oldValue !== "undefined" && this.getPlainValue() !== this.oldValue && !equals(this.getPlainValue(), this.oldValue)) {
+			if (changedCount === 0 && this.calculateChanged()) {
 				changedCount = 1;
 			}
 			this.set("incompleteCount", incompleteCount);
@@ -213,6 +213,7 @@ define([
 			this.set("changedCount", changedCount);
 			this.set("errorCount", errorCount);
 		},
+
 		remove: function () {
 			if (this.parent && this.parent.removeChild) {
 				this.parent.removeChild(this);
@@ -228,9 +229,9 @@ define([
 				}
 				model.resetMeta(false);
 				if (bubble) {
-					model._execute(function() {
+					model._execute(function () {
 						model.onChange(false);
-					},false);
+					}, false);
 				}
 			});
 			//this.resetMeta(false);
@@ -276,7 +277,7 @@ define([
 			this._execute(function () {
 				this.set("state", "");
 				this.computeProperties();
-			},false);
+			}, false);
 			this.onChange(false);
 		},
 		resetMeta: function (bubble) {
@@ -323,6 +324,13 @@ define([
 		},
 		onTouch: function () {
 			this.set("touched", true);
+		},
+		calculateChanged: function () {
+			if (typeof this.oldValue === "undefined") {
+				return false;
+			} else {
+				return this.value !== this.oldValue;
+			}
 		},
 		validate: function (force) {
 			if (this.isEmpty()) {

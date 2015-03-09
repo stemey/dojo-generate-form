@@ -16,8 +16,9 @@ define([
 		isEmpty: function () {
 			return this.isNull;
 		},
-		hasChanged: function () {
-			return this.changedCount > 0;
+		calculateChanged: function () {
+			var wasNull = this.oldValue === null;
+			return this.isNull !== wasNull;
 		},
 		update: function (/*Object*/plainValue, setOldValue, bubble) {
 			// summary:
@@ -107,10 +108,10 @@ define([
 		_isNullSetter: function (value) {
 			if (value !== this.isNull) {
 				if (value === true) {
-					this.updateGroup(null);
+					this.updateGroup(null, false);
 				} else {
 					if (this.oldValue) {
-						this.updateGroup(this.oldValue);
+						this.updateGroup(this.oldValue, false);
 					} else {
 						this.initDefault(false);
 					}
@@ -188,14 +189,18 @@ define([
 					var model = this.get("attributes")[key];
 					// don't init Default on complex attributes unless it is an array with defaults or it is required.
 					if (metaHelper.isArray(model.schema) || !metaHelper.isComplex(model.schema) || model.isRequired()) {
-						model.initDefault();
+						model.initDefault(setOldValue);
 					}
 
 				}, this);
 				this.resetMeta();
-				if (setOldValue === false) {
+				if (setOldValue !== false) {
 					// restMeta sets oldValue to current value
 					// TODO should reset Meta really reset oldValue?
+					this.changedValue=null;
+					this.set("oldValue", this.getPlainValue());
+				} else {
+					//resetMeta overwrite the oldValue
 					this.set("oldValue", oldValue);
 				}
 

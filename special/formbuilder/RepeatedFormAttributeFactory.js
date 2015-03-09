@@ -46,7 +46,7 @@ define(
 						return newElement;
 					};
 					model.elementFactory = ef;
-					model.update(plainValue,true,false);
+					//model.update(plainValue,true,false);
 					return model;
 				}
 			});
