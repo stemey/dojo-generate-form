@@ -23,9 +23,9 @@ define(
                         maxHeight: -1
                     });
 
-					sync(modelHandle, "value", select, "value", {converter: nullablePrimitiveConverter});
                     sync(modelHandle, "options", select, "options");
-					if (modelHandle.options && modelHandle.options.length>0) {
+					sync(modelHandle, "value", select, "value", {converter: nullablePrimitiveConverter});
+					if (!modelHandle.value && modelHandle.options && modelHandle.options.length>0) {
 						modelHandle.set("value", modelHandle.options[0].value);
 					}
 
