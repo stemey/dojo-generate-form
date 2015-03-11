@@ -26,11 +26,10 @@ define([
             });
 
         },
-        createModel: function (meta, plainValue) {
+        createModel: function (meta) {
             var validators = this.editorFactory.getModelValidators(meta);
             var model = new PrimitiveModel({schema: meta, alwaysUseInvalidMessage: this.alwaysUseInvalidMessage === true, validators: validators, required: meta.required === true
             });
-            //model.update(plainValue,false,false);
             return model;
         }
     });

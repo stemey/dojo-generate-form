@@ -56,7 +56,7 @@ define([
 			return select;
 
 		},
-		createModel: function (meta, plainValue) {
+		createModel: function (meta) {
 			var validators = this.editorFactory.getModelValidators(meta);
 			var model = new ArrayModel({schema: meta, validators: validators});
 			var me = this;
@@ -68,7 +68,6 @@ define([
 				return newElement;
 			};
 			model.elementFactory = ef;
-			model.update(plainValue,true,false);
 			return model;
 		}
 	});

@@ -53,11 +53,8 @@ define([  //
 		createBadge: function (model) {
 			return this.decoratorFactory.createBadge(model);
 		},
-		createGroupModel: function (schema, plainValue) {
+		createGroupModel: function (schema) {
 			var factory;
-			if (typeof plainValue === "undefined") {
-				plainValue = null;
-			}
 			if (schema.editor) {
 				factory = this.getGroupFactory(schema.editor);
 			} else {
@@ -66,14 +63,14 @@ define([  //
 			if (factory === null) {
 				throw new Error("cannot find group factory for type " + schema.editor);
 			}
-			return factory.createModel(schema, plainValue);
+			return factory.createModel(schema);
 		},
-		createAttributeModel: function (attribute, plainValue) {
+		createAttributeModel: function (attribute) {
 			var factory = this.getAttributeFactory(attribute);
 			if (factory === null) {
 				throw new Error("cannot find attribute factory for type " + attribute.type);
 			}
-			return factory.createModel(attribute, plainValue);
+			return factory.createModel(attribute);
 		},
 		addGroupFactory: function (id, factory) {
 			// summary:

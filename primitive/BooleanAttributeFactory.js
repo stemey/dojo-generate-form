@@ -33,9 +33,8 @@ define([
         getPreferredDecorator: function() {
             return this.preferredDecorator;
         },
-        createModel: function (meta, plainValue) {
+        createModel: function (meta) {
             var model = new BooleanModel({schema: meta});
-            model.update(plainValue,true,false);
             return model;
         }
     });

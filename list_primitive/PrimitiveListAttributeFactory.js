@@ -17,7 +17,7 @@ define([
 		handles: function (attribute) {
 			return attribute !== null && attribute.type === "array" && attribute.element;
 		},
-		createModel: function (attribute, plainValue) {
+		createModel: function (attribute) {
 			var validators = this.editorFactory.getModelValidators(attribute);
 			var model = new ArrayModel({schema: attribute, validators: validators});
 			var me = this;
@@ -27,7 +27,6 @@ define([
                 return elementModel;
 			};
 			model.elementFactory = ef;
-			//model.update(plainValue,false,false);
 			return model;
 
 		},

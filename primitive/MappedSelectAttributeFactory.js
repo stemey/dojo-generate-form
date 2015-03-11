@@ -37,7 +37,7 @@ define([
 		},
 
 
-		createModel: function (meta, plainValue) {
+		createModel: function (meta) {
 			var validators = this.editorFactory.getModelValidators(meta);
 			var mappedValues = {};
 			for (var key in meta.mapped_values) {
@@ -50,7 +50,6 @@ define([
 				});
 			}
 			var model = new MappedSelectModel({schema: meta, mappedValues: mappedValues, mappedAttribute: meta.mapped_attribute, validators: validators, required: meta.required === true});
-			model.update(plainValue,true,false);
 			return model;
 		}
 

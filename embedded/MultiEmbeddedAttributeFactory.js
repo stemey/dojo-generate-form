@@ -35,12 +35,10 @@ define([
 			return panelWidget;
 
 		},
-		createModel: function (schema, plainValue) {
-			//var groups = [];
+		createModel: function (schema) {
 			var validators = this.editorFactory.getModelValidators(schema);
 			var model = MultiObject.create({schema: schema, editorFactory: this.editorFactory});
 			model.validators = validators;
-			model.update(plainValue, true, false);
 			return model;
 		}
 

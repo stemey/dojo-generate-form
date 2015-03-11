@@ -31,12 +31,8 @@ define([ "dojo/_base/array",
 			return select;
 		},
 
-		createModel: function (meta, plainValue) {
-			if (!plainValue) {
-				plainValue = [];
-			}
+		createModel: function (meta) {
 			var model = new PrimitiveModel({schema:meta});
-			model.update(plainValue,true,false);
 			return model;
 		}
 	});

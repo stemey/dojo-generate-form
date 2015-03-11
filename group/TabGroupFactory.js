@@ -13,7 +13,7 @@ define([
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		createModel: function (meta, plainValue) {
+		createModel: function (meta) {
 			var groups = [];
 			var validators = this.editorFactory.getModelValidators(meta);
 			meta.groups.forEach(function (group) {
@@ -25,7 +25,6 @@ define([
 				groups: groups,
 				required: meta.required === true
 			});
-			//model.update(plainValue,true,false);
 			return model;
 		},
 		createAttribute: function (attribute, modelHandle) {

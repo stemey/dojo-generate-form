@@ -88,7 +88,7 @@ define(["dojo/_base/array", //
 			};
 			return factory;
 		},
-		createModel: function (meta, value) {
+		createModel: function (meta) {
 			var validators = this.editorFactory.getModelValidators(meta);
 			var me = this;
 			var model = new ArrayModel({schema: meta, validators: validators});
@@ -97,7 +97,6 @@ define(["dojo/_base/array", //
 				elModel.update(element, false, model.initialized);
 				return elModel;
 			};
-			model.update(value, true, false);
 			return model;
 
 		},

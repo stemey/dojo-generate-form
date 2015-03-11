@@ -12,7 +12,7 @@ define([
 		constructor: function (kwArgs) {
 			lang.mixin(this, kwArgs);
 		},
-		createModel: function (schema, plainValue) {
+		createModel: function (schema) {
 			var normalizedSchema = {};
 			lang.mixin(normalizedSchema, schema);
 			normalizedSchema.attributes = [schema.attribute];
@@ -22,7 +22,6 @@ define([
 				validators: validators,
 				editorFactory: this.editorFactory
 			});
-			//model.update(plainValue, true, false);
 			model.typeCode = schema.code;
 			return model;
 		},

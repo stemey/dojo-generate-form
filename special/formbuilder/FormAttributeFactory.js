@@ -10,12 +10,9 @@ define(
 		return declare([EmbeddedAttributeFactory],
 			{
 				id: "form",
-				createModel: function (schema, plainValue) {
-					if (plainValue === null && schema.required) {
-						plainValue = {};
-					}
+				createModel: function (schema) {
 					var validators = this.editorFactory.getModelValidators(schema);
-					var model = this.editorFactory.createGroupModel(schema.group, plainValue);
+					var model = this.editorFactory.createGroupModel(schema.group);
 					// marker to find the parent form
 					model.form = true;
 					model.transformer = new GroupTransformer();

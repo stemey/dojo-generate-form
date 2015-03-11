@@ -41,12 +41,9 @@ define([
         getPreferredDecorator: function (attribute) {
             return !attribute.required ? "none" : null;
         },
-        createModel: function (schema, plainValue) {
-            if (!plainValue && schema.required) {
-                plainValue = {};
-            }
+        createModel: function (schema) {
             var validators = this.editorFactory.getModelValidators(schema);
-            var model = this.editorFactory.createGroupModel(schema.group, plainValue);
+            var model = this.editorFactory.createGroupModel(schema.group);
             model.validators = validators;
             model.required = schema.required === true;
             return model;

@@ -31,9 +31,8 @@ define([
 
 			return select;
 		},
-		createModel: function (meta, plainValue) {
+		createModel: function (meta) {
 			var model = new PrimitiveModel({schema: meta});
-			model.update(plainValue,true,false);
 			return model;
 		}
 

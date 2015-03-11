@@ -41,7 +41,7 @@ define([
 			return select;
 
 		},
-		createModel: function (attribute, plainValue) {
+		createModel: function (attribute) {
 			var validators = this.editorFactory.getModelValidators(attribute);
 			var model = new MapModel({keyProperty: attribute.keyProperty, validators: validators});
 			var me = this;
@@ -53,7 +53,6 @@ define([
 				return model;
 			};
 			model.elementFactory = ef;
-			model.update(plainValue, true, false);
 			return model;
 		}
 	});

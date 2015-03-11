@@ -58,7 +58,7 @@ define([
 			aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
 			return widget;
 		},
-		createModel: function (meta, plainValue) {
+		createModel: function (meta) {
 			var validators = this.editorFactory.getModelValidators(meta);
 			if (!meta.defaultValue) {
 				meta.defaultValue = "";
@@ -69,7 +69,6 @@ define([
 				validators: validators,
 				required: meta.required === true
 			});
-			model.update(plainValue,true,false);
 			return model;
 		}
 	});

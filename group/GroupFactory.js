@@ -38,11 +38,10 @@ define([
             //		the container, that the attribute widgets will be added to.
             return new AttributeListWidget({meta: group});
         },
-        createModel: function (schema, plainValue) {
+        createModel: function (schema) {
             var validators = this.editorFactory.getModelValidators(schema);
             var model = new SingleObject({schema: schema, validators: validators, editorFactory: this.editorFactory});
 			model.transformer = new GeneralTransformer();
-            //model.update(plainValue,true,false);
             model.typeCode = schema.code;
             return model;
         },

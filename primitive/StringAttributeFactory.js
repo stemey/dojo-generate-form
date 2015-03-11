@@ -17,7 +17,7 @@ define([
 		handles: function (attribute) {
 			return meta.isType(attribute, "string") && !attribute.array;
 		},
-		createModel: function (meta, plainValue) {
+		createModel: function (meta) {
 			var validators = this.editorFactory.getModelValidators(meta);
 			var model = new StringModel({
 				validators: validators,
@@ -25,8 +25,6 @@ define([
 				alwaysUseInvalidMessage: true,
 				schema: meta
 			});
-			//
-			// model.update(plainValue,true,false);
 			return model;
 		},
 		create: function (attribute, modelHandle) {

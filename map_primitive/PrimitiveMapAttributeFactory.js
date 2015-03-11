@@ -42,7 +42,7 @@ define([
 			attributes.push(value);
 			return tableMeta;
 		},
-		createModel: function (schema, value) {
+		createModel: function (schema) {
 			var me = this;
 			var validators = this.editorFactory.getModelValidators(schema);
 			var map = new PrimitiveMapModel({keyProperty: "key", "validators": validators});
