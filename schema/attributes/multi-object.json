@@ -24,6 +24,10 @@
 					"values": ["object"]
 				},
 				{
+					"code": "layout",
+					"type": "boolean"
+				},
+				{
 					"$ref": "properties/groups.json"
 				}
 
