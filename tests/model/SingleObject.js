@@ -116,9 +116,20 @@ define(['dojo/_base/lang',
             assertEqual(true, so.hasChanged());
             so.resetMetaRecursively(true);
 			assertEqual(0, so.errorCount);
-            assertEqual(0, so.changedCount);
-            assertEqual(false, so.hasChanged());
         },
+		function testReset() {
+			createModel();
+			so.getAttribute("stringP").set("value", "XXX");
+			so.getAttribute("stringP").set("state", "Error");
+			so.set("state", "Error");
+			assertEqual(2, so.errorCount);
+			assertEqual(1, so.changedCount);
+			assertEqual(true, so.hasChanged());
+			so.reset(true);
+			assertEqual(0, so.errorCount);
+			assertEqual(0, so.changedCount);
+			assertEqual(false, so.hasChanged());
+		},
         function testVisit() {
             createModel();
             so.update({});

@@ -184,8 +184,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 				this.bufferChange(function () {
 					// TODO bubble prevention does not work properly.
 					var oldValue = this.modelHandle.oldValue;
-					this.modelHandle.resetMetaRecursively();
-					this.modelHandle.update(oldValue, oldValue, false);
+					this.modelHandle.reset();
 					this.onChange();
 				}.bind(this));
 			},

@@ -199,9 +199,6 @@ define([
 					// TODO should reset Meta really reset oldValue?
 					this.changedValue=null;
 					this.set("oldValue", this.getPlainValue());
-				} else {
-					//resetMeta overwrite the oldValue
-					this.set("oldValue", oldValue);
 				}
 
 				this.onChange();

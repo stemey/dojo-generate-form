@@ -23,10 +23,22 @@ define([
             doh.assertEqual(0, m.errorCount);
             doh.assertEqual(0, m.incompleteCount);
             doh.assertEqual(1, m.changedCount);
-            m.resetMeta(true);
-			m.computeProperties();
-            doh.assertEqual(0, m.changedCount);
         },
+		function testMeta() {
+			m.update("x");
+			doh.assertEqual(false, m.hasChanged());
+			doh.assertEqual(0, m.errorCount);
+			doh.assertEqual(0, m.incompleteCount);
+			doh.assertEqual(0, m.changedCount);
+			m.set("value","y");
+			doh.assertEqual(true, m.hasChanged());
+			doh.assertEqual(0, m.errorCount);
+			doh.assertEqual(0, m.incompleteCount);
+			doh.assertEqual(1, m.changedCount);
+			m.reset();
+			m.computeProperties();
+			doh.assertEqual(0, m.changedCount);
+		},
 		function testIncomplete() {
 			m.update(null);
 			m.validate();

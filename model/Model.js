@@ -242,11 +242,13 @@ define([
 			//		reset value and state.
 			this._execute(function () {
 				this.visit(function (model, cascade, idx) {
-					model.resetMeta();
-					cascade();
+					if (cascade && (model.get("changedCount")>0 || model.get("errorCount")>0) ) {
+						cascade();
+					}
+					model.resetMeta(false);
 				});
 			}, false);
-			this.update(this.oldValue);
+			this.update(this.oldValue, true, false);
 		},
 		getModelByPath: function (path) {
 			if (path === "") {
@@ -287,7 +289,7 @@ define([
 				this.set("state", "");
 				this.set("message", "");
 				this.set("touched", false);
-				this.set("oldValue", this.getPlainValue());
+				//this.set("oldValue", this.getPlainValue());
 			}, bubble !== false);
 		},
 		hasChildrenErrors: function () {
