@@ -38,7 +38,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
         // changesTooltip:dijit/Tooltip
         //		tooltip for change description
         changesTooltip: null,
-        postCreate: function () {
+        startup: function () {
             this.inherited(arguments);
             if (this.modelHandle && typeof this.modelHandle.watch === "function") {
 				this.own(this.modelHandle.watch("message", lang.hitch(this, "onMessageChange")));
@@ -81,9 +81,6 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
                 // TODO insert after label and not before errorTooltipNode
                 this.labelNode.parentNode.insertBefore(sup, this.errorTooltipNode);
             }
-        },
-        startup: function () {
-            this.inherited(arguments);
             if (this.modelHandle) {
                 // set message that existed before widget was displayed
                 this.errorTooltip.label = this.modelHandle.message;

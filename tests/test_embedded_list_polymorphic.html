@@ -18,23 +18,23 @@
 		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner", "gform/createStandardEditorFactory",//
 		         "dojo/text!./meta/embedded_list_polymorphic.json","dojo/text!./entity/embedded_list_polymorphic.json"//
 		         ],function(ready,json,Editor,Stateful,doh,createStandardEditorFactory,meta,entity) {
-			
+
 				editor=new Editor({"plainValue": dojo.fromJson(entity),
 				"meta":dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 				var container= dojo.byId("container");
 				editor.placeAt(container);
 				editor.startup();
-				
+
 				//dijit.byId("dijit_TitlePane_0").set("open",true);
 				doh.register("standard", [
 							{
 								name: 'init',
 								runTest: function(t){
 									t.assertEqual(2,editor.get("plainValue").things.length);
-									dijit.byId("dijit_TitlePane_0").set("open", true);
+									dijit.byId("gform_TitlePane_0").set("open", true);
 									var message1=dijit.byId("gform_ValidationTextBox_0").get("value");
 									t.assertEqual("moin",message1);
-									dijit.byId("dijit_TitlePane_1").set("open", true);
+									dijit.byId("gform_TitlePane_1").set("open", true);
 									var message2=dijit.byId("gform_ValidationTextBox_1").get("value");
 									t.assertEqual("John",message2);
 								}
@@ -79,10 +79,10 @@
 									editor.set("plainValue",{things:[{ext_type:"thing1",common:"c1",name:"name1"}, {ext_type:"thing2",common:"c2",firstName:"fname1"}]});
 									t.assertEqual(2,editor.get("plainValue").things.length);
 								}
-							}]);			
+							}]);
 			doh.run();
 		});
-		
+
 	</script>
 </head>
 <body class="claro">

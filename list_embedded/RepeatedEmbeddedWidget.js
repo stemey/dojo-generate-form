@@ -2,7 +2,7 @@ define(['dojo/Stateful',
 	"dojo/_base/lang", "dojo/aspect", "dojo/dom-class", "dojo/_base/array", "dojo/_base/declare",
 	"dijit/_WidgetBase", "dijit/_Container", "dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin", "./PolymorphicMemberWidget", "../Editor",
-	"dojo/text!./repeated_embedded_attribute.html", "dijit/TitlePane", "dojo/i18n!../nls/messages",
+	"dojo/text!./repeated_embedded_attribute.html", "./TitlePane", "dojo/i18n!../nls/messages",
 	"../layout/_LayoutMixin", "../schema/labelHelper"
 ], function (Stateful, lang, aspect, domClass, array, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, PolymorphicMemberWidget, Editor, template, TitlePane, messages, _LayoutMixin, labelHelper) {
 
@@ -19,6 +19,8 @@ define(['dojo/Stateful',
 			var panelModel = new Stateful();
 			panelModel.set("title", "");
 			var modelHandle = this.get("modelHandle");
+			this.titlePane.set("modelHandle", modelHandle);
+			this.titlePane.set("meta", modelHandle.schema);
 			if (this.groups) {
 				this.editor = new PolymorphicMemberWidget({
 					"shown": false,
@@ -70,7 +72,7 @@ define(['dojo/Stateful',
 			var label = labelHelper.getLabel(this.group || this.groups[0], this.modelHandle);
 			title += label === null ? "" : label;
 			if (this.titlePane) {
-				var completeTitle = title + this.editorFactory.createBadge(this.modelHandle);
+				var completeTitle = title;// + this.editorFactory.createAttributeBadge(this.modelHandle);
 				if (completeTitle !== this.titlePane.get("title")) {
 					this.titlePane.set("title", completeTitle);
 				}
