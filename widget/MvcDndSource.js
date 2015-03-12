@@ -50,10 +50,7 @@ define([
             if (value) {
                 copied.update(value, false, true);
             }
-			// notify again after updated moved element
-			if(model._watchCallbacks){
-				//model._watchCallbacks();
-			}
+
 
         }
 
