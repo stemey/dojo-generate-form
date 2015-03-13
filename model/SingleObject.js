@@ -197,12 +197,21 @@ define([
 				if (setOldValue !== false) {
 					// restMeta sets oldValue to current value
 					// TODO should reset Meta really reset oldValue?
-					this.changedValue=null;
+					this.changedValue = null;
 					this.set("oldValue", this.getPlainValue());
 				}
 
 				this.onChange();
 			}, false);
+		},
+		getChangeMessage: function () {
+			if (this.oldValue === null) {
+				return this._getWasNullMessage();
+			} else if (this.isNull) {
+				return this._getWasNotNullMessage();
+			} else {
+				return this._getEmbeddedChanges();
+			}
 		},
 		init: function () {
 			this.inherited(arguments);

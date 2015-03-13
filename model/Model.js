@@ -3,8 +3,8 @@ define([
 	"dojo/_base/declare",
 	"dojo/Stateful",
 	"dojo/i18n!dijit/form/nls/validate",
-	"./equals"
-], function (lang, declare, Stateful, dijitNls, equals) {
+	"dojo/i18n!../nls/messages",
+], function (lang, declare, Stateful, dijitNls, messages) {
 	// module:
 	//		gform/model/Model
 
@@ -242,7 +242,7 @@ define([
 			//		reset value and state.
 			this._execute(function () {
 				this.visit(function (model, cascade, idx) {
-					if (cascade && (model.get("changedCount")>0 || model.get("errorCount")>0) ) {
+					if (cascade && (model.get("changedCount") > 0 || model.get("errorCount") > 0)) {
 						cascade();
 					}
 					model.resetMeta(false);
@@ -483,6 +483,25 @@ define([
 			} else {
 				return value;
 			}
+		},
+		getChangeMessage: function () {
+			var message;
+			if (this.oldValue === null) {
+				message = this._getWasNullMessage();
+			} else {
+				message = lang.replace(messages.oldValueChanged, {oldValue: JSON.stringify(this.oldValue, true)});
+			}
+			return message;
+
+		},
+		_getWasNullMessage: function () {
+			return messages.oldValueWasNull;
+		},
+		_getWasNotNullMessage: function () {
+			return messages.oldValueWasNotNull;
+		},
+		_getEmbeddedChanges: function () {
+			return lang.replace(messages.embeddedChanges, {changedCount: this.changedCount});
 		},
 		init: function () {
 			this.initialized = true;

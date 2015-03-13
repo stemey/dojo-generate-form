@@ -73,7 +73,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
                 label: ""
             });
             this.updateState();
-            this.changesTooltip.label = this.getOldValueMessage(this.modelHandle.oldValue);
+            this.changesTooltip.label = this.modelHandle.getChangeMessage();
             if (this.labelNode && this.meta.required && !this.meta.array) {
                 var sup = document.createElement("sup");
 				sup.setAttribute("class","required-asterisk");
@@ -106,17 +106,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
             this.updateState();
             this.emit("value-changed", {src: this, oldValue: old, newValue: nu});
         },
-        getOldValueMessage: function (old) {
-            var message;
-            if (old === null || typeof old === "undefined") {
-                message = messages.oldValueWasNull;
-            } else {
-                message = lang.replace(messages.oldValueChanged, {oldValue: JSON.stringify(old, true)});
-            }
-            return message;
-        },
         onOldValueChange: function (propName, old, nu) {
-            this.changesTooltip.label = this.getOldValueMessage(nu);
             this.updateState();
         },
         updateState: function () {
@@ -129,6 +119,7 @@ define([ "dojo/_base/declare", "dojo/_base/lang", "dojo/aspect",
                 //this.set("state","Error");
             } else if (this.modelHandle.hasChanged()) {
                 //this.set("state","Changed");
+				this.changesTooltip.label = this.modelHandle.getChangeMessage();
                 this.changesTooltipNode.style.display = "";
                 this.errorTooltipNode.style.display = "none";
             } else {

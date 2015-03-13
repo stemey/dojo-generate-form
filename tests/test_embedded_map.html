@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,7 @@
 
 	<!-- required: a default dijit theme: -->
 	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css"/>
+	<link rel="stylesheet" href="../../gform/resources/gform.css"/>
 
 	<script type="text/javascript" src="dojoConfig.js"></script>
     <script type="text/javascript" src="../../dojo/dojo.js"></script>
@@ -17,7 +19,7 @@
 		require(["dojo/ready","dojo/json","gform/Editor","dojo/Stateful","doh/runner", "gform/createStandardEditorFactory",//
 		         "dojo/text!./meta/embedded_map.json","dojo/text!./entity/embedded_map.json"//
 		         ],function(ready,json,Editor,Stateful,doh,createStandardEditorFactory,meta,entity) {
-			
+
 				 editor=new Editor({"plainValue": dojo.fromJson(entity),
 				"meta":dojo.fromJson(meta),editorFactory:createStandardEditorFactory()});
 				var container= dojo.byId("container");
@@ -27,7 +29,7 @@
 							{
 								name: 'init',
 								runTest: function(t){
-									dijit.byId("dijit_TitlePane_0").set("open", true);
+									dijit.byId("gform_TitlePane_0").set("open", true);
 									var message1=dijit.byId("gform_ValidationTextBox_0").get("value");
 									t.assertEqual("a",message1);
 								},
@@ -36,7 +38,7 @@
 								runTest: function(t){
 									var value=editor.getPlainValue();
 									dijit.byId("dijit_form_Button_0").onClick();
-									dijit.byId("dijit_TitlePane_2").set("open", true);
+									dijit.byId("gform_TitlePane_2").set("open", true);
 									dijit.byId("gform_ValidationTextBox_2").set("value","ll");
 									dijit.byId("gform_ValidationTextBox_3").set("value","hi");
 									t.assertEqual("hi",editor.get("plainValue").things.ll.message);
@@ -46,16 +48,16 @@
 								runTest: function(t){
 									var value=editor.getPlainValue();
 									dijit.byId("dijit_form_Button_0").onClick();
-									dijit.byId("dijit_TitlePane_3").set("open", true);
+									dijit.byId("gform_TitlePane_3").set("open", true);
 									dijit.byId("gform_ValidationTextBox_4").set("value","ll");
 									dijit.byId("gform_ValidationTextBox_5").set("value","ho");
 									t.assertEqual(1,editor.getErrorCount());
 								}
 							}
-					]);			
+					]);
 			doh.run();
 		});
-		
+
 	</script>
 </head>
 <body class="claro">

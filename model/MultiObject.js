@@ -2,8 +2,9 @@ define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
 	"./Model",
-	"./AdditionalPropertiesMixin"
-], function (declare, lang, Model, AdditionalPropertiesMixin) {
+	"./AdditionalPropertiesMixin",
+	"dojo/i18n!../nls/messages",
+], function (declare, lang, Model, AdditionalPropertiesMixin, messages) {
 	// module:
 	//		gform/model/MultiObject
 
@@ -110,7 +111,7 @@ define([
 			this._changeAttrValue("currentTypeCode", typeCode);
 			var nextGroup = this.getGroup(this.currentTypeCode);
 			if (prevGroup && nextGroup) {
-				var value=nextGroup.getPlainValue();
+				var value = nextGroup.getPlainValue();
 				prevGroup.visit(
 					function (model, cascade, idx) {
 						if (typeof idx === "undefined") {
@@ -195,6 +196,22 @@ define([
 			if (model) {
 				model._removeError(message);
 			}
+		},
+		getOldType: function () {
+			return this.oldValue ? this.oldValue[this.typeProperty] : null;
+		},
+		getChangeMessage: function () {
+			var message;
+			if (this.getOldType() === null) {
+				message = this._getWasNullMessage();
+			} else if (this.get("currentTypeCode") === null) {
+				message = this._getWasNotNullMessage();
+			} else if (this.getOldType() !== this.get("currentTypeCode")) {
+				message = lang.replace(messages.wasDifferentType, {oldType: this.getOldType()});
+			} else {
+				message = this._getEmbeddedChanges();
+			}
+			return message;
 		},
 		init: function () {
 			this.inherited(arguments);
