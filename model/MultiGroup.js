@@ -33,10 +33,11 @@ define([
 			}, this);
 			this._changeAttrValue("groups", groups);
 		},
-		calculateChanged: function() {
+		calculateChanged: function () {
 			return false;
 		},
 		initDefault: function (setOldValue) {
+			this.isNull = false;
 			this.groups.forEach(function (group) {
 				group.initDefault(setOldValue);
 			}, this);
