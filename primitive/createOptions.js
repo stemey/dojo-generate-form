@@ -21,7 +21,7 @@ define([
         }
         for (var key in attribute.values) {
             var value = attribute.values[key];
-            if (value.label && value.value) {
+            if (typeof value === "object") {
                 options.push({
                     label: value.label,
                     value: value.value

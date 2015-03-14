@@ -37,7 +37,7 @@ define([
         createModel: function (meta, plainValue) {
             var validators = this.editorFactory.getModelValidators(meta);
             var options = createOptions(meta, true);
-            var model = new SelectModel({meta: meta, options: options, validators: validators, required: meta.required === true});
+            var model = new SelectModel({schema: meta, options: options, validators: validators, required: meta.required === true});
             model.update(plainValue);
             return model;
         }
