@@ -195,9 +195,7 @@ define([
 				}, this);
 				this.resetMeta();
 				if (setOldValue !== false) {
-					// restMeta sets oldValue to current value
 					// TODO should reset Meta really reset oldValue?
-					this.changedValue = null;
 					this.set("oldValue", this.getPlainValue());
 				}
 

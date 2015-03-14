@@ -161,6 +161,9 @@ define([
 				return model.getModelByPath(path);
 			}
 		},
+		getChangeMessage: function() {
+			return "";
+		},
 		init: function () {
 			this.inherited(arguments);
 			this.iterateChildren(function (child) {
