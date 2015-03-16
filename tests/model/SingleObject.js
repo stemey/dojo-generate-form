@@ -117,6 +117,30 @@ define(['dojo/_base/lang',
             so.resetMetaRecursively(true);
 			assertEqual(0, so.errorCount);
         },
+		function testResetMetaRecursively() {
+			createModel();
+			so.getAttribute("stringP").set("value", "XXX");
+			so.getAttribute("stringP").set("state", "Error");
+			so.set("state", "Error");
+			assertEqual(2, so.errorCount);
+			assertEqual(1, so.changedCount);
+			assertEqual(true, so.hasChanged());
+			so.resetMetaRecursively(true);
+			assertEqual(0, so.errorCount);
+			assertEqual(1, so.changedCount);
+		},
+		function testRemoveIndicators() {
+			createModel();
+			so.getAttribute("stringP").set("value", "XXX");
+			so.getAttribute("stringP").set("state", "Error");
+			so.set("state", "Error");
+			assertEqual(2, so.errorCount);
+			assertEqual(1, so.changedCount);
+			assertEqual(true, so.hasChanged());
+			so.removeIndicators(true);
+			assertEqual(0, so.errorCount);
+			assertEqual(0, so.changedCount);
+		},
 		function testReset() {
 			createModel();
 			so.getAttribute("stringP").set("value", "XXX");

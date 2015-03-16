@@ -205,7 +205,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 				}
 			},
 			removeChangeIndicators: function () {
-				this.modelHandle.resetMetaRecursively(true);
+				this.modelHandle.removeIndicators();
 			},
 			postCreate: function () {
 				this.inherited(arguments);

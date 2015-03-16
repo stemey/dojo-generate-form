@@ -71,6 +71,7 @@
 						var button = registry.byId("dijit_form_Button_4");
 						button.onClick();
 						doh.assertEqual(0, crudController.editor.get("errorCount"));
+						doh.assertEqual(0, crudController.editor.get("changedCount"));
 					}
 				},
 				{

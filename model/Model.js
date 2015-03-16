@@ -237,6 +237,18 @@ define([
 			//this.resetMeta(false);
 
 		},
+		removeIndicators: function () {
+			this.visit(function (model, cascade) {
+				if (cascade) {
+					cascade();
+				}
+				model._execute(function () {
+					model.resetMeta(false);
+					model.set("oldValue", model.getPlainValue());
+					model.onChange(false);
+				}, false);
+			});
+		},
 		reset: function () {
 			// summary:
 			//		reset value and state.
