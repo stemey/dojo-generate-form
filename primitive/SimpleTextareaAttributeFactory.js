@@ -6,10 +6,10 @@ define([
 	"../schema/meta",
 	"./mixinTextboxBindings",
 	"./dijitHelper",
-	"./PrimitiveAttributeFactory"
-], function (lang, aspect, declare, SimpleTextarea, meta, mixinTextboxBindings, dijitHelper, PrimitiveAttributeFactory) {
+	"./StringAttributeFactory"
+], function (lang, aspect, declare, SimpleTextarea, meta, mixinTextboxBindings, dijitHelper, StringAttributeFactory) {
 
-	return declare([PrimitiveAttributeFactory], {
+	return declare([StringAttributeFactory], {
 		id: "simpletextarea",
 		handles: function (attribute) {
 			return meta.isType(attribute, "string") && !attribute.array;
@@ -22,7 +22,13 @@ define([
 			dijitHelper.copyProperty("cols", attribute, props);
 			dijitHelper.copyProperty("rows", attribute, props);
 			var widget = new SimpleTextarea(props);
-			aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch"));
+			widget.own(aspect.after(widget, "_onBlur", function () {
+				modelHandle.onTouch();
+				if (attribute.intermediateChanges) {
+					// need to validate
+					modelHandle.onChange(true);
+				}
+			}));
 			return widget;
 		}
 	});

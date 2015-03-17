@@ -8,6 +8,7 @@
             "description":"Only alphabetical characters",
             "code":"description",
             "array":false,
+			"required":true,
             "editor":"textarea"
         }
     ],

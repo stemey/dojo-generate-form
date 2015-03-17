@@ -252,15 +252,17 @@ define([
 		reset: function () {
 			// summary:
 			//		reset value and state.
-			this._execute(function () {
-				this.visit(function (model, cascade, idx) {
-					if (cascade && (model.get("changedCount") > 0 || model.get("errorCount") > 0)) {
-						cascade();
-					}
-					model.resetMeta(false);
-				});
-			}, false);
-			this.update(this.oldValue, true, false);
+			if (this.hasChanged()) {
+				this._execute(function () {
+					this.visit(function (model, cascade, idx) {
+						if (cascade && (model.get("changedCount") > 0 || model.get("errorCount") > 0)) {
+							cascade();
+						}
+						model.resetMeta(false);
+					});
+				}, false);
+				this.update(this.oldValue, true, false);
+			}
 		},
 		getModelByPath: function (path) {
 			if (path === "") {
@@ -366,7 +368,7 @@ define([
 				}
 			} else {
 				if (this.state === "Incomplete" || this.state === "Error") {
-					this.state = "";
+					this.set("state", "");
 					this.message = "";
 				}
 			}

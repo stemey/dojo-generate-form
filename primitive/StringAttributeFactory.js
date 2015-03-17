@@ -43,7 +43,13 @@ define([
 			dijitHelper.copyProperty("pattern", attribute, props);
 			dijitHelper.copyDijitProperties(attribute, props);
 			var widget = new TextBox(props);
-			widget.own(aspect.after(widget, "_onBlur", lang.hitch(modelHandle, "onTouch")));
+			widget.own(aspect.after(widget, "_onBlur", function() {
+				modelHandle.onTouch();
+				if (attribute.intermediateChanges) {
+					// need to validate
+					modelHandle.onChange(true);
+				}
+			}));
 			sync(modelHandle, "disabled", widget, "disabled",{});
 			return widget;
 
