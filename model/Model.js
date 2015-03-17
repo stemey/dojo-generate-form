@@ -252,17 +252,15 @@ define([
 		reset: function () {
 			// summary:
 			//		reset value and state.
-			if (this.hasChanged()) {
-				this._execute(function () {
-					this.visit(function (model, cascade, idx) {
-						if (cascade && (model.get("changedCount") > 0 || model.get("errorCount") > 0)) {
-							cascade();
-						}
-						model.resetMeta(false);
-					});
-				}, false);
-				this.update(this.oldValue, true, false);
-			}
+			this._execute(function () {
+				this.visit(function (model, cascade, idx) {
+					if (cascade && (model.get("changedCount") > 0 || model.get("errorCount") > 0)) {
+						cascade();
+					}
+					model.resetMeta(false);
+				});
+			}, false);
+			this.update(this.oldValue, true, false);
 		},
 		getModelByPath: function (path) {
 			if (path === "") {
