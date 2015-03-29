@@ -1,4 +1,5 @@
 define([
+	'dojo/dom-class',
 	'dojo/Stateful',
 	"dojo/_base/lang",
 	"dojo/_base/declare",
@@ -9,7 +10,7 @@ define([
 	"dojo/text!./repeated_attribute.html",
 	"dojo/i18n!../nls/messages",
 	"../group/_DecoratorMixin"
-], function (Stateful, lang, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, messages, _DecoratorMixin) {
+], function (domClass, Stateful, lang, declare, _WidgetBase, _Container, _TemplatedMixin, _WidgetsInTemplateMixin, template, messages, _DecoratorMixin) {
 
 	return declare("gform.RepeatedAttributeWidget", [ _WidgetBase, _Container,
 		_TemplatedMixin, _WidgetsInTemplateMixin, _DecoratorMixin ], {
@@ -36,7 +37,10 @@ define([
 
 			this.addChild(editor);
 			this.set("target", panelModel);
-
+			if (attribute.disabled) {
+				this.deleteButton.domNode.style.display="none";
+				domClass.add(this.domNode, "gformDisabled");
+			}
 			this.deleteButton.set("onClick", lang.hitch(this, "_delete"));
 		},
 		_delete: function () {

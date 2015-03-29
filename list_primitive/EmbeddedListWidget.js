@@ -10,6 +10,11 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase",
 		attribute: null,
 		childAttribute: null,
 		messages: messages,
+		postCreate: function() {
+			if (this.attribute.disabled) {
+				this.addButton.domNode.display = "none";
+			}
+		},
 		_addElement: function () {
 
 			this.target.push(null);

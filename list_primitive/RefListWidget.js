@@ -1,9 +1,9 @@
-define([ "dojo/_base/lang", "dojo/_base/declare", "./EmbeddedListWidget",
+define(["dojo/_base/lang", "dojo/_base/declare", "./EmbeddedListWidget",
 	"dojo/text!./embedded_list_ref.html"
 ], function (lang, declare, EmbeddedListWidget, template) {
 // module:
 //		gform/list_primitive/RefListWidget
-	return declare([ EmbeddedListWidget ], {
+	return declare([EmbeddedListWidget], {
 		// summary:
 		//		The RefListWidget is a list of refs selectale in a dijit/form/FilteringSelect.
 		templateString: template,
@@ -16,7 +16,7 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "./EmbeddedListWidget",
 				schemaUrl: this.attribute.element.schemaUrl,
 				editorFactory: this.editorFactory,
 				callback: lang.hitch(this, "onCreated"),
-				value:this.createValue ? this.createValue() : undefined
+				value: this.createValue ? this.createValue() : undefined
 			});
 		},
 		onCreated: function (id) {
@@ -26,12 +26,16 @@ define([ "dojo/_base/lang", "dojo/_base/declare", "./EmbeddedListWidget",
 			//		the id of the newly created.
 
 
-            var value = this.converter ? this.converter.parse(id) : id;
-            this.target.push(value);
+			var value = this.converter ? this.converter.parse(id) : id;
+			this.target.push(value);
 		},
 		postCreate: function () {
 			this.inherited(arguments);
 			this.createButton.set("onClick", lang.hitch(this, "_createElement"));
+			if (this.attribute.disabled) {
+				this.addButton.domNode.style.display = "none";
+				this.createButton.domNode.style.display = "none";
+			}
 		}
 	});
 

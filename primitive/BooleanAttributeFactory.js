@@ -35,7 +35,7 @@ define([
         },
         createModel: function (meta) {
             var model = new BooleanModel({schema: meta});
-            return model;
+			return model;
         }
     });
 });

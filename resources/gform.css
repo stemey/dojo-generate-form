@@ -294,6 +294,9 @@ div.gformEditorController.loading .actions {
 }
 
 /* DND */
+.gformDnd.gformDisabled .area {
+	display:none;
+}
 .area {
 	top:3px;
 	position: relative;

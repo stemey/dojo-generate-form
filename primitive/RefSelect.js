@@ -53,6 +53,9 @@ define(["dojo/_base/lang",
 			this.editButton.set("label", messages.editButtonLabel);
 			this.createButton.on("click", lang.hitch(this, "createref"));
 			this.createButton.set("label", messages.createButtonLabel);
+			if (this.meta.disabled) {
+				this.createButton.domNode.style.display="none";
+			}
 			this.filteringSelect.watch("value", lang.hitch(this, "updateState"));
 			this.filteringSelect.watch("state", lang.hitch(this, "updateState"));
 			if (!this.targetCreatable) {
