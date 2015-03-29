@@ -17,7 +17,7 @@ define([
 			// plainValue:
 			//		the new value of the attribute
 			if (typeof plainValue === "undefined") {
-				plainValue = null;
+				plainValue = this.getDefaultValue();
 			}
 			if (plainValue !== null && !this.isInstance(plainValue)) {
 				throw new Error("convert value " + plainValue + " to correct type");
