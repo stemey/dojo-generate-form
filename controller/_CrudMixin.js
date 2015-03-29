@@ -219,7 +219,7 @@ define([
 			var instancePromise = this.store.get(id);
 			var fallbackSchemaP = this.getFallbackSchema();
 			if (fallbackSchemaP) {
-				when(fallbackSchemaP).then(function(fallbackSchema) {
+				when(fallbackSchemaP).then(function (fallbackSchema) {
 					this._execute(instancePromise, "LoadForEditAndSchema", fallbackSchema);
 				}.bind(this));
 			} else {
@@ -353,7 +353,7 @@ define([
 			this.set("state", "edit");
 			var fallbackSchemaP = this.getFallbackSchema();
 			if (fallbackSchemaP) {
-				when(fallbackSchemaP).then(function(fallbackSchema) {
+				when(fallbackSchemaP).then(function (fallbackSchema) {
 					this.onLoadMultiWithFallback(fallbackSchema, entity);
 				}.bind(this));
 			} else {
@@ -423,7 +423,7 @@ define([
 			} else {
 				this.editor.initDefault();
 			}
-			this.oldValue=this.editor.getPlainValue();
+			this.oldValue = this.editor.getPlainValue();
 			this.onCreated(this.editor.meta, value);
 		},
 		_createNewAndSchema: function (schemaUrl, value) {
@@ -438,6 +438,10 @@ define([
 			} else {
 				return null;
 			}
+		},
+		reload: function () {
+			this.edit(this.getId());
+
 		},
 		_onLoadForCreateAndSchema: function (schema, schemaUrl, value) {
 			this.set("state", "create");
@@ -456,7 +460,7 @@ define([
 					this.editor.setMetaAndDefault(schema);
 				}
 			}
-			this.oldValue=this.editor.getPlainValue();
+			this.oldValue = this.editor.getPlainValue();
 			this.onCreated(schema, this.editor.getPlainValue());
 			this.emit("editor-changed");
 		},
@@ -520,6 +524,14 @@ define([
 		},
 		_addAction: function (button) {
 			this.actionContainer.addChild(button);
+		},
+		getId: function () {
+			var value = this.editor.getPlainValue();
+			if (value) {
+				return this.store.getIdentity(value);
+			} else {
+				return null;
+			}
 		},
 		_removeActions: function () {
 			this.actionContainer.getChildren().forEach(function (child) {
