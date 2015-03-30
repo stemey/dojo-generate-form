@@ -2,27 +2,25 @@ define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
 	"dojo/aspect",
-	"../util/restHelper",
 	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
 	"dojo/text!./singleEditorDialog.html",
 	"../createLayoutEditorFactory",
-	"../controller/DialogCrudController",
 	"./ActionProgressBar",
 	"dijit/form/Button",
 	"dijit/layout/StackContainer",
 	"dijit/layout/ContentPane",
 	"dijit/ProgressBar",
 	"dijit/Dialog"
-], function (declare, lang, aspect, restHelper, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, createLayoutEditorFactory, DialogCrudController, ActionProgressBar) {
+], function (declare, lang, aspect, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, createLayoutEditorFactory, ActionProgressBar) {
 // module:
 //		gform/opener/SingleEditorDialogOpener
 
 
 	return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 		// summary:
-		//		This dijit provides a dialog and an embedded CrudController. This dijit is designed o be used as opener in a gform/Context. 
+		//		This dijit provides a dialog and an embedded CrudController. This dijit is designed o be used as opener in a gform/Context.
 
 		templateString: template,
 		controllerConfig: null,
@@ -66,8 +64,8 @@ define([
 			// summary:
 			//		open the dialog to edit an existing resource.
 			//  options:
-			//		must provide the schemaUrl to load the gform schema from. 
-			//		Must also provide the url to the resource edited. 
+			//		must provide the schemaUrl to load the gform schema from.
+			//		Must also provide the url to the resource edited.
 
 			var url = options.url;
 			var id = options.id;
@@ -92,8 +90,8 @@ define([
 			// summary:
 			//		open the dialog to create a new resource.
 			//  options:
-			//		must provide the schemaUrl to load the gform schema from. 
-			//		Must also provide the url to the resource's collection. 
+			//		must provide the schemaUrl to load the gform schema from.
+			//		Must also provide the url to the resource's collection.
 			//		A callback which gets passed the new id may also be specified.  Options may provide EditorFactory.
 			var url = options.url;
 

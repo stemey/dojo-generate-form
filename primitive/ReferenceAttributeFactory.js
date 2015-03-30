@@ -1,5 +1,6 @@
 define(
 	[
+		'dojox/mvc/sync',
 		"dojo/_base/lang",//
 		"dojo/_base/declare",//
 		"dojox/mvc/at",//
@@ -11,7 +12,7 @@ define(
 		"./makeConverterDijitAware",
 		"./PrimitiveAttributeFactory"
 	],
-	function (lang, declare, at, FilteringSelect, RefSelect, meta, dijitHelper, Memory, makeConverterDijitAware, PrimitiveAttributeFactory) {
+	function (sync, lang, declare, at, FilteringSelect, RefSelect, meta, dijitHelper, Memory, makeConverterDijitAware, PrimitiveAttributeFactory) {
 		//
 		return declare([PrimitiveAttributeFactory],
 			{
@@ -68,6 +69,17 @@ define(
 						dijitAwareConverter.dijit = f;
 					}
 
+					if (attribute.modifiable===false) {
+						function updateState() {
+							modelHandle.set("disabled",ctx.state.get("state")==="edit");
+						}
+						updateState();
+						ctx.state.watch("state", function(prop,nu,old) {
+							updateState();
+						})
+					}
+
+
 					var createValue;
 					if (attribute.initialValue) {
 						createValue = function () {
@@ -94,6 +106,8 @@ define(
 						filteringSelect: f,
 						editorFactory: this.editorFactory
 					});
+					sync(modelHandle, "disabled", refSelect, "disabled",{});
+
 					return refSelect;
 				}
 			});

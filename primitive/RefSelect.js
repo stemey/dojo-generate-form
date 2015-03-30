@@ -47,6 +47,7 @@ define(["dojo/_base/lang",
 		// targetCreatable:
 		//		if a button to create a target should be displayed.
 		targetCreatable: false,
+		disabled: false,
 		postCreate: function () {
 			this.inherited(arguments);
 			this.editButton.on("click", lang.hitch(this, "openref"));
@@ -54,13 +55,14 @@ define(["dojo/_base/lang",
 			this.createButton.on("click", lang.hitch(this, "createref"));
 			this.createButton.set("label", messages.createButtonLabel);
 			if (this.meta.disabled) {
-				this.createButton.domNode.style.display="none";
+				this.createButton.domNode.style.display = "none";
 			}
 			this.filteringSelect.watch("value", lang.hitch(this, "updateState"));
 			this.filteringSelect.watch("state", lang.hitch(this, "updateState"));
 			if (!this.targetCreatable) {
 				this.createButton.domNode.style.display = "none";
 			}
+			this.watch("disabled", this.disabledChanged.bind(this));
 			var select = this.filteringSelect;
 			this.storeListener = aspect.after(select.store, "put", function (result, args) {
 				when(result).then(function (id) {
@@ -71,6 +73,12 @@ define(["dojo/_base/lang",
 				});
 				return result;
 			});
+		},
+		disabledChanged: function () {
+			this.filteringSelect.set("disabled", this.disabled);
+			if (this.targetCreatable) {
+				this.createButton.domNode.style.display = this.disabled ? "none" : "block";
+			}
 		},
 		startup: function () {
 			this.filteringSelect.placeAt(this.selectContainer);

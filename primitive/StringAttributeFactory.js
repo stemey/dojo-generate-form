@@ -27,7 +27,7 @@ define([
 			});
 			return model;
 		},
-		create: function (attribute, modelHandle) {
+		create: function (attribute, modelHandle, ctx) {
 
 			var props = {};
 			var width = null;
@@ -50,6 +50,15 @@ define([
 					modelHandle.onChange(true);
 				}
 			}));
+			if (attribute.modifiable===false) {
+				function updateState() {
+					modelHandle.set("disabled",ctx.state.get("state")==="edit");
+				}
+				updateState();
+				ctx.state.watch("state", function(prop,nu,old) {
+					updateState();
+				})
+			}
 			sync(modelHandle, "disabled", widget, "disabled",{});
 			return widget;
 

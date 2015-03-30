@@ -129,7 +129,9 @@ define([
 			}
 		},
 		setCtx: function (ctx) {
-			this.editor.set("ctx", ctx);
+			var editorCtx = {state: this};
+			lang.mixin(editorCtx, ctx);
+			this.editor.set("ctx", editorCtx);
 		},
 		edit: function (id, schemaUrl) {
 			// summary:
