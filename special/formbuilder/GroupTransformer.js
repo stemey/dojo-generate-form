@@ -8,6 +8,9 @@ define([
 			var attributes = [];
 			var group = {};
 			this.visitIn(value, attributes, group);
+			if (Object.keys(group).length==0) {
+				group={editor:"listpane",attributes:[]}
+			}
 			var inValue = {};
 			inValue.group = group;
 			inValue.attributes = attributes;
