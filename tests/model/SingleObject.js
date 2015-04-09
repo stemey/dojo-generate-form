@@ -104,7 +104,7 @@ define(['dojo/_base/lang',
             createModel();
             so.update({});
             var plainValue = so.getPlainValue(so);
-            assertEqual({stringP: null, booleanP: null, numberP: null}, plainValue);
+			assertEqual({stringP: "default", booleanP: true, numberP: 2}, plainValue);
         },
         function testResetMetaRecursively() {
             createModel();
