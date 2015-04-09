@@ -48,7 +48,7 @@ define([
 			// plainValue:
 			//		the new value of the attribute
 			plainValue = this.transformIn(plainValue);
-			if (this.required && plainValue === null) {
+			if (this.required && !plainValue) {
 				plainValue = {};
 			}
 			if (plainValue === null) {
@@ -63,6 +63,9 @@ define([
 				this.set("oldValue", this.getPlainValue());
 			}
 
+		},
+		isEmpty: function() {
+			return this.isNull;
 		},
 		getChildPath: function (child) {
 			if (this.parent) {
