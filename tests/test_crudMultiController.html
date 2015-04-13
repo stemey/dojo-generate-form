@@ -51,7 +51,7 @@
                     name: 'createMulti',
                     runTest: function (t) {
                         crudController.createNewMulti(["country", "city"], "type");
-                        doh.assertEqual("country",crudController.schemaSelector.get("value"));
+                        doh.assertEqual("city",crudController.schemaSelector.get("value"));
                     }
                 },
                 {
@@ -69,9 +69,9 @@
                         crudController._removeChangeIndicator();
                         crudController.createNewMulti(["country", "city"], "type");
                         doh.assertEqual(false,crudController.hasChanged());
-                        crudController.schemaSelector.set("value","city");
-                        doh.assertEqual(true,crudController.hasChanged());
                         crudController.schemaSelector.set("value","country");
+                        doh.assertEqual(true,crudController.hasChanged());
+                        crudController.schemaSelector.set("value","city");
                         doh.assertEqual(false,crudController.hasChanged());
                     }
                 },
