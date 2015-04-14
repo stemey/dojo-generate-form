@@ -183,7 +183,6 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 				//		reset the data to its original value.
 				this.bufferChange(function () {
 					// TODO bubble prevention does not work properly.
-					var oldValue = this.modelHandle.oldValue;
 					this.modelHandle.reset();
 					this.onChange();
 				}.bind(this));

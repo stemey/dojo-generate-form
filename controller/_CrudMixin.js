@@ -157,11 +157,15 @@ define([
 				// if entity with typeProperty but type is not changeable
 				var entity = this.editor.getPlainValue();
 				var oldSchemaUrl = entity ? entity[this.typeProperty] : null;
-				if (schemaUrl !== oldSchemaUrl) {
-					entity[this.typeProperty] = this.schemaSelector.get("value");
-					var promise = this.getSchema(schemaUrl);
-					this._execute(promise, "LoadForEntityAndSchema", entity);
-				}
+				this._switchEditorSchema(schemaUrl, oldSchemaUrl);
+			}
+		},
+		_switchEditorSchema: function (schemaUrl, oldSchemaUrl) {
+			if (schemaUrl !== oldSchemaUrl) {
+				var entity = this.editor.getPlainValue();
+				entity[this.typeProperty] = this.schemaSelector.get("value");
+				var promise = this.getSchema(schemaUrl);
+				this._execute(promise, "LoadForEntityAndSchema", entity);
 			}
 		},
 		getSchema: function (url) {
@@ -460,7 +464,12 @@ define([
 			}
 		},
 		reload: function () {
-			this.edit(this.getId());
+			if (this.typeProperty) {
+				var promise = this.store.get(this.getId());
+				this._execute(promise, "LoadMulti");
+			}else {
+				this._edit(this.getId());
+			}
 
 		},
 		_onLoadForCreateAndSchema: function (schema, schemaUrl, value) {
@@ -507,10 +516,9 @@ define([
 		},
 		reset: function () {
 			if (this.typeProperty) {
-				this.schemaSelector.set("value", this.oldType);
-				// is also triggered asynchronuosly from change event
-				this.onSchemaChange();
-				this.editor.reset();
+				if (this.state==="edit"){
+					this.reload();
+				}
 			} else {
 				this.editor.reset();
 			}
