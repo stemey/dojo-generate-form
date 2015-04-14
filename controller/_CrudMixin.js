@@ -60,6 +60,7 @@ define([
 		},
 
 		postCreate: function () {
+			this.schemaSelector.set("required", true);
 			this.own(aspect.after(this.schemaSelector, "onChange", lang.hitch(this, this.onSchemaChange)));
 			if (this.progressBar) {
 				this.progressBar.set("duration", 0);
@@ -316,6 +317,7 @@ define([
 		},
 		_onLoadMulti: function (entity) {
 			var type = entity[this.typeProperty];
+			this.schemaSelector.set("value", type);
 			var schema = this.getSchema(type);
 			this._execute(schema, "LoadMultiSchema", entity);
 		},
@@ -365,29 +367,45 @@ define([
 		_hideSchemaSelector: function () {
 			this.schemaSelector.domNode.style.visibility = "hidden";
 		},
-		_initializeSchemaSelector: function (schemas, initializeValue) {
-			if (schemas.length > 0) {
-				this.schemaSelector.domNode.style.visibility = "visible";
-				var options = [];
-				schemas.forEach(function (schema) {
-					var option = {};
-					if (typeof schema === "string") {
-						option.id = schema;
-						option.name = schema;
-					} else {
-						option.id = schema.code;
-						option.name = schema.label;
-					}
-					options.push(option);
-				}, this);
-				var store = new Memory({idProperty: "id"});
-				store.setData(options);
-				this.schemaSelector.set("store", store);
-				if (initializeValue) {
-					this.schemaSelector.set("value", options[0].id);
+		createStore: function (schemas) {
+			var options = [];
+			schemas.forEach(function (schema) {
+				var option = {};
+				if (typeof schema === "string") {
+					option.id = schema;
+					option.name = schema;
+				} else {
+					option.id = schema.code;
+					option.name = schema.label;
 				}
-				if (schemas.length == 1) {
-					this._hideSchemaSelector();
+				options.push(option);
+			}, this);
+			var store = new Memory({idProperty: "id"});
+			store.setData(options);
+			return store;
+		},
+		_initializeSchemaSelector: function (schemas, initializeValue) {
+			var store;
+			var searchProperty;
+			if (Array.isArray(schemas)) {
+				store = this.createStore(schemas);
+				searchProperty = "name";
+			} else {
+				store = this.editor.ctx.getStore(schemas.store);
+				searchProperty = schemas.searchProperty;
+			}
+			if (store !== null) {
+				this.schemaSelector.domNode.style.visibility = "visible";
+				this.schemaSelector.set("store", store);
+				this.schemaSelector.set("searchProperty", searchProperty);
+				if (initializeValue) {
+					var selector = this.schemaSelector;
+					when(store.query({}, {
+						count: 1,
+						sort: [{attribute: searchProperty, ascending: true}]
+					})).then(function (results) {
+						selector.set("value", results[0][store.idProperty]);
+					});
 				}
 			} else {
 				this.schemaSelector.domNode.style.visibility = "hidden";
@@ -489,12 +507,10 @@ define([
 		},
 		reset: function () {
 			if (this.typeProperty) {
-				this.editor.bufferChange(function () {
-					this.schemaSelector.set("value", this.oldType);
-					// is also triggered asynchronuosly from change event
-					this.onSchemaChange();
-					this.editor.set("plainValue", this.oldValue || this.createPlainValue(this.editor.meta));
-				}.bind(this));
+				this.schemaSelector.set("value", this.oldType);
+				// is also triggered asynchronuosly from change event
+				this.onSchemaChange();
+				this.editor.reset();
 			} else {
 				this.editor.reset();
 			}
