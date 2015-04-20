@@ -12,7 +12,7 @@ define([
 			});
 			return value;
 		},
-		in: function (value) {
+		"in": function (value) {
 			return value;
 		}
 	});

@@ -4,7 +4,7 @@ define([
 
 	return declare([], {
 		props: ["label", "code", "editorDescription", "additionalProperties"],
-		in: function (value) {
+		"in": function (value) {
 			var attributes = [];
 			var group = {};
 			this.visitIn(value, attributes, group);

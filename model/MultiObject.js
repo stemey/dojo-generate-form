@@ -3,7 +3,7 @@ define([
 	"dojo/_base/lang",
 	"./Model",
 	"./AdditionalPropertiesMixin",
-	"dojo/i18n!../nls/messages",
+	"dojo/i18n!../nls/messages"
 ], function (declare, lang, Model, AdditionalPropertiesMixin, messages) {
 	// module:
 	//		gform/model/MultiObject

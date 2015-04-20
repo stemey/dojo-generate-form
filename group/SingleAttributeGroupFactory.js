@@ -34,7 +34,7 @@ define([
 			if (preferredDecorator === "none") {
 				return attributeEditor;
 			} else {
-				var widget = new BorderContainer({gutters: false, class: "singleDecorator"});
+				var widget = new BorderContainer({"gutters": false, "class": "singleDecorator"});
 				var decorator = new SingleDecoratorWidget({
 					meta: attribute,
 					modelHandle: attributeModel,

@@ -3,7 +3,7 @@ define([
 	"dojo/_base/declare",
 	"dojo/Stateful",
 	"dojo/i18n!dijit/form/nls/validate",
-	"dojo/i18n!../nls/messages",
+	"dojo/i18n!../nls/messages"
 ], function (lang, declare, Stateful, dijitNls, messages) {
 	// module:
 	//		gform/model/Model
@@ -484,7 +484,7 @@ define([
 		},
 		transformIn: function (value) {
 			if (this.transformer) {
-				return this.transformer.in(value);
+				return this.transformer["in"](value);
 			} else {
 				return value;
 			}
