@@ -47,7 +47,15 @@ define(["dojo/_base/lang",
             var plainValue = am.getPlainValue();
             assertEqual({"x": {"x": 4}}, plainValue);
         },
-        function testNull() {
+		function testHasChanged() {
+			am.update({},true,true);
+			doh.assertEqual(false,am.hasChanged());
+			am.update({x:"ddd"}, false, true);
+			doh.assertEqual(true,am.hasChanged());
+			am.update(null, false, true);
+			doh.assertEqual(false,am.hasChanged());
+		},
+		function testNull() {
             am.update(null);
             var plainValue = am.getPlainValue();
             assertEqual({}, plainValue);

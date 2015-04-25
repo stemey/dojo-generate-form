@@ -65,6 +65,24 @@ define(['dojo/_base/lang',
 			assertEqual(1, am.changedCount);
 			assertEqual(0, am.getModelByIndex(1).changedCount);
 		},
+		function testHasChanged() {
+			var am = new ArrayModel({elementFactory: elementFactory});
+			am.init();
+			doh.assertEqual(false,am.hasChanged());
+			am.update([], false, true);
+			doh.assertEqual(false,am.hasChanged());
+			am.update(null, false, true);
+			doh.assertEqual(false,am.hasChanged());
+		},
+		function testHasChanged() {
+			var am = new ArrayModel({elementFactory: elementFactory});
+			am.init();
+			doh.assertEqual(false,am.hasChanged());
+			am.update(["kkk"], false, true);
+			doh.assertEqual(true,am.hasChanged());
+			am.update(null, false, true);
+			doh.assertEqual(false,am.hasChanged());
+		},
 		function testRemovedState() {
 			am.update(["a", "b"], true);
 			am.pop();

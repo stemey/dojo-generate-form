@@ -61,8 +61,18 @@ define([
 				});
 			}
 		},
+		isEmptyArray: function (value) {
+			return !value || value.length === 0;
+		},
+		isEmpty: function () {
+			return this.isEmptyArray(this.value);
+		},
 		calculateChanged: function () {
-			if (!this.oldValue || this.oldValue.length !== this.value.length) {
+			if (this.isEmptyArray(this.value) && this.isEmptyArray(this.oldValue)) {
+				return false;
+			} else if (this.isEmptyArray(this.value) || this.isEmptyArray(this.oldValue)) {
+				return true;
+			} else if (this.value.length !== this.oldValue.length) {
 				return true;
 			} else {
 				return this.oldValue.some(function (el, idx) {
@@ -161,7 +171,7 @@ define([
 				return model.getModelByPath(path);
 			}
 		},
-		getChangeMessage: function() {
+		getChangeMessage: function () {
 			return "";
 		},
 		init: function () {
