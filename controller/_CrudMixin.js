@@ -45,7 +45,6 @@ define([
 		editor: null,
 
 		oldValue: null,
-		oldType: null,
 		typeProperty: null,
 
 		// dialog: gform/controller/ConfimDialog
@@ -260,10 +259,10 @@ define([
 		_onLoadForEntityAndSchema: function (schema, entity) {
 			try {
 				if (this.oldValue) {
-					this.editor.setMetaAndPlainValue(schema, this.oldValue);
+					this.editor.setMetaAndPlainValue(schema, this.oldValue, false);
 					this.editor.modelHandle.update(entity, false);
 				} else {
-					this.editor.setMetaAndPlainValue(schema, entity);
+					this.editor.setMetaAndPlainValue(schema, entity, false);
 				}
 			} catch (e) {
 				this.displayError("cannot load data into form");
@@ -290,12 +289,12 @@ define([
 			var success = function (result) {
 				args.splice(0, 0, result);
 				s.apply(me, args);
-			}
+			};
 			var f = this["_on" + command + "Failed"];
 			var fail = function (result) {
 				args.splice(0, 0, result);
 				f.apply(me, args);
-			}
+			};
 
 			when(promise, success, fail);
 		},
@@ -306,7 +305,6 @@ define([
 			// initialize selector
 			this.typeProperty = typeProperty;
 			this._initializeSchemaSelector(schemas, true);
-			this.oldType = this.getSelectedSchemaUrl();
 			//call createNew with first schemaUrls
 			this._createNewInternal(this.getSelectedSchemaUrl(), createCallback, value);
 		},
@@ -332,7 +330,6 @@ define([
 		_onLoadMultiSchema: function (schema, entity) {
 			this.set("state", "edit");
 			var type = entity[this.typeProperty];
-			this.oldType = type;
 			this.oldValue = entity;
 			this.schemaSelector.set("value", type);
 			this.onLoaded(schema, entity);
@@ -346,7 +343,6 @@ define([
 		onLoadMultiWithFallback: function (fallbackSchema, entity) {
 			this.typeProperty = null;
 			this.set("state", "edit");
-			this.oldType = null;
 			this.oldValue = entity;
 			this._initializeSchemaSelector([], null);
 			try {
@@ -513,7 +509,7 @@ define([
 			this.editor.set("plainValue", entity);
 		},
 		hasChanged: function () {
-			return this.editor.hasChanged() || this.oldType !== this.schemaSelector.get("value");
+			return this.editor.hasChanged();
 		},
 		onCreate: function (id) {
 			// summary:

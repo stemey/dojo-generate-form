@@ -72,7 +72,7 @@
                         crudController.createNewMulti(["country", "city"], "type");
                         doh.assertEqual(false,crudController.hasChanged());
                         crudController.schemaSelector.set("value","country");
-                        doh.assertEqual(true,crudController.hasChanged());
+                        doh.assertEqual(false,crudController.hasChanged());
                         crudController.schemaSelector.set("value","city");
                         doh.assertEqual(false,crudController.hasChanged());
                     }
