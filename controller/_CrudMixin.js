@@ -391,12 +391,19 @@ define([
 		_initializeSchemaSelector: function (schemas, initializeValue) {
 			var store;
 			var searchProperty;
+			var initialValue;
 			if (Array.isArray(schemas)) {
 				store = this.createStore(schemas);
 				searchProperty = "name";
+				initialValue = schemas.length>0 ? schemas[0][store.idProperty] : null;
 			} else {
 				store = this.editor.ctx.getStore(schemas.store);
 				searchProperty = schemas.searchProperty;
+				if (schemas.schemaUrl) {
+					initialValue = schemas.schemaUrl;
+				} else {
+					initialValue = null;
+				}
 			}
 			if (store !== null) {
 				this.schemaSelector.domNode.style.visibility = "visible";
@@ -404,12 +411,16 @@ define([
 				this.schemaSelector.set("searchProperty", searchProperty);
 				if (initializeValue) {
 					var selector = this.schemaSelector;
-					when(store.query({}, {
-						count: 1,
-						sort: [{attribute: searchProperty, ascending: true}]
-					})).then(function (results) {
-						selector.set("value", results[0][store.idProperty]);
-					});
+					if (initialValue) {
+						selector.set("value", initialValue);
+					} else {
+						when(store.query({}, {
+							count: 1,
+							sort: [{attribute: searchProperty, ascending: true}]
+						})).then(function (results) {
+							selector.set("value", results[0][store.idProperty]);
+						});
+					}
 				}
 			} else {
 				this.schemaSelector.domNode.style.visibility = "hidden";
@@ -467,7 +478,7 @@ define([
 			if (this.typeProperty) {
 				var promise = this.store.get(this.getId());
 				this._execute(promise, "LoadMulti");
-			}else {
+			} else {
 				this._edit(this.getId());
 			}
 
@@ -479,12 +490,12 @@ define([
 				if (this.typeProperty && !(this.typeProperty in value)) {
 					value[this.typeProperty] = schemaUrl;
 				}
-				this.editor.setMetaAndPlainValue(schema, value);
+				this.editor.setMetaAndPlainValue(schema, value, false);
 			} else {
 				if (this.typeProperty) {
 					var init = {};
 					init[this.typeProperty] = schemaUrl;
-					this.editor.setMetaAndPlainValue(schema, init);
+					this.editor.setMetaAndPlainValue(schema, init, false);
 				} else {
 					this.editor.setMetaAndDefault(schema);
 				}
@@ -516,7 +527,7 @@ define([
 		},
 		reset: function () {
 			if (this.typeProperty) {
-				if (this.state==="edit"){
+				if (this.state === "edit") {
 					this.reload();
 				}
 			} else {

@@ -52,6 +52,8 @@
                     runTest: function (t) {
                         crudController.createNewMulti(["country", "city"], "type");
                         doh.assertEqual("city",crudController.schemaSelector.get("value"));
+						crudController.editor.modelHandle.getModelByPath("label").update("Moinsen", false, true);
+						doh.assertEqual(false, crudController.editor.hasChanged());
                     }
                 },
                 {
@@ -60,7 +62,7 @@
                         crudController.createNewMulti(["country", "city"], "type");
                         var input = registry.byNode(document.querySelectorAll(".dijitValidationTextBox")[1]);
                         input.set("value","NewCountry");
-                        doh.assertEqual(true,crudController.editor.hasChanged());
+                        doh.assertEqual(false,crudController.editor.hasChanged());
                     }
                 },
                 {

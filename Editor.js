@@ -61,12 +61,12 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 			// remember all field paths where an explicit error message was added via addError()
 			_explicitErrorPaths: [],
 
-			setMetaAndPlainValue: function (meta, value) {
+			setMetaAndPlainValue: function (meta, value, setOldValue) {
 				// summary:
 				//		Change the schema and the value simultaneously.
 				delete this.modelHandle;
 				this.meta = meta;
-				this.setPlainValue(value);
+				this._init(value, setOldValue);
 
 				this._buildContained();
 			},
@@ -75,7 +75,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 				//		Change the schema and the value simultaneously.
 				delete this.modelHandle;
 				this.meta = meta;
-				this.initDefault();
+				this.initDefault(false);
 
 				this._buildContained();
 			},
@@ -97,6 +97,9 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 				return this.editorFactory.createBadge(this.modelHandle);
 			},
 			_setPlainValueAttr: function (value) {
+				this._init(value, true);
+			},
+			_init: function (value, setOldValue) {
 				if (this.modelHandle) {
 					this.modelHandle.resetMetaRecursively();
 				}
@@ -105,12 +108,12 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 				}
 				if (!this.modelHandle) {
 					this.modelHandle = this.editorFactory.createGroupModel(this.meta, value);
-					this.modelHandle.update(value, true);
+					this.modelHandle.update(value, setOldValue);
 					this.modelHandle.init();
 					var me = this;
 					aspect.after(this.modelHandle, "onChange", lang.hitch(this, "onChangeInternally"));
 				} else {
-					this.modelHandle.update(value, true);
+					this.modelHandle.update(value, setOldValue);
 				}
 				if (!this.meta) {
 					throw new Error("cannot set plainValue before setting meta");
@@ -326,13 +329,13 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 					this.onChange();
 				}
 			},
-			initDefault: function () {
+			initDefault: function (setOldValue) {
 				if (!this.modelHandle) {
 					this.modelHandle = this.editorFactory.createGroupModel(this.meta, {});
 					aspect.after(this.modelHandle, "onChange", lang.hitch(this, "onChangeInternally"));
 				}
 				this.modelHandle.init();
-				this.modelHandle.initDefault();
+				this.modelHandle.initDefault(setOldValue);
 
 			}
 

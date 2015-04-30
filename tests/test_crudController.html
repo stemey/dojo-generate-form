@@ -61,6 +61,8 @@
 					runTest: function (t) {
 						crudController.createNew("/gform/tests/meta/refs.json");
 						doh.assertEqual('create', crudController.state);
+						crudController.editor.modelHandle.getModelByPath("label").update("hallo",false,true);
+						doh.assertEqual(false, crudController.editor.hasChanged());
 					}
 				},
 				{
