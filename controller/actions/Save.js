@@ -55,12 +55,16 @@ define([
                 var me = this;
                 var entity = this.ctrl.store.get(generatedId);
                 when(entity).then(function (e) {
-                    me.ctrl.editor.setPlainValue(e);
+                    me.ctrl.editor.modelHandle.update(e,true,false);
+					me.ctrl.oldValue=e;
                     me.ctrl.onCreate(generatedId);
                 });
             } else {
                 var idProperty = this.ctrl.store.idProperty || "id";
-                this.ctrl.onCreate(this.ctrl.editor.getPlainValue()[idProperty]);
+				var value = this.ctrl.editor.getPlainValue();
+				this.ctrl.editor.modelHandle.update(value, true, false)
+				this.ctrl.oldValue=value;
+                this.ctrl.onCreate(value[idProperty]);
             }
             //this.ctrl.editor.set("plainValue",{});
             //this.ctrl.editor.reset();

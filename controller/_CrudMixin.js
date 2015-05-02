@@ -259,7 +259,7 @@ define([
 		_onLoadForEntityAndSchema: function (schema, entity) {
 			try {
 				if (this.oldValue) {
-					this.editor.setMetaAndPlainValue(schema, this.oldValue, false);
+					this.editor.setMetaAndPlainValue(schema, this.oldValue, true);
 					this.editor.modelHandle.update(entity, false);
 				} else {
 					this.editor.setMetaAndPlainValue(schema, entity, false);
@@ -450,11 +450,12 @@ define([
 				value = this.createPlainValue(this.editor.meta);
 			}
 			if (value !== null) {
+				// TODO oldValue mst be undefined
 				this.editor.set("plainValue", value);
 			} else {
 				this.editor.initDefault();
 			}
-			this.oldValue = this.editor.getPlainValue();
+			this.oldValue = undefined;//this.editor.getPlainValue();
 			this.onCreated(this.editor.meta, value);
 		},
 		_createNewAndSchema: function (schemaUrl, value) {
@@ -470,12 +471,12 @@ define([
 				return null;
 			}
 		},
-		reload: function () {
+		reload: function (id) {
 			if (this.typeProperty) {
-				var promise = this.store.get(this.getId());
+				var promise = this.store.get(id ||this.getId());
 				this._execute(promise, "LoadMulti");
 			} else {
-				this._edit(this.getId());
+				this._edit(id || this.getId());
 			}
 
 		},
