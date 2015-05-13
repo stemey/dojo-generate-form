@@ -1,7 +1,6 @@
 define([
 	"../controller/TabCrudController",
 	"../createLayoutEditorFactory",
-	"../util/restHelper",
 	"dijit/registry",
 	"dojo/_base/declare",
 	"dojo/_base/lang",
@@ -12,7 +11,7 @@ define([
 	"dijit/layout/StackContainer",
 	"dijit/form/Button",
 	"gform/util/restHelper"
-], function (TabCrudController, createLayoutEditorFactory, restHelper, registry, declare, lang, aspect) {
+], function (TabCrudController, createLayoutEditorFactory, registry, declare, lang, aspect) {
 //  module:
 //		gform/opener/SingleEditorTabOpener
 
@@ -75,17 +74,17 @@ define([
 			this.tabContainer.selectChild(controller);
 			var me = this;
 			aspect.after(controller, "onCreate", function (result, args) {
-				var singleUrl = restHelper.compose(url, args[0]);
+				var singleUrl = url+"/"+args[0];
 				me.url2widget[singleUrl] = controller;
-                aspect.after(controller, "destroy", function(){
-                    delete me.url2widget[singleUrl];
-                });
+				aspect.after(controller, "destroy", function(){
+					delete me.url2widget[singleUrl];
+				});
 			});
-            if (options.typeProperty) {
-                controller.createNewMulti(options.schemaUrls, options.typeProperty, options.callback, options.value);
-            } else {
-                controller.createNew(options.schemaUrl, options.callback, options.value);
-            }
+			if (options.typeProperty) {
+				controller.createNewMulti(options.schemaUrls, options.typeProperty, options.callback, options.value);
+			} else {
+				controller.createNew(options.schemaUrl, options.callback, options.value);
+			}
 		},
 		openSingle: function (options) {
 			// summary:
@@ -99,7 +98,7 @@ define([
 			}
 			var controller = registry.byId(wid);
 
-            var singleUrl = restHelper.compose(options.url, options.id);
+			var singleUrl = options.url + "/"+options.id;
 
 			if (controller) {
 				this.tabContainer.selectChild(controller);
@@ -122,11 +121,11 @@ define([
 
 				this.tabContainer.addChild(controller);
 				this.tabContainer.selectChild(controller);
-                if (options.typeProperty) {
-                    controller.editMulti(options.schemaUrls, options.typeProperty, id);
-                }else{
-                    controller.edit(id, options.schemaUrl);
-                }
+				if (options.typeProperty) {
+					controller.editMulti(options.schemaUrls, options.typeProperty, id);
+				}else{
+					controller.edit(id, options.schemaUrl);
+				}
 			}
 		}
 	});

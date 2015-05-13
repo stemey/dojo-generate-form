@@ -51,6 +51,7 @@ define([
 			this.ctrl.hideProgressBar();
 			this.ctrl.set("state", "edit");
 			this.ctrl.editor.removeChangeIndicators();
+			var idProperty = this.ctrl.store.idProperty || "id";
 			if (generatedId) {
 				var entity;
 				if (typeof generatedId == "object") {
@@ -62,10 +63,10 @@ define([
 				when(entity).then(function (e) {
 					me.ctrl.editor.modelHandle.update(e, true, false);
 					me.ctrl.oldValue = e;
-					me.ctrl.onCreate(generatedId);
+
+					me.ctrl.onCreate(entity[idProperty]);
 				});
 			} else {
-				var idProperty = this.ctrl.store.idProperty || "id";
 				var value = this.ctrl.editor.getPlainValue();
 				this.ctrl.editor.modelHandle.update(value, true, false)
 				this.ctrl.oldValue = value;
