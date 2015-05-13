@@ -68,7 +68,9 @@ define([
 			return this.isEmptyArray(this.value);
 		},
 		calculateChanged: function () {
-			if (this.isEmptyArray(this.value) && this.isEmptyArray(this.oldValue)) {
+			if (typeof this.oldValue === "undefined") {
+				return false;
+			}else if (this.isEmptyArray(this.value) && this.isEmptyArray(this.oldValue)) {
 				return false;
 			} else if (this.isEmptyArray(this.value) || this.isEmptyArray(this.oldValue)) {
 				return true;
