@@ -8,7 +8,7 @@ define([
                 //  collectionUr id
             //  returns:
             //		the url to the resource.
-            if (collectionUrl.substring(collectionUrl.length-1)=="/") {
+            if (typeof collectionUrl == "string" && collectionUrl.substring(collectionUrl.length-1)=="/") {
                 return collectionUrl +  id;
             }else {
                 return collectionUrl + "/" + id;
