@@ -23,9 +23,13 @@ define([
 			});
 			var options = this._createMappedOptions(modelHandle, attribute);
 			when(options).then(function(newOptions) {
+				if (!initialValue && newOptions.length>0) {
+					initialValue = newOptions[0].value;
+
+				}
 				modelHandle.options=newOptions;
 				select.set("options", modelHandle.options);
-				select.set("value",initialValue);
+				modelHandle.update(initialValue);
 			});
 
 			modelHandle.watch("options", function () {
