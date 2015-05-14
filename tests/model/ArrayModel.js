@@ -65,11 +65,13 @@ define(['dojo/_base/lang',
 			assertEqual(1, am.changedCount);
 			assertEqual(0, am.getModelByIndex(1).changedCount);
 		},
-		function testHasChanged() {
+		function testHasChangedNew() {
 			var am = new ArrayModel({elementFactory: elementFactory});
 			am.init();
 			doh.assertEqual(false,am.hasChanged());
 			am.update([], false, true);
+			doh.assertEqual(false,am.hasChanged());
+			am.update(["kk"], false, true);
 			doh.assertEqual(false,am.hasChanged());
 			am.update(null, false, true);
 			doh.assertEqual(false,am.hasChanged());
@@ -77,10 +79,11 @@ define(['dojo/_base/lang',
 		function testHasChanged() {
 			var am = new ArrayModel({elementFactory: elementFactory});
 			am.init();
+			am.update([], true);
 			doh.assertEqual(false,am.hasChanged());
-			am.update(["kkk"], false, true);
+			am.update(["xxx"], false);
 			doh.assertEqual(true,am.hasChanged());
-			am.update(null, false, true);
+			am.update(null, false);
 			doh.assertEqual(false,am.hasChanged());
 		},
 		function testRemovedState() {
