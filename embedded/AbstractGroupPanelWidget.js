@@ -117,8 +117,8 @@ define(['dijit/Tooltip',
 			}
 			if (newType === null) {
 				this._updateDescription(null);
-				if (this.modelHandle.currentTypeCode !== null) {
-					domClass.replace(this.typeToGroup[this.modelHandle.currentTypeCode].domNode, "dijitHidden", "dijitVisible");
+				if (this.typeStack.selectedChildWidget) {
+					domClass.replace(this.typeStack.selectedChildWidget.domNode, "dijitHidden", "dijitVisible");
 				}
 			} else {
 				this._updateDescription(this.descriptions[newType]);

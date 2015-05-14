@@ -82,6 +82,8 @@
 						t.assertEqual("null",typeSelect.value);
 						editor.set("plainValue",{thing:{ext_type:"thing2",firstName:"stefan",common:"meyer"}});
 						t.assertEqual("thing2",typeSelect.value);
+						editor.set("plainValue",null);
+						t.assertEqual("null",typeSelect.value);
 					}
 				}
 			]);

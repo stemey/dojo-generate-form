@@ -86,12 +86,12 @@ define([
 					plainValue[this.typeProperty] = this.currentTypeCode;
 					//this.value= getGroup(this.currentTypeCode);
 				} else {
-					this.currentTypeCode = null;
+					this.set("currentTypeCode",null);
 					//this.value=null;
 				}
 			} else {
 				var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.getTypeCode(this.schema.groups[0]);
-				if (this.getGroup(typeCode) != null) {
+				if (this.getGroup(typeCode) !== null) {
 					this._changeAttrValue("currentTypeCode", typeCode);
 				}
 			}
