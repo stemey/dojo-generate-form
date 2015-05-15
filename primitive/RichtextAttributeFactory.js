@@ -34,6 +34,9 @@ define([
 					if (this.target.get("focused")) {
 						throw new "don't update when focus is set";
 					}
+					if (value === null || typeof value === "undefined") {
+						value = "";
+					}
 					return value;
 				},
 				parse: function (value) {
