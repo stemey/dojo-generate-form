@@ -1,3 +1,5 @@
+moved to [github](https://github.com/stemey/dojo-generate-form/releases)
+
 0.22.0 (29.05.2014)
 -----------------
 
