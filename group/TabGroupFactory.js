@@ -39,8 +39,8 @@ define([
 			});
 			for (var index = 0; index < group.groups.length; index++) {
 				var tab = group.groups[index];
-				if (!tab.groupType) {
-					tab.groupType = "listpane";
+				if (!tab.editor) {
+					tab.editor = "listpane";
 				}
 				var model = modelHandle.getModelByIndex(index);
 				var tabWidget = this.editorFactory.create(tab, model, ctx, {hidden:true});
