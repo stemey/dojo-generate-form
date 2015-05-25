@@ -48,6 +48,9 @@ define([
                 this.values[element.id] = element;
             }
         },
+        addVariable: function(key, value) {
+            this.values[key] = value;
+        },
         getUrlForRef: function (relUrl, baseUrl) {
             if (this.transformer) {
                 return this.transformer.getUrlForRef(baseUrl, relUrl);
@@ -66,7 +69,7 @@ define([
                     if (ref.id.substring(0, 1) === "#") {
                         throw new Error("path reference not implemented");
                     } else {
-                        if (!this.values[ref.id]) {
+                        if (!(ref.id in this.values)) {
                             deferred.push(this.load(ref, baseUrl));
                         }
                     }

@@ -17,6 +17,11 @@ define(['dojo/_base/declare',
 
 	};
 
+	var schemaWithVariables =
+	{
+		mycar: {$ref: "mercedes"}
+	};
+
 	var LocalResolver = declare([Resolver], {
 		constructor: function () {
 			this.p = {};
@@ -65,11 +70,10 @@ define(['dojo/_base/declare',
 			doh.assertEqual("expensive", schema.mycar.price);
 			doh.assertEqual("medium", schema.theircars[1].price);
 		},
-		function testByIdI() {
-			var resolver = new LocalResolver();
+		function testByVariable() {
+			var resolver = new LocalResolver({values:{"mercedes":"Hallo"}});
 			var refs = resolver.resolveInternally(schema, "");
-			doh.assertEqual("expensive", schema.mycar.price);
-			doh.assertEqual("medium", schema.theircars[1].price);
+			doh.assertEqual("Hallo", schema.mycar);
 		},
 		function testByUrl() {
 			var resolver = new LocalResolver();
@@ -81,8 +85,6 @@ define(['dojo/_base/declare',
 			doh.assertEqual(true, p.isResolved());
 			resolver.callSetters();
 			doh.assertEqual("test", schemaWithExternalRef.car);
-
-
 		},
 		function testByUrlTransform() {
 			var resolver = new LocalResolver();

@@ -1,6 +1,6 @@
 define([
-	'./transforms/AddRegionTransformer',
-	'dojo/_base/json',
+    './transforms/AddRegionTransformer',
+    'dojo/_base/json',
     '../util/Resolver',
     './Transformer',
     "dojo/_base/declare",
@@ -19,15 +19,17 @@ define([
             var t = this.createTransformer();
             return this.load(meta, baseUrl, t);
         },
-        load: function (group, baseUrl, transformer) {
-            var resolver = new Resolver({baseUrl: baseUrl, transformer: transformer});
+        load: function (group, baseUrl, transformer, variables) {
+            var resolver = new Resolver({baseUrl: baseUrl, transformer: transformer, values: variables || {}});
             return resolver.resolve(group);
         },
         createTransformer: function () {
             var t = new Transformer();
-            t.add(new FilterAttributesTransformer({id: "primitive", test: function (code) {
-                return !/(object|array|map)/.test(code);
-            }}));//["./primitive-attributes.json"] = {url: "./attributes.json", execute: filterPrimitives};
+            t.add(new FilterAttributesTransformer({
+                id: "primitive", test: function (code) {
+                    return !/(object|array|map)/.test(code);
+                }
+            }));//["./primitive-attributes.json"] = {url: "./attributes.json", execute: filterPrimitives};
             t.add(new RemoveFirstGroupTransformer({id: "attributes-nocode"}));
             //}));t["./attributes-nocode.json"] = {url: "./attributes.json", execute: removeFirstGroupFromAttributes};
             t.add(new RemovePropertyFromGroupsTransformer({id: "nocode", deleteCodes: ["code"]}));
@@ -36,8 +38,8 @@ define([
             //t["./group/listpane-nocode.json"] = {url: "./group/listpane.json", execute: removeCodeFromSingle};
             t.add(new RemovePropertyFromGroupTransformer({id: "nocode-group", deleteCodes: ["code"]}));
             //t["./groups-nocode-nolabel.json"] = {url: "./groups.json", execute: removeCodeAndLabel};
-			t.add(new RemovePropertyFromGroupTransformer({id: "nocode-group", deleteCodes: ["code"]}));
-			t.add(new AddRegionTransformer({id: "add-region"}));
+            t.add(new RemovePropertyFromGroupTransformer({id: "nocode-group", deleteCodes: ["code"]}));
+            t.add(new AddRegionTransformer({id: "add-region"}));
             return t;
         }
 
