@@ -32,9 +32,8 @@
 					"type": "string"
 				},
 				{
-					"code": "schemaUrl",
-					"required": true,
-					"description": "the url to the schema of the referenced resources.",
+					"code": "schemaUrlPrefix",
+					"description": "Prefix to create schemaUrl.",
 					"type": "string"
 				},
 				{
