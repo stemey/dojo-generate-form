@@ -45,7 +45,7 @@ define([
 		createModel: function (schema) {
 			var me = this;
 			var validators = this.editorFactory.getModelValidators(schema);
-			var map = new PrimitiveMapModel({keyProperty: "key", "validators": validators});
+			var map = new PrimitiveMapModel({schema:schema,keyProperty: "key", "validators": validators});
 			map.elementFactory = function (value) {
 				var aModels = {};
 				var tableSchema = me.createTableMeta(schema);
