@@ -24,6 +24,10 @@ define([
 		//		maybe "loading", "edit", "create".
 		state: "loading",
 
+		selectButton:null,
+
+		showSelectButton:false,
+
 		// fallbackSchema:
 		//		if loading the schema fails, then use this general schema
 		fallbackSchema: null,
@@ -65,6 +69,12 @@ define([
 				this.progressBar.set("duration", 0);
 			}
 			this.own(this.watch("state", this.onLoadOrSave.bind(this)));
+			if (this.showSelectButton) {
+				this.selectButton.set("onClick", this.gotoTemplate.bind(this));
+			}
+		},
+
+		gotoTemplate: function(evt) {
 		},
 
 		invokeIfOk: function (callback) {
@@ -366,6 +376,7 @@ define([
 		},
 		_hideSchemaSelector: function () {
 			this.schemaSelector.domNode.style.visibility = "hidden";
+			this.selectButton.domNode.style.visibility = "hidden";
 		},
 		createStore: function (schemas) {
 			var options = [];
