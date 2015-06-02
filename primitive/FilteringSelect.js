@@ -20,6 +20,10 @@ define([
 			} else{
 				this.inherited(arguments);
 			}
+		},
+		labelFunc: function(item, store){
+			// override to make sure there is no error when items has no serachAttr value
+			return (item[this.labelAttr || this.searchAttr] || "").toString(); // String
 		}
 	});
 });
