@@ -17,6 +17,9 @@ define([
 			return this.isNull;
 		},
 		calculateChanged: function () {
+			if (typeof this.oldValue === "undefined") {
+				return false;
+			}
 			var wasNull = this.oldValue === null;
 			return this.isNull !== wasNull;
 		},
