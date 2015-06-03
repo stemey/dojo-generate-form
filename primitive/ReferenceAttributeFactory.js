@@ -98,6 +98,10 @@ define(
 						createValue: createValue
 					};
 
+					if (attribute.query) {
+						f.query=attribute.query;
+					}
+
 					var refSelect = new RefSelect({
 						openerParams: openerParams,
 						targetCreatable: targetCreatable,

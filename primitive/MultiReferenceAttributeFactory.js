@@ -86,13 +86,14 @@ define(
                         }
                     });
                     var typeProperty = attribute.typeProperty;
-                    props.query={};
+                    props.query=attribute.query || {};
                     if (schemas.length>0) {
                         props.query[typeProperty] = {$in: schemas};
                     }
 
                     dijitHelper.copyDijitProperties(attribute, props);
                     var f = new FilteringSelect(props);
+
                     dijitAwareConverter.dijit = f;
 
                     var openerParams = {
