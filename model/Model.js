@@ -491,7 +491,7 @@ define([
 		},
 		transformOut: function (value) {
 			if (this.transformer) {
-				return this.transformer.out(value);
+				return this.transformer.out(value, this.schema);
 			} else {
 				return value;
 			}

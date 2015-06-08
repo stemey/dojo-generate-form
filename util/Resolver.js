@@ -16,15 +16,15 @@ define([
     return declare("gform.util.Resolver", [], {
         // summary:
         //		Resolver helps resolving references.
-		plainPattern:null,
+        plainPattern: null,
         returnNullForFailed: false,
         transformer: null,
-		refProperties: ["$ref","#ref"],
+        refProperties: ["$ref", "#ref"],
         constructor: function (kwArgs) {
-            this.plainPattern=/html$/;
-			this.references = [];
+            this.plainPattern = /html$/;
+            this.references = [];
             this.values = {};
-			lang.mixin(this, kwArgs);
+            lang.mixin(this, kwArgs);
 
         },
         baseUrl: "",
@@ -48,11 +48,13 @@ define([
                 this.values[element.id] = element;
             }
         },
-        addVariable: function(key, value) {
+        addVariable: function (key, value) {
             this.values[key] = value;
         },
         getUrlForRef: function (relUrl, baseUrl) {
-            if (this.transformer) {
+            if (relUrl in this.values) {
+                return relUrl;
+            } else if (this.transformer) {
                 return this.transformer.getUrlForRef(baseUrl, relUrl);
             } else {
                 return new Url(baseUrl, relUrl).uri;
@@ -79,8 +81,8 @@ define([
             return all(deferred);
         },
         createSetter: function (obj, name) {
-            return  (function (obj1, name1) {
-                return    function (value) {
+            return (function (obj1, name1) {
+                return function (value) {
                     obj1[name1] = value;
                 };
             })(obj, name);
@@ -94,12 +96,13 @@ define([
             if (lang.isObject(obj) || lang.isArray(obj)) {
                 for (var name in obj) {
                     if (obj.hasOwnProperty(name)) {
-						var rpIdx = this.refProperties.indexOf(name);
-                        if (rpIdx>=0) {
+                        var rpIdx = this.refProperties.indexOf(name);
+                        if (rpIdx >= 0) {
                             var url = this.getUrlForRef(obj[this.refProperties[rpIdx]], baseUrl);
                             references.push(this.createReference(url, setter));
                             break;
-                        } else if (name === "id") {
+                        } else if (name === "id" && typeof obj[name]!=="object") {
+                            // ids must be primitive value. Otherwise it maybe a "{$ref:"something"}
                             this.addElement(obj);
                         } else {
                             var newSetter = this.createSetter(obj, name);
@@ -123,19 +126,19 @@ define([
                 } else if (t1 && t2) {
                     return 0;
                 } else {
-                    return  me.references.indexOf(e2) - me.references.indexOf(e1);
+                    return me.references.indexOf(e2) - me.references.indexOf(e1);
                 }
 
             }, this);
 
-            var promises=Object.keys(this.values).map(function (key) {
+            var promises = Object.keys(this.values).map(function (key) {
                 return me.values[key];
             });
             var allPromises = all(promises);
             when(allPromises).then(function (value) {
-            ts.forEach(function (ref) {
-                when(me.values[ref.id]).then(lang.hitch(me, "callSetter", ref));
-            });
+                ts.forEach(function (ref) {
+                    when(me.values[ref.id]).then(lang.hitch(me, "callSetter", ref));
+                });
             });
         },
         callSetter: function (ref, value) {
@@ -203,7 +206,7 @@ define([
             return deferred.promise;
         },
         _load: function (url) {
-			return xhr(url, {method: "GET"});
+            return xhr(url, {method: "GET"});
         },
         onLoadFailed: function (url, newBaseUrl, deferred, e) {
             //console.debug("reject " + url, e);
@@ -215,20 +218,20 @@ define([
 
         },
         onLoaded: function (newBaseUrl, deferred, url, response) {
-			var data;
-			if (url.match(this.plainPattern)) {
-				deferred.resolve(response);
-			} else{
-				var resolvedRef=JSON.parse(response);
-				var dependentPromise = this.resolveMore(resolvedRef, newBaseUrl);
-				when(dependentPromise).then(function () {
-					deferred.resolve(resolvedRef);
-				}).otherwise(function (e) {
-						//console.debug("rejected dependent ", e);
-						deferred.reject();
-					}
-				);
-			}
+            var data;
+            if (url.match(this.plainPattern)) {
+                deferred.resolve(response);
+            } else {
+                var resolvedRef = JSON.parse(response);
+                var dependentPromise = this.resolveMore(resolvedRef, newBaseUrl);
+                when(dependentPromise).then(function () {
+                    deferred.resolve(resolvedRef);
+                }).otherwise(function (e) {
+                        //console.debug("rejected dependent ", e);
+                        deferred.reject();
+                    }
+                );
+            }
 
 
         }

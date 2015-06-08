@@ -75,6 +75,11 @@ define(['dojo/_base/declare',
 			var refs = resolver.resolveInternally(schema, "");
 			doh.assertEqual("Hallo", schema.mycar);
 		},
+		function testByVariableAnBaseUrl() {
+			var resolver = new LocalResolver({values:{"mercedes":"Hallo"}});
+			var refs = resolver.resolveInternally(schema, "");
+			doh.assertEqual("Hallo", schema.mycar);
+		},
 		function testByUrl() {
 			var resolver = new LocalResolver();
 			var refs = resolver.resolveInternally(schemaWithExternalRef, "");
