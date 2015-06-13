@@ -159,27 +159,6 @@
 							"code": "dijit/_editor/plugins/AlwaysShowToolbar"
 						},
 						{
-							"code": "dojox/editor/plugins/LocalImage",
-							"attributes": [
-								{
-									"code": "uploadable",
-									"type": "boolean"
-								},
-								{
-									"code": "uploadUrl",
-									"type": "string"
-								},
-								{
-									"code": "baseImageUrl",
-									"type": "string"
-								},
-								{
-									"code": "fileMask",
-									"type": "string"
-								}
-							]
-						},
-						{
 							"code": "dijit._editor.plugins.LinkDialog "
 						},
 						{
@@ -196,9 +175,6 @@
 						},
 						{
 							"code": "dijit._editor.plugins.ViewSource"
-						},
-						{
-							"code": "dijit._editor.plugins.Print "
 						}
 					]
 				}
