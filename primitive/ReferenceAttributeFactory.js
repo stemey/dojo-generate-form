@@ -40,10 +40,8 @@ define(
 					var props = {};
 					dijitHelper.copyDijitProperties(attribute, props);
 					props.value = at(modelHandle, "value");
-					var dijitAwareConverter;
 					if (refConverter) {
-						dijitAwareConverter = makeConverterDijitAware(refConverter);
-						props.value.transform(dijitAwareConverter);
+						props.value.transform(refConverter);
 					}
 					props.message = at(modelHandle, "message");
 					props.state = at(modelHandle, "state");
@@ -65,9 +63,6 @@ define(
 
 					dijitHelper.copyDijitProperties(attribute, props);
 					var f = new FilteringSelect(props);
-					if (dijitAwareConverter) {
-						dijitAwareConverter.dijit = f;
-					}
 
 					if (attribute.modifiable===false) {
 						function updateState() {

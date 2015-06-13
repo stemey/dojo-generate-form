@@ -56,8 +56,10 @@ define(
                     var searchProperty = attribute.searchProperty || "name";
                     var props = {};
                     dijitHelper.copyDijitProperties(attribute, props);
-                    var dijitAwareConverter = makeConverterDijitAware(refConverter);
-                    props.value = at(modelHandle, "value").transform(dijitAwareConverter);
+                    props.value = at(modelHandle, "value");
+                    if (refConverter) {
+                        props.value.transform(refConverter);
+                    }
                     props.message = at(modelHandle, "message");
                     props.state = at(modelHandle, "state");
                     var store;
@@ -94,7 +96,6 @@ define(
                     dijitHelper.copyDijitProperties(attribute, props);
                     var f = new FilteringSelect(props);
 
-                    dijitAwareConverter.dijit = f;
 
                     var openerParams = {
                         editorFactory: this.editorFactory,
