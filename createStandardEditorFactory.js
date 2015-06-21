@@ -1,5 +1,6 @@
 define([
-	'./converter/isoDateConverter',
+    './group/TreeGroupFactory',
+    './converter/isoDateConverter',
 	"./EditorFactory",
     "./createActionFactory",
     "./AttributeFactoryFinder",
@@ -43,7 +44,7 @@ define([
     "./list_table/RepeatedEmbeddedAttributeFactory",
     "./list_table/RepeatedSingleEmbeddedAttributeFactory"//
 
-], function (isoDateConverter, EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
+], function (TreeGroupFactory, isoDateConverter, EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
              TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, SelectStoreAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, BinaryAttributeFactory, AnyTextAreaAttributeFactory, //MappedContentPaneFactory,
              TextareaAttributeFactory, RichtextAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
              ColumnsGroupFactory, SingleAttributeGroupFactory, VerticalGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
@@ -64,7 +65,8 @@ define([
         editorFactory.addGroupFactory("columnsgroup", new ColumnsGroupFactory({editorFactory: editorFactory}));
         editorFactory.addGroupFactory("single", new SingleAttributeGroupFactory({editorFactory: editorFactory}));
 		editorFactory.addGroupFactory("verticalgroup", new VerticalGroupFactory({editorFactory: editorFactory}));
-
+        editorFactory.addGroupFactory("tree", new TreeGroupFactory({editorFactory: editorFactory}));
+        
         editorFactory.set("defaultGroupFactory", new GroupFactory({editorFactory: editorFactory}));
 
         editorFactory.actionFactory = createActionFactory();

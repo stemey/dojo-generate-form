@@ -1,0 +1,18 @@
+{
+  "children": [
+    {
+      "yes": false,
+      "message": "a",
+      "names": [
+        {"name": "hallo"}
+      ]
+    },
+    {
+      "yes": true,
+      "message": "b",
+      "names": [
+        {"name": "bye"}
+      ]
+    }
+  ]
+}

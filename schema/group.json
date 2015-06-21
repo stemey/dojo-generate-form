@@ -4,7 +4,6 @@
 			"code": "group",
 			"type": "object",
 			"typeProperty": "editor",
-			"required": true,
 			"groups": {
 				"$ref": "./groups.json?transforms=nocode&transforms=nolabel"
 			}

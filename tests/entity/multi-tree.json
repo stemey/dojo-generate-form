@@ -1,0 +1,7 @@
+{
+  "type": "A",
+  "children": [
+    {"name": "hallo"},
+    {"name": "bye"}
+  ]
+}

@@ -26,7 +26,6 @@ define([ "dojo/_base/array", "dojo/_base/declare",
 				var width = this._getMaxChildWidth();
 				if (width > 0) {
 					this.maxChildWidth = width + 10;
-					console.log("maxChildWidth " + width + " width :" + this._contentBox.w);
 				}
 			}
 			this.columnCount = Math.floor(this._contentBox.w / this.maxChildWidth);

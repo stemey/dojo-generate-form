@@ -79,6 +79,13 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 
 				this._buildContained();
 			},
+			setModel: function (model) {
+				// summary:
+				//		Change the schema and the value simultaneously.
+				this.modelHandle = model;
+				this.meta = model.schema;
+				this._buildContained();
+			},
 			setPlainValue: function (/*Object*/ plainValue) {
 				// summary:
 				//		update the modelHandle bound to the editor

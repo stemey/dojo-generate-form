@@ -1,0 +1,64 @@
+{
+  "editor": "tree",
+  "nodeAttributes": [
+    {
+      "code": "children",
+      "type": "array",
+      "group": {
+        "editor": "tree",
+        "nodeAttributes": [
+          {
+            "code": "names",
+            "type": "array",
+            "group": {
+              "attributes": [
+                {
+                  "code": "name",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "code": "tags",
+            "type": "array",
+            "group": {
+              "attributes": [
+                {
+                  "code": "tag",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "detailGroup": {
+          "attributes": [
+            {
+              "required": false,
+              "type": "boolean",
+              "label": "yes",
+              "code": "yes"
+            },
+            {
+              "required": false,
+              "type": "string",
+              "label": "message",
+              "code": "message"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "detailGroup": {
+    "attributes": [
+      {
+        "required": true,
+        "type": "string",
+        "code": "name"
+      }
+    ]
+  }
+}
+

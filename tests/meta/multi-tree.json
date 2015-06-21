@@ -1,0 +1,63 @@
+{
+  "editor": "tree",
+  "typeProperty": "type",
+  "groups": [
+    {
+      "editor": "tree",
+      "code": "A",
+      "groupMap": {
+        "nodeAttributes": {
+          "code": "children",
+          "type": "array",
+          "group": {
+            "attributes": [
+              {
+                "code": "name",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "detailGroup": {
+          "attributes": [
+            {
+              "required": true,
+              "type": "string",
+              "code": "name"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "editor": "tree",
+      "code": "B",
+      "groupMap": {
+        "nodeAttributes": [
+          {
+            "code": "things",
+            "type": "array",
+            "group": {
+              "attributes": [
+                {
+                  "code": "tag",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "detailGroup": {
+          "attributes": [
+            {
+              "required": true,
+              "type": "string",
+              "code": "text"
+            }
+          ]
+        }
+        ]
+      }
+    }
+  ]
+}

@@ -15,20 +15,26 @@ define([
         },
         addDijitValidation: function (model, widget) {
             model.validators.push(function (model, force) {
-                var r = widget.validate(true);
-                if (widget.state === "Error") {
-                    return [
-                        {path: "", message: widget.message}
-                    ];
-                } else {
-                    return [];
+                if (!widget._destroyed) {
+                    var r = widget.validate(true);
+                    if (widget.state === "Error") {
+                        return [
+                            {path: "", message: widget.message}
+                        ];
+                    }
                 }
+                return [];
+
             });
 
         },
         createModel: function (meta) {
             var validators = this.editorFactory.getModelValidators(meta);
-            var model = new PrimitiveModel({schema: meta, alwaysUseInvalidMessage: this.alwaysUseInvalidMessage === true, validators: validators, required: meta.required === true
+            var model = new PrimitiveModel({
+                schema: meta,
+                alwaysUseInvalidMessage: this.alwaysUseInvalidMessage === true,
+                validators: validators,
+                required: meta.required === true
             });
             return model;
         }

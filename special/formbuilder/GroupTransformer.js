@@ -58,6 +58,16 @@ define([
 					form.groups.push(newGroup);
 				}, this);
 				this.copyGroupProperties(group, form, "groups");
+			} else if (group.editor==="tree") {
+				form.detailGroup = this.visitOut(group.detailGroup, attributes);
+				var codes = group.nodeAttributes;
+				var newAttributes = codes.map(function (code) {
+					return attributes.filter(function (a) {
+						return a && a.code === code;
+					})[0];
+				});
+				form.nodeAttributes = newAttributes;
+				this.copyGroupProperties(group, form, ["detailGroup", "nodeAttributes"]);
 			}
 			return form;
 		},
@@ -67,7 +77,7 @@ define([
 				return;
 			}
 			Object.keys(from).forEach(function (key) {
-				if (from[key] &&  key!==exclude) {
+				if (from[key] &&  key!==exclude && (!exclude.indexOf || exclude.indexOf(key)<0)) {
 					to[key] = from[key];
 				}
 			});
@@ -100,6 +110,19 @@ define([
 					group.groups.push(newGroup);
 					this.visitIn(element, attributes, newGroup);
 				}, this);
+			} else if(value.editor === "tree")
+			{
+				group.detailGroup = {};
+				this.copyGroupProperties(value, group, ["detailGroup","nodeAttributes"]);
+				this.visitIn(value.detailGroup, attributes, group.detailGroup);
+
+				value.nodeAttributes.forEach(function (attribute) {
+					attributes.push(attribute);
+				});
+				var aCodes = value.nodeAttributes.map(function (attribute) {
+					return attribute.code;
+				}, this);
+				group.nodeAttributes = aCodes;
 			}
 		}
 	});

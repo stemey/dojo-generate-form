@@ -1,27 +1,29 @@
 [
-	{
-		"$ref": "./group/listpane.json"
-	},
-    {
-        "$ref": "./group/single.json"
-    },
-	{
-		"$ref": "./group/titlepane.json"
-	},
-	{
-		"$ref": "./group/columnsgroup.json"
-	},
-	{
-		"$ref": "./group/tabgroup.json"
-	},
-	{
-		"$ref": "./group/listgroup.json"
-	},
-	{
-		"$ref": "./group/verticalgroup.json"
-	},
-	{
-		"$ref": "./group/list.json"
-	}
-
+  {
+    "$ref": "./group/listpane.json"
+  },
+  {
+    "$ref": "./group/single.json"
+  },
+  {
+    "$ref": "./group/titlepane.json"
+  },
+  {
+    "$ref": "./group/columnsgroup.json"
+  },
+  {
+    "$ref": "./group/tabgroup.json"
+  },
+  {
+    "$ref": "./group/listgroup.json"
+  },
+  {
+    "$ref": "./group/verticalgroup.json"
+  },
+  {
+    "$ref": "./group/list.json"
+  },
+  {
+    "$ref": "./group/tree.json"
+  }
 ]

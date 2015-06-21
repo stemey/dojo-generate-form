@@ -155,14 +155,14 @@ define([
 		hasChanged: function () {
 			return this.changedCount > 0;
 		},
-		onChange: function (validate) {
+		onChange: function (validate, source) {
 			if (validate !== false && this.validateOnChange) {
 				this.validate();
 			}
 			this.computeProperties();
 			if (this.bubble) {
 				if (this.parent) {
-					this.parent.onChange(validate);
+					this.parent.onChange(validate, source || this);
 				}
 			} else {
 				this.wouldHaveBubbled = true;

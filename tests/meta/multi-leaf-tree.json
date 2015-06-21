@@ -1,0 +1,42 @@
+{
+  "editor": "tree",
+  "groups": [
+    {
+      "attributes": [
+        {
+          "code": "children",
+          "type": "array",
+          "typeProperty": "type",
+          "groups": [
+            {
+              "code": "A",
+              "attributes": [
+                {
+                  "code": "name",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "code": "B",
+              "attributes": [
+                {
+                  "code": "total",
+                  "type": "boolean"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "attributes": [
+        {
+          "code": "message",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

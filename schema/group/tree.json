@@ -1,0 +1,36 @@
+{
+  "code": "tree",
+  "editorDescription": ".",
+  "attributes": [
+    {
+      "$ref": "properties/code.json"
+    },
+    {
+      "$ref": "properties/label.json"
+    },
+    {
+      "$ref": "properties/description.json"
+    },
+    {
+      "$ref": "properties/labelAttribute.json"
+    },
+    {
+      "code": "nodeAttributes",
+      "type": "array",
+      "description": "An array of attributes.",
+      "element": {
+        "type": "string",
+        "editor": "attribute-ref",
+        "required": "true"
+      }
+    },
+    {
+      "code": "detailGroup",
+      "type": "object",
+      "typeProperty": "editor",
+      "groups": {"$ref": "../groups.json?transforms=nocode"}
+    }
+  ]
+}
+
+

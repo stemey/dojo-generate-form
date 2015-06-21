@@ -1,8 +1,15 @@
-define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function (array, lang, declare, Container, at, domConstruct, Stateful) {
+define(["dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare"], function (array, lang, declare, Container, at, domConstruct, Stateful) {
     // module:
     //		gform/Meta
 
-    var Meta = declare([ ], {
+    var metaTypes = {
+        tree: {
+            nodeAttributes: "attributes",
+            detailGroup: "group"
+        }
+    }
+
+    var Meta = declare([], {
         // summary:
         //		provides convenience functions for schema access. Also abstracts over schema changes.
         getType: function (attribute) {
@@ -39,9 +46,9 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
             return typeCode == this.getType(attribute);
         },
         getComplexType: function (attribute, model) {
-			if (attribute.group) {
-				return attribute.group;
-			}
+            if (attribute.group) {
+                return attribute.group;
+            }
             if (!attribute.groups) {
                 throw new Error("not a complex attribute");
             }
@@ -72,14 +79,21 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
         isMap: function (meta) {
             return meta.type === "map";
         },
+        _isSpecialObject: function(meta) {
+          if (meta.editor in metaTypes)  {
+              return true;
+          } else{
+              return false;
+          }
+        },
         isSingleObject: function (meta) {
-            return meta.attributes || meta.group;
+            return meta.attributes || meta.group || (meta.groups && !meta.typeProperty) || this._isSpecialObject(meta);
         },
         isMultiObject: function (meta) {
-            return  meta.type == "multi-object" || meta.groups;
+            return meta.groups && meta.typeProperty;
         },
         isComplex: function (meta) {
-            return  this.isSingleObject(meta) || this.isMultiObject(meta);
+            return this.isSingleObject(meta) || this.isMultiObject(meta);
         },
         createElement: function (meta) {
             var element = {};
@@ -87,31 +101,42 @@ define([ "dojo/_base/array", "dojo/_base/lang", "dojo/_base/declare" ], function
             delete element.array;
             return element;
         },
-		collectAttributesWithoutAdditional: function (schema, excludedProperties) {
-			if (!excludedProperties) {
-				excludedProperties=[];
-			}
-			if (schema.additionalProperties) {
-				excludedProperties.push(schema.additionalProperties.code);
-			}
-			return this.collectAttributes(schema,excludedProperties);
-		},
+        collectAttributesWithoutAdditional: function (schema, excludedProperties) {
+            if (!excludedProperties) {
+                excludedProperties = [];
+            }
+            if (schema.additionalProperties) {
+                excludedProperties.push(schema.additionalProperties.code);
+            }
+            return this.collectAttributes(schema, excludedProperties);
+        },
         collectAttributes: function (schema, excludedProperties) {
-			if (!excludedProperties) {
-				excludedProperties=[];
-			}
+            if (!excludedProperties) {
+                excludedProperties = [];
+            }
             if (schema.attributes) {
-                return schema.attributes.filter(function(attribute) {
-					return excludedProperties.indexOf(attribute.code)<0;
-				});
-            } else if (schema.attribute && excludedProperties.indexOf(schema.attribute.code)<0) {
+                return schema.attributes.filter(function (attribute) {
+                    return excludedProperties.indexOf(attribute.code) < 0;
+                });
+            } else if (schema.attribute && excludedProperties.indexOf(schema.attribute.code) < 0) {
                 return [schema.attribute];
             } else if (schema.group) {
                 return this.collectAttributes(schema.group, excludedProperties);
+            } else if (metaTypes[schema.editor]) {
+                var attributes = [];
+                Object.keys(metaTypes[schema.editor]).map(function (key) {
+                    var type = metaTypes[schema.editor][key];
+                    if (type === "attributes") {
+                        attributes = attributes.concat(this.collectAttributes({attributes: schema[key]}, excludedProperties));
+                    } else if (type == "group") {
+                        attributes = attributes.concat(this.collectAttributes(schema[key], excludedProperties));
+                    }
+                },this)
+                return attributes;
             } else if (schema.groups) {
                 var attributes = [];
                 schema.groups.forEach(function (group) {
-                    attributes=attributes.concat(this.collectAttributes(group, excludedProperties));
+                    attributes = attributes.concat(this.collectAttributes(group, excludedProperties));
                 }, this);
                 return attributes;
             } else {

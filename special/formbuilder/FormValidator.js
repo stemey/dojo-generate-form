@@ -32,7 +32,8 @@ define([
                 return [];
             }
             var attributesModel = modelHandle.getModelByPath("attributes");
-            var group = modelHandle.getModelByPath("group").getPlainValue();
+            // TODO FIX:we need to use the parent which is the multiObject dan fills the typeProeprty.
+            var group = modelHandle.getModelByPath("group").parent.getPlainValue();
             if (group === null) {
                 return[];
             }
