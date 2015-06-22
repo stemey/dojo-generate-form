@@ -21,7 +21,7 @@ define(['../../schema/meta',
         toolbar: null,
         treeModel: null,
         editorFactory: null,
-        ctx:null,
+        ctx: null,
         createTree: function (kwArgs) {
 
             var RtLabelTreeNode = declare(Tree._TreeNode, {
@@ -56,7 +56,10 @@ define(['../../schema/meta',
             this.editor.set("editorFactory", this.editorFactory);
             this.editor.set("ctx", this.ctx);
 
-            var cp = new ContentPane({region: "left", splitter: true});
+            var cp = new ContentPane({
+                region: "left", splitter: true,
+                style: {width: "30%"}
+            });
             cp.addChild(this.tree);
             this.addChild(this.toolbar);
             this.addChild(this.editor);
@@ -76,7 +79,7 @@ define(['../../schema/meta',
                 } else if (item.schema) {
                     if (meta.isMultiObject(item.schema)) {
                         this.editor.setModel(item.getCurrentGroup());
-                    }else{
+                    } else {
                         this.editor.setModel(item);
                     }
                 } else {

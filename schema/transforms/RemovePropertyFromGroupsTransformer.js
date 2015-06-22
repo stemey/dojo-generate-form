@@ -1,4 +1,5 @@
-define(['dojo/_base/lang', 'dojo/_base/declare'],
+define([
+        'dojo/_base/lang', 'dojo/_base/declare'],
     function (lang, declare) {
 // module:
 //		gform/schema/Transformer
@@ -13,16 +14,23 @@ define(['dojo/_base/lang', 'dojo/_base/declare'],
                 groups.forEach(function (e) {
                     var newE = {};
                     lang.mixin(newE, e);
-                    var newAttributes = [];
-                    e.attributes.forEach(function (group, idx) {
-                        if (this.deleteCodes.indexOf(group.code)<0) {
-                            newAttributes.push(group);
-                        }
-                    }, this);
-                    newE.attributes = newAttributes;
+                    if (e.attributes) {
+                        newE.attributes=this.fixAttributes(e);
+                    } else if (e.groups) {
+                        newE.groups = this.execute(e.groups);
+                    }
                     newArray.push(newE);
                 }, this);
                 return newArray;
+            },
+            fixAttributes: function(e) {
+                var newAttributes = [];
+                e.attributes.forEach(function (group, idx) {
+                    if (this.deleteCodes.indexOf(group.code)<0) {
+                        newAttributes.push(group);
+                    }
+                }, this);
+                return newAttributes;
             }
 
         });

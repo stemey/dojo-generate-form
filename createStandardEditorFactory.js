@@ -66,7 +66,7 @@ define([
         editorFactory.addGroupFactory("single", new SingleAttributeGroupFactory({editorFactory: editorFactory}));
 		editorFactory.addGroupFactory("verticalgroup", new VerticalGroupFactory({editorFactory: editorFactory}));
         editorFactory.addGroupFactory("tree", new TreeGroupFactory({editorFactory: editorFactory}));
-        
+
         editorFactory.set("defaultGroupFactory", new GroupFactory({editorFactory: editorFactory}));
 
         editorFactory.actionFactory = createActionFactory();

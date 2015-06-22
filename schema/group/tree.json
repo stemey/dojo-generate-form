@@ -1,6 +1,6 @@
 {
   "code": "tree",
-  "editorDescription": ".",
+  "editorDescription": "The tree supports one or more node attributes and a detail group.",
   "attributes": [
     {
       "$ref": "properties/code.json"

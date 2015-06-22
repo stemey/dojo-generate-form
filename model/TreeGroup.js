@@ -10,8 +10,8 @@ define([
 
         removable: true,
         editorFactory: null,
-        detailGroup:null,
-        childNodes:null,
+        detailGroup: null,
+        childNodes: null,
         init: function () {
             // TODO move to factory
             var nodeAttributes = this.schema.nodeAttributes;
@@ -38,12 +38,15 @@ define([
         },
         getLabel: function () {
             var label = labelHelper.getLabel(this.schema, this);
+            if (label && label.length > 20) {
+                label = label.substr(0, 20)+"..";
+            }
             label += this.editorFactory.createBadge(this);
             return label;
 
         },
         accept: function (model, position) {
-            if (this._isSingleAttribute()) {
+            if (position=="over" && this._isSingleAttribute()) {
                 return this._getSingleAttribute().accept(model, position);
             } else {
                 if (position == "over") {

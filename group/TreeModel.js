@@ -84,6 +84,9 @@ define([
                 return item.name;
             } else {
                 var label = labelHelper.getLabel(item.schema, item);
+                if (label && label.length > 20) {
+                    label = label.substr(0, 20)+".."
+                }
                 return label;	// String
             }
         },
