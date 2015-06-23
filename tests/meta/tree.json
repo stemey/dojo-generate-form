@@ -45,6 +45,10 @@
               "type": "string",
               "label": "message",
               "code": "message"
+            },
+            {
+              "type": "number",
+              "code": "count"
             }
           ]
         }

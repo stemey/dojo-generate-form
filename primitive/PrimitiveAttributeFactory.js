@@ -1,8 +1,9 @@
 define([
+    'dojo/aspect',
     "dojo/_base/lang",
     "dojo/_base/declare",
     "../model/PrimitiveModel"
-], function (lang, declare, PrimitiveModel) {
+], function (aspect, lang, declare, PrimitiveModel) {
 
     return declare([], {
         editorFactory: null,
@@ -14,18 +15,23 @@ define([
             lang.mixin(this, kwArgs);
         },
         addDijitValidation: function (model, widget) {
-            model.validators.push(function (model, force) {
-                if (!widget._destroyed) {
-                    var r = widget.validate(true);
-                    if (widget.state === "Error") {
-                        return [
-                            {path: "", message: widget.message}
-                        ];
-                    }
+            var dijitValidator = function (model, force) {
+                var r = widget.validate(true);
+                if (widget.state === "Error") {
+                    return [
+                        {path: "", message: widget.message}
+                    ];
                 }
                 return [];
 
-            });
+            }
+            model.validators.push(dijitValidator);
+            aspect.after(widget, "destroy", function () {
+                var index = model.validators.indexOf(dijitValidator);
+                if (index >= 0) {
+                    model.validators.splice(index, 1);
+                }
+            })
 
         },
         createModel: function (meta) {
