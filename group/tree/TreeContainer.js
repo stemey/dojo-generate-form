@@ -34,7 +34,19 @@ define(['../../schema/meta',
             };
             lang.mixin(args, kwArgs);
 
-            return new Tree(args);
+
+            var GformTree = declare([Tree], {
+                getIconClass: function (/*dojo.data.Item*/ item, /*Boolean*/ opened) {
+                    if (item.getIconClass) {
+                        return item.getIconClass();
+                    } else if (schema && item.schema.iconClass) {
+                        return item.schema.iconClass;
+                    }
+                    return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
+                }
+            })
+
+            return new GformTree(args);
         },
         hideEditor: function () {
             this.editor.setMetaAndDefault({attributes: []});
