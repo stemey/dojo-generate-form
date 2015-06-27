@@ -1,11 +1,11 @@
 define([
-    'dijit/form/Select',
+    '../../widget/GroupSelect',
     './TreeToolMixin',
     "dojo/_base/declare"
-], function (Select, TreeToolMixin, declare) {
+], function (GroupSelect, TreeToolMixin, declare) {
 
 
-    return declare("gform-app.group.tree.TypeSelect", [Select, TreeToolMixin], {
+    return declare("gform-app.group.tree.TypeSelect", [GroupSelect, TreeToolMixin], {
         postCreate: function () {
             this.inherited(arguments);
             this.own(this.watch("value", this.onSelectChanged.bind(this)));
