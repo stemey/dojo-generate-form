@@ -82,8 +82,14 @@ define([
         },
         createSetter: function (obj, name) {
             return (function (obj1, name1) {
-                return function (value) {
+                return function (value, id) {
                     obj1[name1] = value;
+                    if (id) {
+                        if (!Array.isArray(obj1)) {
+                            obj1[name1+"_schemaRef"]=id;
+                        }
+
+                    }
                 };
             })(obj, name);
         },
@@ -146,7 +152,7 @@ define([
             if (this.transformer) {
                 value = this.transformer.transformObject(ref.id, value);
             }
-            ref.setter(value);
+            ref.setter(value, ref.id);
         },
         resolveMore: function (obj, baseUrl) {
             baseUrl = baseUrl || this.baseUrl;
