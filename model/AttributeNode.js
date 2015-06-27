@@ -13,6 +13,10 @@ define([
             if (position!=="over") {
                 return false;
             }
+            if (!this.arrayModel.getAsChildNodes) {
+                return false;
+            }
+
             if (model.schema) {
                 return model.schema == this.arrayModel.schema  || model.schema == this.arrayModel.schema.group;
             } else {
@@ -20,10 +24,10 @@ define([
             }
         },
         isRemovable: function() {
-          return false;
+          return this.arrayModel.getAsChildNodes;
         },
         isAddable: function() {
-            return true;
+            return this.arrayModel.getAsChildNodes;
         },
         addNew: function() {
             this.arrayModel.addNew();
@@ -40,7 +44,12 @@ define([
             }
         },
         getChildNodes: function () {
-            return this.arrayModel.value;
+            if (this.arrayModel.getAsChildNodes) {
+                return this.arrayModel.getAsChildNodes();
+            }else{
+                return [this.arrayModel];
+            }
+
         },
         hasChildNodes: function() {
             return true;

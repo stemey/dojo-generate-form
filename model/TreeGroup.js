@@ -12,6 +12,9 @@ define([
         editorFactory: null,
         detailGroup: null,
         childNodes: null,
+        getIconClass: function() {
+            return this.schema.iconClass || "fa fa-cube";
+        },
         init: function () {
             // TODO move to factory
             var nodeAttributes = this.schema.nodeAttributes;

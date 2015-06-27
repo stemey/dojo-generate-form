@@ -189,6 +189,9 @@ define([
         getChangeMessage: function () {
             return "";
         },
+        getAsChildNodes: function() {
+            return this.value;
+        },
         init: function () {
             this.inherited(arguments);
             this.iterateChildren(function (child) {

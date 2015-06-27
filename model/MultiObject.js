@@ -51,7 +51,7 @@ define([
         },
         getTypeOptions: function () {
             return this.schema.groups.map(function (g) {
-                return {value: g.code, label: g.label || g.code};
+                return {value: g.code, label: g.label || g.code, group: g.groupLabel};
             })
         },
         getCurrentGroup: function () {
