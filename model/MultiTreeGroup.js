@@ -6,17 +6,30 @@ define([
 
 
     return declare("gform.model.MultiTreeGroup", [MultiObject], {
-        getIconClass: function() {
+        getIconClass: function () {
             var group = this.getCurrentGroup();
             return group.getIconClass ? group.getIconClass() : group.schema.iconClass || "fa fa-cube";
         },
         removable: true,
-        editorFactory:null,
+        editorFactory: null,
         getChildNodes: function (item) {
             return this.getCurrentGroup().getChildNodes ? this.getCurrentGroup().getChildNodes(item) : null;
         },
         accept: function (model, position) {
-            return this.getCurrentGroup().accept && this.getCurrentGroup().accept(model, position);
+            if (position !== "over") {
+                var parent = this.parent;
+                while (parent != null && !parent.accept) {
+                    parent = parent.parent;
+                }
+                if (parent && parent.accept) {
+                    return parent.accept(model, "over");
+                } else {
+                    return false;
+                }
+            }
+            else if (this.getCurrentGroup().accept) {
+                return this.getCurrentGroup().accept(model, position);
+            }
         },
         isRemovable: function () {
             return this.removable;
@@ -24,20 +37,20 @@ define([
         getLabel: function () {
             var group = this.getCurrentGroup();
             var label = labelHelper.getLabel(group.schema, group);
-            label+=this.editorFactory.createBadge(this);
+            label += this.editorFactory.createBadge(this);
             return label;
         },
         /*setType: function (value) {
-            this.set("currentTypeCode", value);
-        },
-        getType: function () {
-            return this.get("currentTypeCode");
-        },
-        getTypeOptions: function () {
-            return this.schema.groups.map(function (group) {
-                return {value: group.code, label: group.code};
-            });
-        },*/
+         this.set("currentTypeCode", value);
+         },
+         getType: function () {
+         return this.get("currentTypeCode");
+         },
+         getTypeOptions: function () {
+         return this.schema.groups.map(function (group) {
+         return {value: group.code, label: group.code};
+         });
+         },*/
         removeSelf: function () {
             this.parent.remove(this);
         },
