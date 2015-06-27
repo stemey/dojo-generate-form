@@ -6,6 +6,7 @@ define([
 
 
     return declare("gform-app.group.tree.TypeSelect", [GroupSelect, TreeToolMixin], {
+        style: {width: "140px"},
         postCreate: function () {
             this.inherited(arguments);
             this.own(this.watch("value", this.onSelectChanged.bind(this)));
@@ -25,7 +26,7 @@ define([
                 this.set("disabled", false);
                 var value = this.getSelectedItem().getType();
                 this.set("options", this.getSelectedItem().getTypeOptions());
-                this.set("value",value);
+                this.set("value", value);
             } else {
                 this.set("disabled", true);
 
