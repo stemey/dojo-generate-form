@@ -1,10 +1,8 @@
 define([
     '../schema/labelHelper',
-    "dojo/_base/array", // array.filter array.forEach array.indexOf array.some
-    // aspect.before, aspect.after
-    "dojo/_base/declare", // declare
-    "dojo/_base/lang" // lang.hitch
-], function (labelHelper, array, declare, lang) {
+    "dojo/_base/declare",
+    "dojo/_base/lang"
+], function (labelHelper, declare, lang) {
 
     // module:
     //		dijit/tree/ObjectStoreModel
