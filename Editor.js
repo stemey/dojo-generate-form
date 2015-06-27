@@ -264,7 +264,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 				}
 				try {
 					if (this.widget) {
-						this.widget.destroy();
+						this.widget.destroyRecursive();
 					}
 					if (this.get("meta") && this.editorFactory) {
 						this.widget = this.editorFactory.create(this.get("meta"),
@@ -298,7 +298,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 			},
 			_destroyBody: function () {
 				if (this.widget != null) {
-					this.widget.destroy();
+					this.widget.destroyRecursive();
 					this.widget = null;
 				}
 			},

@@ -93,9 +93,9 @@ define(['dijit/Tooltip',
 				this.initTypeEditor(currentType);
 			}
 
-			this.modelHandle.watch("currentTypeCode", lang.hitch(this, "modelTypeChanged"));
+			this.own(this.modelHandle.watch("currentTypeCode", lang.hitch(this, "modelTypeChanged")));
 
-			this.panelModel.watch("type", lang.hitch(this, "onTypeSelectorChanged"));
+			this.own(this.panelModel.watch("type", lang.hitch(this, "onTypeSelectorChanged")));
 			//this.addChild(this.typeStack);
 			this.set("target", this.panelModel);
 		},
