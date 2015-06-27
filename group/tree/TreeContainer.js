@@ -39,7 +39,7 @@ define(['../../schema/meta',
                 getIconClass: function (/*dojo.data.Item*/ item, /*Boolean*/ opened) {
                     if (item.getIconClass) {
                         return item.getIconClass();
-                    } else if (schema && item.schema.iconClass) {
+                    } else if (item.schema && item.schema.iconClass) {
                         return item.schema.iconClass;
                     }
                     return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
