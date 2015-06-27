@@ -1,6 +1,7 @@
 {
 	"code": "multi-checked-select",
 	"groupLabel": "collection",
+  	"iconClass": "fa fa-check-circle-o",
 	"label":"select many",
 	"editorDescription":"a list of checkboxes",
 	"editor": "tab",

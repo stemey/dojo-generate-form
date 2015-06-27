@@ -1,6 +1,7 @@
 {
 	"code": "currencyamount",
 	"label":"currency amount",
+    "iconClass":"fa fa-money",
 	"editorDescription":"Editor for currency values in a certain currency.",
 	"editor": "tab",
 	"groupLabel":"misc",

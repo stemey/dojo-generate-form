@@ -3,6 +3,7 @@
 	"label":"checkbox",
     "editor": "listpane",
 	"groupLabel":"general",
+    "iconClass":"fa fa-check-square-o",
     "attributes": [
 
         {

@@ -1,17 +1,18 @@
 {
-	"code": "number",
-	"editor": "tab",
-	"groupLabel": "general",
-	"groups": [
-		{
-			"$ref": "header.json"
-		},
-		{
-			"$ref": "number-constraints.json"
-		},
-		{
-			"$ref": "messages.json"
-		}
-	]
+  "code": "number",
+  "editor": "tab",
+  "iconClass": "fa fa-line-chart",
+  "groupLabel": "general",
+  "groups": [
+    {
+      "$ref": "header.json"
+    },
+    {
+      "$ref": "number-constraints.json"
+    },
+    {
+      "$ref": "messages.json"
+    }
+  ]
 }
 

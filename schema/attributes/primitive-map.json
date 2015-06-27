@@ -1,5 +1,6 @@
 {
 	"code": "primitive-map",
+  	"iconClass":"fa fa-list",
 	"label":"map of primitives",
 	"groupLabel": "collection",
 	"editor": "tab",

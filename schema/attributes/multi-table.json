@@ -1,6 +1,7 @@
 {
 	"code": "multi-table",
 	"editor": "tab",
+	"iconClass":"fa fa-table",
 	"label":"multi-typed table",
 	"groupLabel": "collection",
 	"example": {

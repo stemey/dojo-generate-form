@@ -1,41 +1,42 @@
 {
-	"code": "textarea",
-	"editorDescription":"A textarea that automatically expands vertically",
-	"groupLabel": "text",
-	"editor": "tab",
-	"example": {
-		"$ref": "example/string.json"
-	},
-	"groups": [
-		{
-			"label": "general",
-			"attributes": [
-				{
-					"$ref":"properties/code.json"
-				},
-				{
-					"code": "cols",
-					"type": "number",
-					"places": 0,
-					"description": "the number of characters per line"
-				},
-				{
-					"$ref":"properties/label.json"
-				},
-				{
-					"$ref":"properties/description.json"
-				},
-				{
-					"$ref":"properties/required.json"
-				}
-			]
-		},
-		{
-			"$ref": "string-constraints.json"
-		},
-		{
-			"$ref": "messages.json"
-		}
-	]
+  "code": "textarea",
+  "editorDescription": "A textarea that automatically expands vertically",
+  "iconClass": "fa fa-file-text-o",
+  "groupLabel": "text",
+  "editor": "tab",
+  "example": {
+    "$ref": "example/string.json"
+  },
+  "groups": [
+    {
+      "label": "general",
+      "attributes": [
+        {
+          "$ref": "properties/code.json"
+        },
+        {
+          "code": "cols",
+          "type": "number",
+          "places": 0,
+          "description": "the number of characters per line"
+        },
+        {
+          "$ref": "properties/label.json"
+        },
+        {
+          "$ref": "properties/description.json"
+        },
+        {
+          "$ref": "properties/required.json"
+        }
+      ]
+    },
+    {
+      "$ref": "string-constraints.json"
+    },
+    {
+      "$ref": "messages.json"
+    }
+  ]
 }
 

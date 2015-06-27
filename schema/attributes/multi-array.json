@@ -1,37 +1,35 @@
 {
-	"code": "multi-array",
-	"label":"multi-type array",
-	"groupLabel": "collection",
-	"editor": "tab",
-	"example": {
-		"$ref": "example/multi-array.json"
-	},
-	"groups": [
-		{
-			"$ref": "header.json"
-		},
-		{
-			"label": "element",
-			"attributes": [
-				{
-					"$ref": "properties/typeProperty.json"
-				},
-				{
-					"code": "type",
-					"type": "string",
-					"visible": false,
-					"required": true,
-					"values": ["array"]
-				},
-				{
-					"$ref": "properties/groups.json"
-				}
-
-			]
-		},
-		{
-			"$ref": "array-constraints.json"
-		}
-	]
-
+  "code": "multi-array",
+  "label": "multi-type array",
+  "groupLabel": "collection",
+  "editor": "tree",
+  "iconClass":"fa fa-list",
+  "example": {
+    "$ref": "example/multi-array.json"
+  },
+  "nodeAttributes": [
+    {"$ref": "properties/groups.json"}
+  ],
+  "detailGroup": {
+    "editor": "tab",
+    "groups": [
+      {
+        "$ref": "header.json"
+      },
+      {
+        "label": "element",
+        "attributes": [
+          {
+            "$ref": "properties/typeProperty.json"
+          },
+          {
+            "$ref": "properties/groups.json"
+          }
+        ]
+      },
+      {
+        "$ref": "array-constraints.json"
+      }
+    ]
+  }
 }

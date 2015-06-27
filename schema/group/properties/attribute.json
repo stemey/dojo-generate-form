@@ -1,6 +1,7 @@
 {
 
 	"code": "attribute",
+  	"iconClass":"fa fa-cube",
 	"description":"A single attribute.",
 	"type": "object",
 	"typeProperty": "editor",

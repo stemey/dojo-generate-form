@@ -1,6 +1,7 @@
 {
 	"code": "simpletextarea",
 	"label":"simple textarea",
+	"iconClass":"fa fa-file-text-o",
 	"editorDescription":"a textarea with fixed columns and rows",
 	"groupLabel": "text",
 	"editor": "tab",

@@ -1,6 +1,7 @@
 {
 	"code": "table",
 	"editor": "tab",
+    "iconClass":"fa fa-table",
 	"groupLabel": "collection",
 	"example": {
 		"$ref": "example/table.json"

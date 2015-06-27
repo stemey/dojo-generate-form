@@ -1,191 +1,192 @@
 {
-	"code": "richtext",
-	"editorDescription": "This is a a rich text attribute. It uses 'dijit.Editor'.",
-	"groupLabel": "text",
-	"editor": "tab",
-	"groups": [
-		{
-			"$ref": "header.json"
-		},
-		{
-			"label": "plugins",
-			"attributes": [
-				{
-					"code": "updateInterval",
-					"label": "update interval",
-					"type": "number",
-					"description": "if greater than 0 changes in the editor will lead to model updates after the given interval.",
-					"defaultValue": "100"
-				},
-				{
-					"code": "height",
-					"type": "string",
-					"description": "set height in px.",
-					"defaultValue": "500px"
-				},
-				{
-					"code": "plugins",
-					"type": "array",
-					"label": "plugins",
-					"typeProperty": "name",
-					"defaultValue": [
-						{
-							"name": "undo"
-						},
-						{
-							"name": "redo"
-						},
-						{
-							"name": "bold"
-						},
-						{
-							"name": "italic"
-						},
-						{
-							"name": "underline"
-						},
-						{
-							"name": "strikethrough"
-						},
-						{
-							"name": "subscript"
-						},
-						{
-							"name": "superscript"
-						},
-						{
-							"name": "removeFormat"
-						},
-						{
-							"name": "insertOrderedList"
-						},
-						{
-							"name": "insertUnorderedList"
-						},
-						{
-							"name": "insertHorizontalRule"
-						},
-						{
-							"name": "indent"
-						},
-						{
-							"name": "outdent"
-						},
-						{
-							"name": "justifyLeft"
-						},
-						{
-							"name": "justifyCenter"
-						},
-						{
-							"name": "justifyRight"
-						},
-						{
-							"name": "createLink"
-						},
-						{
-							"name": "dijit/_editor/plugins/FullScreen"
-						},
-						{
-							"name": "dijit/_editor/plugins/AlwaysShowToolbar",
-							"description": ""
-						}
-					],
-					"groups": [
-						{
-							"code": "undo"
-						},
-						{
-							"code": "redo"
-						},
-						{
-							"code": "bold"
-						},
-						{
-							"code": "italic"
-						},
-						{
-							"code": "underline"
-						},
-						{
-							"code": "strikethrough"
-						},
-						{
-							"code": "subscript"
-						},
-						{
-							"code": "superscript"
-						},
-						{
-							"code": "removeFormat"
-						},
-						{
-							"code": "insertOrderedList"
-						},
-						{
-							"code": "insertUnorderedList"
-						},
-						{
-							"code": "insertHorizontalRule"
-						},
-						{
-							"code": "indent"
-						},
-						{
-							"code": "outdent"
-						},
-						{
-							"code": "justifyLeft"
-						},
-						{
-							"code": "justifyCenter"
-						},
-						{
-							"code": "justifyRight"
-						},
-						{
-							"code": "createLink"
-						},
-						{
-							"code": "dijit/_editor/plugins/FullScreen"
-						},
-						{
-							"code": "dojox/editor/plugins/ShowBlockNodes"
-						},
-						{
-							"code": "dojox/editor/plugins/FindReplace"
-						},
-						{
-							"code": "dijit/_editor/plugins/AlwaysShowToolbar"
-						},
-						{
-							"code": "dijit._editor.plugins.LinkDialog "
-						},
-						{
-							"code": "dijit._editor.plugins.ToggleDir"
-						},
-						{
-							"code": "fontSize"
-						},
-						{
-							"code": "fontName"
-						},
-						{
-							"code": "foreColor"
-						},
-						{
-							"code": "dijit._editor.plugins.ViewSource"
-						}
-					]
-				}
-			]
-		},
-		{
-			"$ref": "string-constraints.json"
-		},
-		{
-			"$ref": "messages.json"
-		}
-	]
+  "code": "richtext",
+  "editorDescription": "This is a a rich text attribute. It uses 'dijit.Editor'.",
+  "groupLabel": "text",
+  "iconClass": "fa fa-file-text-o",
+  "editor": "tab",
+  "groups": [
+    {
+      "$ref": "header.json"
+    },
+    {
+      "label": "plugins",
+      "attributes": [
+        {
+          "code": "updateInterval",
+          "label": "update interval",
+          "type": "number",
+          "description": "if greater than 0 changes in the editor will lead to model updates after the given interval.",
+          "defaultValue": "100"
+        },
+        {
+          "code": "height",
+          "type": "string",
+          "description": "set height in px.",
+          "defaultValue": "500px"
+        },
+        {
+          "code": "plugins",
+          "type": "array",
+          "label": "plugins",
+          "typeProperty": "name",
+          "defaultValue": [
+            {
+              "name": "undo"
+            },
+            {
+              "name": "redo"
+            },
+            {
+              "name": "bold"
+            },
+            {
+              "name": "italic"
+            },
+            {
+              "name": "underline"
+            },
+            {
+              "name": "strikethrough"
+            },
+            {
+              "name": "subscript"
+            },
+            {
+              "name": "superscript"
+            },
+            {
+              "name": "removeFormat"
+            },
+            {
+              "name": "insertOrderedList"
+            },
+            {
+              "name": "insertUnorderedList"
+            },
+            {
+              "name": "insertHorizontalRule"
+            },
+            {
+              "name": "indent"
+            },
+            {
+              "name": "outdent"
+            },
+            {
+              "name": "justifyLeft"
+            },
+            {
+              "name": "justifyCenter"
+            },
+            {
+              "name": "justifyRight"
+            },
+            {
+              "name": "createLink"
+            },
+            {
+              "name": "dijit/_editor/plugins/FullScreen"
+            },
+            {
+              "name": "dijit/_editor/plugins/AlwaysShowToolbar",
+              "description": ""
+            }
+          ],
+          "groups": [
+            {
+              "code": "undo"
+            },
+            {
+              "code": "redo"
+            },
+            {
+              "code": "bold"
+            },
+            {
+              "code": "italic"
+            },
+            {
+              "code": "underline"
+            },
+            {
+              "code": "strikethrough"
+            },
+            {
+              "code": "subscript"
+            },
+            {
+              "code": "superscript"
+            },
+            {
+              "code": "removeFormat"
+            },
+            {
+              "code": "insertOrderedList"
+            },
+            {
+              "code": "insertUnorderedList"
+            },
+            {
+              "code": "insertHorizontalRule"
+            },
+            {
+              "code": "indent"
+            },
+            {
+              "code": "outdent"
+            },
+            {
+              "code": "justifyLeft"
+            },
+            {
+              "code": "justifyCenter"
+            },
+            {
+              "code": "justifyRight"
+            },
+            {
+              "code": "createLink"
+            },
+            {
+              "code": "dijit/_editor/plugins/FullScreen"
+            },
+            {
+              "code": "dojox/editor/plugins/ShowBlockNodes"
+            },
+            {
+              "code": "dojox/editor/plugins/FindReplace"
+            },
+            {
+              "code": "dijit/_editor/plugins/AlwaysShowToolbar"
+            },
+            {
+              "code": "dijit._editor.plugins.LinkDialog "
+            },
+            {
+              "code": "dijit._editor.plugins.ToggleDir"
+            },
+            {
+              "code": "fontSize"
+            },
+            {
+              "code": "fontName"
+            },
+            {
+              "code": "foreColor"
+            },
+            {
+              "code": "dijit._editor.plugins.ViewSource"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$ref": "string-constraints.json"
+    },
+    {
+      "$ref": "messages.json"
+    }
+  ]
 }
 

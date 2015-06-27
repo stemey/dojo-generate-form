@@ -1,52 +1,50 @@
 {
-	"code": "select",
-	"groupLabel": "general",
-	"editor": "tab",
-	"example": {
-		"$ref": "./example/select.json"
-	},
-	"groups": [
-
-		{
-			"$ref": "header.json"
-		},
-		{
-			"label": "values",
-			"attributes": [
-				{
-					"code": "emptyValueLabel",
-					"type": "string"
-				},
-				{
-					"code": "type",
-					"type": "string",
-					"required":true,
-					"values":["string"],
-					"visible":false
-				},
-				{
-					"code": "values",
-					"type": "array",
-					"editor": "table",
-					"attributes": [
-						{
-							"code": "label",
-							"required": "true",
-							"type": "string"
-						},
-						{
-							"code": "value",
-							"type": "string"
-						}
-					]
-
-
-				}
-			]
-		},
-		{
-			"$ref": "messages.json"
-		}
-	]
+  "code": "select",
+  "iconClass": "fa fa-check",
+  "groupLabel": "general",
+  "editor": "tab",
+  "example": {
+    "$ref": "./example/select.json"
+  },
+  "groups": [
+    {
+      "$ref": "header.json"
+    },
+    {
+      "label": "values",
+      "attributes": [
+        {
+          "code": "emptyValueLabel",
+          "type": "string"
+        },
+        {
+          "code": "type",
+          "type": "string",
+          "required": true,
+          "values": ["string"],
+          "visible": false
+        },
+        {
+          "code": "values",
+          "type": "array",
+          "editor": "table",
+          "attributes": [
+            {
+              "code": "label",
+              "required": "true",
+              "type": "string"
+            },
+            {
+              "code": "value",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$ref": "messages.json"
+    }
+  ]
 }
 

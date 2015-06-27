@@ -1,5 +1,6 @@
 {
 	"label": "array of primitives",
+    "iconClass":"fa fa-list",
 	"code": "primitive-array",
 	"groupLabel": "collection",
 	"editor": "tab",

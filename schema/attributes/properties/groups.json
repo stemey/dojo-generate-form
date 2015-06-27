@@ -1,11 +1,11 @@
 {
-	"code": "groups",
-	"type": "array",
-	"description": "The embedded objects can be an instance of any of these groups. The embedded object's tpeProperty must be equal to it's group's code..",
-	"typeProperty": "editor",
-	"required": true,
-	"groups": {
-		"$ref": "../../groups.json"
-	}
-
+  "code": "groups",
+  "editor":"form-array",
+  "type": "array",
+  "description": "The embedded objects can be an instance of any of these groups. The embedded object's tpeProperty must be equal to it's group's code..",
+  "typeProperty": "editor",
+  "required": true,
+  "groups": {
+    "$ref": "../../groups.json"
+  }
 }

@@ -2,6 +2,7 @@
 	"code": "string",
 	"editor": "tab",
 	"groupLabel":"text",
+  "iconClass":"fa fa-file-text",
 	"groupDescription": "This is a textfield based on 'dijit.form.ValidationTextBox'",
 	"example": {
 		"$ref": "example/string.json"

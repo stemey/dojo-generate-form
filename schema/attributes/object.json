@@ -1,30 +1,28 @@
 {
-	"code": "object",
-	"groupLabel": "embedded",
-	"editor": "tab",
-	"example": {
-		"$ref": "example/object.json"
-	},
-	"groups": [
-		{
-			"$ref": "header.json"
-		},
-		{
-			"label": "element",
-			"attributes": [
-				{
-					"code": "type",
-					"type": "string",
-					"visible": false,
-					"required": true,
-					"values": ["object"]
-				},
-				{
-					"$ref": "properties/group.json"
-				}
-
-			]
-		}
-	]
-
+  "code": "object",
+  "groupLabel": "embedded",
+  "editor": "tree",
+  "iconClass": "fa fa-cubes",
+  "example": {
+    "$ref": "example/object.json"
+  },
+  "nodeAttributes": [
+    {"$ref": "properties/group.json"}
+  ],
+  "detailGroup": {
+    "editor": "listgroup",
+    "groups": [
+      {"$ref": "header.json"},
+      {
+        "attributes": [
+          {
+            "code": "type",
+            "type": "string",
+            "values": ["object"],
+            "required": true
+          }
+        ]
+      }
+    ]
+  }
 }

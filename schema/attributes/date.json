@@ -1,32 +1,33 @@
 {
-	"code": "date",
-	"editor": "tab",
-	"groupLabel":"general",
-	"groups": [
-		{
-			"$ref": "header.json"
-		},
-		{
-			"label": "messages",
-			"attributes": [
-				{
-					"$ref": "properties/placeHolder.json"
-				},
-				{
-					"$ref": "properties/invalidMessage.json"
-				},
-				{
-					"$ref": "properties/missingMessage.json"
-				},
-				{
-					"code": "type",
-					"type": "string",
-					"visible": false,
-					"required": true,
-					"values": ["date"]
-				}
-			]
-		}
-	]
+  "code": "date",
+  "editor": "tab",
+  "groupLabel": "general",
+  "iconClass": "fa fa-calendar",
+  "groups": [
+    {
+      "$ref": "header.json"
+    },
+    {
+      "label": "messages",
+      "attributes": [
+        {
+          "$ref": "properties/placeHolder.json"
+        },
+        {
+          "$ref": "properties/invalidMessage.json"
+        },
+        {
+          "$ref": "properties/missingMessage.json"
+        },
+        {
+          "code": "type",
+          "type": "string",
+          "visible": false,
+          "required": true,
+          "values": ["date"]
+        }
+      ]
+    }
+  ]
 }
 
