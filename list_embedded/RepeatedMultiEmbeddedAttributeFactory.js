@@ -1,4 +1,5 @@
 define([
+	'../model/MultiTreeGroup',
 	"dojo/_base/lang",//
 	"dojo/aspect",//
 	"dojo/_base/declare",//
@@ -8,7 +9,7 @@ define([
 	"./RepeatedEmbeddedWidget",//
 	"../model/ArrayModel",//
 	"../model/MultiObject"//
-], function (lang, aspect, declare, EmbeddedListWidget, DndSource, WidgetList, RepeatedEmbeddedWidget, ArrayModel, MultiObject) {
+], function (MultiTreeGroup, lang, aspect, declare, EmbeddedListWidget, DndSource, WidgetList, RepeatedEmbeddedWidget, ArrayModel, MultiObject) {
 
 	var findGroup = function (code, allGroups) {
 		var groups = allGroups.filter(function (group) {
@@ -75,7 +76,18 @@ define([
 			var model = new ArrayModel({schema: meta, validators: validators});
 			var me = this;
 			var ef = function (value) {
-				var model = MultiObject.create({editorFactory: me.editorFactory, schema: meta});
+				if (meta.tree) {
+					var model = new MultiTreeGroup({
+						editorFactory: me.editorFactory,
+						typeCodeToGroup: {},
+						schema: meta,
+						typeProperty: meta.typeProperty,
+						required: true
+					});
+				}else{
+					var model = MultiObject.create({editorFactory: me.editorFactory, schema: meta});
+				}
+
 				if (typeof value === "undefined") {
 					model.initDefault(false);
 				}else{
