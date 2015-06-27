@@ -1,13 +1,16 @@
 define([  //
 	"dojo/_base/declare",
-	"dojo/_base/lang",
 	"dijit/form/Select",
 	"dijit/PopupMenuItem",
 	"dijit/Menu"
-], function (declare, lang, Select, PopupMenuItem, Menu) {
+], function (declare, Select, PopupMenuItem, Menu) {
 
 	return declare([Select], {
 		groupItems: null,
+		_setOptionsAttr: function(/*Array*/ options){
+			this.groupItems={};
+			this.inherited(arguments);
+		},
 		_getMenuItemForOption: function (option, submenu) {
 			if (!submenu && option.group) {
 				var groupItem;
