@@ -249,7 +249,11 @@ define([  //
 				c = this.convertersByType[attribute.type];
 			}
 			if (typeof c === "function") {
-				return new c(attribute, ctx);
+				var conv =  new c(attribute, ctx);
+				return {
+					format:conv.format.bind(conv),
+					parse:conv.parse.bind(conv)
+				}
 			} else {
 				return c;
 			}
