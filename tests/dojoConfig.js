@@ -10,7 +10,9 @@ var dojoConfig = {
         'dojox',
         {name: 'doh', location: 'util/doh'},
         {name: 'gform', location: 'gform'},
-        {name: 'ace', location: 'ace-builds/src'}
+        {name: 'ace', location: 'ace-builds/src-noconflict'}
+
+        //       {name: 'ace', location: 'ace-builds/src'}
     ]
     //	deps: [ 'app' ]//,
 //	callback: function (test) {
