@@ -21,7 +21,7 @@
             "dojo/text!./meta/primitive_boolean.json", "dojo/text!./entity/primitive_boolean.json"//
         ], function (ready, json, Editor, Stateful, doh, createStandardEditorFactory, meta, entity) {
 
-            var editor = new Editor({
+            editor = new Editor({
                 "plainValue": {},
                 "meta": dojo.fromJson(meta), editorFactory: createStandardEditorFactory()});
             var container = dojo.byId("container");
@@ -32,7 +32,7 @@
                 {
                     name: "initEmpty",
                     runTest: function (t) {
-                        t.assertEqual(false, editor.get("plainValue").bool);
+                        t.assertTrue(typeof editor.get("plainValue").bool == "undefined");
 
                     }
                 },

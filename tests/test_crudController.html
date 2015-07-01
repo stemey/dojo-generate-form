@@ -70,7 +70,7 @@
 					runTest: function (t) {
 						registry.byId("gform_NumberTextBox_3").set("state", "Error");
 						registry.byId("gform_NumberTextBox_3").set("message", "Error");
-						var button = registry.byId("dijit_form_Button_4");
+						var button = registry.byId("dijit_form_Button_5");
 						button.onClick();
 						doh.assertEqual(0, crudController.editor.get("errorCount"));
 						doh.assertEqual(0, crudController.editor.get("changedCount"));

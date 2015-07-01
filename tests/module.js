@@ -1,5 +1,6 @@
 define(
 	"gform.tests.module", [
+		'gform/tests/model/TreeGroup',
 		"gform/tests/Resolver",//
 		"gform/tests/model/Model",//
 		"gform/tests/model/PrimitiveModel",//
@@ -18,7 +19,7 @@ define(
         "gform/tests/schema/labelHelper",
 		"gform/tests/special/formbuilder/GroupTransformer",
         "gform/tests/restHelper"
-	], function () {
+	], function (TreeGroup) {
 
 		try {
 			doh.registerUrl("gform.tests.embedded_list", dojo.moduleUrl("gform", "tests/test_embedded_list.html"));
@@ -68,6 +69,7 @@ define(
 			doh.registerUrl("gform.tests.validation", dojo.moduleUrl("gform", "tests/test_validation.html"));
             doh.registerUrl("gform.tests.formbuilder", dojo.moduleUrl("gform", "tests/special/formbuilder/test_formbuilder.html"));
 			doh.registerUrl("gform.tests.formbuilder.array", dojo.moduleUrl("gform", "tests/special/formbuilder/test_formbuilder.html"));
+			doh.registerUrl("gform.tests.treegroip", dojo.moduleUrl("gform", "tests/test_treegroup.html"));
 
 
 		} catch (e) {

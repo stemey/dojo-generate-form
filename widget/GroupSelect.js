@@ -5,7 +5,7 @@ define([  //
 	"dijit/Menu"
 ], function (declare, Select, PopupMenuItem, Menu) {
 
-	return declare([Select], {
+	return declare("gform.widget.GroupSelect",[Select], {
 		groupItems: null,
 		_setOptionsAttr: function(/*Array*/ options){
 			this.groupItems={};

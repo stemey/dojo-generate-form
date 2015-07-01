@@ -52,7 +52,8 @@
 					runTest : function(t) {
 						registry.byId("gform_ValidationTextBox_0").set("value", "changedLabel");
 						doh.assertTrue( container.selectedChildWidget.get("title").match("^changedLabel"));
-						registry.byId("dijit_form_Button_4").onClick();
+						// save
+						registry.byId("dijit_form_Button_5").onClick();
 						doh.assertEqual("changedLabel",registry.byId("gform_FilteringSelect_0").item.label);
 					}
 				},
@@ -84,7 +85,8 @@
 						doh.assertEqual(2, container.getChildren().length)
 						registry.byId("gform_ValidationTextBox_1").set("value", "createdLabel");
 						doh.assertTrue( container.selectedChildWidget.get("title").match("createdLabel"));
-						registry.byId("dijit_form_Button_8").onClick();
+						// save
+						registry.byId("dijit_form_Button_10").onClick();
 						doh.assertEqual("createdLabel",registry.byId("gform_FilteringSelect_0").item.label);
 					}
 				},
