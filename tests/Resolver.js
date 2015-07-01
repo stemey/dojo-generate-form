@@ -19,7 +19,7 @@ define(['dojo/_base/declare',
 
 	var schemaWithVariables =
 	{
-		mycar: {$ref: "mercedes"}
+		mycar: {$ref: "audi"}
 	};
 
 	var LocalResolver = declare([Resolver], {
@@ -71,14 +71,9 @@ define(['dojo/_base/declare',
 			doh.assertEqual("medium", schema.theircars[1].price);
 		},
 		function testByVariable() {
-			var resolver = new LocalResolver({values:{"mercedes":"Hallo"}});
-			var refs = resolver.resolveInternally(schema, "");
-			doh.assertEqual("Hallo", schema.mycar);
-		},
-		function testByVariableAnBaseUrl() {
-			var resolver = new LocalResolver({values:{"mercedes":"Hallo"}});
-			var refs = resolver.resolveInternally(schema, "");
-			doh.assertEqual("Hallo", schema.mycar);
+			var resolver = new LocalResolver({values:{"audi":"Hallo"}});
+			resolver.resolve(schemaWithVariables, "");
+			doh.assertEqual("Hallo", schemaWithVariables.mycar);
 		},
 		function testByUrl() {
 			var resolver = new LocalResolver();
