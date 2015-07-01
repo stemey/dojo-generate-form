@@ -29,6 +29,31 @@ or simply to checkout gform features online.
 INSTALLATION
 ------------
 
-this project is organized like most dojo libraries. If your project is based on the dojo boilerplate layout you can integrate
-it by adding it as a git submodule named "gform" (not dojo-generate-form) parallel to dojo, dijit, dojox and util.
+
+git clone https://github.com/stemey/dojo-generate-form.git gform
+
+install dependencies parallel to this project:
+
+bower install
+
+
+TESTS
+------
+
+
+Tests run in the browser. You need an http server running serving dojo-generate-form at <server>/gform.
+
+All tests:
+
+<server>/util/doh/runner.html?testModule=gform/tests/module
+
+Example for single test:
+
+<server>/gform/tests/test_primitive_ref.html
+
+Example for test that does require a browser:
+
+<server>/gform/tests/test_libs.html?test=gform.tests.model/TreeGroup
+
+
 
