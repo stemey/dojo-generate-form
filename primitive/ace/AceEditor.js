@@ -47,7 +47,9 @@ define(['dijit/layout/_LayoutWidget',
 
 			},
 			_set: function (prop, value) {
-				if (this.ace && prop in delegatedProps) {
+                if (this.ace && prop === "value") {
+                    this.ace.setValue(value,-1);
+                } else if (this.ace && prop in delegatedProps) {
 					this.ace[delegatedProps[prop].setter](value);
 				} else if (this.ace && prop in delegatedSessionProps) {
 					this.ace.getSession()[delegatedSessionProps[prop].setter](value);
