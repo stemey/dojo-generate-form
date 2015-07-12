@@ -30,6 +30,7 @@
 				{
 					name : 'incompleteCount',
 					runTest : function(t) {
+						editor.validate();
 						t.assertEqual(4, editor.get("incompleteCount"));
 						t.assertEqual(1, editor.get("errorCount"));
 					}

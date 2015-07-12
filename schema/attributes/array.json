@@ -14,6 +14,7 @@
     "editor": "tab",
     "groups": [
       {
+        "label":"general",
         "editor": "listgroup",
         "groups": [
           {"$ref": "header.json"},
