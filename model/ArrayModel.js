@@ -131,7 +131,7 @@ define([
                         this.set("oldValue", this.getPlainValue());
                     }
                 }
-                this.onChange();
+                this.onChange(bubble);
             }, false);
         },
         iterateChildren: function (cb) {

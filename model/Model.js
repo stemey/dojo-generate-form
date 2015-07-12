@@ -252,6 +252,8 @@ define([
 		reset: function () {
 			// summary:
 			//		reset value and state.
+
+			// remove errors
 			this._execute(function () {
 				this.visit(function (model, cascade, idx) {
 					if (cascade && (model.get("changedCount") > 0 || model.get("errorCount") > 0)) {
@@ -440,7 +442,7 @@ define([
 			return this.messages[key] || dijitNls[key];
 		},
 		isRequired: function () {
-			return this.schema.required;
+			return this.required;
 		},
 		getMissingMessage: function () {
 			// summary:

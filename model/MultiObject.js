@@ -91,31 +91,34 @@ define([
 
             // set to undefined so that hasChanged returns false
             plainValue = this.transformIn(plainValue);
-            this.oldValue = undefined;
-            if (plainValue === null || typeof plainValue === "undefined") {
-                if (this.required) {
-                    // TODO this updates the value of group. Will be done again at the end of this method.
-                    this.set("currentTypeCode", this.schema.groups[0].code);
-                    plainValue = {};
-                    plainValue[this.typeProperty] = this.currentTypeCode;
-                    //this.value= getGroup(this.currentTypeCode);
+            this._execute(function () {
+                this.oldValue = undefined;
+                if (plainValue === null || typeof plainValue === "undefined") {
+                    if (this.required) {
+                        // TODO this updates the value of group. Will be done again at the end of this method.
+                        this.set("currentTypeCode", this.schema.groups[0].code);
+                        plainValue = {};
+                        plainValue[this.typeProperty] = this.currentTypeCode;
+                        //this.value= getGroup(this.currentTypeCode);
+                    } else {
+                        this.set("currentTypeCode", null);
+                        //this.value=null;
+                    }
                 } else {
-                    this.set("currentTypeCode", null);
-                    //this.value=null;
+                    var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.getTypeCode(this.schema.groups[0]);
+                    if (this.getGroup(typeCode) !== null) {
+                        this._changeAttrValue("currentTypeCode", typeCode);
+                    }
                 }
-            } else {
-                var typeCode = plainValue[this.typeProperty] || this.currentTypeCode || this.getTypeCode(this.schema.groups[0]);
-                if (this.getGroup(typeCode) !== null) {
-                    this._changeAttrValue("currentTypeCode", typeCode);
+                if (this.currentTypeCode !== null) {
+                    var currentGroup = this.getGroup(this.currentTypeCode);
+                    currentGroup.update(plainValue, setOldValue, bubble);
                 }
-            }
-            if (this.currentTypeCode !== null) {
-                var currentGroup = this.getGroup(this.currentTypeCode);
-                currentGroup.update(plainValue, setOldValue, bubble);
-            }
-            if (setOldValue !== false) {
-                this.set("oldValue", this.getPlainValue());
-            }
+                if (setOldValue !== false) {
+                    this.set("oldValue", this.getPlainValue());
+                }
+                this.onChange(bubble, this);
+            }, false);
         },
         _currentTypeCodeSetter: function (typeCode) {
             if (this.currentTypeCode === typeCode) {

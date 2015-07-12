@@ -41,7 +41,7 @@ define([
 					this.cachedValue = null;
 					this.set("oldValue", this.getPlainValue());
 				}
-				this.onChange(bubble);
+				this.onChange(bubble, this);
 			}, false);
 
 		},
