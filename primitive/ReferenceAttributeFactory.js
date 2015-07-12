@@ -105,7 +105,7 @@ define(
 						filteringSelect: f,
 						editorFactory: this.editorFactory
 					});
-					sync(modelHandle, "disabled", refSelect, "disabled",{});
+					refSelect.own(sync(modelHandle, "disabled", refSelect, "disabled",{}));
 
 					return refSelect;
 				}

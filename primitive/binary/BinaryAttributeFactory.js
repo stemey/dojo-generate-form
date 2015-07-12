@@ -32,9 +32,9 @@ define(
                     var binary = new Binary(props);
                     binary.addViewer(new ImageView(props));
                     binary.addViewer(new DownloadableView(props));
-                    sync(modelHandle, "value", binary, "value", {equals: equals});
-                    sync(modelHandle, "state", binary, "state");
-                    sync(modelHandle, "message", binary, "message");
+                    binary.own(sync(modelHandle, "value", binary, "value", {equals: equals}));
+                    binary.own(sync(modelHandle, "state", binary, "state"));
+                    binary.own(sync(modelHandle, "message", binary, "message"));
                     return binary;
 
                 }

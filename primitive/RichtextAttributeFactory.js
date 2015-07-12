@@ -49,11 +49,11 @@ define([
             dijitHelper.copyProperty("updateInterval", attribute, props);
             var widget = new Editor(props);
             var liveChanges = props.updateInterval && props.updateInterval >= 0;
-            sync(modelHandle, "value", widget, "value", {converter: converter});
+            widget.own(sync(modelHandle, "value", widget, "value", {converter: converter}));
             if (liveChanges) {
-                aspect.after(widget, "onNormalizedDisplayChanged", function () {
+                widget.own(aspect.after(widget, "onNormalizedDisplayChanged", function () {
                     modelHandle.set("value", widget.get("value"));
-                });
+                }));
             }
 
 

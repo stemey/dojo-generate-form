@@ -59,7 +59,7 @@ define([
 					updateState();
 				})
 			}
-			sync(modelHandle, "disabled", widget, "disabled",{});
+			widget.own(sync(modelHandle, "disabled", widget, "disabled",{}));
 			return widget;
 
 		}
