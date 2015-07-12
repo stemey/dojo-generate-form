@@ -12,7 +12,7 @@ define([
         editorFactory: null,
         detailGroup: null,
         childNodes: null,
-        getIconClass: function() {
+        getIconClass: function () {
             return this.schema.iconClass || "fa fa-cube";
         },
         init: function () {
@@ -42,14 +42,14 @@ define([
         getLabel: function () {
             var label = labelHelper.getLabel(this.schema, this);
             if (label && label.length > 20) {
-                label = label.substr(0, 20)+"..";
+                label = label.substr(0, 20) + "..";
             }
             label += this.editorFactory.createBadge(this);
             return label;
 
         },
         accept: function (model, position) {
-            if (position=="over" && this._isSingleAttribute()) {
+            if (position == "over" && this._isSingleAttribute()) {
                 return this._getSingleAttribute().accept(model, position);
             } else {
                 if (position == "over") {
@@ -86,7 +86,6 @@ define([
         remove: function (item) {
             return this._getSingleAttribute().remove(item);
         }
-
 
     });
 });

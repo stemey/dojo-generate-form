@@ -75,7 +75,5 @@ define([
         remove: function (item) {
             return this.getCurrentGroup().remove(item);
         }
-
-
     });
 });

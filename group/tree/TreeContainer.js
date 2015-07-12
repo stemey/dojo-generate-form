@@ -25,7 +25,10 @@ define(['../../schema/meta',
         createTree: function (kwArgs) {
 
             var RtLabelTreeNode = declare(Tree._TreeNode, {
-                _setLabelAttr: {node: "labelNode", type: "innerHTML"}
+                _setLabelAttr: function (label) {
+                    this.labelNode.innerHTML = label;
+                    this._set("label", label);
+                }
             });
             var args = {
                 _createTreeNode: function (args) {
@@ -37,24 +40,37 @@ define(['../../schema/meta',
 
             var GformTree = declare([Tree], {
                 getIconClass: function (/*dojo.data.Item*/ item, /*Boolean*/ opened) {
-                    if (item.getIconClass) {
-                        return item.getIconClass();
-                    } else if (item.schema && item.schema.iconClass) {
-                        return item.schema.iconClass;
+                    var indicator = "";
+                    if (item.get("errorCount") > 0) {
+                        indicator = "icon-error ";
+                    } else if (item.get("changeCount") > 0) {
+                        indicator = "icon-change ";
                     }
-                    return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
+
+                    var iconClass = "";
+                    if (item.getIconClass) {
+                        iconClass = item.getIconClass();
+                    } else if (item.schema && item.schema.iconClass) {
+                        iconClass = item.schema.iconClass;
+                    } else {
+                        iconClass = (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
+                    }
+
+                    return indicator + iconClass;
+
                 }
-            })
+            });
 
             return new GformTree(args);
         },
         hideEditor: function () {
             this.editor.setMetaAndDefault({attributes: []});
-        },
+        }
+        ,
         _build: function () {
             // root is not removable
             this.model.removable = false;
-            this.treeModel = new TreeModel({model: this.model});
+            this.treeModel = new TreeModel({badgeFactory: this.editorFactory, model: this.model});
 
             this.tree = this.createTree({
                 dndController: DndSource,
@@ -81,7 +97,8 @@ define(['../../schema/meta',
                 var nodes = this.tree.getNodesByItem(this.model);
                 this.tree.dndController.setSelection(nodes)
             }.bind(this)));
-        },
+        }
+        ,
         onSelectedItems: function () {
             var items = this.tree.get("selectedItems");
             if (items.length == 1) {
@@ -101,7 +118,8 @@ define(['../../schema/meta',
                 this.hideEditor();
             }
 
-        },
+        }
+        ,
         postCreate: function () {
 
             this._build();
@@ -110,26 +128,50 @@ define(['../../schema/meta',
             this.own(this.tree.watch("selectedItems", this.onSelectedItems.bind(this)));
 
             this.own(aspect.after(this.model, "onChange", function (obj, args) {
-                var source = args[1];
+                // we listen on root model
+                var source = args[1] || this.model;
+                // find first tree model
                 while (source != null && !source.treeId) {
                     source = source.parent;
                 }
                 if (source != null) {
-                    this.treeModel.onChange(source);
-                    if (source.getChildNodes) {
-                        this.treeModel.onChildrenChange(source, source.getChildNodes());
+                    // we don't know if this change is bubbling up or executed top down, so we do both..
+                    var parent =source.parent;
+                    // .. bubble here
+                    while(parent!=null) {
+                        this.treeModel.onChange(parent);
+                        parent=parent.parent;
                     }
+                    // .. and also go to all descendants and update.
+                    var treeModel=this.treeModel;
+                    var onChangeRecursively = function(m) {
+                        treeModel.onChange(m)
+                        if (m.getChildNodes) {
+                            var children = m.getChildNodes();
+                            if (children) {
+                                treeModel.onChildrenChange(m, children);
+                                children.forEach(function (child) {
+                                    onChangeRecursively(child);
+                                })
+                            }
+
+                        }
+                    }
+                    onChangeRecursively(source);
+
                 }
             }.bind(this)));
             this.inherited(arguments);
 
-        },
+        }
+        ,
         _addButtons: function () {
             this.toolbar.addChild(new DeleteButton({tree: this.tree, label: "remove"}));
             this.toolbar.addChild(new AddButton({tree: this.tree, label: "add"}));
             this.toolbar.addChild(new TypeSelect({tree: this.tree}));
         }
 
-    });
+    })
+        ;
 })
 

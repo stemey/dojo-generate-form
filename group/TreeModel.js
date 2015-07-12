@@ -11,7 +11,7 @@ define([
 
 
         model: null,
-
+        badgeFactory:null,
 
         constructor: function (/* Object */ args) {
             // summary:
@@ -77,14 +77,17 @@ define([
         getLabel: function (/*dojo/data/Item*/ item) {
             // summary:
             //		Get the label for an item
-
+            var badge = this.badgeFactory.createBadge(item);
             if (item.name) {
-                return item.name;
+                var label= item.name;
+                label+=badge;
+                return label;	// String
             } else {
                 var label = labelHelper.getLabel(item.schema, item);
                 if (label && label.length > 20) {
                     label = label.substr(0, 20)+".."
                 }
+                label+=badge;
                 return label;	// String
             }
         },
