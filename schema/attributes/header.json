@@ -15,6 +15,9 @@
 		},
         {
             "$ref": "properties/converter.json"
+        },
+        {
+            "$ref": "properties/defaultValue.json"
         }
 
 	]

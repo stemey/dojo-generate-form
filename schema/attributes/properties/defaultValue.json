@@ -1,0 +1,5 @@
+{
+	"code": "defaultValue",
+	"type": "string",
+    "description": "the default value"
+}
