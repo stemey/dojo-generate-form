@@ -28,7 +28,10 @@ define([
                 } else {
                      baseUrl = this.attribute.url;
                 }
-                return value.$ref.substr(baseUrl.length+1);
+                if (baseUrl.substr(baseUrl.length-1)!=="/") {
+                    baseUrl+="/";
+                }
+                return value.$ref.substr(baseUrl.length);
 			}
 		},
 		parse: function (value) {
