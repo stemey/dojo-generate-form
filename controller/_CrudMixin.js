@@ -282,7 +282,7 @@ define([
 		},
 		_onLoadForEntityAndSchemaFailed: function (error) {
 			this.set("state", "edit");
-			this.displayError("error while loading entity");
+			this.displayError(error.message || "error while loading entity");
 		},
 		startConfirmDialog: function (message, callback, title) {
 			// summary:

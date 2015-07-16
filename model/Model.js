@@ -388,6 +388,7 @@ define([
 					}, this);
 				}
 				var changes = this._getErrorChanges(errors, this.oldErrors);
+				// we diff the old and new errors because otherwise when validation is run mny times we would do a lot of dom changes
 				// we might have to readd the errors in subproperties, because the value was changed.
 				errors.forEach(function (error) {
 					this.addError(error.path, error.message);

@@ -151,9 +151,7 @@ define([
                 model.set("index", i++);
                 model.set("parent", this);
             }, this);
-            if (this.bubble) {
-                this.onChange();
-            }
+            this.onChange();
         },
         _setupIndexes: function () {
             this.value.watch(lang.hitch(this, "_onArrayChanged"));
