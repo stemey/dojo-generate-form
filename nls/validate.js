@@ -5,6 +5,7 @@ define({
 		"maxItems": "The number of elements in the collection must be shorter than or equal to {maxItems}",
 		"minItems": "TThe number of elements in the collection must be greater than or equal to {minItems}",
 		"unique": "The value must be unique across all elements in the collection.",
+		"uniqueItem": "The value must be unique across all elements in the collection.",
 		"pattern": "The value must conform to the pattern '{pattern}'.",
 		"maxLength": "The text must be shorter than or equal to {maxLength}",
 		"minLength": "The text must be longer than or equal to {minLength}",

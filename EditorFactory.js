@@ -1,4 +1,5 @@
 define([  //
+	'./validate/UniqueItem',
 	"dojo/_base/declare",//
 	"dojo/Stateful", //
 	"./converter/urlToIdConverter", //
@@ -13,7 +14,7 @@ define([  //
 	"./validate/MinLength",//
 	"./validate/MaxLength",//
 	"./validate/Pattern"//
-], function (declare, Stateful, urlToIdConverter, anyToTextConverter, DecoratorFactory, UniqueProperties, AdditionalProperties, Min, Max, MinItems, MaxItems, MinLength, MaxLength, Pattern) {
+], function (UniqueItem, declare, Stateful, urlToIdConverter, anyToTextConverter, DecoratorFactory, UniqueProperties, AdditionalProperties, Min, Max, MinItems, MaxItems, MinLength, MaxLength, Pattern) {
 	// module:
 	//		gform/EditorFactory
 
@@ -46,7 +47,8 @@ define([  //
 				max: Max,
 				minItems: MinItems,
 				maxItems: MaxItems,
-				additionalProperties: AdditionalProperties
+				additionalProperties: AdditionalProperties,
+				uniqueItem:UniqueItem
 			}
 			this.constructorValidators = {};
 		},
