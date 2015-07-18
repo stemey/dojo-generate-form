@@ -355,6 +355,7 @@ define([
 			this.set("state", "edit");
 			this.oldValue = entity;
 			this._initializeSchemaSelector([], null);
+			this._hideSchemaSelector();
 			try {
 				this.editor.setMetaAndPlainValue(fallbackSchema, entity);
 				this.onLoaded(fallbackSchema, entity);
