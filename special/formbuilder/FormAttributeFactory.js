@@ -31,7 +31,8 @@ define(
 						}
 					}
 
-					aspect.after(model, "init", initialize);
+
+					aspect.before(model, "init", initialize);
 					aspect.after(model.getModelByPath("attributes"), "onChange", update);
 					model.validators = validators;
 					model.required = schema.required === true;

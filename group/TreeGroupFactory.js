@@ -32,11 +32,12 @@ define([
                 var nodeGroup = this.editorFactory.createGroupModel({attributes:meta.nodeAttributes});
 
 
+                // the order of groups is important for usage in a form, where the detail's attribute references depend on the attributes nodes
                 var model = new TreeGroup({
                     editorFactory: this.editorFactory,
                     validators: validators,
                     schema: meta,
-                    groups: [detailGroup, nodeGroup],
+                    groups: [nodeGroup, detailGroup],
                     detailGroup: detailGroup,
                     required: meta.required === true
                 });
