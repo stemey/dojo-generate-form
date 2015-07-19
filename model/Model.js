@@ -443,7 +443,7 @@ define([
 			return this.messages[key] || dijitNls[key];
 		},
 		isRequired: function () {
-			return this.required;
+			return this.required || this.schema.required;
 		},
 		getMissingMessage: function () {
 			// summary:
