@@ -60,6 +60,7 @@ define(
 					props.store = store;
 					props.searchAttr = searchProperty;
 					props.labelAttr = searchProperty;
+					props.autoComplete=attribute.autoComplete!==false;
 
 					dijitHelper.copyDijitProperties(attribute, props);
 					var f = new FilteringSelect(props);
@@ -96,6 +97,11 @@ define(
 					if (attribute.query) {
 						f.query=attribute.query;
 					}
+
+					if (attribute.queryExpr) {
+						f.queryExpr=attribute.queryExpr;
+					}
+
 
 					var refSelect = new RefSelect({
 						openerParams: openerParams,
