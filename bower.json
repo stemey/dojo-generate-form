@@ -1,12 +1,12 @@
 {
     "name": "gform",
-    "version": "0.20.0",
+    "version": "0.24.4",
     "private": true,
     "dependencies": {
-        "dojo": "~1.9.7",
-        "dijit": "~1.9.7",
-		"dojox": "~1.9.7",
+        "dojo": "~1.9",
+        "dijit": "~1.9",
+		"dojox": "~1.9",
         "ace-builds": "~1.1.3",
-        "util": "dojo-util#~1.9.7"
+        "util": "dojo-util#~1.9"
     }
 }
