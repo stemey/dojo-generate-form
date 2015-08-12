@@ -20,15 +20,23 @@ define([
             props.options = {};
             props.options.enableBasicAutocompletion = !!attribute.autoComplete;
             this.addProps(props);
-			props.style ={};
-			if (attribute.height) {
-				props.style.height=attribute.height;
-			}
-			if (attribute.width) {
-				props.style.height=attribute.width;
-			}
+            props.style = {};
+            if (attribute.height) {
+                props.style.height = attribute.height;
+            }
+            if (attribute.width) {
+                props.style.height = attribute.width;
+            }
             var widget = new AceEditor(props);
             aspect.after(widget, "startup", lang.hitch(this, "startup", widget, attribute));
+
+            if (attribute.modeAttribute) {
+                var modeModel = modelHandle.getModelByPath(attribute.modeAttribute);
+                widget.own(aspect.after(modeModel, "onChange", function () {
+                    widget.set("mode", modeModel.getPlainValue());
+                }));
+                widget.set("mode", modeModel.getPlainValue());
+            }
 
             var converter = this.getConverter(attribute, ctx);
             if (converter) {
