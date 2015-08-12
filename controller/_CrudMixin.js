@@ -71,6 +71,8 @@ define([
 			this.own(this.watch("state", this.onLoadOrSave.bind(this)));
 			if (this.showSelectButton) {
 				this.selectButton.set("onClick", this.gotoTemplate.bind(this));
+			}else{
+				this.selectButton.domNode.style.display="none";
 			}
 		},
 
@@ -130,7 +132,9 @@ define([
 			if (this.editor.modelHandle) {
 				var idModel = this.editor.modelHandle.getModelByPath(this.store.idProperty);
 				if (idModel) {
-					if (this.store.assignableId && this.state == "create") {
+					if (this.store.changeableId) {
+						idModel.set("disabled", false);
+					}else if (this.store.assignableId && this.state == "create") {
 						idModel.set("disabled", false);
 					} else {
 						idModel.set("disabled", true);

@@ -40,7 +40,7 @@ define([
 				this.ctrl._removeChangeIndicator();
 				this.ctrl.showProgressBar("deleting " + this.ctrl.editor.getLabel());
 				var idProperty = this.ctrl.store.idProperty;
-				when(this.ctrl.store.remove(entity[idProperty]))
+				when(this.ctrl.store.remove(entity[idProperty],{old:entity}))
 					.then(lang.hitch(this, "_onRemoved"))
 					.otherwise(lang.hitch(this, "_onRemoveFailed"));
 			}
