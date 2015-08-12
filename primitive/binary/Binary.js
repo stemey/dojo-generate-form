@@ -1,4 +1,4 @@
-define([ "dojo/_base/lang",
+define(["dojo/_base/lang",
     "dojo/_base/declare",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
@@ -8,31 +8,40 @@ define([ "dojo/_base/lang",
     "dojo/Deferred"
 ], function (lang, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, request, Deferred) {
 
-    return declare([ _WidgetBase,
-        _TemplatedMixin, _WidgetsInTemplateMixin ], {
+    return declare([_WidgetBase,
+        _TemplatedMixin, _WidgetsInTemplateMixin], {
         templateString: template,
         inputFile: null,
         value: null,
         message: "",
-        mimeTypes: null,
+        mimeTypes: null,// TODO
         // 10 MB
         maxSize: 10000000,
         fileServerUrl: null,
         stackContainer: null,
+        mimeTypeHelper: null,
+        fileModel: null,
+        filename: null,
         postCreate: function () {
             this.inherited(arguments);
             this.inputFile.addEventListener("change", lang.hitch(this, "onFileChange"), false);
             this.watch("value", lang.hitch(this, "onValueChange"));
+            if (this.fileModel != null) {
+                this.filename = this.fileModel.getPlainValue();
+            }
         },
         onValueChange: function () {
             this.stack.getChildren().some(function (viewer) {
                 if (viewer.supports && viewer.supports(this.value)) {
-                    viewer.display(this.value);
+                    //TODO for gihtub: data image prefix + btoa(file);
+                    var data = this.value;
+                    if (!this.useUrl()) {
+                        data = this.mimeTypeHelper.getDataUrlPrefix(this.filename)+this.value;
+                    }
+                    viewer.display(data);
                     this.stack.selectChild(viewer);
                 }
             }, this);
-            //this.imageView.set("src", this.value.url);
-            //this.imageView.set("size", this.value.size);
         },
         addViewer: function (viewer) {
             this.stack.addChild(viewer);
@@ -48,12 +57,40 @@ define([ "dojo/_base/lang",
                 }
             }
             if (this.state === "") {
-                var me = this;
-                var urlPromise = this.upload(file);
-                urlPromise.then(function (url) {
-                    me.set("value", {size: file.size, url: url, name: file.name, type: file.type, lastModified: file.lastModifiedDate});
-                });
+                if (this.useUrl()) {
+                    var me = this;
+                    var urlPromise = this.upload(file);
+                    urlPromise.then(function (url) {
+                        me.set("value", {
+                            size: file.size,
+                            url: url,
+                            name: file.name,
+                            type: file.type,
+                            lastModified: file.lastModifiedDate
+                        });
+                    });
+                } else {
+                    if (!this.useUrl()) {
+                        this.filename = file.name;
+                        if (this.fileModel && this.fileModel.isEmpty()) {
+
+                            this.fileModel.update(file.name);
+                        }
+                    }
+                    var reader = new FileReader();
+                    var me = this;
+                    reader.onload = function (event) {
+                        var result = /^data:image\/([^;]+);base64,(.*)/.exec(event.target.result);
+                        if (result && result.length == 3) {
+                            me.set("value", result[2]);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
             }
+        },
+        useUrl: function () {
+            return !!this.fileServerUrl;
         },
         upload: function (file) {
             var formData = new FormData();
@@ -74,6 +111,7 @@ define([ "dojo/_base/lang",
 
 
         }
+
     });
 
 });

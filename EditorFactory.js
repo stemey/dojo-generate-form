@@ -1,4 +1,5 @@
 define([  //
+	'./primitive/binary/MimeTypeHelper',
 	'./validate/UniqueItem',
 	"dojo/_base/declare",//
 	"dojo/Stateful", //
@@ -14,7 +15,7 @@ define([  //
 	"./validate/MinLength",//
 	"./validate/MaxLength",//
 	"./validate/Pattern"//
-], function (UniqueItem, declare, Stateful, urlToIdConverter, anyToTextConverter, DecoratorFactory, UniqueProperties, AdditionalProperties, Min, Max, MinItems, MaxItems, MinLength, MaxLength, Pattern) {
+], function (MimeTypeHelper, UniqueItem, declare, Stateful, urlToIdConverter, anyToTextConverter, DecoratorFactory, UniqueProperties, AdditionalProperties, Min, Max, MinItems, MaxItems, MinLength, MaxLength, Pattern) {
 	// module:
 	//		gform/EditorFactory
 
@@ -29,6 +30,7 @@ define([  //
 		convertersByType: null,
 		functions:null,
 		constructor: function () {
+			this.mimeTypeHelper=new MimeTypeHelper();
 			this.groupFactories = {};
 			this.convertersById = {};
 			this.convertersByType = {};
@@ -289,6 +291,9 @@ define([  //
 		},
 		getFunction: function(id) {
 			return this.functions[id];
+		},
+		getMimeTypeHelper: function() {
+			return this.mimeTypeHelper;
 		}
 
 	});
