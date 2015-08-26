@@ -31,7 +31,7 @@ define([
             var schema = this.schema.groups.filter(function (group) {
                 return group.code === typeCode;
             }, this)[0];
-            if (schema === null) {
+            if (schema === null || typeof schema === "undefined") {
                 return null;
             }
             var group = this.editorFactory.createGroupModel(schema, {});

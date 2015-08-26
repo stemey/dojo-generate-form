@@ -114,7 +114,7 @@ define(["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dojo/_base/declar
 					value = {};
 				}
 				if (!this.modelHandle) {
-					this.modelHandle = this.editorFactory.createGroupModel(this.meta, value);
+					this.modelHandle = this.editorFactory.createGroupModel(this.meta);
 					this.modelHandle.update(value, setOldValue);
 					this.modelHandle.init();
 					var me = this;
