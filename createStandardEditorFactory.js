@@ -1,4 +1,5 @@
 define([
+    './list_primitive/QueryRefListAttributeFactory',
     './group/TreeGroupFactory',
     './converter/isoDateConverter',
 	"./EditorFactory",
@@ -44,7 +45,7 @@ define([
     "./list_table/RepeatedEmbeddedAttributeFactory",
     "./list_table/RepeatedSingleEmbeddedAttributeFactory"//
 
-], function (TreeGroupFactory, isoDateConverter, EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
+], function (QueryRefListAttributeFactory, TreeGroupFactory, isoDateConverter, EditorFactory, createActionFactory, AttributeFactoryFinder, GroupFactory, ListPaneGroupFactory, TabGroupFactory, //
              TitlePaneGroupFactory, ListGroupFactory, PrimitiveListAttributeFactory, RefListAttributeFactory, StringAttributeFactory, ReferenceAttributeFactory, MultiReferenceAttributeFactory, BooleanAttributeFactory, SelectAttributeFactory, SelectStoreAttributeFactory, CheckedSelectAttributeFactory, MappedCheckedMultiSelectAttributeFactory, CheckedMultiSelectAttributeFactory, MappedSelectAttributeFactory, DateAttributeFactory, TimeAttributeFactory, EmbeddedAttributeFactory, MultiEmbeddedAttributeFactory, NumberAttributeFactory, CurrencyAmountAttributeFactory, BinaryAttributeFactory, AnyTextAreaAttributeFactory, //MappedContentPaneFactory,
              TextareaAttributeFactory, RichtextAttributeFactory, SimpleTextareaAttributeFactory, //		AttributeListWidget,
              ColumnsGroupFactory, SingleAttributeGroupFactory, VerticalGroupFactory, RepeatedEmbeddedAttributeFactory, RepeatedMultiEmbeddedAttributeFactory, PrimitiveMapAttributeFactory, MapEmbeddedAttributeFactory, MultiTableAttributeFactory, TableAttributeFactory) {
@@ -111,6 +112,7 @@ define([
         attributeFactoryFinder.addAttributeFactory(new RichtextAttributeFactory({editorFactory: editorFactory}));
         //attributeFactoryFinder.addAttributeFactory(new AceTextAttributeFactory({editorFactory: editorFactory}));
         attributeFactoryFinder.addAttributeFactory(new SimpleTextareaAttributeFactory({editorFactory: editorFactory}));
+        attributeFactoryFinder.addAttributeFactory(new QueryRefListAttributeFactory({editorFactory: editorFactory}));
         attributeFactoryFinder.set("attributeFactories", attributeFactories);
 
         editorFactory.set("attributeFactoryFinder", attributeFactoryFinder);

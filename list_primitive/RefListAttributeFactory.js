@@ -23,7 +23,7 @@ define([
 		},
 		create: function (attribute, modelHandle, ctx) {
 			if (modelHandle.value == null) {
-				throw new "provide a default value";
+				throw "provide a default value";
 			}
 
 			// TODO rather move to model
