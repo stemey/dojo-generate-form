@@ -263,7 +263,7 @@ define([
 				this.emit("editor-changed");
 			} catch (e) {
 				this.displayError("cannot load data into form");
-				console.log(e.message, e.stack);
+				console.error(e);
 			}
 		},
 		_onLoadForEditAndSchemaFailed: function (error) {
@@ -280,6 +280,7 @@ define([
 				}
 			} catch (e) {
 				this.displayError("cannot load data into form");
+				console.error(e);
 			}
 			this.onLoaded(schema, entity);
 			this.emit("editor-changed");
