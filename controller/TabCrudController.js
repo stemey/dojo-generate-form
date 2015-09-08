@@ -102,7 +102,9 @@ define([
 			}
 		},
 		close: function () {
-			this.getParent().removeChild(this);
+			if (!this._destroyed) {
+				this.getParent().removeChild(this);
+			}
 		}
 
 	});

@@ -554,7 +554,9 @@ define([
 			(this.progressMessage || this.progressBar.progressMessage).innerHTML = message;
 		},
 		hideProgressBar: function () {
-			this.progressBar.hide();
+			if (this.progressBar) {
+				this.progressBar.hide();
+			}
 		},
 		onCreated: function (schema, entity) {
 			this.updateActions(schema, entity);
@@ -588,8 +590,13 @@ define([
 			this.actionContainer.getChildren().forEach(function (child) {
 				this.actionContainer.removeChild(child);
 			}, this);
+		},
+		destroyRecursive: function(/*Boolean?*/ preserveDom){
+			if (this.progressBar && this.progressBar.open) {
+				this.progressBar.hide();
+			}
+			this.inherited(arguments);
 		}
-
 
 	});
 
