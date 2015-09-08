@@ -26,6 +26,9 @@ define([
         getMessages: function () {
             return messages;
         },
+        constructor: function (kwArgs) {
+            lang.mixin(this, kwArgs);
+        },
         // summary:
         //		creates a button based on the configuration
         // returns: dijit/form/Button

@@ -82,10 +82,14 @@ define([
             this.ctrl.alert(messages["actions.save.serverError"]);
         },
         _onUpdate: function (result) {
-            if (Array.isArray(result)) {
+            if (this.handleResult === "update") {
                 result.forEach(function (update) {
                     this.ctrl.editor.updateValue(update.path, update.value);
                 }, this);
+            } else if (this.handleResult === "entity") {
+                this.ctrl.editor.modelHandle.update(result, true, false);
+            } else if (this.handleResult === "reload") {
+                this.ctrl.reload();
             }
             this.ctrl.hideProgressBar();
             //this.ctrl._removeChangeIndicator();
